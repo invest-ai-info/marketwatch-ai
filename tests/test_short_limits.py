@@ -42,7 +42,7 @@ def test_mask_and_tables_show_shape_only():
     assert n == 3 and head == ["銘柄名", "コード", "実施日"] and second == ["…", "（コード）", "2026/10/08"]
     assert S.mask_row(['"2134"', '"北浜キャピタル"', "申込停止", "2026/10/08", "1.5"]) == ["（コード）", "…", "申込停止", "2026/10/08", "1.5"]
     assert S.mask_row(["コード", "銘柄名", "措置"]) == ["コード", "銘柄名", "措置"]                       # 見出しはそのまま
-    assert S.SITES[0][1] == "https://www.taisyaku.jp/restrictive.php"
+    assert S.SITES[-1][1] == "https://www.taisyaku.jp/restrictive.php"
     assert "甲" not in repr(S.html_tables(html))
     assert S.decode("申込停止".encode("cp932")) == "申込停止" and S.decode("規制".encode()) == "規制"
 

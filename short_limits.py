@@ -17,16 +17,14 @@ import sys
 
 import jp_taishaku as JT
 
-SITES = (("日本証券金融（貸借取引銘柄別制限措置等一覧）", "https://www.taisyaku.jp/restrictive.php"),   # 10/8 1回目の probe で見つけた
-         ("日本証券金融（銘柄別の制限措置）", "http://www.taisyaku.jp/brand/"),
-         ("日本証券金融", "https://www.taisyaku.jp/"),
-         ("日本取引所グループ（信用取引の規制＝増担保など）", "https://www.jpx.co.jp/markets/equities/margin-reg/index.html"),
+SITES = (("日本取引所グループ（信用取引の規制＝増担保など）", "https://www.jpx.co.jp/markets/equities/margin-reg/index.html"),
          ("日本取引所グループ（日々公表）", "https://www.jpx.co.jp/markets/equities/margin-daily/index.html"),
-         ("日本取引所グループ（注意喚起）", "https://www.jpx.co.jp/markets/equities/alerts/index.html"))
+         ("日本取引所グループ（注意喚起）", "https://www.jpx.co.jp/markets/equities/alerts/index.html"),
+         ("日本証券金融（貸借取引銘柄別制限措置等一覧）", "https://www.taisyaku.jp/restrictive.php"))   # 10/8 1回目の probe で見つけた（いちばん大事＝記録の最後に出す）
 KEYWORDS = re.compile(r"申込停止|停止措置|制限措置|注意喚起|増担保|規制|日々公表|品貸|貸借取引|逆日歩")
 A_RE = re.compile(r'<a\s[^>]*href="([^"#]+)"[^>]*>(.*?)</a>', re.I | re.S)
 FILE_EXT = re.compile(r"\.(csv|xlsx?|pdf|zip|txt)(\?|$)", re.I)
-MAX_PAGES = 5                 # 1つの入口から見るページの数
+MAX_PAGES = 2                 # 1つの入口から見るページの数（入口ともう1ページ）
 
 
 def links(html, base):
@@ -124,7 +122,7 @@ def probe(get=JT.http):
             title = re.search(r"<title>(.*?)</title>", html, re.S)
             hits = keyword_links(links(html, url))
             print(f"  ▼ {url}（{why}）「{(title.group(1).strip() if title else '')[:40]}」規制の言葉のリンク {len(hits)}件")
-            for n, head, second in html_tables(html)[:6]:
+            for n, head, second in html_tables(html)[:8]:
                 print(f"    表：{n}行・見出し {head}・2行目 {second}")
             files = [(u, t) for u, t in links(html, url) if FILE_EXT.search(u)]
             if files:
