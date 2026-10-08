@@ -1,0 +1,56 @@
+name: Lunch Gap Forward (weekdays)
+
+# R10F 昼休みの窓と同じ向きに後場（12:30→大引け）を持つ・前向きの記録（MT4 の株価指数 CFD の自動売買の候補）。
+# 2026-10-08 登録・オーナー「両方登録して進めていってください」。記録だけ＝建てるかはオーナーが決める。
+# ⚠️ 決まりは PILLAR_PREREG.md「R10F」（事前登録）と lunch_gap_forward.py の冒頭に固定。
+# ⚠️ 1321.T の1時間足だけを取り、2026-10-09 以降で「今日より前」の日だけを数える＝大引けが決まった日だけ。一度数えた日は数え直さない。
+# ⚠️ 出力（lunch-gap-forward.json / .md・verified-list.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+#    積み上げた記録と判定を持つ＝古い版で上書きすると消える。
+
+on:
+  schedule:
+    - cron: '17 7 * * 1-5'    # 月〜金 16:17 JST（その日の前の営業日までを数える）
+    - cron: '47 23 * * 0-4'   # 月〜金 08:47 JST 保険（数えた日は数え直さない）
+  workflow_dispatch:
+
+concurrency:
+  group: lunch-gap-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Count only the days after registration
+        run: |
+          python lunch_gap_forward.py
+          python verified_list.py > /dev/null
+          [ -f lunch-gap-forward.md ] && cat lunch-gap-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lunch-gap-forward.json lunch-gap-forward.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: lunch gap forward $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi

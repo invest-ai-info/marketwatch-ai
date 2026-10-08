@@ -13,7 +13,7 @@
   exit-wall-lab.json / stop-lab.json  … 出口の壁ラボ・損切りラボの前向きの確認
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
   🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
-  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json / tvsurge-forward.json / market-dip-forward.json / auction-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json / tvsurge-forward.json / market-dip-forward.json / auction-forward.json / lunch-gap-forward.json … 前向きの検証（判定が出たら一覧から外れる）
   🆕 2026-10-07 見込みなしで途中で止めた腕（verified_list.RETIRED）と、トラッカーで ⏹見込みなし（status=retired）になった仮説は外す
   ⚠️ 自動で建てる検証（auto-forward）は ea_ledger.py の PAUSED_SINCE が入っているあいだは出さない（2026-10-05〜・止めている検証を「検証中」と見せない）
   yutai-edinet/                       … 株主優待のデータ集め（研究中）
@@ -51,6 +51,7 @@ PREVGAP_FWD = "prevgap-forward.json"      # 🆕 2026-10-07 J17F 「寄りで買
 TVSURGE_FWD = "tvsurge-forward.json"      # 🆕 2026-10-07 夜 J26F 目印C「前の日の売買代金の急増」の前向き
 MARKET_DIP_FWD = "market-dip-forward.json"   # 🆕 2026-10-07 J25F 相場全体が安く寄った朝の深い下げ・前向き
 AUCTION_FWD = "auction-forward.json"         # 🆕 2026-10-08 J31F 空売りの前向き（寄り成行→引け成行）
+LUNCH_FWD = "lunch-gap-forward.json"         # 🆕 2026-10-08 R10F 昼休みの窓と同じ向きに後場を持つ前向き
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
@@ -510,6 +511,15 @@ def collect_studies(root, m):
                                "登録した日より後の朝だけで確かめています（記録だけで、取引の決まりではありません）",
                        "since": af.get("fwd_start") or "",
                        "progress": f"数えた朝 {days}営業日（{af.get('goal_days') or 250}営業日で1回だけ判定）"})
+
+    lg = _load(p(LUNCH_FWD))
+    if lg and not all(k in (lg.get("verdicts") or {}) or V.retired(LUNCH_FWD, k) for k in (lg.get("titles") or {})):
+        verify.append({"cat": "index", "name": "日経平均の昼休みのあいだの動きと同じ向きに、午後の取引を持つ",
+                       "what": "東京の株式市場は11時30分から12時30分まで昼休みですが、日経平均の先物はそのあいだも動きます。"
+                               "昼休みに動いた向きと同じ向きに、午後の始まり（12時30分）から終わりまで持つと、手数料などを引いてもプラスになるかを、"
+                               "登録した日より後の日だけで確かめています（記録だけで、取引の決まりではありません）",
+                       "since": lg.get("fwd_start") or "",
+                       "progress": f"数えた日 {len(lg.get('days') or {})}日（昼休みの動きが大きい日は100回・すべての日は250日で判定）"})
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):
