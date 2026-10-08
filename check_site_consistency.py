@@ -117,6 +117,7 @@ SYNC_FORBIDDEN = {
     "tom-basket-lab.json", "tom-basket-lab.md",   # 🆕 2026-10-08 J41 月末月初の個別株の籠（tom-basket-lab.yml・手動）
     "momentum-lab.json", "momentum-lab.md",       # 🆕 2026-10-08 J42 日本株の数か月単位のモメンタム（momentum-lab.yml・手動）
     "momentum-forward.json", "momentum-forward.md",   # 🆕 2026-10-08 J42F 一番上げた10銘柄の前向き（momentum-forward.yml・月1）
+    "tsmom-lab.json", "tsmom-lab.md",             # 🆕 2026-10-08 夜 R11 株価指数・商品と為替の時系列モメンタム（tsmom-lab.yml・手動）
     "lunch-gap-lab.json", "lunch-gap-lab.md",     # 🆕 2026-10-08 R10 昼休みの窓（lunch-gap-lab.yml・手動）
     "lunch-gap-forward.json", "lunch-gap-forward.md",   # 🆕 2026-10-08 R10F 昼休みの窓の前向き（lunch-gap-forward.yml・平日）
     "highs-trap-small.json", "highs-trap-small.md",   # 🆕 2026-10-06 J11 J10 の目印を約400銘柄の外で（highs-trap-small.yml・手動）
