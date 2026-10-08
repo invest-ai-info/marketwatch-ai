@@ -14,6 +14,8 @@
    前の日の上げ＝前の日の終値÷その前の終値−1）。ここで数字を変えない（変えるなら研究の登録から）。
 ⚠️ 銘柄名を出すのは**自分用のメールだけ**。サイトには出さない（「この銘柄を寄りで買わない」は個別銘柄の売買の推奨に近づくため）。
 ⚠️ 決まりは「寄りで買わない」だけ（空売りの合図ではない）。
+🆕 2026-10-08 夕方（オーナー「両方登録して進めてください」・研究 J36 を受けて）：各銘柄に〔貸借〕の印＝制度信用で空売りできる銘柄
+   （日本取引所グループの一覧を jp_taishaku.py で読む・build_jp_highs が夕方に取りに行く）。印だけ＝空売りの決まりではない。
 """
 import datetime as dt
 
@@ -44,8 +46,9 @@ def stock_values(bars):
     return tv[-1], ratio, ret
 
 
-def compute(daily, stocks, asof):
-    """daily＝{コード: bars}（最後のバーが asof の銘柄だけ・データの誤りの日は除いてから渡す）→ jp-highs.json の "markers"。"""
+def compute(daily, stocks, asof, tai=None):
+    """daily＝{コード: bars}（最後のバーが asof の銘柄だけ・データの誤りの日は除いてから渡す）→ jp-highs.json の "markers"。
+    tai＝jp_taishaku.load_or_none() の形（{"codes", "asof", "n"}）か None（一覧が取れなかった＝印を付けない）。"""
     rows, n_c, n_b, n_ratio = [], 0, 0, 0
     for code, bars in daily.items():
         v = stock_values(bars)
@@ -61,17 +64,19 @@ def compute(daily, stocks, asof):
         if (c or b) and tv >= KEEP_MIN_TV:
             rows.append({"code": code, "name": (stocks.get(code) or {}).get("name", ""), "tv": round(tv, 2),
                          "ratio": None if ratio is None else round(ratio, 1), "ret": None if ret is None else round(ret, 4),
-                         "c": bool(c), "b": bool(b)})
+                         "c": bool(c), "b": bool(b), "tai": (code in tai["codes"]) if tai else None})
     rows.sort(key=lambda r: r["tv"], reverse=True)
     return {"asof": asof, "universe": len(daily), "with_ratio": n_ratio, "n_c": int(n_c), "n_b": int(n_b),
-            "keep_min_tv": KEEP_MIN_TV, "rows": rows}
+            "keep_min_tv": KEEP_MIN_TV, "rows": rows,
+            "taishaku": {"asof": tai.get("asof") or "", "n": len(tai["codes"])} if tai else None}
 
 
 def _fmt(r):
     ratio = "—" if r.get("ratio") is None else f"{r['ratio']:.1f}倍"
     ret = "—" if r.get("ret") is None else f"{r['ret'] * 100:+.1f}%"
     both = " ★C・B候補の両方" if r.get("c") and r.get("b") else ""
-    return f"{r['code']} {r['name']}  売買代金 {r['tv']:.1f}億円（{ratio}）・前の日 {ret}{both}"
+    tai = " 〔貸借〕" if r.get("tai") is True else ""
+    return f"{r['code']} {r['name']}  売買代金 {r['tv']:.1f}億円（{ratio}）・前の日 {ret}{both}{tai}"
 
 
 def section(markers, today):
@@ -100,6 +105,11 @@ def section(markers, today):
     L += [f"     {i}. {_fmt(r)}" for i, r in enumerate(bs[:SHOW_TOP], 1)] or ["     （なし）"]
     if len(bs) > SHOW_TOP:
         L.append(f"     …ほか {len(bs) - SHOW_TOP}銘柄")
+    if "taishaku" in markers:          # 2026-10-08 夕方より前に作った一覧にはこの欄が無い＝何も書かない
+        t = markers["taishaku"]
+        L += ["", f"  〔貸借〕＝制度信用で空売りできる銘柄（日本取引所グループの一覧 {t.get('asof') or '日付不明'}・{t.get('n', 0):,}銘柄）。"
+                  "売り禁・証券会社の在庫は入っていない。印だけ＝空売りの決まりではない（空売りの前向き J31F で記録中）"] if t else \
+             ["", "  〔貸借〕の印は今回なし（日本取引所グループの一覧を取れなかった）"]
     L += ["", "  🚫 A はどの銘柄でも：その銘柄だけ全体より +1% 以上高く寄ったら寄りでは買わない（気配で見る・ぎりぎりは買わない側に倒す）",
           "  ※ 決まりは「寄りで買わない」だけ（空売りの合図ではない）。前向きの確かめ（J13F・J17F・J26F）が約1年で判定する", ""]
     return L

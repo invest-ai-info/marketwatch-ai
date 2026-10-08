@@ -137,6 +137,51 @@ def test_market_adjusted_reading_column():
     assert "相場全体を差し引いた平均" in F.render_md(st, "x") and st["summary"]["arms"]["C0"]["adj"] is not None
 
 
+def test_taishaku_reading_column():
+    """2026-10-08 夕方の追記（J36 を受けて）：貸借銘柄だけの割合と平均は読むだけ・判定は変えない・一覧が無い朝は空けたまま"""
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    assert "**読むための欄**として「貸借銘柄だけ」の数字を足す" in text and "`jp_taishaku.py`" in text
+    rng = np.random.default_rng(6)
+    rows = _rows(rng, 0.01)
+    hot = [r for r in rows if r[3] >= F.TV_HIGH]
+    tags = {r[0] for r in hot[::2]}                            # 目印の付いた株の半分が貸借銘柄
+    st = F.empty_state()
+    F.add_day(st, "2026-10-09", rows, {"tags": tags, "asof": "2026年10月1日現在"})
+    g = st["days"]["2026-10-09"]["g"]["C0"]
+    want = [F.arm_net("C0", r[5], r[6]) for r in hot if r[0] in tags]
+    assert g[5] == len(want) == (len(hot) + 1) // 2 and abs(g[6] - sum(want)) < 1e-9
+    assert st["days"]["2026-10-09"]["tai_asof"] == "2026年10月1日現在"
+    F.add_day(st, "2026-10-13", _rows(rng, 0.01))             # 一覧が取れなかった朝＝貸借の欄は空けたまま
+    assert st["days"]["2026-10-13"]["tai_asof"] is None and st["days"]["2026-10-13"]["g"]["C0"][5] == 0
+    sm = F.summary(st)
+    a = sm["arms"]["C0"]
+    assert sm["tai_days"] == 1 and abs(a["tai_share"] - g[5] / g[0]) < 1e-12 and abs(a["tai_mean"] - sum(want) / len(want)) < 1e-12
+    old = F.empty_state()                                      # 追記の前の形（5つ）でも読める
+    old["days"]["2026-10-09"] = {"g": {k: [2, 0.02, 0, 2, 0.04] for k in F.ARMS + F.EXTRA}, "n": 600, "market": 0.01}
+    assert F.summary(old)["arms"]["B0"]["tai_share"] is None and F.summary(old)["tai_asof"] is None
+    F.finalize(st)
+    md = F.render_md(st, "x")
+    assert "貸借銘柄だけ：割合・平均（読むだけ）" in md and "一覧があった朝 1／2営業日" in md
+
+
+def test_run_loads_the_list_only_when_there_are_new_mornings():
+    days_all = TL._bdays("2026-09-01", 35)
+    codes = [str(1000 + i) for i in range(520)]
+    calls = []
+
+    def loader():
+        calls.append(1)
+        return {"codes": {c for c in codes if int(c) % 2 == 0}, "asof": "2026年10月1日現在", "n": 260}
+    st = F.empty_state()
+    added, _ = F.run(st, codes, _fetch_factory(days_all), "2026-10-14", tai_loader=loader)
+    assert added and len(calls) == 1 and all(st["days"][d]["tai_asof"] == "2026年10月1日現在" for d in added)
+    assert sum(st["days"][d]["g"]["C0"][5] for d in added) > 0
+    assert F.run(st, codes, _fetch_factory(days_all), "2026-10-14", tai_loader=loader)[0] == [] and len(calls) == 1
+    st2 = F.empty_state()
+    F.run(st2, codes, _fetch_factory(days_all), "2026-10-14")   # 一覧なし（既定）でも数える
+    assert st2["days"] and all(v["tai_asof"] is None for v in st2["days"].values())
+
+
 def _fetch_factory(days_all):
     def fetch(code, interval, rng):
         out, k = [], int(code) % 7

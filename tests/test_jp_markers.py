@@ -3,7 +3,8 @@
 
 値動きはすべて作り物。確かめること＝①倍率と前の日比の計算（研究の landmine_lab.prev_more と同じ数字）②C・B候補の判定と
 1億円以上だけを残すこと・件数は全部を数えること ③メールの節（平日だけ・古い一覧・無い一覧・★）④朝の指標メールと
-夕方の jp-highs.json の作り方に繋がっていること。
+夕方の jp-highs.json の作り方に繋がっていること ⑤〔貸借〕の印（2026-10-08 夕方・一覧が無い／古い一覧の形でも壊れない）
+⑥貸借銘柄の一覧を読む部品 jp_taishaku（J36 と同じ読み方・取れなければ None）。
 
 実行:  python tests/test_jp_markers.py     （pytest 不要。pytest でも動く）
 """
@@ -84,6 +85,60 @@ def test_wired_into_digest_and_jp_highs():
     assert "寄りで買わない目印" in body and "1111 甲" in body and "投資助言ではありません" in body
     src = open("build_jp_highs.py", encoding="utf-8").read()
     assert "import jp_markers" in src and '"markers": jp_markers.compute(' in src and "if sane_today(b)" in src
+
+
+def test_taishaku_tag():
+    daily = {"1111": _bars(last_vol=8e5), "3333": _bars(last_vol=9e5, last_close=1100.0)}
+    stocks = {"1111": {"name": "甲"}, "3333": {"name": "乙"}}
+    mk = M.compute(daily, stocks, "2026-10-07", {"codes": {"3333", "9999"}, "asof": "2026年10月1日現在", "n": 2})
+    tai = {r["code"]: r["tai"] for r in mk["rows"]}
+    assert tai == {"1111": False, "3333": True} and mk["taishaku"] == {"asof": "2026年10月1日現在", "n": 2}
+    s = "\n".join(M.section(mk, dt.date(2026, 10, 8)))
+    assert "乙  売買代金" in s and s.count("〔貸借〕") == 1 + 2              # 説明の1行＋C と B候補の両方に出る乙
+    assert "制度信用で空売りできる銘柄（日本取引所グループの一覧 2026年10月1日現在・2銘柄）" in s and "空売りの決まりではない" in s
+    no = M.compute(daily, stocks, "2026-10-07", None)                       # 一覧が取れなかった
+    assert no["taishaku"] is None and all(r["tai"] is None for r in no["rows"])
+    s2 = "\n".join(M.section(no, dt.date(2026, 10, 8)))
+    assert "〔貸借〕の印は今回なし" in s2 and "〔貸借〕＝" not in s2
+    old = {k: v for k, v in no.items() if k != "taishaku"}                   # 10/8 夕方より前の形＝何も書かない
+    assert "〔貸借〕" not in "\n".join(M.section(old, dt.date(2026, 10, 8)))
+    src = open("build_jp_highs.py", encoding="utf-8").read()
+    assert "import jp_taishaku" in src and "jp_taishaku.load_or_none()" in src
+
+
+def test_jp_taishaku_reader():
+    import io
+    import pandas as pd
+    import jp_taishaku as JT
+    import taishaku_lab as K
+    assert K.parse_list is JT.parse_list and K.MIN_LIST == JT.MIN_LIST == 1000      # J36 と同じ読み方
+    html = '<a href="/listing/others/margin/x.xlsx">一覧</a>'
+    rows = [["2026年10月1日現在", None, None, None], ["銘柄コード", "銘柄名", "市場区分/商品区分", "信用区分"]]
+    rows += [[str(1300 + i), f"会社{i}", "プライム", "貸借銘柄" if i < 1200 else "制度信用銘柄"] for i in range(1500)]
+    try:
+        buf = io.BytesIO()
+        pd.DataFrame(rows).to_excel(buf, header=False, index=False)
+    except ImportError:                                                         # openpyxl が無い手元では Excel の往復は省く
+        buf = None
+    got = []
+
+    def get(url):
+        got.append(url)
+        return html.encode() if url == JT.PAGES[0] else buf.getvalue()
+    if buf is not None:
+        codes, asof, counts = JT.load(get)
+        assert len(codes) == 1200 and asof == "2026年10月1日現在" and counts["制度信用銘柄"] == 300
+        assert got == [JT.PAGES[0], "https://www.jpx.co.jp/listing/others/margin/x.xlsx"]
+        out = JT.load_or_none(get)
+        assert out["n"] == 1200 and "1300" in out["codes"] and out["asof"] == "2026年10月1日現在"
+        small = io.BytesIO()
+        pd.DataFrame(rows[:500]).to_excel(small, header=False, index=False)
+        assert JT.load_or_none(lambda u: html.encode() if u == JT.PAGES[0] else small.getvalue()) is None   # 1,000 未満
+    assert JT.load_or_none(lambda u: b"<html></html>") is None                 # Excel のリンクが無い
+
+    def boom(u):
+        raise OSError("つながらない")
+    assert JT.load_or_none(boom) is None
 
 
 if __name__ == "__main__":
