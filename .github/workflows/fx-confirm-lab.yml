@@ -1,0 +1,74 @@
+name: FX Confirm Lab (manual)
+
+# XC X の読むための表から出た候補を、X が使っていない昔の期間（2004〜2011年）で確かめる（2026-10-08・オーナー「FX短期トレードの期待値向上の研究を加速させてください」）。
+# XC1 ECB の値決め前にユーロドルだけ売る／XC2 大きな月曜の窓（0.5以上）を埋める向き／XC3 FOMC の日のドル売り。費用は個人と低い費用の2段。
+# ⚠️ 物差し・判定は PILLAR_PREREG.md「XC」（事前登録・計算より先にコミット済み）と fx_confirm_lab.py の冒頭に固定。
+# ⚠️ 手動のみ。先に fx-bars-cache.yml を mode=fetch・period=early で回して昔の期間をそろえる。mode=check は点検だけ → mode=run は1回だけ。
+# ⚠️ 出力（fx-confirm-lab.json / .md）と verified-list.md は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝点検だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: fx-confirm-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas holidays python-dateutil
+      - uses: actions/cache/restore@v4
+        with:
+          path: fx-bars
+          key: fx-bars-none
+          restore-keys: fx-bars-
+      - name: Test with made-up prices
+        run: |
+          python tests/test_fx_bars.py
+          python tests/test_fx_clock_lab.py
+          python tests/test_fx_confirm_lab.py
+      - name: Data check only (no counting)
+        if: ${{ inputs.mode == 'check' }}
+        shell: bash
+        run: python -u fx_confirm_lab.py --check | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python -u fx_confirm_lab.py
+          python verified_list.py > /dev/null
+          [ -f fx-confirm-lab.md ] && cat fx-confirm-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fx-confirm-lab.json fx-confirm-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: FX confirm lab XC $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
