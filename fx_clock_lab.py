@@ -297,9 +297,9 @@ def gap_trades(d, pair, gap_min=GAP_READ):
         if q >= len(idx) or idx[q] > t_end:
             continue
         up = gap > 0
-        pre = slice(p, q)
-        filled_before = (ml[pre].min() <= target) if up else (mh[pre].max() >= target)
-        if q > p and filled_before:
+        pre = slice(p, q)                 # 週の初めの足から、入る足の前まで（週の初めが月曜 0時ちょうどなら 0本）
+        filled_before = q > p and ((ml[pre].min() <= target) if up else (mh[pre].max() >= target))
+        if filled_before:
             out.append({"week": mon0.date().isoformat(), "pair": pair, "g": abs(gap) / atr, "up": bool(up), "traded": False})
             continue
         entry = mo[q]

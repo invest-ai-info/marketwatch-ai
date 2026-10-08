@@ -135,6 +135,15 @@ def test_gap_trade_skips_when_filled_before_entry_and_times_out():
     assert _close(tr2["gross"], -(1.2040 + 0.0001 * 20) / 1.2040 * 1e4 + 1e4, tol=1e-3)   # 19:00 の足の終値（＝20時の値）で出る
 
 
+def test_gap_trade_when_week_opens_at_monday_midnight():
+    """週の初めの足が月曜 0時ちょうど（入る足と同じ）でも止まらない（2026-10-08 本番で ValueError・結果を出す前に止まった）"""
+    f = _gap_week(1.2000, 1.2040, lambda h: 1.2040 - 0.0010 * min(h, 4))
+    d = _with_range(_bars("EURUSD", "2023-12-01", "2024-01-16", f), 0.0004)
+    d = d[~((d.index >= pd.Timestamp("2024-01-14 22:00", tz="UTC")) & (d.index < pd.Timestamp("2024-01-15 00:00", tz="UTC")))]
+    tr = [x for x in X.gap_trades(d, "EURUSD") if x["week"] == "2024-01-15"]
+    assert len(tr) == 1 and tr[0]["traded"] and tr[0]["filled"]
+
+
 def test_week_rows_threshold():
     trades = [{"week": "2024-01-15", "traded": True, "g": 0.3, "gross": 5.0, "net": 3.0, "cost": 2.0},
               {"week": "2024-01-15", "traded": True, "g": 0.2, "gross": 50.0, "net": 48.0, "cost": 2.0},
