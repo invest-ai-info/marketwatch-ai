@@ -4,14 +4,20 @@
 
 ## 2026-10-09｜#121 12本一括引退・RSI売られすぎ逆張り継続
 
-**テーマ**: 3984回試しても勝率43%——12本の仮説が引退した理由と、残った仮説の話
+**テーマ**: 3991回試しても勝率43%——12本の仮説が引退した理由と、残った仮説の話
 
-**結果**: group=all FWD 1723/3984=43.2% CI[41.7%,44.8%] avgR=+0.009 → ⏹ / tf=4h×long 497/1143=43.5% CI[40.6%,46.4%] avgR=+0.015 → ⏹ / rsi_oversold 203/412=49.3% CI[44.5%,54.1%] avgR=+0.150 → 🟡継続
+**結果**: group=all FWD 1726/3991=43.2% CI[41.7%,44.8%] avgR=+0.009 → ⏹ / tf=4h×long 497/1146=43.4% CI[40.5%,46.3%] avgR=+0.015 → ⏹ / rsi_oversold 203/412=49.3% CI[44.5%,54.1%] avgR=+0.150 → 🟡継続
 
-**ゲート状況**: 🔄進行中（signal_lab_verify.py実行待ち）
+**ゲート状況**: ✅自動公開済み（2026-10-09）
 - check_plain_japanese.py: ✅ EXIT=0（修正2ラウンド・35件→0件）
-- signal_lab_verify.py: 待機中
-- Opusコンプラ: 待機中
+- signal_lab_verify.py: ✅ 3/3 GREEN → EXIT=0（fired_from追加・top-level hypothesis_id追加で2ラウンド）
+- Opusコンプラ1: 🟢白（G1修正・平均損益のぶれ幅が0をまたぐ旨追記・SVG重なり修正）
+- Opusコンプラ2（独立）: 🟢白（修正なし）
+- verify再確認: EXIT=0（3/3 GREEN・SVG 0警告）
+- finalize_signal_lab.py: EXIT=0 (kinsho=4, svg=3, size=41KB)
+- publish_article.py: EXIT=0
+- check_site_consistency.py: EXIT=0（エラーなし・警告34件は既存問題）
+- PUSH-MAIN: ✅ 00f4fd9
 
 ---
 
