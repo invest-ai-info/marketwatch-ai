@@ -39,6 +39,7 @@ ALPHA = 0.05 / N_Q            # 98.75％ の幅
 MIN_N = 30
 DAILY_RANGE = "3mo"
 MIN_STOCKS = 500
+MIN_BIG = 30                  # 🆕 2026-10-08 追記：相場全体（10億円以上の平均）を数えるのに要る銘柄の数（J34 と同じ）
 TV_MIN, PREV_BIG, IDIO, TV_HIGH = 10.0, 0.05, 0.01, 5.0     # 点検表 日本株⑤ と同じ数字・10億円以上
 COST, STOP, SLIP = 0.0003, 0.10, 0.002                       # J31・J32 と同じ
 ARMS = ("B0", "B10", "C0", "C10")
@@ -116,18 +117,23 @@ def add_day(st, day, rows):
         st.setdefault("skipped", {})[day] = len(rows)
         return False
     med = float(np.median([r[1] for r in rows]))
-    g = {k: [0, 0.0, 0] for k in ARMS + EXTRA}            # 回数・損益の合計・損切りに届いた回数
+    big = [r[5] for r in rows if r[4] >= TV_MIN]
+    mkt = float(np.mean(big)) if len(big) >= MIN_BIG else None   # 🆕 追記：相場全体の寄り→大引け（読むだけ）
+    g = {k: [0, 0.0, 0, 0, 0.0] for k in ARMS + EXTRA}    # 回数・損益の合計・損切りに届いた回数・（読むだけ）差し引いた回数・合計
     for sid, gap, rprev, ratio, tv, rc, rh in rows:
         for arm in arms_of(gap - med, rprev, ratio, tv):
             v = arm_net(arm, rc, rh)
             g[arm][0] += 1
             g[arm][1] += v
             g[arm][2] += int(arm.endswith("10") and rh >= STOP)
+            if mkt is not None:
+                g[arm][3] += 1
+                g[arm][4] += v + mkt
             if arm in ARMS:
                 c = st["stocks"].setdefault(sid, {}).setdefault(arm, [0, 0.0])
                 c[0] += 1
                 c[1] += v
-    st["days"][day] = {"g": g, "median_gap": med, "n": len(rows)}
+    st["days"][day] = {"g": g, "median_gap": med, "n": len(rows), "market": mkt}
     st.get("skipped", {}).pop(day, None)
     return True
 
@@ -229,15 +235,15 @@ def run(st, codes, fetch, today):
 
 def summary(st):
     days = sorted(st["days"])
-    tot = {k: [sum(st["days"][d]["g"][k][i] for d in days) for i in range(3)] for k in ARMS + EXTRA}
+    tot = {k: [sum((st["days"][d]["g"][k] + [0, 0.0])[i] for d in days) for i in range(5)] for k in ARMS + EXTRA}
     daily = {}
     for k in ARMS:
         vals = [st["days"][d]["g"][k][1] / st["days"][d]["g"][k][0] for d in days if st["days"][d]["g"][k][0]]
         daily[k] = {"days": len(vals), "lose": (sum(v < 0 for v in vals) / len(vals)) if vals else None,
                     "worst": min(vals) if vals else None}
     return {"days": len(days), "first": days[0] if days else None, "last": days[-1] if days else None,
-            "arms": {k: {"n": v[0], "mean": v[1] / v[0] if v[0] else None, "hit": v[2] / v[0] if v[0] else None}
-                     for k, v in tot.items()}, "daily": daily}
+            "arms": {k: {"n": v[0], "mean": v[1] / v[0] if v[0] else None, "hit": v[2] / v[0] if v[0] else None,
+                         "adj": v[4] / v[3] if v[3] else None} for k, v in tot.items()}, "daily": daily}
 
 
 def render_md(st, now):
@@ -248,15 +254,18 @@ def render_md(st, now):
          f"（プラス＝売りが勝った・費用 {COST * 100:.2f}％ 込み）。銘柄名は出しません。**記録だけ＝売買の決まりではない**。", "",
          f"- 数えた朝：{sm['days']}営業日（{sm['first'] or '—'}〜{sm['last'] or '—'}）／判定は **{GOAL_DAYS}営業日**で1回だけ"
          f"（98.75％の幅・{CHECK_EVERY}営業日ごとに費用後の平均がマイナスの腕は止める）", "",
-         "| 腕 | 回数 | 費用後の平均 | 損切りに届いた割合 | 1日ごとの負けた日 | いちばん悪い日 | 状態 |", "|---|---:|---:|---:|---:|---:|---|"]
+         "| 腕 | 回数 | 費用後の平均 | 相場全体を差し引いた平均（読むだけ） | 損切りに届いた割合 | 1日ごとの負けた日 | いちばん悪い日 | 状態 |",
+         "|---|---:|---:|---:|---:|---:|---:|---|"]
     for k in ARMS:
         a, d, vd = sm["arms"][k], sm["daily"][k], st["verdicts"].get(k)
         state = ("✅ 前向きでもプラス" if vd["status"] == "plus" else "⏹ ストップ") if vd else "観察中"
         hit = "—" if not k.endswith("10") or a["hit"] is None else f"{a['hit'] * 100:.0f}％"
         lose = "—" if d["lose"] is None else f"{d['lose'] * 100:.0f}％"
-        L.append(f"| {k} | {a['n']:,} | {GF._p(a['mean'])} | {hit} | {lose} | {GF._p(d['worst'])} | {state} |")
+        L.append(f"| {k} | {a['n']:,} | {GF._p(a['mean'])} | {GF._p(a['adj'])} | {hit} | {lose} | {GF._p(d['worst'])} | {state} |")
     bc = sm["arms"]["BC0"]
-    L += ["", f"- 読むだけ：B かつ C（損切りなし）{bc['n']:,}回・費用後の平均 {GF._p(bc['mean'])}", "", "## 腕ごとの判定", ""]
+    L += ["", f"- 読むだけ：B かつ C（損切りなし）{bc['n']:,}回・費用後の平均 {GF._p(bc['mean'])}",
+          "- 相場全体を差し引いた平均＝1回の損益 ＋ その朝の相場全体（前の日の売買代金10億円以上の全銘柄）の寄り→大引け"
+          "（同じ金額だけ相場全体を買って打ち消した形・2026-10-08 の追記・判定には使わない）", "", "## 腕ごとの判定", ""]
     for k in ARMS:
         vd = st["verdicts"].get(k)
         if vd:

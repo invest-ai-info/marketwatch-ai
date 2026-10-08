@@ -112,6 +112,31 @@ def test_interim_stop_and_single_verdict():
     assert all(st2["verdicts"][k]["status"] == "stop" and "途中の見張り" in st2["verdicts"][k]["reason"] for k in F.ARMS)
 
 
+def test_market_adjusted_reading_column():
+    """2026-10-08 の追記：相場全体（10億円以上の平均）を差し引いた欄は読むだけ・判定は変えない"""
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    assert "**読むための欄**として「相場全体を差し引いた数字」を足す" in text and F.MIN_BIG == 30
+    rng = np.random.default_rng(5)
+    rows = _rows(rng, 0.01)
+    st = F.empty_state()
+    F.add_day(st, "2026-10-09", rows)
+    mkt = float(np.mean([r[5] for r in rows if r[4] >= F.TV_MIN]))
+    day = st["days"]["2026-10-09"]
+    assert abs(day["market"] - mkt) < 1e-12
+    g = day["g"]["C0"]
+    assert g[3] == g[0] and abs(g[4] - (g[1] + g[0] * mkt)) < 1e-9
+    few = [(sid, gap, rp, ra, (20.0 if i < 29 else 1.0), rc, rh) for i, (sid, gap, rp, ra, tv, rc, rh) in enumerate(rows)]
+    st2 = F.empty_state()
+    F.add_day(st2, "2026-10-09", few)
+    assert st2["days"]["2026-10-09"]["market"] is None and st2["days"]["2026-10-09"]["g"]["C0"][3] == 0
+    old = F.empty_state()                                   # 追記の前の形（3つだけ）でも読める
+    old["days"]["2026-10-09"] = {"g": {k: [2, 0.02, 0] for k in F.ARMS + F.EXTRA}, "n": 600}
+    sm = F.summary(old)
+    assert sm["arms"]["B0"]["mean"] == 0.01 and sm["arms"]["B0"]["adj"] is None
+    F.finalize(st)
+    assert "相場全体を差し引いた平均" in F.render_md(st, "x") and st["summary"]["arms"]["C0"]["adj"] is not None
+
+
 def _fetch_factory(days_all):
     def fetch(code, interval, rng):
         out, k = [], int(code) % 7
