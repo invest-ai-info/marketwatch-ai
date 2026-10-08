@@ -1,0 +1,71 @@
+name: TSMOM Lab (manual)
+
+# R11 株価指数・商品（MT4）と為替（MT5）の時系列モメンタム（12か月の向き・量をそろえる・月1回）。
+# 2026-10-08 夜 登録・オーナー「候補3も登録して進めてください」。
+# ⚠️ 決まりは PILLAR_PREREG.md「R11」（事前登録）と tsmom_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。為替の置き場 fx-bars を restore → check（データの期間・BIS に届くか・月の数だけ・損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（tsmom-lab.json / .md）は集計だけ。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝件数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: tsmom-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the FX price store
+        uses: actions/cache/restore@v4
+        with:
+          path: fx-bars
+          key: fx-bars-none
+          restore-keys: fx-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_tsmom_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u tsmom_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python tsmom_lab.py
+          python verified_list.py > /dev/null
+          [ -f tsmom-lab.md ] && cat tsmom-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tsmom-lab.json tsmom-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: tsmom lab R11 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
