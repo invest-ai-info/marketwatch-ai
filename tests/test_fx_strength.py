@@ -121,6 +121,8 @@ def test_wired_into_digest_and_workflow():
     assert "通貨の強弱" in body and "米ドル +0.42%" in body and "中国・オーストラリアのニュース" in body
     assert body.index("今日のファンダ") < body.index("通貨の強弱") < body.index("中国・オーストラリア") < body.index("決算発表")
     assert "値動きの強弱を取れなかった" in body2 and "投資助言ではありません" in body2
+    pv = open(".github/workflows/morning-mail-preview.yml", encoding="utf-8").read()
+    assert "--dry-run" in pv and "GMAIL" not in pv and "python fx_strength.py" in pv and "python asia_news.py" in pv
 
 
 RSS = """<?xml version="1.0"?><rss><channel>
