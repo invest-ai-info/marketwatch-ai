@@ -57,6 +57,7 @@ import urllib.request
 
 from build_jp_rankings import INFO, JST, modal_date, is_regression, is_unsettled, SETTLE_JST
 import jp_markers   # 🆕 2026-10-08 朝の準備用「寄りで買わない」目印（同じ日足に相乗り・jp-highs.json の "markers"）
+import jp_taishaku  # 🆕 2026-10-08 夕方 目印の一覧に〔貸借〕の印（日本取引所グループの一覧・取れなければ印なしで続ける）
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "jp-highs.json")
@@ -447,7 +448,8 @@ def main(force=False, dry_run=False):
         "rule": RULE_VERSION, "jpx_listings": len(jpx), "highs": highs, "lows": lows,
         "history": update_history(prev.get("history"), asof, counts),
         # 🆕 2026-10-08 目印C（売買代金の急増）・B候補（前の日 +5% 以上）＝朝の指標メールが読む（サイトには出さない）
-        "markers": jp_markers.compute({c: b for c, b in daily.items() if sane_today(b)}, stocks, asof),
+        "markers": jp_markers.compute({c: b for c, b in daily.items() if sane_today(b)}, stocks, asof,
+                                      jp_taishaku.load_or_none()),
     }
     if not dry_run:
         with open(OUT, "w", encoding="utf-8") as f:
@@ -458,7 +460,8 @@ def main(force=False, dry_run=False):
           f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
     mk = payload["markers"]
     print(f"   朝のメール用の目印：C（売買代金が20営業日平均の{jp_markers.TV_HIGH:g}倍以上）{mk['n_c']}銘柄・"
-          f"B候補（前の日 +{jp_markers.UP * 100:g}% 以上）{mk['n_b']}銘柄（うち売買代金{mk['keep_min_tv']:g}億円以上を {len(mk['rows'])}件保存）")
+          f"B候補（前の日 +{jp_markers.UP * 100:g}% 以上）{mk['n_b']}銘柄（うち売買代金{mk['keep_min_tv']:g}億円以上を {len(mk['rows'])}件保存）"
+          f"・〔貸借〕{sum(1 for r in mk['rows'] if r.get('tai'))}件（一覧 {(mk.get('taishaku') or {}).get('asof') or '取れず'}）")
     for side, name, rec in (("high", "高値", "最高値"), ("low", "安値", "最安値")):
         rows = out[side]
         print(f"   {period}{name} {len(rows)}銘柄・記録上の{rec} {sum(1 for r in rows if r['record'])}銘柄"

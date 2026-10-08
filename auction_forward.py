@@ -7,6 +7,7 @@
   前の日の売買代金が20営業日平均の5倍以上
 - 腕：B0・C0（損切りなし）／B10・C10（損切り +10％・滑り 0.2％）。費用 0.03％
 - 250営業日で1回だけ判定（98.75％の幅・朝と銘柄の広いほう）。60営業日ごとに費用後の平均がマイナスの腕は止める
+- 読むだけの欄（判定に使わない）：相場全体を差し引いた平均（10/8 追記）／貸借銘柄だけの割合と平均（10/8 夕方の追記・J36 を受けて）
 
 ⚠️ 決まりは PILLAR_PREREG.md「J31F」と下の定数に固定。途中の数字を見て動かさない。行は J31 と同じ prevday_lab.stock_rows、
    倍率は landmine_lab.prev_more、幅は gap_forward._boot_agg、日の選び方は gap_forward.trading_days をそのまま使う。
@@ -25,6 +26,7 @@ import numpy as np
 
 import build_jp_highs as H
 import gap_forward as GF
+import jp_taishaku as JT
 import landmine_lab as LM
 import pillar_lab as P
 import prevday_lab as PD
@@ -111,15 +113,18 @@ def arm_net(arm, rclose, rhigh):
 
 # ════════════════════ 合計を足す ════════════════════
 
-def add_day(st, day, rows):
-    """rows＝[(印, 窓, 前の日比, 倍率, 売買代金, 始→終, 始→高)]。数えた銘柄が MIN_STOCKS 未満なら足さない（False）"""
+def add_day(st, day, rows, tai=None):
+    """rows＝[(印, 窓, 前の日比, 倍率, 売買代金, 始→終, 始→高)]。数えた銘柄が MIN_STOCKS 未満なら足さない（False）。
+    tai＝{"tags": 貸借銘柄の印の集合, "asof": 一覧の日付} か None（一覧が取れなかった回＝貸借の欄を空けたまま）"""
     if len(rows) < MIN_STOCKS:
         st.setdefault("skipped", {})[day] = len(rows)
         return False
     med = float(np.median([r[1] for r in rows]))
     big = [r[5] for r in rows if r[4] >= TV_MIN]
     mkt = float(np.mean(big)) if len(big) >= MIN_BIG else None   # 🆕 追記：相場全体の寄り→大引け（読むだけ）
-    g = {k: [0, 0.0, 0, 0, 0.0] for k in ARMS + EXTRA}    # 回数・損益の合計・損切りに届いた回数・（読むだけ）差し引いた回数・合計
+    g = {k: [0, 0.0, 0, 0, 0.0, 0, 0.0] for k in ARMS + EXTRA}
+    # 回数・損益の合計・損切りに届いた回数・（読むだけ）相場全体を差し引いた回数・合計・（読むだけ・10/8 夕方の追記）貸借銘柄の回数・合計
+    tags = tai["tags"] if tai else None
     for sid, gap, rprev, ratio, tv, rc, rh in rows:
         for arm in arms_of(gap - med, rprev, ratio, tv):
             v = arm_net(arm, rc, rh)
@@ -129,11 +134,14 @@ def add_day(st, day, rows):
             if mkt is not None:
                 g[arm][3] += 1
                 g[arm][4] += v + mkt
+            if tags is not None and sid in tags:
+                g[arm][5] += 1
+                g[arm][6] += v
             if arm in ARMS:
                 c = st["stocks"].setdefault(sid, {}).setdefault(arm, [0, 0.0])
                 c[0] += 1
                 c[1] += v
-    st["days"][day] = {"g": g, "median_gap": med, "n": len(rows), "market": mkt}
+    st["days"][day] = {"g": g, "median_gap": med, "n": len(rows), "market": mkt, "tai_asof": (tai["asof"] or "日付不明") if tai else None}
     st.get("skipped", {}).pop(day, None)
     return True
 
@@ -202,8 +210,9 @@ def done(st):
 
 # ════════════════════ 実行 ════════════════════
 
-def run(st, codes, fetch, today):
-    """1回分：まだ数えていない朝を数えて足す。→ (足した朝, 取れなかった銘柄数)"""
+def run(st, codes, fetch, today, tai_loader=lambda: None):
+    """1回分：まだ数えていない朝を数えて足す。→ (足した朝, 取れなかった銘柄数)。
+    tai_loader＝貸借銘柄の一覧を取る関数（jp_taishaku.load_or_none の形）。足す朝があるときだけ1回呼ぶ"""
     dailies, missing = {}, 0
     for i, code in enumerate(codes):
         d = fetch(code, "1d", DAILY_RANGE)
@@ -220,12 +229,14 @@ def run(st, codes, fetch, today):
     new = [d for d in GF.trading_days(dailies, today, start=FWD_START) if d not in st["days"]]
     drops = {"n": 0}
     per = {code: stock_mornings(dailies[code], set(new), drops) for code in dailies}
+    lst = tai_loader() if new and not done(st) else None
+    tai = {"tags": {tag(c) for c in lst["codes"]}, "asof": lst.get("asof")} if lst else None
     added = []
     for day in new:
         if done(st):
             break
         rows = [(tag(code), *per[code][day]) for code in sorted(per) if day in per[code]]
-        if add_day(st, day, rows):
+        if add_day(st, day, rows, tai):
             after_day(st, day)
             added.append(day)
     return added, missing
@@ -233,9 +244,15 @@ def run(st, codes, fetch, today):
 
 # ════════════════════ 出力 ════════════════════
 
+_PAD = [0, 0.0, 0, 0, 0.0, 0, 0.0]
+
+
 def summary(st):
     days = sorted(st["days"])
-    tot = {k: [sum((st["days"][d]["g"][k] + [0, 0.0])[i] for d in days) for i in range(5)] for k in ARMS + EXTRA}
+    tot = {k: [sum((list(st["days"][d]["g"][k]) + _PAD[len(st["days"][d]["g"][k]):])[i] for d in days) for i in range(7)]
+           for k in ARMS + EXTRA}
+    listed = [d for d in days if st["days"][d].get("tai_asof")]          # 貸借銘柄の一覧があった朝
+    n_listed = {k: sum(st["days"][d]["g"][k][0] for d in listed) for k in ARMS + EXTRA}
     daily = {}
     for k in ARMS:
         vals = [st["days"][d]["g"][k][1] / st["days"][d]["g"][k][0] for d in days if st["days"][d]["g"][k][0]]
@@ -243,7 +260,16 @@ def summary(st):
                     "worst": min(vals) if vals else None}
     return {"days": len(days), "first": days[0] if days else None, "last": days[-1] if days else None,
             "arms": {k: {"n": v[0], "mean": v[1] / v[0] if v[0] else None, "hit": v[2] / v[0] if v[0] else None,
-                         "adj": v[4] / v[3] if v[3] else None} for k, v in tot.items()}, "daily": daily}
+                         "adj": v[4] / v[3] if v[3] else None, "tai_n": v[5],
+                         "tai_share": v[5] / n_listed[k] if n_listed[k] else None,
+                         "tai_mean": v[6] / v[5] if v[5] else None} for k, v in tot.items()}, "daily": daily,
+            "tai_days": len(listed), "tai_asof": st["days"][listed[-1]]["tai_asof"] if listed else None}
+
+
+def _tai(a):
+    if a.get("tai_share") is None:
+        return "—"
+    return f"{a['tai_share'] * 100:.0f}％・{GF._p(a['tai_mean'])}"
 
 
 def render_md(st, now):
@@ -254,18 +280,21 @@ def render_md(st, now):
          f"（プラス＝売りが勝った・費用 {COST * 100:.2f}％ 込み）。銘柄名は出しません。**記録だけ＝売買の決まりではない**。", "",
          f"- 数えた朝：{sm['days']}営業日（{sm['first'] or '—'}〜{sm['last'] or '—'}）／判定は **{GOAL_DAYS}営業日**で1回だけ"
          f"（98.75％の幅・{CHECK_EVERY}営業日ごとに費用後の平均がマイナスの腕は止める）", "",
-         "| 腕 | 回数 | 費用後の平均 | 相場全体を差し引いた平均（読むだけ） | 損切りに届いた割合 | 1日ごとの負けた日 | いちばん悪い日 | 状態 |",
-         "|---|---:|---:|---:|---:|---:|---:|---|"]
+         "| 腕 | 回数 | 費用後の平均 | 相場全体を差し引いた平均（読むだけ） | 貸借銘柄だけ：割合・平均（読むだけ） | 損切りに届いた割合 | 1日ごとの負けた日 | いちばん悪い日 | 状態 |",
+         "|---|---:|---:|---:|---:|---:|---:|---:|---|"]
     for k in ARMS:
         a, d, vd = sm["arms"][k], sm["daily"][k], st["verdicts"].get(k)
         state = ("✅ 前向きでもプラス" if vd["status"] == "plus" else "⏹ ストップ") if vd else "観察中"
         hit = "—" if not k.endswith("10") or a["hit"] is None else f"{a['hit'] * 100:.0f}％"
         lose = "—" if d["lose"] is None else f"{d['lose'] * 100:.0f}％"
-        L.append(f"| {k} | {a['n']:,} | {GF._p(a['mean'])} | {GF._p(a['adj'])} | {hit} | {lose} | {GF._p(d['worst'])} | {state} |")
+        L.append(f"| {k} | {a['n']:,} | {GF._p(a['mean'])} | {GF._p(a['adj'])} | {_tai(a)} | {hit} | {lose} | {GF._p(d['worst'])} | {state} |")
     bc = sm["arms"]["BC0"]
     L += ["", f"- 読むだけ：B かつ C（損切りなし）{bc['n']:,}回・費用後の平均 {GF._p(bc['mean'])}",
           "- 相場全体を差し引いた平均＝1回の損益 ＋ その朝の相場全体（前の日の売買代金10億円以上の全銘柄）の寄り→大引け"
-          "（同じ金額だけ相場全体を買って打ち消した形・2026-10-08 の追記・判定には使わない）", "", "## 腕ごとの判定", ""]
+          "（同じ金額だけ相場全体を買って打ち消した形・2026-10-08 の追記・判定には使わない）",
+          f"- 貸借銘柄だけ＝制度信用で空売りできる銘柄（日本取引所グループの一覧・いちばん新しい朝は {sm['tai_asof'] or '—'}）の回数の割合と費用後の平均"
+          f"（2026-10-08 夕方の追記・J36 を受けて・判定には使わない）。一覧があった朝 {sm['tai_days']}／{sm['days']}営業日。"
+          "売り禁（貸借取引の申込停止）と証券会社ごとの在庫は入っていない", "", "## 腕ごとの判定", ""]
     for k in ARMS:
         vd = st["verdicts"].get(k)
         if vd:
@@ -298,9 +327,13 @@ def main(argv):
     st["prereg_sha256"] = P.prereg_sha256()
     if not done(st):
         stocks, _ = H.load_universe()
-        added, missing = run(st, sorted(stocks), Y.fetch_chart, now.date().isoformat())
+        got = {}
+        added, missing = run(st, sorted(stocks), Y.fetch_chart, now.date().isoformat(),
+                             tai_loader=lambda: got.setdefault("list", JT.load_or_none()))
+        lst = got.get("list")
         st["runs"] = (st.get("runs") or [])[-30:] + [{"at": now.isoformat(timespec="minutes"), "added": added,
-                                                       "n_codes": len(stocks), "missing": missing}]
+                                                       "n_codes": len(stocks), "missing": missing,
+                                                       "taishaku": (lst.get("asof") or "日付不明") if lst else None}]
         print(f"足した朝：{added or 'なし'}（取れなかった銘柄 {missing}/{len(stocks)}）")
     finalize(st)
     with open(STATE, "w", encoding="utf-8") as fh:

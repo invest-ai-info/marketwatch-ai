@@ -20,7 +20,6 @@ import io
 import json
 import re
 import sys
-import urllib.request
 
 import numpy as np
 
@@ -28,6 +27,8 @@ import auction_lab as AU
 import bounce_range_lab as BR
 import highs_trap_lab as T
 import jp_bars
+import jp_taishaku as JT
+from jp_taishaku import CODE_RE, MIN_LIST, PAGES, file_links, http, parse_list  # noqa: F401  2026-10-08 一覧を読む部品を共通にした（読み方は同じ）
 import pillar_lab as P
 import prevgap_lab as PG
 import stop_short_lab as SS
@@ -36,32 +37,12 @@ import yori_lab as Y
 OUT_JSON, OUT_MD = "taishaku-lab.json", "taishaku-lab.md"
 C = AU.C
 ERAS = AU.ERAS
-UA = {"User-Agent": "Mozilla/5.0", "Accept-Language": "ja"}
-PAGES = ("https://www.jpx.co.jp/listing/others/margin/index.html",
-         "https://www.jpx.co.jp/markets/statistics-equities/margin/05.html",
-         "https://www.jpx.co.jp/markets/statistics-equities/margin/index.html")
-FILE_RE = re.compile(r'href="([^"]+\.(?:xlsx?|csv|zip|pdf))"[^>]*>(.*?)</a>', re.I | re.S)
-CODE_RE = re.compile(r"^\d{3}[0-9A-Z]$")
 N_Q = 2
 ALPHA = 0.05 / N_Q            # 97.5％ の幅
-MIN_LIST = 1000               # 貸借銘柄がこれ未満しか読めなければ数えない（約2,000のはず）
 OK_ALL, OK_OLD, NONE = "✅ 貸借銘柄だけでも残る", "△ 昔だけ（最近は届かない）", "✕ 貸借銘柄だけでは残らない"
 
 
 # ════════════════════ 資料 ════════════════════
-
-def http(url, timeout=60):
-    return urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout).read()
-
-
-def file_links(html, base="https://www.jpx.co.jp"):
-    """ページの HTML → [(絶対 URL, リンクの文字)]。純関数"""
-    out = []
-    for href, text in FILE_RE.findall(html):
-        url = href if href.startswith("http") else base + href
-        out.append((url, re.sub(r"<[^>]+>|\s+", " ", text).strip()))
-    return out
-
 
 def code_column(df):
     """4桁の銘柄コードがいちばん多い列の名前（無ければ None）。純関数"""
@@ -123,32 +104,9 @@ def probe():
     return 0
 
 
-def parse_list(raw):
-    """一覧の表（見出しなしで読んだもの）→ (貸借銘柄のコードの集合, 一覧の日付の文字, 区分ごとの件数)。PREREG「J36」の追記の読み方。純関数"""
-    head = next((i for i in range(min(20, len(raw))) if "銘柄コード" in [str(v).strip() for v in raw.iloc[i].tolist()]), None)
-    if head is None:
-        raise RuntimeError("一覧の表に「銘柄コード」の見出しの行が無い（資料の形が変わった？）")
-    cols = [str(v).strip() for v in raw.iloc[head].tolist()]
-    if "信用区分" not in cols:
-        raise RuntimeError("一覧の表に「信用区分」の列が無い（資料の形が変わった？）")
-    df = raw.iloc[head + 1:].copy()
-    df.columns = cols
-    asof = next((str(v).strip() for v in raw.iloc[:head].astype(str).values.ravel() if "現在" in str(v)), "")
-    kinds = df["信用区分"].astype(str).str.strip()
-    counts = {k: int((kinds == k).sum()) for k in sorted(set(kinds)) if k and k != "nan"}
-    codes = df["銘柄コード"].astype(str).str.strip().str.replace(r"\.0$", "", regex=True)
-    return {c for c, k in zip(codes, kinds) if CODE_RE.match(c) and k == "貸借銘柄"}, asof, counts
-
-
 def load_list():
-    """→ (貸借銘柄のコードの集合, 説明)。読み方は PREREG「J36」の追記（probe のあと）"""
-    import pandas as pd
-    html = http(PAGES[0]).decode("utf-8", "replace")
-    xls = [u for u, _ in file_links(html) if re.search(r"\.xlsx?$", u, re.I)]
-    if not xls:
-        raise RuntimeError("「制度信用銘柄・貸借銘柄」のページに Excel のリンクが無い（ページの形が変わった？）")
-    raw = pd.read_excel(io.BytesIO(http(xls[0])), sheet_name=0, dtype=str, header=None)
-    codes, asof, counts = parse_list(raw)
+    """→ (貸借銘柄のコードの集合, 説明)。読み方は PREREG「J36」の追記（probe のあと）＝jp_taishaku.load"""
+    codes, asof, counts = JT.load()
     note = f"日本取引所グループの貸借銘柄の一覧（{asof or '日付不明'}・{len(codes):,}銘柄・区分ごと {counts}）"
     print(note, flush=True)
     return codes, note
