@@ -65,6 +65,43 @@ def fetch_closes(ticker, tries=2):
     return []
 
 
+def fetch_series(ticker, tries=2):
+    """Yahoo の1時間足（10日）の (時刻〔UTC 秒〕, 終値) の並び。取れなければ []（セッション前のメールの「今日の◯◯時から」に使う）"""
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?range=10d&interval=1h"
+    for k in range(tries):
+        try:
+            r = json.load(urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20))["chart"]["result"][0]
+            return [(int(t), float(c)) for t, c in zip(r.get("timestamp") or [], r["indicators"]["quote"][0]["close"]) if c is not None]
+        except Exception:  # noqa: BLE001
+            time.sleep(1 + k)
+    return []
+
+
+def change_since(series, since_ts):
+    """(時刻, 終値) の並び → since_ts より前の最後の終値から最新までの変動率（％）。足りなければ None"""
+    before = [c for t, c in series if t < since_ts]
+    if not before or not series or not before[-1] or series[-1][0] < since_ts:
+        return None
+    return round((series[-1][1] - before[-1]) / before[-1] * 100, 3)
+
+
+def compute_full(since_ts=None, fetch=fetch_series):
+    """24時間・約5日に加えて、since_ts（UTC 秒）からの強弱も出す（セッション前のメール用）。1つも取れなければ None"""
+    pairs = {}
+    for t in PAIRS:
+        sr = fetch(t)
+        cl = [c for _, c in sr]
+        pairs[t] = {"h24": change(cl, BACK_24H), "d5": change(cl, BACK_5D),
+                    "since": change_since(sr, since_ts) if since_ts else None}
+    if all(v["h24"] is None for v in pairs.values()):
+        return None
+    out = {"h24": strength({p: v["h24"] for p, v in pairs.items()}),
+           "d5": strength({p: v["d5"] for p, v in pairs.items()}), "pairs": pairs}
+    if since_ts:
+        out["since"] = strength({p: v["since"] for p, v in pairs.items()})
+    return out
+
+
 def compute(fetch=fetch_closes):
     """→ {"h24": {通貨: 値}, "d5": {…}, "pairs": {ペア: {"h24", "d5"}}}。1つも取れなければ None"""
     pairs = {}
@@ -100,9 +137,21 @@ def load(path=OUT, now=None):
         return None
 
 
-def main():
+def main(argv=None):
+    """--since-jst H＝今日の日本時間 H 時からの強弱も出す（ロンドン前＝9・NY前＝15）"""
     import datetime as dt
-    d = compute()
+    import sys
+    argv = sys.argv[1:] if argv is None else argv
+    jst = dt.timezone(dt.timedelta(hours=9))
+    since_h = int(argv[argv.index("--since-jst") + 1]) if "--since-jst" in argv else None
+    if since_h is None:
+        d = compute()
+    else:
+        now = dt.datetime.now(jst)
+        start = now.replace(hour=since_h, minute=0, second=0, microsecond=0)
+        d = compute_full(int(start.timestamp()))
+        if d is not None:
+            d["since_jst"] = since_h
     if d is None:
         print("⚠️ 為替の1時間足を1つも取れなかった＝朝のメールの通貨の強弱は「取れなかった」と書く")
         return 0

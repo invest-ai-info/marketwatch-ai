@@ -96,6 +96,7 @@ WORKFLOW_CHECKS = [
     ("朝の指標ダイジェスト",    "indicator-digest.yml",    80,      "warn"),
     #    alert は毎時。該当が無い日でも「走った」記録は残るので 6h で見る。
     ("発表前アラート",          "indicator-alert.yml",     6,       "warn"),
+    ("ロンドン前・NY前のメール", "session-brief.yml",      6,       "warn"),   # 🆕 2026-10-08 夜 相乗り（1日約65回）＋cron 保険
     ("週次レベル計算",          "weekly-levels.yml",       24 * 8,  "warn"),
     ("週次振り返り",            "weekly-review.yml",       24 * 10, "warn"),
     ("週次投資戦略",            "weekly-strategy.yml",     24 * 10, "warn"),
@@ -783,6 +784,7 @@ CHAIN_WATCH = [
     # 🆕 2026-10-04: 発表前アラートを頻繁なワークフローの完了に相乗りさせた（cron だけでは1日4〜5回しか動かず、
     #    10/2 の米雇用統計の「まもなく」が届かなかった）。1日数十回起動するはずなので1日空いたら異常
     ("他のワークフローの完了→発表前アラート", "indicator-alert.yml", 1, dt.date(2026, 10, 5), "workflow_run"),
+    ("他のワークフローの完了→ロンドン前・NY前のメール", "session-brief.yml", 1, dt.date(2026, 10, 9), "workflow_run"),   # 🆕 2026-10-08 夜
 ]
 
 

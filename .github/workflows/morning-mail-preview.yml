@@ -8,9 +8,15 @@ on:
   workflow_dispatch:
     inputs:
       when:
-        description: "メールの日時（JST・例 2026-10-09T06:20）。空なら次の平日の 06:20"
+        description: "メールの日時（JST・例 2026-10-09T06:20）。空なら次の平日の 06:20（london は 14:00・ny は 19:30）"
         required: false
         default: ""
+      kind:
+        description: "morning＝朝の指標メール／london＝ロンドン前／ny＝NY前（2026-10-08 夜 追加）"
+        required: false
+        default: morning
+        type: choice
+        options: [morning, london, ny]
 
 jobs:
   preview:
@@ -22,18 +28,31 @@ jobs:
           python-version: '3.11'
       - name: Currency strength
         continue-on-error: true
-        run: python fx_strength.py
-      - name: China and Australia headlines
+        env:
+          KIND: ${{ inputs.kind }}
+        run: |
+          case "$KIND" in london) python fx_strength.py --since-jst 9 ;; ny) python fx_strength.py --since-jst 15 ;; *) python fx_strength.py ;; esac
+      - name: Headlines
         continue-on-error: true
-        run: python asia_news.py
-      - name: Show the morning mail (not sent)
+        env:
+          KIND: ${{ inputs.kind }}
+        run: |
+          case "$KIND" in london) python asia_news.py --set europe ;; ny) python asia_news.py --set us ;; *) python asia_news.py ;; esac
+      - name: Show the mail (not sent)
         env:
           WHEN: ${{ inputs.when }}
+          KIND: ${{ inputs.kind }}
         run: |
+          hm=06:20; [ "$KIND" = london ] && hm=14:00; [ "$KIND" = ny ] && hm=19:30
           if [ -z "$WHEN" ]; then
-            d=$(TZ=Asia/Tokyo date -d tomorrow +%Y-%m-%d)
+            d=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+            [ "$KIND" = morning ] || [ -z "$KIND" ] && d=$(TZ=Asia/Tokyo date -d tomorrow +%Y-%m-%d)
             while [ "$(date -d "$d" +%u)" -gt 5 ]; do d=$(date -d "$d + 1 day" +%Y-%m-%d); done
-            WHEN="${d}T06:20"
+            WHEN="${d}T${hm}"
           fi
-          python send_indicator_digest.py --dry-run --now "$WHEN" | tee mail.txt
+          if [ "$KIND" = london ] || [ "$KIND" = ny ]; then
+            python session_brief.py --session "$KIND" --dry-run --now "$WHEN" | tee mail.txt
+          else
+            python send_indicator_digest.py --dry-run --now "$WHEN" | tee mail.txt
+          fi
           { echo '```'; cat mail.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
