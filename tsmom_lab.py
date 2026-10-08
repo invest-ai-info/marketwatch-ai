@@ -372,8 +372,10 @@ def verdicts_of(r, today):
         if a.get("verdict") in (REV, NONE):
             f = a["full"]
             out[qid] = {"status": "stop", "decided_on": today, "n": f["n"], "mean": f["mean"], "lo": f["lo"], "hi": f["hi"],
-                        "reason": f"過去のデータで1回だけ数えて{'逆向き' if a['verdict'] == REV else '偽薬やいつも買いと区別できない'}"
-                                  f"（費用後の1か月の平均・{a['first']}〜{a['last']}）"}
+                        "reason": "過去のデータで1回だけ数えて" + (
+                            "逆向き" if a["verdict"] == REV else
+                            "、でたらめな向きには勝つが、費用後の平均の幅が0をまたぐ" if (a.get("placebo_p") or 1) < ALPHA else
+                            "、でたらめな向きと区別できない") + f"（費用後の1か月の平均・{a['first']}〜{a['last']}）"}
     return out
 
 
