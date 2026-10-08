@@ -30,7 +30,7 @@ TEXT, MUTED = "#24292f", "#6e7781"
 LEAN_COLOR = {"強い": UP, "弱い": DOWN, "中立": FLAT, "上向き": UP, "下向き": DOWN, "リスクオン": UP, "リスクオフ": DOWN}
 PILL = {"強い": ("#dafbe1", UP), "弱い": ("#ffebe9", DOWN), "中立": ("#eaeef2", "#57606a")}
 # 見出しに含まれる言葉 → 帯の色（上から順に最初に当てはまったもの。「この時間の注意（…研究から）」は注意・「研究から…（日本株…）」は研究）
-SECTION = (("注意", "#b42318"), ("研究", "#57606a"), ("日本株", "#b42318"), ("通貨", "#00796b"), ("ファンダ", "#6f42c1"),
+SECTION = (("要点", "#24292f"), ("注意", "#b42318"), ("研究", "#57606a"), ("日本株", "#b42318"), ("通貨", "#00796b"), ("ファンダ", "#6f42c1"),
            ("ニュース", "#c2410c"), ("決算", "#8a5a00"), ("休場", "#57606a"), ("指標", "#0b57d0"), ("今日", "#0b57d0"),
            ("今後", "#0b57d0"))
 SECTION_DEFAULT = "#1f2a44"
@@ -38,7 +38,7 @@ SECTION_DEFAULT = "#1f2a44"
 BOX = (("🚫", "#fff1f0", "#cf222e"), ("⚠️", "#fff8e1", "#d4a72c"), ("🚩", "#fff8e1", "#d4a72c"), ("🏦", "#f3efff", "#6f42c1"),
        ("💣", "#fff5f5", "#e5a0a0"), ("📏", "#eef4ff", "#9ab8f0"))
 SMALL_HEADS = ("※", "影響:", "根拠：", "…ほか", "（一覧の更新")
-PCT_HEADS = ("値動き", "24時間：", "今日の", "約5日", "主なペア", "豪ドル：")
+PCT_HEADS = ("値動き", "24時間：", "今日の", "約5日", "主なペア", "豪ドル：", "・通貨（24時間")
 CCY_LINE = re.compile(r"^・(\S+?) (?=(?:強い|弱い|中立)（)")              # 「・米ドル 強い（高）：…」の通貨名＝太字
 ALERT_EVENT = re.compile(r"^\d{1,2}:\d{2} JST\s")                       # 「まもなく」メールの発表の行＝大きく
 SEP = re.compile(r"^━+$")
@@ -49,11 +49,13 @@ TAG = re.compile(r"\s?(★C・B候補の両方|〔[^〕]+〕)")
 RANK_ITEM = re.compile(r"(\S+?) ([+\-−]\d+(?:\.\d+)?%)（(強い|弱い|中立)）")
 TOK = re.compile(
     r"(?P<pct>(?<![\w.])[+\-−]\d+(?:\.\d+)?[%％])"
-    r"|(?P<lean>(?<=[（\s：])(?:強い|弱い|中立)(?=[）（]))"
+    r"|(?P<lean>(?<=[（\s：])(?:強い|弱い|中立)(?=[）（\s]))"
     r"|(?P<dir>上向き|下向き|リスクオフ|リスクオン)"
     r"|(?P<time>(?<![\d:/.])\d{1,2}:\d{2}(?![\d:]))"
     r"|(?P<tag>★C・B候補の両方|〔[^〕]+〕)"
     r"|(?P<imp>\[重要度 [高中低]\])")
+# 「今日の要点」の決算の行（9983 ファーストリテイリング（…））＝コードと名前を塗る（ほかの欄では使わない＝思わぬ数字を塗らない）
+TOK_CODES = re.compile(r"(?P<code>(?<![\w.])\d{3}[0-9A-Z] [^\s（・／]+(?=（))|" + TOK.pattern)
 IMP = {"高": ("#ffebe9", DOWN), "中": ("#fff8c5", "#9a6700"), "低": ("#eaeef2", "#57606a")}
 FONT = "-apple-system,'Hiragino Sans','Hiragino Kaku Gothic ProN',Meiryo,'Noto Sans JP',sans-serif"
 
@@ -78,7 +80,7 @@ def _badge(text, bg, fg):
 def _tag(t):
     """★C・B候補の両方＝橙／〔C …〕〔B候補 …〕＝赤／ほかの〔…〕（貸借など）＝灰"""
     if t.startswith("★"):
-        return _badge(t, "#fff1e5", "#bc4c00")
+        return _badge(t, DOWN, "#ffffff")                     # C・B候補の両方＝いちばん強い印＝赤地に白
     if t.startswith(("〔C", "〔B")):
         return _badge(t, "#ffebe9", DOWN)
     return _badge(t, "#eaeef2", "#57606a")
@@ -89,10 +91,10 @@ def _pct_color(t):
     return FLAT if v == 0 else (UP if t[0] == "+" else DOWN)
 
 
-def inline(s, pct=False):
-    """1行の中の言葉に色を付ける（騰落率は pct=True の行だけ＝決まりの文の「+5% 以上」などは塗らない）"""
+def inline(s, pct=False, codes=False):
+    """1行の中の言葉に色を付ける（騰落率は pct=True の行だけ＝決まりの文の「+5% 以上」などは塗らない・銘柄コードは codes=True の行だけ）"""
     out, i = [], 0
-    for m in TOK.finditer(s):
+    for m in (TOK_CODES if codes else TOK).finditer(s):
         out.append(_e(s[i:m.start()]))
         i = m.end()
         k, t = m.lastgroup, m.group()
@@ -104,6 +106,8 @@ def inline(s, pct=False):
             out.append(_b(t))
         elif k == "tag":
             out.append(_tag(t))
+        elif k == "code":
+            out.append(_code_name(*t.split(" ", 1)))
         else:
             out.append(_badge(t, *IMP[t[-2]]))
     out.append(_e(s[i:]))
@@ -164,6 +168,7 @@ def line_html(s, section=""):
     ind = s[:len(s) - len(s.lstrip())]
     pad = _pad(ind)
     pad_css = f"padding-left:{pad}px;" if pad else ""
+    codes = "要点" in section
     if "決算" in section:
         m = EARN_JP.match(s) or EARN_US.match(s)
         if m:
@@ -185,8 +190,8 @@ def line_html(s, section=""):
     for head, bg, line in BOX:
         if body.startswith(head):
             return (f'<div style="margin:4px 0 4px {pad}px;background:{bg};border-left:4px solid {line};padding:4px 8px;'
-                    f'border-radius:4px">{inline(body, pct)}</div>')
-    return f'<div style="{pad_css}">{inline(body, pct)}</div>'
+                    f'border-radius:4px">{inline(body, pct, codes)}</div>')
+    return f'<div style="{pad_css}">{inline(body, pct, codes)}</div>'
 
 
 def to_html(body, subject=""):
@@ -226,7 +231,10 @@ def to_html(body, subject=""):
             zebra = not zebra
             continue
         zebra = False
-        out.append(line_html(s, section))
+        h = line_html(s, section)
+        if "要点" in section:                    # 今日の要点＝薄い黄色の箱（ここだけ見れば朝の判断に要る点がわかる）
+            h = f'<div style="background:#fffbea;padding:3px 8px;border-radius:4px;margin:2px 0">{h}</div>'
+        out.append(h)
     return ('<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{_e(subject)}</title></head><body style="margin:0;padding:0;background:#ffffff">'
             f'<div style="max-width:720px;margin:0 auto;padding:12px;font-family:{FONT};font-size:14px;line-height:1.6;'

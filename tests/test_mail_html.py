@@ -32,7 +32,7 @@ def text_of(page):
 def test_stock_row_card():
     h = M.stock_row(M.ROW.match(ROW), True)
     assert '<b style="color:#0b57d0">3692</b> <b style="color:#0288d1">ＦＦＲＩセキュリティ</b>' in h
-    assert "#fff1e5" in h and "★C・B候補の両方" in h and "〔貸借〕" in h and "background:#f6f8fa" in h
+    assert "background:#cf222e;color:#ffffff" in h and "★C・B候補の両方" in h and "〔貸借〕" in h and "background:#f6f8fa" in h
     assert '<b style="color:#1a7f37">+17.7%</b>' in h and "💣地雷：過熱（25日線 +40%）" in h and "color:#cf222e" in h
     h2 = M.stock_row(M.ROW.match(ROW2), False)
     assert '<b style="color:#0b57d0">476A</b>' in h2 and '<b style="color:#cf222e">-16.8%</b>' in h2 and "#f6f8fa" not in h2
@@ -72,6 +72,18 @@ def test_words_and_boxes():
     assert "font-size:17px" in M.line_html("  21:30 JST  米 CPI（9月分）")
 
 
+def test_summary_box():
+    """一番上の「今日の要点」（2026-10-09）＝濃い帯・薄い黄色の箱・決算のコードと名前・強い／弱いの色"""
+    body = "\n".join(["━━━━", "題", "━━━━", "", "【⭐ 今日の要点（くわしくは下の各欄）】", "  🚫 発表：21:30 米 CPI（数時間前〜は新規を建てない）",
+                      "  ・通貨（24時間の値動き）：強い 米ドル +0.40% ／ 弱い 円 -0.30%",
+                      "  ・決算（日本の主な銘柄）：9983 ファーストリテイリング（10/08 引け後＝今日の寄りに効く）", "", "【今日】", "  なし"])
+    page = M.to_html(body)
+    assert "background:#24292f" in page and page.count("background:#fffbea") == 3 and "#fff1f0" in page
+    assert '<b style="color:#0b57d0">9983</b> <b style="color:#0288d1">ファーストリテイリング</b>' in page
+    assert '<b style="color:#1a7f37">強い</b> 米ドル <b style="color:#1a7f37">+0.40%</b>' in page and '<b style="color:#cf222e">弱い</b> 円' in page
+    assert "#0b57d0\">9983" not in M.line_html("  ・決算：9983 ファーストリテイリング（予定）", "【📰 ニュース】")    # 要点の欄だけ
+
+
 def test_section_colors():
     assert M.section_color("【🇯🇵 日本株：寄りで買わない目印（点検表 日本株⑤・前の日の引けでわかるもの）】") == "#b42318"
     assert M.section_color("【📚 研究から分かっていること（日本株・朝の売買）】") == "#57606a"
@@ -80,6 +92,7 @@ def test_section_colors():
     assert M.section_color("【🧭 今日のファンダ（AIの朝の見立て・ニュースの要約から）】") == "#6f42c1"
     assert M.section_color("【📊 決算発表（前の平日の引け後・今日・次の平日／主な銘柄だけ）】") == "#8a5a00"
     assert M.section_color("【今日】") == "#0b57d0" and M.section_color("【なにか】") == M.SECTION_DEFAULT
+    assert M.section_color("【⭐ 今日の要点（くわしくは下の各欄）】") == "#24292f"
 
 
 def test_earnings_only_in_its_section():

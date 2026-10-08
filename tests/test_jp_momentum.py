@@ -164,6 +164,36 @@ def test_earnings_section():
     assert B.research_section(dt.date(2026, 10, 10)) == [] and "J42 ✕" in "\n".join(B.research_section(dt.date(2026, 10, 9)))
 
 
+def test_summary_section():
+    """一番上の「今日の要点」（2026-10-09 オーナー「1と2を進めて」）＝下の各欄から数字を拾うだけ"""
+    J9 = lambda h, m=0, d=9: dt.datetime(2026, 10, d, h, m, tzinfo=dt.timezone(dt.timedelta(hours=9)))
+    now = J9(6, 20)
+    ev = lambda w, n: (w, {"name": n})
+    fc = dict(FC, currencies=[{"code": "USD", "lean": "STRONG", "conviction": "HIGH"}, {"code": "JPY", "lean": "WEAK", "conviction": "MID"},
+                              {"code": "AUD", "lean": "NEUTRAL", "conviction": "LOW"}])
+    fx = {"h24": {"USD": 0.40, "EUR": -0.02, "GBP": 0.06, "JPY": -0.30, "AUD": -0.12}}
+    mk = {"asof": "2026-10-08", "rows": [{"code": "7777", "c": True, "b": True, "tv": 12.0, "ret": 0.2, "dev25": 0.3, "streak": 5},
+                                         {"code": "8888", "c": True, "b": False, "tv": 3.0, "ret": 0.01}]}
+    s = "\n".join(B.summary_section(now, [ev(J9(9, 30), "豪 雇用統計"), ev(J9(21, 30), "米 CPI"), ev(J9(23), "米 何か"),
+                                         ev(J9(23, 30), "米 四つ目")], fc, fx, mk, _mom(), EC))
+    assert s.startswith("【⭐ 今日の要点（くわしくは下の各欄）】")
+    assert "🚫 発表：09:30 豪 雇用統計・21:30 米 CPI・23:00 米 何か ほか1件（数時間前〜は新規を建てない）" in s
+    assert "・地合い（AI）：リスクオフ（売られやすい）・確度 中／日経225 中立・ドル円 上向き" in s and "今朝の見立てではない" not in s
+    assert "・通貨（24時間の値動き）：強い 米ドル +0.40%・ポンド +0.06% ／ 弱い 円 -0.30%・豪ドル -0.12%" in s
+    assert "・通貨（AIの見立て）：強い 米ドル（高） ／ 弱い 円（中）" in s
+    assert "・日本株：寄りで買わない目印 2銘柄（★C・B候補の両方 1・💣地雷 1）／強すぎる株 1銘柄（新しく買わない側）" in s
+    assert "・決算（日本の主な銘柄）：9983 ファストリ（今日 引け後）" in s
+    s = "\n".join(B.summary_section(now, [ev(J9(21, 30, 13), "米 CPI")], None, None, None, None, None))
+    assert "・発表：今日はなし（次は 10/13(火) 21:30 米 CPI）" in s and "地合い" not in s and "日本株" not in s and "通貨" not in s
+    assert "🟡 発表：21:30 米 CPI" in "\n".join(B.summary_section(now, [ev(J9(21, 30), "米 CPI")]))          # 6時間より先
+    s = "\n".join(B.summary_section(J9(6, 20, 12), [], FC, None, mk, {"lists": "壊れた"}, EC))       # 月曜・一覧は金曜→4日以内
+    assert "今朝の見立てではない" in s and "強すぎる株" not in s and "寄りで買わない目印 2銘柄" in s
+    assert "9983 ファストリ（10/09 引け後＝今日の寄りに効く）" in s and "4063 信越（今日 引け後）" in s
+    assert "日本株" not in "\n".join(B.summary_section(J9(6, 20, 14), [], FC, None, mk))                 # 一覧が古い
+    sat = B.summary_section(J9(6, 20, 10), [], FC, fx, mk, _mom(), EC)
+    assert sat == ["【⭐ 今日の要点（くわしくは下の各欄）】", "  ・発表：今日はなし", ""]                     # 土曜は発表だけ
+
+
 def test_wired_into_digest_and_jp_highs():
     import send_indicator_digest as D
     o1, o2, o3, o4 = D.load_markers, D.load_momentum, B.FUND, B.EARN
@@ -178,7 +208,9 @@ def test_wired_into_digest_and_jp_highs():
     for s in ("今日のファンダ", "決算発表", "寄りで買わない目印", "💣地雷：", "強すぎる株＝新しく買わない側", "2026-09-30 の大引けで決めた一覧",
               "研究から分かっていること", "投資助言ではありません"):
         assert s in body, s
-    assert body.index("今日のファンダ") < body.index("寄りで買わない目印") < body.index("強すぎる株") < body.index("研究から分かっていること")
+    assert body.index("今日の要点") < body.index("【今日】") < body.index("今日のファンダ") < body.index("【🇯🇵 日本株：寄りで買わない目印") \
+        < body.index("【🇯🇵 日本株：強すぎる株") < body.index("研究から分かっていること")
+    assert "寄りで買わない目印 1銘柄（★C・B候補の両方 1・💣地雷 1）／強すぎる株 1銘柄" in body
     try:
         D.load_momentum = lambda: {"lists": "壊れた"}                      # 壊れた欄でもメールは届く
         _, broken = D.build(dt.datetime(2026, 10, 9, 6, 20, tzinfo=D.JST))
