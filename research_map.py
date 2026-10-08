@@ -13,7 +13,7 @@
   exit-wall-lab.json / stop-lab.json  … 出口の壁ラボ・損切りラボの前向きの確認
   signal-env-profile-history.json     … 相場の環境の統計（毎月）
   🆕 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」＝先頭の「📋 研究中・検証中の一覧」:
-  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json / tvsurge-forward.json / market-dip-forward.json … 前向きの検証（判定が出たら一覧から外れる）
+  yori-forward.json / combo-forward.json / auto-forward.json / calendar-forward.json / highs-trap-forward.json / gap-forward.json / prevgap-forward.json / tvsurge-forward.json / market-dip-forward.json / auction-forward.json … 前向きの検証（判定が出たら一覧から外れる）
   🆕 2026-10-07 見込みなしで途中で止めた腕（verified_list.RETIRED）と、トラッカーで ⏹見込みなし（status=retired）になった仮説は外す
   ⚠️ 自動で建てる検証（auto-forward）は ea_ledger.py の PAUSED_SINCE が入っているあいだは出さない（2026-10-05〜・止めている検証を「検証中」と見せない）
   yutai-edinet/                       … 株主優待のデータ集め（研究中）
@@ -50,6 +50,7 @@ GAP_FWD = "gap-forward.json"              # 🆕 2026-10-06 夜 J13F 窓の戻�
 PREVGAP_FWD = "prevgap-forward.json"      # 🆕 2026-10-07 J17F 「寄りで買わない」目印の前向き
 TVSURGE_FWD = "tvsurge-forward.json"      # 🆕 2026-10-07 夜 J26F 目印C「前の日の売買代金の急増」の前向き
 MARKET_DIP_FWD = "market-dip-forward.json"   # 🆕 2026-10-07 J25F 相場全体が安く寄った朝の深い下げ・前向き
+AUCTION_FWD = "auction-forward.json"         # 🆕 2026-10-08 J31F 空売りの前向き（寄り成行→引け成行）
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
@@ -498,6 +499,17 @@ def collect_studies(root, m):
                                "登録した日より後の朝だけで確かめています",
                        "since": md.get("fwd_start") or "",
                        "progress": f"相場全体が安く始まった朝 {sm.get('down_days', 0)}朝（{md.get('goal_down_days') or 30}朝で1回だけ判定・数えた朝 {sm.get('days', 0)}営業日）"})
+
+    af = _load(p(AUCTION_FWD))
+    if af and not all(k in (af.get("verdicts") or {}) or V.retired(AUCTION_FWD, k) for k in (af.get("titles") or {})):
+        days = (af.get("summary") or {}).get("days", 0)
+        verify.append({"cat": "jp", "name": "「寄りで買わない」目印の付いた日本株を、朝いちばんの値段で売り（空売り）、終わりの値段で買い戻す",
+                       "what": "前の日に5パーセント以上上がったうえに今朝もその銘柄だけ高く始まった銘柄と、前の日の売買代金がその前の20営業日の平均の"
+                               "5倍以上だった銘柄（どちらも前の日の売買代金10億円以上）を、朝いちばんの値段（寄り付き）で売り、終わりの値段（大引け）で"
+                               "買い戻すと、手数料などを引いてもプラスになるかを、損切りなしと、10パーセント上がったら買い戻す形の両方で、"
+                               "登録した日より後の朝だけで確かめています（記録だけで、取引の決まりではありません）",
+                       "since": af.get("fwd_start") or "",
+                       "progress": f"数えた朝 {days}営業日（{af.get('goal_days') or 250}営業日で1回だけ判定）"})
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):

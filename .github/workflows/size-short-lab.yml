@@ -1,0 +1,73 @@
+name: Size Short Lab (manual)
+
+# J33 建玉の大きさ：J31・J32 の売り（目印 B・C・10億円以上・寄り成行→引け成行・損切りなし／+10％）を、1銘柄あたり口座の
+# 1／2／3／5／10％ ずつ建てたとき、点検表の守りの決まり（1回1％・月 −10％・最大 −20％）に収まるか（毎日複利）。
+# 2026-10-08 登録・オーナー「1と2を登録して続けてください」。目隠しではない（同じ取引を J31・J32 で数えた）。決まりにはしない。
+# ⚠️ 決まりは PILLAR_PREREG.md「J33」（事前登録）と size_short_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。先に jp-bars-cache（日足＝取れる全期間版）を1回。check（組ごとの件数と日数だけ・損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（size-short-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝行数と組ごとの件数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: size-short-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up prices
+        run: python tests/test_size_short_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u size_short_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python size_short_lab.py
+          [ -f size-short-lab.md ] && cat size-short-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add size-short-lab.json size-short-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: size short lab J33 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
