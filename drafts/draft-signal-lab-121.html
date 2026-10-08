@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <meta name="publish-date" content="2026-10-09">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>3984回試しても勝率43%——12本の仮説が引退した理由と、残った仮説の話【研究日誌 #121】 - MarketWatch AI</title>
+  <meta name="description" content="2026年10月9日の前向き更新で12本の仮説が引退しました。全シグナル基準線は3984回で勝率43.2%・平均損益ほぼゼロ。一方、RSI売られすぎ逆張り買いは412回で49.3%・平均+0.15Rを記録。引退の理由と残った仮説を解説します。">
+  <meta name="keywords" content="AIシグナル,仮説引退,RSI,前向き検証,研究日誌,勝率,シグナル研究">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-121.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="3984回試しても勝率43%——12本の仮説が引退した理由と、残った仮説の話【研究日誌 #121】">
+  <meta property="og:description" content="2026年10月9日の前向き更新で12本の仮説が引退しました。全シグナル基準線は3984回で勝率43.2%・平均損益ほぼゼロ。RSI売られすぎ逆張り買いは412回で49.3%・平均+0.15Rを記録。引退の理由と残った仮説を解説します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-121.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "3984回試しても勝率43%——12本の仮説が引退した理由と、残った仮説の話【研究日誌 #121】",
+    "description": "2026年10月9日の前向き更新で12本の仮説が引退しました。全シグナル基準線は3984回で勝率43.2%・平均損益ほぼゼロ。RSI売られすぎ逆張り買いは412回で49.3%・平均+0.15Rを記録。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-10-09",
+    "dateModified": "2026-10-09",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-121.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
+    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-fill-b{fill:#ddf4ff;stroke:none}
+    .s-fill-g{fill:#e6ffed;stroke:none}
+    .s-fill-r{fill:#ffebe9;stroke:none}
+    .s-fill-y{fill:#fff8c5;stroke:none}
+    .s-fill-gray{fill:#f0f3f6;stroke:none}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark h1{color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label{fill:#c9d1d9}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-label-b{fill:#79c0ff}
+    body.dark .s-label-g{fill:#7ee787}
+    body.dark .s-label-r{fill:#ff8080}
+    body.dark .s-label-y{fill:#d4a017}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-guide{stroke:#30363d}
+    body.dark .s-curve-b{stroke:#79c0ff}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-fill-b{fill:#1a2030}
+    body.dark .s-fill-g{fill:#162416}
+    body.dark .s-fill-r{fill:#2a1010}
+    body.dark .s-fill-y{fill:#2a1f0e}
+    body.dark .s-fill-gray{fill:#1f2328}
+    @media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar mwf-nav">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">トップ</a> ＞ <a href="../guides.html">解説記事</a> ＞ AIシグナル研究日誌 #121
+  </div>
+
+  <div class="article">
+
+    <!-- 冒頭バナー（kinsho-v1） -->
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+    </div>
+
+    <h1>🧪 3984回試しても勝率43%——12本の仮説が引退した理由と、残った仮説の話<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #121</small></h1>
+    <div class="meta-line">
+      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年10月（下書き中） &nbsp;|&nbsp; 読了：約10分
+    </div>
+
+    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="../guide-signal-anatomy.html"><strong>シグナルの発火条件をチャートで確認する図解カタログ</strong></a> — この日誌に出てくるシグナル（RSI（相対力指数）売られすぎ反発・逆張り買いなど）がチャートのどの場面かを図解で確認できます。</div>
+
+    <p>毎回ひとつの仮説を実データで検証し、良い結果も悪い結果もすべて公開する研究日誌の第121回です。</p>
+    <p>今回は「引退」の話をします。2026年10月9日の前向き更新で、12本の仮説が「⏹見込みなし」になりました。引退とは、決められた条件を満たしたため記録を止めることです。これは失敗ではなく、「効かないとわかった」という検証の成果です。</p>
+    <p>また、引退した仮説がある一方で、まだ前向きで記録を続けている仮説もあります。その中でとくに注目している1本（RSI（相対力指数：買われすぎ・売られすぎを0から100で表す指標）が30を下回った後の逆張り買い）の現状もあわせて紹介します。</p>
+
+    <!-- 30秒まとめ -->
+    <div class="info-box">
+      <strong>30秒でわかる今回のまとめ</strong><br><br>
+      ① 2026年10月9日の前向き更新で12本の仮説が「⏹見込みなし（引退）」になった。うち10本は「100回以上試しても効果が小さすぎた」、2本は「判定まで2年以上かかる見込みで打ち切り」<br><br>
+      ② 代表例：全シグナルをまとめて見た場合、前向きで<strong>3984回</strong>試して勝率<strong>43.2%</strong>・1回あたりの平均損益はほぼゼロ（損切り幅の0.009倍）<br><br>
+      ③ 4時間足で買うだけでも<strong>1143回</strong>で<strong>43.5%</strong>・平均損益損切り幅の0.015倍（どちらも損益分岐の43%を上回れず）<br><br>
+      ④ 一方、「RSI（相対力指数）が30を下回った後の逆張り買い」は<strong>412回</strong>で<strong>49.3%</strong>・平均損益損切り幅の0.150倍（偶然のぶれの幅が全体プラス寄り）
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">目次</div>
+      <ol>
+        <li><a href="#retirement">「引退」とは何か</a></li>
+        <li><a href="#retired-list">今日引退した12本の仮説（一覧）</a></li>
+        <li><a href="#baseline">「効かない」証拠：全体の基準線</a></li>
+        <li><a href="#comparison">基準線との対比（棒グラフ）</a></li>
+        <li><a href="#requirements">仮説が残り続けるには何が必要か</a></li>
+        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
+      </ol>
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="retirement">① 「引退」とは何か</h2>
+
+    <p>当サイトの検証では、条件を先に登録してから記録を始めます。これを「前向き検証」と呼びます。登録後に積み上げた記録だけが、後付けのない証拠になります。</p>
+
+    <p>「引退」とは、前向きで記録をやめることです。2つの条件のどちらかに当てはまったとき、仮説は引退します。</p>
+
+    <ul>
+      <li><strong>条件A（効果なし）</strong>：前向きの記録が100回以上になり、偶然のぶれを考えた幅の上の端が損切り幅の0.10倍を下回った場合</li>
+      <li><strong>条件B（打ち切り）</strong>：このペースで記録を続けると、判定に2年以上かかる見込みになった場合</li>
+    </ul>
+
+    <div class="info-box">
+      引退は失敗ではありません。「この仮説には効果がなかった」「このペースでは確かめられない」とわかることも、大切な研究の成果です。10本の「効果なし」と2本の「打ち切り」が今回の内訳です。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="retired-list">② 今日引退した12本の仮説（一覧）</h2>
+
+    <p>以下が今回引退した12本です。「前向きN（回数）」は、登録後に積み上げた記録の回数です。</p>
+
+    <div class="mw-scroll-hint">横にスクロールできます</div>
+    <table>
+      <tr>
+        <th>仮説の内容</th>
+        <th>引退の理由</th>
+        <th>前向きの回数</th>
+      </tr>
+      <tr>
+        <td>全シグナルをまとめて</td>
+        <td>効果が小さすぎる</td>
+        <td>3975回</td>
+      </tr>
+      <tr>
+        <td>目標の手前に壁なし（全方向）</td>
+        <td>効果が小さすぎる</td>
+        <td>3177回</td>
+      </tr>
+      <tr>
+        <td>目標の手前に壁なしの買い</td>
+        <td>効果が小さすぎる</td>
+        <td>2513回</td>
+      </tr>
+      <tr>
+        <td>4時間足の買い全般</td>
+        <td>効果が小さすぎる</td>
+        <td>1150回</td>
+      </tr>
+      <tr>
+        <td>選別ランク「普通」（全方向）</td>
+        <td>効果が小さすぎる</td>
+        <td>1044回</td>
+      </tr>
+      <tr>
+        <td>株価指数（全方向）</td>
+        <td>効果が小さすぎる</td>
+        <td>1044回</td>
+      </tr>
+      <tr>
+        <td>関連ニュースなし（全方向）</td>
+        <td>効果が小さすぎる</td>
+        <td>579回</td>
+      </tr>
+      <tr>
+        <td>金・銀（全方向）</td>
+        <td>効果が小さすぎる</td>
+        <td>493回</td>
+      </tr>
+      <tr>
+        <td>もみあい中の逆張り買い</td>
+        <td>効果が小さすぎる</td>
+        <td>382回</td>
+      </tr>
+      <tr>
+        <td>下降トレンド中の売り</td>
+        <td>効果が小さすぎる</td>
+        <td>316回</td>
+      </tr>
+      <tr style="background:#fff8c5">
+        <td>株価指数の逆張り買い（日足）</td>
+        <td>判定まで2年以上かかる見込み</td>
+        <td>6回</td>
+      </tr>
+      <tr style="background:#fff8c5">
+        <td>ダブルボトムと高値ブレイクのコンボ</td>
+        <td>判定まで2年以上かかる見込み</td>
+        <td>1回</td>
+      </tr>
+    </table>
+
+    <p>黄色の2行（日足・コンボ）は件数が少なすぎて、このペースでは結論が出るまでに2年以上かかると計算されました。</p>
+
+    <!-- =============================== -->
+    <h2 id="baseline">③「効かない」証拠：全体の基準線</h2>
+
+    <p>引退した12本のうち、最も回数が多い「全シグナルをまとめて」の仮説を代表例として見てみましょう。これは、特定の条件を絞らず、すべてのシグナルをひとまとめにしたときの成績です。</p>
+
+    <p>前向きで3984回試した結果は、勝率43.2%・平均損益損切り幅の0.009倍（（損切り損失を1としたときの利益・損失の比率）でした。損益分岐の勝率（とんとんになる勝率）は43%です。これは損切り（損切り幅の1倍）・第1目標（損切り幅の1.33倍）のときに、勝ちを43%取れれば損益がほぼゼロになる計算から出ています。</p>
+
+    <div class="chart-figure">
+      <!-- 図1：RSI30割れと反発シグナルのチャート風図解 -->
+      <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" aria-label="RSI30を下回った後に反発するシグナルのイメージ図">
+        <rect x="0" y="0" width="680" height="260" fill="#f9fafb" rx="8"/>
+
+        <!-- タイトル -->
+        <text x="340" y="20" text-anchor="middle" class="s-label" style="font-weight:700;font-size:13.5px;fill:#1E3A6E">RSI30を下回った後に反発するシグナルのイメージ</text>
+
+        <!-- 価格軸 -->
+        <line x1="68" y1="32" x2="68" y2="162" class="s-axis"/>
+        <line x1="68" y1="162" x2="645" y2="162" class="s-axis"/>
+
+        <!-- 軸ラベル -->
+        <text x="58" y="40" text-anchor="end" class="s-label-sm">高値</text>
+        <text x="58" y="162" text-anchor="end" class="s-label-sm">安値</text>
+
+        <!-- 下降トレンド補助線 -->
+        <line x1="90" y1="55" x2="465" y2="148" stroke="#d0d7de" stroke-width="1" stroke-dasharray="5 4"/>
+
+        <!-- ローソク足1（下落）: x=105 -->
+        <line x1="105" y1="48" x2="105" y2="76" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="98" y="53" width="14" height="16" fill="#cf222e" rx="1"/>
+
+        <!-- ローソク足2（下落）: x=190 -->
+        <line x1="190" y1="65" x2="190" y2="96" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="183" y="70" width="14" height="18" fill="#cf222e" rx="1"/>
+
+        <!-- ローソク足3（下落）: x=275 -->
+        <line x1="275" y1="82" x2="275" y2="118" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="268" y="88" width="14" height="22" fill="#cf222e" rx="1"/>
+
+        <!-- ローソク足4（下落、底付近）: x=360 -->
+        <line x1="360" y1="107" x2="360" y2="155" stroke="#cf222e" stroke-width="1.5"/>
+        <rect x="353" y="114" width="14" height="28" fill="#cf222e" rx="1"/>
+
+        <!-- RSI30割れゾーンの強調 -->
+        <rect x="340" y="98" width="92" height="20" rx="4" fill="#ffebe9" opacity="0.9"/>
+        <text x="386" y="112" text-anchor="middle" class="s-label-r" style="font-size:11.5px">RSI30割れ</text>
+        <line x1="360" y1="118" x2="360" y2="120" stroke="#cf222e" stroke-width="1.2" stroke-dasharray="2 2"/>
+
+        <!-- ローソク足5（反発・買いシグナル、オレンジ枠）: x=450 -->
+        <line x1="450" y1="128" x2="450" y2="155" stroke="#1a7f37" stroke-width="1.5"/>
+        <!-- 陽線（緑） -->
+        <rect x="443" y="112" width="14" height="26" fill="#1a7f37" rx="1"/>
+        <!-- オレンジの強調枠 -->
+        <rect x="435" y="103" width="30" height="54" rx="5" fill="none" stroke="#E8A317" stroke-width="2.8"/>
+        <!-- 反発シグナルラベル -->
+        <text x="450" y="97" text-anchor="middle" class="s-label-b" style="font-size:11px">反発シグナル</text>
+        <text x="450" y="109" text-anchor="middle" class="s-label-b" style="font-size:11px">（買い）</text>
+        <!-- 「ここで入った場合を計算」の注釈 -->
+        <line x1="465" y1="130" x2="510" y2="135" stroke="#E8A317" stroke-width="1.2" stroke-dasharray="3 2"/>
+        <text x="514" y="132" class="s-label-y" style="font-size:10.5px">ここで入った</text>
+        <text x="514" y="144" class="s-label-y" style="font-size:10.5px">場合を計算</text>
+
+        <!-- ローソク足6（続伸）: x=548 -->
+        <line x1="548" y1="95" x2="548" y2="126" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="541" y="98" width="14" height="20" fill="#1a7f37" rx="1"/>
+
+        <!-- ローソク足7（続伸）: x=630 -->
+        <line x1="630" y1="82" x2="630" y2="110" stroke="#1a7f37" stroke-width="1.5"/>
+        <rect x="623" y="84" width="14" height="18" fill="#1a7f37" rx="1"/>
+
+        <!-- RSIパネル区切り -->
+        <line x1="68" y1="172" x2="645" y2="172" stroke="#d0d7de" stroke-width="0.8"/>
+        <text x="68" y="170" class="s-label-sm" style="font-size:10px">RSI</text>
+
+        <!-- RSIパネル軸 -->
+        <line x1="68" y1="178" x2="68" y2="252" class="s-axis"/>
+        <line x1="68" y1="252" x2="645" y2="252" class="s-axis"/>
+
+        <!-- RSI30の基準線（赤い破線） -->
+        <line x1="68" y1="229" x2="645" y2="229" stroke="#cf222e" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="646" y="232" class="s-label-r" style="font-size:10.5px">30</text>
+
+        <!-- 売られすぎゾーンの塗りつぶし -->
+        <polygon points="318,229 360,235 455,229" fill="#ffebe9" opacity="0.6"/>
+
+        <!-- RSIの折れ線 -->
+        <polyline points="105,213 190,220 275,226 360,235 450,229 548,221 630,212" class="s-curve-r" style="stroke-width:2"/>
+
+        <!-- RSIパネルのラベル -->
+        <text x="58" y="182" text-anchor="end" class="s-label-sm">70</text>
+        <text x="58" y="232" text-anchor="end" class="s-label-sm">30</text>
+        <text x="58" y="252" text-anchor="end" class="s-label-sm">0</text>
+
+        <!-- 売られすぎゾーンの説明ラベル -->
+        <text x="360" y="248" text-anchor="middle" class="s-label-sm" style="font-size:10px">← RSIが30を下回った区間（売られすぎゾーン）</text>
+      </svg>
+      <div class="chart-caption">RSI（相対力指数）が30を下回って売られすぎゾーンに入り、反発した場面で買いシグナルが出る状況のイメージ。オレンジ枠のローソク足がシグナル発火の場面で、「ここで入った場合を計算」している。<br>※ 概念を示すイメージ図です（実際の値動きではありません）</div>
+    </div>
+
+    <p>全シグナルをまとめた3984回の勝率43.2%は、損益分岐の43%とほぼ変わりません。平均損益+0.009も実質ゼロに近い数字です。偶然のぶれを考えた幅は[41.7%, 44.8%]で、幅の上の端（44.8%）から期待できる利益も損切り幅の0.10倍を下回りました。そのため、引退の条件A（効果が小さすぎる）に当てはまりました。</p>
+
+    <table>
+      <tr>
+        <th>条件</th>
+        <th>回数</th>
+        <th>勝ち</th>
+        <th>勝率</th>
+        <th>偶然のぶれを考えた幅（95%）</th>
+        <th>平均損益</th>
+      </tr>
+      <tr>
+        <td>全シグナル基準線</td>
+        <td>3984回</td>
+        <td>1723回</td>
+        <td>43.2%</td>
+        <td>[41.7%, 44.8%]</td>
+        <td>損切り幅の0.009倍</td>
+      </tr>
+      <tr>
+        <td>4時間足の買い全般</td>
+        <td>1143回</td>
+        <td>497回</td>
+        <td>43.5%</td>
+        <td>[40.6%, 46.4%]</td>
+        <td>損切り幅の0.015倍</td>
+      </tr>
+      <tr style="background:#e6ffed">
+        <td>RSI売られすぎ逆張り買い</td>
+        <td>412回</td>
+        <td>203回</td>
+        <td>49.3%</td>
+        <td>[44.5%, 54.1%]</td>
+        <td>損切り幅の0.150倍</td>
+      </tr>
+    </table>
+
+    <p>損益分岐の勝率は<strong>43%</strong>です（損切り幅の1倍の損・損切り幅の1.33倍の利確のとき）。全体基準線も4時間足の買いも、この43%を大きく上回れませんでした。</p>
+
+    <!-- =============================== -->
+    <h2 id="comparison">④ 基準線との対比（棒グラフ）</h2>
+
+    <p>3つの条件を勝率で並べて見てみましょう。43%の損益分岐線（赤い破線）を超えられるかどうかが、残る仮説と引退する仮説の分かれ目になります。</p>
+
+    <div class="chart-figure">
+      <!-- 図2：勝率の棒グラフ -->
+      <svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg" aria-label="3つの条件の勝率比較棒グラフ">
+        <rect x="0" y="0" width="480" height="200" fill="#f9fafb" rx="8"/>
+
+        <!-- タイトル -->
+        <text x="240" y="18" text-anchor="middle" class="s-label" style="font-weight:700;font-size:13px;fill:#1E3A6E">3つの条件の勝率比較</text>
+
+        <!-- Y軸・X軸 -->
+        <line x1="55" y1="24" x2="55" y2="165" class="s-axis"/>
+        <line x1="55" y1="165" x2="435" y2="165" class="s-axis"/>
+
+        <!-- Y軸目盛り（0% / 43% / 55%） -->
+        <line x1="51" y1="165" x2="59" y2="165" class="s-axis"/>
+        <text x="48" y="169" text-anchor="end" class="s-label-sm">0%</text>
+
+        <line x1="51" y1="61" x2="59" y2="61" class="s-axis"/>
+        <text x="48" y="65" text-anchor="end" class="s-label-sm">43%</text>
+
+        <line x1="51" y1="24" x2="59" y2="24" class="s-axis"/>
+        <text x="48" y="28" text-anchor="end" class="s-label-sm">55%</text>
+
+        <!-- 損益分岐43%の赤い破線 -->
+        <line x1="55" y1="61" x2="435" y2="61" stroke="#cf222e" stroke-width="1.2" stroke-dasharray="5 3"/>
+        <text x="437" y="58" class="s-label-r" style="font-size:10.5px">損益分岐43%</text>
+
+        <!-- バー1：全体基準線 43.2%（灰色 - 43〜44%） -->
+        <!-- 0%=y=165, 55%=y=24, 1%=(165-24)/55=2.56px -->
+        <!-- 43.2%の高さ=43.2*2.56=110.6px → 棒の上端 y=165-110.6=54.4 -->
+        <!-- Wait: y=24 corresponds to 55%, y=165 to 0%. Range 141px for 55%. 1%=141/55=2.56px -->
+        <!-- 43.2% height=43.2*2.56=110.6, bar top=165-110.6=54.4 -->
+        <!-- Actually let me recalculate: 43%=y=61 (from our axis), and 0%=y=165. So 43px=104px height from bottom -->
+        <!-- Simpler: using our axis marks: 43%=y=61, 55%=y=24, 0%=y=165 -->
+        <!-- So 43%=height 104px (165-61). 43.2%=104.5px, top=165-104.5=60.5 ~ 61 -->
+        <!-- 43.5%=105.3px, top=165-105.3=59.7 ~ 60 -->
+        <!-- 49.3%=49.3*(104/43)=119.1px, top=165-119.1=45.9 ~ 46 -->
+        <rect x="70" y="61" width="82" height="104" fill="#8b949e" rx="3"/>
+        <text x="111" y="55" text-anchor="middle" class="s-label" style="font-size:12px;font-weight:700;fill:#424a53">43.2%</text>
+        <text x="111" y="180" text-anchor="middle" class="s-label-sm" style="font-size:11px">全体基準線</text>
+        <text x="111" y="192" text-anchor="middle" class="s-label-sm" style="font-size:10px">3984回</text>
+
+        <!-- バー2：4時間足買い 43.5%（灰色 - 43〜44%） -->
+        <rect x="197" y="60" width="82" height="105" fill="#8b949e" rx="3"/>
+        <text x="238" y="54" text-anchor="middle" class="s-label" style="font-size:12px;font-weight:700;fill:#424a53">43.5%</text>
+        <text x="238" y="180" text-anchor="middle" class="s-label-sm" style="font-size:11px">4時間足買い</text>
+        <text x="238" y="192" text-anchor="middle" class="s-label-sm" style="font-size:10px">1143回</text>
+
+        <!-- バー3：RSI売られすぎ 49.3%（青 - 43%超） -->
+        <rect x="324" y="46" width="82" height="119" class="s-fill-b" rx="3"/>
+        <rect x="324" y="46" width="82" height="119" fill="none" stroke="#0969da" stroke-width="1.5" rx="3"/>
+        <text x="365" y="40" text-anchor="middle" class="s-label-b" style="font-size:12.5px">49.3%</text>
+        <text x="365" y="180" text-anchor="middle" class="s-label-sm" style="font-size:11px">RSI売られすぎ</text>
+        <text x="365" y="192" text-anchor="middle" class="s-label-sm" style="font-size:10px">412回</text>
+      </svg>
+      <div class="chart-caption">灰色のバー（43.2%・43.5%）は損益分岐の43%（赤い破線）とほぼ同じ水準で、引退の条件を満たした。青のバー（49.3%）は43%を上回り、まだ前向きで記録を続けている仮説。</div>
+    </div>
+
+    <div class="negative-box">
+      <strong>全体基準線（43.2%）と4時間足買い（43.5%）：引退の理由</strong><br><br>
+      どちらも損益分岐の43%をほぼ上回れませんでした。偶然のぶれを考えた幅の上の端も損切り幅の0.10倍を下回り、「何千回試しても改善の見込みは薄い」と判断しました。
+    </div>
+
+    <!-- =============================== -->
+    <h2 id="requirements">⑤ 仮説が残り続けるには何が必要か</h2>
+
+    <p>引退の条件A（効果なし）は、2つの数字で判断します。前向きの回数が100回以上になること、かつ「偶然のぶれを考えた幅の上の端」が損切り幅の0.10倍を下回ることです。</p>
+
+    <p>ここで「RSI売られすぎ逆張り買い」の仮説がなぜ残っているかを確認します。この仮説は412回の前向き記録があり、勝率は49.3%・平均損益損切り幅の0.150倍です。偶然のぶれを考えた幅は[44.5%, 54.1%]で、幅の下の端（44.5%）でも損益分岐の43%を上回っています。つまり、まだ「効果がない」とは言えない状況です。</p>
+
+    <div class="positive-box">
+      <strong>RSI売られすぎ逆張り買いが残っている理由</strong><br><br>
+      偶然のぶれを考えた幅が[44.5%, 54.1%]で、幅の全体が43%より上にあります。平均損益損切り幅の0.150倍も、「効果なし」の引退基準（損切り幅の0.10倍以下）を上回っています。ただし、「昇格（確定）」にはまだ至っていません。前向きで2回連続合格が昇格の条件であり、現在1回目の集計中です。
+    </div>
+
+    <div class="warning-box">
+      「引退していない」は「確定した優位性がある」とは異なります。まだ記録を続けている段階であり、今後の結果によっては引退することもあります。
+    </div>
+
+    <p>引退した仮説の中には、1000回以上試した仮説も含まれています。「全体基準線（3975回）」「目標の手前に壁なし（3177回）」などは、非常に多くの記録を積み上げた末に引退しました。多く試せば試すほど、その結論は確かなものになります。</p>
+
+    <!-- =============================== -->
+    <h2 id="tracker">⑥ 前向きトラッカー定点観測（期待値ベース）</h2>
+
+    <p>現在、前向きで追跡中の主な仮説の状況です。</p>
+
+    <p class="meta-line">基準日 2026-10-09／昇格＝前向き回数80回以上（🏁ホールドアウト合格は30回以上）・平均R（期待値）の95%CIが0をまたがない・基準合格2回連続で確定（2026-07-19以降）／降格＝昇格後の再判定で基準割れ2回連続で黄色に戻る（2026-07-18以降・再昇格可）</p>
+    <div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（17語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド下限タッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0から100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（下の線が下限、上の線が上限）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数</li><li>順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）</li><li>ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）</li><li>VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）</li><li>ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て</li></ul></details></div>
+    <div class="mw-scroll-hint">横にスクロールできます</div>
+    <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+    <tr><td>円以外の通貨ペアの買い<br><small style="opacity:.7">group=other_fx×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向き回数80回以上</span><br><span style="white-space:nowrap">平均RのCI上限が0未満</span></td><td><span style="white-space:nowrap">平均R -0.02</span><br><span style="white-space:nowrap">CI[-0.13〜+0.09]</span><br><small style="opacity:.8;white-space:nowrap">377/899・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+    <tr><td>株価指数の買い<br><small style="opacity:.7">指数×ロング(全足ライブ)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向き回数80回以上</span><br><span style="white-space:nowrap">平均RのCI下限が0超</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.11〜+0.17]</span><br><small style="opacity:.8;white-space:nowrap">370/835・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+    <tr><td>値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ステート 上昇配置（MA25と75より上）×ロング</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向き回数30回以上🏁</span><br><span style="white-space:nowrap">平均RのCI下限が0超</span></td><td><span style="white-space:nowrap">平均R +0.02</span><br><span style="white-space:nowrap">CI[-0.10〜+0.14]</span><br><small style="opacity:.8;white-space:nowrap">351/803・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+    <tr><td>目標の手前に壁なしの売り<br><small style="opacity:.7">blocked=False×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span></td><td><span style="white-space:nowrap">前向き回数80回以上</span></td><td><span style="white-space:nowrap">平均R -0.00</span><br><span style="white-space:nowrap">CI[-0.11〜+0.11]</span><br><small style="opacity:.8;white-space:nowrap">294/688・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+    <tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向き回数80回以上</span><br><span style="white-space:nowrap">平均RのCI下限が0超</span></td><td><span style="white-space:nowrap">平均R +0.15</span><br><span style="white-space:nowrap">CI[-0.00〜+0.31]</span><br><small style="opacity:.8;white-space:nowrap">203/410・勝率50%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+    </table>
+
+    <!-- 関連記事 -->
+    <div class="cta-box">
+      <div class="cta-box-title">関連する記事</div>
+      <div class="cta-box-desc">シグナルの発火条件や他の検証結果もあわせてご覧ください</div>
+      <div class="related-grid">
+        <a class="related-card" href="../guide-signal-anatomy.html">
+          <div class="related-card-title">📈 シグナル発火条件の図解カタログ</div>
+          <div class="related-card-desc">RSI売られすぎ反発・ボリンジャーバンド下限タッチなど、各シグナルがチャートのどの場面かを図解で解説</div>
+        </a>
+        <a class="related-card" href="../track-record.html">
+          <div class="related-card-title">🧪 シグナル研究のトップページ</div>
+          <div class="related-card-desc">全ての前向き検証結果、トラッカーの状況をまとめたページ</div>
+        </a>
+        <a class="related-card" href="../guide-signal-lab-120.html">
+          <div class="related-card-title">← 前回 #120</div>
+          <div class="related-card-desc">前回の研究日誌を読む</div>
+        </a>
+      </div>
+    </div>
+
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{display:block;max-width:900px;margin:28px auto 0;padding:0 16px;background:none;border:0;box-shadow:none}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a;min-width:0;white-space:normal}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;overflow-wrap:anywhere}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:minmax(0,1fr)}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+<style>.mw-sernav-cta{margin-top:12px;padding:12px 14px;border:1px dashed #0969da;border-radius:10px;background:#f6f9ff;text-align:center;font-size:13.5px;line-height:1.6}.mw-sernav-cta a{color:#0969da;font-weight:700;text-decoration:none;white-space:normal;padding:0}body.dark .mw-sernav-cta{background:#0d1a2b;border-color:#388bfd}body.dark .mw-sernav-cta a{color:#58a6ff}</style>
+    <nav class="mw-sernav" aria-label="AIシグナル研究日誌のシリーズ内移動">
+      <div class="mw-sernav-h">📚 AIシグナル研究日誌</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-signal-lab-120.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">下降トレンドで逆張りの買いをすると負けやすい？ 前向き370回の答えは意外だった【AIシグナル研究日誌 #120】</span>
+      </a>
+      <span class="mw-sernav-btn next is-off" aria-hidden="true">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">これが最新の記事です</span>
+      </span>
+      </div>
+      <div class="mw-sernav-cta"><a href="guide-sore-honto.html">🔎 気になる投資の「定説」はありますか？ データで確かめて記事にします →</a></div>
+      <div class="mw-sernav-idx"><a href="guides.html#cat-lab">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">本記事は情報提供を目的としており、特定の金融商品・取引の推奨や勧誘を行うものではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。記載された検証結果は過去または参考データであり、将来の運用成果を保証するものではありません。投資に関する最終的な判断はご自身の責任において行ってください。</p>
+
+  </div><!-- .article -->
+</main>
+
+<footer>
+  <a href="../index.html">MarketWatch AI</a> &copy; 2024-2026 &nbsp;|&nbsp;
+  <a href="../about.html">このサイトについて</a> &nbsp;|&nbsp;
+  <a href="../privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="../contact.html">お問い合わせ</a>
+  <div class="footer-disclaimer" data-disclaimer="kinsho-v1" style="margin-top:10px;font-size:.75rem;color:#8b949e">
+    当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。
+  </div>
+</footer>
+
+<script>
+(function(){
+  var el=document.getElementById('reading-progress');
+  if(!el)return;
+  function update(){
+    var h=document.documentElement,b=document.body;
+    var st='scrollTop',sh='scrollHeight';
+    var pct=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;
+    el.style.width=Math.min(pct,100)+'%';
+  }
+  window.addEventListener('scroll',update,{passive:true});
+})();
+function toggleTheme(){
+  var b=document.body;
+  if(b.classList.contains('dark')){b.classList.remove('dark');try{localStorage.setItem('mw_theme','light');}catch(e){}}
+  else{b.classList.add('dark');try{localStorage.setItem('mw_theme','dark');}catch(e){}}
+  document.getElementById('theme-toggle').textContent=b.classList.contains('dark')?'☀️':'🌙';
+}
+(function(){try{if(localStorage.getItem('mw_theme')==='dark'){document.body.classList.add('dark');document.getElementById('theme-toggle').textContent='☀️';}}catch(e){}})();
+</script>
+<script src="site-search.js" defer></script>
+</body>
+</html>
