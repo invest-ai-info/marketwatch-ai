@@ -74,6 +74,7 @@ def test_render_and_check():
     out = L.check_summary(df)
     assert out["bar_start_times"] == {"09:00": 1, "12:30": 1} and out["days_with_both_sessions"] == 1
     assert not any(w in repr(out) for w in ("value", "mean", "'lo'"))
+    assert out["lunch_gap_zero_share"] == 0.0 and abs(out["lunch_gap_sd"]) < 1e-12 and "a_sd" not in out   # 1日だけ＝ばらつき0
 
 
 def test_workflow_sync_and_verified_list():

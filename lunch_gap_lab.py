@@ -160,8 +160,12 @@ def check_summary(df):
         k = t.strftime("%H:%M")
         starts[k] = starts.get(k, 0) + 1
     sess = sessions(bars)
+    _, g, _ = gaps(sess) if sess else ([], np.zeros(0), None)
     return {"ticker": TICKER, "bars": len(bars), "bar_start_times": dict(sorted(starts.items())), "days_with_both_sessions": len(sess),
-            "first": sess[0][0].isoformat() if sess else None, "last": sess[-1][0].isoformat() if sess else None}
+            "first": sess[0][0].isoformat() if sess else None, "last": sess[-1][0].isoformat() if sess else None,
+            # 2026-10-08 追記：後場の最初の足の始値が 12:30 の値か（前場の引けをそのまま写していないか）＝昼休みの窓 g だけ（後場の動きは見ない）
+            "lunch_gap_zero_share": float(np.mean(g == 0)) if len(g) else None, "lunch_gap_sd": float(g.std()) if len(g) else None,
+            "lunch_gap_top20_line": float(np.quantile(np.abs(g), 1 - TOP_SHARE)) if len(g) else None}
 
 
 # ════════════════════ 書く ════════════════════
