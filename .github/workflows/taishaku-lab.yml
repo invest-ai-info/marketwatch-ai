@@ -1,0 +1,75 @@
+name: Taishaku Lab (manual)
+
+# J36 J31 の売り（目印 B・C・10億円以上・寄り成行→引け成行）は、制度信用で空売りできる「貸借銘柄」だけでも残るか。
+# 2026-10-08 登録・オーナー「リアを登録し続けてください」。目隠しではない（同じ取引を J31〜J35 で数えた）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J36」（事前登録）と taishaku_lab.py の冒頭に固定。貸借銘柄の一覧は日本取引所グループの公表資料（いまの一覧）。
+# ⚠️ 手動実行のみ。probe（資料の場所・表の見出し・件数だけ）→ 読み方を PREREG の追記に書く → check（件数だけ・損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（taishaku-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "probe＝資料の形だけ／check＝件数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [probe, check, run]
+
+concurrency:
+  group: taishaku-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up prices
+        run: python tests/test_taishaku_lab.py
+      - name: Probe the published list (shape only)
+        if: ${{ inputs.mode == 'probe' }}
+        run: python -u taishaku_lab.py --probe | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u taishaku_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python taishaku_lab.py
+          [ -f taishaku-lab.md ] && cat taishaku-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add taishaku-lab.json taishaku-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: taishaku lab J36 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
