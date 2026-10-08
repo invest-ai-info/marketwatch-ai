@@ -79,12 +79,20 @@ def test_flags_and_judge():
     assert out["n_list"] == 260 and out["eras"]["e1"]["K3"]["taishaku"] > 0 and "mean" not in repr(out)
 
 
-def test_list_reading_not_decided_yet_fails_safely():
+def test_parse_list_as_registered():
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    assert "信用区分がちょうど「貸借銘柄」の銘柄コードを貸借銘柄とする" in text
+    raw = pd.DataFrame([["2026年10月1日現在", None, None, None], ["銘柄コード", "銘柄名", "市場区分/商品区分", "信用区分"],
+                        ["1301", "甲", "プライム", "貸借銘柄"], ["1305", "乙ETF", "ETF", "貸借銘柄"], ["130A", "丙", "グロース", "制度信用銘柄"],
+                        ["1332", "丁", "プライム", "貸借銘柄 "], ["9999", "戊", "スタンダード", "非制度信用銘柄"]])
+    codes, asof, counts = K.parse_list(raw)
+    assert codes == {"1301", "1305", "1332"} and asof == "2026年10月1日現在"
+    assert counts == {"制度信用銘柄": 1, "貸借銘柄": 3, "非制度信用銘柄": 1}
     try:
-        K.load_list()
-        assert False, "読み方を決める前に数えてしまう"
+        K.parse_list(raw.drop(columns=[3]))
+        assert False, "信用区分の列が無いのに読めてしまう"
     except RuntimeError as e:
-        assert "--probe" in str(e)
+        assert "信用区分" in str(e)
 
 
 def test_workflow_and_sync_forbidden():
