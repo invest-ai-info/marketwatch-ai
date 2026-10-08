@@ -17,6 +17,12 @@ on:
         default: probe
         type: choice
         options: [probe, fetch]
+      period:
+        description: "main＝2012年から（X）／early＝2004〜2011年（XC の確かめ用・2026-10-08 追加）"
+        required: true
+        default: main
+        type: choice
+        options: [main, early]
 
 concurrency:
   group: fx-bars-cache
@@ -61,7 +67,7 @@ jobs:
           key: fx-bars-none
           restore-keys: fx-bars-
       - name: Fetch the months this shard does not have yet
-        run: python -u fx_bars.py fetch --shard ${{ matrix.shard }} --of 16 --budget-min 300
+        run: python -u fx_bars.py fetch --shard ${{ matrix.shard }} --of 16 --budget-min 300 --period ${{ inputs.period }}
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:

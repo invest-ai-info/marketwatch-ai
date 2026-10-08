@@ -142,6 +142,22 @@ def test_merge_and_load_join_bid_ask():
         assert inf["months"][1] == "2026-09" and inf["series"] == len(F.PAIRS) * 2
 
 
+def test_early_period_tasks_and_info():
+    t = F.tasks(("EURUSD",), F.EARLY[0], F.EARLY[1])
+    assert t[0] == ("EURUSD", "BID", 2004, 1) and t[-1] == ("EURUSD", "ASK", 2011, 12) and len(t) == 2 * 96
+    with tempfile.TemporaryDirectory() as d:
+        root, new = os.path.join(d, "fx-bars"), os.path.join(d, "fx-new")
+        F.save(new, "USDJPY", "BID", 2026, 9, lzma.compress(_month_bytes("USDJPY", 2026, 9, 147.0)))
+        F.merge(new, root, today=pd.Timestamp("2026-10-07").date())
+        import json
+        meta = json.load(open(os.path.join(root, "INFO.json"), encoding="utf-8"))
+        assert "coverage_early" not in meta                                                        # 昔の期間を取っていなければ書かない
+        F.save(new, "EURUSD", "BID", 2004, 1, lzma.compress(_month_bytes("EURUSD", 2004, 1, 1.25)))
+        F.merge(new, root, today=pd.Timestamp("2026-10-07").date())
+        meta = json.load(open(os.path.join(root, "INFO.json"), encoding="utf-8"))
+        assert meta["coverage_early"]["EURUSD/BID"]["have"] == 1 and meta["early_months"] == ["2004-01", "2011-12"]
+
+
 def test_load_drops_no_volume_hours():
     with tempfile.TemporaryDirectory() as d:
         for s in F.SIDES:
