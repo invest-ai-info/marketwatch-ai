@@ -161,7 +161,23 @@ def test_earnings_section():
     assert "🇺🇸 10/13(火)（米国の日付） 寄付前 JPM" in "\n".join(B.earnings_section(EC, dt.date(2026, 10, 12)))
     assert "JPM" not in "\n".join(B.earnings_section(EC, dt.date(2026, 10, 14)))   # 前の平日の「寄付前」は出さない
     assert B.earnings_section(EC, dt.date(2026, 10, 11)) == []
-    assert B.research_section(dt.date(2026, 10, 10)) == [] and "J42 ✕" in "\n".join(B.research_section(dt.date(2026, 10, 9)))
+    assert B.research_section(dt.date(2026, 10, 10)) == [] and "J42 ✕" in "\n".join(B.research_section(dt.date(2026, 10, 5)))
+    # 2026-10-09〜 研究は週の最初の取引日だけ（月曜・10/12 はスポーツの日＝その週は火曜 10/13）
+    assert B.research_section(dt.date(2026, 10, 9)) == [] and B.research_section(dt.date(2026, 10, 12)) == []
+    assert B.research_section(dt.date(2026, 10, 13)) and B.research_section(dt.date(2026, 10, 14)) == []
+    s = "\n".join(B.earnings_section(EC, dt.date(2026, 10, 12), jp_open=False))      # 東証の休み＝前の平日の引け後は次の取引日に効く
+    assert "🇯🇵 10/09(金)＝次の取引日の寄りに効く 引け後 9983" in s and "今日の寄りに効く" not in s
+
+
+def test_tse_calendar():
+    """東証の休み（2026-10-09 オーナー「東証の休日日はもちろん意味がないので日本株の欄を止めてください」）"""
+    d = dt.date
+    assert B.tse_closed(d(2026, 10, 12)) and B.tse_closed(d(2026, 10, 10)) and not B.tse_closed(d(2026, 10, 13))
+    assert B.tse_closed(d(2026, 12, 31)) and B.tse_closed(d(2028, 1, 3)) and not B.tse_closed(d(2028, 1, 4))   # 年末年始は一覧の外でも休み
+    assert B.tse_closed(d(2026, 10, 12), "/nonexistent.json") is False                                    # 一覧が無ければ土日と年末年始だけ
+    assert B.prev_session(d(2026, 10, 13)) == d(2026, 10, 9) and B.prev_session(d(2026, 5, 7)) == d(2026, 5, 1)
+    assert B.week_first_session(d(2026, 10, 5)) and B.week_first_session(d(2026, 10, 13)) and not B.week_first_session(d(2026, 10, 6))
+    assert B.week_first_session(d(2026, 9, 24)) and not B.week_first_session(d(2026, 9, 21))              # 9/21〜23 の連休の週は木曜
 
 
 def test_summary_section():
@@ -190,6 +206,8 @@ def test_summary_section():
     assert "今朝の見立てではない" in s and "強すぎる株" not in s and "寄りで買わない目印 2銘柄" in s
     assert "9983 ファストリ（10/09 引け後＝今日の寄りに効く）" in s and "4063 信越（今日 引け後）" in s
     assert "日本株" not in "\n".join(B.summary_section(J9(6, 20, 14), [], FC, None, mk))                 # 一覧が古い
+    hol = "\n".join(B.summary_section(J9(6, 20, 12), [], FC, fx, mk, _mom(), EC, jp_open=False))        # 東証の休み
+    assert "・日本株：今日は東証の休み（日本株の欄はなし）" in hol and "寄りで買わない目印" not in hol and "決算" not in hol and "通貨" in hol
     sat = B.summary_section(J9(6, 20, 10), [], FC, fx, mk, _mom(), EC)
     assert sat == ["【⭐ 今日の要点（くわしくは下の各欄）】", "  ・発表：今日はなし", ""]                     # 土曜は発表だけ
 
@@ -206,10 +224,19 @@ def test_wired_into_digest_and_jp_highs():
     finally:
         D.load_markers, D.load_momentum = o1, o2
     for s in ("今日のファンダ", "決算発表", "寄りで買わない目印", "💣地雷：", "強すぎる株＝新しく買わない側", "2026-09-30 の大引けで決めた一覧",
-              "研究から分かっていること", "投資助言ではありません"):
+              "投資助言ではありません"):
         assert s in body, s
     assert body.index("今日の要点") < body.index("【今日】") < body.index("今日のファンダ") < body.index("【🇯🇵 日本株：寄りで買わない目印") \
-        < body.index("【🇯🇵 日本株：強すぎる株") < body.index("研究から分かっていること")
+        < body.index("【🇯🇵 日本株：強すぎる株") and "研究から分かっていること" not in body                      # 金曜＝研究の欄なし
+    try:
+        D.load_markers = lambda: {"asof": "2026-10-09", "rows": [], "universe": 3700, "n_c": 0, "n_b": 0, "keep_min_tv": 1.0}
+        D.load_momentum = lambda: _mom()
+        _, hol = D.build(dt.datetime(2026, 10, 12, 6, 20, tzinfo=D.JST))                 # スポーツの日（東証の休み）
+        _, tue = D.build(dt.datetime(2026, 10, 13, 6, 20, tzinfo=D.JST))                 # その週の最初の取引日
+    finally:
+        D.load_markers, D.load_momentum = o1, o2
+    assert "今日は東証の休み" in hol and "【🇯🇵" not in hol and "研究から分かっていること" not in hol and "今日のファンダ" in hol
+    assert "【🇯🇵 日本株：寄りで買わない目印" in tue and "【🇯🇵 日本株：強すぎる株" in tue and "研究から分かっていること" in tue
     assert "寄りで買わない目印 1銘柄（★C・B候補の両方 1・💣地雷 1）／強すぎる株 1銘柄" in body
     try:
         D.load_momentum = lambda: {"lists": "壊れた"}                      # 壊れた欄でもメールは届く

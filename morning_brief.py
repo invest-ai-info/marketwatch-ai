@@ -17,7 +17,8 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 FUND = os.path.join(HERE, "fundamental-context.json")
 EARN = os.path.join(HERE, "earnings-calendar.json")
-RESULTS = os.path.join(HERE, "indicator-result.json")   # 🆕 2026-10-08 夜 発表の結果と市場の反応（別の予約が書く）
+RESULTS = os.path.join(HERE, "indicator-result.json")
+EVENTS = os.path.join(HERE, "economic-events.json")    # 🆕 2026-10-09 東証の休場（market_holiday・country JP）   # 🆕 2026-10-08 夜 発表の結果と市場の反応（別の予約が書く）
 COUNTRY_CCY = {"us": "USD", "jp": "JPY", "eu": "EUR", "ez": "EUR", "de": "EUR", "uk": "GBP", "gb": "GBP", "au": "AUD", "cn": "CNY"}
 COUNTRY_FLAG = {"USD": "🇺🇸", "JPY": "🇯🇵", "EUR": "🇪🇺", "GBP": "🇬🇧", "AUD": "🇦🇺", "CNY": "🇨🇳"}
 BIAS = {"BULLISH": "上向き", "BEARISH": "下向き", "NEUTRAL": "中立"}
@@ -42,6 +43,32 @@ def _load(path):
             return json.load(fh)
     except (OSError, ValueError):
         return None
+
+
+def tse_closed(day, path=EVENTS):
+    """東証が休みの日か（土日・economic-events.json の日本市場休場〔market_holiday・country JP〕・年末年始 12/31〜1/3）。
+    2026-10-09 オーナー「東証の休日はもちろん意味がないので日本株の欄を止めてください」。一覧が読めなくても土日と年末年始は決まる"""
+    if day.weekday() >= 5 or (day.month, day.day) in ((12, 31), (1, 1), (1, 2), (1, 3)):
+        return True
+    iso = day.isoformat()
+    return any(e.get("category") == "market_holiday" and e.get("country") == "JP" and str(e.get("datetime") or "")[:10] == iso
+               for e in (_load(path) or {}).get("events") or [])
+
+
+def prev_session(day, path=EVENTS):
+    """day より前で東証が開いていた最後の日"""
+    d = day - dt.timedelta(days=1)
+    while tse_closed(d, path):
+        d -= dt.timedelta(days=1)
+    return d
+
+
+def week_first_session(day, path=EVENTS):
+    """その週（月曜から）で東証が最初に開く日か（ふつうは月曜・月曜が休みの週は火曜…）"""
+    if tse_closed(day, path):
+        return False
+    monday = day - dt.timedelta(days=day.weekday())
+    return all(tse_closed(monday + dt.timedelta(days=i), path) for i in range(day.weekday()))
 
 
 def _cut(s, n):
@@ -199,8 +226,9 @@ def _prev_weekday(d):
     return d
 
 
-def earnings_section(ec, today):
-    """前の平日の引け後（今日の寄りに効く）・今日・次の平日の決算発表（主な銘柄）。平日だけ。純関数"""
+def earnings_section(ec, today, jp_open=True):
+    """前の平日の引け後（今日の寄りに効く）・今日・次の平日の決算発表（主な銘柄）。平日だけ。純関数。
+    jp_open=False（東証の休み）＝前の平日の引け後は「次の取引日の寄りに効く」"""
     if today.weekday() >= 5:
         return []
     head = "【📊 決算発表（前の平日の引け後・今日・次の平日／主な銘柄だけ・予定は変わることがある）】"
@@ -216,7 +244,8 @@ def earnings_section(ec, today):
         us = [e for e in ec.get("us") or [] if e.get("date") == iso and after(e)]
         if not jp and not us:
             continue
-        label = "今日" if d == today else f"{d:%m/%d}({WD[d.weekday()]})" + ("＝今日の寄りに効く" if d == prev else "")
+        label = "今日" if d == today else f"{d:%m/%d}({WD[d.weekday()]})" + \
+            (("＝今日の寄りに効く" if jp_open else "＝次の取引日の寄りに効く") if d == prev else "")
         for e in jp:
             n += 1
             L.append(f"  🇯🇵 {label} {e.get('time') or ''} {e.get('code', '')} {e.get('name', '')}{'（予定）' if e.get('tentative') else ''}")
@@ -232,9 +261,10 @@ def earnings_section(ec, today):
     return L
 
 
-def research_section(today):
-    """研究から分かっていること（日本株・朝の売買）。平日だけ。純関数"""
-    if today.weekday() >= 5:
+def research_section(today, path=EVENTS):
+    """研究から分かっていること（日本株・朝の売買）。週の最初の取引日だけ（2026-10-09 オーナー「研究から分かっていることは月曜日だけ」＝
+    毎日同じ文。月曜が東証の休みの週は、その週の最初の取引日に出す）"""
+    if not week_first_session(today, path):
         return []
     return ["【📚 研究から分かっていること（日本株・朝の売買）】"] + [f"  ・{x}" for x in RESEARCH] + \
            ["  ・くわしくはサイトの検証済みリスト（verified-list.md）と研究の地図", ""]
@@ -248,7 +278,7 @@ def _more(xs, n=SUMMARY_ITEMS):
     return "・".join(xs[:n]) + (f" ほか{len(xs) - n}件" if len(xs) > n else "")
 
 
-def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None):
+def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None, jp_open=True):
     """一番上の「今日の要点」。2026-10-09 オーナー「1と2を進めて」（朝のメールが長い＝ここだけ見れば朝の判断に要る点がわかる形）。
     下の各欄から数字を拾うだけ（新しい判断はしない）。発表の行はいつも出す。地合い・通貨・日本株・決算は平日だけ（下の欄と同じ）。
     データが無い行は出さない（下の欄が「取れなかった」と書く）。ind＝load_events の指標（今より後・昇順）。純関数"""
@@ -286,7 +316,9 @@ def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None)
         pick = lambda lean: "・".join(f"{FX.NAMES.get(c['code'], c['code'])}（{CONF.get(c.get('conviction'), '—')}）"
                                       for c in cur if c.get("lean") == lean) or "なし"
         L.append(f"  ・通貨（AIの見立て）：強い {pick('STRONG')} ／ 弱い {pick('WEAK')}{stale}")
-    if jp_markers.fresh(markers, today):
+    if not jp_open:
+        L.append("  ・日本株：今日は東証の休み（日本株の欄はなし）")
+    elif jp_markers.fresh(markers, today):
         rows = markers.get("rows") or []
         n_both = sum(1 for x in rows if x.get("c") and x.get("b"))
         n_mine = sum(1 for x in rows if jp_markers.mines(x))
@@ -298,7 +330,7 @@ def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None)
         if x:
             part += f"／強すぎる株 {len(x['rows'])}銘柄（新しく買わない側）"
         L.append("  ・日本株：" + part)
-    if ec:
+    if ec and jp_open:
         prev = _prev_weekday(today)
         jp = [f"{e.get('code', '')} {e.get('name', '')}（{prev:%m/%d} 引け後＝今日の寄りに効く）" for e in ec.get("jp") or []
               if e.get("date") == prev.isoformat() and "引け後" in str(e.get("time") or "")]
@@ -309,8 +341,8 @@ def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None)
     return L + [""]
 
 
-def sections(today, fund_path=FUND, earn_path=EARN, fx=None, today_events=None, news=None, results_path=RESULTS):
+def sections(today, fund_path=FUND, earn_path=EARN, fx=None, today_events=None, news=None, results_path=RESULTS, jp_open=True):
     """朝のメールに足す節（ファンダ・通貨の強弱・中国と豪州のニュース・決算）。研究の要約は日本株の節のあとに置くので別"""
     fc = _load(fund_path)
     return (fundamentals_section(fc, today) + fx_section(fx, fc, today_events, today, _load(results_path))
-            + asia_section(fc, today, news) + earnings_section(_load(earn_path), today))
+            + asia_section(fc, today, news) + earnings_section(_load(earn_path), today, jp_open))

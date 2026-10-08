@@ -70,7 +70,8 @@ def test_section():
     assert "一覧を作れていない" in "\n".join(M.section(None, dt.date(2026, 10, 8)))
     assert "（なし）" in "\n".join(M.section(dict(mk, rows=[]), dt.date(2026, 10, 8)))
     many = dict(mk, rows=[dict(mk["rows"][0], code=str(1000 + i)) for i in range(30)])
-    assert "…ほか 5銘柄" in "\n".join(M.section(many, dt.date(2026, 10, 8)))
+    assert "…ほか 15銘柄" in "\n".join(M.section(many, dt.date(2026, 10, 8)))         # 2026-10-09〜 それぞれ15まで（前は25）
+    assert M.SHOW_TOP == 15
 
 
 def test_one_merged_list():
@@ -85,9 +86,12 @@ def test_one_merged_list():
     s = "\n".join(M.section(mk, dt.date(2026, 10, 8)))
     assert s.count("1000 会社1000") == 1 and "1000 会社1000  売買代金 50.0億円（6.0倍）・前の日 +7.0% ★C・B候補の両方" in s
     assert "2000 会社2000  売買代金 40.0億円（6.0倍）・前の日 +1.0% 〔C〕" in s and "3000 会社3000  売買代金 30.0億円（1.0倍）・前の日 +7.0% 〔B候補〕" in s
-    assert "★C・B候補の両方 1銘柄" in s and "C と B候補それぞれ大きい順に25までを1つの一覧に" in s and s.count("     1. ") == 1
+    assert "★C・B候補の両方 1銘柄" in s and "C と B候補それぞれ大きい順に15までを1つの一覧に" in s and s.count("     1. ") == 1
     assert M.fresh(mk, dt.date(2026, 10, 8)) and not M.fresh(mk, dt.date(2026, 10, 7)) and not M.fresh(mk, dt.date(2026, 10, 14))
     assert not M.fresh(None, dt.date(2026, 10, 8))
+    gw = dict(mk, asof="2026-05-01")                                                          # 連休明け（5/2〜5/6 休み）＝6日あいても前の取引日の分
+    assert M.fresh(gw, dt.date(2026, 5, 7)) and not M.fresh(dict(mk, asof="2026-04-30"), dt.date(2026, 5, 7))
+    assert M.fresh(dict(mk, asof="2026-12-30"), dt.date(2027, 1, 5))                          # 年末年始（12/31〜1/4 休み）
 
 
 def test_wired_into_digest_and_jp_highs():
