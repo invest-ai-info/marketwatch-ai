@@ -79,7 +79,7 @@ def test_fx_section():
     assert "・米ドル 強い（中）：FOMC がタカ派" in s and "・人民元 弱い（中）" in s and "今日の豪州・中国の指標：10:30 豪 雇用統計" in s
     assert "米 CPI" not in s and "当たり外れをまだ記録していない" in s
     t = "\n".join(B.fx_section(None, {}, [], dt.date(2026, 10, 9)))
-    assert "値動きの強弱を取れなかった" in t and "予約 fundamental-briefing の指示に通貨の欄を足すと" in t and "今日の豪州・中国の指標：なし" in t
+    assert "値動きの強弱を取れなかった" in t and "今朝のブリーフィングにこの欄が無い" in t and "今日の豪州・中国の指標：なし" in t
     res = {"results": [{"event_date": "2026-10-08", "name": "米9月CPI", "country": "us", "headline": "予想を上回る",
                         "market_reaction": "ドル買い"},
                        {"event_date": "2026-10-01", "name": "古い", "country": "us", "headline": "x"}]}
