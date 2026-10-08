@@ -17,7 +17,8 @@ import sys
 
 import jp_taishaku as JT
 
-SITES = (("日本証券金融（銘柄別の制限措置）", "http://www.taisyaku.jp/brand/"),
+SITES = (("日本証券金融（貸借取引銘柄別制限措置等一覧）", "https://www.taisyaku.jp/restrictive.php"),   # 10/8 1回目の probe で見つけた
+         ("日本証券金融（銘柄別の制限措置）", "http://www.taisyaku.jp/brand/"),
          ("日本証券金融", "https://www.taisyaku.jp/"),
          ("日本取引所グループ（信用取引の規制＝増担保など）", "https://www.jpx.co.jp/markets/equities/margin-reg/index.html"),
          ("日本取引所グループ（日々公表）", "https://www.jpx.co.jp/markets/equities/margin-daily/index.html"),
@@ -58,9 +59,21 @@ def decode(raw):
     return raw.decode("utf-8", "replace")
 
 
+DATE_RE = re.compile(r"^\d{4}[/\-年.]\d{1,2}[/\-月.]\d{1,2}日?$")
+
+
 def mask(v):
-    s = str(v).strip()
+    s = str(v).strip().strip('"').strip()
     return "（コード）" if JT.CODE_RE.match(s) or re.fullmatch(r"\d{4}0?", s) else s[:14]
+
+
+def mask_row(cells):
+    """データの行：コードは伏せ、日付・数字・規制の言葉だけ残し、ほか（銘柄名など）は「…」。見出しの行（コードが無い行）はそのまま"""
+    m = [mask(c) for c in cells]
+    if "（コード）" not in m:
+        return m
+    return [c if c == "（コード）" or DATE_RE.match(c) or re.fullmatch(r"[\d.,%％\-]+", c) or KEYWORDS.search(c) or c in ("", "nan") else "…"
+            for c in m]
 
 
 def html_tables(html):
@@ -68,8 +81,9 @@ def html_tables(html):
     out = []
     for t in re.findall(r"<table.*?</table>", html, re.S | re.I):
         rows = re.findall(r"<tr.*?</tr>", t, re.S | re.I)
-        cells = [[mask(re.sub(r"<[^>]+>|\s+", " ", c).strip()) for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", r, re.S | re.I)] for r in rows[:2]]
-        out.append((len(rows), cells[0][:10] if cells else [], ["…" if i == 0 else c for i, c in enumerate(cells[1][:4])] if len(cells) > 1 else []))
+        cells = [mask_row([re.sub(r"<[^>]+>|\s+", " ", c).strip() for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", r, re.S | re.I)])
+                 for r in rows[:3]]
+        out.append((len(rows), cells[0][:10] if cells else [], cells[1][:8] if len(cells) > 1 else []))
     return out
 
 
@@ -81,13 +95,13 @@ def show_table(url, raw):
         lines = text.splitlines()
         print(f"    CSV {len(lines)}行")
         for i, line in enumerate(lines[:3]):
-            print(f"    {i}行目：{[mask(c) for c in line.split(',')][:12]}")
+            print(f"    {i}行目：{mask_row(line.split(','))[:12]}")
         return
     sheets = pd.read_excel(io.BytesIO(raw), sheet_name=None, dtype=str, header=None)
     for name, df in sheets.items():
         print(f"    表「{name}」：{df.shape[0]}行×{df.shape[1]}列")
         for i in range(min(3, len(df))):
-            print(f"    {i}行目：{[mask(v) for v in df.iloc[i].tolist()][:12]}")
+            print(f"    {i}行目：{mask_row(df.iloc[i].tolist())[:12]}")
 
 
 def probe(get=JT.http):
