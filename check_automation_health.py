@@ -737,7 +737,7 @@ def judge_calendar_runway(events, now, forward_days=FORWARD_DAYS, min_count=FORW
     """純関数（テスト対象）＝今後 forward_days 日に指標イベントが何件あるか。
 
     市場休場（category=market_holiday）は数えない。あれは
-    generate_market_holidays.py が2027年まで自動補充しており、
+    generate_market_holidays.py が2027年（東証は2028年）まで自動補充しており、
     **これがあるせいで「イベントはある」ように見えてしまう**のが今回の見落としの正体。
     戻り値: (ok, 件数, 直近イベント名 or None)
     """

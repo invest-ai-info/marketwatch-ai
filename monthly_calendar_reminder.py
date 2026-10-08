@@ -220,7 +220,7 @@ def send_report_email(year, month, todos, stats, raw_text):
     L += ["━━━━━━━━━━━━━━━━━━━━━",
           "指標  = sync_economic_events.py（ECONOMIC_EVENTS_2026 から生成）",
           "決算  = build_earnings_calendar.py（Nasdaq API + yfinance）",
-          "休場  = generate_market_holidays.py（2027年まで自動）",
+          "休場  = generate_market_holidays.py（米英は2027年・東証は2028年まで自動）",
           "見張り = automation-health §⑬（先詰まりを毎朝チェック）",
           "MarketWatch AI Calendar"]
 
