@@ -24,7 +24,7 @@ TV_HIGH = 5.0           # 目印C（MY_TRADING_RULES 日本株⑤・研究 J26�
 TV_STRONG = 10.0        # 10倍以上はもっと強い（J26 の読むための表）
 UP = 0.05               # B候補＝前の日 +5% 以上（J16・J17・J17F と同じ）
 KEEP_MIN_TV = 1.0       # 一覧に残すのは前の日の売買代金1億円以上（件数は全部を数える）
-SHOW_TOP = 25
+SHOW_TOP = 15            # 2026-10-09 オーナー「一覧も25から15に減らして」（C と B候補それぞれ大きい順に15まで）
 STALE_DAYS = 4          # 一覧の日付が今朝からこれより古ければ使わない（連休明けでも金曜の引けなら4日以内）
 # 🆕 2026-10-08 夜 オーナー「地雷銘柄…平日の朝一メール」＝研究 J21（landmine_lab）で 2006〜2016年に「地雷」と決まった形を、
 #    J21 と同じ「主戦場」（前の日 +5% 以上・前の日の売買代金10億円以上）の株にだけ印として付ける（数字は main_field_lab と同じ）
@@ -119,11 +119,14 @@ def _fmt(r):
 
 
 def fresh(markers, today):
-    """今朝使ってよい一覧か（前の取引日の引けの分＝今日より前・STALE_DAYS 日以内）"""
+    """今朝使ってよい一覧か（今日より前・STALE_DAYS 日以内か、東証の前の取引日の引けの分）。
+    2026-10-09〜 連休明け（GW・年末年始＝5日以上あく）も前の取引日の分なら使う（東証の休みは morning_brief.tse_closed）"""
     if not markers or not markers.get("asof"):
         return False
-    age = (today - dt.date.fromisoformat(markers["asof"])).days
-    return 0 < age <= STALE_DAYS
+    import morning_brief              # 東証の休みの判定（ここで読む＝morning_brief も jp_markers を読むので輪にしない）
+    asof = dt.date.fromisoformat(markers["asof"])
+    age = (today - asof).days
+    return 0 < age and (age <= STALE_DAYS or asof >= morning_brief.prev_session(today))
 
 
 def merged(rows, top=SHOW_TOP):

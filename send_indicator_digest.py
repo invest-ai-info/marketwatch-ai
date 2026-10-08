@@ -177,8 +177,10 @@ def build(now):
 
     # 🆕 2026-10-09 一番上に「今日の要点」（下の各欄から数字を拾うだけ・オーナー「1と2を進めて」）
     fx, markers, mom = load_fx(), load_markers(), load_momentum()
+    # 🆕 2026-10-09 東証の休み（平日の祝日・年末年始）は日本株の欄を出さない（オーナー「もちろん意味がないので日本株の欄を止めて」）
+    jp_open = not morning_brief.tse_closed(today)
     L += _safe("今日の要点", morning_brief.summary_section, now, ind, morning_brief._load(morning_brief.FUND), fx, markers, mom,
-               morning_brief._load(morning_brief.EARN))
+               morning_brief._load(morning_brief.EARN), jp_open)
 
     if today_ev:
         L.append("【今日】")
@@ -206,12 +208,14 @@ def build(now):
     # 🆕 2026-10-08 夜 今日のファンダ（AIの朝の見立て）・今日と次の平日の決算（平日だけ）
     # 🆕 2026-10-08 夜（2）通貨の強弱（ワークフローの前の段が fx_strength.py で取った一時ファイル）・中国と豪州のニュース
     L += _safe("今日のファンダ・通貨の強弱・決算", morning_brief.sections, today, morning_brief.FUND, morning_brief.EARN,
-               fx, today_ev, load_news())
+               fx, today_ev, load_news(), morning_brief.RESULTS, jp_open)
 
     # 🆕 2026-10-08 日本株の「寄りで買わない」目印（前の日の引けでわかる C・B候補・💣地雷の印）＝朝の準備（7〜9時）用
-    L += _safe("寄りで買わない目印", jp_markers.section, markers, today)
-    # 🆕 2026-10-08 夜 強すぎる株＝新しく買わない側（過去12か月で一番上げた10銘柄・月1回）と、研究から分かっていること（平日だけ）
-    L += _safe("強すぎる株", jp_momentum.section, mom, markers, today)
+    # 🆕 2026-10-08 夜 強すぎる株＝新しく買わない側（過去12か月で一番上げた10銘柄・月1回）
+    # 🆕 2026-10-09 東証の休みは2つとも出さない。研究から分かっていることは週の最初の取引日だけ（research_section の中で決める）
+    if jp_open:
+        L += _safe("寄りで買わない目印", jp_markers.section, markers, today)
+        L += _safe("強すぎる株", jp_momentum.section, mom, markers, today)
     L += _safe("研究から分かっていること", morning_brief.research_section, today)
 
     if hol:
