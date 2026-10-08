@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-09", "line": '・<b>2026-10-09</b>: 🧪 解説「<a href="guide-signal-lab-121.html" style="color:#0969da"><b>3991回試しても43%——12本の仮説が引退した理由</b></a>」公開'},
         {"date": "2026-10-08", "line": '・<b>2026-10-08</b>: 📰 解説「<a href="guide-news-2026-10-08-topix-reform-nikkei-drop.html" style="color:#0969da"><b>【10/8】日経平均▲993円・新TOPIX986銘柄発表と米10年債5.36%</b></a>」公開'},
         {"date": "2026-10-08", "line": '・<b>2026-10-08</b>: 📰 解説「<a href="guide-entry-macro-surprise.html" style="color:#0969da"><b>経済指標のサプライズで為替は動く？</b></a>」公開'},
         {"date": "2026-10-08", "line": '・<b>2026-10-08</b>: 🔬 解説「<a href="guide-company-amd-amd.html" style="color:#0969da"><b>AMD（AMD）を数字で見る｜続報</b></a>」公開'},
