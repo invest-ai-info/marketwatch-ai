@@ -123,9 +123,35 @@ def probe():
     return 0
 
 
+def parse_list(raw):
+    """一覧の表（見出しなしで読んだもの）→ (貸借銘柄のコードの集合, 一覧の日付の文字, 区分ごとの件数)。PREREG「J36」の追記の読み方。純関数"""
+    head = next((i for i in range(min(20, len(raw))) if "銘柄コード" in [str(v).strip() for v in raw.iloc[i].tolist()]), None)
+    if head is None:
+        raise RuntimeError("一覧の表に「銘柄コード」の見出しの行が無い（資料の形が変わった？）")
+    cols = [str(v).strip() for v in raw.iloc[head].tolist()]
+    if "信用区分" not in cols:
+        raise RuntimeError("一覧の表に「信用区分」の列が無い（資料の形が変わった？）")
+    df = raw.iloc[head + 1:].copy()
+    df.columns = cols
+    asof = next((str(v).strip() for v in raw.iloc[:head].astype(str).values.ravel() if "現在" in str(v)), "")
+    kinds = df["信用区分"].astype(str).str.strip()
+    counts = {k: int((kinds == k).sum()) for k in sorted(set(kinds)) if k and k != "nan"}
+    codes = df["銘柄コード"].astype(str).str.strip().str.replace(r"\.0$", "", regex=True)
+    return {c for c, k in zip(codes, kinds) if CODE_RE.match(c) and k == "貸借銘柄"}, asof, counts
+
+
 def load_list():
-    """→ (貸借銘柄のコードの集合, 説明)。読み方は PREREG「J36」の追記で決める（probe のあと）"""
-    raise RuntimeError("貸借銘柄の一覧の読み方がまだ決まっていない（先に --probe を回し、PREREG「J36」の追記で決める）")
+    """→ (貸借銘柄のコードの集合, 説明)。読み方は PREREG「J36」の追記（probe のあと）"""
+    import pandas as pd
+    html = http(PAGES[0]).decode("utf-8", "replace")
+    xls = [u for u, _ in file_links(html) if re.search(r"\.xlsx?$", u, re.I)]
+    if not xls:
+        raise RuntimeError("「制度信用銘柄・貸借銘柄」のページに Excel のリンクが無い（ページの形が変わった？）")
+    raw = pd.read_excel(io.BytesIO(http(xls[0])), sheet_name=0, dtype=str, header=None)
+    codes, asof, counts = parse_list(raw)
+    note = f"日本取引所グループの貸借銘柄の一覧（{asof or '日付不明'}・{len(codes):,}銘柄・区分ごと {counts}）"
+    print(note, flush=True)
+    return codes, note
 
 
 # ════════════════════ 数える ════════════════════
