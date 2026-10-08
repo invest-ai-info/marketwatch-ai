@@ -52,6 +52,7 @@ TVSURGE_FWD = "tvsurge-forward.json"      # 🆕 2026-10-07 夜 J26F 目印C「�
 MARKET_DIP_FWD = "market-dip-forward.json"   # 🆕 2026-10-07 J25F 相場全体が安く寄った朝の深い下げ・前向き
 AUCTION_FWD = "auction-forward.json"         # 🆕 2026-10-08 J31F 空売りの前向き（寄り成行→引け成行）
 LUNCH_FWD = "lunch-gap-forward.json"         # 🆕 2026-10-08 R10F 昼休みの窓と同じ向きに後場を持つ前向き
+MOMENTUM_FWD = "momentum-forward.json"       # 🆕 2026-10-08 夜 J42F 過去12か月で一番上げた10銘柄の前向き（月1）
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
@@ -520,6 +521,18 @@ def collect_studies(root, m):
                                "登録した日より後の日だけで確かめています（記録だけで、取引の決まりではありません）",
                        "since": lg.get("fwd_start") or "",
                        "progress": f"数えた日 {len(lg.get('days') or {})}日（昼休みの動きが大きい日は100回・すべての日は250日で判定）"})
+
+    mf = _load(p(MOMENTUM_FWD))
+    if mf is not None:
+        mfv = (mf or {}).get("verdicts") or {}
+        if not ("F1" in mfv or V.retired(MOMENTUM_FWD, "F1")):
+            n = len((mf or {}).get("months") or {})
+            verify.append({"cat": "jp", "name": "過去12か月で一番上げた10銘柄は、次の1か月に弱いか",
+                           "what": "日本株で、過去12か月（直近の1か月を除く）にいちばん大きく上げた10銘柄を月末に選び、翌月の初日の寄りから"
+                                   "1か月持つと、ほかの株の平均より弱いかを、登録した日より後の月だけで記録しています"
+                                   "（過去のデータでは弱かったが、結果を見たあとに気づいた数字のため。買わない側の目印の確かめで、空売りの合図ではありません）",
+                           "since": (mf or {}).get("fwd_start") or "2026-10",
+                           "progress": f"数えた月 {n}/24（月に1回なので時間がかかります。初めて数えるのは12月上旬）"})
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):

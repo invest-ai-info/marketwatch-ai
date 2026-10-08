@@ -47,6 +47,8 @@ import sys
 from email.mime.text import MIMEText
 
 import jp_markers
+import jp_momentum    # 🆕 2026-10-08 夜 強すぎる株（過去12か月で一番上げた10銘柄・J42／J42F）
+import morning_brief  # 🆕 2026-10-08 夜 今日のファンダ・決算・研究から分かっていること
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 JST = dt.timezone(dt.timedelta(hours=9))
@@ -120,6 +122,23 @@ def load_markers(path=JP_HIGHS):
         return None
 
 
+def load_momentum(path=JP_HIGHS):
+    """jp-highs.json の "momentum"（build_jp_highs.py → jp_momentum.compute が夕方に作る）。無ければ None"""
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f).get("momentum")
+    except (OSError, ValueError):
+        return None
+
+
+def _safe(name, fn, *args):
+    """節を1つ作る。壊れても朝のメール（発表の注意）は必ず送る＝その節だけ「作れなかった」と書く"""
+    try:
+        return fn(*args)
+    except Exception as e:  # noqa: BLE001
+        return [f"【{name}】", f"  ⚠️ この節を作れなかった（{type(e).__name__}）＝今朝は証券会社の画面などで確かめる", ""]
+
+
 def build(now):
     ind, hol = load_events(now)
     today = now.date()
@@ -161,8 +180,15 @@ def build(now):
             L.append(f"       影響: {assets_ja(e)}")
         L.append("")
 
-    # 🆕 2026-10-08 日本株の「寄りで買わない」目印（前の日の引けでわかる C・B候補）＝朝の準備（7〜9時）用
-    L += jp_markers.section(load_markers(), today)
+    # 🆕 2026-10-08 夜 今日のファンダ（AIの朝の見立て）・今日と次の平日の決算（平日だけ）
+    L += _safe("今日のファンダ・決算", morning_brief.sections, today)
+
+    # 🆕 2026-10-08 日本株の「寄りで買わない」目印（前の日の引けでわかる C・B候補・💣地雷の印）＝朝の準備（7〜9時）用
+    markers = load_markers()
+    L += _safe("寄りで買わない目印", jp_markers.section, markers, today)
+    # 🆕 2026-10-08 夜 強すぎる株＝新しく買わない側（過去12か月で一番上げた10銘柄・月1回）と、研究から分かっていること（平日だけ）
+    L += _safe("強すぎる株", jp_momentum.section, load_momentum(), markers, today)
+    L += _safe("研究から分かっていること", morning_brief.research_section, today)
 
     if hol:
         L.append("【市場休場】")

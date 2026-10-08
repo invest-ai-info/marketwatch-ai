@@ -26,6 +26,12 @@ UP = 0.05               # B候補＝前の日 +5% 以上（J16・J17・J17F と�
 KEEP_MIN_TV = 1.0       # 一覧に残すのは前の日の売買代金1億円以上（件数は全部を数える）
 SHOW_TOP = 25
 STALE_DAYS = 4          # 一覧の日付が今朝からこれより古ければ使わない（連休明けでも金曜の引けなら4日以内）
+# 🆕 2026-10-08 夜 オーナー「地雷銘柄…平日の朝一メール」＝研究 J21（landmine_lab）で 2006〜2016年に「地雷」と決まった形を、
+#    J21 と同じ「主戦場」（前の日 +5% 以上・前の日の売買代金10億円以上）の株にだけ印として付ける（数字は main_field_lab と同じ）
+MAIN_TV = 10.0          # 主戦場の売買代金（億円）
+OVERHEAT = 0.15         # L2 過熱＝前の日の終値が25日線より +15% 超（main_field_lab.OVERHEAT）
+STREAK = 4              # L3 連騰＝前の日まで4日以上続けて上がった（main_field_lab.STREAK）
+SURGE = 0.15            # L4 急騰＝前の日 +15% 以上
 
 
 def stock_values(bars):
@@ -46,6 +52,35 @@ def stock_values(bars):
     return tv[-1], ratio, ret
 
 
+def landmine_values(bars):
+    """bars → (25日線からの離れ, それまで続けて上がった日数)。main_field_lab.prev_features の最後の日と同じ数字。純関数"""
+    c = [b[3] for b in bars]
+    dev = c[-1] / (sum(c[-25:]) / 25) - 1 if len(c) >= 25 and sum(c[-25:]) > 0 else None
+    streak = 0
+    for k in range(len(c) - 1, 0, -1):
+        if c[k] > c[k - 1]:
+            streak += 1
+        else:
+            break
+    return dev, streak
+
+
+def mines(r):
+    """一覧の行 → 当てはまる地雷の名前（主戦場の株だけ・J21 の L2〜L5）"""
+    if not r.get("b") or (r.get("tv") or 0) < MAIN_TV:
+        return []
+    out = []
+    if r.get("dev25") is not None and r["dev25"] > OVERHEAT:
+        out.append(f"過熱（25日線 +{r['dev25'] * 100:.0f}%）")
+    if (r.get("streak") or 0) >= STREAK:
+        out.append(f"連騰（{r['streak']}日）")
+    if (r.get("ret") or 0) >= SURGE:
+        out.append("急騰（+15%以上）")
+    if r.get("c"):
+        out.append("売買代金の急増")
+    return out
+
+
 def compute(daily, stocks, asof, tai=None):
     """daily＝{コード: bars}（最後のバーが asof の銘柄だけ・データの誤りの日は除いてから渡す）→ jp-highs.json の "markers"。
     tai＝jp_taishaku.load_or_none() の形（{"codes", "asof", "n"}）か None（一覧が取れなかった＝印を付けない）。"""
@@ -62,9 +97,11 @@ def compute(daily, stocks, asof, tai=None):
         n_c += c
         n_b += b
         if (c or b) and tv >= KEEP_MIN_TV:
+            dev, streak = landmine_values(bars)
             rows.append({"code": code, "name": (stocks.get(code) or {}).get("name", ""), "tv": round(tv, 2),
                          "ratio": None if ratio is None else round(ratio, 1), "ret": None if ret is None else round(ret, 4),
-                         "c": bool(c), "b": bool(b), "tai": (code in tai["codes"]) if tai else None})
+                         "c": bool(c), "b": bool(b), "tai": (code in tai["codes"]) if tai else None,
+                         "dev25": None if dev is None else round(dev, 4), "streak": int(streak)})
     rows.sort(key=lambda r: r["tv"], reverse=True)
     return {"asof": asof, "universe": len(daily), "with_ratio": n_ratio, "n_c": int(n_c), "n_b": int(n_b),
             "keep_min_tv": KEEP_MIN_TV, "rows": rows,
@@ -76,7 +113,9 @@ def _fmt(r):
     ret = "—" if r.get("ret") is None else f"{r['ret'] * 100:+.1f}%"
     both = " ★C・B候補の両方" if r.get("c") and r.get("b") else ""
     tai = " 〔貸借〕" if r.get("tai") is True else ""
-    return f"{r['code']} {r['name']}  売買代金 {r['tv']:.1f}億円（{ratio}）・前の日 {ret}{both}{tai}"
+    m = mines(r)
+    mine = f" 💣地雷：{'・'.join(m)}" if m else ""
+    return f"{r['code']} {r['name']}  売買代金 {r['tv']:.1f}億円（{ratio}）・前の日 {ret}{both}{tai}{mine}"
 
 
 def section(markers, today):
@@ -105,6 +144,10 @@ def section(markers, today):
     L += [f"     {i}. {_fmt(r)}" for i, r in enumerate(bs[:SHOW_TOP], 1)] or ["     （なし）"]
     if len(bs) > SHOW_TOP:
         L.append(f"     …ほか {len(bs) - SHOW_TOP}銘柄")
+    n_mine = sum(1 for r in rows if mines(r))
+    L += ["", f"  💣 地雷（研究 J21）＝前の日 +5%以上・売買代金10億円以上の株のうち、過熱（25日線 +15%超）・連騰（4日以上）・"
+              f"急騰（+15%以上）・売買代金の急増（5倍以上）のどれかに当てはまるもの：{n_mine}銘柄（上の一覧に印）",
+          "     → 2006〜2016年に寄りのあと特に弱かった形（−0.6〜−1.5%）。2023年〜は弱まっている。地雷を外しても、残りを寄りで買う手にはならない（J21）"]
     if "taishaku" in markers:          # 2026-10-08 夕方より前に作った一覧にはこの欄が無い＝何も書かない
         t = markers["taishaku"]
         L += ["", f"  〔貸借〕＝制度信用で空売りできる銘柄（日本取引所グループの一覧 {t.get('asof') or '日付不明'}・{t.get('n', 0):,}銘柄）。"

@@ -121,7 +121,14 @@ CODES = [f"7X{i:02d}" for i in range(130)]
 
 
 def _panel(drift_scale=0.02, seed=7, y1=1997):
-    """銘柄ごとに一定の月の流れ（勝ち組は勝ち続ける）を仕込んだ作り物の日足"""
+    """銘柄ごとに一定の月の流れ（勝ち組は勝ち続ける）を仕込んだ作り物の日足 → 銘柄 × 月の表"""
+    series, sectors, cal = _series(drift_scale, seed, y1)
+    Mi, first, last, tail = M.month_table(cal)
+    return M.panel(series, sectors, Mi, first, last, tail)
+
+
+def _series(drift_scale=0.02, seed=7, y1=1997):
+    """→ ({コード: (日, 値)}, {コード: 業種}, 取引日)"""
     rng = np.random.default_rng(seed)
     cal = _bdays(1990, 1, y1, 12)
     series, sectors = {}, {}
@@ -134,8 +141,7 @@ def _panel(drift_scale=0.02, seed=7, y1=1997):
         v = np.full(len(cal), 2e6 if i % 13 else 1e4)           # 13銘柄に1つは売買代金が足りない
         series[code] = (cal.astype(np.int32), np.c_[o, h, lo, c, v].astype(np.float32))
         sectors[code] = f"業種{i % 6}" if i % 17 else ""
-    Mi, first, last, tail = M.month_table(cal)
-    return M.panel(series, sectors, Mi, first, last, tail)
+    return series, sectors, cal
 
 
 def test_pipeline_finds_planted_momentum_and_costs():
