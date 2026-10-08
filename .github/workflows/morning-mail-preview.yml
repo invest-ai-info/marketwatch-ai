@@ -1,0 +1,39 @@
+name: Morning Mail Preview (manual)
+
+# 朝の指標メール（indicator-digest.yml）の中身を、**送らずに**表示するだけ（2026-10-08 夜 新設）。
+# 通貨の強弱（fx_strength.py）と中国・豪州の見出し（asia_news.py）は Actions からしか取れないので、メールの中身を変えたときの確認に使う。
+# ⚠️ 何も送らない・何も書き換えない（一時ファイルはこの実行の中だけ）。表示は実行の Summary。
+
+on:
+  workflow_dispatch:
+    inputs:
+      when:
+        description: "メールの日時（JST・例 2026-10-09T06:20）。空なら次の平日の 06:20"
+        required: false
+        default: ""
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Currency strength
+        continue-on-error: true
+        run: python fx_strength.py
+      - name: China and Australia headlines
+        continue-on-error: true
+        run: python asia_news.py
+      - name: Show the morning mail (not sent)
+        env:
+          WHEN: ${{ inputs.when }}
+        run: |
+          if [ -z "$WHEN" ]; then
+            d=$(TZ=Asia/Tokyo date -d tomorrow +%Y-%m-%d)
+            while [ "$(date -d "$d" +%u)" -gt 5 ]; do d=$(date -d "$d + 1 day" +%Y-%m-%d); done
+            WHEN="${d}T06:20"
+          fi
+          python send_indicator_digest.py --dry-run --now "$WHEN" | tee mail.txt
+          { echo '```'; cat mail.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
