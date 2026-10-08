@@ -25,11 +25,14 @@ MAX_AGE_HOURS = 30
 TOP = 6
 MAX_AGE_MIN = 180          # 一時ファイルの古さ（朝のメールが読むとき）
 UA = {"User-Agent": "Mozilla/5.0 marketwatch-jp/1.0"}
-CN_WORDS = ("中国", "人民元", "香港", "上海", "習近平", "北京")
+CN_WORDS = ("中国", "人民元", "香港", "上海", "習近平", "北京", "鉄鉱石")
 AU_WORDS = ("豪", "オーストラリア", "RBA", "オージー")
+NG_TITLE = re.compile(r"指数情報|推移|チャート|リアルタイム|株価・|掲示板")   # 相場のページ（ニュースではない）・2026-10-08 試し表示で混入
+KEY_CHARS = 15             # 似た見出しの見分け（norm した先頭15字が同じなら1つ）
 
 
-def region_of(title, default):
+def region_of(title, default=None):
+    """見出しそのものに豪州・中国の言葉があるか（無ければ None＝拾わない・2026-10-08 試し表示で一般の為替記事が混ざったため）"""
     if any(w in title for w in AU_WORDS):
         return "AU"
     if any(w in title for w in CN_WORDS):
@@ -51,24 +54,25 @@ def parse(xml_text, region, now):
             when = parsedate_to_datetime(it.findtext("pubDate") or "")
         except (TypeError, ValueError):
             continue
-        if not title or when is None or len(re.findall(r"[ぁ-んァ-ヶ一-龠]", title)) < 3 or NT.is_ng_publisher(src):
+        if not title or when is None or len(re.findall(r"[ぁ-んァ-ヶ一-龠]", title)) < 3 or NT.is_ng_publisher(src) \
+                or NG_TITLE.search(title) or region_of(title) is None:
             continue
         age_h = (now - when).total_seconds() / 3600
         if age_h < -0.5 or age_h > MAX_AGE_HOURS:
             continue
         out.append({"t": title, "s": src, "dt": when.astimezone(NT.JST).isoformat(timespec="minutes"),
-                    "r": region_of(title, region), "u": it.findtext("link") or ""})
+                    "r": region_of(title), "u": it.findtext("link") or ""})
     return out
 
 
 def pick(items, top=TOP):
-    """新しい順・似た見出しは1つ（build_news_ticker.norm で前から20字が同じもの）"""
-    seen, out = set(), []
+    """新しい順・似た見出しは1つ（build_news_ticker.norm で前から KEY_CHARS 字が同じもの）"""
+    seen, out = [], []
     for x in sorted(items, key=lambda x: x["dt"], reverse=True):
-        k = NT.norm(x["t"])[:20]
-        if k in seen:
+        k = NT.norm(x["t"])
+        if any(k[:m] == s[:m] for s in seen for m in [min(len(k), len(s), KEY_CHARS)]):   # 短いほうの長さまで同じ＝同じ記事
             continue
-        seen.add(k)
+        seen.append(k)
         out.append(x)
         if len(out) == top:
             break
