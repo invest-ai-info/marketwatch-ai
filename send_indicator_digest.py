@@ -46,9 +46,12 @@ import smtplib
 import sys
 from email.mime.text import MIMEText
 
+import jp_markers
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 JST = dt.timezone(dt.timedelta(hours=9))
 EVENTS = os.path.join(HERE, "economic-events.json")
+JP_HIGHS = os.path.join(HERE, "jp-highs.json")   # 🆕 2026-10-08 朝の目印（jp_markers）
 HORIZON_DAYS = 7
 # 朝の便を送ってよい時間帯（JST）。routine の相乗りは 06:13 前後、cron の保険は遅れて来るので広めに取る。
 MORNING_WINDOW = (4, 10)
@@ -108,6 +111,15 @@ def assets_ja(e):
     return " / ".join(TICKER_JA.get(t, t) for t in a)
 
 
+def load_markers(path=JP_HIGHS):
+    """jp-highs.json の "markers"（build_jp_highs.py が夕方に作る）。無ければ None"""
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f).get("markers")
+    except (OSError, ValueError):
+        return None
+
+
 def build(now):
     ind, hol = load_events(now)
     today = now.date()
@@ -148,6 +160,9 @@ def build(now):
             L.append(f"  {w:%m/%d}({WD[w.weekday()]}) {w:%H:%M}  {e['name']}")
             L.append(f"       影響: {assets_ja(e)}")
         L.append("")
+
+    # 🆕 2026-10-08 日本株の「寄りで買わない」目印（前の日の引けでわかる C・B候補）＝朝の準備（7〜9時）用
+    L += jp_markers.section(load_markers(), today)
 
     if hol:
         L.append("【市場休場】")
