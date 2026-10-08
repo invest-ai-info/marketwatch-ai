@@ -3,6 +3,7 @@ name: Morning Mail Preview (manual)
 # 朝の指標メール（indicator-digest.yml）の中身を、**送らずに**表示するだけ（2026-10-08 夜 新設）。
 # 通貨の強弱（fx_strength.py）と中国・豪州の見出し（asia_news.py）は Actions からしか取れないので、メールの中身を変えたときの確認に使う。
 # ⚠️ 何も送らない・何も書き換えない（一時ファイルはこの実行の中だけ）。表示は実行の Summary。
+# 🆕 2026-10-09 色付きの HTML（実際に届く見た目）は成果物 mail-preview＝実行のページの下からダウンロードしてブラウザで開く。
 
 on:
   workflow_dispatch:
@@ -51,8 +52,13 @@ jobs:
             WHEN="${d}T${hm}"
           fi
           if [ "$KIND" = london ] || [ "$KIND" = ny ]; then
-            python session_brief.py --session "$KIND" --dry-run --now "$WHEN" | tee mail.txt
+            python session_brief.py --session "$KIND" --dry-run --now "$WHEN" --html-out mail.html | tee mail.txt
           else
-            python send_indicator_digest.py --dry-run --now "$WHEN" | tee mail.txt
+            python send_indicator_digest.py --dry-run --now "$WHEN" --html-out mail.html | tee mail.txt
           fi
           { echo '```'; cat mail.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mail-preview
+          path: mail.html
+          retention-days: 7
