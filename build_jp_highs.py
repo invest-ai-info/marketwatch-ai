@@ -58,6 +58,7 @@ import urllib.request
 from build_jp_rankings import INFO, JST, modal_date, is_regression, is_unsettled, SETTLE_JST
 import jp_markers   # 🆕 2026-10-08 朝の準備用「寄りで買わない」目印（同じ日足に相乗り・jp-highs.json の "markers"）
 import jp_taishaku  # 🆕 2026-10-08 夕方 目印の一覧に〔貸借〕の印（日本取引所グループの一覧・取れなければ印なしで続ける）
+import jp_momentum  # 🆕 2026-10-08 夜 朝のメール用「強すぎる株＝買わない側」（過去12か月で一番上げた10銘柄・研究 J42／J42F）
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "jp-highs.json")
@@ -361,12 +362,24 @@ def read_json(path):
         return {}
 
 
+def momentum_or_error(daily, stocks, asof):
+    """jp_momentum.compute を呼ぶ。失敗しても高値・安値の一覧は止めない（{"asof", "error"} を返す）"""
+    def monthly(code):
+        bars = fetch_bars(code, "max", "1mo")
+        time.sleep(0.07)
+        return bars
+    try:
+        return jp_momentum.compute(daily, stocks, asof, monthly)
+    except Exception as e:  # noqa: BLE001
+        return {"asof": asof, "error": f"{type(e).__name__}: {str(e)[:120]}", "lists": {}}
+
+
 def main(force=False, dry_run=False):
     """dry_run＝最後まで数えて結果を表示するが jp-highs.json は書かない（点検のワークフローで本番の前に試す用）。"""
     prev = read_json(OUT)
     prev_asof = prev.get("asof") or ""
     rank_asof = read_json(RANKINGS).get("asof") or ""
-    if not force and not dry_run and already_done(prev, rank_asof):
+    if not force and not dry_run and already_done(prev, rank_asof) and "momentum" in prev:   # 🆕 2026-10-08 夜 強すぎる株の欄が無ければ作り直す
         print(f"⏭ jp-highs.json はもう {prev_asof}（jp-rankings.json と同じ営業日・同じ決まり）＝取りに行かずに終了")
         return
 
@@ -450,6 +463,8 @@ def main(force=False, dry_run=False):
         # 🆕 2026-10-08 目印C（売買代金の急増）・B候補（前の日 +5% 以上）＝朝の指標メールが読む（サイトには出さない）
         "markers": jp_markers.compute({c: b for c, b in daily.items() if sane_today(b)}, stocks, asof,
                                       jp_taishaku.load_or_none()),
+        # 🆕 2026-10-08 夜 強すぎる株（過去12か月で一番上げた10銘柄）＝朝の指標メールが読む（サイトには出さない）
+        "momentum": momentum_or_error(daily, stocks, asof),
     }
     if not dry_run:
         with open(OUT, "w", encoding="utf-8") as f:
@@ -458,6 +473,12 @@ def main(force=False, dry_run=False):
           f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
           f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"
           f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
+    mo = payload["momentum"]
+    for key in ("asof", "month_end"):
+        x = (mo.get("lists") or {}).get(key) or {}
+        print(f"   強すぎる株（{key}・決める月 {x.get('ym')}）：{len(x.get('rows') or [])}銘柄"
+              f"（組 {x.get('universe')}・上場からの長さを確かめた {x.get('checked')}・不明 {x.get('age_unknown')}）"
+              + (f"・⚠️ {mo['error']}" if mo.get("error") else ""))
     mk = payload["markers"]
     print(f"   朝のメール用の目印：C（売買代金が20営業日平均の{jp_markers.TV_HIGH:g}倍以上）{mk['n_c']}銘柄・"
           f"B候補（前の日 +{jp_markers.UP * 100:g}% 以上）{mk['n_b']}銘柄（うち売買代金{mk['keep_min_tv']:g}億円以上を {len(mk['rows'])}件保存）"

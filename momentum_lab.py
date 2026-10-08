@@ -16,6 +16,7 @@
 import datetime as dt
 import json
 import sys
+import time
 
 import numpy as np
 
@@ -514,13 +515,15 @@ def _check_summary(T, n_codes, missing, store, first, last):
 
 # ════════════════════ 読み込み ════════════════════
 
-def load(codes, fetch):
-    """→ ({code: (日, 値)}, 日足の取れなかった銘柄の数, 取引日の表)"""
+def load(codes, fetch, rng=jp_bars.FULL_DAILY, pause=0.0):
+    """→ ({code: (日, 値)}, 日足の取れなかった銘柄の数, 取引日の表)。rng＝取る期間（J42F の前向きは "5y"）"""
     series, missing = {}, 0
     base = dt.date(1989, 1, 1).toordinal()
     counts = np.zeros(dt.date.today().toordinal() - base + 400, np.int64)
     for i, code in enumerate(codes):
-        rows = fetch(code, "1d", jp_bars.FULL_DAILY)
+        rows = fetch(code, "1d", rng)
+        if pause:
+            time.sleep(pause)
         a = from_rows(rows) if rows else None
         if a is None:
             missing += 1
