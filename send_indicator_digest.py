@@ -122,6 +122,24 @@ def load_markers(path=JP_HIGHS):
         return None
 
 
+def load_fx():
+    """通貨の強弱（実際の値動き）の一時ファイル。ワークフローの前の段（fx_strength.py）が作る。無ければ None"""
+    try:
+        import fx_strength
+        return fx_strength.load()
+    except Exception:  # noqa: BLE001   壊れても朝のメール（発表の注意）は必ず送る
+        return None
+
+
+def load_news():
+    """中国・豪州の見出しの一時ファイル。ワークフローの前の段（asia_news.py）が作る。無ければ None"""
+    try:
+        import asia_news
+        return asia_news.load()
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def load_momentum(path=JP_HIGHS):
     """jp-highs.json の "momentum"（build_jp_highs.py → jp_momentum.compute が夕方に作る）。無ければ None"""
     try:
@@ -181,7 +199,9 @@ def build(now):
         L.append("")
 
     # 🆕 2026-10-08 夜 今日のファンダ（AIの朝の見立て）・今日と次の平日の決算（平日だけ）
-    L += _safe("今日のファンダ・決算", morning_brief.sections, today)
+    # 🆕 2026-10-08 夜（2）通貨の強弱（ワークフローの前の段が fx_strength.py で取った一時ファイル）・中国と豪州のニュース
+    L += _safe("今日のファンダ・通貨の強弱・決算", morning_brief.sections, today, morning_brief.FUND, morning_brief.EARN,
+               load_fx(), today_ev, load_news())
 
     # 🆕 2026-10-08 日本株の「寄りで買わない」目印（前の日の引けでわかる C・B候補・💣地雷の印）＝朝の準備（7〜9時）用
     markers = load_markers()

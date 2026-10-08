@@ -17,6 +17,9 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 FUND = os.path.join(HERE, "fundamental-context.json")
 EARN = os.path.join(HERE, "earnings-calendar.json")
+RESULTS = os.path.join(HERE, "indicator-result.json")   # 🆕 2026-10-08 夜 発表の結果と市場の反応（別の予約が書く）
+COUNTRY_CCY = {"us": "USD", "jp": "JPY", "eu": "EUR", "ez": "EUR", "de": "EUR", "uk": "GBP", "gb": "GBP", "au": "AUD", "cn": "CNY"}
+COUNTRY_FLAG = {"USD": "🇺🇸", "JPY": "🇯🇵", "EUR": "🇪🇺", "GBP": "🇬🇧", "AUD": "🇦🇺", "CNY": "🇨🇳"}
 BIAS = {"BULLISH": "上向き", "BEARISH": "下向き", "NEUTRAL": "中立"}
 REGIME = {"RISK_ON": "リスクオン（買われやすい）", "RISK_OFF": "リスクオフ（売られやすい）", "NEUTRAL": "中立", "MIXED": "まちまち"}
 CONF = {"HIGH": "高", "MID": "中", "LOW": "低"}
@@ -84,6 +87,111 @@ def _next_weekday(d):
     return d
 
 
+LEAN = {"STRONG": "強い", "WEAK": "弱い", "NEUTRAL": "中立"}
+ASIA_TOP = 5
+
+
+def _is_au_cn(e):
+    """今日の指標のうち、豪州・中国のもの（国の欄か名前で見る）"""
+    return e.get("country") in ("AU", "CN") or any(k in str(e.get("name") or "") for k in ("豪", "中国", "RBA", "オーストラリア"))
+
+
+def recent_results(res, today):
+    """indicator-result.json → 前の平日〜今日の発表の結果（新しい順）"""
+    lo = _prev_weekday(today).isoformat()
+    xs = [r for r in (res or {}).get("results") or [] if lo <= str(r.get("event_date") or "") <= today.isoformat()]
+    return sorted(xs, key=lambda r: str(r.get("event_date")), reverse=True)
+
+
+def fx_section(fx, fc, today_events, today, results=None):
+    """通貨の強弱（前の日の値動き＝fx_strength の一時ファイル／ファンダの見立て＝fundamental-context の currencies）と、
+    今日の豪州・中国の指標。平日だけ。純関数（fx_strength は計算の部品だけ使う）"""
+    import fx_strength as FX
+    if today.weekday() >= 5:
+        return []
+    L = ["【💱 通貨の強弱（前の日の値動き＋ファンダの見立て）】"]
+    if fx:
+        L.append(f"  値動き 24時間（サイトの通貨強弱と同じ計算・±{FX.EDGE:g}%で強い／弱い）：{FX.ranking(fx.get('h24'))}")
+        L.append(f"  値動き 約5日（傾向）：{FX.ranking(fx.get('d5'))}")
+        pr = fx.get("pairs") or {}
+        aud = [f"{FX.PAIR_JA[p]} {pr[p]['h24']:+.2f}%（24時間）・{'—' if pr[p].get('d5') is None else format(pr[p]['d5'], '+.2f') + '%'}（約5日）"
+               for p in ("AUDJPY=X", "AUDUSD=X") if (pr.get(p) or {}).get("h24") is not None]
+        if aud:
+            L.append("  豪ドル：" + "／".join(aud))
+    else:
+        L.append("  ⚠️ 値動きの強弱を取れなかった（Yahoo に届かない・朝のワークフローの前の段が失敗）＝サイトの通貨強弱で確かめる")
+    cur = (fc or {}).get("currencies")
+    if cur:
+        when = str((fc or {}).get("generated_at") or "")[:16]
+        L.append(f"  ファンダの見立て（AI・{when} のブリーフィング・前の日〜今朝の材料から）：")
+        for c in cur:
+            if not c.get("code"):
+                continue
+            L.append(f"   ・{FX.NAMES.get(c['code'], c['code'])} {LEAN.get(c.get('lean'), c.get('lean') or '—')}"
+                     f"（{CONF.get(c.get('conviction'), c.get('conviction') or '—')}）：{_cut(c.get('reason'), 70)}")
+    else:
+        L.append("  ファンダの見立て（AI・通貨ごと）：まだ無い（予約 fundamental-briefing の指示に通貨の欄を足すと、ここに出る）")
+    rr = recent_results(results, today)
+    if rr:
+        L.append("  前の日〜今朝の指標の結果（予想との差と市場の反応）：")
+        for r in rr[:4]:
+            ccy = COUNTRY_CCY.get(str(r.get("country") or "").lower(), "")
+            L.append(f"   {COUNTRY_FLAG.get(ccy, '・')} {r.get('name', '')}（{str(r.get('event_date'))[5:]}）：{_cut(r.get('headline'), 70)}")
+            if r.get("market_reaction"):
+                L.append(f"      → {_cut(r['market_reaction'], 90)}")
+    au = [(w, e) for w, e in today_events or [] if _is_au_cn(e)]
+    if au:
+        L.append("  今日の豪州・中国の指標：" + "・".join(f"{w:%H:%M} {e['name']}" for w, e in au))
+    else:
+        L.append("  今日の豪州・中国の指標：なし")
+    L += ["  ※ 値動きの強弱は前の日までの集計（この先の向きではない）。AIの通貨の見立ては当たり外れをまだ記録していない＝参考", ""]
+    return L
+
+
+def asia_section(fc, today, news=None):
+    """中国・オーストラリアのニュース。AI が選んだもの（fundamental-context の asia_watch・予約の指示に欄を足したら出る）と、
+    機械で拾った見出し（asia_news.py・重要度の判断なし）。平日だけ。純関数"""
+    if today.weekday() >= 5:
+        return []
+    head = "【🇨🇳🇦🇺 中国・オーストラリアのニュース（豪ドルと日経に効くもの）】"
+    L = [head] + _asia_ai(fc)
+    picked = (news or {}).get("items") or []
+    if picked:
+        L.append("  機械で拾った見出し（直近30時間・新しい順・重要度の判断はしていない）：")
+        for x in picked:
+            flag = {"CN": "🇨🇳", "AU": "🇦🇺"}.get(x.get("r"), "・")
+            L.append(f"   {flag} {str(x.get('dt'))[5:16].replace('T', ' ')} {_cut(x.get('t'), 70)}（{x.get('s') or '出典不明'}）")
+    elif news is None:
+        L.append("  機械で拾った見出し：取れなかった（朝のワークフローの前の段が失敗）")
+    else:
+        L.append("  機械で拾った見出し：直近30時間になし")
+    L.append("")
+    return L
+
+
+def _asia_ai(fc):
+    if not fc or "asia_watch" not in fc:
+        return ["  AI が選んだもの：まだ無い（予約 fundamental-briefing の指示に欄を足すと、ここに出る）"]
+    items = [x for x in fc.get("asia_watch") or [] if x.get("headline")]
+    rank = {"high": 0, "mid": 1, "low": 2}
+    def newest(x):
+        try:
+            return -dt.date.fromisoformat(str(x.get("published"))[:10]).toordinal()
+        except ValueError:
+            return 0
+    items.sort(key=lambda x: (rank.get(x.get("materiality"), 3), newest(x)))
+    if not items:
+        return ["  AI が選んだもの：今朝は特になし"]
+    L = ["  AI が選んだもの（直近2日・重要度の高い順）："]
+    imp = {"high": "高", "mid": "中", "low": "低"}
+    for x in items[:ASIA_TOP]:
+        flag = {"CN": "🇨🇳", "AU": "🇦🇺"}.get(x.get("region"), "・")
+        L.append(f"  {flag} [重要度 {imp.get(x.get('materiality'), '—')}] {_cut(x['headline'], 70)}（{x.get('published') or '日付不明'}・{x.get('source') or '出典不明'}）")
+        if x.get("why"):
+            L.append(f"     → {_cut(x['why'], 70)}")
+    return L
+
+
 def _prev_weekday(d):
     d -= dt.timedelta(days=1)
     while d.weekday() >= 5:
@@ -132,6 +240,8 @@ def research_section(today):
            ["  ・くわしくはサイトの検証済みリスト（verified-list.md）と研究の地図", ""]
 
 
-def sections(today, fund_path=FUND, earn_path=EARN):
-    """朝のメールに足す節（ファンダ・決算）。研究の要約は日本株の節のあとに置くので別"""
-    return fundamentals_section(_load(fund_path), today) + earnings_section(_load(earn_path), today)
+def sections(today, fund_path=FUND, earn_path=EARN, fx=None, today_events=None, news=None, results_path=RESULTS):
+    """朝のメールに足す節（ファンダ・通貨の強弱・中国と豪州のニュース・決算）。研究の要約は日本株の節のあとに置くので別"""
+    fc = _load(fund_path)
+    return (fundamentals_section(fc, today) + fx_section(fx, fc, today_events, today, _load(results_path))
+            + asia_section(fc, today, news) + earnings_section(_load(earn_path), today))

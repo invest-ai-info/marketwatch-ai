@@ -55,6 +55,18 @@ jobs:
           path: .digest-marker
           key: indicator-digest-${{ steps.d.outputs.jst }}
 
+      # 🆕 2026-10-08 夜 通貨の強弱（実際の値動き・サイトと同じ計算）を一時ファイルに取る。失敗してもメールは送る
+      - name: Currency strength for the morning mail
+        if: steps.sent.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python fx_strength.py
+
+      # 🆕 2026-10-08 夜 中国・豪州のニュースの見出し（Google ニュースの RSS・機械で拾う）。失敗してもメールは送る
+      - name: China and Australia headlines for the morning mail
+        if: steps.sent.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python asia_news.py
+
       - name: Send today's indicator digest
         if: steps.sent.outputs.cache-hit != 'true'
         env:
