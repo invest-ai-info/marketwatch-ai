@@ -31,16 +31,29 @@ NG_TITLE = re.compile(r"指数情報|推移|チャート|リアルタイム|株�
 KEY_CHARS = 15             # 似た見出しの見分け（norm した先頭15字が同じなら1つ）
 
 
-def region_of(title, default=None):
-    """見出しそのものに豪州・中国の言葉があるか（無ければ None＝拾わない・2026-10-08 試し表示で一般の為替記事が混ざったため）"""
-    if any(w in title for w in AU_WORDS):
-        return "AU"
-    if any(w in title for w in CN_WORDS):
-        return "CN"
+# 🆕 2026-10-08 夜 オーナー「15時までにロンドン時間・20時までにNY時間の注意…メール」＝同じ拾い方で英国・ユーロ圏と米国も
+SETS = {
+    "asia": {"out": OUT, "queries": QUERIES, "words": (("AU", AU_WORDS), ("CN", CN_WORDS))},
+    "europe": {"out": ".news-europe.json",
+               "queries": (("GB", "ポンド 相場 OR 英中銀 OR イングランド銀行"), ("GB", "英国 経済 OR 英国 インフレ OR 英国 雇用"),
+                           ("EU", "ユーロ 相場 OR ECB OR 欧州中央銀行"), ("EU", "ユーロ圏 経済 OR ドイツ 経済")),
+               "words": (("GB", ("ポンド", "英国", "英中銀", "イングランド銀行", "ベイリー", "英")),
+                         ("EU", ("ユーロ", "ECB", "欧州中央銀行", "ラガルド", "ドイツ", "欧州")))},
+    "us": {"out": ".news-us.json",
+           "queries": (("US", "FRB OR パウエル OR FOMC"), ("US", "米国 経済 OR 米国債 OR 米金利"), ("US", "ドル 相場 OR ドル円")),
+           "words": (("US", ("米", "FRB", "パウエル", "FOMC", "ドル", "トランプ", "ウォール街")),)},
+}
+
+
+def region_of(title, default=None, words=None):
+    """見出しそのものに、その組の国・地域の言葉があるか（無ければ None＝拾わない・2026-10-08 試し表示で一般の為替記事が混ざったため）"""
+    for region, ws in (words or SETS["asia"]["words"]):
+        if any(w in title for w in ws):
+            return region
     return default
 
 
-def parse(xml_text, region, now):
+def parse(xml_text, region, now, words=None):
     """RSS の文字列 → [{"t", "s", "dt", "r", "u"}]（直近 MAX_AGE_HOURS 時間・日本語の見出しだけ）。純関数"""
     out = []
     try:
@@ -55,13 +68,13 @@ def parse(xml_text, region, now):
         except (TypeError, ValueError):
             continue
         if not title or when is None or len(re.findall(r"[ぁ-んァ-ヶ一-龠]", title)) < 3 or NT.is_ng_publisher(src) \
-                or NG_TITLE.search(title) or region_of(title) is None:
+                or NG_TITLE.search(title) or region_of(title, words=words) is None:
             continue
         age_h = (now - when).total_seconds() / 3600
         if age_h < -0.5 or age_h > MAX_AGE_HOURS:
             continue
         out.append({"t": title, "s": src, "dt": when.astimezone(NT.JST).isoformat(timespec="minutes"),
-                    "r": region_of(title), "u": it.findtext("link") or ""})
+                    "r": region_of(title, words=words), "u": it.findtext("link") or ""})
     return out
 
 
@@ -84,18 +97,21 @@ def fetch(query):
         return r.read().decode("utf-8", "replace")
 
 
-def collect(get=fetch, now=None):
+def collect(get=fetch, now=None, set_name="asia"):
     now = now or dt.datetime.now(dt.timezone.utc)
+    cfg = SETS[set_name]
     items, errors = [], 0
-    for region, q in QUERIES:
+    for region, q in cfg["queries"]:
         try:
-            items += parse(get(q), region, now)
+            items += parse(get(q), region, now, cfg["words"])
         except Exception:  # noqa: BLE001
             errors += 1
-    return {"items": pick(items), "errors": errors}
+    return {"items": pick(items), "errors": errors, "set": set_name}
 
 
-def load(path=OUT, now=None):
+def load(path=OUT, now=None, set_name=None):
+    if set_name:
+        path = SETS[set_name]["out"]
     try:
         with open(path, encoding="utf-8") as fh:
             d = json.load(fh)
@@ -106,12 +122,16 @@ def load(path=OUT, now=None):
         return None
 
 
-def main():
-    d = collect()
+def main(argv=None):
+    """--set europe|us で英国・ユーロ圏／米国の見出し（既定は中国・豪州）"""
+    import sys
+    argv = sys.argv[1:] if argv is None else argv
+    name = argv[argv.index("--set") + 1] if "--set" in argv else "asia"
+    d = collect(set_name=name)
     d["generated_at"] = dt.datetime.now(NT.JST).isoformat(timespec="minutes")
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(SETS[name]["out"], "w", encoding="utf-8") as fh:
         json.dump(d, fh, ensure_ascii=False)
-    print(f"✅ 中国・豪州の見出し {len(d['items'])}件（取得エラー {d['errors']}/{len(QUERIES)}）")
+    print(f"✅ 見出し（{name}） {len(d['items'])}件（取得エラー {d['errors']}/{len(SETS[name]['queries'])}）")
     for x in d["items"]:
         print(f"   {x['dt'][5:16]} [{x['r']}] {x['t']}（{x['s']}）")
     return 0

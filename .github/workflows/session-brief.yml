@@ -1,0 +1,84 @@
+name: Session Brief (London / NY)
+
+# ロンドン時間・NY時間の前の確認メール（平日）。2026-10-08 夜 オーナー「午後の3時までに間に合うようにFXの強弱とロンドン時間の取引に
+# 注意するべきことを…毎日15時に間に合うように。同じ要領で夜20時までにニューヨーク時間の…」。中身＝session_brief.py。
+#
+# 🕐 cron は数時間遅れる（CLAUDE.md）＝「まもなく」メール（indicator-alert.yml）と同じく、頻繁に動くワークフローの完了に相乗りする
+#    （1日約65回・間隔の中央値14分）。送る時間帯＝ロンドン前 13:30〜15:00（〜16:00 は「⏰遅れ」）／NY前 18:30〜20:00（〜21:00 は遅れ）。
+#    時間帯に入った最初の回で、その日その時間帯に1通だけ（actions/cache の印・リポジトリには書かない）。cron は相乗りが止まった日の保険。
+# ⚠️ 相乗り先の name: は一字一句合わせる（indicator-alert.yml と同じ5本・tests/test_session_brief.py が見張る）。
+# ⚠️ 時間帯の外の回は最初の1ステップで終わる（checkout もしない）。読むだけ・何も書き換えない。
+
+on:
+  workflow_run:
+    workflows:
+      - "Political Alerts (Live Feed)"
+      - "News Ticker"
+      - "Technical Alerts (4H)"
+      - "Technical Alerts (1H Data Only)"
+      - "Update Market News"
+    types: [completed]
+  schedule:
+    - cron: '41 4 * * 1-5'    # 13:41 JST（ロンドン前の保険）
+    - cron: '7 5 * * 1-5'     # 14:07 JST
+    - cron: '23 5 * * 1-5'    # 14:23 JST
+    - cron: '41 9 * * 1-5'    # 18:41 JST（NY前の保険）
+    - cron: '7 10 * * 1-5'    # 19:07 JST
+    - cron: '23 10 * * 1-5'   # 19:23 JST
+  workflow_dispatch:
+
+concurrency:
+  group: session-brief
+  cancel-in-progress: false
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Which session (JST)
+        id: s
+        run: |
+          d=$(TZ=Asia/Tokyo date +%Y-%m-%d); u=$(TZ=Asia/Tokyo date +%u); hm=$(TZ=Asia/Tokyo date +%H%M)
+          s=""; since=""; news=""
+          if [ "$u" -le 5 ]; then
+            if [ "$hm" -ge 1330 ] && [ "$hm" -lt 1600 ]; then s=london; since=9; news=europe; fi
+            if [ "$hm" -ge 1830 ] && [ "$hm" -lt 2100 ]; then s=ny; since=15; news=us; fi
+          fi
+          echo "JST $d (曜日 $u) $hm → ${s:-送る時間帯の外}"
+          { echo "session=$s"; echo "date=$d"; echo "since=$since"; echo "news=$news"; } >> "$GITHUB_OUTPUT"
+
+      # 🔑 同じ日・同じ時間帯に2通送らないための印
+      - name: Already sent for this session today?
+        if: steps.s.outputs.session != ''
+        id: sent
+        uses: actions/cache@v4
+        with:
+          path: .session-marker
+          key: session-brief-${{ steps.s.outputs.session }}-${{ steps.s.outputs.date }}
+
+      - uses: actions/checkout@v4
+        if: steps.s.outputs.session != '' && steps.sent.outputs.cache-hit != 'true'
+      - uses: actions/setup-python@v5
+        if: steps.s.outputs.session != '' && steps.sent.outputs.cache-hit != 'true'
+        with:
+          python-version: '3.11'
+
+      - name: Currency strength (since the session before)
+        if: steps.s.outputs.session != '' && steps.sent.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python fx_strength.py --since-jst ${{ steps.s.outputs.since }}
+
+      - name: Headlines (UK and euro area / US)
+        if: steps.s.outputs.session != '' && steps.sent.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python asia_news.py --set ${{ steps.s.outputs.news }}
+
+      - name: Send the session brief
+        if: steps.s.outputs.session != '' && steps.sent.outputs.cache-hit != 'true'
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+        run: |
+          python session_brief.py --session ${{ steps.s.outputs.session }}
+          date -u > .session-marker

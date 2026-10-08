@@ -146,8 +146,35 @@ def test_asia_news_parse_and_pick():
     assert [x["s"] for x in AN.pick(xs)] == ["ロイター", "Bloomberg"]                  # 似た見出しは1つ（末尾が違う同じ記事も）・新しい順
     assert AN.parse("<rss>壊れた", "CN", now) == []
     d = AN.collect(lambda q: RSS, now)
-    assert len(d["items"]) == 2 and d["errors"] == 0 and AN.collect(lambda q: 1 / 0, now) == {"items": [], "errors": 3}
+    assert len(d["items"]) == 2 and d["errors"] == 0 and AN.collect(lambda q: 1 / 0, now) == {"items": [], "errors": 3, "set": "asia"}
     assert ".asia-news.json" in open(".gitignore", encoding="utf-8").read()
+
+
+EU_RSS = """<?xml version="1.0"?><rss><channel>
+<item><title>英中銀の総裁、追加利下げに慎重な姿勢</title><link>https://x/1</link><pubDate>Thu, 08 Oct 2026 20:00:00 GMT</pubDate><source>ロイター</source></item>
+<item><title>ECB理事、ユーロ高を警戒</title><link>https://x/2</link><pubDate>Thu, 08 Oct 2026 19:00:00 GMT</pubDate><source>Bloomberg</source></item>
+<item><title>豪ドルが上昇、RBA の発言で</title><link>https://x/3</link><pubDate>Thu, 08 Oct 2026 18:00:00 GMT</pubDate><source>日経</source></item>
+</channel></rss>"""
+
+
+def test_news_sets_for_sessions():
+    now = dt.datetime(2026, 10, 8, 21, 0, tzinfo=dt.timezone.utc)
+    d = AN.collect(lambda q: EU_RSS, now, set_name="europe")
+    assert [(x["r"], x["s"]) for x in d["items"]] == [("GB", "ロイター"), ("EU", "Bloomberg")] and d["set"] == "europe"
+    u = AN.collect(lambda q: EU_RSS, now, set_name="us")
+    assert [x["s"] for x in u["items"]] == ["日経"]                                       # 「ドル」で米国の組に入る（豪ドルも）
+    assert {k: v["out"] for k, v in AN.SETS.items()} == {"asia": ".asia-news.json", "europe": ".news-europe.json", "us": ".news-us.json"}
+    gi = open(".gitignore", encoding="utf-8").read()
+    assert ".news-europe.json" in gi and ".news-us.json" in gi and ".session-marker" in gi
+
+
+def test_change_since_session_start():
+    sr = [(1000 + 3600 * i, 100.0 + i) for i in range(30)]
+    assert FX.change_since(sr, 1000 + 3600 * 20) == round((129 - 119) / 119 * 100, 3)   # 20本目より前の最後（119）から最新（129）
+    assert FX.change_since(sr, 0) is None and FX.change_since(sr, 1000 + 3600 * 40) is None
+    d = FX.compute_full(1000 + 3600 * 20, lambda t: sr if t == "AUDJPY=X" else [(1000 + 3600 * i, 100.0) for i in range(130)])
+    assert d["pairs"]["AUDJPY=X"]["since"] > 0 and d["since"]["AUD"] > 0 > d["since"]["JPY"] and d["pairs"]["USDJPY=X"]["since"] == 0
+    assert FX.compute_full(None, lambda t: [])  is None and "since" not in FX.compute_full(None, lambda t: sr)
 
 
 if __name__ == "__main__":
