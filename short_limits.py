@@ -2,16 +2,20 @@
 """J40 売り禁・規制はどれくらいかかるか：J31F の売りの対象に、その朝かかっていた規制を前向きで記録する（読むだけ）。
 2026-10-08 登録・オーナー「両方登録して進めてください」。PILLAR_PREREG.md「J40」。
 
-いまは --probe だけ＝日本証券金融（売り禁・注意喚起）と日本取引所グループ（増担保規制）の公表資料の場所と形を調べる
-（資料の場所・リンクの文字・表の見出しと件数だけ。損益は数えない・何も書き出さない）。読み方を PREREG「J40」の追記に
-書いてから、毎朝の記録の道具をここに足す。日々公表銘柄はすでに毎日取っている jp-margin.json を使う。
+--probe＝日本証券金融（売り禁・注意喚起）と日本取引所グループ（増担保規制）の公表資料の場所と形を調べる（見出しと件数だけ）。
+--record＝その日の分の記録（PREREG「J40」の追記の読み方・2026-10-08 夕方）。J31F の実行（auction-forward.yml）の前に回す。
+日々公表銘柄はすでに毎日取っている jp-margin.json を使う。記録するのはその朝の「寄りで買わない目印」の候補に入る銘柄だけ。
 
 ⚠️ probe の表示は見出しと件数だけ（銘柄コードは伏せる・銘柄名の列は件数だけ）。
 ⚠️ 出力（short-limits.json / .md）は GitHub 側で生成＝手元から送らない（SYNC禁忌）。銘柄は J31F と同じ伏せた印で持つ。
 
-実行: python short_limits.py --probe   （Actions の short-limits.yml から手動で）
+実行: python short_limits.py --probe    （Actions の short-limits.yml から手動で）
+      python short_limits.py --record   （Actions の auction-forward.yml から平日に・その日の分を1回）
 """
+import datetime as dt
+import hashlib
 import io
+import json
 import re
 import sys
 
@@ -143,10 +147,174 @@ def probe(get=JT.http):
     return 0
 
 
+# ════════════════════ 毎朝の記録（PREREG「J40」の追記） ════════════════════
+
+STATE, OUT_MD = "short-limits.json", "short-limits.md"
+JSF_URL = "https://www.taisyaku.jp/restrictive.php"
+JPX_URL = "https://www.jpx.co.jp/markets/equities/margin-reg/index.html"
+MARGIN, HIGHS = "jp-margin.json", "jp-highs.json"
+CATS = ("ban", "jsf_alert", "jsf_other", "zoutanpo", "daily")
+CAT_NAMES = {"ban": "売り禁（申込停止）", "jsf_alert": "注意喚起（日本証券金融）", "jsf_other": "その他の措置（日本証券金融）",
+             "zoutanpo": "増担保規制（日本取引所グループ）", "daily": "日々公表"}
+MARKERS_STALE = 4
+DATE_ANY = re.compile(r"(\d{4})[/\-年.](\d{1,2})[/\-月.](\d{1,2})")
+JST = dt.timezone(dt.timedelta(hours=9))
+
+
+def tag(code):
+    """J31F（auction_forward.tag）と同じ伏せた印"""
+    return hashlib.sha1(("j31f:" + str(code)).encode()).hexdigest()[:10]
+
+
+def table_rows(html, need):
+    """need の見出しをすべて含む最初の表 → [{見出し: 値}]（タグを外した文字）。無ければ None。純関数"""
+    for t in re.findall(r"<table.*?</table>", html, re.S | re.I):
+        rows = re.findall(r"<tr.*?</tr>", t, re.S | re.I)
+        cells = [[re.sub(r"<[^>]+>|\s+", " ", c).strip() for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", r, re.S | re.I)] for r in rows]
+        if not cells or not all(n in cells[0] for n in need):
+            continue
+        head = cells[0]
+        return [dict(zip(head, c)) for c in cells[1:] if c]
+    return None
+
+
+def dates_in(text):
+    out = []
+    for y, m, d in DATE_ANY.findall(text or ""):
+        try:
+            out.append(dt.date(int(y), int(m), int(d)))
+        except ValueError:
+            continue
+    return out
+
+
+def jsf_cats(rows, today):
+    """日本証券金融の表の行 → ({"ban"/"jsf_alert"/"jsf_other": コードの集合}, 実施措置ごとの件数)。まだ効いていない行は入れない"""
+    out = {k: set() for k in ("ban", "jsf_alert", "jsf_other")}
+    labels = {}
+    for r in rows:
+        code = r.get("コード", "").strip()
+        if not JT.CODE_RE.match(code):
+            continue
+        ds = dates_in(r.get("通知日・実施日", ""))
+        if ds and max(ds) > today:
+            continue
+        measure = r.get("実施措置", "").strip()
+        labels[measure] = labels.get(measure, 0) + 1
+        key = "ban" if "申込停止" in measure else "jsf_alert" if "注意喚起" in measure else "jsf_other"
+        out[key].add(code)
+    return out, labels
+
+
+def jpx_zoutanpo(rows, today):
+    out = set()
+    for r in rows:
+        code = r.get("コード", "").strip()
+        ds = dates_in(r.get("実施日", ""))
+        if JT.CODE_RE.match(code) and ds and min(ds) <= today:
+            out.add(code)
+    return out
+
+
+def load_json(path):
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return None
+
+
+def candidates(highs, today):
+    """その朝の「寄りで買わない目印」の候補（jp-highs.json の markers の行）。古い・無いときは None（＝全部を記録）"""
+    mk = (highs or {}).get("markers") or {}
+    try:
+        age = (today - dt.date.fromisoformat(mk.get("asof", ""))).days
+    except ValueError:
+        return None
+    if age <= 0 or age > MARKERS_STALE:
+        return None
+    return {r["code"] for r in mk.get("rows") or [] if r.get("code")}
+
+
+def build_entry(today, jsf_html, jpx_html, margin, highs, now):
+    """1日分の記録（純関数）。表が読めなかった源は ok=False"""
+    entry = {"recorded_at": now, "jsf_ok": False, "jpx_ok": False, "daily_ok": False, "tags": {}, "counts": {}, "labels": {}}
+    sets = {}
+    rows = table_rows(jsf_html, ("コード", "実施措置")) if jsf_html else None
+    if rows:
+        c, labels = jsf_cats(rows, today)
+        sets.update(c)
+        entry.update(jsf_ok=True, labels=labels)
+    rows = table_rows(jpx_html, ("コード", "実施日")) if jpx_html else None
+    if rows is not None:
+        sets["zoutanpo"] = jpx_zoutanpo(rows, today)
+        entry["jpx_ok"] = True
+    if margin and margin.get("rows"):
+        sets["daily"] = {r.get("code") for r in margin["rows"] if r.get("code")}
+        entry.update(daily_ok=True, daily_asof=margin.get("asof"))
+    cand = candidates(highs, today)
+    entry["candidates"] = None if cand is None else len(cand)
+    for k, codes in sets.items():
+        entry["counts"][k] = len(codes)
+        keep = codes if cand is None else codes & cand
+        entry["tags"][k] = sorted(tag(c) for c in keep)
+    return entry
+
+
+def record(today=None, get=JT.http, state_path=STATE):
+    now = dt.datetime.now(JST)
+    today = today or now.date()
+    st = load_json(state_path) or {"registered": "J40", "kind": "record", "days": {}, "runs": []}
+    day = today.isoformat()
+    old = st["days"].get(day)
+    if today.weekday() >= 5:
+        print("土日は記録しない")
+        return st
+    if old and old.get("jsf_ok") and old.get("jpx_ok"):
+        print(f"{day} は記録済み（取り直さない）")
+        return st
+    pages = {}
+    for key, url in (("jsf", JSF_URL), ("jpx", JPX_URL)):
+        try:
+            pages[key] = decode(get(url))
+        except Exception as e:  # noqa: BLE001
+            print(f"⚠️ {url} を取れない：{type(e).__name__}: {str(e)[:120]}")
+            pages[key] = None
+    entry = build_entry(today, pages["jsf"], pages["jpx"], load_json(MARGIN), load_json(HIGHS), now.isoformat(timespec="minutes"))
+    st["days"][day] = entry
+    st["runs"] = (st.get("runs") or [])[-30:] + [{"at": now.isoformat(timespec="minutes"), "day": day,
+                                                   "jsf_ok": entry["jsf_ok"], "jpx_ok": entry["jpx_ok"]}]
+    with open(state_path, "w", encoding="utf-8") as fh:
+        json.dump(st, fh, ensure_ascii=False, indent=0)
+        fh.write("\n")
+    with open(OUT_MD, "w", encoding="utf-8") as fh:
+        fh.write(render_md(st))
+    print(f"{day}：日本証券金融 {'✅' if entry['jsf_ok'] else '✕'}・日本取引所グループ {'✅' if entry['jpx_ok'] else '✕'}・"
+          f"日々公表 {'✅' if entry['daily_ok'] else '✕'}・件数 {entry['counts']}・目印の候補 {entry['candidates']}")
+    return st
+
+
+def render_md(st):
+    L = ["# J40 売り禁・規制の前向き記録（毎朝・読むだけ）", "",
+         "事前登録＝`PILLAR_PREREG.md`「J40」（読み方は同じ節の追記）。銘柄名とコードは出さない（J31F の欄は `auction-forward.md`）。", "",
+         "| 日 | 日本証券金融 | 日本取引所グループ | 売り禁 | 注意喚起 | その他の措置 | 増担保 | 日々公表 | 目印の候補 |", "|---|---|---|---:|---:|---:|---:|---:|---:|"]
+    for day in sorted(st.get("days", {}), reverse=True)[:30]:
+        e = st["days"][day]
+        c = e.get("counts", {})
+        L.append(f"| {day} | {'✅' if e.get('jsf_ok') else '✕'} | {'✅' if e.get('jpx_ok') else '✕'} | " +
+                 " | ".join(str(c.get(k, '—')) for k in CATS) + f" | {e.get('candidates') if e.get('candidates') is not None else '全部'} |")
+    L += ["", "- 件数はその朝に効いている全体の数（記録する印は目印の候補に入る銘柄だけ）", "", "---", "",
+          "※ 研究の記録です。投資助言ではありません。"]
+    return "\n".join(L) + "\n"
+
+
 def main(argv):
     if "--probe" in argv:
         return probe()
-    print("いまは --probe だけ（記録の道具は PREREG「J40」の追記のあとに足す）")
+    if "--record" in argv:
+        record()
+        return 0
+    print("使い方：--probe／--record")
     return 1
 
 

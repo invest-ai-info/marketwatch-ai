@@ -36,6 +36,7 @@ jobs:
         run: pip install numpy pandas yfinance openpyxl xlrd
       - name: Count only the mornings after registration
         run: |
+          python -u short_limits.py --record || echo "⚠️ J40 の記録ができなかった（J31F はそのまま数える）"
           python auction_forward.py
           python verified_list.py > /dev/null
           [ -f auction-forward.md ] && cat auction-forward.md >> "$GITHUB_STEP_SUMMARY"
@@ -44,7 +45,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add auction-forward.json auction-forward.md verified-list.md 2>/dev/null || true
+          git add auction-forward.json auction-forward.md short-limits.json short-limits.md verified-list.md 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes."
           else

@@ -60,10 +60,65 @@ def test_probe_writes_nothing():
     assert set(os.listdir(".")) == before and S.main([]) == 1
 
 
+JSF = ("<table><tr><th>直近</th><th>コード</th><th>銘柄名</th><th>実施措置</th><th>実施内容</th><th>通知日・実施日</th></tr>"
+       "<tr><td></td><td>1001</td><td>甲</td><td>申込停止</td><td>新規売り</td><td>2026/10/07 2026/10/08</td></tr>"
+       "<tr><td>●</td><td>1002</td><td>乙</td><td>注意喚起</td><td>-</td><td>2026/10/08</td></tr>"
+       "<tr><td></td><td>1003</td><td>丙</td><td>貸借担保金率の引上げ</td><td>-</td><td>2026/10/01</td></tr>"
+       "<tr><td>●</td><td>1004</td><td>丁</td><td>申込停止</td><td>新規売り</td><td>2026/10/08 2026/10/12</td></tr></table>")   # 1004 はまだ効いていない
+JPX = ("<table><tr><th>銘柄名</th><th>コード</th><th>実施日</th><th>規制の内容</th><th>該当基準</th></tr>"
+       "<tr><td>戊</td><td>1005</td><td>2026/09/16</td><td>…</td><td>…</td></tr><tr><td>己</td><td>1001</td><td>2026/10/20</td><td>…</td><td>…</td></tr></table>"
+       "<table><tr><th>銘柄名</th><th>コード</th><th>解除日</th><th>規制の内容</th></tr><tr><td>庚</td><td>1006</td><td>2026/09/28</td><td>…</td></tr></table>")
+
+
+def test_record_rules_as_registered():
+    import datetime as dt
+    import auction_forward as F
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    assert "実施措置に「**申込停止**」を含む行＝**売り禁**" in text and "**いちばん遅い日がその朝より後の行は、まだ効いていないので入れない**" in text
+    today = dt.date(2026, 10, 9)
+    margin = {"asof": "2026-10-08", "rows": [{"code": "1002"}, {"code": "1007"}]}
+    highs = {"markers": {"asof": "2026-10-08", "rows": [{"code": c} for c in ("1001", "1002", "1003", "1005")]}}
+    e = S.build_entry(today, JSF, JPX, margin, highs, "x")
+    assert e["jsf_ok"] and e["jpx_ok"] and e["daily_ok"] and e["candidates"] == 4
+    assert e["counts"] == {"ban": 1, "jsf_alert": 1, "jsf_other": 1, "zoutanpo": 1, "daily": 2}
+    assert e["tags"]["ban"] == [S.tag("1001")] and e["tags"]["daily"] == [S.tag("1002")] and e["tags"]["zoutanpo"] == [S.tag("1005")]
+    assert e["labels"] == {"申込停止": 1, "注意喚起": 1, "貸借担保金率の引上げ": 1} and S.tag("1001") == F.tag("1001")
+    stale = S.build_entry(today, JSF, None, None, {"markers": {"asof": "2026-09-30", "rows": []}}, "x")
+    assert stale["candidates"] is None and not stale["jpx_ok"] and not stale["daily_ok"] and stale["tags"]["ban"] == [S.tag("1001")]
+    assert not S.build_entry(today, "<html>表なし</html>", JPX, None, None, "x")["jsf_ok"]
+    assert "1001" not in repr(e) and "甲" not in repr(e)
+
+
+def test_record_once_per_day():
+    import datetime as dt
+    import tempfile
+    calls = []
+
+    def get(url):
+        calls.append(url)
+        return (JSF if "taisyaku" in url else JPX).encode()
+    with tempfile.TemporaryDirectory() as d:
+        orig = (S.OUT_MD, S.MARGIN, S.HIGHS)
+        S.OUT_MD, S.MARGIN, S.HIGHS = os.path.join(d, "o.md"), os.path.join(d, "m.json"), os.path.join(d, "h.json")
+        try:
+            path = os.path.join(d, "s.json")
+            st = S.record(dt.date(2026, 10, 9), get, path)
+            assert st["days"]["2026-10-09"]["jsf_ok"] and len(calls) == 2 and os.path.exists(path)
+            S.record(dt.date(2026, 10, 9), get, path)
+            assert len(calls) == 2                                              # その日の分は取り直さない
+            S.record(dt.date(2026, 10, 10), get, path)                          # 土曜は記録しない
+            assert len(calls) == 2 and "| 2026-10-09 | ✅ | ✅ |" in open(S.OUT_MD, encoding="utf-8").read()
+        finally:
+            S.OUT_MD, S.MARGIN, S.HIGHS = orig
+
+
 def test_workflow_and_sync_forbidden():
     wf = open(".github/workflows/short-limits.yml", encoding="utf-8").read()
     assert "python -u short_limits.py --probe" in wf and "python tests/test_short_limits.py" in wf and "contents: read" in wf
     assert '"short-limits.json", "short-limits.md"' in open("check_site_consistency.py", encoding="utf-8").read()
+    af = open(".github/workflows/auction-forward.yml", encoding="utf-8").read()
+    assert "python -u short_limits.py --record ||" in af and af.index("short_limits.py --record") < af.index("python auction_forward.py")
+    assert "short-limits.json short-limits.md" in af
 
 
 if __name__ == "__main__":
