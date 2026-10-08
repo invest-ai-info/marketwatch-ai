@@ -163,6 +163,31 @@ def test_fomc_dates_mark_unreachable_years():
     assert dates == [] and status["2015"].startswith("取得できず")
 
 
+def test_fomc_dates_keep_this_year_from_the_calendar_page():
+    """今年は過去のページがまだ無い（404）＝日程のページの分を捨てない（2026-10-08 の点検で 2026年の6回が抜けていた）"""
+    import io
+    import urllib.error
+    cur = "".join(f'<div class="fomc-meeting__month">M</div><div class="fomc-meeting__date">1-2</div>'
+                  f'<a href="/newsevents/pressreleases/monetary{d}a.htm">Statement</a>'
+                  for d in ("20260128", "20260318", "20260429", "20260617", "20260729", "20260916"))
+
+    class R(io.BytesIO):
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    def opener(req):
+        if req.full_url == X.FOMC_CUR:
+            return R(cur.encode())
+        raise urllib.error.HTTPError(req.full_url, 404, "nf", None, None)
+    dates, status = X.fomc_dates(opener)
+    assert dates == [dt.date(2026, 1, 28), dt.date(2026, 3, 18), dt.date(2026, 4, 29), dt.date(2026, 6, 17),
+                     dt.date(2026, 7, 29), dt.date(2026, 9, 16)], dates
+    assert status["2026"].startswith("6件") and status["2015"].startswith("取得できず")
+
+
 def test_judge_rules():
     base = {"mean": 1.0, "lo": 0.2, "first": 1.0, "second": 1.0, "recent": 0.5}
     assert X.judge(base) == X.VERDICTS[0]
