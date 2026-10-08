@@ -7,7 +7,8 @@
   前の日の売買代金が20営業日平均の5倍以上
 - 腕：B0・C0（損切りなし）／B10・C10（損切り +10％・滑り 0.2％）。費用 0.03％
 - 250営業日で1回だけ判定（98.75％の幅・朝と銘柄の広いほう）。60営業日ごとに費用後の平均がマイナスの腕は止める
-- 読むだけの欄（判定に使わない）：相場全体を差し引いた平均（10/8 追記）／貸借銘柄だけの割合と平均（10/8 夕方の追記・J36 を受けて）
+- 読むだけの欄（判定に使わない）：相場全体を差し引いた平均（10/8 追記）／貸借銘柄だけの割合と平均（10/8 夕方の追記・J36 を受けて）／
+  目印B・貸借銘柄・その銘柄だけの窓 +6％以上（10/8 夕方(2)の追記・J38 を受けて）
 
 ⚠️ 決まりは PILLAR_PREREG.md「J31F」と下の定数に固定。途中の数字を見て動かさない。行は J31 と同じ prevday_lab.stock_rows、
    倍率は landmine_lab.prev_more、幅は gap_forward._boot_agg、日の選び方は gap_forward.trading_days をそのまま使う。
@@ -45,7 +46,8 @@ MIN_BIG = 30                  # 🆕 2026-10-08 追記：相場全体（10億円
 TV_MIN, PREV_BIG, IDIO, TV_HIGH = 10.0, 0.05, 0.01, 5.0     # 点検表 日本株⑤ と同じ数字・10億円以上
 COST, STOP, SLIP = 0.0003, 0.10, 0.002                       # J31・J32 と同じ
 ARMS = ("B0", "B10", "C0", "C10")
-EXTRA = ("BC0",)              # 読むだけ：B かつ C・損切りなし
+EXTRA = ("BC0", "BW6")       # 読むだけ：B かつ C・損切りなし／B・貸借銘柄・その銘柄だけの窓 +6％以上・損切りなし（J38）
+W6 = 0.06                    # 🆕 2026-10-08 夕方(2) 追記：J38 の W の箱（+6％以上）
 TITLES = {"B0": "目印B（前の日 +5％以上・その銘柄だけ +1％以上高く寄った・10億円以上）を寄り成行で売り、引け成行で買い戻す（損切りなし・費用後）",
           "B10": "目印B を寄り成行で売り、+10％ の損切りか引け成行で買い戻す（費用後）",
           "C0": "目印C（前の日の売買代金が20営業日平均の5倍以上・10億円以上）を寄り成行で売り、引け成行で買い戻す（損切りなし・費用後）",
@@ -126,7 +128,10 @@ def add_day(st, day, rows, tai=None):
     # 回数・損益の合計・損切りに届いた回数・（読むだけ）相場全体を差し引いた回数・合計・（読むだけ・10/8 夕方の追記）貸借銘柄の回数・合計
     tags = tai["tags"] if tai else None
     for sid, gap, rprev, ratio, tv, rc, rh in rows:
-        for arm in arms_of(gap - med, rprev, ratio, tv):
+        arms = arms_of(gap - med, rprev, ratio, tv)
+        if "B0" in arms and gap - med >= W6 and tags is not None and sid in tags:
+            arms.append("BW6")                                 # 読むだけ（一覧が無い朝は入れない）
+        for arm in arms:
             v = arm_net(arm, rc, rh)
             g[arm][0] += 1
             g[arm][1] += v
@@ -249,10 +254,12 @@ _PAD = [0, 0.0, 0, 0, 0.0, 0, 0.0]
 
 def summary(st):
     days = sorted(st["days"])
-    tot = {k: [sum((list(st["days"][d]["g"][k]) + _PAD[len(st["days"][d]["g"][k]):])[i] for d in days) for i in range(7)]
-           for k in ARMS + EXTRA}
+    def cnt(d, k):                                                         # 追記より前の朝にはその欄が無い
+        a = list(st["days"][d]["g"].get(k, []))
+        return a + _PAD[len(a):]
+    tot = {k: [sum(cnt(d, k)[i] for d in days) for i in range(7)] for k in ARMS + EXTRA}
     listed = [d for d in days if st["days"][d].get("tai_asof")]          # 貸借銘柄の一覧があった朝
-    n_listed = {k: sum(st["days"][d]["g"][k][0] for d in listed) for k in ARMS + EXTRA}
+    n_listed = {k: sum(cnt(d, k)[0] for d in listed) for k in ARMS + EXTRA}
     daily = {}
     for k in ARMS:
         vals = [st["days"][d]["g"][k][1] / st["days"][d]["g"][k][0] for d in days if st["days"][d]["g"][k][0]]
@@ -288,8 +295,10 @@ def render_md(st, now):
         hit = "—" if not k.endswith("10") or a["hit"] is None else f"{a['hit'] * 100:.0f}％"
         lose = "—" if d["lose"] is None else f"{d['lose'] * 100:.0f}％"
         L.append(f"| {k} | {a['n']:,} | {GF._p(a['mean'])} | {GF._p(a['adj'])} | {_tai(a)} | {hit} | {lose} | {GF._p(d['worst'])} | {state} |")
-    bc = sm["arms"]["BC0"]
+    bc, bw = sm["arms"]["BC0"], sm["arms"]["BW6"]
     L += ["", f"- 読むだけ：B かつ C（損切りなし）{bc['n']:,}回・費用後の平均 {GF._p(bc['mean'])}",
+          f"- 読むだけ：目印B・貸借銘柄・その銘柄だけの窓 +6％以上（損切りなし・J38 で ✅ の箱・2026-10-08 夕方(2)の追記）{bw['n']:,}回・"
+          f"費用後の平均 {GF._p(bw['mean'])}（貸借銘柄の一覧があった朝だけ）",
           "- 相場全体を差し引いた平均＝1回の損益 ＋ その朝の相場全体（前の日の売買代金10億円以上の全銘柄）の寄り→大引け"
           "（同じ金額だけ相場全体を買って打ち消した形・2026-10-08 の追記・判定には使わない）",
           f"- 貸借銘柄だけ＝制度信用で空売りできる銘柄（日本取引所グループの一覧・いちばん新しい朝は {sm['tai_asof'] or '—'}）の回数の割合と費用後の平均"

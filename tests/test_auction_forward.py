@@ -164,6 +164,30 @@ def test_taishaku_reading_column():
     assert "貸借銘柄だけ：割合・平均（読むだけ）" in md and "一覧があった朝 1／2営業日" in md
 
 
+def test_w6_reading_column():
+    """2026-10-08 夕方(2)の追記（J38 を受けて）：目印B・貸借銘柄・その銘柄だけの窓 +6％以上だけ（読むだけ・一覧が無い朝は入れない）"""
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    assert "「**目印B・貸借銘柄・その銘柄だけの窓 +6％以上**（損切りなし）」の回数と費用後の平均を足す" in text and F.W6 == 0.06
+    rng = np.random.default_rng(7)
+    rows = _rows(rng, 0.01)
+    rows = [(sid, 0.08 if (i % 5 == 0 and i % 10 == 0) else gap, *rest) for i, (sid, gap, *rest) in enumerate(rows)]  # 目印の半分は +8％で寄る
+    tags = {r[0] for i, r in enumerate(rows) if i % 20 == 0}                 # そのうち半分が貸借銘柄
+    st = F.empty_state()
+    F.add_day(st, "2026-10-09", rows, {"tags": tags, "asof": "x"})
+    g = st["days"]["2026-10-09"]["g"]
+    med = float(np.median([r[1] for r in rows]))
+    want = [F.arm_net("B0", r[5], r[6]) for r in rows if r[0] in tags and r[1] - med >= F.W6 and r[2] >= F.PREV_BIG]
+    assert g["BW6"][0] == len(want) == 26 and abs(g["BW6"][1] - sum(want)) < 1e-9 and g["B0"][0] == 104
+    F.add_day(st, "2026-10-13", rows)                                          # 一覧が無い朝＝入れない
+    assert st["days"]["2026-10-13"]["g"]["BW6"][0] == 0
+    old = F.empty_state()                                                      # 追記より前の朝（BW6 の欄が無い）でも読める
+    old["days"]["2026-10-09"] = {"g": {k: [2, 0.02, 0] for k in F.ARMS + ("BC0",)}, "n": 600}
+    assert F.summary(old)["arms"]["BW6"]["n"] == 0 and F.summary(old)["arms"]["BW6"]["mean"] is None
+    F.finalize(st)
+    assert "目印B・貸借銘柄・その銘柄だけの窓 +6％以上（損切りなし・J38 で ✅ の箱" in F.render_md(st, "x")
+    assert st["summary"]["arms"]["BW6"]["n"] == 26
+
+
 def test_run_loads_the_list_only_when_there_are_new_mornings():
     days_all = TL._bdays("2026-09-01", 35)
     codes = [str(1000 + i) for i in range(520)]
