@@ -39,11 +39,12 @@ PAIRS = ("EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCHF", "USDCAD", "NZDUSD",
          "EURJPY", "GBPJPY", "AUDJPY", "EURAUD", "GBPAUD")          # サイトの為替9ペア＋ドルのペア3つ
 SIDES = ("BID", "ASK")
 START = (2012, 1)
+EARLY = ((2004, 1), (2011, 12))       # 🆕 2026-10-08 確かめ用の昔の期間（X の結果を見たあとに足した・XC だけが使う）
 ROOT = os.environ.get("FX_BARS", "fx-bars")
 NEW = "fx-new"
 URL = "https://datafeed.dukascopy.com/datafeed/{pair}/{y}/{m0:02d}/{side}_candles_hour_1.bi5"
 REC = np.dtype([("t", ">u4"), ("o", ">u4"), ("c", ">u4"), ("l", ">u4"), ("h", ">u4"), ("v", ">f4")])
-# 点検用の値の範囲（2012年以降。外れたら単位の取り違え＝置かない）
+# 点検用の値の範囲（2004年以降。外れたら単位の取り違え＝置かない）
 SANE = {"EURUSD": (0.8, 1.7), "GBPUSD": (0.9, 2.2), "USDJPY": (60, 220), "AUDUSD": (0.4, 1.2), "USDCHF": (0.6, 1.4),
         "USDCAD": (0.85, 1.7), "NZDUSD": (0.4, 1.0), "EURJPY": (80, 230), "GBPJPY": (100, 260), "AUDJPY": (50, 140),
         "EURAUD": (1.0, 2.2), "GBPAUD": (1.4, 2.6)}
@@ -273,8 +274,12 @@ def merge(new_root=NEW, root=None, today=None):
                 n += 1
     end = last_full_month(today)
     cov = coverage(root, end=end)
+    early = coverage(root, start=EARLY[0], end=EARLY[1])
     meta = {"built_at": dt.datetime.now(JST).isoformat(timespec="minutes"), "months": [f"{START[0]}-{START[1]:02d}", f"{end[0]}-{end[1]:02d}"],
             "added": n, "coverage": cov}
+    if any(v["have"] for v in early.values()):           # 昔の期間を取ったときだけ書く
+        meta["early_months"] = [f"{EARLY[0][0]}-{EARLY[0][1]:02d}", f"{EARLY[1][0]}-{EARLY[1][1]:02d}"]
+        meta["coverage_early"] = early
     os.makedirs(root, exist_ok=True)
     with open(os.path.join(root, "INFO.json"), "w", encoding="utf-8") as fo:
         json.dump(meta, fo, ensure_ascii=False, indent=1)
@@ -327,6 +332,7 @@ def main(argv=None):
     f.add_argument("--shard", type=int, required=True)
     f.add_argument("--of", type=int, required=True)
     f.add_argument("--budget-min", type=float, default=None)
+    f.add_argument("--period", choices=("main", "early"), default="main")
     mg = sub.add_parser("merge")
     mg.add_argument("--new", default=NEW)
     sub.add_parser("coverage")
@@ -334,7 +340,7 @@ def main(argv=None):
     if a.cmd == "probe":
         return probe()
     if a.cmd == "fetch":
-        items = shard(tasks(), a.shard, a.of)
+        items = shard(tasks() if a.period == "main" else tasks(start=EARLY[0], end=EARLY[1]), a.shard, a.of)
         print(f"台 {a.shard}/{a.of}：{len(items)}件（置き場にある月は取らない）", flush=True)
         st = fetch(items, budget_min=a.budget_min, log=lambda s: print(s, flush=True))
         print(f"結果：{st}", flush=True)
@@ -346,6 +352,11 @@ def main(argv=None):
         print("| ペア/側 | ある月 | 欲しい月 | 足りない月（先頭5つ） |\n|---|---|---|---|")
         for k, v in cov.items():
             print(f"| {k} | {v['have']} | {v['want']} | {', '.join(v['missing'][:5])} |")
+        early = coverage(start=EARLY[0], end=EARLY[1])
+        if any(v["have"] for v in early.values()):
+            print(f"\n昔の期間（{EARLY[0][0]}〜{EARLY[1][0]}）\n| ペア/側 | ある月 | 欲しい月 | 足りない月（先頭5つ） |\n|---|---|---|---|")
+            for k, v in early.items():
+                print(f"| {k} | {v['have']} | {v['want']} | {', '.join(v['missing'][:5])} |")
         return 0
     cov = coverage()
     for k, v in cov.items():
