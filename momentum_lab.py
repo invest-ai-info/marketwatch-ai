@@ -47,10 +47,10 @@ BLOCK = 6                     # 6か月のかたまり
 N_BOOT = 10000
 TAX = 0.20315
 FIRST, LAST = (1995, 1), (2026, 8)
-ERAS = (("all", "全期間 1995〜2026年", (1995, 1), (2026, 8)),
-        ("old", "昔 1995〜2009年", (1995, 1), (2009, 12)),
-        ("new", "最近 2010〜2026年", (2010, 1), (2026, 8)))
-READ_ERAS = ERAS + (("e3", "2023〜2026年（読むだけ）", (2023, 1), (2026, 8)),)
+ERAS = (("all", "全期間", (1995, 1), (2026, 8)),          # 置き場の日足は実質2000年から＝数えられるのは2003-01から（check 2026-10-08）
+        ("old", "昔（〜2009年）", (1995, 1), (2009, 12)),
+        ("new", "最近（2010年〜）", (2010, 1), (2026, 8)))
+READ_ERAS = ERAS + (("e3", "2023年〜（読むだけ）", (2023, 1), (2026, 8)),)
 ARMS = (("Q1", "mom", "腕1 ふつうのモメンタム（12−1）"),
         ("Q2", "res", "腕2 残差モメンタム（市場と業種を除いた強さ）"),
         ("Q3", "hi", "腕3 52週高値への近さ"))
@@ -421,7 +421,10 @@ def _mean(x):
 def analyze(T, first=FIRST, last=LAST):
     recs, mkt = records(T, first, last)
     res = {"months": len(recs), "first": recs[0]["ym"] if recs else None, "last": recs[-1]["ym"] if recs else None,
-           "judge": {}, "summary": {}, "read": {}, "series": recs}
+           "judge": {}, "summary": {}, "read": {}, "series": recs, "spans": {}}
+    for e, _, a, b in READ_ERAS:
+        ys = [r["ym"] for r in recs if in_era(r, (a, b))]
+        res["spans"][e] = f"{ys[0]}〜{ys[-1]}・{len(ys)}か月" if ys else "—"
     for q, key, name in ARMS:
         res["judge"][q] = {e: band([diff(r, q) for r in recs if in_era(r, (a, b))]) for e, _, a, b in ERAS}
         res["summary"][q] = verdict(res["judge"][q])
@@ -480,7 +483,7 @@ def verdicts_of(res, today):
             a = res["judge"][q]["all"]
             out[q] = {"status": "stop", "decided_on": today, "n": a["n"], "mean": a["mean"], "lo": a["lo"], "hi": a["hi"],
                       "reason": "過去のデータで1回だけ数えて" + ("強い株のほうがその後弱い（逆向き）" if res["summary"][q] == REV else "強い株を買い続ける得は見えない")
-                                + "（上位10％ − 同じ組の全銘柄の平均・費用後・1995〜2026年の数字）"}
+                                + f"（上位10％ − 同じ組の全銘柄の平均・費用後・{res.get('first')}〜{res.get('last')} の数字）"}
     return out
 
 
@@ -568,7 +571,8 @@ def render_md(res):
           "各腕の上位10％を翌月の最初の取引日の寄りで買い、その次の月の最初の取引日の寄りで売る。"
           f"1か月の値＝上位10％の平均 − 同じ組の全銘柄の平均 − 入れ替えた割合 × 往復{COST * 100:.1f}％。"
           f"幅は {100 * (1 - ALPHA):.2f}％（3つの腕・6か月のかたまりで引き直す 10,000回）。", "", "## まとめ（判定）", "",
-          "| 腕 | 判定 | 全期間の差（月あたり） | 幅 | 昔 1995〜2009 | 最近 2010〜2026 | 最近の幅 |", "|---|---|---:|---|---:|---:|---|"]
+          f"時代＝全期間 {r['spans']['all']}／昔 {r['spans']['old']}／最近 {r['spans']['new']}（置き場の日足は実質2000年から＝37か月の履歴がそろうのは2003年から）。", "",
+          "| 腕 | 判定 | 全期間の差（月あたり） | 幅 | 昔 | 最近 | 最近の幅 |", "|---|---|---:|---|---:|---:|---|"]
     for q, _, name in ARMS:
         j = r["judge"][q]
         L.append(f"| {name} | **{r['summary'][q]}** | {_p(j['all']['mean'])} | {_band(j['all'])} | {_p(j['old']['mean'])} | "
@@ -581,7 +585,7 @@ def render_md(res):
             x = r["read"][q][e]
             wm = "—" if x["win_months"] is None else f"{x['win_months'] * 100:.0f}％"
             rep = "—" if x["rep"] is None else f"{x['rep'] * 100:.0f}％"
-            L.append(f"| {ename} | {x['months']} | {_p(x['top'])} | {_p(x['uni'])} | {_p(x['diff'])} | {_p(x['diff_hi_cost'])} | {wm} | "
+            L.append(f"| {ename}（{r['spans'][e].split('・')[0]}） | {x['months']} | {_p(x['top'])} | {_p(x['uni'])} | {_p(x['diff'])} | {_p(x['diff_hi_cost'])} | {wm} | "
                      f"{_p(x['worst'])} | {rep} | {_p(x['mdd_top'], 0)}／{_p(x['mdd_uni'], 0)} | {_p(x['top10'])} | {_p(x['top20'])} | "
                      f"{_p(x['big'])}（{x['big_months']}か月） | {_p(x['bot'])} |")
         t = r["read"][q]["new"].get("tax") or {}
@@ -640,7 +644,7 @@ def main(argv):
         out["survivorship"] = survivorship_gauge(out, etf_years(fetch, M, first, last, tail))
         res["result"] = dict(out, n_codes=len(codes), list_date=list_date, n_missing=missing, bad_days_zeroed=int(T["bad_days"]))
         res.update(kind="backtest",
-                   titles={q: f"日本株の数か月単位のモメンタム・{name}（売買代金1億円以上の上位10％を月1回入れ替え・1995〜2026-08・1回だけ数えた）"
+                   titles={q: f"日本株の数か月単位のモメンタム・{name}（売買代金1億円以上の上位10％を月1回入れ替え・{out['first']}〜{out['last']}・1回だけ数えた）"
                            for q, _, name in ARMS},
                    verdicts=verdicts_of(out, dt.datetime.now(P.JST).date().isoformat()))
     except Exception as e:  # noqa: BLE001
