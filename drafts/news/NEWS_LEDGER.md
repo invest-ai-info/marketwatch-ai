@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-10-09
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均が一時892円安から終値11円安に急回復──OpenAI売上高FT報道でAI株急落、V字切り返しの3要因を整理（カテゴリ: 今日のニュース）
+- スコア: 話題性 5 / 影響 4 / 付加価値 5（合計 14/15）
+- 選定理由: 日経平均が朝方に一時前日比892円安まで急落しながら終値11円安で着地するV字回復が10/9の最大ニュース。OpenAI売上高FT報道（~$50B vs ~$70B推計）→米AI株安→東京市場への波及→ソフトバンクG1社で243円押し下げ→後場の非AI株・先物買いによる急回復という構造に付加価値大。週4連続上昇で着地。スコア14/15
+- 出典（確認済み・7系統）:
+  - メディアIR「【日経平均一時８９２円安から下げ幅急縮小】大引け１１円安」2026-10-09
+  - 財経新聞 zaikei.co.jp「日経平均は続落、ソフトバンクGが約243円分押し下げ」2026-10-09
+  - 財経新聞 zaikei.co.jp「日経平均は393円安でスタート」2026-10-09
+  - f-frontier.com「2026年10月9日のマーケット情報」2026-10-09（終値・TOPIX確認）
+  - CNBC「Nasdaq falls 1% as AI trade stumbles following OpenAI revenue setback」2026-10-08
+  - CNNビジネス「Tech stocks drop after report that OpenAI's revenue is lower than expected」2026-10-08
+  - InsideAI News「Tech Stocks Slide as OpenAI Revenue Miss Sparks AI Spending Concerns」2026-10-08
+  - fxstreet.com「Asian Stocks struggle as OpenAI revenue miss hits AI sector」2026-10-09
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟡グレー（2箇所の軽微修正→「上昇基調が続いているとみる向きもある（今後の値動きを示唆するものではない）」「FRBの金融政策判断に影響しやすい」に軟化）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典7系統 ✅ → 最終判定🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典7系統 ✅ / noindexなし ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告34件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-09-nikkei-recovery-openai-revenue.html
+- commit: 19473e8（main へ push 済み）
+
+---
+
 ## 2026-10-08
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均終値993円安（69,042円）──JPX新TOPIX構成発表（986銘柄・4割減）と米10年債5.365%（24年ぶり高水準）が重なった1日を中立整理（カテゴリ: 今日のニュース）
