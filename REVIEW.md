@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-10-10｜#122 group=metal×reversalL 前向き130回現在地
+
+**テーマ**: ゴールドや銀が下がったときに逆張りで買うと、今は勝ちやすい？ 前向き130回の現在地
+
+**結果**: IS=11/59=18.6% CI[10.7%,30.4%] / FWD=63/130=48.5% CI[40.0%,57.0%] avgR=+0.131 / 4H FWD=28/50=56.0% / RSI売られすぎFWD=25/40=62.5% CI[47.0%,75.8%] / 基準42.9% → 🟡蓄積中
+
+**ゲート状況**: ✅自動公開済み（2026-10-10）
+- check_plain_japanese.py: ✅ EXIT=0（修正1ラウンド・5件→0件）
+- signal_lab_verify.py: ✅ 5/5 GREEN → EXIT=0（SVG重なり・下書き文言・summary-box修正）
+- Opusコンプラ1: 🟢白修正済み（断定表現軟化・後付き分析の注意書き追加）
+- Opusコンプラ2（独立）: 🟢白（棒グラフ注記・gate方向注記を追加）
+- verify再確認: EXIT=0（5/5 GREEN・SVG 0警告）
+- finalize_signal_lab.py: EXIT=0 (kinsho=3, svg=4, size=39KB)
+- publish_article.py: EXIT=0
+- check_site_consistency.py: EXIT=0（エラーなし・警告34件は既存問題）
+- PUSH-MAIN: ✅ c96c402
+
+---
+
 ## 2026-10-09｜#121 12本一括引退・RSI売られすぎ逆張り継続
 
 **テーマ**: 3991回試しても勝率43%——12本の仮説が引退した理由と、残った仮説の話
