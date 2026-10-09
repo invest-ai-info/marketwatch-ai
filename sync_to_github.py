@@ -340,4 +340,5 @@ SYNC_FILES = [
     "guide-entry-macro-surprise.html",
     "guide-news-2026-10-08-topix-reform-nikkei-drop.html",
     "guide-signal-lab-121.html",
+    "guide-company-6971-kyocera.html",
 ]
