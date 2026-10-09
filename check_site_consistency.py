@@ -249,7 +249,7 @@ def check_economic_events():
             continue  # 過去分は表示済み＝修正不能。検査は未来の日付のみ（警告ノイズ防止）
         if "中国" in name and "PMI" in name:
             continue  # 中国国家統計局PMIは月末公表＝土日もあり得る（正当な例外）
-        if "雇用統計" in name and wd != 4:
+        if "雇用統計" in name and region == "us" and wd != 4:   # 英雇用統計（ONS）は火曜が通例＝金曜の決まりは米だけ
             warnings.append(f"カレンダー: {mo}/{dy}「{name}」が金曜でない（米雇用統計は原則金曜）＝要確認")
         elif wd >= 5 and "休場" not in name:
             warnings.append(f"カレンダー: {mo}/{dy}「{name}」が{'土日'[wd - 5]}曜＝日付要確認")

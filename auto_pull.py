@@ -12,6 +12,7 @@
 何をするか（API は使わない＝GitHub の ZIP を1回取るだけ。_reconcile.py は件数が多いと API が応答しなくなった）:
   ・手元で書き換えていないファイル → GitHub の最新にする（新しいファイルは作る・GitHub で消えたものは控えへ移す）
   ・手元で書き換えたファイル → 触らない。「手元だけ変更＝送ればよい」「両方で変更＝統合が必要」を見分けて知らせる
+    （両方で変更には「手元にしか無い行」の数を添える＝0 なら中身は GitHub 側に全部ある見込み）
     （統合に使えるよう、GitHub 側の版を _auto_pull_conflicts\\ に置く）
   ・GitHub 側で作るデータ（SYNC 禁忌＝signals-log.json など）→ 研究に使うので常に最新にする。
     手元で書き換えていたら、置き換える前に _pull_backup\\ へ控えを残す（手元からは送れないファイルなので失うものは控えだけ）
@@ -105,6 +106,22 @@ def lf_sha(p):
         return None
     lf = b.replace(b"\r\n", b"\n")
     return blob_sha(lf) if lf != b else None
+
+
+def local_only_lines(p, rb):
+    """手元にあって GitHub 側の版に無い行の数（空行・前後の空白・改行コードは無視）。手元で消した行は数えない。
+    2026-10-09: 手元から送ったあとにクラウドも同じファイルを直すと、中身は GitHub に全部あるのに「両方で変更」と出る
+    （PILLAR_PREREG.md など3件が5日残り、古い登録簿のままテストが落ちた）。0 か否かで、置き換えてよいかがすぐ分かる。"""
+    try:
+        with open(p, "rb") as f:
+            lb = f.read()
+    except OSError:
+        return None
+
+    def lines(b):
+        return {ln.strip() for ln in b.decode("utf-8", "replace").replace("\r\n", "\n").split("\n")}
+    remote = lines(rb)
+    return sum(1 for ln in lines(lb) if ln and ln not in remote)
 
 
 def now_utc():
@@ -290,6 +307,12 @@ def run(root, zip_path=None, dry=False, hook=False, boot=None, now=None):
                     kind = "両方で変更＝統合が必要"
                 else:
                     kind = "手元だけ変更＝`python mw.py sync` で送ればよい"
+                if prev != R:
+                    n = local_only_lines(p, rb)
+                    if n == 0:
+                        kind += "（手元にしか無い行 0＝中身は GitHub 側に全部ある見込み。手元で消した行が無ければ GitHub 版に置き換えてよい）"
+                    elif n:
+                        kind += f"（手元にしか無い行 {n}）"
                 if rel in local_sync:
                     if prev != R and not dry:
                         cp = os.path.join(conflict_dir, *rel.split("/"))

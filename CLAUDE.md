@@ -8,7 +8,7 @@
 - ホストパス: `C:\Users\info0\OneDrive\デスクトップ\新しいフォルダー`
 - GitHub: `invest-ai-info/marketwatch-ai`（branch: main）
 - 🆕 **PR のマージ（2026-09-25 オーナー決定）**: Claude がセッションで作った PR は、テスト・検査（`tests/`・`check_site_consistency.py` など）が通ったら **Claude がマージしてよい**（マージ後に何を反映したかを報告）。ただし**サイトの見た目や自動実行の動きが大きく変わるもの**は、反映の前にオーナーへ一言確認する。routine・Actions の自動生成物は従来どおり main へ直接入る（PR 不要）
-- 🆕 **クラウドで頼まれたことが手元向きなら、手元のセッションへ誘導する（2026-09-26 オーナー確認）**。クラウドのセッションはオーナーの PC に触れず、手元のセッションを自動で動かす手段も無い。手元向き＝`research/`（非公開研究・DOCTRINE・`mw evolve`）／PC 内の大きなデータやキャッシュ（罠シリーズ等）／クラウドから届かないサイト（論文の出版社・bls.gov 等）／`mw discipline` など手元の取引記録の点検／手元専用の道具（`_` 始まり・本物の `sync_to_github.py`）。そのときは ①手元向きである理由を1行で伝え ②**手元のセッションにそのまま貼れる指示文**（目的・使うファイル・手順・報告してほしいこと）を渡し ③クラウドでできる部分は先に進める。連携の土台＝GitHub（クラウドの成果→手元は起動時に `auto_pull.py` で自動取り込み／手元の成果→`mw sync` で GitHub へ）＋ SESSION_HANDOFF。手元のセッションの始め方＝デスクトップアプリ Code の左の一覧「新しいフォルダー」の「＋」（または入力欄の上の実行場所を「ローカル」にしてフォルダを選ぶ）
+- 🆕 **クラウドで頼まれたことが手元向きなら、手元のセッションへ誘導する（2026-09-26 オーナー確認）**。クラウドのセッションはオーナーの PC に触れず、手元のセッションを自動で動かす手段も無い。手元向き＝`research/`（非公開研究・DOCTRINE・`mw evolve`）／PC 内の大きなデータやキャッシュ（罠シリーズ等）／クラウドから届かないサイト（論文の出版社・bls.gov 等）／`mw discipline` など手元の取引記録の点検／手元専用の道具（`_` 始まり・本物の `sync_to_github.py`）。そのときは ①手元向きである理由を1行で伝え ②**手元のセッションにそのまま貼れる指示文**（目的・使うファイル・手順・報告してほしいこと。⚠️ **手元は git ではない**＝`auto_pull.py` が ZIP でそろえる→git コマンドは書かず、過去の版は GitHub の API で取らせる）を渡し ③クラウドでできる部分は先に進める。連携の土台＝GitHub（クラウドの成果→手元は起動時に `auto_pull.py` で自動取り込み／手元の成果→`mw sync` で GitHub へ）＋ SESSION_HANDOFF。手元のセッションの始め方＝デスクトップアプリ Code の左の一覧「新しいフォルダー」の「＋」（または入力欄の上の実行場所を「ローカル」にしてフォルダを選ぶ）
 
 ---
 
@@ -58,7 +58,6 @@
 | **weekly-strategy.yml** | 日曜 18:13 | 来週投資戦略の自動生成 |
 | **weekly-review.yml** ⭐ | 月曜 07:13 | 先週シグナル振り返り (C1) |
 | **monthly-report.yml** ⭐ | 毎月 1〜3 日 09:23（取りこぼし対策で1-3日に拡張・冪等） | 先月成績レポート (C3) |
-| **monthly-calendar-reminder.yml** | 毎月 25 日 09:13 | 翌月指標リマインダー + 休場補充 |
 | **monthly-backup.yml** | 毎月 1〜3 日 09:10（同上・冪等） | signals-log の GitHub Release |
 | **monthly-calendar-reminder.yml** | 25日 09:13 | 市場休場の自動補充＋**経済指標の生成**（`sync_economic_events.py`）＋**決算予定の更新**（`build_earnings_calendar.py`）＋来月指標のメール |
 | **health-check.yml** | 12 / 20 | サイト 6 ページ HTTP・最終更新の鮮度チェック（2026-08-30〜 **経過時間**で判定＝`STALE_HOURS=26`。旧「JSTの今日と一致するか」は実行が深夜0時JSTをまたぐと必ず誤検知した） |
@@ -69,7 +68,7 @@
 | **verify-calendar.yml** 🆕 | 月曜 07:10 ＋ 毎月25日 07:10 | **米・英・ユーロ圏の発表日を各国の公式日程と機械で突合**（米=`verify_economic_calendar.py`／英EU=`verify_uk_eu_calendar.py`。**2本を1ステップで回す**＝片方が落ちても両方のレポートが Issue に載る）。食い違い・解析不能・比較0件のいずれでも Issue 化。🔑 **Claude セッションからは bls.gov が egress 遮断されるが Actions のランナーからは届く**＝検証はここで回す |
 | **jp-rankings.yml** 🆕 | **routine の push に相乗り**（news 台帳 17:5x・sns 19:1x JST）＋cron 保険4本（16:40〜19:10 のつもりが実測 21〜23時台） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目）＋ 完了で **jp-highs.yml** を起動（下の行） |
 | **jp-highs.yml** 🆕 | **jp-rankings の完了**（`workflow_run`） | **高値・安値の更新銘柄**（2026-10-06 オーナー依頼・東証の全上場 約3,700）＝`build_jp_highs.py`→`jp-highs.json`→hot-assets「🏔️ 高値・安値更新」。1回13〜15分・**一覧が変わったときだけ** update-market-news を起動。年初来・上場来の決め方（Yahoo の記録の始まりと JPX の上場日の確かめ）は OPERATIONS.md「CLAUDE.md から移した詳しい説明」。点検 `jp-highs-audit.yml`・テスト `tests/test_build_jp_highs.py`・鮮度は automation-health §⑫c |
-| **研究ラボ・前向きの検証（約50本）** 🆕 | 手動のみ／前向きは平日・毎月 | **一覧・登録・結果＝`RESEARCH_LABS.md`**（2026-10-08 に CLAUDE.md から移した＝CLAUDE.md が上限 32KB の4倍の約130KBになり、10/8 朝の signal-lab-daily が文脈あふれ〔autocompact thrashing〕で止まったため）。🚨 **新しいラボ・前向きを足したら `RESEARCH_LABS.md` に1行（CLAUDE.md には書かない）**。共通の決まり＝事前登録 `PILLAR_PREREG.md`（結果を見る前にコミット）・check（損益なし）→ run 1回・出力は GitHub 側生成＝push 禁止（SYNC禁忌）・前向きは研究の地図（`research_map.collect_studies` に `cat` 付き）・見張り番（`check_automation_health.py`）・検証済みリスト（`verified_list.SOURCES`／`MARKER_SOURCES`）に登録・値段の置き場は `jp-bars-cache.yml`（為替は `fx-bars-cache.yml`） |
+| **研究ラボ・前向きの検証（約50本）** 🆕 | 手動のみ／前向きは平日・毎月 | **一覧・登録・結果＝`RESEARCH_LABS.md`**（2026-10-08 に CLAUDE.md から移した＝肥大で予約が文脈あふれで止まったため）。🚨 **新しいラボ・前向きを足したら `RESEARCH_LABS.md` に1行（CLAUDE.md には書かない）**。共通の決まり＝事前登録 `PILLAR_PREREG.md`（結果を見る前にコミット）・check（損益なし）→ run 1回・出力は GitHub 側生成＝push 禁止（SYNC禁忌）・前向きは研究の地図（`research_map.collect_studies` に `cat` 付き）・見張り番（`check_automation_health.py`）・検証済みリスト（`verified_list.SOURCES`／`MARKER_SOURCES`）に登録・値段の置き場は `jp-bars-cache.yml`（為替は `fx-bars-cache.yml`） |
 | **research-lists.yml** 🆕 | 手元の記録が届いたとき（push）＋手動 | 検証済みリスト `verified-list.md` と**昇格リスト `promotion-list.md`** を記録から組み立て直す（2026-09-30 オーナー「成績の良いものは昇格リスト、悪いものは検証済みリスト…後に改善して再検証」）。M6＝ポンド円・ロンドン時間の総当たり（足3×入口32×出口64＝6,144通り）を**手元で1回ずつ**数え、判定は **`screen_judge.py`（計算より先にコミット・手元が import）**＝件数200・幅・多重検定（これまでの総数で割る）・時期・偽薬→昇格候補→MT5 の実ティック→前向き1000回。記録＝`m6-screen.json`（手元で作って送る・判定と集計だけ）。直して数え直すときは新しいラウンドを登録してから。**昇格リストはメールの昇格エッジとは別物**。事前登録＝`PILLAR_PREREG.md`「M6」・テスト `tests/test_screen_judge.py` |
 | **update-youtube-summary.yml** | 朝 10 / 11 | YouTube 10 ch 要約 |
 | **news-ticker.yml** | 毎時 :37 | ⚡最新ニュース・ライブフィード（`build_news_ticker.py`→`news-ticker.json`・AI不使用。詳細は SYNC禁忌節の同名項目） |
