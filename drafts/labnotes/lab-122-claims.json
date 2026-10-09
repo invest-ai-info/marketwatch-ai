@@ -1,0 +1,41 @@
+{
+  "article_id": "122",
+  "hypothesis_id": "auto_group-metal_reversal_long-True",
+  "asof": "2026-10-10T06:16:00+09:00",
+  "claims": [
+    {
+      "label": "IS（登録前）: 金属×逆張り買い",
+      "hypothesis_id": "auto_group-metal_reversal_long-True",
+      "filter": {"group": "metal", "reversal_long": true, "fired_before": "2026-06-18"},
+      "k": 11,
+      "n": 59
+    },
+    {
+      "label": "FWD（前向き）: 金属×逆張り買い・全足",
+      "hypothesis_id": "auto_group-metal_reversal_long-True",
+      "filter": {"group": "metal", "reversal_long": true, "fired_from": "2026-06-18"},
+      "k": 63,
+      "n": 130
+    },
+    {
+      "label": "FWD（前向き）: 金属×逆張り買い・4時間足",
+      "hypothesis_id": "auto_group-metal_reversal_long-True",
+      "filter": {"group": "metal", "reversal_long": true, "tf": "4h", "fired_from": "2026-06-18"},
+      "k": 28,
+      "n": 50
+    },
+    {
+      "label": "FWD（前向き）: 金属×逆張り買い・RSI売られすぎ",
+      "hypothesis_id": "auto_group-metal_reversal_long-True",
+      "filter": {"group": "metal", "reversal_long": true, "rsi_band": "os", "fired_from": "2026-06-18"},
+      "k": 25,
+      "n": 40
+    },
+    {
+      "label": "FWD期間ベースライン（全シグナル）",
+      "filter": {"fired_from": "2026-06-18"},
+      "k": 1871,
+      "n": 4362
+    }
+  ]
+}
