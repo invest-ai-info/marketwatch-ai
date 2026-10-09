@@ -343,4 +343,5 @@ SYNC_FILES = [
     "guide-company-6971-kyocera.html",
     "guide-entry-cot-report.html",
     "guide-news-2026-10-09-nikkei-recovery-openai-revenue.html",
+    "guide-signal-lab-122.html",
 ]
