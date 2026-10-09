@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-09", "line": '・<b>2026-10-09</b>: 📰 解説「<a href="guide-news-2026-10-09-nikkei-recovery-openai-revenue.html" style="color:#0969da"><b>【10/9】日経平均が一時892円安から終値11円安に急回復</b></a>」公開'},
         {"date": "2026-10-09", "line": '・<b>2026-10-09</b>: 🐂 解説「<a href="guide-entry-cot-report.html" style="color:#0969da"><b>大口投機筋の持ち高が買い越しに傾いたら、逆に張るべき？【エントリー方法の研究 #15】</b></a>」公開'},
         {"date": "2026-10-09", "line": '・<b>2026-10-09</b>: 🔬 解説「<a href="guide-company-6971-kyocera.html" style="color:#0969da"><b>京セラ（6971）を数字で見る</b></a>」公開'},
         {"date": "2026-10-09", "line": '・<b>2026-10-09</b>: 🧪 解説「<a href="guide-signal-lab-121.html" style="color:#0969da"><b>3991回試しても43%——12本の仮説が引退した理由</b></a>」公開'},
