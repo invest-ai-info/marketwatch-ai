@@ -469,6 +469,13 @@ def main(force=False, dry_run=False):
     if not dry_run:
         with open(OUT, "w", encoding="utf-8") as f:
             json.dump(payload, f, ensure_ascii=False)
+        # 🆕 2026-10-09 高値更新の台帳（J44・読むだけ）＝その日の特徴と「そのあと」（続伸・だまし）をためる。
+        #    失敗しても jp-highs.json は書けている＝止めない（highs-ledger.csv / .md は同じコミットに入れる）
+        try:
+            import highs_ledger
+            print(f"   高値更新の台帳：{highs_ledger.update(daily, payload, prev)}")
+        except Exception as e:  # noqa: BLE001
+            print(f"⚠️ 高値更新の台帳を更新できず（jp-highs.json は書けている）：{type(e).__name__}: {str(e)[:200]}")
     print(f"{'🧪 試し（書かない）' if dry_run else '✅ ' + OUT}: as of {asof} / 一覧 {len(stocks)}銘柄 → 取れた {fetched}"
           f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
           f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"
