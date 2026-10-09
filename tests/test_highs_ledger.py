@@ -60,6 +60,9 @@ def test_prereg_matches_the_code():
     assert [b[1:] for b in spec["tv_ratio"]] == [(0, 2), (2, 5), (5, 10), (10, L.INF)]
     assert [b[1:] for b in spec["dev25"]][1:] == [(0.10, 0.20), (0.20, 0.30), (0.30, L.INF)]
     assert [b[1:] for b in spec["breakout"]][1:] == [(0.01, 0.03), (0.03, L.INF)]
+    assert "**上場来高値（記録上の最高値＝一覧の record）のケースだけでも、全体・その日の特徴ごと・最近のケースの表を別に出す**" in text
+    rec = [b[1] for b in L.RECORD_BUCKETS]
+    assert rec[0] == "listed" and "record" not in rec and rec[1:] == [b[1] for b in L.BUCKETS if b[1] != "record"]
 
 
 def test_features_from_the_row_and_the_day():
@@ -67,13 +70,15 @@ def test_features_from_the_row_and_the_day():
     day = bars[39][0]
     f = L.features(_row(day=day, prev=110.0, ext=120.0, prev_date="2026-09-01", hist_from="2025-12-01"), day, bars, "年初来")
     assert f["date"] == day and f["code"] == "9999" and f["record"] == 1 and f["listed"] == 1 and f["akaji"] == ""
+    assert f["kind"] == L.KIND_LISTED
     assert abs(f["breakout"] - (120 / 110 - 1)) < 1e-9 and abs(f["close_vs_prev"] - (112 / 110 - 1)) < 1e-9
     assert abs(f["wick"] - 0.5) < 1e-9 and f["hi_close"] == 0                         # (120−112)/(120−104)
     assert f["tv_ratio"] > 9 and f["turnover"] > 1 and f["dev25"] > 0.1 and f["streak"] == 1
     assert f["age_days"] == L._days("2025-12-01", day) and f["days_since_prev"] == L._days("2026-09-01", day)
     assert L.features(_row(), "2030-01-01", bars) is None                              # その日の足が無い
     f2 = L.features(_row(prev=None, listed=None, akaji=True), day, bars)
-    assert f2["breakout"] is None and f2["listed"] == "" and f2["akaji"] == 1
+    assert f2["breakout"] is None and f2["listed"] == "" and f2["akaji"] == 1 and f2["kind"] == L.KIND_RECORD
+    assert L.features(_row(record=False, listed=None), day, bars)["kind"] == L.KIND_YTD
 
 
 def test_labels():
@@ -131,7 +136,10 @@ def test_update_adds_both_lists_fills_and_never_duplicates():
         assert abs(A["gap1"] - (115 / 120 - 1)) < 1e-4 and abs(A["oc1"] - (110 / 115 - 1)) < 1e-4
         assert cases["2222"]["date"] == d1 and cases["2222"]["label1"] == ""
         md = open(md_p, encoding="utf-8").read()
-        assert "## 全体" in md and "## その日の特徴ごと" in md and "上場から" in md and "投資助言ではありません" in md
+        assert "## A. 年初来高値の更新（全部）" in md and "## B. 上場来高値の更新（記録上の最高値）だけ" in md
+        assert md.count("### 全体") == 2 and md.count("### その日の特徴ごと") == 2 and "#### 上場の日からの記録か" in md
+        assert "上場来高値（記録上の最高値）** 2件" in md and "上場から" in md and "投資助言ではありません" in md
+        assert cases["1111"]["kind"] == L.KIND_LISTED
         assert "1111 エー" in md and "**だまし**" in md                                   # 最近のケースは名前つき
         msg2 = L.update({"1111": a, "2222": b}, payload, prev, fetch, csv_p, md_p, now="x", sleep=0)
         assert "今回 +0" in msg2 and len(L.read_ledger(csv_p)) == 2 and calls == ["1111"]    # 二重にしない・始値は取り直さない

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""J44 高値更新の台帳：年初来高値を更新した株の「その日の特徴」と「そのあと」（続伸・横ばい・だまし）を毎日ためる。
+"""J44 高値更新の台帳：年初来高値・上場来高値を更新した株の「その日の特徴」と「そのあと」（続伸・横ばい・だまし）を毎日ためる。
 2026-10-09 オーナー「年初の高値を更新してさらに上げたものと、だましで下げたもの、特徴を蓄積して保存しておいてください」。
 PILLAR_PREREG.md「J44」（読むだけ・判定しない）。
 
@@ -8,7 +8,9 @@ PILLAR_PREREG.md「J44」（読むだけ・判定しない）。
      次の日の始値（窓・寄り→大引け）は daily に無いので、そのケースの銘柄だけ Yahoo の日足を取りに行く（1日に数十回）
   ② その日の高値更新の一覧（jp-highs.json の highs）を新しいケースとして足す（特徴はその日の引けでわかるものだけ）。
      台帳に前の日の一覧が無ければ、前の jp-highs.json の一覧も足す（始めた日・取りこぼした日）
-  → highs-ledger.csv（全ケース・1行1ケース・Excel で開ける UTF-8 BOM つき）／highs-ledger.md（区切りごとの表と最近のケース）
+  → highs-ledger.csv（全ケース・1行1ケース・Excel で開ける UTF-8 BOM つき・kind 列＝上場来／記録上の最高値／年初来）
+    ／highs-ledger.md（A. 年初来の更新すべて・B. 上場来高値〔記録上の最高値〕だけ、の2部。どちらも区切りごとの表と最近のケース）
+  🆕 2026-10-09 オーナー「上場来高値も同様でお願いします」で B を足した（区切りは同じ・「上場来と言えるか」で分ける）
 
 ⚠️ 続伸・だましの区切り（次の日 ±1％・5日後 ±3％）と特徴の区切りは PILLAR_PREREG.md「J44」と下の定数に固定。
 ⚠️ 判定はしない＝ここで目立った特徴は「候補」。決まりにするなら別に事前登録して、それより後のケースだけで確かめる。
@@ -40,7 +42,7 @@ JST = dt.timezone(dt.timedelta(hours=9))
 UA = {"User-Agent": "Mozilla/5.0"}
 LABEL_UP, LABEL_FLAT, LABEL_DOWN = "続伸", "横ばい", "だまし"
 
-FEATURES = ("date", "code", "name", "market", "sector", "period", "record", "listed", "age_days", "akaji",
+FEATURES = ("date", "code", "name", "market", "sector", "period", "kind", "record", "listed", "age_days", "akaji",
             "close", "pct", "high", "prev_high", "prev_date", "breakout", "close_vs_prev", "wick", "hi_close",
             "turnover", "tv_ratio", "dev25", "streak", "days_since_prev")
 AFTER_COLS = ("d1", "gap1", "oc1", "cc1", "hi1", "below_prev1", "label1", "d5", "cc5", "max5", "min5", "label5")
@@ -66,6 +68,12 @@ BUCKETS = (
     ("その日の売買代金", "turnover", [("1億円未満", 0, 1), ("1〜10億円", 1, 10), ("10億円以上", 10, INF)]),
     ("次の日の窓（寄りでわかる）", "gap1", [("−1％以下", -INF, -0.01), ("±1％未満", -0.01, 0.01), ("+1％以上", 0.01, INF)]),
 )
+# 🆕 2026-10-09 オーナー「上場来高値も同様でお願いします」＝上場来高値（記録上の最高値）のケースだけの表は、
+#    「上場来の高値か」の代わりに「上場の日からの記録か」で分ける（ほかの区切りは同じ）
+KIND_LISTED, KIND_RECORD, KIND_YTD = "上場来", "記録上の最高値", "年初来"
+RECORD_BUCKETS = (("上場の日からの記録か", "listed", {1: "上場来と言える（上場の日からの記録）",
+                                                     0: "記録の始まりが上場より後（2000年ごろからの最高値）"}),) + \
+    tuple(b for b in BUCKETS if b[1] != "record")
 
 
 # ════════════════════ 1件のケース ════════════════════
@@ -110,9 +118,11 @@ def features(row, day, bars, period=""):
     tv = jp_markers.stock_values(b)
     dev, streak = jp_markers.landmine_values(b) if b else (None, None)
     akaji = row.get("akaji")
+    record = bool(row.get("record"))
+    kind = KIND_LISTED if record and row.get("listed") else KIND_RECORD if record else KIND_YTD
     return {
         "date": day, "code": row.get("code", ""), "name": row.get("name", ""), "market": row.get("market", ""),
-        "sector": row.get("sector", ""), "period": period,
+        "sector": row.get("sector", ""), "period": period, "kind": kind,
         "record": int(bool(row.get("record"))),
         "listed": "" if row.get("listed") is None else int(bool(row.get("listed"))),
         "age_days": _days(row.get("hist_from"), day),
@@ -263,9 +273,9 @@ def stats(cases):
             "down5": (sum(1 for c in five if c["label5"] == LABEL_DOWN) / len(five)) if five else None}
 
 
-def tables(cases):
+def tables(cases, buckets=BUCKETS):
     out = []
-    for title, col, spec in BUCKETS:
+    for title, col, spec in buckets:
         names = ([n for n, *_ in spec] if isinstance(spec, list) else list(spec.values()) if isinstance(spec, dict)
                  else sorted({str(c.get(col)) for c in cases if c.get(col) not in (None, "")}))
         rows = [(name, stats([c for c in cases if bucket_of(spec, c.get(col)) == name])) for name in names]
@@ -285,42 +295,62 @@ def _x(x, unit="", d=1):
     return "—" if x is None or x == "" else f"{float(x):.{d}f}{unit}"
 
 
-def render_md(cases, now=""):
-    days = sorted({c["date"] for c in cases})
+def section(cases, buckets, days):
+    """全体・その日の特徴ごと・最近のケースの3つの表（render_md の1部ぶん）"""
     st = stats(cases)
-    L = ["# 高値更新の台帳（J44・読むだけ）", "",
-         f"更新: {now}（事前登録＝`PILLAR_PREREG.md`「J44」）。ケース {len(cases):,}件（{days[0] if days else '—'}〜{days[-1] if days else '—'}・"
-         f"{len(days)}営業日）・次の日まで埋まった {st['n']:,}件・5日後まで {st['n5']:,}件。全ケースは `highs-ledger.csv`（Excel で開ける）", "",
-         "- **ケース**＝その日の大引けで年初来高値を更新した東証の銘柄（サイトの「高値・安値更新」の一覧と同じ）",
-         f"- **次の日**：終値どうしで +{UP1 * 100:g}％以上＝**{LABEL_UP}**・{DOWN1 * 100:g}％以下＝**{LABEL_DOWN}**・その間＝{LABEL_FLAT}"
-         f"／**5日後**：+{UP5 * 100:g}％以上＝{LABEL_UP}・{DOWN5 * 100:g}％以下＝{LABEL_DOWN}",
-         "- **判定はしない**。目立った特徴は「候補」で、決まりにするなら別に事前登録して、それより後のケースだけで確かめる。"
-         "件数が少ないうちは割合が大きく揺れる", "",
-         "## 全体", "", "| 件数 | 続伸 | 横ばい | だまし | 次の日の平均（終値どうし） | 次の日の寄り→大引け | 5日後（件数） | 5日後にだまし |",
+    L = ["### 全体", "", "| 件数 | 続伸 | 横ばい | だまし | 次の日の平均（終値どうし） | 次の日の寄り→大引け | 5日後（件数） | 5日後にだまし |",
          "|---:|---:|---:|---:|---:|---:|---:|---:|",
          f"| {st['n']:,} | {_s(st['up'])} | {_s(st['flat'])} | {_s(st['down'])} | {_p(st['cc1'], 2)} | {_p(st['oc1'], 2)} | "
          f"{_p(st['cc5'], 2)}（{st['n5']:,}） | {_s(st['down5'])} |", "",
-         "## その日の特徴ごと（次の日の値動き）", ""]
-    for title, rows in tables(cases):
-        L += [f"### {title}", "", "| 区切り | 件数 | 続伸 | だまし | 次の日の平均 | 寄り→大引け | 5日後（件数） |", "|---|---:|---:|---:|---:|---:|---:|"]
+         "### その日の特徴ごと（次の日の値動き）", ""]
+    for title, rows in tables(cases, buckets):
+        L += [f"#### {title}", "", "| 区切り | 件数 | 続伸 | だまし | 次の日の平均 | 寄り→大引け | 5日後（件数） |", "|---|---:|---:|---:|---:|---:|---:|"]
         for name, s in rows:
             L.append(f"| {name} | {s['n']:,} | {_s(s['up'])} | {_s(s['down'])} | {_p(s['cc1'], 2)} | {_p(s['oc1'], 2)} | {_p(s['cc5'], 2)}（{s['n5']:,}） |")
         L.append("")
     recent = set(days[-RECENT_DAYS - 1:-1]) if len(days) > 1 else set()
-    L += [f"## 最近のケース（次の日まで埋まった {RECENT_DAYS}営業日・だましと続伸）", "",
-          "| 日 | 銘柄 | 上場来 | 上場から | その日の上げ | 売買代金の倍率 | 25日線から | 更新幅 | 引けと前の高値 | 次の日の窓 | 次の日 | 5日後 |",
+    L += [f"### 最近のケース（次の日まで埋まった {RECENT_DAYS}営業日・だましと続伸）", "",
+          "| 日 | 銘柄 | 種類 | 上場から | その日の上げ | 売買代金の倍率 | 25日線から | 更新幅 | 引けと前の高値 | 次の日の窓 | 次の日 | 5日後 |",
           "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|"]
     show = [c for c in cases if c["date"] in recent and c.get("label1") in (LABEL_UP, LABEL_DOWN)]
     for c in sorted(show, key=lambda x: (x["date"], _num(x.get("cc1")) or 0), reverse=True):
         age = _num(c.get("age_days"))
         five = f"{c['label5']} {_p(_num(c.get('cc5')))}" if c.get("label5") else "—"
-        L.append(f"| {c['date']} | {c['code']} {c['name']} | {'★' if c.get('record') == 1 else ''} | "
+        L.append(f"| {c['date']} | {c['code']} {c['name']} | {c.get('kind') or ''} | "
                  f"{'—' if age is None else f'{age / 365:.1f}年'} | {_p(_num(c.get('pct')))} | {_x(c.get('tv_ratio'), '倍')} | "
                  f"{_p(_num(c.get('dev25')))} | {_p(_num(c.get('breakout')))} | {_p(_num(c.get('close_vs_prev')))} | "
                  f"{_p(_num(c.get('gap1')))} | **{c.get('label1')}** {_p(_num(c.get('cc1')))} | "
                  f"{five} |")
-    L += ["", "## 注意", "",
+    return L + [""]
+
+
+def is_record(c):
+    return _num(c.get("record")) == 1
+
+
+def render_md(cases, now=""):
+    days = sorted({c["date"] for c in cases})
+    st = stats(cases)
+    rec = [c for c in cases if is_record(c)]
+    sr = stats(rec)
+    L = ["# 高値更新の台帳（J44・読むだけ）", "",
+         f"更新: {now}（事前登録＝`PILLAR_PREREG.md`「J44」）。ケース {len(cases):,}件（{days[0] if days else '—'}〜{days[-1] if days else '—'}・"
+         f"{len(days)}営業日）・次の日まで埋まった {st['n']:,}件・5日後まで {st['n5']:,}件。全ケースは `highs-ledger.csv`（Excel で開ける）", "",
+         f"- うち**上場来高値（記録上の最高値）** {len(rec):,}件（上場来と言える {sum(1 for c in rec if _num(c.get('listed')) == 1):,}件）・"
+         f"次の日まで埋まった {sr['n']:,}件。CSV の「kind」列で 上場来／記録上の最高値／年初来 に絞れる",
+         "- **ケース**＝その日の大引けで年初来高値を更新した東証の銘柄（サイトの「高値・安値更新」の一覧と同じ）。"
+         "上場来高値の更新は年初来の更新の一部（同じ一覧に入る）。上場から20営業日未満の株は一覧に入らない",
+         f"- **次の日**：終値どうしで +{UP1 * 100:g}％以上＝**{LABEL_UP}**・{DOWN1 * 100:g}％以下＝**{LABEL_DOWN}**・その間＝{LABEL_FLAT}"
+         f"／**5日後**：+{UP5 * 100:g}％以上＝{LABEL_UP}・{DOWN5 * 100:g}％以下＝{LABEL_DOWN}",
+         "- **判定はしない**。目立った特徴は「候補」で、決まりにするなら別に事前登録して、それより後のケースだけで確かめる。"
+         "件数が少ないうちは割合が大きく揺れる", "",
+         "## A. 年初来高値の更新（全部）", ""]
+    L += section(cases, BUCKETS, days)
+    L += ["## B. 上場来高値の更新（記録上の最高値）だけ", ""]
+    L += section(rec, RECORD_BUCKETS, days)
+    L += ["## 注意", "",
           "- Yahoo の日足だけで数えている（値の誤り・取れない日がある）。次の日の始値が取れなかったケースは窓と寄り→大引けを空けている",
+          "- 「上場来と言える」＝記録の始まりが上場の日と確かめられたもの。古い株は記録の始まりが2000年ごろ＝「記録上の最高値」",
           "- 材料（ニュース・大株主の売り買い・板の様子）は入っていない。セッションで読み解いた事例は `memory/05_highs_casebook.md`",
           "- 過去の数え（J10・J11）では、高値更新の翌朝に寄りで買うと平均で負けやすく、窓 +1％以上で寄るとさらに弱い",
           "", "---", "", "※ 値動きの記録です。投資助言ではありません。将来の値動きを約束するものではありません。"]
