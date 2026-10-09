@@ -1,0 +1,72 @@
+name: SQ Morning Lab (manual)
+
+# J43 SQの日（毎月の第2金曜日）の朝は特別か：寄りの窓の戻しと「寄りで買わない」目印（A・B・C）を、ほかの金曜日と比べる。
+# 2026-10-09 登録・オーナー「1と2を進めてください」（きっかけ＝10/9 のSQの日に 8:55 の気配が寄り値と大きくずれた）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J43」（事前登録）と sq_morning_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。先に jp-bars-cache（日足＝取れる全期間版）を1回。check（損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（sq-morning-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝行数・SQの日の数・組ごとの件数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: sq-morning-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up prices
+        run: python tests/test_sq_morning_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u sq_morning_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python sq_morning_lab.py
+          [ -f sq-morning-lab.md ] && cat sq-morning-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sq-morning-lab.json sq-morning-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: sq morning lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
