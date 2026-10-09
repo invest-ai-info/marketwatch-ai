@@ -5,11 +5,15 @@
   手元で書き換えていないファイルだけを更新する／手元で書き換えたファイルには触れず「手元だけ」「両方」を見分ける／
   触ってはいけないファイル（sync_to_github.py・mw.py・_ 始まり・research/）に触れない／GitHub 側で作るデータは
   控えを残して最新にする／GitHub で消えたファイルは控えへ移す／下見は何も書かない／起動時の設定は冪等。
+  2026-10-09 追加: 手元の版が GitHub に一度あった版（前回そろえた版より新しいもの）のままなら「両方で変更」にせず
+  控えを残して最新にする／--help や知らない指定では取り込みを動かさない。
 
 実行:  python tests/test_auto_pull.py     （pytest 不要。pytest でも動く）
 """
+import contextlib
 import datetime
 import importlib.util
+import io
 import json
 import os
 import shutil
@@ -21,6 +25,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _spec = importlib.util.spec_from_file_location("auto_pull", os.path.join(ROOT, "auto_pull.py"))
 A = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(A)
+# テストでは GitHub に問い合わせない（過去の版をたどる関数の既定を「履歴なし」にする。使うテストは history= で渡す）
+A.past_versions = lambda root, rel: iter(())
 
 T0 = datetime.datetime(2026, 9, 26, 6, 0, tzinfo=datetime.timezone.utc)
 CSC = 'SYNC_FORBIDDEN = {\n    "signals-log.json",\n    "index.html",\n}\n'
@@ -108,6 +114,110 @@ def test_both_changed_but_local_already_on_github_says_zero_lines():
     text = "\n".join(lines)
     assert "d.md … 両方で変更＝統合が必要（手元にしか無い行 0＝" in text
     assert read(root, "d.md") == "d1\r\n手元で足して送った行\r\n"   # 知らせるだけ＝手元は触らない
+
+
+def _sent_then_cloud_edited(name="d.md"):
+    """前回そろえた版 d1 → 手元で1行足して送った版（GitHub に一度あった）→ クラウドがさらに足した版、の状態を作る。"""
+    root = make_local({name: "d1\n"})
+    A.run(root, zip_path=make_zip(root, {name: "d1\n"}), boot=set(), now=T0)
+    sent = "d1\n手元で足して送った行\n"
+    latest = sent + "クラウドが足した行\n"
+    with open(os.path.join(root, name), "w", encoding="utf-8", newline="") as f:
+        f.write(sent)
+    return root, make_zip(root, {name: latest}, name="z2.zip"), sent, latest
+
+
+def _history(*bodies):
+    def h(root, rel):
+        for i, b in enumerate(bodies):
+            yield f"c{i:06d}", "2026-10-05T10:00:00Z", A.blob_sha(b.encode("utf-8"))
+    return h
+
+
+def test_local_equal_to_past_github_version_is_caught_up():
+    # 2026-10-09 の実例（MY_TRADING_RULES.md・SESSION_HANDOFF.md）: 手元は送った版のまま＝書き換えていない→最新にする
+    root, zp, sent, latest = _sent_then_cloud_edited()
+    _code, lines = A.run(root, zip_path=zp, boot=set(), now=T0 + datetime.timedelta(hours=2),
+                         history=_history(latest, sent, "d1\n"))
+    text = "\n".join(lines)
+    assert read(root, "d.md") == latest
+    assert "両方で変更" not in text and "まだ GitHub に送っていない" not in text
+    assert "GitHub の過去の版のまま" in text and "d.md（10/05 19:00 の版 c000001）" in text
+    bdir = [d for d in os.listdir(os.path.join(root, "_pull_backup")) if d.endswith("-auto")][-1]
+    assert read(root, f"_pull_backup/{bdir}/d.md") == sent              # 置き換える前の手元の版を控える
+    st = json.load(open(os.path.join(root, "_auto_pull_state.json"), encoding="utf-8"))
+    assert st["files"]["d.md"] == A.blob_sha(latest.encode("utf-8"))  # 次の起動では「同じ」になる
+    assert "過去の版から更新 d.md" in read(root, "_auto_pull_report.txt")
+
+
+def test_crlf_copy_of_past_github_version_is_caught_up():
+    root, zp, sent, latest = _sent_then_cloud_edited()
+    with open(os.path.join(root, "d.md"), "wb") as f:
+        f.write(sent.replace("\n", "\r\n").encode("utf-8"))
+    A.run(root, zip_path=zp, boot=set(), now=T0 + datetime.timedelta(hours=2), history=_history(latest, sent))
+    assert read(root, "d.md") == latest
+
+
+def test_version_older_than_last_sync_is_still_a_local_change():
+    # 前回そろえた版より古い版に戻したのは手元の変更（意図して戻した可能性）＝触らず「両方で変更」
+    root, zp, sent, latest = _sent_then_cloud_edited()
+    _code, lines = A.run(root, zip_path=zp, boot=set(), now=T0 + datetime.timedelta(hours=2),
+                         history=_history(latest, "d1\n", sent))
+    assert read(root, "d.md") == sent
+    assert "d.md … 両方で変更" in "\n".join(lines)
+
+
+def test_history_failure_falls_back_to_notice():
+    root, zp, sent, _latest = _sent_then_cloud_edited()
+
+    def down(root_, rel):
+        raise OSError("HTTP Error 403: rate limit")
+        yield
+    _code, lines = A.run(root, zip_path=zp, boot=set(), now=T0 + datetime.timedelta(hours=2), history=down)
+    text = "\n".join(lines)
+    assert read(root, "d.md") == sent and "d.md … 両方で変更" in text
+    assert "照合はできなかった: HTTP Error 403" in text
+
+
+def test_history_not_consulted_for_local_only_change_and_dry_run_writes_nothing():
+    root, zp, sent, latest = _sent_then_cloud_edited()
+    calls = []
+
+    def spy(root_, rel):
+        calls.append(rel)
+        return _history(latest, sent)(root_, rel)
+    _code, lines = A.run(root, zip_path=zp, dry=True, boot=set(), now=T0 + datetime.timedelta(hours=2), history=spy)
+    assert read(root, "d.md") == sent and calls == ["d.md"]
+    assert "最新にする予定" in "\n".join(lines)
+    # 手元だけ変更（GitHub は前回そろえた版のまま）では問い合わせない
+    root2 = make_local({"c.md": "c1\n"})
+    A.run(root2, zip_path=make_zip(root2, {"c.md": "c1\n"}), boot=set(), now=T0)
+    with open(os.path.join(root2, "c.md"), "w", encoding="utf-8") as f:
+        f.write("c 手元で変更\n")
+    calls.clear()
+    A.run(root2, zip_path=make_zip(root2, {"c.md": "c1\n"}, name="z2.zip"), boot=set(),
+          now=T0 + datetime.timedelta(hours=2), history=spy)
+    assert calls == []
+
+
+def test_help_and_unknown_flags_do_not_run():
+    # 2026-10-09: --help を付けたら受け付けずに取り込みが動いた
+    orig = A.run
+
+    def boom(*a, **k):
+        raise AssertionError("取り込みを動かしてはいけない")
+    A.run = boom
+    out = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(out):
+            for argv in (["--help"], ["-h"], ["--hook", "--help"]):
+                assert A.main(argv) == 0
+            assert A.main(["--hlep"]) == 2
+            assert A.main(["--hook", "--bogus"]) == 0      # 起動時の自動実行は止めない
+    finally:
+        A.run = orig
+    assert "知らない指定: --hlep" in out.getvalue()
+    assert A.usage().startswith("使い方") and "--dry-run" in A.usage()
 
 
 def test_never_touch_local_only_files():

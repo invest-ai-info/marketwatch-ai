@@ -13,6 +13,8 @@
   ・手元で書き換えていないファイル → GitHub の最新にする（新しいファイルは作る・GitHub で消えたものは控えへ移す）
   ・手元で書き換えたファイル → 触らない。「手元だけ変更＝送ればよい」「両方で変更＝統合が必要」を見分けて知らせる
     （両方で変更には「手元にしか無い行」の数を添える＝0 なら中身は GitHub 側に全部ある見込み）
+    ただし手元の版が「前回そろえた版より新しい、GitHub に一度あった版」と1バイトも違わなければ、手元では書き換えて
+    いない（遅れているだけ）＝控えを残して最新にする。照合だけは API を使う（該当ファイルの数件だけ・できなければ従来どおり知らせる）
     （統合に使えるよう、GitHub 側の版を _auto_pull_conflicts\\ に置く）
   ・GitHub 側で作るデータ（SYNC 禁忌＝signals-log.json など）→ 研究に使うので常に最新にする。
     手元で書き換えていたら、置き換える前に _pull_backup\\ へ控えを残す（手元からは送れないファイルなので失うものは控えだけ）
@@ -29,6 +31,7 @@
   python auto_pull.py --dry-run          下見だけ（何も書き換えない）
   python auto_pull.py --install-hook     手元の Claude Code の起動時に自動で動くよう設定（.claude\\settings.local.json）
   python auto_pull.py --uninstall-hook   その設定を外す
+  python auto_pull.py --help             この使い方を出すだけ（取り込みはしない。知らない指定も取り込まずに止まる）
   （--hook は起動時の自動実行用＝短い要約だけを出す。前回の取り込みから60分以内なら取得を省く）
 """
 import ast
@@ -41,14 +44,22 @@ import shutil
 import sys
 import tempfile
 import time
+import urllib.parse
 import urllib.request
 import zipfile
 
 ZIP_URL = "https://codeload.github.com/invest-ai-info/marketwatch-ai/zip/refs/heads/main"
+COMMITS_API = "https://api.github.com/repos/invest-ai-info/marketwatch-ai/commits"
+RAW_URL = "https://raw.githubusercontent.com/invest-ai-info/marketwatch-ai/"
 HERE = os.path.dirname(os.path.abspath(__file__))
 HOOK_MIN_INTERVAL_MIN = 60
 KEEP_BACKUPS = 15
 SHOW_MAX = 15
+# 「両方で変更」のとき、手元の版が GitHub に一度あった版かを照合する上限（API は1ファイル1回・中身は raw で取る）
+HISTORY_COMMITS = 30      # 1ファイルで遡るコミット数
+HISTORY_MAX_FILES = 10    # 1回の取り込みで照合するファイル数（認証なしの API は1時間60回まで）
+HISTORY_BUDGET_SEC = 60   # 照合に使う時間の上限（起動時の自動実行は180秒で打ち切られる）
+KNOWN_FLAGS = {"--hook", "--dry-run", "--install-hook", "--uninstall-hook"}
 # 絶対に触らない（パス）
 NEVER = {"sync_to_github.py", "mw.py", ".sync-cache.json", ".claude/settings.local.json"}
 # 非公開研究の台帳（SYNC 禁忌に載っているが GitHub 側の生成物ではない＝「常に最新にする」の対象から外す）
@@ -122,6 +133,48 @@ def local_only_lines(p, rb):
         return {ln.strip() for ln in b.decode("utf-8", "replace").replace("\r\n", "\n").split("\n")}
     remote = lines(rb)
     return sum(1 for ln in lines(lb) if ln and ln not in remote)
+
+
+def github_token(root):
+    """手元の設定ファイルの github_token（あれば API の上限が1時間5000回になる）。無ければ認証なしで呼ぶ。"""
+    for name in ("market-news-config.json.json", "market-news-config.json"):
+        try:
+            with open(os.path.join(root, name), encoding="utf-8") as f:
+                tok = json.load(f).get("github_token")
+            if tok:
+                return tok
+        except (OSError, ValueError, AttributeError):
+            pass
+    return os.environ.get("GITHUB_TOKEN") or None
+
+
+def past_versions(root, rel):
+    """GitHub の main で rel を変えたコミットを新しい順にたどり、(短いコミット, 日時, その版の指紋) を順に返す。
+    通信できなければ例外。呼ぶ側は見つかった時点で止める（中身は必要な分だけ取る）。"""
+    headers = {"User-Agent": "mw-auto-pull", "Accept": "application/vnd.github+json"}
+    tok = github_token(root)
+    if tok:
+        headers["Authorization"] = f"token {tok}"
+    q = urllib.parse.urlencode({"path": rel, "sha": "main", "per_page": HISTORY_COMMITS})
+    with urllib.request.urlopen(urllib.request.Request(f"{COMMITS_API}?{q}", headers=headers), timeout=20) as r:
+        commits = json.load(r)
+    for c in commits:
+        url = RAW_URL + c["sha"] + "/" + urllib.parse.quote(rel)
+        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "mw-auto-pull"}),
+                                    timeout=10) as r:
+            body = r.read()
+        yield c["sha"][:7], c.get("commit", {}).get("committer", {}).get("date", ""), blob_sha(body)
+
+
+def match_past_version(root, rel, mine, prev, history):
+    """手元の版（mine＝指紋の集合）が、前回そろえた版（prev）より新しい GitHub の版のどれかと同じなら
+    (短いコミット, 日時) を返す。前回そろえた版まで遡っても無ければ None（それより古い版に戻したのは手元の変更とみなす）。"""
+    for short, date, sha in history(root, rel):
+        if sha in mine:
+            return short, date
+        if sha == prev:
+            return None
+    return None
 
 
 def now_utc():
@@ -222,9 +275,11 @@ def prune_backups(root):
         shutil.rmtree(os.path.join(base, d), ignore_errors=True)
 
 
-def run(root, zip_path=None, dry=False, hook=False, boot=None, now=None):
-    """戻り値: (終了コード, 表示する行のリスト)。hook=True は要約だけ・60分以内なら取得を省く。"""
+def run(root, zip_path=None, dry=False, hook=False, boot=None, now=None, history=None):
+    """戻り値: (終了コード, 表示する行のリスト)。hook=True は要約だけ・60分以内なら取得を省く。
+    history は GitHub の過去の版をたどる関数（テストで差し替える。既定は past_versions）。"""
     boot = BOOT if boot is None else boot
+    history = history or past_versions
     now = now or now_utc()
     st = load_state(root)
     if hook and st.get("last_success") and not zip_path:
@@ -262,6 +317,9 @@ def run(root, zip_path=None, dry=False, hook=False, boot=None, now=None):
     conflict_dir = os.path.join(root, "_auto_pull_conflicts")
     updated, created, gen_replaced, removed, fails = [], [], [], [], []
     unsent, other_diff, kept_deleted = [], [], []
+    caught_up = []                    # GitHub の過去の版のまま（手元では書き換えていない）だった＝最新にした
+    hist_left, hist_err = HISTORY_MAX_FILES, None
+    hist_until = time.monotonic() + HISTORY_BUDGET_SEC
     same = 0
     if not dry:
         shutil.rmtree(conflict_dir, ignore_errors=True)   # 前回の統合用の控えは、今回の判定で置き直す
@@ -301,6 +359,23 @@ def run(root, zip_path=None, dry=False, hook=False, boot=None, now=None):
                 files[rel] = R
                 gen_replaced.append(rel)
             else:
+                # 2026-10-09: 手元から送った版（＝GitHub に一度あった版）のまま、クラウドがさらに直すと「両方で変更」と
+                # 出ていた（MY_TRADING_RULES.md・SESSION_HANDOFF.md）。手元の版が前回そろえた版より新しい GitHub の版と
+                # 1バイトも違わなければ、手元では何も書き換えていない＝控えを残して最新にする（中身は GitHub の履歴にも残る）
+                hit = None
+                if prev != R and hist_err is None and hist_left > 0 and time.monotonic() < hist_until:
+                    hist_left -= 1
+                    try:
+                        hit = match_past_version(root, rel, {L, lf} - {None}, prev, history)
+                    except Exception as e:   # 通信できない・上限など＝従来どおり知らせるだけ
+                        hist_err = e
+                if hit:
+                    if not dry:
+                        backup(root, bdir, rel)
+                        write_bytes(root, rel, rb)
+                    files[rel] = R
+                    caught_up.append((rel, hit))
+                    continue
                 if prev is None:
                     kind = "手元と GitHub で違う（初回のため、どちらが新しいか判定できない）"
                 elif prev != R:
@@ -365,6 +440,15 @@ def run(root, zip_path=None, dry=False, hook=False, boot=None, now=None):
             f"更新 {len(updated)}・新規 {len(created)}・GitHub で削除 {len(removed)}・データ更新 {len(gen_replaced)}"
             f"（同じ {same}）")
     lines = [head] + notice
+    if caught_up:
+        def when(d):
+            return jst(datetime.datetime.fromisoformat(d.replace("Z", "+00:00"))) if d else "?"
+        lines.append(f"   GitHub の過去の版のまま（手元では書き換えていない）だったので最新に{'する予定' if dry else 'した'} "
+                     f"{len(caught_up)} 件: " + ", ".join(f"{r}（{when(d)} の版 {c}）" for r, (c, d) in caught_up[:5])
+                     + (" …" if len(caught_up) > 5 else "")
+                     + ("" if dry else f"（置き換える前の手元の版は {os.path.relpath(bdir, root)} に控えた）"))
+    if hist_err is not None:
+        lines.append(f"   （「両方で変更」が GitHub の過去の版のままかの照合はできなかった: {hist_err}）")
     if gen_replaced and not dry:
         lines.append(f"   GitHub 側で作るデータは、置き換える前の手元の版を {os.path.relpath(bdir, root)} に控えた: "
                      + ", ".join(gen_replaced[:5]) + (" …" if len(gen_replaced) > 5 else ""))
@@ -376,6 +460,7 @@ def run(root, zip_path=None, dry=False, hook=False, boot=None, now=None):
         prune_backups(root)
         rep = [f"# auto_pull の結果（{jst(now)} JST・main {commit}）", ""] + lines + [""]
         rep += [f"更新      {r}" for r in updated] + [f"新規      {r}" for r in created]
+        rep += [f"過去の版から更新 {r}（{d} の版 {c}）" for r, (c, d) in caught_up]
         rep += [f"削除      {r}" for r in removed] + [f"データ更新 {r}" for r in gen_replaced]
         rep += [f"未送信    {r} … {k}" for r, k in unsent] + [f"SYNC外の差 {r} … {k}" for r, k in other_diff]
         rep += [f"失敗      {x}" for x in fails]
@@ -433,12 +518,25 @@ def install_hook(root, uninstall=False):
                "   次に Claude Code を起動したときから動く。まず一度 `python auto_pull.py` を手で実行しておくと確実"] + ([note] if note else [])
 
 
+def usage():
+    return "使い方" + __doc__.split("使い方", 1)[1].rstrip()
+
+
 def main(argv):
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
     hook = "--hook" in argv
+    # 2026-10-09: --help を付けても受け付けずに本体（取り込み）が動いた＝使い方を見るだけのつもりで手元が書き換わる。
+    # 使い方の指定と知らない指定は、取り込みの前に止める（どのフォルダでも動く）
+    if any(a in ("-h", "--help", "/?") for a in argv):
+        print(usage())
+        return 0
+    unknown = [a for a in argv if a not in KNOWN_FLAGS and not a.lower().endswith(".zip")]
+    if unknown:
+        print(f"❌ 知らない指定: {' '.join(unknown)}（取り込みはしていない）\n\n{usage()}")
+        return 0 if hook else 2
     if not is_local_folder(HERE):
         if not hook:   # 起動時の自動実行では黙って終わる（クラウドのセッションを邪魔しない）
             print("❌ 手元のフォルダ専用（本物の sync_to_github.py と mw.py があるフォルダで実行する）")
