@@ -91,8 +91,23 @@ def test_second_run_tells_local_only_from_both_changed():
     text = "\n".join(lines)
     assert "c.md … 手元だけ変更" in text
     assert "d.md … 両方で変更" in text
+    assert "d.md … 両方で変更＝統合が必要（手元にしか無い行 1）" in text
+    assert "c.md … 手元だけ変更＝`python mw.py sync` で送ればよい" in text   # 手元だけ変更には行数を添えない
     assert read(root, "_auto_pull_conflicts/d.md") == "d2 GitHub で変更\n"   # 統合用に GitHub 側の版を置く
     assert read(root, "_auto_pull_conflicts/c.md") is None
+
+
+def test_both_changed_but_local_already_on_github_says_zero_lines():
+    # 2026-10-09 の実例: 手元で足して送った → クラウドがさらに足した → 次の取り込みで「両方で変更」。中身は GitHub に全部ある
+    root = make_local({"d.md": "d1\n"})
+    A.run(root, zip_path=make_zip(root, {"d.md": "d1\n"}), boot=set(), now=T0)
+    with open(os.path.join(root, "d.md"), "wb") as f:
+        f.write("d1\r\n手元で足して送った行\r\n".encode("utf-8"))   # CRLF でも数えない
+    zp = make_zip(root, {"d.md": "d1\n手元で足して送った行\nクラウドが足した行\n"}, name="z2.zip")
+    _code, lines = A.run(root, zip_path=zp, boot=set(), now=T0 + datetime.timedelta(hours=2))
+    text = "\n".join(lines)
+    assert "d.md … 両方で変更＝統合が必要（手元にしか無い行 0＝" in text
+    assert read(root, "d.md") == "d1\r\n手元で足して送った行\r\n"   # 知らせるだけ＝手元は触らない
 
 
 def test_never_touch_local_only_files():
