@@ -50,6 +50,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add jp-highs.json
+          git add highs-ledger.csv highs-ledger.md 2>/dev/null || true   # 🆕 2026-10-09 高値更新の台帳（J44・highs_ledger.py）
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0

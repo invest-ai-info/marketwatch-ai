@@ -1240,6 +1240,21 @@ def main():
             body.append(f"- ✅ 🟢 高値・安値の更新銘柄 asof={h_asof}（上流の確定最終営業日と一致）")
         else:
             body.append(f"- ⚪ 高値・安値の更新銘柄: 判定不能（asof={h_asof or 'なし'} / 上流={h_settled or 'なし'}）")
+        # 🆕 2026-10-09 J44 高値更新の台帳（highs_ledger.py が jp-highs と同じ回に書く）＝一覧より古ければ台帳だけ止まっている
+        try:
+            led = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/highs-ledger.md", token)
+            m = re.search(r"ケース [\d,]+件（[\d-]+〜(\d{4}-\d{2}-\d{2})・", led or "")
+            l_last = m.group(1) if m else ""
+            if h_asof and l_last and l_last < h_asof:
+                body.append(f"- 🚨 🟡 高値更新の台帳（J44）が止まっている: 最新のケース {l_last} / jp-highs.json {h_asof}。"
+                            f"jp-highs.yml のログで「高値更新の台帳を更新できず」を探す（highs_ledger.py）")
+                bad.append(("高値更新の台帳の鮮度", "warn"))
+            elif l_last:
+                body.append(f"- ✅ 🟢 高値更新の台帳（J44）最新のケース {l_last}")
+            else:
+                body.append("- ⚪ 高値更新の台帳（J44）: まだ無いか読めない（2026-10-09 夜の初回より前なら正常）")
+        except Exception as e:  # noqa: BLE001
+            body.append(f"- ⚪ 高値更新の台帳（J44）の確認に失敗: {e}")
     except Exception as e:
         body.append(f"- 🚨 ⚪ 高値・安値の更新銘柄の鮮度確認に失敗: {e}")
 
