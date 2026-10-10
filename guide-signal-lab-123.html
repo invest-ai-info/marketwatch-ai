@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>日足で安値ブレイクの売りをするとき、損切りと利確の組み合わせで結果は変わるか？ 2369件で調べた【研究日誌 #123】 - MarketWatch AI</title>
+  <meta name="description" content="日足で直近20本の安値を下抜けたときに売りを出し、損切りと利確の組み合わせを変えると成績が変わるかを2369件で調査。目立つ組み合わせは0件で偶然の範囲内。研究日誌第123回。">
+  <meta name="keywords" content="安値ブレイク,売り,損切り,利確,出口の相性,日足,研究日誌">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-123.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="日足で安値ブレイクの売りをするとき、損切りと利確の組み合わせで結果は変わるか？ 2369件で調べた【研究日誌 #123】">
+  <meta property="og:description" content="日足で直近20本の安値を下抜けたときに売りを出し、損切りと利確の組み合わせを変えると成績が変わるかを2369件で調査。目立つ組み合わせは0件で偶然の範囲内。研究日誌第123回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-123.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "日足で安値ブレイクの売りをするとき、損切りと利確の組み合わせで結果は変わるか？ 2369件で調べた【研究日誌 #123】",
+    "description": "日足で直近20本の安値を下抜けたときに売りを出し、損切りと利確の組み合わせを変えると成績が変わるかを2369件で調査。目立つ組み合わせは0件で偶然の範囲内。研究日誌第123回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-10-11",
+    "dateModified": "2026-10-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-123.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --c-bg: #f8f9fb; --c-surface: #fff; --c-border: #e2e6ed;
+      --c-text: #1a1d23; --c-muted: #5a6072; --c-accent: #2563eb;
+      --c-green: #16a34a; --c-red: #dc2626; --c-warn: #d97706;
+      --c-tag: #eff6ff; --c-tag-text: #1d4ed8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --c-bg: #0f1117; --c-surface: #1a1d23; --c-border: #2e3340;
+        --c-text: #e8eaf0; --c-muted: #8b93a8; --c-accent: #60a5fa;
+        --c-green: #4ade80; --c-red: #f87171; --c-warn: #fbbf24;
+        --c-tag: #1e3a5f; --c-tag-text: #93c5fd;
+      }
+    }
+    :root[data-theme="dark"] {
+      --c-bg: #0f1117; --c-surface: #1a1d23; --c-border: #2e3340;
+      --c-text: #e8eaf0; --c-muted: #8b93a8; --c-accent: #60a5fa;
+      --c-green: #4ade80; --c-red: #f87171; --c-warn: #fbbf24;
+      --c-tag: #1e3a5f; --c-tag-text: #93c5fd;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--c-bg); color: var(--c-text); font-family: 'Noto Sans JP', system-ui, sans-serif; font-size: 16px; line-height: 1.7; }
+    a { color: var(--c-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+
+    .s-nav { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 8px 16px; }
+    .s-nav-inner { max-width: 900px; margin: 0 auto; }
+    .s-nav-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    @media (max-width: 699px) { .s-nav-grid { grid-template-columns: repeat(5, 1fr); } }
+    .s-nav-btn { display: block; text-align: center; padding: 6px 4px; font-size: 12px; border-radius: 6px; background: var(--c-tag); color: var(--c-tag-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .s-nav-btn:hover { opacity: .85; text-decoration: none; }
+    .s-nav-btn.current { background: var(--c-accent); color: #fff; }
+
+    .s-hero { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 28px 16px 24px; text-align: center; }
+    .s-hero-inner { max-width: 780px; margin: 0 auto; }
+    .s-tag { display: inline-block; background: var(--c-tag); color: var(--c-tag-text); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; letter-spacing: .04em; }
+    .s-hero h1 { font-size: clamp(18px, 2.6vw, 25px); font-weight: 800; line-height: 1.4; margin-bottom: 10px; }
+    .meta-line { font-size: 13px; color: var(--c-muted); }
+
+    .s-main { max-width: 780px; margin: 0 auto; padding: 28px 16px 60px; }
+    .s-section { margin-bottom: 40px; }
+    .s-section h2 { font-size: 19px; font-weight: 700; border-left: 4px solid var(--c-accent); padding-left: 12px; margin-bottom: 16px; }
+    .s-section h3 { font-size: 16px; font-weight: 700; margin: 22px 0 10px; }
+    .s-section p { margin-bottom: 12px; }
+
+    .s-summary { background: var(--c-surface); border: 2px solid var(--c-accent); border-radius: 10px; padding: 20px 22px; margin-bottom: 36px; }
+    .s-summary-head { font-weight: 800; font-size: 15px; color: var(--c-accent); margin-bottom: 10px; }
+    .s-summary ul { padding-left: 1.4em; }
+    .s-summary li { margin-bottom: 5px; }
+
+    .s-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .s-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .s-table th { background: var(--c-tag); color: var(--c-tag-text); padding: 8px 10px; font-weight: 700; text-align: left; white-space: nowrap; }
+    .s-table td { padding: 8px 10px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+    .s-table tr:last-child td { border-bottom: none; }
+    .s-table .plus { color: var(--c-green); font-weight: 700; }
+    .s-table .minus { color: var(--c-red); font-weight: 700; }
+    .s-table .base { background: rgba(37,99,235,.07); }
+
+    .s-note { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 14px 16px; font-size: 14px; color: var(--c-muted); margin: 20px 0; }
+    .s-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-right: 4px; }
+    .s-badge-ok { background: #dcfce7; color: #166534; }
+    .s-badge-ng { background: #fee2e2; color: #991b1b; }
+    .s-badge-note { background: var(--c-tag); color: var(--c-tag-text); }
+
+    .s-chart { margin: 20px 0; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 12px; }
+    .s-chart-note { font-size: 12px; color: var(--c-muted); text-align: center; margin-top: 8px; }
+
+    .tracker-wrap { overflow-x: auto; }
+    .tracker-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .tracker-wrap th { background: var(--c-tag); color: var(--c-tag-text); padding: 6px 8px; font-weight: 700; }
+    .tracker-wrap td { padding: 6px 8px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+
+    .s-kinsho { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 16px 18px; font-size: 13px; color: var(--c-muted); margin-top: 40px; }
+    .s-kinsho h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--c-text); }
+
+    .s-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+    .s-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 16px; }
+    .s-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .s-card p { font-size: 14px; color: var(--c-muted); margin: 0; }
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<!-- ナビバー -->
+<nav class="s-nav" aria-label="サイトナビ">
+  <div class="s-nav-inner">
+    <div class="s-nav-grid">
+      <a class="s-nav-btn" href="index.html">🏠 ホーム</a>
+      <a class="s-nav-btn" href="political-feed.html">🚨 政治速報</a>
+      <a class="s-nav-btn current" href="track-record.html">🧪 シグナル研究</a>
+      <a class="s-nav-btn" href="calendar.html">📅 カレンダー</a>
+      <a class="s-nav-btn" href="guides.html">📚 解説記事</a>
+      <a class="s-nav-btn" href="guide-investment-books.html">📖 投資本</a>
+      <a class="s-nav-btn" href="market-health.html">🩺 市場の健康度</a>
+      <a class="s-nav-btn" href="hot-assets.html">🔥 急騰ランキング</a>
+      <a class="s-nav-btn" href="charts.html">📈 チャート</a>
+      <a class="s-nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ヘッダー -->
+<header class="s-hero">
+  <div class="s-hero-inner">
+    <span class="s-tag">🧪 AIシグナル研究日誌</span>
+    <h1>日足で安値ブレイクの売りをするとき、損切りと利確の組み合わせで結果は変わるか？ 2369件で調べた【研究日誌 #123】</h1>
+    <p class="meta-line">公開：2026年10月11日　調査期間：2026年9月24日まで　出口の相性ラボ 第3回</p>
+  </div>
+</header>
+
+<main class="s-main">
+
+  <!-- ① kinsho-v1 免責バナー（3点必須） -->
+  <div class="disclaimer-banner s-note" data-disclaimer="kinsho-v1">
+    ⚠️ この記事は情報提供を目的としています。投資の判断はご自身でお願いします。将来の成績を保証するものではありません。
+  </div>
+
+  <!-- 30秒まとめ -->
+  <div class="s-summary">
+    <div class="s-summary-head">⏱ 30秒でわかる今回のまとめ</div>
+    <ul>
+      <li>「直近20本の安値を下抜けたら売る（日足）」という入り方で、<strong>損切りと利確の組み合わせを72通り試した</strong>。探索期間（2026年9月24日まで）の2369件が対象。</li>
+      <li>いまの方式（ATR（平均的な値動きの幅）の1.5倍で損切り・ATRの2倍で利確）の平均は<strong>損切り幅の0.08倍の損</strong>。1回あたり損切り幅の0.08倍の損という計算。</li>
+      <li>72通りの中に「統計的に目立つ」組み合わせは<strong>0件</strong>。偶然とは言いにくいほど良い組み合わせは見つからなかった。</li>
+      <li>やや良く見えた組み合わせ（ATR損切りとボリンジャーバンド（統計的なぶれ幅で引いた帯）下限利確）は基準より損切り幅の0.10倍高かったが、旗立ての基準（差が損切り幅の0.15倍以上）には届かなかった。</li>
+      <li>資産クラス別では、<strong>株価指数が最も苦しく（損切り幅の0.17倍の損、673件）</strong>、<strong>ビットコインのみプラス（損切り幅の0.10倍のプラス、105件・参考値）</strong>だった。</li>
+      <li>前向き（2026年9月25日以降）ではデータを積み重ねている最中。</li>
+    </ul>
+  </div>
+
+  <!-- 1. 今回の研究 -->
+  <section class="s-section">
+    <h2>1. 今回の研究について</h2>
+    <p>直近20本のロウソク足の安値を下に抜けたとき、売りのシグナルが出ます。このとき、<strong>損切りの置き方と利益確定の場所をどう変えると成績が変わるか</strong>を調べました。</p>
+    <p>これは「出口の相性ラボ」シリーズの第3回です。前2回は買い側（ボリンジャーバンド下限タッチの買い・高値ブレイクの買い）を調べました。今回は初めての売り側です。</p>
+    <p>対象となるデータは、2026年9月24日までに記録した日足（1日の足）の取引2369件です。18銘柄（金・銀・原油・株価指数5本・FX9通貨ペア・ビットコイン）が対象です。</p>
+    <div class="s-note">
+      <strong>損益の単位について</strong> 損切りになったときの損を1とした倍数で表します。たとえば「損切り幅の0.10倍のプラス」なら、0.10倍だけ平均的に勝っている計算になります。
+    </div>
+
+    <!-- チャート風図解：安値ブレイクの売りと出口の置き方 -->
+    <div class="s-chart">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="安値ブレイクの売りと損切り・利確の概念図" style="width:100%;max-width:700px;display:block;margin:0 auto">
+        <!-- 背景 -->
+        <rect width="700" height="320" fill="var(--c-surface,#fff)" rx="6"/>
+
+        <!-- タイトル -->
+        <text x="350" y="22" font-size="13" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">安値ブレイクの売り：入口と損切り・利確の置き方（概念図）</text>
+
+        <!-- ロウソク足（全8本、右端の2本が入口付近） -->
+        <!-- 足1 -->
+        <line x1="60" y1="80" x2="60" y2="190" stroke="var(--c-muted,#999)" stroke-width="1"/>
+        <rect x="50" y="100" width="20" height="60" fill="var(--c-green,#16a34a)" opacity=".7"/>
+        <!-- 足2 -->
+        <line x1="110" y1="90" x2="110" y2="185" stroke="var(--c-muted,#999)" stroke-width="1"/>
+        <rect x="100" y="105" width="20" height="55" fill="var(--c-green,#16a34a)" opacity=".7"/>
+        <!-- 足3 -->
+        <line x1="160" y1="100" x2="160" y2="200" stroke="var(--c-muted,#999)" stroke-width="1"/>
+        <rect x="150" y="118" width="20" height="60" fill="var(--c-red,#dc2626)" opacity=".7"/>
+        <!-- 足4 -->
+        <line x1="210" y1="105" x2="210" y2="195" stroke="var(--c-muted,#999)" stroke-width="1"/>
+        <rect x="200" y="120" width="20" height="55" fill="var(--c-red,#dc2626)" opacity=".7"/>
+        <!-- 足5 -->
+        <line x1="260" y1="108" x2="260" y2="210" stroke="var(--c-muted,#999)" stroke-width="1"/>
+        <rect x="250" y="125" width="20" height="60" fill="var(--c-red,#dc2626)" opacity=".7"/>
+        <!-- 足6 -->
+        <line x1="310" y1="115" x2="310" y2="215" stroke="var(--c-muted,#999)" stroke-width="1"/>
+        <rect x="300" y="132" width="20" height="60" fill="var(--c-red,#dc2626)" opacity=".7"/>
+        <!-- 足7（直近最安値の水準＝192） -->
+        <line x1="360" y1="120" x2="360" y2="220" stroke="var(--c-muted,#999)" stroke-width="1"/>
+        <rect x="350" y="140" width="20" height="65" fill="var(--c-red,#dc2626)" opacity=".7"/>
+        <!-- 入口の足（足8）：安値を下に抜ける → オレンジ枠で強調 -->
+        <line x1="410" y1="180" x2="410" y2="270" stroke="var(--c-accent,#2563eb)" stroke-width="1.5"/>
+        <rect x="400" y="200" width="20" height="55" fill="var(--c-red,#dc2626)" opacity=".8" rx="1"/>
+        <rect x="397" y="197" width="26" height="61" fill="none" stroke="#f97316" stroke-width="2.5" rx="2"/>
+
+        <!-- 直近20本の安値ライン（水平） -->
+        <line x1="30" y1="220" x2="440" y2="220" stroke="var(--c-warn,#d97706)" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="28" y="218" font-size="11" font-family="sans-serif" fill="var(--c-warn,#d97706)" text-anchor="end">安値</text>
+
+        <!-- 売りの入口（足8の終値あたり） -->
+        <text x="420" y="235" font-size="11" font-family="sans-serif" fill="#f97316" font-weight="bold">▼ 売り入口</text>
+
+        <!-- 損切りライン（高値方向＝上） -->
+        <line x1="440" y1="160" x2="700" y2="160" stroke="var(--c-red,#dc2626)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="445" y="156" font-size="11" font-family="sans-serif" fill="var(--c-red,#dc2626)">🛑 損切り（直近高値の上）</text>
+
+        <!-- ATR損切りライン（少し上） -->
+        <line x1="440" y1="175" x2="700" y2="175" stroke="var(--c-red,#dc2626)" stroke-width="1" stroke-dasharray="2,4" opacity=".7"/>
+        <text x="445" y="172" font-size="10" font-family="sans-serif" fill="var(--c-red,#dc2626)" opacity=".8">ATRの1.5倍（いまの方式）</text>
+
+        <!-- 利確ライン1（ATRの2倍）-->
+        <line x1="440" y1="270" x2="700" y2="270" stroke="var(--c-green,#16a34a)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="445" y="267" font-size="11" font-family="sans-serif" fill="var(--c-green,#16a34a)">✅ 利確①（ATRの2倍・いまの方式）</text>
+
+        <!-- 利確ライン2（ボリンジャー下限）-->
+        <line x1="440" y1="292" x2="700" y2="292" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="445" y="289" font-size="11" font-family="sans-serif" fill="#7c3aed">🔵 利確②（ボリンジャーバンド下限）</text>
+
+        <!-- 矢印（価格が下がる方向） -->
+        <path d="M420 245 L420 295" stroke="var(--c-accent,#2563eb)" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="var(--c-accent,#2563eb)"/>
+          </marker>
+        </defs>
+      </svg>
+      <p class="s-chart-note">※ 概念を示すイメージ図です（実際の値動きではありません）。オレンジ枠が入口のロウソク足。</p>
+    </div>
+  </section>
+
+  <!-- 2. 探索期間の結果 -->
+  <section class="s-section">
+    <h2>2. 探索期間（2026年9月24日まで）の結果</h2>
+
+    <h3>全18銘柄の数字</h3>
+    <p>探索期間に記録した入口は2372件、そのうち確定したのは<strong>2369件</strong>です。基準方式（ATR（平均的な値動きの幅）の1.5倍で損切り・ATRの2倍で利確）での平均は<strong>損切り幅の0.08倍の損</strong>でした。</p>
+    <p>合計で72通りの組み合わせを調べましたが、「統計的に目立つ」と判定された組み合わせは<strong>0件</strong>でした。</p>
+    <p>目立つかどうかの基準は、同じ手順を何度繰り返しても偶然で出た「目立つ」組み合わせが平均0.2マス程度になるよう設計されています（旗立て基準：差が損切り幅の0.15倍以上・前後半で同じ向き・ボンフェローニ補正）。<strong>目立つ組み合わせが1マス程度なら、まだ偶然の可能性があります。</strong></p>
+
+    <h3>良い組み合わせと悪い組み合わせの比較</h3>
+    <p>いまの方式との差を使って比べます。同じ入口の中でしか比べられないので、この差を使います。</p>
+
+    <div class="s-table-wrap">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>損切りの方法</th>
+            <th>利確の方法</th>
+            <th>平均損益</th>
+            <th>基準との差</th>
+            <th>差のぶれ幅</th>
+            <th>件数</th>
+            <th>「目立つ」旗</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="base">
+            <td>ATRの1.5倍（いまの方式）</td>
+            <td>ATRの2倍（いまの方式）</td>
+            <td class="minus">−0.08</td>
+            <td>基準</td>
+            <td>—</td>
+            <td>2369件</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>ATRの1.5倍</td>
+            <td>ボリンジャーバンド下限（−2σ）</td>
+            <td class="plus">+0.02</td>
+            <td class="plus">+0.10</td>
+            <td>+0.02〜+0.17</td>
+            <td>920件</td>
+            <td><span class="s-badge s-badge-note">なし</span></td>
+          </tr>
+          <tr>
+            <td>ATRの1.5倍</td>
+            <td>損切り幅の3倍</td>
+            <td class="minus">−0.12</td>
+            <td class="minus">−0.04</td>
+            <td>−0.13〜+0.05</td>
+            <td>2364件</td>
+            <td><span class="s-badge s-badge-note">なし</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>「ボリンジャーバンド下限（売りの場合は−2σ）を利確ラインにする」組み合わせは損切り幅の0.02倍のプラスで、いまの方式より損切り幅の0.10倍高く見えます。しかし差のぶれ幅の中央（損切り幅の0.10倍）は旗立て基準の0.15倍に届かず、偶然の可能性があります。「目立つ」旗は立ちませんでした。</p>
+
+    <div class="s-note">
+      <strong>組み合わせが多いと偶然で良く見えるものが出ます。</strong> 今回は72通りを調べたので、本当は差がないのに「良さそう」と出る組み合わせが偶然含まれている可能性があります。前向き（2026年9月25日以降）のデータで確かめることが大切です。
+    </div>
+
+    <!-- 図解：各組み合わせのR値の比較 -->
+    <div class="s-chart">
+      <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="組み合わせ別の平均R比較（概念図）" style="width:100%;max-width:600px;display:block;margin:0 auto">
+        <rect width="600" height="220" fill="var(--c-surface,#fff)" rx="6"/>
+        <text x="300" y="20" font-size="12" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">平均損益の比較（探索期間・全18銘柄）</text>
+
+        <!-- ゼロ基準線 -->
+        <line x1="120" y1="110" x2="560" y2="110" stroke="var(--c-muted,#999)" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="115" y="113" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">0</text>
+
+        <!-- −0.08 基準方式（青・基準バー） -->
+        <rect x="145" y="110" width="60" height="32" fill="var(--c-accent,#2563eb)" opacity=".7" rx="2"/>
+        <text x="175" y="153" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#555)">いまの方式</text>
+        <text x="175" y="165" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)" font-weight="bold">−0.08</text>
+
+        <!-- +0.02 ボリンジャー下限（緑・良い例） -->
+        <rect x="240" y="102" width="60" height="8" fill="var(--c-green,#16a34a)" opacity=".8" rx="2"/>
+        <text x="270" y="85" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#555)">ATRとボリンジャー下限</text>
+        <text x="270" y="97" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-green,#16a34a)" font-weight="bold">+0.02</text>
+
+        <!-- −0.12 損切り幅3倍（赤・悪い例） -->
+        <rect x="335" y="110" width="60" height="48" fill="var(--c-red,#dc2626)" opacity=".6" rx="2"/>
+        <text x="365" y="170" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#555)">ATRと3倍利確</text>
+        <text x="365" y="183" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)" font-weight="bold">−0.12</text>
+
+        <!-- 横軸の目盛り -->
+        <text x="116" y="57" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">+0.04</text>
+        <line x1="120" y1="60" x2="560" y2="60" stroke="var(--c-muted,#ddd)" stroke-width="1"/>
+        <text x="116" y="160" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">−0.12</text>
+
+        <text x="450" y="90" font-size="11" font-family="sans-serif" fill="var(--c-muted,#888)">旗立て基準（差0.15倍以上）</text>
+        <text x="450" y="103" font-size="11" font-family="sans-serif" fill="var(--c-muted,#888)">を通過した組：0件</text>
+      </svg>
+      <p class="s-chart-note">※ 概念を示すイメージ図です（実際の値動きではありません）。値はデータから算出。</p>
+    </div>
+
+    <h3>資産クラス別の結果（基準方式）</h3>
+    <p>資産クラスによって成績の差があります。</p>
+
+    <div class="s-table-wrap">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>資産クラス</th>
+            <th>平均損益</th>
+            <th>件数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>株価指数（日経・米国株（S&amp;P500）・ナスダック・ダウ・英国株指数）</td>
+            <td class="minus">−0.17</td>
+            <td>673件</td>
+          </tr>
+          <tr>
+            <td>FX（9通貨ペア）</td>
+            <td class="minus">−0.05</td>
+            <td>1056件</td>
+          </tr>
+          <tr>
+            <td>コモディティ（金・銀・原油）</td>
+            <td class="minus">−0.06</td>
+            <td>535件</td>
+          </tr>
+          <tr>
+            <td>ビットコイン（参考値・1銘柄）</td>
+            <td class="plus">+0.10</td>
+            <td>105件</td>
+          </tr>
+          <tr class="base">
+            <td>全18銘柄（合計）</td>
+            <td class="minus">−0.08</td>
+            <td>2369件</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>株価指数が最も苦しく（損切り幅の0.17倍の損）</strong>、FXやコモディティも全クラスでマイナスでした。<strong>ビットコインのみ損切り幅の0.10倍のプラス</strong>でしたが、105件と件数が少ないため参考値にとどまります（資産クラス別の「目立つ」基準は件数200以上かつ差が損切り幅の0.25倍以上のため、ビットコインは対象外です）。</p>
+
+    <div class="s-note">
+      どの損切り・利確の組み合わせでも、株価指数の安値ブレイクの売りは特に苦しい傾向があります。ただし探索期間のデータであり、前向き（2026年9月25日以降）で確かめるまで結論にはなりません。
+    </div>
+  </section>
+
+  <!-- 3. 前向きの検証 -->
+  <section class="s-section">
+    <h2>3. 前向き（2026年9月25日以降）の検証</h2>
+    <p>「出口の相性ラボ」の前向き検証は2026年9月25日から始まっています。今回の入口（日足・安値ブレイクの売り）については、まだデータを積み重ねている最中です。</p>
+    <p>前向きとは、結果を見る前にあらかじめ「どのような組み合わせが良いか」を登録してから数えるやり方です。探索期間の数字は、過去のデータを後から見た結果なので、偶然の良し悪しが混ざっています。前向きのデータが積み上がれば、より信頼できる結論が出せます。</p>
+  </section>
+
+  <!-- 4. 前向きトラッカー表 -->
+  <section class="s-section">
+    <h2>4. 前向きトラッカーの現在地（2026年10月11日）</h2>
+    <p>すべての仮説の前向き結果を一覧しています。これらは「入口の種類」についての仮説で、今回調べた「出口の組み合わせ」とは別の検証です。</p>
+    <div class="tracker-wrap">
+      <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+      <p class="meta-line">基準日 2026-10-11／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+      <div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（17語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数</li><li>順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）</li><li>ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）</li><li>VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）</li><li>ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て</li></ul></details></div>
+      <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>円以外の通貨ペアの買い<br><small style="opacity:.7">group=other_fx×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.02</span><br><span style="white-space:nowrap">CI[-0.13~+0.08]</span><br><small style="opacity:.8;white-space:nowrap">378/904・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数の買い<br><small style="opacity:.7">指数×ロング(全足ライブ)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.11~+0.17]</span><br><small style="opacity:.8;white-space:nowrap">371/839・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ステート 上昇配置（&gt;MA25&amp;75）×ロング</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.02</span><br><span style="white-space:nowrap">CI[-0.11~+0.14]</span><br><small style="opacity:.8;white-space:nowrap">351/806・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.15</span><br><span style="white-space:nowrap">CI[-0.01~+0.31]</span><br><small style="opacity:.8;white-space:nowrap">203/411・勝率49%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「直近20本の安値を下抜け」のシグナル<br><small style="opacity:.7">signal=low_break</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.01</span><br><span style="white-space:nowrap">CI[-0.15~+0.14]</span><br><small style="opacity:.8;white-space:nowrap">116/273・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>買い全般<br><small style="opacity:.7">dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.05~+0.10]</span><br><small style="opacity:.8;white-space:nowrap">1325/3014・勝率44%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>下降トレンド中の逆張り買い<br><small style="opacity:.7">trend=下降×reversalL</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.18</span><br><span style="white-space:nowrap">CI[+0.04~+0.33]</span><br><small style="opacity:.8;white-space:nowrap">197/388・勝率51%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--c-muted);margin-top:8px">（表は一部抜粋。全件は <a href="track-record.html#tracker">シグナル研究ページ</a> で確認できます）</p>
+  </section>
+
+  <!-- 5. まとめ -->
+  <section class="s-section">
+    <h2>5. まとめ</h2>
+    <p>今回の結論を正直に伝えます。</p>
+    <p><strong>探索期間のデータ（2369件）では、損切りと利確の組み合わせを72通り変えても、統計的に目立つ組み合わせは0件でした。</strong>「ボリンジャーバンド下限を利確にする組み合わせ」がやや良く見えますが、差の大きさが旗立て基準に届かず、偶然の可能性を排除できません。</p>
+    <p>また、株価指数での安値ブレイクの売りは特にマイナスが大きく（損切り幅の0.17倍の損）、この入口での売りが難しい傾向が見て取れます。ビットコインは唯一プラスでしたが、件数が少ないので参考程度にとどまります。</p>
+    <p>「出口の組み合わせを変えれば必ず良くなる」という前提は、今回の探索期間のデータでは支持されませんでした。これはこれで大切な情報です。前向き（2026年9月25日以降）のデータが積み上がれば、また確かめます。</p>
+  </section>
+
+  <!-- 関連カード -->
+  <section class="s-section">
+    <h2>関連する解説</h2>
+    <div class="s-card-grid">
+      <div class="s-card">
+        <h3><a href="guide-signal-anatomy.html">📊 発火条件の図解カタログ</a></h3>
+        <p>安値ブレイク・高値ブレイク・RSI（値動きの勢いを表す指標）・MACD（勢いの変わり目を見る指標）など、シグナルの発火条件を図で説明しています。今回の「安値ブレイクの売り」の仕組みも確認できます。</p>
+      </div>
+      <div class="s-card">
+        <h3><a href="guide-signal-lab-111.html">🧪 研究日誌 #111（第1回 出口の相性）</a></h3>
+        <p>ボリンジャーバンド下限タッチの買いで、損切りを変えると成績がどう変わるかを調べた最初の回です。</p>
+      </div>
+      <div class="s-card">
+        <h3><a href="guide-signal-lab-117.html">🧪 研究日誌 #117（第2回 出口の相性）</a></h3>
+        <p>高値ブレイクの買いで、損切りと利確の組み合わせを調べた回です。</p>
+      </div>
+      <div class="s-card">
+        <h3><a href="track-record.html">🧪 シグナル研究のトップページ</a></h3>
+        <p>前向きトラッカーの全一覧と、過去の研究日誌をまとめて見られます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- kinsho-v1 免責 -->
+  <div class="s-kinsho disclaimer" id="disclaimer" data-disclaimer="kinsho-v1">
+    <h4>免責事項・ご注意</h4>
+    <p>このページは情報提供を目的としており、特定の銘柄や投資商品の売買を推奨・勧誘するものではありません。投資の最終判断はご自身の責任で行ってください。市場には損失リスクが伴い、元本を割り込む可能性があります。過去の成績は将来の結果を保証するものではありません。</p>
+    <p>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。そのため、個別の投資助言は行いません。</p>
+    <p>本記事の成績データは、当サイトのシグナル記録をもとにした独自のシミュレーション集計であり、実際の取引成績とは異なります。データは自動収集・自動計算によるもので、誤りが含まれる可能性があり、正確性は保証しません。</p>
+  </div>
+
+</main>
+
+<footer style="text-align:center;font-size:12px;color:var(--c-muted);padding:16px">
+  <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言・売買推奨ではありません。投資判断はご自身の責任でお願いします。</div>
+</footer>
+<script src="site-search.js" defer></script>
+</body>
+</html>
