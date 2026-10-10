@@ -123,6 +123,7 @@ SYNC_FORBIDDEN = {
     "lunch-gap-lab.json", "lunch-gap-lab.md",     # 🆕 2026-10-08 R10 昼休みの窓（lunch-gap-lab.yml・手動）
     "lunch-gap-forward.json", "lunch-gap-forward.md",   # 🆕 2026-10-08 R10F 昼休みの窓の前向き（lunch-gap-forward.yml・平日）
     "fx-value-lab.json", "fx-value-lab.md",       # 🆕 2026-10-10 F2 為替の割安と経済の勢い（fx-value-lab.yml・手動）
+    "fund-combo-lab.json", "fund-combo-lab.md",   # 🆕 2026-10-10 F3 ファンダの向き×トレンド×オシレーター（fund-combo-lab.yml・手動）
     "highs-trap-small.json", "highs-trap-small.md",   # 🆕 2026-10-06 J11 J10 の目印を約400銘柄の外で（highs-trap-small.yml・手動）
     "lows-trap-lab.json", "lows-trap-lab.md",         # 🆕 2026-10-06 J12 安値更新の翌朝（lows-trap-lab.yml・手動）
     "gap-lab.json", "gap-lab.md",                     # 🆕 2026-10-06 J13 窓を開けて寄った株（gap-lab.yml・手動）
