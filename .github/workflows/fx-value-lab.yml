@@ -1,0 +1,57 @@
+name: FX Value Lab (manual)
+
+# F2 為替の割安と経済の勢い（8通貨・実質実効為替レートの5年の変化／物価・雇用の勢い・月1回入れ替え）。
+# 2026-10-10 登録・オーナー「おすすめ通りにお願いします」（テクニカルの区切りのあとの、ファンダメンタルの柱の1本目）。
+# ⚠️ 決まりは PILLAR_PREREG.md「F2」（事前登録）と fx_value_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。いまは check だけ＝BIS・OECD・FRED に届くか・通貨ごとの期間・合図がそろう月の数（損益は数えない・何も書かない）。
+#    run は、check の結果で系列の名前を PREREG に追記してから足す（そのときに結果のコミットの手順も書く）。
+# ⚠️ 出力（fx-value-lab.json / .md）は集計だけ。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝データに届くか・期間・月の数だけ（損益は数えない・何も書かない）"
+        required: true
+        default: check
+        type: choice
+        options: [check]
+
+concurrency:
+  group: fx-value-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the FX price store
+        uses: actions/cache/restore@v4
+        with:
+          path: fx-bars
+          key: fx-bars-none
+          restore-keys: fx-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up data
+        run: python tests/test_fx_value_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u fx_value_lab.py --check | tee check.json
+          { echo '```json'; cat check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the check as an artifact
+        if: ${{ always() && inputs.mode == 'check' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: fx-value-check
+          path: check.json
+          if-no-files-found: ignore
+          retention-days: 30
