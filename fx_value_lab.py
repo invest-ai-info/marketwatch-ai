@@ -8,7 +8,7 @@ E＝物価の勢い（前年比 − 12か月前の前年比）と雇用の勢い
 
 ⚠️ 決まりは PILLAR_PREREG.md「F2」と下の定数に固定。出力（fx-value-lab.json / .md）は集計だけ（SYNC禁忌）。
 実行: python fx_value_lab.py --check   （点検だけ＝BIS・OECD・FRED に届くか・通貨ごとの期間・合図がそろう月の数。損益は数えない・何も書き出さない）
-      本番（run）は check の結果で系列の名前を PREREG に追記してから足す（このファイルにはまだ無い）
+      python fx_value_lab.py           （本番。Actions の fx-value-lab.yml から手動で・1回だけ。データの取り口は PREREG「F2」の追記）
 """
 import csv
 import io
@@ -18,8 +18,11 @@ import sys
 import urllib.error
 import urllib.request
 
+import datetime as dt
+
 import numpy as np
 
+import momentum_lab as M
 import pillar_lab as P
 import tsmom_lab as T
 
@@ -40,6 +43,16 @@ N_ARMS = 3
 ALPHA = 0.05 / N_ARMS
 N_BOOT, N_PERM, BLOCK = 10000, 2000, 6
 FX_PIPS_JPY, FX_PIPS_OTHER, FX_MARKUP = 1.2, 1.8, 0.01
+FIRST = (2004, 1)           # 決める月の最初（置き場の最初の月）
+# 追記（2026-10-10・check のあと、数える前）＝データの取り口
+CPI_QUARTERLY = ("AUD", "NZD")                         # 公式の消費者物価が四半期ごと＝3・6・9・12月の行だけ・四半期の遅れ
+UNE_PICK = {"USD": ("USA", "M"), "EUR": ("EA", "M"), "GBP": ("GBR", "M"), "JPY": ("JPN", "M"), "AUD": ("AUS", "M"),
+            "CAD": ("CAN", "M"), "CHF": ("CHE", "Q"), "NZD": ("NZL", "Q")}
+UNE_KEY = ("UNE_LF_M", "PT_LF_SUB", "Y", "_T", "Y_GE15")   # 総数・季節調整済み・全体・15歳以上
+OUT_JSON, OUT_MD = "fx-value-lab.json", "fx-value-lab.md"
+OK, NEW_ONLY, REV, NONE, SKIP = "✅ 効く", "△ 最近だけ", "✕ 逆向き", "✕ 見えない", "― 判定しない（スワップを数えられない）"
+ARMS = (("V", "V 割安（実質実効為替レートの5年の変化）"), ("E", "E 経済の勢い（物価の前年比・失業率の12か月の変化）"),
+        ("VE", "VE 割安と経済の勢いを半分ずつ"))
 
 # ════════════════════ 取り口（check で確かめる・決まりではない） ════════════════════
 _BIS_AREAS = "+".join(BIS_AREA[c] for c in CCYS)
@@ -253,16 +266,31 @@ def month_list(first, last=LAST):
 # ════════════════════ 点検（check） ════════════════════
 
 def pick_cpi(parsed):
-    """BIS の消費者物価 → ({通貨: {(年, 月): 指数}}, {通貨: 'M'|'Q'})。指数（628）の月ごとを優先、無ければ四半期"""
+    """BIS の消費者物価（指数 628）→ ({通貨: {(年, 月): 指数}}, {通貨: 'M'|'Q'})。
+    豪ドル・NZドルは 3・6・9・12月の行だけを四半期の値として使う（PREREG「F2」の追記）。月ごとが無ければ四半期の行"""
     out, freq = {}, {}
     for c in CCYS:
         a = BIS_AREA[c]
         m = parsed.get(("M", a, "628")) or {}
         q = parsed.get(("Q", a, "628")) or {}
-        if len(m) >= 24:
+        if c in CPI_QUARTERLY:
+            s = {k: v for k, v in (m or q).items() if k[1] in (3, 6, 9, 12)}
+            if s:
+                out[c], freq[c] = s, "Q"
+        elif len(m) >= 24:
             out[c], freq[c] = m, "M"
         elif q:
-            out[c], freq[c] = q, "Q"      # 四半期の値は最後の月に置いたまま（前年比も12か月前の同じ四半期と比べる）
+            out[c], freq[c] = q, "Q"
+    return out, freq
+
+
+def pick_une(parsed):
+    """OECD の失業率（UNE_DIMS で読んだもの）→ ({通貨: {(年, 月): ％}}, {通貨: 'M'|'Q'})（PREREG「F2」の追記の系列）"""
+    out, freq = {}, {}
+    for c, (area, f) in UNE_PICK.items():
+        s = parsed.get((area,) + UNE_KEY + (f,)) or {}
+        if s:
+            out[c], freq[c] = s, f
     return out, freq
 
 
@@ -335,6 +363,271 @@ def check(get=get_text, fx_root=None):
     return rep
 
 
+# ════════════════════ 本番（run）：1か月の値・偽薬・判定 ════════════════════
+
+def pair_of(c):
+    """通貨 c（USD 以外）→ (ペア, 向き)。XXXUSD なら +1、USDXXX なら −1（ドルに対する c の値動き＝向き × ペアの値動き）"""
+    for pr in PAIRS:
+        if pr.startswith(c):
+            return pr, 1.0
+        if pr.endswith(c):
+            return pr, -1.0
+    raise KeyError(c)
+
+
+def ymk(t):
+    return f"{t[0]:04d}-{t[1]:02d}"
+
+
+def month_inputs(prices, months):
+    """月ごとの表（ペア → 月 'YYYY-MM' の close・spread）→ 決める月ごとに {通貨: (値動き, 1単位を入れ替える費用の率)}（そろわない通貨は入れない）"""
+    out = []
+    for t in months:
+        b = mi(*t) + 1
+        nxt = ymk((b // 12, b % 12 + 1))
+        row = {}
+        for c in CCYS[1:]:
+            pr, sgn = pair_of(c)
+            tb = prices.get(pr)
+            if tb is None or ymk(t) not in tb.index or nxt not in tb.index:
+                continue
+            p0, p1, sp = float(tb.loc[ymk(t), "close"]), float(tb.loc[nxt, "close"]), tb.loc[ymk(t), "spread"]
+            if not (p0 > 0 and p1 > 0):
+                continue
+            pip = 0.01 if pr.endswith("JPY") else 0.0001
+            fixed = (FX_PIPS_JPY if pr.endswith("JPY") else FX_PIPS_OTHER) * pip
+            cost = max(fixed, float(sp) if sp is not None and np.isfinite(sp) else 0.0) / p0
+            row[c] = (sgn * float(np.log(p1 / p0)), cost)
+        out.append(row)
+    return out
+
+
+def rate_table(rates, months):
+    """決める月ごとの {通貨: 政策金利（％）}（R11 と同じ＝その月か3か月前までの直近）"""
+    return [{c: T.rate_at(rates, BIS_AREA[c], ymk(t)) for c in CCYS} for t in months] if rates else None
+
+
+def eligible(sig, row):
+    """合図のうち、値段がそろう通貨だけ（ドルはいつも入る）"""
+    return {c: v for c, v in sig.items() if v is not None and np.isfinite(v) and (c == "USD" or c in row)}
+
+
+def arm_values(weights, inp, rtab=None):
+    """月ごとの重み（dict か None）→ (1か月の値, 入れ替えの量, スワップの分)。rtab が None ならスワップと上乗せを入れない"""
+    n = len(weights)
+    vals, turn, swp = np.full(n, np.nan), np.full(n, np.nan), np.full(n, np.nan)
+    prev = {}
+    for j, w in enumerate(weights):
+        row = inp[j]
+        if w is None:
+            prev = {}
+            continue
+        xs = [c for c in CCYS[1:] if w.get(c, 0.0) != 0.0 or prev.get(c, 0.0) != 0.0]
+        if any(c not in row for c in xs if w.get(c, 0.0) != 0.0):
+            prev = {}
+            continue
+        ret = sum(w.get(c, 0.0) * row[c][0] for c in xs if c in row)
+        to = sum(abs(w.get(c, 0.0) - prev.get(c, 0.0)) for c in xs)
+        cost = sum(abs(w.get(c, 0.0) - prev.get(c, 0.0)) * (row[c][1] if c in row else 0.0) for c in xs)
+        sw = 0.0
+        if rtab is not None:
+            ru = rtab[j].get("USD")
+            need = [c for c in CCYS[1:] if w.get(c, 0.0) != 0.0]
+            if ru is None or any(rtab[j].get(c) is None for c in need):
+                prev = {}
+                continue
+            sw = sum(w[c] * (rtab[j][c] - ru) / 100 / 12 - abs(w[c]) * FX_MARKUP / 12 for c in need)
+        vals[j], turn[j], swp[j] = ret - cost + sw, to, sw
+        prev = w
+    return vals, turn, swp
+
+
+def signals_by_month(reer, cpi, cfreq, une, ufreq, inp, months):
+    """月ごとの合図（値段がそろう通貨だけ）：V・E・（読むだけ）E の物価だけ・E の失業率だけ"""
+    S = {"V": [], "E": [], "E_cpi": [], "E_une": []}
+    for j, t in enumerate(months):
+        row = inp[j]
+        S["V"].append(eligible({c: v_signal(reer.get(c) or {}, t) for c in CCYS}, row))
+        S["E"].append(eligible(e_signal(cpi, une, t, cfreq, ufreq), row))
+        S["E_cpi"].append(eligible(e_signal(cpi, {}, t, cfreq, {}), row))
+        um = {c: momentum(lambda s, k: s.get(k), une.get(c) or {}, t, ufreq.get(c, "M")) for c in CCYS}
+        S["E_une"].append(eligible({c: -v for c, v in um.items() if v is not None}, row))
+    return S
+
+
+def combine(a, b):
+    """VE＝V と E の1か月の値の平均（どちらかが無い月は数えない）"""
+    return np.where(np.isfinite(a) & np.isfinite(b), (a + b) / 2, np.nan)
+
+
+def shuffled(sigs, rng):
+    """月ごとに、合図の値を通貨どうしで入れ替える（偽薬）"""
+    out = []
+    for s in sigs:
+        ks = list(s)
+        vs = [s[k] for k in ks]
+        out.append(dict(zip(ks, [vs[i] for i in rng.permutation(len(vs))])) if len(vs) > 1 else dict(s))
+    return out
+
+
+def arm_series(arm, S, inp, rtab):
+    if arm == "VE":
+        return combine(arm_series("V", S, inp, rtab), arm_series("E", S, inp, rtab))
+    return arm_values([rank_weights(s) for s in S[arm]], inp, rtab)[0]
+
+
+def placebo_p(arm, S, inp, rtab, actual, n_perm=N_PERM, seed=P.SEED):
+    """偽薬（月ごとに合図を通貨どうしで入れ替える）の平均が本物の平均以上になる割合（片側）"""
+    rng = np.random.default_rng(seed)
+    hits = 0
+    for _ in range(n_perm):
+        S2 = {k: shuffled(S[k], rng) for k in (("V", "E") if arm == "VE" else (arm,))}
+        x = arm_series(arm, S2, inp, rtab)
+        if np.nanmean(x) >= actual:
+            hits += 1
+    return (hits + 1) / (n_perm + 1)
+
+
+def verdict(full, old_mean, new_band, p):
+    if M.plus(full) and (old_mean or 0) > 0 and (new_band.get("mean") or 0) > 0 and p is not None and p < ALPHA:
+        return OK
+    if M.plus(new_band):
+        return NEW_ONLY
+    if M.minus(full):
+        return REV
+    return NONE
+
+
+def describe(x, months, judge_p=None, skip=False):
+    ok = [j for j, v in enumerate(x) if np.isfinite(v)]
+    split = mi(*SPLIT)
+    old = [j for j in ok if mi(*months[j]) < split]
+    new = [j for j in ok if mi(*months[j]) >= split]
+    full = M.band(x[ok], alpha=ALPHA)
+    oldb, newb = M.band(x[old], alpha=ALPHA), M.band(x[new], alpha=ALPHA)
+    v = SKIP if skip else verdict(full, oldb.get("mean"), newb, judge_p)
+    xs = x[ok]
+    years = sorted({months[j][0] for j in ok})
+    return {"months": len(ok), "first": ymk(months[ok[0]]) if ok else None, "last": ymk(months[ok[-1]]) if ok else None,
+            "full": full, "old": oldb, "new": newb, "placebo_p": judge_p, "verdict": v if ok else SKIP,
+            "sharpe": float(np.mean(xs) / np.std(xs) * np.sqrt(12)) if ok and np.std(xs) > 0 else None,
+            "mdd": T.max_drawdown(xs), "worst": float(np.min(xs)) if ok else None,
+            "by_year": {str(y): float(np.mean([x[j] for j in ok if months[j][0] == y])) for y in years}}
+
+
+def corr(a, b):
+    m = np.isfinite(a) & np.isfinite(b)
+    return float(np.corrcoef(a[m], b[m])[0, 1]) if m.sum() > 2 and np.std(a[m]) > 0 and np.std(b[m]) > 0 else None
+
+
+def analyze(prices, reer, cpi, cfreq, une, ufreq, rates, months, n_perm=N_PERM):
+    inp = month_inputs(prices, months)
+    rtab = rate_table(rates, months)
+    S = signals_by_month(reer, cpi, cfreq, une, ufreq, inp, months)
+    skip = rtab is None
+    carry = arm_values([rank_weights(eligible(r, inp[j])) for j, r in enumerate(rtab)], inp, rtab)[0] if rtab else None
+    res = {"une_used": sorted(une), "cpi_freq": cfreq, "une_freq": ufreq}
+    for arm, _ in ARMS:
+        if arm == "VE":
+            x = combine(arm_values([rank_weights(s) for s in S["V"]], inp, rtab)[0], arm_values([rank_weights(s) for s in S["E"]], inp, rtab)[0])
+            x0 = combine(arm_values([rank_weights(s) for s in S["V"]], inp)[0], arm_values([rank_weights(s) for s in S["E"]], inp)[0])
+            to = np.nan
+            wavg = {}
+        else:
+            W = [rank_weights(s) for s in S[arm]]
+            x, tn, sw = arm_values(W, inp, rtab)
+            x0 = arm_values(W, inp)[0]
+            to = float(np.nanmean(tn)) if np.isfinite(tn).any() else None
+            wavg = {c: float(np.mean([w.get(c, 0.0) for w in W if w])) for c in CCYS}
+        p = placebo_p(arm, S, inp, rtab, float(np.nanmean(x)), n_perm=n_perm) if not skip and np.isfinite(x).any() else None
+        d = describe(x if not skip else x0, months, p, skip=skip)
+        d["read"] = {"noswap_mean": float(np.nanmean(x0)) if np.isfinite(x0).any() else None,
+                     "swap_part": (float(np.nanmean(x)) - float(np.nanmean(x0))) if not skip and np.isfinite(x).any() else None,
+                     "turnover": to, "avg_weight": wavg, "corr_carry": corr(x, carry) if carry is not None else None}
+        res[arm] = d
+    for k in ("E_cpi", "E_une"):
+        xx = arm_values([rank_weights(s) for s in S[k]], inp, rtab)[0]
+        res[k + "_read"] = {"months": int(np.isfinite(xx).sum()), "mean": float(np.nanmean(xx)) if np.isfinite(xx).any() else None}
+    if carry is not None:
+        res["carry_read"] = {"months": int(np.isfinite(carry).sum()), "mean": float(np.nanmean(carry)) if np.isfinite(carry).any() else None}
+    return res
+
+
+def verdicts_of(r, today):
+    out = {}
+    for arm, _ in ARMS:
+        a = r.get(arm) or {}
+        if a.get("verdict") in (REV, NONE):
+            f = a["full"]
+            out[arm] = {"status": "stop", "decided_on": today, "n": f["n"], "mean": f["mean"], "lo": f["lo"], "hi": f["hi"],
+                        "reason": "過去のデータで1回だけ数えて" + ("逆向き" if a["verdict"] == REV else
+                                                          "、でたらめな並べ方には勝つが、費用とスワップのあとの平均の幅が0をまたぐ"
+                                                          if (a.get("placebo_p") or 1) < ALPHA else "、でたらめな並べ方と区別できない")
+                                  + f"（費用とスワップのあとの1か月の平均・{a['first']}〜{a['last']}）"}
+    return out
+
+
+def render_md(res):
+    L = ["# F2 為替の割安と経済の勢い（8通貨・月1回の入れ替え）", "",
+         f"更新: {res.get('generated_at', '')}（事前登録＝`PILLAR_PREREG.md`「F2」・指紋 `{(res.get('prereg_sha256') or '')[:12]}`）", ""]
+    r = res.get("result") or {}
+    if "error" in r:
+        return "\n".join(L + [f"⚠️ 計算できず：{r['error']}", "", "※ 研究の記録です。投資助言ではありません。"]) + "\n"
+    L += ["8通貨（USD・EUR・GBP・JPY・AUD・CHF・CAD・NZD）を合図の順に並べ、順位に比例した重み（買いの合計1・売りの合計1）で月末に入れ替える。"
+          "1か月の値＝ドルに対する値動き（月末どうしの対数）＋スワップ（政策金利の差 − 年1％の上乗せ）− 入れ替えの費用。"
+          "幅は 98.33％（3つの腕・6か月のかたまり）・偽薬は月ごとに合図を通貨どうしで入れ替える 2,000回（片側）。", "",
+          "## まとめ（判定）", "", "| 腕 | 判定 | 月 | 1か月の平均 | 幅 | 昔（〜2014年） | 最近（2015年〜） | 偽薬 p |", "|---|---|---:|---:|---|---:|---:|---:|"]
+    for arm, name in ARMS:
+        a = r.get(arm) or {}
+        if not a:
+            continue
+        L.append(f"| {name} | **{a['verdict']}** | {a['months']}（{a['first']}〜{a['last']}） | {M._p(a['full']['mean'])} | {M._band(a['full'])} | "
+                 f"{M._p(a['old']['mean'])} | {M._p(a['new']['mean'])}（{M._band(a['new'])}） | "
+                 f"{'—' if a['placebo_p'] is None else format(a['placebo_p'], '.4f')} |")
+    sh = lambda v: "—" if v is None else f"{v:.2f}"
+    L += ["", "## 読むための表（判定しない）", ""]
+    for arm, name in ARMS:
+        a = r.get(arm) or {}
+        if not a:
+            continue
+        rd = a["read"]
+        L += [f"### {name}", "",
+              f"- 年あたりの成績÷ばらつき {sh(a['sharpe'])}・最大の下落 {M._p(a['mdd'], 0)}・最悪の月 {M._p(a['worst'])}",
+              f"- スワップ抜きの1か月の平均 {M._p(rd['noswap_mean'])}・スワップの分 {M._p(rd['swap_part'])}・入れ替えの量（1か月）{sh(rd['turnover'])}"
+              f"・キャリー（政策金利の順）との相関 {sh(rd['corr_carry'])}",
+              ("- 通貨ごとの平均の重み：" + "・".join(f"{c} {w:+.2f}" for c, w in rd["avg_weight"].items())) if rd["avg_weight"] else "- 通貨ごとの重み：V と E の半分ずつ",
+              "- 年ごと：" + "・".join(f"{y} {M._p(v, 1)}" for y, v in a["by_year"].items()), ""]
+    L += [f"- E の2つの数字それぞれ（読むだけ）：物価の勢いだけ {M._p((r.get('E_cpi_read') or {}).get('mean'))}"
+          f"・失業率の勢いだけ {M._p((r.get('E_une_read') or {}).get('mean'))}・キャリー（政策金利の順・同じ重み）{M._p((r.get('carry_read') or {}).get('mean'))}",
+          f"- 失業率を数えた通貨：{'・'.join(r.get('une_used') or []) or 'なし（E は物価だけ）'}", "",
+          "## 注意", "", "- 通貨は8つだけ・経済の数字は今の値（後で直された値）で、発表の遅れを2〜3か月とって見込んだ・スワップは政策金利で近づけた目安",
+          "- 実質実効為替レートは広い通貨のかごに対する強さ（ドルとの値段ではない）。過去の成績は将来を約束しない", "", "---", "",
+          "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
+    return "\n".join(L) + "\n"
+
+
+def load_all(get=get_text, fx_root=None):
+    """本番のデータ（ネット・置き場）→ (prices, reer, cpi, cfreq, une, ufreq, rates, info)"""
+    import fx_bars
+    info = {}
+    text = _must(get, BIS_REER_URLS[0])
+    p = parse_sdmx_csv(text, ("REF_AREA",))
+    reer = {c: p.get((BIS_AREA[c],), {}) for c in CCYS}
+    cpi, cfreq = pick_cpi(parse_sdmx_csv(_must(get, BIS_CPI_URLS[0]), ("FREQ", "REF_AREA", "UNIT_MEASURE")))
+    text, err = get(OECD_UNE_URLS[0])
+    une, ufreq = pick_une(parse_sdmx_csv(text, UNE_DIMS)) if text else ({}, {})
+    if len(une) < MIN_CCY:
+        info["une_note"] = f"失業率が{len(une)}通貨しか取れない＝E は物価の勢いだけ（PREREG のとおり）：{err or ''}"
+        une, ufreq = {}, {}
+    rates, info["bis_url"] = T.fetch_bis()
+    prices = {}
+    for pr in PAIRS:
+        c, sp = T.fx_daily(fx_bars.load(pr, root=fx_root, start=fx_bars.EARLY[0]))
+        prices[pr] = T.monthly_table(c, sp) if c is not None else None
+    info["prices"] = {pr: ([str(tb.index.min()), str(tb.index.max()), int(len(tb))] if tb is not None and len(tb) else None) for pr, tb in prices.items()}
+    return prices, reer, cpi, cfreq, une, ufreq, rates, info
+
+
 def _must(get, url):
     text, err = get(url)
     if text is None:
@@ -346,8 +639,28 @@ def main(argv):
     if "--check" in argv:
         print(json.dumps(check(), ensure_ascii=False, indent=1, default=str))
         return 0
-    print("run はまだ無い：check の結果で系列の名前を PILLAR_PREREG.md「F2」に追記してから足す", file=sys.stderr)
-    return 2
+    res = {"generated_at": dt.datetime.now(P.JST).isoformat(timespec="minutes"), "prereg_file": P.PREREG,
+           "prereg_sha256": P.prereg_sha256(), "kind": "backtest", "titles": {
+               "V": "為替の割安（8通貨・実質実効為替レートの5年の変化・月1・費用とスワップ・2004〜2026-08・1回だけ数えた）",
+               "E": "為替の経済の勢い（8通貨・物価の前年比と失業率の12か月の変化・月1・費用とスワップ・1回だけ数えた）",
+               "VE": "為替の割安と経済の勢いを半分ずつ（8通貨・月1・費用とスワップ・1回だけ数えた）"}}
+    try:
+        prices, reer, cpi, cfreq, une, ufreq, rates, info = load_all()
+        r = analyze(prices, reer, cpi, cfreq, une, ufreq, rates, month_list(FIRST))
+        r.update(info)
+        res["result"] = r
+        res["verdicts"] = verdicts_of(r, dt.datetime.now(P.JST).date().isoformat())
+    except Exception as e:  # noqa: BLE001
+        import traceback
+        traceback.print_exc()
+        res["result"] = {"error": f"{type(e).__name__}: {str(e)[:200]}"}
+    with open(OUT_JSON, "w", encoding="utf-8") as fh:
+        json.dump(M.rounded(res), fh, ensure_ascii=False, indent=1, default=str)
+    md = render_md(res)
+    with open(OUT_MD, "w", encoding="utf-8") as fh:
+        fh.write(md)
+    print(md)
+    return 0
 
 
 if __name__ == "__main__":

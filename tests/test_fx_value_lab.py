@@ -7,6 +7,7 @@
 
 実行:  python tests/test_fx_value_lab.py     （pytest 不要。pytest でも動く）
 """
+import math
 import os
 import sys
 
@@ -163,14 +164,138 @@ def test_check_runs_offline_and_writes_nothing():
     assert not any(k in rep for k in ("returns", "mean", "result"))   # 損益は数えない
 
 
+def _prices(months, f):
+    """作り物の月ごとの表：ペア → DataFrame（'YYYY-MM'・close・spread）。f(pair, j) が値段"""
+    import pandas as pd
+    out = {}
+    for pr in L.PAIRS:
+        rows = {L.ymk(t): {"close": f(pr, j), "spread": 0.00005 if not pr.endswith("JPY") else 0.005} for j, t in enumerate(months)}
+        out[pr] = pd.DataFrame.from_dict(rows, orient="index").sort_index()
+    return out
+
+
+def test_pair_direction_and_month_inputs():
+    assert L.pair_of("EUR") == ("EURUSD", 1.0) and L.pair_of("JPY") == ("USDJPY", -1.0) and L.pair_of("CAD") == ("USDCAD", -1.0)
+    months = L.month_list((2010, 1), (2010, 3))
+    pr = _prices(months + [(2010, 4)], lambda p, j: (100.0 * 1.1 ** j) if p == "USDJPY" else 1.0)
+    inp = L.month_inputs(pr, months)
+    r, cost = inp[0]["JPY"]
+    assert abs(r - (-math.log(1.1))) < 1e-12                 # ドル円が上がった＝円はドルに対して下がった
+    assert abs(cost - 1.2 * 0.01 / 100.0) < 1e-12             # 決まった費用 1.2pips が実際の差 0.5pips より大きい
+    assert abs(inp[0]["EUR"][0]) < 1e-12 and abs(inp[0]["EUR"][1] - 1.8 * 0.0001 / 1.0) < 1e-12
+    short = L.month_inputs(pr, [(2010, 4)])                   # 次の月が無い＝数えない
+    assert short == [{}]
+
+
+def test_arm_values_return_cost_swap():
+    months = L.month_list((2010, 1), (2010, 2))
+    pr = _prices(months + [(2010, 3)], lambda p, j: 1.0 * 1.02 ** j if p == "EURUSD" else 1.0)
+    inp = L.month_inputs(pr, months)
+    w = [{"EUR": 1.0, "USD": -1.0}, {"EUR": 1.0, "USD": -1.0}]
+    v, to, sw = L.arm_values(w, inp)                          # スワップなし
+    c0 = 1.8 * 0.0001 / 1.0
+    assert abs(v[0] - (math.log(1.02) - c0)) < 1e-12 and abs(v[1] - math.log(1.02)) < 1e-12   # 2か月目は入れ替えなし＝費用なし
+    assert list(to) == [1.0, 0.0]
+    rtab = [{"USD": 2.0, "EUR": 5.0}, {"USD": 2.0, "EUR": 5.0}]
+    v2, _, sw2 = L.arm_values(w, inp, rtab)
+    assert abs(sw2[0] - (3.0 / 100 / 12 - 0.01 / 12)) < 1e-12 and abs(v2[1] - v[1] - sw2[1]) < 1e-12
+    v3, _, _ = L.arm_values(w, inp, [{"USD": 2.0}, {"USD": 2.0, "EUR": 5.0}])
+    c1 = 1.8 * 0.0001 / 1.02                                  # 2か月目の値段 1.02 で割る
+    assert math.isnan(v3[0]) and abs(v3[1] - (math.log(1.02) - c1 + sw2[1])) < 1e-12   # 金利が無い月は数えず、次の月は0から建てる
+    v4, _, _ = L.arm_values([None, w[1]], inp)
+    assert math.isnan(v4[0]) and abs(v4[1] - (math.log(1.02) - c1)) < 1e-12
+
+
+def _world(n_months, aligned, seed=1):
+    """合図と次の月の値動きが揃っている（aligned）か、無関係な作り物の世界"""
+    import numpy as np
+    rng = np.random.default_rng(seed)
+    S, inp = {"V": [], "E": []}, []
+    for _ in range(n_months):
+        sig = {c: float(rng.normal()) for c in L.CCYS}
+        noise = {c: float(rng.normal()) for c in L.CCYS}
+        row = {c: (0.01 * ((sig[c] - sig["USD"]) if aligned else noise[c] - noise["USD"]), 0.0) for c in L.CCYS[1:]}
+        inp.append(row)
+        S["V"].append(sig)
+        S["E"].append({c: float(rng.normal()) for c in L.CCYS})
+    return S, inp
+
+
+def test_placebo_finds_aligned_signal_only():
+    import numpy as np
+    S, inp = _world(60, True)
+    x = L.arm_series("V", S, inp, None)
+    p = L.placebo_p("V", S, inp, None, float(np.nanmean(x)), n_perm=200)
+    assert np.nanmean(x) > 0 and p < 0.02
+    S2, inp2 = _world(60, False)
+    x2 = L.arm_series("V", S2, inp2, None)
+    p2 = L.placebo_p("V", S2, inp2, None, float(np.nanmean(x2)), n_perm=200)
+    assert p2 > 0.02
+    ve = L.arm_series("VE", S, inp, None)
+    assert np.isfinite(ve).all() and abs(np.nanmean(ve) - (np.nanmean(x) + np.nanmean(L.arm_series("E", S, inp, None))) / 2) < 1e-12
+
+
+def test_verdict_words():
+    plus, zero, minus = {"lo": 0.001, "hi": 0.01, "mean": 0.005}, {"lo": -0.01, "hi": 0.01, "mean": 0.001}, {"lo": -0.02, "hi": -0.001, "mean": -0.01}
+    assert L.verdict(plus, 0.002, {"mean": 0.003}, 0.001) == L.OK
+    assert L.verdict(plus, 0.002, {"mean": 0.003}, 0.05) != L.OK            # 偽薬を越えなければ ✅ にしない
+    assert L.verdict(plus, -0.001, plus, 0.001) == L.NEW_ONLY                # 昔がマイナス＝最近だけ
+    assert L.verdict(minus, -0.01, zero, 0.9) == L.REV and L.verdict(zero, 0.0, zero, 0.5) == L.NONE
+
+
+def test_analyze_end_to_end_and_skip_without_rates():
+    import numpy as np
+    rng = np.random.default_rng(3)
+    months = L.month_list((2013, 1), (2016, 6))
+    allm = L.month_list((1995, 1), (2016, 7))
+    reer = {c: {t: float(100 * np.exp(rng.normal(0, 0.02) * 1 + 0.001 * i * (k - 3))) for i, t in enumerate(allm)} for k, c in enumerate(L.CCYS)}
+    cpi = {c: {t: float(100 * (1.002 + 0.0003 * k + 0.00001 * i) ** i) for i, t in enumerate(allm)} for k, c in enumerate(L.CCYS)}
+    une = {c: {t: float(5 + rng.normal(0, 0.3)) for t in allm} for c in L.CCYS}
+    freq = {c: "M" for c in L.CCYS}
+    pr = _prices(L.month_list((2013, 1), (2016, 7)), lambda p, j: float(np.exp(rng.normal(0, 0.03))) * (100 if p == "USDJPY" else 1))
+    rates = {a: {L.ymk(t): 1.0 + k * 0.5 for t in allm} for k, a in enumerate(L.BIS_AREA.values())}
+    r = L.analyze(pr, reer, cpi, freq, une, freq, rates, months, n_perm=30)
+    for arm, _ in L.ARMS:
+        a = r[arm]
+        assert a["months"] == len(months) and a["verdict"] in (L.OK, L.NEW_ONLY, L.REV, L.NONE)
+        assert a["placebo_p"] is not None and a["read"]["swap_part"] is not None
+    assert r["carry_read"]["months"] == len(months) and r["E_une_read"]["months"] == len(months)
+    md = L.render_md({"generated_at": "x", "prereg_sha256": "abc", "result": r})
+    assert "## まとめ（判定）" in md and "投資助言ではありません" in md
+    v = L.verdicts_of(r, "2026-10-10")
+    assert all(x["status"] == "stop" and x["reason"].startswith("過去のデータで1回だけ数えて") for x in v.values())
+    r0 = L.analyze(pr, reer, cpi, freq, une, freq, {}, months, n_perm=5)   # 政策金利に届かない＝判定しない
+    assert all(r0[arm]["verdict"] == L.SKIP and r0[arm]["placebo_p"] is None for arm, _ in L.ARMS)
+    assert L.verdicts_of(r0, "2026-10-10") == {}
+
+
+def test_cpi_and_unemployment_picks_follow_the_addendum():
+    parsed = {("M", a, "628"): {(y, m): 100.0 + m for y in (2019, 2020) for m in range(1, 13)} for a in L.BIS_AREA.values()}
+    cpi, f = L.pick_cpi(parsed)
+    assert f["AUD"] == f["NZD"] == "Q" and sorted(cpi["AUD"])[-4:] == [(2020, 3), (2020, 6), (2020, 9), (2020, 12)] and len(cpi["AUD"]) == 8
+    assert f["USD"] == "M" and len(cpi["USD"]) == 24
+    une_parsed = {(a,) + L.UNE_KEY + (fq,): {(2020, 3): 4.0} for c, (a, fq) in L.UNE_PICK.items()}
+    une_parsed[("USA",) + L.UNE_KEY[:2] + ("N",) + L.UNE_KEY[3:] + ("M",)] = {(2020, 3): 9.9}   # 季節調整なしは使わない
+    une, uf = L.pick_une(une_parsed)
+    assert set(une) == set(L.CCYS) and uf["CHF"] == uf["NZD"] == "Q" and une["USD"][(2020, 3)] == 4.0
+    assert L.UNE_PICK["EUR"] == ("EA", "M") and L.UNE_KEY == ("UNE_LF_M", "PT_LF_SUB", "Y", "_T", "Y_GE15")
+    sec = _sec()
+    for s in ("`WS_EER` の `M.R.B`", "**豪ドル・NZドルは、公式の消費者物価が四半期ごとなので、3・6・9・12月の行だけを使い",
+              "**MEASURE＝UNE_LF_M・UNIT_MEASURE＝PT_LF_SUB・ADJUSTMENT＝Y（季節調整済み）・SEX＝_T・AGE＝Y_GE15**",
+              "**四半期ごと＝CHE・NZL**", "FRED は使わない"):
+        assert s in sec, s
+
+
 def test_workflow_and_sync_rules():
     wf = open(".github/workflows/fx-value-lab.yml", encoding="utf-8").read()
     assert "workflow_dispatch" in wf and "schedule" not in wf and "fx_value_lab.py --check" in wf
-    assert "tests/test_fx_value_lab.py" in wf and "restore-keys: fx-bars-" in wf
-    assert "git push" not in wf                              # check だけ＝何もコミットしない（run を足すときに書く）
+    assert "tests/test_fx_value_lab.py" in wf and "restore-keys: fx-bars-" in wf and "options: [check, run]" in wf
+    assert "git add fx-value-lab.json fx-value-lab.md verified-list.md" in wf and "python verified_list.py" in wf
     cs = open("check_site_consistency.py", encoding="utf-8").read()
     assert '"fx-value-lab.json", "fx-value-lab.md"' in cs
     assert "fx-value-lab.yml" in open("RESEARCH_LABS.md", encoding="utf-8").read()
+    import verified_list as VL
+    assert any(s[0] == "fx-value-lab.json" and s[2] == "F2" for s in VL.SOURCES)
 
 
 if __name__ == "__main__":
