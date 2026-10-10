@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-10
+- 判定: ✅ 公開済み
+- 選定トピック: 【10/10週末版】米S&P500が週間＋1.2%で着地──トランプ「中間選挙前に対イラン攻撃なし」発言で地政学リスクが後退、決算シーズン前夜の3論点（カテゴリ: 今日のニュース）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 選定理由: 10/10（土）は米市場引け後。S&P500が0.59%高の7,811.54で週間+1.2%着地。主因は①トランプ「中間選挙前に対イラン攻撃なし」発言による地政学リスク後退と②前日AI株売りの一服。日本人投資家向けに地政学リスクと原油・イランの仕組み、FOMC前の論点整理に付加価値あり。スコア12/15
+- 出典（確認済み・6系統）:
+  - Yahoo Finance「Stock market today: Dow, S&P 500, Nasdaq rally to cap volatile week」2026-10-09
+  - TheStreet「Stock Market Today (Oct. 9, 2026): Dow, S&P 500 end week higher」2026-10-09
+  - Mitrade「S&P 500 Near Record Highs: October 2026 Outlook」2026-10
+  - Yahoo Finance「Oil falls to $103 as Trump says US will not attack Iran before midterms」2026-10-09
+  - CNBC「Oil little changed as Trump comments on Iran talks ease supply concerns」2026-10-09
+  - Investing.com「Oil falls slightly after Trump says no Iran attack before midterms」2026-10-09
+- コンプライアンスゲート:
+  - 第1Opus（初期判定）: 🟢白（修正なし）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 🔴否（2点指摘: ①ハリケーン段落の出典「US Marine Minerals Administration」=廃止機関 ②新TOPIX時期の食い違い）→著者が修正適用（ハリケーン段落削除・188行目の時期表現統一）
+  - 第3Opus（修正後独立確認・Readのみ）: ①〜⑥全合格 → 🟢白（公開OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典6系統 ✅ / noindexなし ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告35件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-10-sp500-weekly-gain-trump-iran-earnings.html
+
+---
+
 ## 2026-10-09
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均が一時892円安から終値11円安に急回復──OpenAI売上高FT報道でAI株急落、V字切り返しの3要因を整理（カテゴリ: 今日のニュース）

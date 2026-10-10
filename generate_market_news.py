@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-10", "line": '・<b>2026-10-10</b>: 📰 解説「<a href="guide-news-2026-10-10-sp500-weekly-gain-trump-iran-earnings.html" style="color:#0969da"><b>【10/10週末版】米S&P500週間＋1.2%着地、トランプ「イラン攻撃なし」で地政学リスク後退</b></a>」公開'},
         {"date": "2026-10-10", "line": '・<b>2026-10-10</b>: 🌡 解説「<a href="guide-entry-investor-sentiment.html" style="color:#0969da"><b>投資家心理の指数は株価の何を予測する？</b></a>」公開'},
         {"date": "2026-10-10", "line": '・<b>2026-10-10</b>: 🔬 解説「<a href="guide-company-5803-fujikura.html" style="color:#0969da"><b>フジクラ（5803）を数字で見る</b></a>」公開'},
         {"date": "2026-10-10", "line": '・<b>2026-10-10</b>: 🧪 解説「<a href="guide-signal-lab-122.html" style="color:#0969da"><b>ゴールドや銀の逆張り買い：前向き130回の現在地</b></a>」公開'},

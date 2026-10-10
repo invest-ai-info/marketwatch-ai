@@ -346,4 +346,5 @@ SYNC_FILES = [
     "guide-signal-lab-122.html",
     "guide-company-5803-fujikura.html",
     "guide-entry-investor-sentiment.html",
+    "guide-news-2026-10-10-sp500-weekly-gain-trump-iran-earnings.html",
 ]
