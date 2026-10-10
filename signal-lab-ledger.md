@@ -19,7 +19,8 @@
 **claims**: drafts/labnotes/lab-123-claims.json
 **exit-claims**: drafts/labnotes/lab-123-exit-claims.json
 **分析メモ**: drafts/labnotes/lab-123-analysis.md
-**状態**: 🔄 ゲート中（2026-10-11）
+**ファイル**: guide-signal-lab-123.html（✅公開済み）
+**状態**: ✅ 公開済み（2026-10-11）
 
 核心:
 - 全18銘柄 基準方式（ATR損切り×ATR2倍利確）: avg=-0.08R n=2369 win=40.8%

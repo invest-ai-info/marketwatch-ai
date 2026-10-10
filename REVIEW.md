@@ -8,7 +8,17 @@
 
 **結果**: 全18銘柄 基準avg=-0.08R n=2369 win=40.8% / 最良候補ATR×BB下限avg=+0.02R vs_base=+0.10R CI=[+0.02,+0.17] / 最悪ATR×RR3=-0.12R / flagged=0/72 → 統計的有意差なし
 
-**ゲート状況**: 🔄 進行中（2026-10-11）
+**ゲート状況**: ✅ 自動公開済み（2026-10-11）
+- check_plain_japanese.py: ✅ EXIT=0（修正4ラウンド・52件→0件）
+- signal_lab_verify.py: ✅ EXIT=0（summary box heading・下書き中修正）
+- exit_lab_verify.py: ✅ EXIT=0（23/23 GREEN・2件claim追加）
+- Opusコンプラ1: 🟢白修正済み（kinsho-v1 3層・免責文修正）
+- Opusコンプラ2（独立）: 🟢白（L184括弧修正・全項目確認）
+- verify再確認: EXIT=0 全ゲート緑
+- finalize_signal_lab.py: EXIT=0 (kinsho=5, svg=2, size=28KB)
+- publish_article.py: EXIT=0
+- check_site_consistency.py: EXIT=0（エラーなし・警告36件は既存問題）
+- PUSH-MAIN: ✅ 1474bfb
 
 ---
 
