@@ -1,0 +1,70 @@
+name: Fund Combo Lab (manual)
+
+# F3 ファンダの向き × トレンド × オシレーター（4時間足・為替12ペア・2004〜2026・6×10×6＝360通り）。
+# 2026-10-10 登録・オーナー「すぐに検証できる方法で」「ファンダメンタルズで方向性を確認して、トレンド系とオシレーター系の全組み合わせ」。
+# ⚠️ 決まりは PILLAR_PREREG.md「F3」（事前登録）と fund_combo_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。check＝4時間足とオシレーターの合図の数・ファンダの向きの割合・政策金利の空欄（損益は数えない・何も書かない）／run は1回だけ。
+# ⚠️ 出力（fund-combo-lab.json / .md）は集計だけ。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝足と合図の数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: fund-combo-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the FX price store
+        uses: actions/cache/restore@v4
+        with:
+          path: fx-bars
+          key: fx-bars-none
+          restore-keys: fx-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up data
+        run: python tests/test_fund_combo_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u fund_combo_lab.py --check | tee check.json
+          { echo '```json'; cat check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python fund_combo_lab.py
+          [ -f fund-combo-lab.md ] && cat fund-combo-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fund-combo-lab.json fund-combo-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: fund combo lab F3 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
