@@ -49,6 +49,7 @@ BIS_CPI_URLS = (f"https://stats.bis.org/api/v1/data/WS_LONG_CPI/M+Q.{_BIS_AREAS}
                 f"https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M+Q.{_BIS_AREAS}.628+771?format=csv")
 OECD_FLOWS_URL = "https://sdmx.oecd.org/public/rest/dataflow/all?detail=allstubs"
 OECD_UNE_URLS = ("https://sdmx.oecd.org/public/rest/data/OECD.SDD.TPS,DSD_LFS@DF_IALFS_UNE_M,1.0/all?startPeriod=1995-01&format=csvfile",)
+UNE_DIMS = ("REF_AREA", "MEASURE", "UNIT_MEASURE", "ADJUSTMENT", "SEX", "AGE", "FREQ")   # 失業率の総数＝UNE_LF_M・PT_LF_SUB・_T・Y_GE15
 FRED_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id={sid}"
 FRED_UNE = {"USD": ("LRHUTTTTUSM156S",), "EUR": ("LRHUTTTTEZM156S",), "GBP": ("LRHUTTTTGBM156S",), "JPY": ("LRHUTTTTJPM156S",),
             "AUD": ("LRHUTTTTAUM156S",), "CHF": ("LRHUTTTTCHM156S", "LRHUTTTTCHQ156S"), "CAD": ("LRHUTTTTCAM156S",),
@@ -304,14 +305,12 @@ def check(get=get_text, fx_root=None):
             rep.setdefault("oecd_une_errors", []).append(f"{u[:70]}… {err}")
             continue
         rd = csv.DictReader(io.StringIO(text))
-        cols = [c for c in (rd.fieldnames or [])]
-        rep["oecd_une_columns"] = cols
-        p = parse_sdmx_csv(text, tuple(c for c in cols if c.upper() not in ("TIME_PERIOD", "OBS_VALUE", "OBS_STATUS",
-                                                                          "UNIT_MULT", "DECIMALS", "BASE_PER", "DATAFLOW",
-                                                                          "STRUCTURE", "STRUCTURE_ID", "ACTION", "OBS_STATUS_2")))
+        rep["oecd_une_columns"] = list(rd.fieldnames or [])
+        p = parse_sdmx_csv(text, UNE_DIMS)
         want = set(OECD_AREA.values()) | {"EA19", "EA", "EA20"}
-        kept = {"|".join(k): span(s) for k, s in sorted(p.items()) if any(x in want for x in k)}
-        rep["oecd_une"] = {"url": u, "n_series": len(p), "target_series": dict(list(kept.items())[:120])}
+        rep["oecd_une"] = {"url": u, "n_series": len(p),
+                           "total_rate": {"|".join(k): span(s) for k, s in sorted(p.items())
+                                          if k[0] in want and k[1:3] == ("UNE_LF_M", "PT_LF_SUB") and k[4:6] == ("_T", "Y_GE15")}}
     # 失業率：FRED（OECD の系列）
     fred = {}
     for c, sids in FRED_UNE.items():
