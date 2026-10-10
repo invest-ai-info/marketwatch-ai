@@ -434,3 +434,9 @@ autodraft と tse の2レーンを畳み、その分を本レーンに寄せる�
 - 📝 運用メモ：独立確認の Opus が、ja.wikipedia の 429 に対し再試行せず WebSearch に切り替えたと報告。User-Agent の変更・迂回は今回なし。pip で pypdf を入れたとの報告が執筆担当からあった（EDINET の PDF を読むため・リポジトリには入っていない）。
 - 📌 弁護士相談アジェンダ候補（継続）：個別企業の記事の末尾に証券口座の広告（DMM株）が並ぶこと。
 - ファイル：`guide-company-5803-fujikura.html`
+
+---
+
+## 2026-10-10（旧 weekly トリガーの誤発火）
+
+- 🛑 旧 weekly を停止：`company-weekly-auto`（`trig_017X6e1WvUm2FBvyegzFkAUh`・毎週土曜14:23 JST）が2026-10-10 14:23 JST に発火。COMPANY_GUIDE.md 冒頭の引き継ぎ指示（プロンプトに「週1本」とあれば旧ルーティン）どおり、記事は書かずに `update_trigger(trigger_id="trig_017X6e1WvUm2FBvyegzFkAUh", enabled=false)` を実行＝`enabled: false` に変更済み（次回 next_run_at 2026-10-17 は発火しない）。本日分の記事は daily-auto が別途フジクラ（5803）で既に公開済み（上の第12回）。
