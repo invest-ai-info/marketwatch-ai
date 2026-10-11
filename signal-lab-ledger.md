@@ -18,7 +18,7 @@
 **ファイル**: guide-signal-lab-124.html
 **claims**: drafts/labnotes/lab-124-claims.json
 **分析メモ**: drafts/labnotes/lab-124-analysis.md
-**状態**: 🔄 処理中
+**状態**: ✅ 公開済み（2026-10-12）
 
 核心:
 - ベースライン: 2198/5165 = 42.6% CI=[41.2%〜43.9%]

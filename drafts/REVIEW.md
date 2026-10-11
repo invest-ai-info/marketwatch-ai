@@ -1,4 +1,4 @@
-2026-10-12 signal-lab: #124 🔄処理中（ADX強（25以上）×順張り FWD30.3% n=66 CI=[20.6%〜42.2%]。定点観測④。draft作成・claims作成・重複h2修正済み・check_plain_japanese待ち）
+2026-10-12 signal-lab: #124 ✅公開済み（エーディーエックス強（25以上）×順張り FWD30.3% n=66 CI=[20.6%〜42.2%]。定点観測④。plain_japanese✅・verify 7/7✅（FWD比較用クレーム2件追加）・Opus1st🟡G1-G4修正→verify✅・Opus2nd🟢・finalize✅・check_site OK・push済み）
 2026-10-07 signal-lab: #120 ✅公開済み（下降トレンド中の逆張り買い⛔反証確定・前向き370回。IS186/33.9%→FWD370/50.8% R-CI=[+0.030〜+0.341]。4時間足60.6% R-CI=[+0.120〜+0.707]。plain_japanese✅・signal_verify対応予定・Opus対応予定・push済み）
 2026-10-06 signal-lab: #119 ✅公開済み（9種類の入り方の定点観測・全5050回。RSI売られすぎ反発買い46.7%[42.5-50.9%]が最高・高値ブレイク買い39.2%[34.8-43.8%]が最低。全シグナルのCIが重なり統計的有意差なし。plain_japanese✅・signal_verify 14/14 GREEN✅・Opus1st🟡3件修正→verify再確認✅・独立Opus2nd🟢・apply_disclaimer三層補完✅・check_site OK・push済み）
 2026-10-05 signal-lab: #118 ✅公開済み（品質ランク別の勝率・全5020回。上の上=41.3%/良=45.4%/普通=42.4%/避ける=43.0%。4ランク間で有意差なし（信頼区間が重なる）。plain_japanese✅・signal_verify 5/5 GREEN✅・Opus1st🟢・独立Opus2nd🟢・disclaimer三層補完・check_site OK・push済み）
