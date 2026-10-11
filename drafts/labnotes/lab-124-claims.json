@@ -1,0 +1,53 @@
+{
+  "article_id": "124",
+  "asof": "2026-10-12T06:18:42+09:00",
+  "hypothesis_id": "rl_tf_adx_strong",
+  "claims": [
+    {
+      "label": "全体ベースライン（全決済済みシグナル）",
+      "filter": {},
+      "k": 2198,
+      "n": 5165
+    },
+    {
+      "label": "ADX強（25以上）×順張り — 検証に使った期間（IS）",
+      "filter": {
+        "adx_band": "strong",
+        "family": "tf",
+        "fired_before": "2026-09-27"
+      },
+      "k": 443,
+      "n": 1070
+    },
+    {
+      "label": "ADX強（25以上）×順張り — その後の期間（FWD）",
+      "filter": {
+        "adx_band": "strong",
+        "family": "tf",
+        "fired_from": "2026-09-27"
+      },
+      "k": 20,
+      "n": 66
+    },
+    {
+      "label": "ADX弱（20未満）×順張り — 検証に使った期間（IS）",
+      "filter": {
+        "adx_band": "weak",
+        "family": "tf",
+        "fired_before": "2026-09-27"
+      },
+      "k": 376,
+      "n": 851
+    },
+    {
+      "label": "ADX弱（20未満）×順張り — その後の期間（FWD）",
+      "filter": {
+        "adx_band": "weak",
+        "family": "tf",
+        "fired_from": "2026-09-27"
+      },
+      "k": 30,
+      "n": 74
+    }
+  ]
+}
