@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-10-11
+- 判定: ✅ 公開済み
+- 選定トピック: 日本3連休（スポーツの日・10/12）明けに集中する3大イベント——JPモルガンQ3決算（10/13・米東部時間）・IMF世界経済見通し（10/13・バンコク）・米9月CPI（10/14）（カテゴリ: マクロ・決算・経済指標）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4 （合計 14/15）
+- 出典:
+  - JPMorgan Chase IR公式発表 "JPMorganChase to Host Third-Quarter 2026 Earnings Call"（2026-10-09）
+  - MarketBeat "JPMorgan Chase & Co. (JPM) Q3 2026 Earnings Date, Time & Estimates"（2026-10-09）
+  - Benzinga "JPMorgan's Equities Business Surged 86% Last Quarter — What Comes Next on Oct. 13?"（2026-10-09）
+  - IMF WEO July 2026 Update（世界経済見通し3.0%・IMF公式）
+  - Admiral Markets "US CPI Preview September 2026"（9月CPI予想3.6〜3.7%YoY）
+  - TradingKey "The Week Ahead: US September CPI and PPI"（CPI発表日10/14確認）
+  - Yahoo Finance Japan / Investing.com（米10年利回り5.24%・52週高値5.36%・2026-10-09）
+  - 財経新聞「日経平均大引け：前日比11.19円安の69030.92円」（2026-10-09）
+  - IFC Markets "Trading Schedule Changes October 12 2026"（スポーツの日・東証休場確認）
+  - Wikipedia "Sports Day (Japan)"（10月第2月曜日=10/12確認）
+- コンプラ監査:
+  - 初期判定（Opus監査エージェント1）: 🟢白（禁止語なし・kinsho-v1×3確認・銘柄推奨なし・出典多数）※日時の誤り2箇所を指摘（CPI時間・h3見出し）→編集で修正
+  - Opus適用修正: 日時の事実修正（CPI 夜10:30→夜9:30 JST。h3「13日まで休場」→「12日まで休場・13日再開」。チェックリスト「夜〜夕方」→「夜」）→コンプライアンス上の修正なし
+  - 独立Opus確認: 🟢白（kinsho-v1×3・禁止語なし・銘柄推奨なし・出典多系統・noindexなし・断定なし）
+  - 最終判定: 🟢白 / 公開OK
+- 公開ファイル: guide-news-2026-10-11-japan-holiday-cpi-earnings.html
+- 追記: check_site_consistency.py exit=0確認済み（警告37件は既存問題・本記事と無関係）。publish_article.py完了。git push成功（c4196ec）
+
+---
+
 ## 2026-10-10
 - 判定: ✅ 公開済み
 - 選定トピック: 【10/10週末版】米S&P500が週間＋1.2%で着地──トランプ「中間選挙前に対イラン攻撃なし」発言で地政学リスクが後退、決算シーズン前夜の3論点（カテゴリ: 今日のニュース）
