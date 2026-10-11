@@ -349,4 +349,5 @@ SYNC_FILES = [
     "guide-news-2026-10-10-sp500-weekly-gain-trump-iran-earnings.html",
     "guide-signal-lab-123.html",
     "guide-company-7735-screen.html",
+    "guide-entry-volatility-scaling.html",
 ]

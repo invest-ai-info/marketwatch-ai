@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>「値動きが荒れたら量を減らす」は成績を上げるのか？ 研究でわかっていること【エントリー方法の研究 #17】 - MarketWatch AI</title>
+  <meta name="description" content="値動きの荒さ（ボラティリティ）が高いときは取引の量を減らし、落ち着いているときは増やすという考え方は、研究でどこまで支持されているのか。モレイラ氏とミュア氏の研究（2017年）が米国株の要因・通貨の金利差取引で報告した成績の改善、セダーバーグ氏らの研究（2020年）による反論、VIXの水準が示す別の傾向まで、出典つきで整理します。">
+  <meta name="keywords" content="ボラティリティ,VIX,ポジションサイジング,シャープレシオ,エントリー,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-entry-volatility-scaling.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="「値動きが荒れたら量を減らす」は成績を上げるのか？ 研究でわかっていること【エントリー方法の研究 #17】">
+  <meta property="og:description" content="値動きの荒さに応じて取引の量を増減させる方法を、研究の報告と反論の両方から出典つきで整理します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-entry-volatility-scaling.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "「値動きが荒れたら量を減らす」は成績を上げるのか？ 研究でわかっていること【エントリー方法の研究 #17】",
+    "description": "値動きの荒さに応じて取引の量を増減させる方法を、研究の報告と反論の両方から出典つきで整理します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-10-11",
+    "dateModified": "2026-10-11",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-entry-volatility-scaling.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <!-- 広告なし（2026-09-25 オーナー指示「広告はなしでいいです」）＝Google AdSense の読み込みも入れない -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    @media (max-width:600px){td:first-child{white-space:normal}th,td{padding:9px 8px}}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* エントリー方法の研究 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-bar-a{fill:#0969da;opacity:.85}
+    .s-bar-b{fill:#54aeff;opacity:.85}
+    .s-bar-c{fill:#9a6700;opacity:.8}
+    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
+    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-bar-a{fill:#58a6ff}
+    body.dark .s-bar-b{fill:#1f6feb}
+    body.dark .s-bar-c{fill:#d29922}
+    body.dark .s-curve-g{stroke:#3fb950}
+    body.dark .s-curve-r{stroke:#f85149}
+    body.dark .s-guide{stroke:#6e7781}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; 値動きの荒さで量を変える（エントリー方法の研究 #17）
+  </div>
+
+  <article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事はエントリー（買う・売るタイミング）の決め方についての考え方や、公開されている研究の紹介を目的とした「情報提供」であり、特定の手法・銘柄の売買を推奨するものではありません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🌊 「値動きが荒れたら量を減らす」は成績を上げるのか？ 研究でわかっていること【エントリー方法の研究 #17】</h1>
+    <div class="meta-line">公開：2026年10月11日 ／ 読了時間：約 10 分 ／ カテゴリ：🚪 エントリー方法の研究</div>
+
+    <p>シリーズ第16回（<a href="guide-entry-investor-sentiment.html">#16</a>）では、投資家心理を表す指標を取り上げました。この記事で取り上げるのは、「いつ入るか」ではなく「どれだけの量で入るか」という工夫です。値動きが荒れている（ボラティリティが高い）ときは取引の量を減らし、落ち着いているときは増やす——という考え方は、実際の研究でどこまで成績の改善につながっているのでしょうか。モレイラ氏とミュア氏の研究（2017年）が米国株の要因・通貨の金利差取引で報告した結果と、セダーバーグ氏らの研究（2020年）による反論、そしてよく混同される「VIX（ボラティリティ指数：米国株がこの先どれくらい大きく動きそうかを、市場がどう見ているかを表す数字）が跳ねたら買い」という考え方との違いまで、出典つきで整理します。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>モレイラ氏とミュア氏の研究（2017年、米国株の市場全体の要因・1926〜2015年のデータ）は、前の月の値動きの荒さ（分散）に反比例する量で毎月の持ち高を調整する方法が、何もしない場合（買って持ち続ける方法）と比べて、年率4.9%のプラスの上乗せ（アルファ：値動きの大きさだけでは説明できない上乗せ分の成績）と、リスク1あたりのもうけを表す数字（シャープレシオ）の25%の上昇をもたらしたと報告しました。株の5つの要因・通貨の金利差取引（キャリートレード）でも改善が報告されています（改善の大きさは要因ごとに異なり、25%は市場全体の要因についての数字です）。</li>
+      <li>一方、セダーバーグ氏らの研究（2020年）は、株の103種類の方法を対象に、実際にその場で使える情報だけでこの工夫を試すと、量を調整する方法を組み合わせに加えるかどうかで比べた場合、加えたほうがリスクに対する成績が悪くなった組み合わせが103種類のうち72種類あったと報告しました。高い成績の一部は、全期間のデータを前提にした検証方法によるものだと指摘されています。</li>
+      <li>「VIXが跳ねたら買う」という考え方は、量を調整するこの工夫とは別の話です。ジオ氏の研究（2005年）は、きわめて高いVIXの水準のあとは短期的にプラスに傾く兆しを報告していますが、そこそこ高い水準のあとはむしろ不利な成績だったとも報告しています。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どんな方法か</a></li>
+        <li><a href="#section-2">研究でわかっていること</a></li>
+        <li><a href="#section-3">反論・限界</a></li>
+        <li><a href="#section-4">株・FX・コモディティでは？</a></li>
+        <li><a href="#section-5">よくある誤解</a></li>
+        <li><a href="#section-6">まとめ</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どんな方法か</h2>
+    <p><strong>どんな方法？</strong> 持っている量（ロットの大きさ）を、「いつ入るか」ではなく「どれだけの量で入るか」で調整する方法です。目安にするのは、直前の期間（たとえば前の1か月）の値動きの荒さです。値動きが荒かった期間のあとは量を減らし、落ち着いていた期間のあとは量を増やします。買うか売るかという方向を決める方法ではなく、決めた方向にどれだけの量で入るかを決める工夫です。</p>
+    <p><strong>仮の例（考え方を説明するための仮の例です）：</strong> ある方法で前の月の値動きの荒さ（分散）を測り、今月の量をそれに反比例させると決めたとします。前の月の値動きが荒かった月は、今月の量をふだんの半分に減らし、前の月が落ち着いていた月は、今月の量をふだんの1.5倍に増やす、といったルールです。これは方法の形を示すための例であり、この売買が有利だという意味ではありません。</p>
+
+    <figure class="chart-figure">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="fig-volscale-title">
+        <title id="fig-volscale-title">値動きの荒さが大きかった月の翌月は量を減らし、小さかった月の翌月は量を増やす、というしくみを示す概念図</title>
+        <text class="s-panel-label" x="320" y="24" text-anchor="middle">前の月の値動きの荒さ（イメージ）</text>
+        <polyline class="s-curve-r" points="100,110 220,70 320,50 420,75 540,115"/>
+        <text class="s-note-r" x="320" y="38" text-anchor="middle">いちばん荒れた月</text>
+        <line class="s-divv" x1="60" y1="155" x2="600" y2="155"/>
+        <text class="s-panel-label" x="320" y="178" text-anchor="middle">今月の量（イメージ）</text>
+        <line class="s-axis" x1="60" y1="270" x2="600" y2="270"/>
+        <rect class="s-bar-a" x="75" y="190" width="50" height="80"/>
+        <rect class="s-bar-a" x="195" y="225" width="50" height="45"/>
+        <rect class="s-bar-a" x="295" y="255" width="50" height="15"/>
+        <rect class="s-bar-a" x="395" y="225" width="50" height="45"/>
+        <rect class="s-bar-a" x="515" y="195" width="50" height="75"/>
+        <text class="s-note-g" x="100" y="184" text-anchor="middle">量を増やす</text>
+        <text class="s-note-r" x="320" y="249" text-anchor="middle">量を減らす</text>
+        <text class="s-label-sm" x="320" y="292" text-anchor="middle">モレイラ氏とミュア氏（2017年）の報告をもとに当サイトが作図</text>
+      </svg>
+      <figcaption class="chart-caption">図：値動きの荒さ（分散）が大きかった月の翌月は量を減らし、小さかった月の翌月は量を増やす、というしくみのイメージです。※概念を示すイメージ図です（実際の値動きではありません）。</figcaption>
+    </figure>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 研究でわかっていること</h2>
+    <h3>市場全体の要因で、シャープレシオが25%上がったという報告</h3>
+    <p>モレイラ氏とミュア氏の研究（全米経済研究所の研究報告として2016年に発表、2017年に学術誌「ジャーナル・オブ・ファイナンス」72巻4号、1611〜1644ページに掲載）は、前の月の値動きの荒さ（分散）の大きさに反比例する量で、毎月の持ち高を調整する方法を、米国株の市場全体を表す要因（1926〜2015年のデータ）に当てはめました。その結果、何もしない場合（買って持ち続ける方法）と比べて、年率4.9%のプラスの上乗せ（アルファ）と、リスク1あたりのもうけを表す数字（シャープレシオ）の25%の上昇が報告されています。同じ研究は、割安株を買う要因・強い銘柄を買う要因（モメンタム）・収益性の高い会社を買う要因・資本効率の高い会社を買う要因・投資の少ない会社を買う要因という、株の5つの要因と、通貨の金利差をねらう取引（キャリートレード）でも、成績が改善したと報告しています（改善の大きさは要因ごとに異なり、25%という数字は市場全体の要因についてのものです）。</p>
+    <h3>「不景気のときほど量を減らす」という、常識に反する動き</h3>
+    <p>この研究は、量を調整する理由が「危ないときに量を減らしてリスクを避けているだけ」という単純な説明では説明しきれないとも報告しています。米国の景気後退期（全米経済研究所が認定した期間）を調べると、市場全体の要因に対して、この方法がどれだけ連動するかを表す数字（ベータ）は、景気後退期以外では0.83だったのに対し、景気後退期ではマイナス0.51下がり、合計で0.32まで下がっていたと報告されています。景気後退期はリスクをとった分だけ高いリターンが得られやすい場面だとも言われるため、この方法が景気後退期にかえって守りに入っているという点は、そうした典型的な説明では説明しづらい、と論じられています。</p>
+
+    <div class="info-box"><strong>当サイトとの関係：</strong> 当サイトの各シグナルは、ATR（真の値幅の平均：値動きの荒さを測る指標の1つ）を使って損切り・利益確定の値段の幅を決めていますが、値動きの荒さに応じて取引の量そのものを増減させるしくみは持っていません。この記事で紹介した研究の対象は米国株の要因・通貨の金利差取引（1926〜2015年のデータ）であり、当サイトの監視18銘柄・現在の期間とは異なります。</div>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 反論・限界</h2>
+    <h3>「その場で使える形」で試すと、7割近い組み合わせで成績が悪化したという報告</h3>
+    <p>セダーバーグ氏・オドハーティ氏・ワン氏・ヤン氏の研究（2020年、学術誌「ジャーナル・オブ・ファイナンシャル・エコノミクス」138巻、95〜117ページに掲載）は、株の103種類の方法を対象に、実際にその場で使える情報だけを使って、この量を調整する工夫を試しました。その結果、何もしない場合と単純に1対1で比べると、量を調整する方法のほうがリスク1あたりの成績（シャープレシオ）で上回ったのは103種類のうち53種類にとどまり、さらにその53種類のうち、統計的にはっきりした差と言えたのはわずか8種類だったと報告されています。また、量を調整する選択肢を加えるかどうかを、もっとも効率の良い組み合わせを選ぶ方法で比べた場合には、加えたほうがリスクに対する成績が悪くなった組み合わせが103種類のうち72種類あったとも報告されています。</p>
+    <h3>高い成績の一部は、未来の情報を使わないと再現できない</h3>
+    <p>この研究は、モレイラ氏とミュア氏の研究と同じ統計的な検証方法（回帰分析）を使うと、同じようにプラスの上乗せ（アルファ）が報告できることも確認しています。ただし、その検証方法は、全期間のデータを使って初めて決まる調整の仕方を前提にしており、実際の取引のように「その時点までの情報」だけでは再現できないと指摘しています。成績が実際には振るわない主な理由として、量を調整する基準となる統計的な関係そのものが、期間によって大きく変わってしまうこと（構造的な不安定さ）を挙げています。なお、この研究が報告した数字は取引コストを引く前のものです。この反論の研究は株の103種類の方法が対象で、通貨の金利差取引やコモディティについて、同じように実際にその場で使える形で試した結果は、この記事では確認できていません。</p>
+    <h3>混同されやすい「VIXが跳ねたら買う」という考え方との違い</h3>
+    <p>この工夫（値動きの荒さで量を調整する）と、よく混同されるのが「VIXが跳ねたら買う」という考え方です。これは「どれだけの量で入るか」ではなく「いつ・どちらの方向に入るか」を決める、別の種類の方法です。ジオ氏の研究（2002年に研究報告として発表、2005年に学術誌「ジャーナル・オブ・ポートフォリオ・マネジメント」31巻3号、92〜100ページに掲載）は、米国のS&amp;P100とナスダック100という2つの株価指数を対象に、VIXと、ナスダック100を対象にした同じ種類の値動きの荒さを表す指数の水準と、その後のリターンの関係を調べました。その結果、これらの指数の水準が上がると、その後の2つの株価指数のリターンは平均でマイナスに傾く一方、きわめて高い水準になったあとは、統計的には短期的にプラスに傾く兆しがあったと報告されています。ただし、そこそこ高い水準のあとは、むしろリスクに対して不利な成績だったとも報告されています。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 株・FX・コモディティでは？</h2>
+    <p>紹介した研究が、どの市場を対象にしているかを表に整理します。</p>
+    <table>
+      <tr><th>市場</th><th>研究はあるか</th><th>内容</th></tr>
+      <tr><td>個別株・株価指数</td><td>あり</td><td>モレイラ氏とミュア氏の研究（2017年）は、米国株の市場全体の要因・5つの株の要因（1926〜2015年）で成績の改善を報告。セダーバーグ氏らの研究（2020年）は、同じ種類の株の方法を実際にその場で使える形で試すと、多くの組み合わせで改善が見られなかったと報告。ジオ氏の研究（2005年）は米国の2つの株価指数（S&amp;P100・ナスダック100）が対象。</td></tr>
+      <tr><td>為替（FX）</td><td>一部あり（金利差取引のみ）</td><td>モレイラ氏とミュア氏の研究は、通貨の金利差をねらう取引（キャリートレード）でも成績の改善を報告していますが、個別の通貨ペアを対象にした結果ではありません。セダーバーグ氏らのような、実際にその場で使える形での検証は、この記事では確認できていません。</td></tr>
+      <tr><td>コモディティ（金・原油など）</td><td>この記事からはわかりません</td><td>紹介した3つの研究はいずれも、金・銀・原油などのコモディティを対象にしていません。</td></tr>
+    </table>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ よくある誤解</h2>
+    <h3>誤解1：「値動きが荒れたら量を減らす」と「VIXが跳ねたら買う」は同じ話だと思われがち</h3>
+    <p>この記事で紹介した量を調整する工夫は、買うか売るかの方向を決めるものではなく、決めた方向にどれだけの量で入るかを決める工夫です。一方、「VIXが跳ねたら買う」という考え方は、いつ・どちらの方向に入るかを決める、別の種類の方法です。ジオ氏の研究が報告したのは後者の傾向で、しかもきわめて高い水準のときだけの、短期的な傾向です。</p>
+    <h3>誤解2：「量を減らせば、成績は良くなる」と思われがち</h3>
+    <p>セダーバーグ氏らの研究が報告したとおり、実際にその場で使える情報だけでこの工夫を試すと、多くの組み合わせで成績は改善しませんでした（米国の株の103種類の方法を対象にした検証です）。量を調整すること自体が、いつも成績を上げるわけではありません。</p>
+    <h3>誤解3：「研究で報告された高い成績は、そのまま再現できる」と思われがち</h3>
+    <p>モレイラ氏とミュア氏の研究が使った統計的な検証方法は、全期間のデータを前提にしています。セダーバーグ氏らが指摘したとおり、その時点までの情報だけで同じ調整を行うと、報告された高さの成績を再現できるとは限りません。</p>
+
+    <div class="warning-box">この記事は、公開されている学術研究を当サイトが要約したものです。研究の数字は、それぞれの研究が使った期間・市場・条件のもとでの結果であり、将来も同じになるとは限りません。特定の手法・銘柄の売買を勧めるものではありません。</div>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ まとめ</h2>
+    <ul>
+      <li>モレイラ氏とミュア氏の研究（2017年）は、米国株の市場全体の要因・5つの株の要因・通貨の金利差取引（1926〜2015年のデータ）で、前の月の値動きの荒さに反比例する量で取引する方法の成績の改善を報告しました。シャープレシオの25%の上昇は市場全体の要因についての数字で、ほかの要因・取引での改善の大きさはそれぞれ異なります。</li>
+      <li>セダーバーグ氏らの研究（2020年）は、株の103種類の方法を実際にその場で使える形で試すと、量を調整する方法を組み合わせに加えたほうがリスクに対する成績が悪くなったのは72種類だったと報告し、高い成績の一部は全期間のデータを前提にした検証方法によるものだと指摘しました。</li>
+      <li>「VIXが跳ねたら買う」という考え方は、量を調整する工夫とは別の種類の方法です。ジオ氏の研究（2005年）は、きわめて高いVIXの水準のあとだけ短期的にプラスに傾く兆しを報告しています。</li>
+      <li>紹介した研究は米国株・通貨の金利差取引・米国の株価指数が対象で、コモディティ（金・原油など）で同じ傾向があるかは、この記事からはわかりません。</li>
+    </ul>
+    <p>次回は、ローソク足の形が研究でどう評価されているのかを見ていきます。</p>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-position-sizing.html">
+        <div class="related-card-title">📏 ポジションサイジングの基本</div>
+        <div class="related-card-desc">「2%ルール」と損切り幅から逆算するロット計算。本記事の「量をどう決めるか」の基本の考え方です。</div>
+      </a>
+      <a class="related-card" href="guide-vix.html">
+        <div class="related-card-title">😱 VIX恐怖指数とは？</div>
+        <div class="related-card-desc">VIXの読み方・水準別の意味。本記事で取り上げた「VIXが跳ねたら買う」という考え方の前提知識です。</div>
+      </a>
+    </div>
+
+    <h2>📚 出典・参考文献</h2>
+    <ul>
+      <li><a href="https://www.nber.org/papers/w22208.pdf" target="_blank" rel="noopener">Moreira, Alan &amp; Muir, Tyler (2016, revised) "Volatility Managed Portfolios", NBER Working Paper No.22208（のちに The Journal of Finance 72(4), 2017年, pp.1611-1644に掲載）</a></li>
+      <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X2030132X" target="_blank" rel="noopener">Cederburg, O'Doherty, Wang &amp; Yan (2020) "On the Performance of Volatility-Managed Portfolios", Journal of Financial Economics 138(1), pp.95-117</a></li>
+      <li><a href="https://ideas.repec.org/p/cor/louvco/2002050.html" target="_blank" rel="noopener">Giot, Pierre (2002) "Implied Volatility Indices as Leading Indicators of Stock Index Returns?", CORE Discussion Paper 2002/050, Université catholique de Louvain（のちに The Journal of Portfolio Management 31(3), 2005年, pp.92-100に掲載）</a></li>
+    </ul>
+
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{display:block;max-width:900px;margin:28px auto 0;padding:0 16px;background:none;border:0;box-shadow:none}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a;min-width:0;white-space:normal}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;overflow-wrap:anywhere}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:minmax(0,1fr)}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="エントリー方法の研究のシリーズ内移動">
+      <div class="mw-sernav-h">📚 エントリー方法の研究</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-entry-investor-sentiment.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">投資家の心理を表す指数が強気に傾いたら、株は買いなのか？ 研究でわかっていること【エントリー方法の研究 #16】</span>
+      </a>
+      <span class="mw-sernav-btn next is-off" aria-hidden="true">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">これが最新の記事です</span>
+      </span>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html#cat-entry">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事はエントリー（買う・売るタイミング）の決め方についての考え方と、公開されている学術研究の紹介を情報提供として整理したものであり、特定銘柄・特定手法の売買推奨や投資助言ではありません。研究の内容は当サイトによる要約です。正確な内容は各原文をご確認ください。記載の数値・方法による利益を保証するものではありません。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+</body>
+</html>
