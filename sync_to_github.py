@@ -350,4 +350,5 @@ SYNC_FILES = [
     "guide-signal-lab-123.html",
     "guide-company-7735-screen.html",
     "guide-entry-volatility-scaling.html",
+    "guide-news-2026-10-11-japan-holiday-cpi-earnings.html",
 ]
