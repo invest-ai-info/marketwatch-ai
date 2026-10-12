@@ -351,4 +351,5 @@ SYNC_FILES = [
     "guide-company-7735-screen.html",
     "guide-entry-volatility-scaling.html",
     "guide-news-2026-10-11-japan-holiday-cpi-earnings.html",
+    "guide-company-wmt-walmart.html",
 ]
