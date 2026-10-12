@@ -1,0 +1,49 @@
+name: Security Watch (weekly)
+
+# 週1回のセキュリティ点検（GitHub 側・読むだけ）。2026-10-12 新設。中身は security_watch.py の冒頭。
+# 要確認があるときだけ Gmail で知らせる。何も書き換えない・コミットしない（ほかのワークフローを起こさない）。
+# ⚠️ このリポジトリは公開＝ログは誰でも読める。security_watch.py はログに項目名と件数しか出さない（中身はメールだけ）。
+# 止まったら automation-health（check_automation_health.py の一覧）が気づく。
+
+on:
+  schedule:
+    - cron: '47 22 * * 0'   # 月曜 07:47 JST（半端な分＝遅れにくい）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 直近8日の差分を読むため
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run security watch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+          # いま使っている鍵そのものが新しい行に紛れていないかを照合する（値はログに出ない・メールにも先頭4文字だけ）
+          WATCH_KEY_EDINET: ${{ secrets.EDINET_API_KEY }}
+          WATCH_KEY_JQUANTS: ${{ secrets.JQUANTS_API_KEY }}
+          WATCH_KEY_GEMINI: ${{ secrets.GEMINI_API_KEY }}
+          WATCH_KEY_NEWSAPI: ${{ secrets.NEWSAPI_KEY }}
+          WATCH_KEY_YOUTUBE: ${{ secrets.YOUTUBE_API_KEY }}
+          WATCH_KEY_GMAIL: ${{ secrets.GMAIL_APP_PASSWORD }}
+          WATCH_KEY_TRADES_CSV: ${{ secrets.MY_TRADES_CSV_URL }}
+        run: python security_watch.py
