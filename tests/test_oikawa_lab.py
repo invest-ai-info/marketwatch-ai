@@ -179,7 +179,7 @@ def test_run_end_to_end_with_made_up_files():
 
 def test_lists_and_workflow():
     import verified_list as VL
-    assert any(s[0] == "oikawa-lab.json" and s[2] == "OK" for s in VL.SOURCES)
+    assert any(s[0] == "oikawa-lab.json" and s[2] == "" for s in VL.SOURCES)   # 記録の名前が OK-A／OK-B＝節の名前を重ねない
     assert "'oikawa-lab.json'" in open(".github/workflows/research-lists.yml", encoding="utf-8").read()
     assert "oikawa_lab.py" in open("RESEARCH_LABS.md", encoding="utf-8").read()
     assert '"oikawa-lab.json"' not in open("check_site_consistency.py", encoding="utf-8").read()   # 手元で作って送る記録＝SYNC 禁忌ではない
