@@ -353,4 +353,5 @@ SYNC_FILES = [
     "guide-news-2026-10-11-japan-holiday-cpi-earnings.html",
     "guide-company-wmt-walmart.html",
     "guide-entry-candlestick-research.html",
+    "guide-news-2026-10-12-houthi-saudi-oil-spike.html",
 ]
