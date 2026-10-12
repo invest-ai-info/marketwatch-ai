@@ -23,6 +23,7 @@ exit code: error があれば 1、無ければ 0（CI/フックで分岐でき�
   python check_site_consistency.py            # 検査して結果表示
   python check_site_consistency.py --quiet    # エラー時のみ詳細表示
 """
+import fnmatch
 import os
 import re
 import subprocess
@@ -273,8 +274,9 @@ def check_sync_forbidden(sync_files):
         base = os.path.basename(f)
         if base in SYNC_FORBIDDEN or f in SYNC_FORBIDDEN or re.match(r"technical-alerts-history.*\.json$", base):
             errors.append(f"🚨 SYNC禁忌ファイルが SYNC_FILES に混入: {f}（ローカルpushで巻き戻し事故の恐れ）")
-        elif base.startswith("_"):
+        elif base.startswith("_") and f.replace("\\", "/") != PAGES_CONFIG:
             # 🆕 2026-07-07: 「_プレフィックス＝ローカル専用（非公開研究/個人データ）」規約をコードで強制
+            #   例外は Pages の設定 _config.yml だけ（Jekyll がリポジトリ直下のこの名前しか読まない）
             errors.append(f"🚨 ローカル専用（_プレフィックス）ファイルが SYNC_FILES に混入: {f}（非公開研究の流出防止）")
         elif re.match(r"(?i)(detailed)?statement.*\.html?$", base):
             # 🆕 2026-09-27: MT4 の口座履歴（Statement.htm）＝名前・口座番号・全取引が入った個人の記録。
@@ -314,12 +316,13 @@ def check_liquid_in_markdown(sync_files):
        ライブは古いビルドを配信し続けるので**訪問者に破損は見えず**、health-check も
        「最終更新の日付が今日か」しか見ないため**緑のまま**＝人力では気づけない壊れ方をする。
 
-    判定は `.nojekyll` の有無で段階を変える:
-       無い → Jekyll が走る＝**実際にビルドが落ちる**ので error
-       有る → 無害化済みだが、`.nojekyll` を失うと再発する潜在リスクなので warning
+    判定は「Jekyll が .md を読むか」で段階を変える:
+       読む   → **実際にビルドが落ちる**ので error
+       読まない（_config.yml の exclude に "*.md"。2026-10-12〜。旧＝.nojekyll）→ 潜在リスクとして warning
     """
     md = [f for f in sync_files if f.lower().endswith(".md")]
-    has_nojekyll = _exists(".nojekyll")
+    md_skipped = _exists(".nojekyll") or (
+        _exists(PAGES_CONFIG) and "*.md" in _pages_excludes(_read(PAGES_CONFIG)))
     for f in sorted(md):
         if not _exists(f):
             continue
@@ -329,10 +332,84 @@ def check_liquid_in_markdown(sync_files):
             continue
         msg = (f"{f}: Liquid 構文（波括弧2連 等）が {hits}箇所。"
                f"Jekyll がテンプレートとして解釈しビルドが落ちる")
-        if has_nojekyll:
-            warnings.append(msg + "（.nojekyll があるので現状は無害）")
+        if md_skipped:
+            warnings.append(msg + "（Jekyll は .md を読まないので現状は無害）")
         else:
-            errors.append("🚨 " + msg + "（.nojekyll が無い＝ライブ更新が止まる）")
+            errors.append("🚨 " + msg + f"（{PAGES_CONFIG} の exclude に \"*.md\" が無い＝ライブ更新が止まる）")
+
+
+# 🛡️ 2026-10-12: サイト（GitHub Pages）に載せないもの。
+#   .nojekyll で Jekyll を止めていた間（2026-08-05〜10-12）は、リポジトリの全ファイルが
+#   marketwatch-jp.com でそのまま配信され、my-trades.json・memory/*.md・CLAUDE.md・全コードが誰でも開けた
+#   （robots.txt は検索に載せないだけで、URL を知っていれば読める）。
+#   Jekyll に戻して _config.yml の exclude で外す。exclude したものは Jekyll が読みもしない＝
+#   .md の Liquid 事故（2026-08-05）も起きない。ここでは一覧の抜けを止める。
+PAGES_CONFIG = "_config.yml"
+PAGES_MUST_EXCLUDE = ("*.md", "*.py", "drafts/", "tests/", "my-trades.json", "my-trades.csv")
+_PAGE_REF = re.compile(r"""(?:href|src)\s*=\s*["']([^"'#?]+)""", re.I)
+_SITE_HOSTS = ("https://marketwatch-jp.com/", "http://marketwatch-jp.com/", "https://www.marketwatch-jp.com/")
+
+
+def _pages_excludes(text):
+    """_config.yml の `exclude:` の並びを取り出す（PyYAML に頼らない・この形だけ読む）。"""
+    out, inside = [], False
+    for line in text.splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if not line[0].isspace() and not line.startswith("-"):
+            inside = line.split("#", 1)[0].strip() == "exclude:"
+            continue
+        m = re.match(r"""\s*-\s*(?:"([^"]*)"|'([^']*)'|([^\s#]+))""", line)
+        if inside and m:
+            out.append(next(g for g in m.groups() if g is not None))
+    return out
+
+
+def _pages_excluded(path, patterns):
+    """Jekyll と同じ決め方：パターンに合う（`*` は `/` もまたぐ）か、パターンで始まる。"""
+    return any(fnmatch.fnmatchcase(path, p) or path.startswith(p) for p in patterns)
+
+
+def _site_path(url):
+    """ページ内のリンク先を、サイト直下からのパスにする（外のサイト・mailto などは None）。"""
+    u = url.strip()
+    for host in _SITE_HOSTS:
+        if u.startswith(host):
+            return u[len(host):]
+    if u.startswith("//") or re.match(r"[A-Za-z][A-Za-z0-9+.\-]*:", u):
+        return None
+    u = u.lstrip("/")
+    return u[2:] if u.startswith("./") else u
+
+
+def check_pages_exclude():
+    """サイトにリポジトリの中身を丸ごと載せていないか・載せないファイルへリンクしていないか。"""
+    if _exists(".nojekyll"):
+        errors.append("🚨 .nojekyll がある＝Jekyll が止まり _config.yml の exclude が効かない。"
+                      "リポジトリの全ファイル（my-trades.json・memory/*.md・CLAUDE.md・全コード）が"
+                      "marketwatch-jp.com で誰でも開ける→ .nojekyll を消す")
+    if not _exists(PAGES_CONFIG):
+        errors.append(f"🚨 {PAGES_CONFIG} が無い＝サイトに載せないファイルの一覧が無い"
+                      "（個人の記録・手順書・コードがサイトで配信される）")
+        return
+    ex = _pages_excludes(_read(PAGES_CONFIG))
+    missing = [p for p in PAGES_MUST_EXCLUDE if p not in ex]
+    if missing:
+        errors.append(f"🚨 {PAGES_CONFIG} の exclude に {missing} が無い＝サイトで誰でも開ける")
+    bad = []
+    for fp in sorted(glob.glob(os.path.join(SD, "*.html"))):
+        name = os.path.basename(fp)
+        if name.startswith("_"):
+            continue
+        with open(fp, encoding="utf-8", errors="replace") as fh:
+            body = fh.read()
+        for url in _PAGE_REF.findall(body):
+            path = _site_path(url)
+            if path and _pages_excluded(path, ex):
+                bad.append(f"{name} → {path}")
+    if bad:
+        errors.append(f"🚨 公開ページが、サイトに載せないファイルを指している（リンク切れ）{len(bad)}件: "
+                      + "、".join(bad[:8]))
 
 
 def check_series_numbering():
@@ -486,6 +563,8 @@ def main():
     if sync_known:
         check_sync_forbidden(sync_files)
         check_liquid_in_markdown(sync_files)
+    # 1b. 🛡️ サイトに載せないファイル（手元でもクラウドでも同じ＝_config.yml と .nojekyll はリポジトリにある）
+    check_pages_exclude()
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""

@@ -1,0 +1,25 @@
+# GitHub Pages（Jekyll）の設定。2026-10-12 追加。
+#
+# 目的＝リポジトリの中の「サイトではないもの」を marketwatch-jp.com で配信しない。
+#   .nojekyll で Jekyll を止めていた間（2026-08-05〜10-12）は、リポジトリの全ファイルがそのまま配信され、
+#   my-trades.json・memory/*.md・CLAUDE.md・全コードが URL を知っていれば誰でも開けた
+#   （robots.txt は検索に載せないだけ）。ここに書いたものは Jekyll が読みもしない＝配信されない。
+#
+# ⚠️ "*.md" を外さないこと。Jekyll は .md を Liquid テンプレートとして読み、波括弧2連が1つあるだけで
+#    ビルドが全失敗する（2026-08-05 に12時間ライブ更新が止まった事故）。
+# ⚠️ .nojekyll を戻さないこと。戻すとこの一覧が効かなくなり、全ファイルがまた配信される。
+# 一覧の抜けと、公開ページがここで外したファイルへリンクしていないかは
+# check_site_consistency.py の check_pages_exclude が検査する（足りないと error）。
+#
+# 書き方の注意：パターンは「合う（* は / もまたぐ）か、その文字で始まる」で判定される。
+#   フォルダは末尾に / を付ける（付けないと同じ文字で始まるファイルまで外れる）。
+
+exclude:
+  - "*.md"            # 手順書・メモ・個人の記録（memory/・MY_TRADING_RULES.md・ROADMAP_10M.md・REVIEW.md など）
+  - "*.py"            # プログラム
+  - drafts/           # 公開前の下書き・台帳
+  - tests/            # テスト
+  - yutai-edinet/     # 株主優待の有報あつめ（研究用の生データ・ページは使わない）
+  - my-trades.json    # 実取引ログ（個人の記録）
+  - my-trades.csv
+  - level_err.txt     # エラーの書き出し
