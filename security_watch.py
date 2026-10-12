@@ -13,7 +13,10 @@
 知らせ方: 要確認があるときだけ Gmail（GMAIL_USER／GMAIL_APP_PASSWORD／ALERT_RECIPIENT）。何も無ければ送らない。
 ⚠️ このリポジトリは公開＝Actions のログは誰でも読める。**ログには項目名と件数だけ**を出し、
    場所・値・メールアドレスなどの中身はメールにだけ書く。鍵の値はメールにも先頭4文字しか書かない。
-PC 側の点検は手元の `_security_watch_pc.py`（タスク MarketWatch_Security_PC）。
+PC 側は自動の点検を置かない（2026-10-12 オーナー判断「ノートンに任せる」）。理由＝PC 側の自動点検の試作
+（Python から PowerShell を -EncodedCommand で呼び、ウイルス対策の一覧を読む）がノートンの振る舞い検知
+IDP.HELU.PSE94 に攻撃と判定され、python.exe の入り口が消えた。PC は月1回などオーナーが頼んだときに
+Claude が読むだけで点検する（PowerShell を直接・暗号化しないで使う）。
 
 実行: GitHub Actions（security-watch.yml・月曜朝）／手元でも `python security_watch.py --dry-run`（メールを送らず中身を表示）
 """
@@ -283,7 +286,7 @@ def main():
         body += [f"  - {x}" for x in items[:30]]
         body.append("")
     body += ["何も書き換えていません。直し方が分からないときは、このメールを Claude に貼ってください。",
-             "（PC 側の点検は手元のタスク MarketWatch_Security_PC が別に知らせます）"]
+             "（PC 側はノートンに任せています。PC の点検は Claude に「PCを点検して」と頼んでください）"]
     subject = f"🛡️ 週1セキュリティ点検：要確認 {sum(len(i) for _, i in bad)}件"
     if dry:
         print("\n--dry-run（送らない）\n" + subject + "\n" + "\n".join(body))

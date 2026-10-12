@@ -412,6 +412,30 @@ def check_pages_exclude():
                       + "、".join(bad[:8]))
 
 
+# 🛡️ 2026-10-12: CDN から読むスクリプトには改ざん防止の印（integrity＝SRI）を付ける。
+#   配信元が乗っ取られて中身が差し替わっても、印と合わなければブラウザは実行しない。
+#   値は配信元の公表値（cdnjs は https://api.cdnjs.com/libraries/<名前>/<版>?fields=sri）と照合して入れる。
+#   jsdelivr の「元に無い .min.js」（その場で縮めた版）は中身が変わりうる＝印が外れてグラフが消えるので使わない。
+_CDN_SCRIPT = re.compile(r"""<script\b[^>]*\bsrc\s*=\s*["']https://(?:cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net|unpkg\.com)/[^"']+["'][^>]*>""", re.I)
+
+
+def check_cdn_integrity():
+    """生成スクリプト（.py）は error・ページ（.html）は warning（生成物は次の再生成で直る）。"""
+    for fp in sorted(glob.glob(os.path.join(SD, "*.py")) + glob.glob(os.path.join(SD, "*.html"))):
+        name = os.path.basename(fp)
+        if name.startswith("_") or name == os.path.basename(__file__):
+            continue
+        with open(fp, encoding="utf-8", errors="replace") as fh:
+            bare = [t for t in _CDN_SCRIPT.findall(fh.read()) if "integrity=" not in t]
+        if not bare:
+            continue
+        msg = f"{name}: CDN のスクリプトに integrity（改ざん防止の印）が無い {len(bare)}件"
+        if name.endswith(".py"):
+            errors.append("🚨 " + msg)
+        else:
+            warnings.append(msg)
+
+
 def check_series_numbering():
     """連番シリーズ（AIシグナル研究日誌）の回番号を検査する。
 
@@ -565,6 +589,7 @@ def main():
         check_liquid_in_markdown(sync_files)
     # 1b. 🛡️ サイトに載せないファイル（手元でもクラウドでも同じ＝_config.yml と .nojekyll はリポジトリにある）
     check_pages_exclude()
+    check_cdn_integrity()
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""

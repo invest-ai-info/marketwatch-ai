@@ -246,7 +246,7 @@ def build_chart_section_html(ticker, asset_name, currency="$", years=3, chart_id
 <p style="font-size:.78rem;color:#6e7781;margin-top:8px">
   💡 データ出典: Yahoo Finance (yfinance)、ティッカー <code>{ticker}</code>。最終取得: {datetime.now(JST).strftime("%Y-%m-%d %H:%M JST")}
 </p>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 (function() {{
   var ctx = document.getElementById('{chart_id}');

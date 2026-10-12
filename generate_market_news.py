@@ -1720,8 +1720,8 @@ def build_vix_html(vix_val, vix_prev, vix_dates, vix_prices, now_jst):
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("vix.html", "恐怖指数（VIX）分析", "VIX指数（恐怖指数）の最新値・90日チャート・AIコメントを毎日更新。市場心理を読み解き、暴落の予兆や買い場のヒントを日本人投資家向けに分かりやすく解説します。")}
   {GA4_TAG}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js" integrity="sha512-Hn1w6YiiFw6p6S2lXv6yKeqTk0PLVzeCwWY9n32beuPjQ5HLcvz5l2QsP+KilEr1ws37rCTw3bZpvfvVIeTh0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
     body{{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}}
@@ -4182,8 +4182,8 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 {seo_head("market-health.html", "市場健康度ダッシュボード", "VIX・恐怖&強欲指数・バフェット指数・CAPEレシオ・騰落レシオを一画面で可視化。割高/割安/過熱/底値圏を色分け表示し、相場全体の温度感を瞬時に判断できます。")}
 {GA4_TAG}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js" integrity="sha512-Hn1w6YiiFw6p6S2lXv6yKeqTk0PLVzeCwWY9n32beuPjQ5HLcvz5l2QsP+KilEr1ws37rCTw3bZpvfvVIeTh0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
   *{{margin:0;padding:0;box-sizing:border-box}}
   body{{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;font-size:16px;line-height:1.75}}
@@ -4523,8 +4523,8 @@ def build_charts_html(hist, now_jst):
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   {seo_head("charts.html", "150年価格チャート＆投資史年表", "S&P500は1871年から、日経平均・ドル円は1949年から、金は1871年から——150年スケールの超長期チャート（対数）を世界恐慌・ニクソンショック・リーマンショックなど歴史的イベントと時代背景（金本位制→ブレトンウッズ→変動相場制）付きで表示。1602年チューリップバブルからの投資史年表も。")}
   {GA4_TAG}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js" integrity="sha512-Hn1w6YiiFw6p6S2lXv6yKeqTk0PLVzeCwWY9n32beuPjQ5HLcvz5l2QsP+KilEr1ws37rCTw3bZpvfvVIeTh0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
     *{{margin:0;padding:0;box-sizing:border-box}}
     body{{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh}}
