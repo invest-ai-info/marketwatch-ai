@@ -1,0 +1,49 @@
+{
+  "article_id": "124",
+  "hypothesis_id": "auto_rsi_band-os_trend-上昇",
+  "asof": "2026-10-13T06:20:00+09:00",
+  "claims": [
+    {
+      "label": "IS（登録前）: 上昇トレンド×RSI売られすぎ×ロング",
+      "hypothesis_id": "auto_rsi_band-os_trend-上昇",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "fired_before": "2026-08-12"},
+      "k": 40,
+      "n": 52
+    },
+    {
+      "label": "FWD（前向き）: 上昇トレンド×RSI売られすぎ×ロング・全足",
+      "hypothesis_id": "auto_rsi_band-os_trend-上昇",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "fired_from": "2026-08-12"},
+      "k": 21,
+      "n": 46
+    },
+    {
+      "label": "FWD（前向き）: 上昇トレンド×RSI売られすぎ×ロング・4時間足",
+      "hypothesis_id": "auto_rsi_band-os_trend-上昇",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "tf": "4h", "fired_from": "2026-08-12"},
+      "k": 13,
+      "n": 22
+    },
+    {
+      "label": "FWD（前向き）: 上昇トレンド×RSI売られすぎ×ロング・1時間足",
+      "hypothesis_id": "auto_rsi_band-os_trend-上昇",
+      "filter": {"rsi_band": "os", "trend": "上昇", "direction": "long", "tf": "1h", "fired_from": "2026-08-12"},
+      "k": 8,
+      "n": 23
+    },
+    {
+      "label": "IS（登録前）: 上昇トレンド×RSI売られすぎ・全方向",
+      "hypothesis_id": "auto_rsi_band-os_trend-上昇",
+      "filter": {"rsi_band": "os", "trend": "上昇", "fired_before": "2026-08-12"},
+      "k": 45,
+      "n": 74
+    },
+    {
+      "label": "FWD（前向き）: 上昇トレンド×RSI売られすぎ・全方向",
+      "hypothesis_id": "auto_rsi_band-os_trend-上昇",
+      "filter": {"rsi_band": "os", "trend": "上昇", "fired_from": "2026-08-12"},
+      "k": 34,
+      "n": 72
+    }
+  ]
+}
