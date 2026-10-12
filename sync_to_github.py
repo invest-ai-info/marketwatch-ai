@@ -354,4 +354,5 @@ SYNC_FILES = [
     "guide-company-wmt-walmart.html",
     "guide-entry-candlestick-research.html",
     "guide-news-2026-10-12-houthi-saudi-oil-spike.html",
+    "guide-signal-lab-124.html",
 ]

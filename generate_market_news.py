@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-13", "line": '・<b>2026-10-13</b>: 🧪 解説「<a href="guide-signal-lab-124.html" style="color:#0969da"><b>研究日誌 #124：上昇トレンド×RSI売られすぎ（前向き46回）</b></a>」公開'},
         {"date": "2026-10-12", "line": '・<b>2026-10-12</b>: 📰 解説「<a href="guide-news-2026-10-12-houthi-saudi-oil-spike.html" style="color:#0969da"><b>フーシー派のサウジ空港攻撃で原油03台高止まり──中東エネルギー地政学を整理</b></a>」公開'},
         {"date": "2026-10-12", "line": '・<b>2026-10-12</b>: 🕯 解説「<a href="guide-entry-candlestick-research.html" style="color:#0969da"><b>ローソク足の「形」は本当に効くのか？【#18】</b></a>」公開'},
         {"date": "2026-10-12", "line": '・<b>2026-10-12</b>: 🔬 解説「<a href="guide-company-wmt-walmart.html" style="color:#0969da"><b>Walmart（WMT）を数字で見る</b></a>」公開'},

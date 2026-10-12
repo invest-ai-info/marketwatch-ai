@@ -873,3 +873,13 @@
 **ファイル**: guide-signal-lab-115.html
 **claims**: drafts/labnotes/lab-115-claims.json
 **分析メモ**: drafts/labnotes/lab-115-analysis.md
+
+---
+
+## 研究日誌 #124 — 2026-10-13
+
+**テーマ**: 上昇トレンド中のRSI売られすぎ逆張り買いの前向き検証——IS76.9%がFWD45.7%に（バイアス修正の典型例）
+**仮説ID**: auto_rsi_band-os_trend-上昇
+**ファイル**: guide-signal-lab-124.html
+**claims**: drafts/labnotes/lab-124-claims.json
+**分析メモ**: drafts/labnotes/lab-124-analysis.md
