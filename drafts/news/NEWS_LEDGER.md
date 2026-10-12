@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-12
+- 判定: ✅ 公開済み
+- 選定トピック: フーシー派のサウジアラビア攻撃が続き原油$103台で高止まり──コロンバスデー・スポーツの日ダブル休場の中東エネルギー地政学の構図（カテゴリ: 地政学・エネルギー）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 出典:
+  - Newsweek Japan・ロイター 2026-10-09（リヤド空港攻撃・死者3人確認）
+  - AFP / 熊本日日新聞 2026-10-08（旅客機火災・フーシー派主張）
+  - OilPrice.com「Brent Back Above $100 as Houthis Hit Saudi Infrastructure」2026年10月
+  - Khaleej Times「Brent rises above $107 as attacks, pipeline outage deepen Saudi supply concerns」2026年10月
+  - SIFMA「固定収益市場コロンバスデー休場勧告」2026年10月
+  - Tickmill「Daily Market Outlook October 12, 2026」（S&P+0.3%・ブレント$103前後・金$4,190）
+  - XTB「Three markets to watch next week 09-10-2026」（CPI予想+3.6%）
+- コンプラ監査:
+  - 第1Opus（初期判定）: 🟡グレー（1箇所「$105超で再度定着すれば市場心理に影響」→「影響する可能性がある」に軟化）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典4系統以上 ✅ → 最終判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告38件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-12-houthi-saudi-oil-spike.html
+- commit: b913ffd（main へ push 済み）
+
+---
+
 ## 2026-10-11
 - 判定: ✅ 公開済み
 - 選定トピック: 日本3連休（スポーツの日・10/12）明けに集中する3大イベント——JPモルガンQ3決算（10/13・米東部時間）・IMF世界経済見通し（10/13・バンコク）・米9月CPI（10/14）（カテゴリ: マクロ・決算・経済指標）
