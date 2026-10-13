@@ -355,4 +355,5 @@ SYNC_FILES = [
     "guide-entry-candlestick-research.html",
     "guide-news-2026-10-12-houthi-saudi-oil-spike.html",
     "guide-signal-lab-124.html",
+    "guide-company-4689-lycorp.html",
 ]
