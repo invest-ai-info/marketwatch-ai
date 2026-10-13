@@ -356,4 +356,5 @@ SYNC_FILES = [
     "guide-news-2026-10-12-houthi-saudi-oil-spike.html",
     "guide-signal-lab-124.html",
     "guide-company-4689-lycorp.html",
+    "guide-entry-chart-patterns.html",
 ]
