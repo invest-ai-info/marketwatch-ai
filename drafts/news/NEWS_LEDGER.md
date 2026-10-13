@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-13
+- 判定: ✅ 公開済み
+- 選定トピック: 中国CXMTのDRAM技術進展（4F²セル構造・年内DDR5量産計画）発表で韓国KOSPI▲5.47%急落・SKハイニックス▲8〜10%台・キオクシアも急落──世界半導体株に波及した1日（カテゴリ: 半導体・テクノロジー・グローバル市場）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - TokenPost「South Korea's KOSPI Closes Down 5.47% as Chip Stocks Slide」2026-10-13
+  - KED Global「Kospi tumbles as chip rout deepens, briefly breaking below 6,000」2026-10-13
+  - Bloomberg「Korean Chip Stocks Sink on Chinese Rival Worry, Broadcom Remarks」2026-10-13
+  - TrendForce「CXMT Accelerates 4F² DRAM Push, Eyes Year-End Server DDR5 RDIMM Launch」2026-10-12
+  - SCMP「China's CXMT unveils key progress in chip structure pursued by Samsung, SK Hynix」2026-10
+  - Digitimes「27 Samsung, SK Hynix veterans joined China's CXMT」2026-10-07
+  - Investing.com「Nasdaq futures slide amid chip selloff; Q3 earnings, inflation data loom」2026-10-13
+- コンプラ監査:
+  - 第1Opus（初期判定）: 🟡グレー（5箇所を軽微修正:「売りが殺到し」→「売りが優勢となり」・「割安感が生じる」→「過度な悲観を戒める見方も一部にはある」+売買判断否定の一文追加・確認出典なし表現を軟化・Broadcom発言の「カジノ的」引用を間接化・本文末免責文の「無登録の投資助言業者ではなく」表現を正確化）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典7系統以上 ✅ → 最終判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告39件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-13-kospi-chip-rout-cxmt.html
+- commit: 0ed117c（main へ push 済み）
+
+---
+
 ## 2026-10-12
 - 判定: ✅ 公開済み
 - 選定トピック: フーシー派のサウジアラビア攻撃が続き原油$103台で高止まり──コロンバスデー・スポーツの日ダブル休場の中東エネルギー地政学の構図（カテゴリ: 地政学・エネルギー）
