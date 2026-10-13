@@ -20,6 +20,7 @@ import re
 import sys
 
 import jp_taishaku as JT
+import morning_brief as MB
 
 SITES = (("日本取引所グループ（信用取引の規制＝増担保など）", "https://www.jpx.co.jp/markets/equities/margin-reg/index.html"),
          ("日本取引所グループ（日々公表）", "https://www.jpx.co.jp/markets/equities/margin-daily/index.html"),
@@ -261,14 +262,16 @@ def build_entry(today, jsf_html, jpx_html, margin, highs, now):
     return entry
 
 
-def record(today=None, get=JT.http, state_path=STATE):
+def record(today=None, get=JT.http, state_path=STATE, closed=MB.tse_closed):
+    """closed＝東証が休みの日か（土日・祝日の休場・年末年始＝morning_brief.tse_closed）。休みの日は記録しない
+    （2026-10-13：10/12 スポーツの日に1行入ったのを受けて。それまでは土日だけ飛ばしていた）"""
     now = dt.datetime.now(JST)
     today = today or now.date()
     st = load_json(state_path) or {"registered": "J40", "kind": "record", "days": {}, "runs": []}
     day = today.isoformat()
     old = st["days"].get(day)
-    if today.weekday() >= 5:
-        print("土日は記録しない")
+    if closed(today):
+        print("東証が休みの日は記録しない")
         return st
     if old and old.get("jsf_ok") and old.get("jpx_ok"):
         print(f"{day} は記録済み（取り直さない）")
