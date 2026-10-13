@@ -6,6 +6,20 @@ SESSION_HANDOFF.md のスリム化（2026-06-20）で、2026-06-17 以前の履�
 
 ---
 
+<!-- SESSION_HANDOFF スリム化（2026-10-13）で退避 -->
+
+## 📦 2026-10-13 退避（SESSION_HANDOFF の済んだ1節・見出しは元のまま）
+
+## 🧪 2026-10-09 夕方: 手元のテストの結果（J43・J44）／手元に古い版が5日残っていた件
+
+- ✅ **手元で確かめ済み（main 08bd872＝#288〜#291 入り）**：`tests/test_highs_ledger.py` 8・`tests/test_sq_morning_lab.py` 11・`tests/test_build_jp_highs.py` 全件が緑／`mw check` エラーなし／本物の `sync_to_github.py` に6件（`sq_morning_lab.py`・`.github/workflows/sq-morning-lab.yml`・`tests/test_sq_morning_lab.py`・`highs_ledger.py`・`tests/test_highs_ledger.py`・`memory/05_highs_casebook.md`）を足した（347→353）。出力5つ（`jp-highs.json`・`highs-ledger.csv`／`.md`・`sq-morning-lab.json`／`.md`）は足していない
+- ✅ **本物の値段で台帳を試した**（`research/_smoke_highs_ledger.py`・過去の `jp-highs.json` は GitHub の API で取得）：日足 119/119 銘柄。10/8 の回＝ケース 51／10/9 の回＝そのあと 51・始値 51。**続伸 29・横ばい 12・だまし 10／年初来 38・記録上の最高値 8・上場来 5**。476A 辻・本郷・436A サイバーソリューションズ＝「上場来」「だまし」で `memory/05_highs_casebook.md` と一致。CSV は BOM 付き UTF-8・md は A（年初来・全部）／B（上場来だけ）の2部（Excel での目視はまだ）
+- ✅ **本番の初回（10/9 18:03 の jp-highs.yml）も手元の試しと一致**：10/8 の 51件が「そのあと」まで埋まり、続伸 29・横ばい 12・だまし 10。476A・436A＝だまし（窓・寄りから引けも入った）。10/9 の新しいケース 83件は次の日の回で埋まる（台帳の合計 134件）
+- 🔧 **手元の `PILLAR_PREREG.md`・`MY_TRADING_RULES.md`・`SESSION_HANDOFF.md` が 10/4〜10/5 の古い版のまま「両方で変更」で残っていた**（古い登録簿で `test_prereg_matches_the_code` が落ちた）→ オーナーの了承で GitHub 版に置き換え済み（控えは中身が今の文書にあると1行ずつ確かめてごみ箱へ・10/9 夜）。原因＝手元から送ったあとにクラウドも同じファイルを直すと、中身が GitHub に全部あっても「両方で変更」と出る作り → **`auto_pull.py` の知らせに「手元にしか無い行」の数を足した**（0＝置き換えてよい見込み・テスト `tests/test_auto_pull.py`）→ **10/9 夜: 手元の版が GitHub に一度あった版（前回そろえた版より新しいもの）と1バイトも違わなければ、控えを残して自動で最新にする**（照合は該当ファイルだけ API＋raw・できなければ従来どおり知らせる）／`--help`・知らない指定では取り込みを動かさない（手元の報告で `--help` で本体が動いた）
+- ✅ **手元の古い `MY_TRADING_RULES.md` にだけあった2行を戻した（10/9 夕方 オーナー「戻してください」）**：①「🛡 守りの決まり」に EA は `research/ea/guard.ini` から数字を読み `guard_ctl.py check` がこの表と照合する ②「⏱ デイトレの事前登録」の測る指標に 9/27 の追試（0.125R/回・全時間帯で費用後マイナス・「ロンドン＞閑散」は再現せず）。文面は `SESSION_ARCHIVE.md` と `PILLAR_PREREG.md` の 10/5 追記から作り直した（手元の元の文面そのままではない）。✅ 10/9 夜 手元で `guard_ctl.py check` が通った（食い違いなし・install/release はしていない）
+- 📝 **手元は git のリポジトリではない**（`auto_pull.py` が ZIP でそろえる）＝手元向けの指示文に git コマンドを書かない（CLAUDE.md の手元へ誘導する項に1行）
+- 🔧 `mw check` の警告「10/20 英雇用統計が金曜でない」は検査の誤り（金曜の決まりは米雇用統計だけ・英 ONS は火曜が通例・10/20 は火曜）→ 検査を米だけに直した（警告 35→34）
+
 <!-- SESSION_HANDOFF スリム化（2026-10-12）で退避 -->
 
 ## 📦 2026-10-12 退避（SESSION_HANDOFF の済んだ1節・見出しは元のまま＝J41 は検証済みリスト・R10F は前向きの一覧表で追える）
