@@ -357,4 +357,5 @@ SYNC_FILES = [
     "guide-signal-lab-124.html",
     "guide-company-4689-lycorp.html",
     "guide-entry-chart-patterns.html",
+    "guide-news-2026-10-13-kospi-chip-rout-cxmt.html",
 ]
