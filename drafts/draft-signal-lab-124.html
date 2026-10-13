@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>上昇トレンドのなかでRSIが30を割ったとき、反発の買いは勝ちやすい？ 過去52回は77%、前向き46回は46%【研究日誌 #124】 - MarketWatch AI</title>
-  <meta name="description" content="上昇トレンド中にRSI（相対力指数）が30以下になった場面でロングシグナルが52回発火。登録前（IS）勝率76.9%、前向き（FWD）46回の勝率は45.7%。4時間足FWDは59.1%、1時間足は34.8%。研究日誌第124回。">
-  <meta name="keywords" content="AIシグナル,RSI,売られすぎ,上昇トレンド,研究日誌,前向き検証,IS,FWD,4時間足,1時間足">
-  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-124.html">
+  <title>ADX（トレンドの強さ）が高い場面の順張りシグナルは、負けやすい？ 前向き71回で確かめた【研究日誌 #124】 - MarketWatch AI</title>
+  <meta name="description" content="ADX（トレンドの強さを表す指標）が25以上の場面での順張りシグナルの成績を、前向き71回で調査。勝った割合28.2%、偶然のぶれを考えた勝率は19.0%〜39.5%で損益分岐43%を下回る。研究日誌第124回。">
+  <meta name="keywords" content="ADX,順張り,トレンドフォロー,シグナル研究,回避,研究日誌">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="上昇トレンドのなかでRSIが30を割ったとき、反発の買いは勝ちやすい？【研究日誌 #124】">
-  <meta property="og:description" content="上昇トレンド中のRSI売られすぎロングを前向き検証。IS76.9%からFWD45.7%への変化と時間足別の差を分析。">
-  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-124.html">
+  <meta property="og:title" content="ADX（トレンドの強さ）が高い場面の順張りシグナルは、負けやすい？ 前向き71回で確かめた【研究日誌 #124】">
+  <meta property="og:description" content="ADX（トレンドの強さを表す指標）が25以上の場面での順張りシグナルの成績を、前向き71回で調査。勝った割合28.2%、偶然のぶれを考えた勝率は19.0%〜39.5%で損益分岐43%を下回る。研究日誌第124回。">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
@@ -23,12 +22,12 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "上昇トレンドのなかでRSIが30を割ったとき、反発の買いは勝ちやすい？ 過去52回は77%、前向き46回は46%【研究日誌 #124】",
-    "description": "上昇トレンド中のRSI売られすぎロングをIS/FWD比較で検証。4時間足FWD59.1%、1時間足FWD34.8%。",
+    "headline": "ADX（トレンドの強さ）が高い場面の順張りシグナルは、負けやすい？ 前向き71回で確かめた【研究日誌 #124】",
+    "description": "ADX（トレンドの強さを表す指標）が25以上の場面での順張りシグナルの成績を、前向き71回で調査。",
     "author": {"@type": "Organization", "name": "MarketWatch AI"},
     "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
-    "datePublished": "2026-10-13",
-    "dateModified": "2026-10-13",
+    "datePublished": "2026-10-14",
+    "dateModified": "2026-10-14",
     "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-124.html"
   }
   </script>
@@ -43,147 +42,140 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
-    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
-    .header-inner{max-width:1200px;margin:0 auto}
-    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
-    main{max-width:1200px;margin:0 auto;padding:32px 24px}
-    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
-    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
-    .nav-btn:hover{border-color:#0969da;color:#0969da}
-    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
-    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
-    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
-    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
-    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
-    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
-    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
-    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
-    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
-    ul,ol{margin:10px 0 18px 28px;color:#424a53}
-    li{margin-bottom:8px;font-size:.95rem}
-    strong{color:#0969da;font-weight:700}
-    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
-    a:hover{text-decoration:underline}
-    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
-    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
-    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
-    .toc ol{margin:0 0 0 22px;font-size:.92rem}
-    .toc li{margin-bottom:6px}
-    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
-    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
-    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
-    td:first-child{font-weight:700;white-space:nowrap}
-    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
-    .info-box strong{color:#0969da}
-    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
-    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
-    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
-    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
-    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
-    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
-    .chart-figure{margin:22px 0}
-    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
-    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
-    .s-label{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
-    .s-label-sm{fill:#6e7781;font-size:11.5px;font-family:'Noto Sans JP',sans-serif}
-    .s-label-b{fill:#0969da;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
-    .s-label-g{fill:#1a7f37;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
-    .s-label-r{fill:#cf222e;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
-    .s-label-y{fill:#9a6700;font-size:13px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
-    .s-axis{stroke:#8b949e;stroke-width:1.3}
-    .s-guide{stroke:#6e7781;stroke-width:1;stroke-dasharray:4 3}
-    .s-curve-b{stroke:#0969da;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
-    .s-curve-g{stroke:#1a7f37;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
-    .s-curve-r{stroke:#cf222e;stroke-width:2.6;fill:none;stroke-linejoin:round;stroke-linecap:round}
-    .s-fill-b{fill:#ddf4ff;stroke:none}
-    .s-fill-g{fill:#e6ffed;stroke:none}
-    .s-fill-r{fill:#ffebe9;stroke:none}
-    .s-fill-y{fill:#fff8c5;stroke:none}
-    .s-fill-gray{fill:#f0f3f6;stroke:none}
-    @media(max-width:700px){
-      .article{padding:24px 20px}
-      h1{font-size:1.45rem}
-      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    :root {
+      --c-bg: #f8f9fb; --c-surface: #fff; --c-border: #e2e6ed;
+      --c-text: #1a1d23; --c-muted: #5a6072; --c-accent: #2563eb;
+      --c-green: #16a34a; --c-red: #dc2626; --c-warn: #d97706;
+      --c-tag: #eff6ff; --c-tag-text: #1d4ed8;
     }
-    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
-    body.dark{background:#0d1117;color:#e6edf3}
-    body.dark h1{color:#e6edf3}
-    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
-    body.dark .header-meta{color:#8b949e}
-    body.dark .article{background:#161b22;border-color:#30363d}
-    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
-    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
-    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
-    body.dark .breadcrumb{color:#8b949e}
-    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
-    body.dark p,body.dark li{color:#c9d1d9}
-    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
-    body.dark h3{color:#e6edf3}
-    body.dark strong{color:#79c0ff}
-    body.dark a{color:#79c0ff}
-    body.dark .toc{background:#0d1117;border-color:#1f6feb}
-    body.dark .toc-title{color:#79c0ff}
-    body.dark th{background:#0d1117;color:#79c0ff}
-    body.dark td,body.dark th{border-bottom-color:#30363d}
-    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
-    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
-    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
-    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
-    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
-    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
-    body.dark footer a{color:#79c0ff}
-    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
-    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
-    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
-    body.dark .chart-caption{color:#8b949e}
-    body.dark .s-label{fill:#c9d1d9}
-    body.dark .s-label-sm{fill:#8b949e}
-    body.dark .s-label-b{fill:#79c0ff}
-    body.dark .s-label-g{fill:#7ee787}
-    body.dark .s-label-r{fill:#ff8080}
-    body.dark .s-label-y{fill:#d4a017}
-    body.dark .s-axis{stroke:#8b949e}
-    body.dark .s-guide{stroke:#30363d}
-    body.dark .s-curve-b{stroke:#79c0ff}
-    body.dark .s-curve-g{stroke:#3fb950}
-    body.dark .s-curve-r{stroke:#f85149}
-    body.dark .s-fill-b{fill:#1a2030}
-    body.dark .s-fill-g{fill:#162416}
-    body.dark .s-fill-r{fill:#2a1010}
-    body.dark .s-fill-y{fill:#2a1f0e}
-    body.dark .s-fill-gray{fill:#1f2328}
-    @media(min-width:900px){.article p{max-width:40em}}
-  </style>
-  <style id="mw-mobile-fit">
-    html,body{overflow-x:hidden}
-    .article,main,section,header,footer{max-width:100%}
-    *{overflow-wrap:break-word;word-break:normal}
-    img,svg,iframe,video{max-width:100%!important;height:auto}
-    pre,code{white-space:pre-wrap;overflow-wrap:break-word}
-    td strong,td b,th strong{white-space:nowrap}
-    .mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
-    @media(min-width:601px){.mw-scroll-hint{display:none}}
-    @media(max-width:600px){
-      body{font-size:.9rem;line-height:1.7}
-      .article{padding:14px 11px}
-      h1{font-size:1.26rem;line-height:1.4}
-      h2{font-size:1.08rem}
-      table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
-      th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --c-bg: #0f1117; --c-surface: #1a1d23; --c-border: #2e3340;
+        --c-text: #e8eaf0; --c-muted: #8b93a8; --c-accent: #60a5fa;
+        --c-green: #4ade80; --c-red: #f87171; --c-warn: #fbbf24;
+        --c-tag: #1e3a5f; --c-tag-text: #93c5fd;
+      }
     }
+    :root[data-theme="dark"] {
+      --c-bg: #0f1117; --c-surface: #1a1d23; --c-border: #2e3340;
+      --c-text: #e8eaf0; --c-muted: #8b93a8; --c-accent: #60a5fa;
+      --c-green: #4ade80; --c-red: #f87171; --c-warn: #fbbf24;
+      --c-tag: #1e3a5f; --c-tag-text: #93c5fd;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--c-bg); color: var(--c-text); font-family: 'Noto Sans JP', system-ui, sans-serif; font-size: 16px; line-height: 1.7; }
+    a { color: var(--c-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+
+    .s-nav { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 8px 16px; }
+    .s-nav-inner { max-width: 900px; margin: 0 auto; }
+    .s-nav-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    @media (max-width: 699px) { .s-nav-grid { grid-template-columns: repeat(5, 1fr); } }
+    .s-nav-btn { display: block; text-align: center; padding: 6px 4px; font-size: 12px; border-radius: 6px; background: var(--c-tag); color: var(--c-tag-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .s-nav-btn:hover { opacity: .85; text-decoration: none; }
+    .s-nav-btn.current { background: var(--c-accent); color: #fff; }
+
+    .s-hero { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 28px 16px 24px; text-align: center; }
+    .s-hero-inner { max-width: 780px; margin: 0 auto; }
+    .s-tag { display: inline-block; background: var(--c-tag); color: var(--c-tag-text); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; letter-spacing: .04em; }
+    .s-hero h1 { font-size: clamp(18px, 2.6vw, 25px); font-weight: 800; line-height: 1.4; margin-bottom: 10px; }
+    .meta-line { font-size: 13px; color: var(--c-muted); }
+
+    .s-main { max-width: 780px; margin: 0 auto; padding: 28px 16px 60px; }
+    .s-section { margin-bottom: 40px; }
+    .s-section h2 { font-size: 19px; font-weight: 700; border-left: 4px solid var(--c-accent); padding-left: 12px; margin-bottom: 16px; }
+    .s-section h3 { font-size: 16px; font-weight: 700; margin: 22px 0 10px; }
+    .s-section p { margin-bottom: 12px; }
+
+    .s-summary { background: var(--c-surface); border: 2px solid var(--c-accent); border-radius: 10px; padding: 20px 22px; margin-bottom: 36px; }
+    .s-summary-head { font-weight: 800; font-size: 15px; color: var(--c-accent); margin-bottom: 10px; }
+    .s-summary ul { padding-left: 1.4em; }
+    .s-summary li { margin-bottom: 5px; }
+
+    .s-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .s-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .s-table th { background: var(--c-tag); color: var(--c-tag-text); padding: 8px 10px; font-weight: 700; text-align: left; white-space: nowrap; }
+    .s-table td { padding: 8px 10px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+    .s-table tr:last-child td { border-bottom: none; }
+    .s-table .plus { color: var(--c-green); font-weight: 700; }
+    .s-table .minus { color: var(--c-red); font-weight: 700; }
+    .s-table .base { background: rgba(37,99,235,.07); }
+    .s-table .focus { background: rgba(220,38,38,.06); }
+
+    .s-note { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 14px 16px; font-size: 14px; color: var(--c-muted); margin: 20px 0; }
+    .s-note-warn { background: #fffbeb; border-color: var(--c-warn); }
+    .s-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-right: 4px; }
+    .s-badge-ok { background: #dcfce7; color: #166534; }
+    .s-badge-ng { background: #fee2e2; color: #991b1b; }
+    .s-badge-note { background: var(--c-tag); color: var(--c-tag-text); }
+
+    .s-chart { margin: 20px 0; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 12px; }
+    .s-chart-note { font-size: 12px; color: var(--c-muted); text-align: center; margin-top: 8px; }
+
+    .tracker-wrap { overflow-x: auto; }
+    .tracker-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .tracker-wrap th { background: var(--c-tag); color: var(--c-tag-text); padding: 6px 8px; font-weight: 700; }
+    .tracker-wrap td { padding: 6px 8px; border-bottom: 1px solid var(--c-border); vertical-align: top; }
+
+    .s-kinsho { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 16px 18px; font-size: 13px; color: var(--c-muted); margin-top: 40px; }
+    .s-kinsho h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--c-text); }
+
+    .s-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+    .s-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 8px; padding: 16px; }
+    .s-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .s-card p { font-size: 14px; color: var(--c-muted); margin: 0; }
   </style>
-  <style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}</style>
+<style id="mw-mobile-fit">
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='→ 横にスクロールできます';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}</style>
 </head>
 <body>
-
-<div id="reading-progress"></div>
-<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-
 <header data-mw-frame>
   <div class="header-inner">
     <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>
@@ -192,453 +184,489 @@
   </div>
 </header>
 
-<main>
-  <nav class="nav-bar mwf-nav">
-    <a class="nav-btn" href="index.html">🏠 トップページ</a>
-    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
-    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
-    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
-    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
-    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
-    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
-    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
-    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
-    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
-    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
-  </nav>
+<!-- ナビバー -->
+<nav class="nav-bar mwf-nav">
+  <a class="nav-btn" href="index.html">🏠 トップページ</a>
+  <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+  <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+  <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+  <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+  <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+  <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+  <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+  <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+  <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+  <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+</nav>
 
-  <div class="breadcrumb">
-    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ AIシグナル研究日誌 #124
+<!-- ヘッダー -->
+<header class="s-hero">
+  <div class="s-hero-inner">
+    <span class="s-tag">🧪 AIシグナル研究日誌</span>
+    <h1>ADX（トレンドの強さ）が高い場面の順張りシグナルは、負けやすい？ 前向き71回で確かめた【研究日誌 #124】</h1>
+    <p class="meta-line">公開：2026年10月（下書き中）　前向き期間：2026年9月26日〜　仮説登録日：2026年9月26日</p>
+  </div>
+</header>
+
+<main class="s-main">
+
+  <!-- ① kinsho-v1 免責バナー（3点必須） -->
+  <div class="disclaimer-banner s-note" data-disclaimer="kinsho-v1">
+    ⚠️ この記事は情報提供を目的としています。投資の判断はご自身でお願いします。将来の成績を保証するものではありません。
   </div>
 
-  <div class="article">
+  <!-- 30秒まとめ -->
+  <div class="s-summary">
+    <div class="s-summary-head">⏱ 30秒でわかる今回のまとめ</div>
+    <ul>
+      <li>ADX（エーディーエックス：トレンドの強さを0から100で表す指標）が25以上の場面で、順張りのシグナルが出たとき、その後の成績を前向きに調べています。</li>
+      <li>仮説を登録してからの前向きの結果（2026年9月26日から18日間）では、<strong>71回中20回が勝ち</strong>。勝った割合は<strong>28.2%</strong>でした。</li>
+      <li>偶然のぶれを考えた勝率は<strong>19.0%〜39.5%</strong>。勝ち負けがとんとんになる勝率（43%）を上端でも下回っています。</li>
+      <li>1回あたり平均で損切り幅の<strong>0.37倍の損</strong>が出ています。損になる方向が偶然とは言いにくい範囲（マイナス0.59からマイナス0.15）に収まっています。</li>
+      <li>ただし前向きの回数はまだ<strong>71回</strong>で、昇格の判断に必要な80回に届いていません。引き続き観察中です。</li>
+    </ul>
+  </div>
 
-    <!-- kinsho-v1 -->
-    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
-      ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
+  <!-- 1. 今回の研究 -->
+  <section class="s-section">
+    <h2>1. 今回の研究について</h2>
+    <p>「順張り」とは、トレンドの方向に乗るやり方です。上がっているときに買い、下がっているときに売ります。</p>
+    <p>「ADX（エーディーエックス：方向性指数）」は、今のトレンドがどれくらい強いかを0から100の数字で表す指標です。25以上で「強いトレンドがある」と一般に言われます。</p>
+    <p>一見、「トレンドが強いほど順張りは勝ちやすいのでは」と思いたくなります。でも、強いトレンドの場面では「すでに動き切った後に乗ることになりやすい」という見方もあります。この研究では、その問いを数字で確かめます。</p>
+
+    <div class="s-note">
+      <strong>💡 ADX（方向性指数）とは</strong><br>
+      ADXは相場の「勢い」を測る指標で、0から100の数字で表されます。25以上で「トレンドがはっきりある」とされます。ADXは方向（上か下か）は示さず、強さだけを測ります。
     </div>
 
-    <h1>🧪 上昇トレンドのなかでRSI（勢い指標）が30を割ったとき、反発の買いは勝ちやすい？ 過去52回は77%、前向き46回は46%<br><small style="font-size:.65em;color:#57606a;font-weight:400">AIシグナル研究日誌 #124</small></h1>
-    <div class="meta-line">
-      カテゴリ：🧪 AIシグナル研究日誌 &nbsp;|&nbsp; 公開：2026年10月13日 &nbsp;|&nbsp; 読了：約10分
-    </div>
+    <!-- SVG 1: ADXと順張りの概念図 -->
+    <div class="s-chart">
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ADXの強さと順張りシグナルの概念図" style="width:100%;max-width:700px;display:block;margin:0 auto">
+        <rect width="700" height="300" fill="var(--c-surface,#fff)" rx="6"/>
+        <text x="350" y="22" font-size="13" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">ADX（トレンドの強さ）と順張りシグナルの概念図</text>
 
-    <div id="mw-anatomy-link" class="info-box" style="margin:14px 0 22px">📈 <a href="guide-signal-anatomy.html"><strong>発火条件をチャートで解剖する図解カタログ</strong></a> — この日誌に出てくるシグナル名（RSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）売られすぎ反発・上昇トレンドなど）がチャートのどの瞬間かを図解で確認できます。</div>
+        <!-- 価格ライン（上昇トレンド） -->
+        <polyline points="50,230 120,210 190,185 260,165 330,140 400,110 470,85 540,65" fill="none" stroke="var(--c-accent,#2563eb)" stroke-width="2.5"/>
+        <!-- ADXライン（0-100スケール、別軸） -->
+        <text x="28" y="290" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="middle">0</text>
+        <text x="28" y="220" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="middle">25</text>
+        <text x="28" y="150" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="middle">50</text>
 
-    <p>毎回ひとつの仮説を実データで確かめ、勝っても負けても全公開する研究日誌の第124回です。<a href="guide-signal-lab-123.html">前回（#123）</a>では日足で安値ブレイクの売り（出口の相性ラボ第3回）を調べました。</p>
-    <p>今回は、2026年8月11日に事前登録した仮説「上昇トレンドのなかでRSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）が30以下になった場面で、反発の買いは勝ちやすいか」を取り上げます。登録から約2か月が経ち、前向きのデータが46回分たまりました。</p>
+        <!-- ADX=25の基準ライン -->
+        <line x1="45" y1="220" x2="660" y2="220" stroke="var(--c-warn,#d97706)" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="665" y="223" font-size="10" font-family="sans-serif" fill="var(--c-warn,#d97706)">ADX=25</text>
 
-    <!-- 30秒まとめ -->
-    <div class="info-box">
-      <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
-      RSIが30を割ると「売られすぎ」とされます。上昇トレンドのなかでこの場面から反発をねらって買うシグナルが、登録前の期間に52回出ました。<br><br>
-      ・登録前の勝った割合は <strong>76.9%（52回中40回）</strong> でした。しかし、この数字は「結果を見てから見つけたパターン」のため、大きく見えるのが自然です。<br>
-      ・事前登録後に前向きで確かめた46回では、<strong>45.7%（46回中21回）</strong> でした。偶然のぶれを考えた幅は32.2%〜59.8%で、勝ち負けがとんとんになる勝率（43%）とほぼ重なります。<br>
-      ・時間足別では、4時間足で <strong>59.1%（22回中13回）</strong>、1時間足で <strong>34.8%（23回中8回）</strong> と、結果が大きく分かれました。<br>
-      ・現在の状態は「🟡蓄積中」のままです。まだ結論を出せる件数（80回）に達していません。
-    </div>
+        <!-- ADX曲線（弱→強→弱） -->
+        <polyline points="50,285 120,275 190,260 260,235 330,200 400,175 470,185 540,210 600,240" fill="none" stroke="#7c3aed" stroke-width="2"/>
+        <text x="610" y="248" font-size="10" font-family="sans-serif" fill="#7c3aed">ADX</text>
 
-    <div class="toc">
-      <div class="toc-title">📋 目次</div>
-      <ol>
-        <li><a href="#hypothesis">今回確かめたこと</a></li>
-        <li><a href="#method">確かめ方と基準</a></li>
-        <li><a href="#result-is-fwd">登録前とその後：大きな差の理由</a></li>
-        <li><a href="#result-tf">時間足別に見る（前向き期間）</a></li>
-        <li><a href="#verdict">現在の判定</a></li>
-        <li><a href="#tracker">前向きトラッカー定点観測</a></li>
-      </ol>
-    </div>
+        <!-- ADX≥25の区間をシェード -->
+        <path d="M260,220 L400,175 L470,185 L470,220 Z" fill="#7c3aed" opacity=".08"/>
 
-    <!-- =============================== -->
-    <h2 id="hypothesis">① 今回確かめたこと</h2>
+        <!-- 順張りシグナルの印（ADX強区間） -->
+        <circle cx="320" cy="148" r="8" fill="var(--c-red,#dc2626)" opacity=".8"/>
+        <text x="320" y="143" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)" font-weight="bold">▲</text>
+        <text x="320" y="135" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)">ADX強の</text>
+        <text x="320" y="123" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)">シグナル</text>
 
-    <p>RSI（相対力指数）は、値動きの勢いを0から100の数字で表す指標です。30以下になると「売られすぎ」とされ、反発の可能性があると言われています。</p>
+        <!-- 順張りシグナルの印（ADX弱区間） -->
+        <circle cx="120" cy="210" r="8" fill="var(--c-green,#16a34a)" opacity=".8"/>
+        <text x="120" y="205" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-green,#16a34a)" font-weight="bold">▲</text>
+        <text x="120" y="198" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-green,#16a34a)">ADX弱の</text>
+        <text x="120" y="186" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-green,#16a34a)">シグナル</text>
 
-    <p>このシステムでは、上昇トレンドのなかでRSIが30以下になった場面で「反発をねらって買う」シグナルが出ます。これは直感的に理解しやすい考え方です。上がっている流れのなかで一時的に売られすぎた場面を拾う、というものです。</p>
-
-    <div class="chart-figure">
-      <!-- 図1: 上昇トレンド中のRSI売られすぎのイメージ図 -->
-      <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="上昇トレンド中のRSI売られすぎとシグナルのイメージ">
-        <!-- 背景 -->
-        <rect x="0" y="0" width="600" height="260" fill="#ffffff" rx="8"/>
-        <!-- タイトル -->
-        <text x="300" y="22" text-anchor="middle" class="s-label" style="font-size:12px;font-weight:700;fill:#2C4F8F">図1：上昇トレンド中のRSI売られすぎ場面のイメージ</text>
-        <!-- 価格チャートエリア（上半分）-->
-        <text x="30" y="48" class="s-label-sm">値段</text>
-        <line x1="55" y1="40" x2="55" y2="145" class="s-axis"/>
-        <line x1="55" y1="145" x2="575" y2="145" class="s-axis"/>
-        <!-- 上昇トレンドライン（破線）-->
-        <line x1="80" y1="140" x2="560" y2="60" class="s-guide"/>
-        <!-- 価格ライン（上昇トレンド中の下落と反発）-->
-        <polyline points="80,130 130,115 180,108 230,120 270,100 310,125 340,130 370,110 420,90 470,78 520,70 560,62" class="s-curve-g"/>
-        <!-- RSI売られすぎ場面（ディップ）をハイライト -->
-        <rect x="295" y="40" width="80" height="110" class="s-fill-y" opacity="0.5"/>
-        <text x="335" y="54" text-anchor="middle" class="s-label-y" style="font-size:11px">RSI30以下</text>
-        <!-- 買いシグナルの矢印 -->
-        <line x1="335" y1="135" x2="335" y2="120" stroke="#1a7f37" stroke-width="2"/>
-        <polygon points="335,115 330,126 340,126" fill="#1a7f37"/>
-        <text x="370" y="150" class="s-label-g" style="font-size:11px">買いシグナル</text>
         <!-- ラベル -->
-        <text x="90" y="138" class="s-label-g" style="font-size:11px">上昇トレンド</text>
-        <!-- RSIエリア（下半分）-->
-        <text x="30" y="170" class="s-label-sm">RSI</text>
-        <line x1="55" y1="160" x2="55" y2="245" class="s-axis"/>
-        <line x1="55" y1="245" x2="575" y2="245" class="s-axis"/>
-        <!-- RSI基準線30 -->
-        <line x1="55" y1="217" x2="575" y2="217" class="s-guide"/>
-        <text x="30" y="220" text-anchor="end" class="s-label-sm">30</text>
-        <!-- RSI基準線70 -->
-        <line x1="55" y1="180" x2="575" y2="180" class="s-guide"/>
-        <text x="30" y="183" text-anchor="end" class="s-label-sm">70</text>
-        <!-- RSIライン -->
-        <polyline points="80,200 130,195 180,188 230,215 270,200 310,220 340,225 370,205 420,188 470,183 520,178 560,175" class="s-curve-b"/>
-        <!-- RSIが30以下の部分を塗りつぶし -->
-        <rect x="295" y="160" width="80" height="90" class="s-fill-y" opacity="0.5"/>
+        <text x="50" y="60" font-size="12" font-family="sans-serif" fill="var(--c-accent,#2563eb)" font-weight="bold">価格（上昇中）</text>
       </svg>
-      <p class="chart-caption">上昇トレンドのなかでRSIが30以下（黄色の帯）になった場面で、反発をねらって買うシグナルが出ます。イメージ図のため実際の値動きとは異なります。</p>
+      <p class="s-chart-note">ADXが25以上の場面（紫のシェード）でのシグナルが今回の調査対象。価格が既に大きく動いた後に乗ることになりやすいのが課題。</p>
+    </div>
+  </section>
+
+  <!-- 2. 調査方法 -->
+  <section class="s-section">
+    <h2>2. 調査の方法</h2>
+    <p>この仮説は「回避」を目的とします。つまり「この条件に当てはまるシグナルは、成績が悪いので使わない方がいい」という仮説です。</p>
+
+    <h3>調べた条件</h3>
+    <div class="s-table-wrap">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>シグナルの種類</td>
+            <td>順張り族（高値・安値ブレイク、MACDクロス、移動平均クロス）</td>
+          </tr>
+          <tr>
+            <td>ADXの条件</td>
+            <td>シグナル発生時に ADX が25以上（「強いトレンド」の場面）</td>
+          </tr>
+          <tr>
+            <td>比べる相手（対照）</td>
+            <td>ADX が20未満（「弱いトレンド」の場面）</td>
+          </tr>
+          <tr>
+            <td>仮説の種類</td>
+            <td>回避（成績が悪いので使わない）</td>
+          </tr>
+          <tr>
+            <td>仮説登録日</td>
+            <td>2026年9月26日（この日より前のデータは事前に固定）</td>
+          </tr>
+          <tr>
+            <td>前向き期間</td>
+            <td>2026年9月26日から現在まで（本記事執筆時で18日間）</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <p>2026年8月11日に、この仮説を「結果を見る前に宣言する」形で事前登録しました。事前登録とは、「この基準を満たせば合格」という条件を先に決めてから検証を始めることです。後から都合のよい解釈をふせぐためのルールです。</p>
+    <div class="s-note">
+      <strong>💡 シグナルどおりに売買していたら、どうなったかの計算（反実仮想検証）について</strong><br>
+      過去に実際に取引されたわけではありません。シグナルが出た時刻の価格で入り、損切り・利益確定の水準に達した時刻を確認し、勝ち（利益確定に到達）か負け（損切りに到達）かを記録します。
+    </div>
+  </section>
 
-    <!-- =============================== -->
-    <h2 id="method">② 確かめ方と基準</h2>
+  <!-- 3. 事前に決めた期間（IS）の結果 -->
+  <section class="s-section">
+    <h2>3. 事前に固定したデータ（登録前、2026年9月26日より前）の結果</h2>
+    <p>仮説を登録する前のデータを「事前に決めた期間（IS）」と呼びます。ここでは仮説の根拠を確認しています。ただし、登録前に数字を見て仮説を作ったため、この結果だけでは「本当に使えるか」の判断はできません。</p>
 
-    <p>確かめ方は次の通りです。</p>
-    <ul>
-      <li>対象：システムが記録した決済済みシグナル（利益確定か損切りで終わったもの）</li>
-      <li>場面：上昇トレンドのなかでRSIが30以下になった場面での反発の買い</li>
-      <li>勝ち：利益確定（損切り幅の1.33倍か2倍のもうけ）</li>
-      <li>負け：損切り（損切り幅の1倍の損）</li>
-      <li>偶然のぶれを考えた幅（信頼区間）：95%</li>
+    <div class="s-table-wrap">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>条件</th>
+            <th>回数</th>
+            <th>勝った割合</th>
+            <th>偶然のぶれを考えた勝率（信頼区間）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="base">
+            <td>全体（ベースライン）</td>
+            <td>4825回</td>
+            <td>42.9%</td>
+            <td>41.5%〜44.3%</td>
+          </tr>
+          <tr class="base">
+            <td>順張り全体</td>
+            <td>2478回</td>
+            <td>42.6%</td>
+            <td>40.7%〜44.6%</td>
+          </tr>
+          <tr class="focus">
+            <td><strong>順張り×ADX強（今回の対象）</strong></td>
+            <td><strong>1069回</strong></td>
+            <td class="minus"><strong>41.4%</strong></td>
+            <td>38.5%〜44.4%</td>
+          </tr>
+          <tr>
+            <td>順張り×ADX弱（比較用）</td>
+            <td>847回</td>
+            <td class="plus">44.4%</td>
+            <td>41.1%〜47.8%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>事前期間では、ADX強（41.4%）とADX弱（44.4%）の差は3.0%分で、大きくはありませんでした。ただし方向は仮説と一致しています（ADX強の方が低い）。</p>
+
+    <div class="s-note s-note-warn">
+      <strong>⚠️ 注意</strong>　この期間のデータは仮説を作るために使ったため、成績が良く見えるように結果を選んでしまっている可能性があります。「本当に使えるか」の判断は前向きの結果で判断します。
+    </div>
+  </section>
+
+  <!-- 4. 前向きの結果（本題） -->
+  <section class="s-section">
+    <h2>4. 前向きの結果（2026年9月26日以降、本題）</h2>
+    <p>仮説を登録してから積み上げた前向きの数字が本題です。<strong>登録前に数字を見ていないため、後付けではありません。</strong></p>
+
+    <div class="s-table-wrap">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>条件</th>
+            <th>回数</th>
+            <th>勝った割合</th>
+            <th>偶然のぶれを考えた勝率（信頼区間）</th>
+            <th>損益分岐（43%）との比較</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="base">
+            <td>全体（ベースライン）</td>
+            <td>372回</td>
+            <td>36.6%</td>
+            <td>31.8%〜41.6%</td>
+            <td class="minus">下回る</td>
+          </tr>
+          <tr class="base">
+            <td>順張り全体</td>
+            <td>203回</td>
+            <td>30.5%</td>
+            <td>24.6%〜37.2%</td>
+            <td class="minus">下回る</td>
+          </tr>
+          <tr class="focus">
+            <td><strong>順張り×ADX強（今回の対象）</strong></td>
+            <td><strong>71回</strong></td>
+            <td class="minus"><strong>28.2%</strong></td>
+            <td><strong>19.0%〜39.5%</strong></td>
+            <td class="minus"><strong>下回る</strong></td>
+          </tr>
+          <tr>
+            <td>順張り×ADX弱（比較用）</td>
+            <td>92回</td>
+            <td>35.9%</td>
+            <td>26.8%〜46.1%</td>
+            <td class="minus">下回る</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>今回の対象（ADX強）は勝った割合<strong>28.2%</strong>で、偶然のぶれを考えた勝率の上端（39.5%）も損益分岐（43%）を下回っています。</p>
+    <p>ADX弱（35.9%）と比べても7.7%分低く、ADX強の場面の順張りは特に成績が悪い傾向が見られます。</p>
+    <p>ただし全体のベースラインも36.6%と低調（事前期間の42.9%より大きく下がっている）なので、「この18日間は全体的に難しい相場環境だった」という影響も含まれています。</p>
+
+    <!-- SVG 2: 棒グラフ（前向きの勝率比較） -->
+    <div class="s-chart">
+      <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="前向きの勝率比較棒グラフ" style="width:100%;max-width:640px;display:block;margin:0 auto">
+        <rect width="640" height="320" fill="var(--c-surface,#fff)" rx="6"/>
+        <text x="320" y="22" font-size="13" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">前向き（2026年9月26日以降）の勝率比較</text>
+
+        <!-- Y軸 -->
+        <line x1="70" y1="40" x2="70" y2="260" stroke="var(--c-border,#e2e6ed)" stroke-width="1"/>
+        <!-- グリッドライン -->
+        <line x1="70" y1="260" x2="610" y2="260" stroke="var(--c-border,#e2e6ed)" stroke-width="1"/>
+        <line x1="70" y1="192" x2="610" y2="192" stroke="var(--c-border,#e2e6ed)" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="70" y1="157" x2="610" y2="157" stroke="var(--c-border,#e2e6ed)" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="70" y1="124" x2="610" y2="124" stroke="var(--c-border,#e2e6ed)" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <!-- Y軸ラベル -->
+        <text x="65" y="264" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">0%</text>
+        <text x="65" y="196" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">20%</text>
+        <text x="65" y="161" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">30%</text>
+        <text x="65" y="128" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">40%</text>
+
+        <!-- 損益分岐ライン（43%） -->
+        <line x1="70" y1="119" x2="610" y2="119" stroke="var(--c-warn,#d97706)" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="615" y="122" font-size="10" font-family="sans-serif" fill="var(--c-warn,#d97706)">43%</text>
+
+        <!-- 棒グラフ（1px=3.4の値に対応: (100%→0%) 260→40, 60%差=220pxで220/60≈3.67px/%) -->
+        <!-- スケール: 0%=y260, 50%=y76.7; 1%=3.67px -->
+        <!-- 全体FWD 36.6%: height=36.6*3.67=134.3px, y=260-134=126 -->
+        <rect x="100" y="127" width="70" height="133" fill="var(--c-accent,#2563eb)" opacity=".6" rx="3"/>
+        <text x="135" y="122" font-size="11" font-family="sans-serif" text-anchor="middle" fill="var(--c-accent,#2563eb)" font-weight="bold">36.6%</text>
+        <text x="135" y="275" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">全体</text>
+        <text x="135" y="286" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">372回</text>
+
+        <!-- 順張り全体FWD 30.5%: height=30.5*3.67=111.9px, y=260-112=148 -->
+        <rect x="210" y="148" width="70" height="112" fill="var(--c-accent,#2563eb)" opacity=".5" rx="3"/>
+        <text x="245" y="143" font-size="11" font-family="sans-serif" text-anchor="middle" fill="var(--c-accent,#2563eb)" font-weight="bold">30.5%</text>
+        <text x="245" y="275" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">順張り全体</text>
+        <text x="245" y="286" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">203回</text>
+
+        <!-- ADX強FWD 28.2%: height=28.2*3.67=103.5px, y=260-104=156 → 強調 -->
+        <rect x="320" y="157" width="70" height="103" fill="var(--c-red,#dc2626)" opacity=".75" rx="3"/>
+        <text x="355" y="152" font-size="12" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)" font-weight="bold">28.2%</text>
+        <text x="355" y="275" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)" font-weight="bold">ADX強</text>
+        <text x="355" y="286" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)">71回</text>
+
+        <!-- ADX弱FWD 35.9%: height=35.9*3.67=131.8px, y=260-132=128 -->
+        <rect x="430" y="128" width="70" height="132" fill="var(--c-green,#16a34a)" opacity=".5" rx="3"/>
+        <text x="465" y="123" font-size="11" font-family="sans-serif" text-anchor="middle" fill="var(--c-green,#16a34a)" font-weight="bold">35.9%</text>
+        <text x="465" y="275" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">ADX弱</text>
+        <text x="465" y="286" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">92回</text>
+      </svg>
+      <p class="s-chart-note">赤棒（ADX強）が最も低い。全体・ADX弱とも損益分岐43%を下回る厳しい期間。</p>
+    </div>
+
+    <h3>平均の損益について</h3>
+    <p>損益は「損切りになったときの損を1とした倍数」で表します。</p>
+    <div class="s-table-wrap">
+      <table class="s-table">
+        <thead>
+          <tr>
+            <th>条件</th>
+            <th>1回あたりの平均損益</th>
+            <th>偶然のぶれを考えた幅（損益の信頼区間）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="focus">
+            <td><strong>順張り×ADX強（今回の対象）</strong></td>
+            <td class="minus"><strong>損切り幅の0.37倍の損</strong></td>
+            <td>マイナス0.59からマイナス0.15</td>
+          </tr>
+          <tr>
+            <td>順張り×ADX弱（比較用）</td>
+            <td class="minus">損切り幅の0.17倍の損</td>
+            <td>マイナス0.42からプラス0.08</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>ADX強の場合、損になる方向のぶれ幅の上端（マイナス0.15）も0を下回っています。これは「偶然とは言いにくい損の傾向」を示しています。ADX弱は上端がプラス0.08で、まだ偶然の範囲内です。</p>
+  </section>
+
+  <!-- 5. 解釈と注意点 -->
+  <section class="s-section">
+    <h2>5. 解釈と注意点</h2>
+
+    <h3>「ADX強の順張りが負けやすい」理由として考えられること</h3>
+    <ul style="padding-left:1.4em;margin-bottom:12px;">
+      <li>ADXが高い場面は「価格がすでに大きく動いた後」が多く、「乗り遅れ」になりやすい。</li>
+      <li>強いトレンドはVIXの上昇局面や急落・急騰と重なることがある。こうした場面は反転しやすい。</li>
+      <li>ADXが25以上の場面は「追いかけ買い・追いかけ売り」に相当し、遅いエントリーになりがち。</li>
+    </ul>
+    <p>ただしこれらはあくまで「考えられる理由」であり、数字で証明したわけではありません。</p>
+
+    <h3>まだ判断できない理由</h3>
+    <p>前向きの回数は<strong>71回</strong>で、昇格の判断に必要な回数（80回）には届いていません。また前向き期間の全体勝率（36.6%）が事前期間（42.9%）より大きく低いため、「ADX強だから悪い」のか「この期間全体が悪い」のか、区別が難しい状況です。</p>
+
+    <div class="s-note s-note-warn">
+      <strong>⚠️ 複合要因の可能性</strong>　2026年9月26日以降の18日間は、順張り全体の勝率が30.5%と特に低い時期でした。ADX強の28.2%はそれよりさらに低いですが、「ADXの影響」と「相場環境全体の悪化」を今の件数では切り離せません。
+    </div>
+  </section>
+
+  <!-- 6. トラッカー（今の状態） -->
+  <section class="s-section">
+    <h2>6. 現在のトラッカー（観察中の仮説一覧から抜粋）</h2>
+    <p>このサイトで登録・観察している仮説の一覧から、今回の仮説の現在地を確認します。</p>
+
+    <div class="tracker-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>仮説ID</th>
+            <th>内容</th>
+            <th>種類</th>
+            <th>前向き回数</th>
+            <th>前向き勝率</th>
+            <th>偶然のぶれを考えた勝率</th>
+            <th>昇格まで</th>
+            <th>状態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>rl_tf_adx_strong</strong></td>
+            <td>順張り×ADX強（25以上）</td>
+            <td>回避</td>
+            <td><strong>71回</strong></td>
+            <td class="minus"><strong>28.2%</strong></td>
+            <td>19.0%〜39.5%</td>
+            <td>あと9回以上</td>
+            <td>観察中</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13px;color:var(--c-muted);margin-top:8px;">※ 損益分岐 43%。昇格の判断には前向き80回以上が必要。</p>
+  </section>
+
+  <!-- SVG 3: 累積の経緯イメージ -->
+  <section class="s-section">
+    <h2>7. ここまでのまとめ</h2>
+
+    <div class="s-chart">
+      <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="事前期間と前向き期間の勝率の変化" style="width:100%;max-width:640px;display:block;margin:0 auto">
+        <rect width="640" height="280" fill="var(--c-surface,#fff)" rx="6"/>
+        <text x="320" y="22" font-size="13" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">ADX強の順張り：事前期間と前向き期間の勝率の変化</text>
+
+        <!-- Y軸 -->
+        <line x1="80" y1="40" x2="80" y2="230" stroke="var(--c-border,#e2e6ed)" stroke-width="1"/>
+        <!-- X軸 -->
+        <line x1="80" y1="230" x2="600" y2="230" stroke="var(--c-border,#e2e6ed)" stroke-width="1"/>
+
+        <!-- グリッドライン -->
+        <line x1="80" y1="178" x2="600" y2="178" stroke="var(--c-border,#e2e6ed)" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="80" y1="140" x2="600" y2="140" stroke="var(--c-border,#e2e6ed)" stroke-width="0.5" stroke-dasharray="3,3"/>
+        <line x1="80" y1="102" x2="600" y2="102" stroke="var(--c-border,#e2e6ed)" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+        <!-- Y軸ラベル（0%=230, 50%=40: 190px/50%=3.8px/%) -->
+        <text x="75" y="234" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">0%</text>
+        <text x="75" y="182" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">20%</text>
+        <text x="75" y="144" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">30%</text>
+        <text x="75" y="106" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">40%</text>
+
+        <!-- 損益分岐ライン（43%）: y=230-(43*3.8)=230-163.4=66.6→67 -->
+        <line x1="80" y1="67" x2="600" y2="67" stroke="var(--c-warn,#d97706)" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="605" y="71" font-size="10" font-family="sans-serif" fill="var(--c-warn,#d97706)">43%</text>
+
+        <!-- 仮説登録の区切り線 -->
+        <line x1="340" y1="35" x2="340" y2="230" stroke="var(--c-accent,#2563eb)" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="340" y="32" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-accent,#2563eb)">仮説登録日</text>
+        <text x="340" y="44" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-accent,#2563eb)">（9/26）</text>
+
+        <!-- 事前期間の勝率点: 41.4% y=230-(41.4*3.8)=230-157.3=72.7→73 -->
+        <circle cx="210" cy="73" r="8" fill="var(--c-muted,#5a6072)"/>
+        <text x="210" y="62" font-size="11" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)" font-weight="bold">41.4%</text>
+        <text x="210" y="248" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">事前期間（IS）</text>
+        <text x="210" y="259" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">1069回</text>
+
+        <!-- 前向き期間の勝率点: 28.2% y=230-(28.2*3.8)=230-107.2=122.8→123 -->
+        <circle cx="470" cy="123" r="8" fill="var(--c-red,#dc2626)"/>
+        <text x="470" y="112" font-size="11" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)" font-weight="bold">28.2%</text>
+        <text x="470" y="248" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)">前向き（FWD）</text>
+        <text x="470" y="259" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-red,#dc2626)">71回</text>
+
+        <!-- 矢印でつなぐ -->
+        <line x1="218" y1="73" x2="355" y2="105" stroke="var(--c-muted,#999)" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <line x1="355" y1="105" x2="462" y2="123" stroke="var(--c-red,#dc2626)" stroke-width="1.5"/>
+      </svg>
+      <p class="s-chart-note">仮説登録（9/26）を境に、後付けでない前向きデータ（赤）が積み上がっています。現時点で71回、引き続き観察中。</p>
+    </div>
+
+    <h3>今の状況を整理すると</h3>
+    <ul style="padding-left:1.4em;margin-bottom:12px;">
+      <li>事前期間（1069回）では ADX強の勝率は41.4%で、ADX弱（44.4%）より低い。</li>
+      <li>前向き期間（71回）では28.2%とさらに低く、損益分岐43%を大きく下回っている。</li>
+      <li>1回あたりの平均損益はマイナス0.37で、偶然の範囲を超えている可能性がある。</li>
+      <li>ただし、この期間全体が難しい相場環境（全体勝率36.6%）であることも影響している可能性がある。</li>
+      <li>昇格（回避確定）の判断には、前向き80回以上が必要（現在71回）。</li>
     </ul>
 
-    <div class="info-box">
-      <strong>💡 「勝ち負けがとんとんになる勝率（43%）」とは</strong><br>
-      このシステムでは、勝ったときの利益は損切り幅の1.33倍または2倍です。負けたときの損は損切り幅の1倍です。この比率では、約43%の勝率があれば長期的に収支がとんとんになる計算です。43%を下回ると長期的にはマイナスになると考えられます。
+    <div class="s-note">
+      次回の更新時に前向き80回を超えたら、「回避確定」か「仮説棄却」かを判断します。それまでは「観察中」のステータスが続きます。
     </div>
+  </section>
 
-    <p>期間の分け方は次の通りです。</p>
-    <ul>
-      <li><strong>登録前の期間</strong>：2026年8月11日（仮説登録日）より前に出たシグナル（52回）</li>
-      <li><strong>前向き期間</strong>：2026年8月12日以降に出たシグナル（46回）</li>
-    </ul>
-
-    <div class="warning-box">
-      これは「過去の自システムデータでの集計」です。将来の成績を保証するものではありません。
+  <!-- 関連記事カード -->
+  <section class="s-section">
+    <h2>関連する解説記事</h2>
+    <div class="s-card-grid">
+      <div class="s-card">
+        <h3><a href="guide-signal-anatomy.html">📊 シグナルの仕組み：どうやってシグナルを出しているか</a></h3>
+        <p>このサイトのシグナルがどんな計算で出ているかを解説。RSI・MACD・移動平均など各シグナルの基礎がわかります。</p>
+      </div>
+      <div class="s-card">
+        <h3><a href="track-record.html">🧪 シグナル研究のトップページ</a></h3>
+        <p>過去の全シグナルの成績・前向き検証の状況・仮説トラッカーをまとめて確認できます。</p>
+      </div>
     </div>
+  </section>
 
-    <!-- =============================== -->
-    <h2 id="result-is-fwd">③ 登録前とその後：大きな差の理由</h2>
-
-    <p>まず登録前の期間とその後の前向き期間の勝率を比べます。</p>
-
-    <div class="chart-figure">
-      <!-- 図2: IS vs FWD 勝率比較棒グラフ -->
-      <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="登録前とその後の勝率の比較棒グラフ">
-        <rect x="0" y="0" width="600" height="280" fill="#ffffff" rx="8"/>
-        <text x="300" y="22" text-anchor="middle" class="s-label" style="font-size:12px;font-weight:700;fill:#2C4F8F">図2：登録前とその後の勝率の比較（買いのシグナル）</text>
-        <!-- 軸 -->
-        <line x1="80" y1="240" x2="540" y2="240" class="s-axis"/>
-        <line x1="80" y1="40" x2="80" y2="240" class="s-axis"/>
-        <!-- Y軸ラベル -->
-        <text x="72" y="244" text-anchor="end" class="s-label-sm">0%</text>
-        <text x="72" y="195" text-anchor="end" class="s-label-sm">20%</text>
-        <text x="72" y="145" text-anchor="end" class="s-label-sm">40%</text>
-        <text x="72" y="96" text-anchor="end" class="s-label-sm">60%</text>
-        <text x="72" y="46" text-anchor="end" class="s-label-sm">80%</text>
-        <!-- ガイドライン -->
-        <line x1="80" y1="195" x2="540" y2="195" class="s-guide"/>
-        <line x1="80" y1="145" x2="540" y2="145" class="s-guide"/>
-        <line x1="80" y1="96" x2="540" y2="96" class="s-guide"/>
-        <line x1="80" y1="46" x2="540" y2="46" class="s-guide"/>
-        <!-- とんとんライン（43%）y = 244 - 43*2.475 = 137.6 ≈ 138 -->
-        <line x1="80" y1="138" x2="540" y2="138" stroke="#cf222e" stroke-width="1.8" stroke-dasharray="6 3"/>
-        <text x="536" y="134" text-anchor="end" class="s-label-r" style="font-size:11px">43%（とんとん）</text>
-        <!-- 棒グラフ　bottom anchor y=244, scale 2.475px/% -->
-        <!-- IS（登録前）76.9%: y = 244-76.9*2.475=53.7≈54, height=190 -->
-        <rect x="130" y="54" width="90" height="190" class="s-fill-b" stroke="#0969da" stroke-width="1.5" rx="3"/>
-        <text x="175" y="47" text-anchor="middle" class="s-label-b">76.9%</text>
-        <text x="175" y="258" text-anchor="middle" class="s-label" style="font-size:12px">登録前</text>
-        <text x="175" y="271" text-anchor="middle" class="s-label-sm">52回</text>
-        <!-- FWD（前向き）45.7%: y = 244-45.7*2.475=130.9≈131, height=113 -->
-        <rect x="255" y="131" width="90" height="113" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
-        <text x="300" y="124" text-anchor="middle" class="s-label-g">45.7%</text>
-        <text x="300" y="258" text-anchor="middle" class="s-label" style="font-size:12px">前向き期間</text>
-        <text x="300" y="271" text-anchor="middle" class="s-label-sm">46回</text>
-        <!-- ベースライン 42.5%: y = 244-42.5*2.475=138.8≈139, height=105 -->
-        <rect x="380" y="139" width="90" height="105" class="s-fill-gray" stroke="#8b949e" stroke-width="1.5" rx="3"/>
-        <text x="425" y="132" text-anchor="middle" class="s-label">42.5%</text>
-        <text x="425" y="258" text-anchor="middle" class="s-label" style="font-size:12px">全シグナル平均</text>
-        <text x="425" y="271" text-anchor="middle" class="s-label-sm">5,174回</text>
-      </svg>
-      <p class="chart-caption">図2：登録前（76.9%）と前向き期間（45.7%）を比べたもの。赤い破線が「勝ち負けがとんとんになる勝率（43%）」です。前向き期間はとんとんの線とほぼ重なります。</p>
-    </div>
-
-    <div class="mw-scroll-hint">横にスクロールできます</div>
-    <table>
-      <tr>
-        <th>期間</th>
-        <th>回数</th>
-        <th>勝ち</th>
-        <th>勝率</th>
-        <th>偶然のぶれを考えた幅（信頼区間）</th>
-        <th>1回あたり平均の損益</th>
-      </tr>
-      <tr>
-        <td>登録前の期間</td>
-        <td>52回</td>
-        <td>40回</td>
-        <td><strong>76.9%</strong></td>
-        <td>63.9%〜86.3%</td>
-        <td>損切り幅の+0.79倍</td>
-      </tr>
-      <tr>
-        <td>前向き期間</td>
-        <td>46回</td>
-        <td>21回</td>
-        <td><strong>45.7%</strong></td>
-        <td>32.2%〜59.8%</td>
-        <td>損切り幅の+0.06倍</td>
-      </tr>
-      <tr>
-        <td>全シグナル平均（参考）</td>
-        <td>5,174回</td>
-        <td>—</td>
-        <td>42.5%</td>
-        <td>—</td>
-        <td>損切り幅の-0.01倍</td>
-      </tr>
-    </table>
-
-    <p style="margin-top:0.6em;font-size:0.95em;color:#444">※ 買いに限らず全方向（買い・売りの両方）で集計した場合：登録前は74回中45回勝ち（60.8%、偶然のぶれを考えた幅 49.4%〜71.1%）、前向き期間は72回中34回勝ち（47.2%、偶然のぶれを考えた幅 36.1%〜58.6%）でした。</p>
-
-    <h3>なぜ登録前はこんなに高かったのか</h3>
-
-    <p>登録前の76.9%という数字は、一見すると非常に高く見えます。しかし、これには理由があります。</p>
-    <p>「結果が出てから見つけたパターン」は、いつも実態より良く見えます。「上昇トレンド中のRSI売られすぎ」という条件を、過去のデータの中から探したとき、偶然うまくいっていた場面が多く集まる可能性があります。これを「後付けのバイアス」と言います。</p>
-    <p>このサイトの研究は、まさにこの問題を前向きに確かめるために、「結果を見る前に仮説を登録してから検証する」というルールを採っています。登録後の46回で45.7%となったことは、バイアスが修正された結果と見ることができます。</p>
-
-    <div class="positive-box">
-      45.7%という数字自体は、全シグナル平均（42.5%）をわずかに上回っています。また、偶然のぶれを考えた幅（32.2%〜59.8%）の上側は59.8%まであります。良い結果が出る可能性は残っています。ただし、まだ結論を出せる件数（80回）に達していません。
-    </div>
-
-    <!-- =============================== -->
-    <h2 id="result-tf">④ 時間足別に見る（前向き期間）</h2>
-
-    <p>前向き期間の46回を、1時間足（1時間ごとに更新されるチャートで出たシグナル）と4時間足（4時間ごとに更新されるチャートで出たシグナル）に分けて見ます。なお、46回の内訳は1時間足23回＋4時間足22回＋その他（日足など）1回です。</p>
-
-    <div class="chart-figure">
-      <!-- 図3: 時間足別FWD勝率 -->
-      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="前向き期間の時間足別勝率比較">
-        <rect x="0" y="0" width="500" height="260" fill="#ffffff" rx="8"/>
-        <text x="250" y="22" text-anchor="middle" class="s-label" style="font-size:12px;font-weight:700;fill:#2C4F8F">図3：前向き期間での時間足別の勝率</text>
-        <!-- 軸 -->
-        <line x1="70" y1="220" x2="450" y2="220" class="s-axis"/>
-        <line x1="70" y1="40" x2="70" y2="220" class="s-axis"/>
-        <!-- Y軸ラベル -->
-        <text x="62" y="224" text-anchor="end" class="s-label-sm">0%</text>
-        <text x="62" y="187" text-anchor="end" class="s-label-sm">20%</text>
-        <text x="62" y="150" text-anchor="end" class="s-label-sm">40%</text>
-        <text x="62" y="114" text-anchor="end" class="s-label-sm">60%</text>
-        <text x="62" y="77" text-anchor="end" class="s-label-sm">80%</text>
-        <!-- ガイドライン -->
-        <line x1="70" y1="187" x2="450" y2="187" class="s-guide"/>
-        <line x1="70" y1="150" x2="450" y2="150" class="s-guide"/>
-        <line x1="70" y1="114" x2="450" y2="114" class="s-guide"/>
-        <line x1="70" y1="77" x2="450" y2="77" class="s-guide"/>
-        <!-- とんとんライン43% -->
-        <line x1="70" y1="142" x2="450" y2="142" stroke="#cf222e" stroke-width="1.8" stroke-dasharray="6 3"/>
-        <text x="454" y="146" class="s-label-r" style="font-size:11px">43%</text>
-        <!-- 1時間足 34.8% → 高さ: (34.8/100)*180 = 63 → y = 220-63 = 157 -->
-        <rect x="110" y="157" width="100" height="63" class="s-fill-r" stroke="#cf222e" stroke-width="1.5" rx="3"/>
-        <text x="160" y="150" text-anchor="middle" class="s-label-r">34.8%</text>
-        <text x="160" y="238" text-anchor="middle" class="s-label" style="font-size:12px">1時間足</text>
-        <text x="160" y="251" text-anchor="middle" class="s-label-sm">23回</text>
-        <!-- 4時間足 59.1% → 高さ: (59.1/100)*180 = 106 → y = 220-106 = 114 -->
-        <rect x="270" y="114" width="100" height="106" class="s-fill-g" stroke="#1a7f37" stroke-width="1.5" rx="3"/>
-        <text x="320" y="107" text-anchor="middle" class="s-label-g">59.1%</text>
-        <text x="320" y="238" text-anchor="middle" class="s-label" style="font-size:12px">4時間足</text>
-        <text x="320" y="251" text-anchor="middle" class="s-label-sm">22回</text>
-      </svg>
-      <p class="chart-caption">図3：前向き期間（46回）を時間足で分けた勝率。1時間足（23回）は34.8%、4時間足（22回）は59.1%でした。赤い破線が43%（とんとん）です。</p>
-    </div>
-
-    <div class="mw-scroll-hint">横にスクロールできます</div>
-    <table>
-      <tr>
-        <th>時間足</th>
-        <th>回数</th>
-        <th>勝ち</th>
-        <th>勝率</th>
-        <th>偶然のぶれを考えた幅（信頼区間）</th>
-        <th>1回あたり平均の損益</th>
-      </tr>
-      <tr>
-        <td>1時間足</td>
-        <td>23回</td>
-        <td>8回</td>
-        <td><strong>34.8%</strong></td>
-        <td>18.8%〜55.1%</td>
-        <td>損切り幅の-0.19倍</td>
-      </tr>
-      <tr>
-        <td>4時間足</td>
-        <td>22回</td>
-        <td>13回</td>
-        <td><strong>59.1%</strong></td>
-        <td>38.7%〜76.7%</td>
-        <td>損切り幅の+0.38倍</td>
-      </tr>
-      <tr>
-        <td>合計（全足）</td>
-        <td>46回</td>
-        <td>21回</td>
-        <td>45.7%</td>
-        <td>32.2%〜59.8%</td>
-        <td>損切り幅の+0.06倍</td>
-      </tr>
-    </table>
-
-    <p>1時間足の34.8%は、とんとんの43%を下回っています。偶然のぶれを考えた幅（18.8%〜55.1%）は広く、まだ件数が少ないため結論は出せませんが、芳しくない傾向が見えます。</p>
-    <p>一方、4時間足の59.1%は比較的高く、1回あたり平均の損益も損切り幅の+0.38倍と良い水準です。ただし、偶然のぶれを考えた幅（38.7%〜76.7%）は依然として広いため、件数を積み重ねて確かめる必要があります。</p>
-
-    <div class="warning-box">
-      1時間足（34.8%）と4時間足（59.1%）の差は、それぞれ23回・22回という少ない件数によるものです。今後の件数が増えるにつれて、この差は変わる可能性があります。現時点での観察として記録します。
-    </div>
-
-    <!-- =============================== -->
-    <h2 id="verdict">⑤ 現在の判定</h2>
-
-    <p>仮説の合格基準は「前向きのデータが80回以上集まり、1回あたり平均の損益の偶然のぶれを考えた幅の下の端が0を上回ること」です。現在は46回で基準の件数（80回）に達していないため、状態は「🟡蓄積中」のままです。</p>
-
-    <div class="mw-scroll-hint">横にスクロールできます</div>
-    <table>
-      <tr>
-        <th>項目</th>
-        <th>現在の値</th>
-        <th>合格基準</th>
-        <th>判定</th>
-      </tr>
-      <tr>
-        <td>前向きの件数</td>
-        <td>46回</td>
-        <td>80回以上</td>
-        <td>まだ</td>
-      </tr>
-      <tr>
-        <td>前向き勝率</td>
-        <td>45.7%</td>
-        <td>—</td>
-        <td>参考値</td>
-      </tr>
-      <tr>
-        <td>平均の損益のぶれ幅の下端</td>
-        <td>件数不足のため未判定</td>
-        <td>0を上回る</td>
-        <td>まだ</td>
-      </tr>
-      <tr>
-        <td>全体状態</td>
-        <td colspan="3"><strong>🟡 蓄積中</strong>（引き続きデータを積み重ねます）</td>
-      </tr>
-    </table>
-
-    <p>引き続き、結果が出るたびに前向きのデータを積み重ねていきます。次の節点となる件数の目安は、あと34回（合計80回）です。</p>
-
-    <!-- =============================== -->
-    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
-
-    <p>このシステムで確かめている全仮説の現在地をまとめます。基準日は2026年10月13日です。</p>
-
-    <p class="meta-line">基準日 2026-10-13／昇格＝前向きN≥80（ホールドアウト合格はN≥30）・平均R（期待値）の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→蓄積中へ（2026-07-18〜・再昇格可）</p>
-
-    <div class="info-box" style="font-size:.88rem">表の見方：「仮説」は、どんな場面で出たシグナルかを表します。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均の損益」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「ぶれの幅」はその数字の偶然のぶれの幅（95%）です。「ぶれ幅の下端が0より大きい」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。</div>
-
-    <!-- トラッカーテーブル（scratchpadから挿入）-->
-    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
-<p class="meta-line">基準日 2026-10-13／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
-<div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均の損益」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「偶然のぶれの幅」はその数字のぶれの幅（95%）です。「ぶれ幅の下端が0より大きい」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。<details><summary>言葉の意味（17語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>全銘柄＝このシグナルが見張っている18銘柄（金・銀・原油・株価指数・為替・ビットコイン）</li><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>関連ニュース＝シグナルが出たときに集まっていた、その銘柄のニュースの本数</li><li>順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）</li><li>ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）</li><li>VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）</li><li>ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て</li></ul></details></div>
-<div class="mw-scroll-hint">横にスクロールできます</div>
-<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
-<tr><td>円以外の通貨ペアの買い<br><small style="opacity:.7">group=other_fx×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.03</span><br><span style="white-space:nowrap">CI[-0.13~+0.08]</span><br><small style="opacity:.8;white-space:nowrap">378/906・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>株価指数の買い<br><small style="opacity:.7">指数×ロング(全足ライブ)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.11~+0.17]</span><br><small style="opacity:.8;white-space:nowrap">371/839・勝率44%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ステート 上昇配置（&gt;MA25&amp;75）×ロング</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.01</span><br><span style="white-space:nowrap">CI[-0.11~+0.14]</span><br><small style="opacity:.8;white-space:nowrap">351/808・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>目標の手前に壁なしの売り<br><small style="opacity:.7">blocked=False×dir=short</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.01</span><br><span style="white-space:nowrap">CI[-0.12~+0.10]</span><br><small style="opacity:.8;white-space:nowrap">297/700・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.15</span><br><span style="white-space:nowrap">CI[-0.01~+0.31]</span><br><small style="opacity:.8;white-space:nowrap">203/411・勝率49%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>金・銀の買い<br><small style="opacity:.7">group=metal×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.07</span><br><span style="white-space:nowrap">CI[-0.12~+0.27]</span><br><small style="opacity:.8;white-space:nowrap">165/359・勝率46%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>上昇トレンド中の逆張り買い<br><small style="opacity:.7">trend=上昇×reversalL</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.06</span><br><span style="white-space:nowrap">CI[-0.09~+0.20]</span><br><small style="opacity:.8;white-space:nowrap">156/345・勝率45%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>目標の手前に壁ありの売り<br><small style="opacity:.7">blocked=True×dir=short</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.04</span><br><span style="white-space:nowrap">CI[-0.19~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">129/312・勝率41%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>上昇トレンド中、RSI30以下（売られすぎ）のシグナル（買いも売りも）<br><small style="opacity:.7">rsi=os×trend=上昇</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.12</span><br><span style="white-space:nowrap">CI[-0.12~+0.36]</span><br><small style="opacity:.8;white-space:nowrap">35/73・勝率48%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>トレンドが強いとき（ADX25以上）の順張り<br><small style="opacity:.7">順張り×ADX強(25以上)(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.35</span><br><span style="white-space:nowrap">CI[-0.57~-0.13]</span><br><small style="opacity:.8;white-space:nowrap">19/68・勝率28%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
-<tr><td>買い全般<br><small style="opacity:.7">dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.03</span><br><span style="white-space:nowrap">CI[-0.05~+0.10]</span><br><small style="opacity:.8;white-space:nowrap">1327/3018・勝率44%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
-<tr><td>下降トレンド中の買い<br><small style="opacity:.7">trend=下降×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.10</span><br><span style="white-space:nowrap">CI[+0.01~+0.20]</span><br><small style="opacity:.8;white-space:nowrap">446/942・勝率47%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
-<tr><td>全銘柄のシグナル（買いも売りも）<br><small style="opacity:.7">group=all</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R +0.01</span><br><span style="white-space:nowrap">CI[-0.04~+0.06]</span><br><small style="opacity:.8;white-space:nowrap">1741/4006・勝率44%</small></td><td><span style="white-space:nowrap">⏹見込みなし</span></td></tr>
-</table>
-
-    <!-- kinsho-v1 免責 -->
-    <div class="s-kinsho disclaimer" id="disclaimer" data-disclaimer="kinsho-v1">
-      <h4>免責事項・ご注意</h4>
-      <p>このページは情報提供を目的としており、特定の銘柄や投資商品の売買を推奨・勧誘するものではありません。投資の最終判断はご自身の責任で行ってください。市場には損失リスクが伴い、元本を割り込む可能性があります。過去の成績は将来の結果を保証するものではありません。</p>
-      <p>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。そのため、個別の投資助言は行いません。</p>
-      <p>本記事の成績データは、当サイトのシグナル記録をもとにした独自のシミュレーション集計であり、実際の取引成績とは異なります。データは自動収集・自動計算によるもので、誤りが含まれる可能性があり、正確性は保証しません。</p>
-    </div>
-
-    <p class="disclaimer" data-disclaimer="kinsho-v1">
-      本記事は情報提供を目的としており、特定の金融商品の売買を推奨するものではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録を受けていません。掲載された情報はすべて過去のデータに基づく参考情報であり、将来の運用成果を示すものではありません。投資に関する最終判断はご自身の責任で行ってください。
-    </p>
-
-  </div><!-- /article -->
-
-  <div class="mw-ad">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2552122294306014" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <!-- kinsho-v1 免責（2点目） -->
+  <div class="s-kinsho" data-disclaimer="kinsho-v1">
+    <h4>⚖️ 免責事項・重要なお知らせ</h4>
+    <p>この記事は情報の提供を目的としたもので、投資の勧誘・推奨ではありません。掲載している数値・分析結果は過去または特定の期間のものであり、将来の投資成果を保証するものではありません。投資にはリスクが伴います。投資の判断は必ずご自身でお願いします。</p>
   </div>
 
 </main>
 
-<footer>
-  <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言・売買推奨ではありません。投資判断はご自身の責任でお願いします。</div>
-  <p><a href="index.html">トップページ</a> | <a href="guides.html">解説記事</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="about.html">このサイトについて</a></p>
-  <p style="margin-top:8px">&copy; 2025-2026 MarketWatch AI. All rights reserved.</p>
+<!-- kinsho-v1 免責（3点目） -->
+<footer style="background:var(--c-surface);border-top:1px solid var(--c-border);padding:24px 16px;text-align:center;font-size:13px;color:var(--c-muted)" data-disclaimer="kinsho-v1">
+  <p>MarketWatch AI | 情報提供サービス | 投資助言業者ではありません</p>
+  <p style="margin-top:6px">掲載情報は情報提供のみを目的とし、投資の判断はご自身でお願いします。</p>
+  <p style="margin-top:6px"><a href="privacy.html">プライバシーポリシー</a> | <a href="about.html">サイトについて</a> | <a href="contact.html">お問い合わせ</a></p>
 </footer>
 
-<script>
-(function(){
-  var el = document.getElementById('reading-progress');
-  if(!el) return;
-  window.addEventListener('scroll', function(){
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    if(h<=0){el.style.width='100%';return;}
-    el.style.width = Math.min(100, (window.scrollY/h)*100) + '%';
-  }, {passive:true});
-})();
-function toggleTheme(){
-  document.body.classList.toggle('dark');
-  var btn = document.getElementById('theme-toggle');
-  if(btn) btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-  try{localStorage.setItem('mw-theme', document.body.classList.contains('dark')?'dark':'light');}catch(e){}
-}
-(function(){
-  try{
-    var t = localStorage.getItem('mw-theme');
-    if(t==='dark'){document.body.classList.add('dark');var b=document.getElementById('theme-toggle');if(b)b.textContent='☀️';}
-  }catch(e){}
-})();
-(function(){try{
-  var ts=document.getElementsByTagName('table');
-  for(var i=0;i<ts.length;i++){(function(t){
-    if(t.getAttribute('data-mw-sc'))return;
-    if(window.innerWidth>600)return;
-    if(t.scrollWidth-t.clientWidth>4){
-      t.setAttribute('data-mw-sc','1');
-      var h=document.createElement('div');
-      h.className='mw-scroll-hint';
-      h.textContent='横にスクロールできます';
-      if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
-    }
-  })(ts[i]);}
-}catch(e){}})();
-</script>
 </body>
 </html>
