@@ -108,6 +108,9 @@ def test_record_once_per_day():
             assert len(calls) == 2                                              # その日の分は取り直さない
             S.record(dt.date(2026, 10, 10), get, path)                          # 土曜は記録しない
             assert len(calls) == 2 and "| 2026-10-09 | ✅ | ✅ |" in open(S.OUT_MD, encoding="utf-8").read()
+            S.record(dt.date(2026, 10, 12), get, path, closed=lambda d: d == dt.date(2026, 10, 12))   # 祝日の休場も記録しない
+            assert len(calls) == 2 and "2026-10-12" not in S.load_json(path)["days"]
+            assert S.MB.tse_closed(dt.date(2026, 10, 10)) and not S.MB.tse_closed(dt.date(2026, 10, 9), path=os.path.join(d, "none.json"))
         finally:
             S.OUT_MD, S.MARGIN, S.HIGHS = orig
 
