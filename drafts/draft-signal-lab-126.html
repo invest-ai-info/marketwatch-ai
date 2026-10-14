@@ -205,7 +205,7 @@ window.addEventListener('resize',mark);
   <div class="s-hero-inner">
     <span class="s-tag">🧪 AIシグナル研究日誌</span>
     <h1>通貨の強弱と同じ向きに入ると損しやすい？ 前向き65回で確かめた【研究日誌 #126】</h1>
-    <p class="meta-line">公開：2026年10月（下書き中）　前向き期間：2026年9月29日〜　仮説登録日：2026年9月28日</p>
+    <p class="meta-line">公開：2026年10月15日　前向き期間：2026年9月29日〜　仮説登録日：2026年9月28日</p>
   </div>
 </header>
 
@@ -223,7 +223,7 @@ window.addEventListener('resize',mark);
       <li>為替（FX）の取引では「通貨の強い方向に乗って入ると勝ちやすい」と言われることがあります。この研究は、その考えが正しいかを数字で確かめたものです。</li>
       <li>仮説を登録してからの前向きの結果（2026年9月29日から17日間）では、「通貨の強弱と同じ向き」にシグナルが出た場面で<strong>65回中15回が勝ち</strong>。勝った割合は<strong>23.1%</strong>でした。</li>
       <li>同じ期間の全体の勝率は<strong>36.2%</strong>で、「同じ向き」はそれより大きく低くなっています。</li>
-      <li>偶然のぶれを考えた1回あたりの損益（95%の範囲）は<strong>マイナス0.70からマイナス0.22</strong>（損切り幅を1として）で、<strong>両端がマイナス</strong>です。偶然ではなく損の方向があると考えられます。</li>
+      <li>偶然のぶれを考えた1回あたりの損益（95%の範囲）は<strong>マイナス0.70からマイナス0.22</strong>（損切り幅を1として）で、<strong>両端がマイナス</strong>です。偶然だけでは説明しにくい損の傾向が見られます（ただし回数はまだ少なめです）。</li>
       <li>まだ<strong>65回</strong>で、昇格・引退の判断に必要な80回に届いていません。引き続き観察中です。</li>
     </ul>
   </div>
@@ -353,7 +353,7 @@ window.addEventListener('resize',mark);
 
     <div class="s-note">
       <strong>💡 「前向き検証」とは</strong><br>
-      仮説を登録した日（2026年9月28日）の翌日以降に出たシグナルだけを数えることで、「都合の良い過去のデータだけを選んで検証する」問題（事後の選り好み）を防ぎます。登録前のデータ（登録前・事前登録前の集計）も参考として示しますが、メインの判断には登録後のデータを使います。
+      仮説を登録した日（2026年9月28日）の翌日以降に出たシグナルだけを数えることで、「都合の良い過去のデータだけを選んで検証する」問題（事後の選り好み）を防ぎます。登録前のデータ（事前登録前の集計）も参考として示しますが、メインの判断には登録後のデータを使います。
     </div>
   </section>
 
@@ -458,7 +458,7 @@ window.addEventListener('resize',mark);
 
     <p>前向きの結果では、「同じ向き」の勝率は<strong>23.1%（65回中15回）</strong>で、全体の36.2%を大きく下回りました。</p>
     <p>1回あたり平均損益（損切り幅を1として）はマイナス0.46で、全体のマイナス0.16と比べてもかなり悪い水準です。</p>
-    <p>注目すべきは損益幅（95%の範囲）です。「同じ向き」はマイナス0.70からマイナス0.22と、<strong>両端がマイナスになっています</strong>。これは「偶然の範囲を超えて損の方向がある」と考えられることを意味します。</p>
+    <p>注目すべきは損益幅（95%の範囲）です。「同じ向き」はマイナス0.70からマイナス0.22と、<strong>両端がマイナスになっています</strong>。これは「偶然のぶれだけでは説明しにくい損の傾向がある」可能性を示しています。</p>
     <p>一方「逆向き」の損益幅はマイナス0.38からプラス0.16と、0をまたいでいます。全体の成績が悪い時期に合わせた動きで、「避けるべき」とは言えません。</p>
 
     <!-- SVG 2: 前向き勝率の比較棒グラフ -->
@@ -510,14 +510,14 @@ window.addEventListener('resize',mark);
         <text x="455" y="266" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">68回</text>
 
         <!-- 注 -->
-        <text x="320" y="278" font-size="10" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+        <text x="320" y="278" font-size="10" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">※ 実際のシグナルデータをもとに作成した図です（集計期間：2026年9月29日〜2026年10月15日）</text>
       </svg>
       <p class="s-chart-note">図2：3グループの前向き勝率の比較。オレンジの破線（43%）は勝ち負けがとんとんになる目安です。「同じ向き」（赤棒）は23.1%と大きく低くなっています。</p>
     </div>
 
     <div class="s-note s-note-warn">
       <strong>⚠️ 解釈の注意</strong><br>
-      2026年9月29日以降は全体の成績も悪い期間でした（全体勝率36.2%・平均損益マイナス0.16）。「同じ向き」はその中でさらに大きく悪化しています。難しい相場だから悪い、ということではなく、通貨の強弱が一致していることがかえって不利に働いた可能性があります。
+      2026年9月29日以降は全体の成績も悪い期間でした（全体勝率36.2%・平均損益マイナス0.16）。「同じ向き」はその中でさらに大きく悪化しています。難しい相場だったことだけが理由とは限らず、通貨の強弱が一致していることがかえって不利に働いた可能性もあります。
     </div>
   </section>
 
@@ -533,7 +533,7 @@ window.addEventListener('resize',mark);
     <p>このサイトのシグナルには「RSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）が売られすぎで反発ねらい」などの逆張り系も含まれます。「通貨が強い方向のシグナル」と「逆張りシグナル」が同時に成立するケースでは、方向性の矛盾が生じる場面もありえます。</p>
 
     <h3>③偶然の偏りも排除できない</h3>
-    <p>前向きはまだ65回です。どの方向にも動きうる偶然の偏りが混入している可能性はあります。ただし、損益幅の両端がマイナスに収まっているため、単純な偶然ではないと考えられます。</p>
+    <p>前向きはまだ65回です。どの方向にも動きうる偶然の偏りが混入している可能性はあります。損益幅の両端がマイナスに収まっているため偶然だけでは説明しにくい結果ですが、このサイトでは多くの仮説を同時に見ているため、そのうちのどれかがたまたまこうした結果になることもありえます。</p>
 
     <!-- SVG 3: IS vs FWD の推移イメージ -->
     <div class="s-chart">
@@ -545,44 +545,43 @@ window.addEventListener('resize',mark);
         <line x1="100" y1="40" x2="100" y2="220" stroke="var(--c-muted,#5a6072)" stroke-width="1.5"/>
         <line x1="100" y1="220" x2="580" y2="220" stroke="var(--c-muted,#5a6072)" stroke-width="1.5"/>
 
-        <!-- ガイドライン（50%, 43%, 40%, 23%あたり） -->
-        <!-- Y: 高さ180のレンジで0〜50%を表示 -->
-        <!-- 50% → y=40, 0% → y=220. 1% = 1.8px -->
+        <!-- ガイドライン y = 308 - rate * 5.37 (50%→40, 40%→93, 30%→147, 20%→201) -->
         <line x1="100" y1="40" x2="580" y2="40" stroke="#e2e6ed" stroke-width="1" stroke-dasharray="3 3"/>
         <line x1="100" y1="93" x2="580" y2="93" stroke="#e2e6ed" stroke-width="1" stroke-dasharray="3 3"/>
         <line x1="100" y1="147" x2="580" y2="147" stroke="#e2e6ed" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="100" y1="201" x2="580" y2="201" stroke="#e2e6ed" stroke-width="1" stroke-dasharray="3 3"/>
 
         <!-- ラベル -->
         <text x="94" y="43" font-size="10" font-family="sans-serif" text-anchor="end" fill="var(--c-muted,#5a6072)">50%</text>
         <text x="94" y="96" font-size="10" font-family="sans-serif" text-anchor="end" fill="var(--c-muted,#5a6072)">40%</text>
         <text x="94" y="150" font-size="10" font-family="sans-serif" text-anchor="end" fill="var(--c-muted,#5a6072)">30%</text>
-        <text x="94" y="223" font-size="10" font-family="sans-serif" text-anchor="end" fill="var(--c-muted,#5a6072)">20%</text>
+        <text x="94" y="204" font-size="10" font-family="sans-serif" text-anchor="end" fill="var(--c-muted,#5a6072)">20%</text>
 
-        <!-- 損益分岐 43% → y = 220 - 43*1.8 = 220 - 77.4 = 142.6 -->
-        <line x1="100" y1="143" x2="580" y2="143" stroke="#d97706" stroke-width="1.2" stroke-dasharray="5 3"/>
-        <text x="584" y="147" font-size="10" font-family="sans-serif" fill="#d97706">43%</text>
+        <!-- 損益分岐 43% → y = 308 - 43*5.37 = 78 -->
+        <line x1="100" y1="78" x2="580" y2="78" stroke="#d97706" stroke-width="1.2" stroke-dasharray="5 3"/>
+        <text x="584" y="82" font-size="10" font-family="sans-serif" fill="#d97706">43%</text>
 
         <!-- 仕切り線（IS | FWD） -->
         <line x1="310" y1="40" x2="310" y2="220" stroke="#e2e6ed" stroke-width="1.5" stroke-dasharray="4 2"/>
         <text x="310" y="35" font-size="10" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">登録前（参考）　｜　登録後（前向き）</text>
 
-        <!-- IS（同じ向き）: 40.4% → y = 220 - 40.4*1.8 = 220 - 72.7 = 147.3 -->
-        <rect x="150" y="148" width="110" height="72" fill="#2563eb" fill-opacity="0.3" rx="3"/>
-        <text x="205" y="144" font-size="11" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="#2563eb" font-weight="700">40.4%</text>
+        <!-- IS（同じ向き）: 40.4% → y = 308 - 40.4*5.37 = 92 -->
+        <rect x="150" y="92" width="110" height="128" fill="#2563eb" fill-opacity="0.3" rx="3"/>
+        <text x="205" y="88" font-size="11" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="#2563eb" font-weight="700">40.4%</text>
         <text x="205" y="228" font-size="11" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">登録前（788回）</text>
 
-        <!-- FWD（同じ向き）: 23.1% → y = 220 - 23.1*1.8 = 220 - 41.6 = 178.4 -->
-        <rect x="360" y="179" width="110" height="41" fill="#dc2626" fill-opacity="0.6" rx="3"/>
-        <text x="415" y="175" font-size="12" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="#dc2626" font-weight="700">23.1%</text>
+        <!-- FWD（同じ向き）: 23.1% → y = 308 - 23.1*5.37 = 184 -->
+        <rect x="360" y="184" width="110" height="36" fill="#dc2626" fill-opacity="0.6" rx="3"/>
+        <text x="415" y="180" font-size="12" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="#dc2626" font-weight="700">23.1%</text>
         <text x="415" y="228" font-size="11" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">前向き（65回）</text>
 
-        <!-- 矢印（悪化） -->
-        <line x1="265" y1="180" x2="355" y2="195" stroke="#dc2626" stroke-width="1.5"/>
-        <polygon points="355,192 362,196 356,200" fill="#dc2626"/>
-        <text x="305" y="175" font-size="11" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="#dc2626" font-weight="700">大きく悪化</text>
+        <!-- 悪化の印 -->
+        <line x1="265" y1="100" x2="355" y2="188" stroke="#dc2626" stroke-width="1.5"/>
+        <polygon points="355,185 362,189 356,193" fill="#dc2626"/>
+        <text x="305" y="148" font-size="11" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="#dc2626" font-weight="700">大きく悪化</text>
 
         <!-- 注 -->
-        <text x="320" y="248" font-size="10" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
+        <text x="320" y="248" font-size="10" font-family="'Noto Sans JP',sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">※ 実際のシグナルデータをもとに作成した図です（集計期間：2026年9月29日〜2026年10月15日）</text>
       </svg>
       <p class="s-chart-note">図3：「通貨の強弱と同じ向き」の登録前と前向きの勝率比較。登録前は40.4%（全体並み）だったが、前向きでは23.1%まで低下しています。</p>
     </div>
@@ -599,11 +598,11 @@ window.addEventListener('resize',mark);
       <li>逆向き（68回）は全体と差なし（マイナス0.38〜プラス0.16）</li>
     </ul>
 
-    <p>「損益幅の両端がマイナス」という状態は、偶然の範囲を超えて損の方向があることを示しています。ただし、前向きの回数が<strong>まだ65回</strong>で、判定の基準（80回）に届いていません。そのため、官式の状態は<strong>観察継続中（蓄積中）</strong>のままです。</p>
+    <p>「損益幅の両端がマイナス」という状態は、偶然のぶれだけでは説明しにくい損の傾向がある可能性を示しています。ただし、前向きの回数が<strong>まだ65回</strong>で、判定の基準（80回）に届いていません。そのため、サイト上の正式な判定は<strong>観察継続中（蓄積中）</strong>のままです。</p>
 
     <div class="s-note">
       <strong>💡 「昇格」「引退」とは</strong><br>
-      このサイトでは、前向きで一定の回数と条件を満たした仮説に「昇格」（良い方向に有効）または「引退」（見込みなし）の判定をしています。今回の仮説（通貨の強弱と同じ向きが不利）が正式に確認されれば「引退」に近い状態、逆に成績が戻れば「昇格」を目指すことになります。
+      このサイトでは、前向きで一定の回数と条件を満たした仮説に「昇格」（良い方向に有効）または「引退」（見込みなし）の判定をしています。今回登録した仮説は「通貨の強弱と同じ向きなら勝ちやすいか」です。このまま損の傾向が続けば「引退」（見込みなし）の判定に近づき、逆に成績が戻れば「昇格」の条件を満たすかを引き続き確かめます。
     </div>
   </section>
 
@@ -611,6 +610,7 @@ window.addEventListener('resize',mark);
   <section class="s-section">
     <h2>7. 前向きトラッカー（現在の成績一覧）</h2>
     <p>現在、このサイトで前向き検証を続けているすべての仮説の成績です（2026年10月15日時点）。</p>
+    <p class="s-note">この記事の集計（本文・図）は仮説の登録翌日（2026年9月29日）を起点にしているのに対し、下の表は登録日当日（2026年9月28日）を起点にしています。5回分の差があるため、件数・成績がわずかに異なります。どちらでも「損の方向がある」と読めます。</p>
     <div class="tracker-wrap">
 <!-- TRACKER_TABLE_START -->
 <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
@@ -723,8 +723,11 @@ window.addEventListener('resize',mark);
 
 </main>
 
-<footer style="background:var(--c-surface);border-top:1px solid var(--c-border);padding:20px 16px;text-align:center;font-size:13px;color:var(--c-muted);margin-top:40px">
-  <p><a href="index.html">トップページ</a> | <a href="guides.html">解説記事一覧</a> | <a href="track-record.html">シグナル研究</a></p>
+<!-- kinsho-v1 免責（3点目） -->
+<footer style="background:var(--c-surface);border-top:1px solid var(--c-border);padding:20px 16px;text-align:center;font-size:13px;color:var(--c-muted);margin-top:40px" data-disclaimer="kinsho-v1">
+  <p>MarketWatch AI | 情報提供サービス | 投資助言業者ではありません</p>
+  <p style="margin-top:6px">掲載情報は情報提供のみを目的とし、投資の判断はご自身でお願いします。</p>
+  <p style="margin-top:8px"><a href="index.html">トップページ</a> | <a href="guides.html">解説記事一覧</a> | <a href="track-record.html">シグナル研究</a></p>
   <p style="margin-top:8px">© 2024–2026 MarketWatch AI. 情報提供サイト（金融商品取引業者ではありません）</p>
 </footer>
 
