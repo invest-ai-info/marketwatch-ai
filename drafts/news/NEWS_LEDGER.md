@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-14
+- 判定: ✅ 公開済み
+- 選定トピック: ゴールドマン・サックスが157年史上2番目の好決算（EPS 17.01ドル・約25%超過）──JPモルガンEPS予想未達・シティ+40%増益・ウェルズ・ファーゴ純利息収入期待未達。米大手銀行Q3 2026決算を中立整理（カテゴリ: 金融・決算・米国株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - Goldman Sachs SEC 8-K https://www.sec.gov/Archives/edgar/data/0000886982/000088698226000529/a3q26gsearningsresults.htm （GS公式）
+  - CNBC「Bank earnings live updates」2026-10-13 https://www.cnbc.com/2026/10/13/bank-earnings-live-updates.html
+  - Fortune「Big Bank Q3 2026 earnings」2026-10-13 https://fortune.com/2026/10/13/jpmorgan-goldman-sachs-citigroup-wells-fargo-interest-inflation/
+  - pulse2.com「JPMorgan Chase Q3 2026」2026-10-13 https://pulse2.com/jpmorgan-chase-q3-2026-results/
+  - Alphastreet「JPMorgan Q3 2026」2026-10-13 https://news.alphastreet.com/jpmorgan-jpm-q3-2026-earnings-key-financials-and-quarterly-highlights/
+  - GlobalBrandsMagazine「Goldman Sachs Q3 2026」https://www.globalbrandsmagazine.com/goldman-sachs-q3-2026-results-analysis
+  - BigGo Finance / Motley Fool 決算説明会 https://finance.biggo.com/news/US_GS_2026-10-13
+- コンプラ監査:
+  - 第1Opus（初期判定）: 🟡グレー（4箇所軽微修正：表の数値表記・慈善寄付の根拠表現・CPI断定気味→「一般には〜構図とされる」・「確認する価値がある」→「背景情報の一つとなりうる」）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典7系統以上 ✅ ⑦金商法リスクなし ✅ → 最終判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告41件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-14-goldman-banks-q3-2026.html
+- commit: 7655878（main へ push 済み）
+
+---
+
 ## 2026-10-13
 - 判定: ✅ 公開済み
 - 選定トピック: 中国CXMTのDRAM技術進展（4F²セル構造・年内DDR5量産計画）発表で韓国KOSPI▲5.47%急落・SKハイニックス▲8〜10%台・キオクシアも急落──世界半導体株に波及した1日（カテゴリ: 半導体・テクノロジー・グローバル市場）
