@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-14", "line": '・<b>2026-10-14</b>: 🔬 解説「<a href="guide-company-6146-disco.html" style="color:#0969da"><b>ディスコ（6146）を数字で見る</b></a>」公開'},
         {"date": "2026-10-14", "line": '・<b>2026-10-14</b>: 🧪 解説「<a href="guide-signal-lab-125.html" style="color:#0969da"><b>トレンドが強い場面の順張りシグナルは、負けやすい？ 前向き70回で確かめた【研究日誌 #125】</b></a>」公開'},
         {"date": "2026-10-13", "line": '・<b>2026-10-13</b>: 📰 解説「<a href="guide-news-2026-10-13-kospi-chip-rout-cxmt.html" style="color:#0969da"><b>中国CXMT DRAM進展でKOSPI▲5.5%急落・半導体株に波及</b></a>」公開'},
         {"date": "2026-10-13", "line": '・<b>2026-10-13</b>: 📉 解説「<a href="guide-entry-chart-patterns.html" style="color:#0969da"><b>チャートの形は機械で見つけても効くのか</b></a>」公開'},
