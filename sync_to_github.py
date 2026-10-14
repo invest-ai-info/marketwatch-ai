@@ -361,4 +361,5 @@ SYNC_FILES = [
     "guide-signal-lab-125.html",
     "guide-company-6146-disco.html",
     "guide-entry-support-resistance.html",
+    "guide-news-2026-10-14-goldman-banks-q3-2026.html",
 ]
