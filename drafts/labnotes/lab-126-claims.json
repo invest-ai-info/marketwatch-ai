@@ -1,0 +1,43 @@
+{
+  "article_id": "126",
+  "asof": "2026-10-15T06:15:00+09:00",
+  "hypothesis_id": "cs_aligned",
+  "claims": [
+    {
+      "label": "前向き・通貨の強弱と同じ向き（2026-09-29以降）",
+      "filter": {"cs_align": "aligned", "fired_from": "2026-09-29"},
+      "k": 15,
+      "n": 65
+    },
+    {
+      "label": "前向き・通貨の強弱と逆向き（対照・2026-09-29以降）",
+      "filter": {"cs_align": "against", "fired_from": "2026-09-29"},
+      "k": 26,
+      "n": 68
+    },
+    {
+      "label": "前向き・全体ベースライン（2026-09-29以降）",
+      "filter": {"fired_from": "2026-09-29"},
+      "k": 132,
+      "n": 365
+    },
+    {
+      "label": "IS・通貨の強弱と同じ向き（2026-09-29より前）",
+      "filter": {"cs_align": "aligned", "fired_before": "2026-09-29"},
+      "k": 318,
+      "n": 788
+    },
+    {
+      "label": "IS・通貨の強弱と逆向き（2026-09-29より前）",
+      "filter": {"cs_align": "against", "fired_before": "2026-09-29"},
+      "k": 354,
+      "n": 798
+    },
+    {
+      "label": "IS・全体ベースライン（2026-09-29より前）",
+      "filter": {"fired_before": "2026-09-29"},
+      "k": 2085,
+      "n": 4867
+    }
+  ]
+}
