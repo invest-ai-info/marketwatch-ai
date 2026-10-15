@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-15", "line": '・<b>2026-10-15</b>: 📰 解説「<a href="guide-news-2026-10-15-nikkei-coreweave-cpi.html" style="color:#0969da"><b>【10/15】日経▲3,318円急落──AI負債懸念とCPI上振れが重なる</b></a>」公開'},
         {"date": "2026-10-15", "line": '・<b>2026-10-15</b>: 🔢 解説「<a href="guide-entry-round-numbers.html" style="color:#0969da"><b>キリのいい値段で止まりやすい？</b></a>」公開'},
         {"date": "2026-10-15", "line": '・<b>2026-10-15</b>: 🔬 解説「<a href="guide-company-6857-advantest.html" style="color:#0969da"><b>アドバンテスト（6857）を数字で見る</b></a>」公開'},
         {"date": "2026-10-15", "line": '・<b>2026-10-15</b>: 🔬 解説「<a href="guide-signal-lab-126.html" style="color:#0969da"><b>通貨の強弱と同じ向きに入ると損しやすい？ 前向き65回</b></a>」公開'},

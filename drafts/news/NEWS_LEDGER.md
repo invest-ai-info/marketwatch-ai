@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-10-15
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均▲3,318円（4.90%）急落──コアウィーブのAI負債懸念（社債利回り約15%急騰）と米9月CPI前年比+3.7%上振れが重なった1日（カテゴリ: 日本株・AIインフラ・米CPI・FOMC）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - gurufocus.com「Tokyo Stock Market Plummets: Nikkei 225 Drops 4.90%」2026-10-15
+  - inkl.com「Global Market: Japan's Nikkei plunges nearly 5% as AI stocks tumble on CoreWeave debt concerns」2026-10-15
+  - CNBC「CPI inflation report September 2026」2026-10-14
+  - CNBC「U.S. inflation stays high for years, worrying Fed officials」2026-10-14
+  - siliconangle.com「Shares of Oracle, neoclouds drop on CoreWeave debt concerns」2026-10-14
+  - marketscreener.com「CoreWeave stock tumbles as bond yields approach 15%」2026-10-14
+  - finimize.com「Japan's Nikkei Slid As AI Stocks Took The Hardest Hit」2026-10-15
+  - coinpedia.org「KOSPI crashes」2026-10-15
+  - Yahoo Finance日本語・フィスコ「日経平均は大幅続落、米CPI上振れで半導体関連に売り殺到」2026-10-15
+- コンプラ監査:
+  - 第1Opus（初期判定）: 🟡グレー（フッターのdata-disclaimer="kinsho-v1"属性が欠落→追加で修正）→最終🟢白
+  - 修正（日付の不整合も別途修正：「同日」→「前日（米国時間10月14日）」・「前日（10月13日）」→「前々日」・「Nebuis」→「Nebius」誤記訂正）
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典7系統以上 ✅ ⑦コンプラ問題なし ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告42件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-15-nikkei-coreweave-cpi.html
+
+---
+
 ## 2026-10-14
 - 判定: ✅ 公開済み
 - 選定トピック: ゴールドマン・サックスが157年史上2番目の好決算（EPS 17.01ドル・約25%超過）──JPモルガンEPS予想未達・シティ+40%増益・ウェルズ・ファーゴ純利息収入期待未達。米大手銀行Q3 2026決算を中立整理（カテゴリ: 金融・決算・米国株）
