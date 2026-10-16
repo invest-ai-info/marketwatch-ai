@@ -18,6 +18,7 @@ import sys
 import numpy as np
 
 import lunch_gap_lab as LG
+import morning_brief as MB
 import pillar_lab as P
 
 STATE, OUT_MD = "lunch-gap-forward.json", "lunch-gap-forward.md"
@@ -127,13 +128,22 @@ def add_days(st, sess, today):
 
 # ════════════════════ 出力 ════════════════════
 
-def reading(st):
+def month_first_days(month, closed=MB.tse_closed):
+    """month（"YYYY-MM"）の、東証が開いていた最初の EDGE_DAYS 日（暦で決める＝数えた日の並びでは決めない）。
+    2026-10-17：数えた日の最初の3日を使っていたため、途中の 10/9 から始まった10月で 10/9・10/13・10/14 を
+    「月の初め」と数えていたのを直した（読むための欄だけ・判定は変わらない）"""
+    d, out = dt.date.fromisoformat(month + "-01"), []
+    while len(out) < EDGE_DAYS:
+        if not closed(d):
+            out.append(d.isoformat())
+        d += dt.timedelta(1)
+    return out
+
+
+def reading(st, closed=MB.tse_closed):
     """読むための欄（判定しない）"""
     days = sorted(st["days"])
-    pos = {}
-    for d in days:
-        pos.setdefault(d[:7], []).append(d)
-    first = {d for v in pos.values() for d in v[:EDGE_DAYS]}
+    first = {d for m in {d[:7] for d in days} for d in month_first_days(m, closed)}
     out = {}
     for name, pick in (("down", lambda d, g: g < 0), ("up", lambda d, g: g > 0),
                        ("monday", lambda d, g: dt.date.fromisoformat(d).weekday() == 0), ("month_first", lambda d, g: d in first)):
