@@ -368,4 +368,5 @@ SYNC_FILES = [
     "guide-news-2026-10-15-nikkei-coreweave-cpi.html",
     "guide-company-jnj-jnj.html",
     "guide-entry-limit-vs-market.html",
+    "guide-news-2026-10-16-warsh-imf-fomc.html",
 ]
