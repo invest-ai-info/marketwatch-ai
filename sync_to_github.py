@@ -366,4 +366,5 @@ SYNC_FILES = [
     "guide-company-6857-advantest.html",
     "guide-entry-round-numbers.html",
     "guide-news-2026-10-15-nikkei-coreweave-cpi.html",
+    "guide-company-jnj-jnj.html",
 ]
