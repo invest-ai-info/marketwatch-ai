@@ -74,6 +74,10 @@ def test_reading_and_outputs():
     F.add_days(st, _sess("2026-10-09", 80, 0.001, seed=3), "2099-01-01")
     rd = F.reading(st)
     assert rd["down"]["n"] + rd["up"]["n"] == F.measure(st, "F1")["n"] and rd["slope"] is not None and rd["monday"]["n"] >= 1
+    assert F.month_first_days("2026-11") == ["2026-11-02", "2026-11-04", "2026-11-05"]          # 11/3 は文化の日
+    assert F.month_first_days("2026-10") == ["2026-10-01", "2026-10-02", "2026-10-05"]          # 10/9 から数えた月でも暦で決める
+    first = set(F.month_first_days("2026-11")) | set(F.month_first_days("2026-12")) | set(F.month_first_days("2027-01"))
+    assert rd["month_first"]["n"] == len([d for d, _ in F.values(st, "F1") if d in first])
     F.finalize(st)
     assert st["progress"]["F1"] == F.measure(st, "F1")["n"] and "250日" in st["goal"]
     md = F.render_md(st, "x")
