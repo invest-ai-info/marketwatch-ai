@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-10-16
+- 判定: ✅ 公開済み
+- 選定トピック: Warsh FRB議長がIMF世界銀行年次総会（バンコク）で「物価安定を確実に実現する」と発言。FOMC前最後の発言で10月利上げ確率が約30%→約17%に低下（Bloomberg）。背景：米9月CPI前年比+3.7%・9月PPI前年比+6.3%（カテゴリ: FRB・FOMC・金融政策・インフレ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - CNBC「Fed's Warsh withholds Fed rate signal, praises recent global tightening」2026-10-16
+  - Bloomberg「Warsh Takes IMF Stage as Hot Inflation Spurs Rate Hike Bets」2026-10-15
+  - Bloomberg Live Blog「Live: Fed Chief Kevin Warsh Speaks at IMF After Hotter US Inflation」2026-10-16
+  - NBC News「Warsh says Fed is focused on taming rising prices」2026-10-16
+  - US News「Fed Chair Warsh Says Price Stability Is Key but Shies Away From Signals About Rates」2026-10-16
+  - Forbes「Accelerating CPI Inflation Raises Prospect Of Further Fed Rate Hikes」2026-10-15
+  - Seeking Alpha「October rate hike probability pops to 49%」2026-10-14
+  - Chase「Will the Fed Hike Rates in October?」2026-10-15
+- コンプラ監査:
+  - 第1Opus（初期判定）: 🟡グレー（2箇所軽微修正：①「利上げサイクルが終了したわけではない」→「終了したとは言い切れないとの指摘もある」に軟化 ②「報道規制期間」→「発言自粛期間」に正確化）→最終🟢白
+  - 事実誤記修正（claude本体）: 「9月14日には米CPI」→「10月14日に公表された米9月CPI」
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典10系統以上 ✅ ⑦コンプラ問題なし ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告43件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-16-warsh-imf-fomc.html
+- commit: cbf4591（main へ push 済み）
+
+---
+
 ## 2026-10-15
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均▲3,318円（4.90%）急落──コアウィーブのAI負債懸念（社債利回り約15%急騰）と米9月CPI前年比+3.7%上振れが重なった1日（カテゴリ: 日本株・AIインフラ・米CPI・FOMC）
