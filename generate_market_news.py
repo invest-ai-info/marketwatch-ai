@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-17", "line": '・<b>2026-10-17</b>: 🌏 解説「<a href="guide-entry-fx-trading-hours.html" style="color:#0969da"><b>🌏 通貨は自国の取引時間に下がりやすい？</b></a>」公開'},
         {"date": "2026-10-17", "line": '・<b>2026-10-17</b>: 🔬 解説「<a href="guide-company-8035-tel.html" style="color:#0969da"><b>東京エレクトロン（8035）を数字で見る</b></a>」公開'},
         {"date": "2026-10-16", "line": '・<b>2026-10-16</b>: 📰 解説「<a href="guide-news-2026-10-16-warsh-imf-fomc.html" style="color:#0969da"><b>【10/16】Warsh FRB議長がIMFで「物価安定を実現する」──FOMC前最後の発言で10月利上げ確率が約17%に低下</b></a>」公開'},
         {"date": "2026-10-16", "line": '・<b>2026-10-16</b>: 📝 解説「<a href="guide-entry-limit-vs-market.html" style="color:#0969da"><b>指値注文は不利な場面ほど約定しやすい？</b></a>」公開'},
