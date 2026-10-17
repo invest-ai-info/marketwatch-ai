@@ -13,7 +13,16 @@
 - 対照(逆向き): k=33/n=78 win=42.3% avgR=+0.011（0含む → 効果不明）
 - 全体ベースライン: k=151/n=416 win=36.3% avgR=-0.142
 
-**自動公開ゲート**: 検証緑 → コンプラOpus → 独立確認 → 公開
+**自動公開ゲート**: 検証緑 → コンプラOpus白 → 独立Opus白 → ✅ 自動公開済み（2026-10-18）
+- check_plain_japanese.py: ✅ EXIT=0（修正2ラウンド・26件→0件）
+- signal_lab_verify.py: ✅ 4/4 GREEN → EXIT=0（N値修正・30秒まとめタイトル修正）
+- Opusコンプラ1: 🟢白修正済み（kinsho-v1 3層追加・断定表現軟化）
+- Opusコンプラ2（独立）: 🟢白修正（og/JSON-LD 79回・勝ちとんとんライン修正）
+- verify再確認: EXIT=0 全ゲート緑
+- finalize_signal_lab.py: EXIT=0 (kinsho=3, svg=2, size=29KB)
+- publish_article.py: EXIT=0
+- check_site_consistency.py: EXIT=0（エラーなし・警告44件は既存問題）
+- PUSH-MAIN: ✅ 164210e
 
 ---
 
