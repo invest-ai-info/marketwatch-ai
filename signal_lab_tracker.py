@@ -1027,9 +1027,10 @@ def table_html(t, today):
     note = ""
     if hidden:
         parts = "・".join(f"{w}{hidden[s]}本" for s, w in (("rejected", "⛔反証"), ("retired", "⏹見込みなし")) if hidden.get(s))
-        note = (f"表には、いま確かめている途中と昇格した仮説（確かめ終えて{RECENT_END_DAYS}日以内のものも）の{len(rows)}本を載せています。"
-                f"確かめ終えた{sum(hidden.values())}本（{parts}）は、"
-                f'<a href="track-record.html#banzuke">シグナル研究のページの「エッジ番付」</a>で全部見られます。')
+        # ⚠️ 載せた本数は書かない（2026-10-18 #127：書き手が表をさらに削り、「53本を載せています」が6行の表に残った）
+        note = (f"表は、いま確かめている途中と昇格した仮説が中心です（確かめ終えて{RECENT_END_DAYS}日以内のものも載せます）。"
+                f"確かめ終えた{sum(hidden.values())}本（{parts}）を含む全部の一覧は、"
+                f'<a href="track-record.html#banzuke">シグナル研究のページの「エッジ番付」</a>で見られます。')
     out = ['<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>',
            f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}'
            f'（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}）・平均R(期待値)の95%CIが0を跨がない'
