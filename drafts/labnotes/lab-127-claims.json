@@ -1,0 +1,31 @@
+{
+  "article_id": "127",
+  "asof": "2026-10-18T06:10:00+09:00",
+  "hypothesis_id": "cs_aligned",
+  "claims": [
+    {
+      "label": "IS：通貨の強さと同じ向き（事前登録前）の勝ち回数",
+      "filter": {"cs_align": "aligned", "fired_before": "2026-09-29"},
+      "k": 318,
+      "n": 809
+    },
+    {
+      "label": "FWD：通貨の強さと同じ向き（前向き）の勝ち回数",
+      "filter": {"cs_align": "aligned", "fired_from": "2026-09-29"},
+      "k": 18,
+      "n": 80
+    },
+    {
+      "label": "FWD：通貨の強さと逆向き（前向き・対照）の勝ち回数",
+      "filter": {"cs_align": "against", "fired_from": "2026-09-29"},
+      "k": 33,
+      "n": 78
+    },
+    {
+      "label": "FWD：全体ベースライン（前向き期間）の勝ち回数",
+      "filter": {"fired_from": "2026-09-29"},
+      "k": 151,
+      "n": 416
+    }
+  ]
+}
