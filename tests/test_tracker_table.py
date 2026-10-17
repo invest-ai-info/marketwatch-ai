@@ -50,10 +50,11 @@ def test_html_keeps_the_shape_the_checks_rely_on():
     block = T.table_html(_tracker(), "2026-10-17")
     assert block.count("<tr>") == 1 + 5 and "<table><tr><th>仮説</th>" in block and "前向き現在値(平均R)" in block
     legend = block[block.index("data-mw-tracker-legend"):block.index("<table>")]
-    assert "5本を載せています" in legend and "確かめ終えた2本（⛔反証1本・⏹見込みなし1本）" in legend
+    assert "確かめ終えた2本（⛔反証1本・⏹見込みなし1本）を含む全部の一覧" in legend
+    assert "本を載せています" not in legend                                    # 載せた本数は書かない（書き手が表を削っても嘘にならない）
     assert 'href="track-record.html#banzuke"' in legend
     none_hidden = {"updated_at": "x", "hypotheses": [_h(1, "tracking")]}
-    assert "載せています" not in T.table_html(none_hidden, "2026-10-17")         # 省いたものが無ければ一文も無い
+    assert "全部の一覧" not in T.table_html(none_hidden, "2026-10-17")           # 省いたものが無ければ一文も無い
 
 
 def test_fixed_checks_treat_it_as_the_table():
