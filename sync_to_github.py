@@ -372,4 +372,5 @@ SYNC_FILES = [
     "guide-company-8035-tel.html",
     "guide-entry-fx-trading-hours.html",
     "guide-news-2026-10-17-indonesia-msci-ihsg.html",
+    "guide-signal-lab-127.html",
 ]

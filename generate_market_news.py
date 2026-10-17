@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-18", "line": '・<b>2026-10-18</b>: 🧪 解説「<a href="guide-signal-lab-127.html" style="color:#0969da"><b>"通貨が強い方向"で入ると逆だった話 #127</b></a>」公開'},
         {"date": "2026-10-17", "line": '・<b>2026-10-17</b>: 📰 解説「<a href="guide-news-2026-10-17-indonesia-msci-ihsg.html" style="color:#0969da"><b>【10/17】インドネシア株1998年以来最大の急落──MSCIがスタンドアロン格下げ提案</b></a>」公開'},
         {"date": "2026-10-17", "line": '・<b>2026-10-17</b>: 🌏 解説「<a href="guide-entry-fx-trading-hours.html" style="color:#0969da"><b>🌏 通貨は自国の取引時間に下がりやすい？</b></a>」公開'},
         {"date": "2026-10-17", "line": '・<b>2026-10-17</b>: 🔬 解説「<a href="guide-company-8035-tel.html" style="color:#0969da"><b>東京エレクトロン（8035）を数字で見る</b></a>」公開'},
