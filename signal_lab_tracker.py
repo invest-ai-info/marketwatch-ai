@@ -933,14 +933,15 @@ def plain_name(f):
     return name + (f"（{'／'.join(note)}）" if note else "")
 
 
-def plain_legend(names):
+def plain_legend(names, note=""):
     """表の直前に置く「表の見方」の要素（HTML）。names＝表に出る日本語の名前（使われた言葉だけ説明する）。
-    言葉の説明は折りたたむ＝表が見出しから遠くならないように。class="meta-line" は check_plain_japanese が飛ばす。"""
+    言葉の説明は折りたたむ＝表が見出しから遠くならないように。class="meta-line" は check_plain_japanese が飛ばす。
+    note＝「表の見方」の後ろに足す一文（HTML・table_html が省いた行の案内に使う）。"""
     text = ("表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。"
             "「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。"
             "「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。"
             "「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。"
-            "時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。")
+            "時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。") + note
     joined = "".join(names)
     terms = [html.escape(d) for w, d in PLAIN_TERMS if w in joined]
     if terms:
@@ -989,30 +990,102 @@ def state_cell(text):
     return text.replace(w, NOWRAP.format(w), 1)
 
 
+# 🆕 2026-10-17 記事の表を短くする（オーナー「順番に進めてください」＝原因調べの直し方3）。
+#   表には ✅昇格・🟡蓄積中だけを載せ、⛔反証・⏹見込みなしは件数と「エッジ番付」へのリンクにする。
+#   原因＝表が73本で約4万字（約1万6千トークン）になり、routine signal-lab-daily が下書きを1回で書くと
+#   出力の上限（32,000トークン）を超えて 10/16・10/17 の朝に止まった。
+#   ただし終わってから RECENT_END_DAYS 日以内の仮説は残す（その日の記事の主役＝「⛔反証が出た」回を表から消さないため）。
+RECENT_END_DAYS = 7
+TABLE_MARK = "<!-- MW:TRACKER_TABLE -->"      # --into で表を差し込む目印（無ければ前の表を置き換える）
+
+
+def _ended_on(h):
+    return (h.get("retired_at") or h.get("rejected_at") or h.get("demoted_at") or "")[:10]
+
+
+def table_rows(hyps, today):
+    """記事の表に載せる仮説（並び順つき）と、省いた仮説の件数 {status: 件数}。"""
+    order = {"promoted": 0, "tracking": 1, "rejected": 2, "retired": 3}
+    rows = sorted(hyps, key=lambda x: (order.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
+    try:
+        cut = (datetime.date.fromisoformat(today[:10]) - datetime.timedelta(days=RECENT_END_DAYS)).isoformat()
+    except ValueError:
+        cut = "9999"
+    shown, hidden = [], {}
+    for h in rows:
+        st = h.get("status", "tracking")
+        if st in ("promoted", "tracking") or _ended_on(h) >= cut:
+            shown.append(h)
+        else:
+            hidden[st] = hidden.get(st, 0) + 1
+    return shown, hidden
+
+
+def table_html(t, today):
+    """記事用トラッカー表（HTML の文字列）。"""
+    rows, hidden = table_rows(t["hypotheses"], today)
+    note = ""
+    if hidden:
+        parts = "・".join(f"{w}{hidden[s]}本" for s, w in (("rejected", "⛔反証"), ("retired", "⏹見込みなし")) if hidden.get(s))
+        note = (f"表には、いま確かめている途中と昇格した仮説（確かめ終えて{RECENT_END_DAYS}日以内のものも）の{len(rows)}本を載せています。"
+                f"確かめ終えた{sum(hidden.values())}本（{parts}）は、"
+                f'<a href="track-record.html#banzuke">シグナル研究のページの「エッジ番付」</a>で全部見られます。')
+    out = ['<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>',
+           f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}'
+           f'（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}）・平均R(期待値)の95%CIが0を跨がない'
+           f'・基準合格2回連続で確定（2026-07-19〜）'
+           f'／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>',
+           # ⚠️ 省いた件数の一文は「表の見方」の中に置く＝exit_lab_verify が「表の見方〜表の終わり」を表として数字の出どころから外す
+           plain_legend([plain_name(h["filter"]) for h in rows], note),
+           # ⚠️ 見出しの「前向き現在値(平均R)」と素の <table> は変えない＝check_plain_japanese.py がこの2つで表を見分けている
+           '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>']
+    icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証", "retired": "⏹見込みなし"}
+    for h in rows:
+        fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0, "avgR": 0, "rci_lo": 0, "rci_hi": 0})
+        mn = min_n_of(h)
+        ho = "🏁" if h.get("holdout_pass") else ""
+        crit = crit_cell(h["kind"], mn, bool(ho))
+        val = value_cell(f"{fwd.get('avgR',0):+.2f}", f"{fwd.get('rci_lo',0):+.2f}", f"{fwd.get('rci_hi',0):+.2f}",
+                         fwd["k"], fwd["n"], f"勝率{fwd['pct']:.0f}%")
+        out.append(f'<tr><td>{plain_cell(h["filter"], h["label"])}</td><td>{plain_kind_cell(h["kind"])}</td>'
+                   f'<td>{crit}</td><td>{val}</td><td>{state_cell(icon[h.get("status","tracking")])}</td></tr>')
+    out.append("</table>")
+    return "\n".join(out)
+
+
+def insert_table(path, block):
+    """下書き path の目印（TABLE_MARK）か、前に差し込んだ表（<h2 id="tracker"> 〜 その後の最初の </table>）を block で置き換える。
+    🆕 2026-10-17（原因調べの直し方2）＝表を手で書き写さない＝書き手の1回の出力を約1万6千トークン減らす。
+    戻り値＝"mark"（目印を置き換えた）／"replaced"（前の表を置き換えた）。どちらも無ければ ValueError（黙って足さない）。"""
+    with open(path, encoding="utf-8") as fh:
+        doc = fh.read()
+    if TABLE_MARK in doc:
+        doc, how = doc.replace(TABLE_MARK, block, 1), "mark"
+    else:
+        i = doc.find('<h2 id="tracker">')
+        j = doc.find("</table>", i) if i >= 0 else -1
+        if j < 0:
+            raise ValueError(f"{path} に {TABLE_MARK} も前の表（<h2 id=\"tracker\">）も無い")
+        doc, how = doc[:i] + block + doc[j + len("</table>"):], "replaced"
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        fh.write(doc)
+    return how
+
+
 def cmd_table(args, data, today):
     t = load_tracker()
-    rows = sorted(t["hypotheses"], key=lambda x: ({"promoted": 0, "tracking": 1, "rejected": 2, "retired": 3}.get(x.get("status", "tracking"), 9), -x.get("forward", {}).get("n", 0)))
     if args.html:
-        out = ['<h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>',
-               f'<p class="meta-line">基準日 {t.get("updated_at", today)}／昇格＝前向きN≥{PROMOTE_MIN_N}'
-               f'（🏁ホールドアウト合格はN≥{PROMOTE_MIN_N_HOLDOUT}）・平均R(期待値)の95%CIが0を跨がない'
-               f'・基準合格2回連続で確定（2026-07-19〜）'
-               f'／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>',
-               plain_legend([plain_name(h["filter"]) for h in rows]),
-               # ⚠️ 見出しの「前向き現在値(平均R)」と素の <table> は変えない＝check_plain_japanese.py がこの2つで表を見分けている
-               '<table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>']
-        icon = {"promoted": "✅昇格", "tracking": "🟡蓄積中", "rejected": "⛔反証", "retired": "⏹見込みなし"}
-        for h in rows:
-            fwd = h.get("forward", {"k": 0, "n": 0, "pct": 0, "avgR": 0, "rci_lo": 0, "rci_hi": 0})
-            mn = min_n_of(h)
-            ho = "🏁" if h.get("holdout_pass") else ""
-            crit = crit_cell(h["kind"], mn, bool(ho))
-            val = value_cell(f"{fwd.get('avgR',0):+.2f}", f"{fwd.get('rci_lo',0):+.2f}", f"{fwd.get('rci_hi',0):+.2f}",
-                             fwd["k"], fwd["n"], f"勝率{fwd['pct']:.0f}%")
-            out.append(f'<tr><td>{plain_cell(h["filter"], h["label"])}</td><td>{plain_kind_cell(h["kind"])}</td>'
-                       f'<td>{crit}</td><td>{val}</td><td>{state_cell(icon[h.get("status","tracking")])}</td></tr>')
-        out.append("</table>")
-        print("\n".join(out))
+        block = table_html(t, today)
+        if args.into:
+            try:
+                how = insert_table(args.into, block)
+            except (OSError, ValueError) as e:
+                print(f"🚨 表を差し込めない: {e}")
+                sys.exit(2)
+            print(f"✅ {args.into} に前向きトラッカー表を差し込みました（{'目印' if how == 'mark' else '前の表'}を置き換え・"
+                  f"{block.count('<tr>') - 1}行・{len(block)}字）")
+        else:
+            print(block)
     else:
         print(f"# 前向きトラッカー（基準日 {t.get('updated_at', today)}）")
         for h in rows:
@@ -1026,6 +1099,7 @@ def main():
     ap.add_argument("--from", dest="src", help="register: スイープのJSON")
     ap.add_argument("--date", help="基準日 YYYY-MM-DD（既定=今日）")
     ap.add_argument("--html", action="store_true", help="table: HTMLで出力")
+    ap.add_argument("--into", help="table --html: 下書きの目印 <!-- MW:TRACKER_TABLE -->（か前の表）に直接差し込む")
     args = ap.parse_args()
     today = args.date or datetime.date.today().isoformat()
     data_full = load_log()
