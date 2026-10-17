@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-10-17
+- 判定: ✅ 公開済み
+- 選定トピック: インドネシア株（IHSG）がMSCIの「スタンドアロン市場」格下げ提案を受けて1998年以来最大の急落（▲11.57%・終値約5,185）、取引停止発動（カテゴリ: MSCI・新興国市場・インドネシア・IHSG・ルピア）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - MSCI公式IRページ「MSCI Launches a Consultation on a Proposal to Reclassify Indonesia from Emerging Market to Standalone Market Status」2026-10-15 https://ir.msci.com/news-releases/news-release-details/msci-launches-consultation-proposal-reclassify-indonesia
+  - Katadata「Facing Risk of Becoming a Standalone Market, IHSG Plummets 11%（Friday, October 16, 2026）」https://databoks.katadata.co.id/en/market/statistics/6ad1f159e1b8f/
+  - aktualita.co「JCI Plummets Over 11 Percent Today, Oct 16, 2026, Amid MSCI Panic」https://aktualita.co/en/economy/jci-plummets-over-11-percent-today-oct-16-2026-amid-msci-panic
+  - IDN Financials「JCI plunges 8.01% after MSCI announcement, triggering trading halt」https://www.idnfinancials.com/news/70377/jci-plunges-8-01-after-msci-announcement-triggering-trading-halt
+  - indonesia-investments.com「Rupiah & Stocks Shaken after Possible MSCI Downgrade: Worst Plunge Since 1998 Crisis」https://www.indonesia-investments.com/finance/financial-columns/rupiah-stocks-shaken-after-possible-msci-downgrade-worst-plunge-since-1998-crisis/item10036
+  - Investing.com UK「MSCI proposes downgrading Indonesia to standalone market status」2026-10-15 https://uk.investing.com/news/stock-market-news/msci-proposes-downgrading-indonesia-to-standalone-market-status-93CH-4913271
+  - BigGo Finance（ルピア・資金流出数値・一部報道・未確定）https://finance.biggo.com/news/8a2f6670-cbc5-4b6c-97b8-8e764cfcc5c0
+  - The Star「Indonesia stocks sink most since 1998 after MSCI flags standalone downgrade」2026-10-16
+  - Bloomberg「Indonesia Caught Off Guard by Surprise MSCI Downgrade Warning」2026-10-16
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（法務・コンプラ問題なし）／エスカレ（事実3点修正要請）→執筆側で修正済み（①トルコ・南ア根拠なし記述を削除 ②「東」→「西」インドネシア時間 ③「インドネア」誤字7か所修正）
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典8系統以上 ✅ ⑦事実未確定なし ✅（推奨修正: ▲11.4%と▲11.57%の表記整合→適用済み）→ 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告44件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-17-indonesia-msci-ihsg.html
+- commit: a81cfdb（main へ push 済み）
+
+---
+
 ## 2026-10-16
 - 判定: ✅ 公開済み
 - 選定トピック: Warsh FRB議長がIMF世界銀行年次総会（バンコク）で「物価安定を確実に実現する」と発言。FOMC前最後の発言で10月利上げ確率が約30%→約17%に低下（Bloomberg）。背景：米9月CPI前年比+3.7%・9月PPI前年比+6.3%（カテゴリ: FRB・FOMC・金融政策・インフレ）
