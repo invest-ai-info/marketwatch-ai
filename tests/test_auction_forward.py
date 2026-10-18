@@ -278,7 +278,7 @@ def test_outputs_verified_list_and_map():
         stop, plus, watching = V.collect([(path, "J31F", "J31F")])
         assert stop == [] and plus == [] and [r["id"] for r in watching] == list(F.ARMS)
         m = R.collect(tmp)
-        jp = [r for r in R.collect_studies(tmp, m)["verify"] if r["cat"] == "jp"]
+        jp = [r for r in R.collect_studies(tmp, m)["verify"] if r["cat"] == "jp" and not r.get("placeholder")]   # 記録が届く前から出る行（F1GF）は外す
         assert len(jp) == 1 and "空売り" in jp[0]["name"] and "12営業日" in jp[0]["progress"]
         assert not any(w in jp[0]["name"] + jp[0]["what"] for w in ("J31", "B0", "C10"))
     assert any(s[0] == "auction-forward.json" for s in V.SOURCES) and R.AUCTION_FWD == "auction-forward.json"

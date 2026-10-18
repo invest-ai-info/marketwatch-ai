@@ -131,6 +131,15 @@ def test_non_claude_branch_is_ignored():
     assert H.stranded_commits(br, NOW) == []
 
 
+# ── ②c 手元で数えて送る前向きの記録
+def test_f1g_forward_record_is_watched_from_december():
+    rows = {path: (days, since) for _l, path, days, since in H.LOCAL_FORWARD_WATCH}
+    days, since = rows["f1g-forward.json"]
+    assert days == 35 and since == _dt.date(2026, 12, 5)
+    # since より前は鳴らさない（最初の記録は 11/2 の判定日のあとに届く）
+    assert H.check_ledger_freshness("o", "r", "t", "f1g-forward.json", days, since, _dt.date(2026, 11, 20))[0] == "waiting"
+
+
 # ── ⑤ シリーズの終わり
 ENTRY = [f"t{i}" for i in range(1, 25)] + ["publication-decay", "series-index"]
 

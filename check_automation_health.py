@@ -159,6 +159,14 @@ ROUTINE_COUNT_CHECKS = [
     ("市況ファンダ・ブリーフィング（1日2回）", "fundamental-context.json", 26, 2, "warn"),
 ]
 
+# ②c 手元で数えて送る前向きの記録: (ラベル, 記録, 何日で鳴らすか, いつから見張るか)
+# 🆕 2026-10-18 F1GF＝J-Quants のデータが手元にしかないので、Actions ではなく手元で月1回数えて `mw sync` で送る。
+#    動かし忘れた月は数えない決まり（PILLAR_PREREG.md「F1GF」）＝届かないことに早く気づく必要がある。最初の判定日 11/2 の分が
+#    届くはずの 12/5 から見る（`since` より前は鳴らさない＝LEDGER_WATCH と同じ考え方・同じ関数）
+LOCAL_FORWARD_WATCH = [
+    ("F1GF グレアムの守りの前向き（手元・月1）", "f1g-forward.json", 35, dt.date(2026, 12, 5)),
+]
+
 # ④ 固定ゲートの不変条件: ゲート/リンターを routine が書き換えて通過する「自己承認」を検知する。
 #    2026-07-09 に autopublish が check_site_consistency.py のクラウドスタブ分岐を独自実装へ
 #    書き換えて commit した実例（routine プロンプトの編集禁止指示だけでは防げなかった）への対策。
@@ -1069,6 +1077,17 @@ def main():
         body.append(f"- {'✅' if ok else '🚨'} {SEV[sev]} {label}: {note}")
         if not ok:
             bad.append((label, sev))
+    for label, path, max_days, since in LOCAL_FORWARD_WATCH:
+        try:
+            st, detail = check_ledger_freshness(owner, repo, token, path, max_days, since, dt.date.today())
+        except Exception as e:
+            body.append(f"- 🚨 ⚪ {label}: 確認失敗 {e}")
+            continue
+        if st in ("ok", "waiting"):
+            body.append(f"- ✅ {'🟢' if st == 'ok' else '⚪'} {label}: {detail}")
+        else:
+            body.append(f"- 🚨 🟡 {label}: {detail}＝手元で月1回数えて送る記録が届いていない（動かし忘れた月は数えない決まり）")
+            bad.append((label, "warn"))
 
     body.append("")
     body.append("### ③ 公開記事カバレッジ（guides.html カードの巻き戻し検知）")
