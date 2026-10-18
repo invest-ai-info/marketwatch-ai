@@ -91,7 +91,10 @@ def test_one_merged_list():
     assert not M.fresh(None, dt.date(2026, 10, 8))
     gw = dict(mk, asof="2026-05-01")                                                          # 連休明け（5/2〜5/6 休み）＝6日あいても前の取引日の分
     assert M.fresh(gw, dt.date(2026, 5, 7)) and not M.fresh(dict(mk, asof="2026-04-30"), dt.date(2026, 5, 7))
-    assert M.fresh(dict(mk, asof="2026-12-30"), dt.date(2027, 1, 5))                          # 年末年始（12/31〜1/4 休み）
+    # 年末年始（東証の休みは 12/31〜1/3・2027-01-04 月曜が大発会）＝1/4 の朝は 12/30 の引けの一覧を使い、
+    # 1/5 の朝は 1/4 の引けの一覧に替わる（2026-10-18 直し：旧は「12/31〜1/4 休み」と思い込んで 1/5 で True を求めていた）
+    assert M.fresh(dict(mk, asof="2026-12-30"), dt.date(2027, 1, 4))
+    assert not M.fresh(dict(mk, asof="2026-12-30"), dt.date(2027, 1, 5))
 
 
 def test_wired_into_digest_and_jp_highs():
