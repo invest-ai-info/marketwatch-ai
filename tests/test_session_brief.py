@@ -97,7 +97,7 @@ NEWS = {"items": [{"t": "英中銀総裁が講演", "s": "ロイター", "dt": "
 
 def test_build_london_sections_and_subject():
     subj, body = S.build("london", T("2026-10-13T14:00"), FX_D, NEWS, FC, "send", _events_path())
-    assert subj == "🇬🇧 ロンドン時間の前 10/13(火)：強い 米ドル／弱い 円・今夜の指標 3件（15:00 英 雇用統計）"
+    assert subj == "【ロンドン前の戦術メモ】10/13(火) 強 米ドル／弱 円・今夜の指標3件（15:00 英 雇用統計）"
     for s in ("24時間：米ドル +0.40%（強い）", "今日の東京時間（9時〜）：ユーロ +0.20%（強い）", "約5日（傾向）：米ドル +1.00%",
               "主なペア：ポンド円 +0.36%（24時間）・-0.20%（東京時間）／ユーロドル -0.50%（24時間）",
               "・ポンド 弱い（中）：英中銀の利下げ観測", "・材料：FOMC", "🇬🇧 10-13 10:05 英中銀総裁が講演（ロイター）",
@@ -108,12 +108,33 @@ def test_build_london_sections_and_subject():
 
 def test_build_ny_friday_late_and_missing_parts():
     subj, body = S.build("ny", T("2026-10-16T20:10"), None, None, None, "late", _events_path())
-    assert subj.startswith("⏰遅れ 🇺🇸 NY時間の前 10/16(金)：今夜の指標 0件") and "予定（20:00）より遅れて届いた" in body
+    assert subj == "⏰遅れ 【NY前の戦術メモ】10/16(金) 今夜の指標0件" and "予定（20:00）より遅れて届いた" in body
     for s in ("値動きの強弱を取れなかった", "見立てを読めない", "米国のニュースの見出し", "取れなかった", "X5", "S2", "🚩 今日は金曜"):
         assert s in body, s
     fc_old = dict(FC, currencies=[])
     _, b2 = S.build("ny", T("2026-10-13T19:00"), FX_D, {"items": []}, fc_old, "send", _events_path())
     assert "12時間より古い" in b2 and "通貨ごと：このブリーフィングには無い" in b2 and "直近30時間になし" in b2 and "今日の欧州時間（15時〜）" in b2
+
+
+def test_three_subjects_line_up():
+    """2026-10-19 オーナー「わかりやすいメールのタイトル」→「メモでいい」＝朝・ロンドン前・NY前を【◯◯前の戦術メモ】でそろえる"""
+    D = S.D
+    orig_fx, orig_ev = D.load_fx, D.EVENTS
+    try:
+        D.load_fx, D.EVENTS = (lambda: FX_D), _events_path()
+        tokyo, _ = D.build(T("2026-10-13T06:20"))
+        D.EVENTS = _events_path().replace("ev.json", "none.json")
+        json.dump({"events": []}, open(D.EVENTS, "w", encoding="utf-8"))
+        quiet, _ = D.build(T("2026-10-13T06:20"))
+        D.load_fx = lambda: None
+        nofx, _ = D.build(T("2026-10-13T06:20"))
+    finally:
+        D.load_fx, D.EVENTS = orig_fx, orig_ev
+    assert tokyo == "【東京前の戦術メモ】10/13(火) 🚨今日の指標3件（15:00 英 雇用統計）・強 米ドル／弱 円"
+    assert quiet == "【東京前の戦術メモ】10/13(火) ⚪7日以内に指標なし・強 米ドル／弱 円" and nofx == "【東京前の戦術メモ】10/13(火) ⚪7日以内に指標なし"
+    ny, _ = S.build("ny", T("2026-10-13T19:00"), FX_D, NEWS, FC, "send", _events_path())
+    assert ny == "【NY前の戦術メモ】10/13(火) 強 米ドル／弱 円・今夜の指標3件（20:00 英中銀 政策金利）"
+    assert D.strong_weak(None) == "" and D.strong_weak({"h24": {"USD": None}}) == ""
 
 
 def test_main_respects_the_window():

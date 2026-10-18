@@ -18,6 +18,8 @@
 
 件名で状態がわかるようにする（開かなくても判断できるのが良いメール）:
    🚨 今日ある / 📅 今日は無いが7日以内にある / ⚪ 7日以内に無い
+   🆕 2026-10-19〜 件名は「【東京前の戦術メモ】10/19(月) 🚨今日の指標2件（21:30 米CPI）・強 米ドル／弱 円」の形
+   （ロンドン前・NY前のメール＝session_brief.py とそろえた。オーナー「わかりやすいメールのタイトル」→「メモでいい」）
 
 🕐 いつ届くかの設計（2026-09-17 実測に基づく）:
    GitHub Actions の cron は**当てにならない**。このリポジトリの実績で
@@ -131,6 +133,16 @@ def load_fx():
         return None
 
 
+def strong_weak(fx):
+    """件名の「強 米ドル／弱 円」（24時間の値動きで一番強い・弱い通貨）。値動きが取れないときは空。
+    朝の【東京前の戦術メモ】と session_brief.py の【ロンドン前／NY前の戦術メモ】で同じものを使う"""
+    h = sorted(((c, v) for c, v in ((fx or {}).get("h24") or {}).items() if v is not None), key=lambda x: -x[1])
+    if not h:
+        return ""
+    import fx_strength
+    return f"強 {fx_strength.NAMES.get(h[0][0], h[0][0])}／弱 {fx_strength.NAMES.get(h[-1][0], h[-1][0])}"
+
+
 def load_news():
     """中国・豪州の見出しの一時ファイル。ワークフローの前の段（asia_news.py）が作る。無ければ None"""
     try:
@@ -162,21 +174,24 @@ def build(now):
     today = now.date()
     today_ev = [(w, e) for w, e in ind if w.date() == today]
 
+    # 🆕 2026-10-09 一番上に「今日の要点」（下の各欄から数字を拾うだけ・オーナー「1と2を進めて」）
+    fx, markers, mom = load_fx(), load_markers(), load_momentum()
+
     if today_ev:
         head = today_ev[0]
-        subject = (f"🚨 今日 重要指標{len(today_ev)}件 — "
-                   f"{head[0]:%H:%M} {head[1]['name']}")
+        state = f"🚨今日の指標{len(today_ev)}件（{head[0]:%H:%M} {head[1]['name']}）"
     elif ind:
-        subject = f"📅 今日は重要指標なし（次は {ind[0][0]:%m/%d %H:%M} {ind[0][1]['name']}）"
+        state = f"📅今日は指標なし（次 {ind[0][0]:%m/%d %H:%M} {ind[0][1]['name']}）"
     else:
-        subject = f"⚪ 今後{HORIZON_DAYS}日に重要指標なし"
+        state = f"⚪{HORIZON_DAYS}日以内に指標なし"
+    # 🆕 2026-10-19 オーナー「わかりやすいメールのタイトル」→ 3通を【◯◯前の戦術メモ】でそろえる（何のメールかを最初の数文字で）
+    sw = strong_weak(fx)
+    subject = f"【東京前の戦術メモ】{now:%m/%d}({WD[now.weekday()]}) {state}" + (f"・{sw}" if sw else "")
 
     L = ["━━━━━━━━━━━━━━━━━━━━━",
          f"📅 {now:%Y-%m-%d (%a)} の重要指標",
          "━━━━━━━━━━━━━━━━━━━━━", ""]
 
-    # 🆕 2026-10-09 一番上に「今日の要点」（下の各欄から数字を拾うだけ・オーナー「1と2を進めて」）
-    fx, markers, mom = load_fx(), load_markers(), load_momentum()
     # 🆕 2026-10-09 東証の休み（平日の祝日・年末年始）は日本株の欄を出さない（オーナー「もちろん意味がないので日本株の欄を止めて」）
     jp_open = not morning_brief.tse_closed(today)
     L += _safe("今日の要点", morning_brief.summary_section, now, ind, morning_brief._load(morning_brief.FUND), fx, markers, mom,
