@@ -1,5 +1,5 @@
 2026-10-19 signal-lab: #127 🚩未完（前セッション作成・gate未実行。draft-signal-lab-127.html在り。cs_aligned⛔反証確定の記事。plain_japanese要確認・verify未実行・Opus未実行。別途ゲート全通過後に公開必要）
-2026-10-19 signal-lab: #128 rl_tf_adx_strong — plain_japanese✅（指摘0件） → verify待ち
+2026-10-19 signal-lab: #128 ✅公開済み（rl_tf_adx_strong・順張り×ADX強（25以上）前向き87回・初通過。FWD k=28/n=87 win=32.2% avgR=-0.276 rCI=[-0.475,-0.077]両端マイナス初。plain_japanese✅0件・verify 4/4 GREEN・SVG警告0件・compliance白（Opus1st🟡→語調軟化・定義修正13編集→再verify✅）・独立Opus🟡→meta-line注記でk=28/27差を説明→再verify✅0件・finalize✅・publish✅・check_site OK・push済み）
 2026-10-15 signal-lab: #126 ✅公開済み（通貨の強弱と同じ向き cs_aligned・前向き65回。FWD k=15/n=65 win=23.1% avgR=-0.462 R-CI=[-0.702,-0.221]両端負。対照cs_against R-CI=[-0.379,+0.164]は0含む。n=65<80で🟡蓄積中。plain_japanese✅・signal_verify 6/6 GREEN✅・SVG縮尺修正[直せる]✅・compliance白（Opus1st🟡→語調軟化・免責3層補完・図キャプション修正・IS/FWD境界注記追加）・独立Opus2nd🟢・check_site OK(EXIT=0)・push済み）
 2026-10-14 signal-lab: #125 ✅公開済み（トレンドが強い場面の順張り回避仮説 rl_tf_adx_strong・前向き70回。FWD k=20/n=70 win=28.6% CI=[19.3%~40.1%] avgR=-0.367 R-CI=[-0.585,-0.148]。plain_japanese✅・signal_verify 8/8 GREEN✅・compliance白（修正済み）・独立Opus🟡2件修正済み・check_site OK・push済み）
 2026-10-07 signal-lab: #120 ✅公開済み（下降トレンド中の逆張り買い⛔反証確定・前向き370回。IS186/33.9%→FWD370/50.8% R-CI=[+0.030〜+0.341]。4時間足60.6% R-CI=[+0.120〜+0.707]。plain_japanese✅・signal_verify対応予定・Opus対応予定・push済み）
