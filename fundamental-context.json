@@ -1,54 +1,53 @@
 {
-  "generated_at": "2026-10-18T06:05:21+09:00",
+  "generated_at": "2026-10-18T15:05:47+09:00",
   "risk_regime": {
-    "regime": "NEUTRAL",
-    "confidence": "MID",
-    "rationale": "米9月CPIが前年比3.7%と予想を上回りFedの利上げ継続懸念が高まる一方、Warsh議長が10月会合での利上げを示唆しなかったため株式は下げ渋り。ナスダックは週間で約4.5%下落し、AI関連の設備投資懐疑論が重荷。ホルムズ海峡でのイランによるタンカー攻撃がBrent原油を1バレル110ドルへ押し上げ、エネルギーコスト上昇圧力がリスクオフ方向に作用。日銀は利上げ継続姿勢を維持し円高への期待が残る。全体としてリスクニュートラルながら下方向へのバイアスあり。",
+    "regime": "RISK_OFF",
+    "confidence": "HIGH",
+    "rationale": "AI関連株への大規模な売りが続き、ナスダックは週間で4%超の下落（6月以来最大）。9月米CPI（前年比3.7%）が予想上回りFRB追加利上げ観測が再燃。原油はイランとの戦争（開戦8カ月目）による供給不安でブレント約110ドル圏。VIXが22超に上昇し、リスクオフ地合いが強まっている。",
     "key_drivers": [
-      "米9月CPIが前年比3.7%と予想を上回り、Fed追加利上げ観測が再燃",
-      "Warsh議長が10月会合での利上げを示唆せず、ドルは軟化・株式は下げ止まり",
-      "ホルムズ海峡でのイラン攻撃でBrent原油が110ドル突破、エネルギーコスト上昇圧力",
-      "AI関連銘柄への懐疑論でナスダックが週間約4.5%下落",
-      "日銀・植田総裁が利上げ継続を明言し円高期待継続"
+      "AI関連銘柄の世界的な売り（週間で時価総額1兆ドル超消失）",
+      "9月米CPIが予想を上回り（3.7%）、10月FOMC利上げ観測が再浮上",
+      "米・イラン交渉停滞、原油供給不安でブレント原油が約110ドル圏",
+      "VIX指数が22超（6月以来高水準）、テクノロジー・半導体セクターからの資金退避",
+      "日銀10月利上げ観測が後退（織り込み約2割）、円安圧力継続"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "現物日経は65,000台と底堅いが、NKD=F先物が63,600台と大幅に下落しており方向感が不鮮明。日銀の利上げ継続姿勢による円高進行が輸出企業収益に逆風。一方、10月19日予定の中国Q3GDP発表が景気回復を示せば正の波及効果も期待できる。",
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "世界的なAI・半導体株の売りがソフトバンクグループ・東京エレクトロンなど日本の関連銘柄に波及。10月14日時点で日経平均は6万7744円。米国の利上げ観測と円安が複雑に交差し、方向感が定まりにくい局面。",
       "catalysts": [
-        "日銀植田総裁が利上げ継続を明言→円高・輸出株に逆風",
-        "10月19日の中国Q3GDP発表（予想：景気刺激策で小幅回復）",
-        "米CPI高止まりによるリスクオフ圧力",
-        "米AI関連株の売りが日本のハイテク株へ波及するリスク"
+        "AI・半導体株の世界的な売りがアジア市場に飛び火（SKハイニックス・サムスン・SBGが急落）",
+        "米CPIショックによるリスクオフが輸出株の上値を抑制",
+        "日銀10月会合（29〜30日）の利上げ見送り観測でやや下支え"
       ],
       "top_news": [
         {
-          "headline": "日銀・植田総裁が10月17日、物価2%超の上昇は「容認できず」と発言し利上げ継続姿勢を強調",
-          "published": "2026-10-17",
-          "comment": "日銀が引き続き利上げを示唆、円高要因となり輸出株に下押し圧力",
-          "source": "NHK",
-          "tier": 3,
-          "credibility": "HIGH",
-          "corroborated_by": ["Bloomberg JP", "OANDA"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://news.web.nhk/newsweb/na/nd-20261017de60794"
-        },
-        {
-          "headline": "中国Q3GDPは10月19日発表予定、景気刺激策効果で目標範囲内の成長率を見込む",
+          "headline": "AI・半導体株の世界的な売りがアジアに波及、SKハイニックスやSBGも急落",
           "published": "2026-10-15",
-          "comment": "中国成長回復なら日本の輸出・資源株に追い風、日経の下支え要因に",
-          "source": "Reuters",
+          "comment": "AI投資過熱への懸念が噴出し、日本の半導体関連株にも売りが広がった",
+          "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Yahoo Finance"],
+          "corroborated_by": ["CNN", "Bloomberg"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/10/15/sk-hynix-samsung-softbank-stocks-asia-tech-rout-ai-funding-worries.html"
+        },
+        {
+          "headline": "日経平均は10月14日終値6万7744円、前日比33円安と小幅もみ合い",
+          "published": "2026-10-14",
+          "comment": "直近の高値7万円台から反落し、AI株売りの影響で上値が重い状態",
+          "source": "共同通信",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://finance.yahoo.com/economy/articles/china-q3-growth-set-pick-092516257.html"
+          "direction": "bearish",
+          "url": "https://kumanichi.com/articles/2046268"
         }
       ]
     },
@@ -56,38 +55,37 @@
       "name": "S&P500",
       "ticker": "ES=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "10月16日に1%超下落し7,659台で引け。AI関連の設備投資に対する懐疑論とインフレ高止まりが主因。Warsh議長が10月会合での利上げを示唆しなかったことで急落を免れたが、Goldman Sachsが12月追加利上げを予想し中長期的な高金利環境が重荷。",
+      "conviction": "HIGH",
+      "rationale": "10月16日終値7659.44と週間2%安。9月CPIショックとAI関連株の売りが重なり、ナスダックは週間4%超の下落。VIXが22超と6月以来の高水準。次の焦点は10月27〜28日のFOMC。",
       "catalysts": [
-        "米9月CPI 3.7%、予想上回りFed追加引き締め懸念が再燃",
-        "AI関連設備投資懐疑論でテック株に売り圧力",
-        "Fed・Warsh議長が10月利上げ否定せず曖昧な姿勢、市場は12月利上げを見越す",
-        "Brent原油110ドル突破によるコストインフレ懸念"
+        "9月CPI前年比3.7%（予想3.6%超え）が利上げ観測を再燃、株式評価に上昇圧力",
+        "AI・データセンター投資への過剰支出懸念（コアウィーブが15%超急落）",
+        "原油高がインフレ持続を示唆し、グロース株の割引率上昇圧力に"
       ],
       "top_news": [
         {
-          "headline": "S&P500が10月16日に約1%下落（7,659台）、AIコスト懸念とインフレデータが重荷",
-          "published": "2026-10-16",
-          "comment": "AI投資懐疑論と高インフレが重なりリスクオフムード、当面の上値が重い",
-          "source": "Yahoo Finance",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Nomura"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-dow-sp-500-nasdaq-futures-mixed-amid-volatile-week-112939401.html"
-        },
-        {
-          "headline": "Fed・Warsh議長が10月16日バンコクで「10月会合の利上げを予断しない」と発言、ドルが軟化",
-          "published": "2026-10-16",
-          "comment": "10月会合での利上げ確率が28%→16%に低下、株式市場の下げに一定の歯止め",
+          "headline": "9月米CPIが予想超え（前年比3.7%）、FRBの10月利上げ観測が再浮上",
+          "published": "2026-10-14",
+          "comment": "物価が予想より粘着性を示し、株式市場は利上げリスクを織り込み直した",
           "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["FXStreet", "Axios", "PBS"],
+          "corroborated_by": ["Reuters", "Bloomberg"],
           "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.cnbc.com/2026/10/16/feds-warsh-says-ai-development-path-will-be-very-bumpy-.html"
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/10/13/stock-market-today-live-updates-.html"
+        },
+        {
+          "headline": "S&P500は10月16日に約1%下落し7659で終了、ナスダックは2%超の大幅安",
+          "published": "2026-10-16",
+          "comment": "週間では6月以来最大の下げ幅となり、AI株バブルへの懸念が広がった",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["BNN Bloomberg"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/10/15/stock-market-today-live-updates.html"
         }
       ]
     },
@@ -95,26 +93,37 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "週間で約4.5%下落し、1ヶ月続いた上昇トレンドが途切れた。AI関連銘柄のバリュエーション懸念と、インフレ高止まりによる高金利長期化観測が成長株に逆風。メモリーチップ株が特に売られた。Warsh発言で急落は回避されたが基調は弱い。",
+      "conviction": "HIGH",
+      "rationale": "10月16日終値26140と週間4%超の下落（6月以来最大）。AI・半導体株への売りが集中し、マイクロン・AMD・ブロードコムが5〜6%の急落。AI資金調達への懸念が中心。",
       "catalysts": [
-        "AI関連設備投資への市場懐疑論が台頭、大型テック株が調整",
-        "米CPI3.7%が高金利長期化観測を強め成長株・グロース株に逆風",
-        "メモリーチップ・半導体株が特に大幅下落",
-        "10月16日の週間下落率約4.5%（1ヶ月ぶり大幅安）"
+        "アンソロピックIPOの想定時価総額が2兆ドルから1.5兆ドルに引き下げと報道、AI株センチメント低下",
+        "半導体指数が7連続安と売りが継続",
+        "CPIショックによる金利上昇が高バリュエーションのグロース株に打撃"
       ],
       "top_news": [
         {
-          "headline": "ナスダックが週間約4.5%下落（26,140台）、AIコスト懐疑論で1ヶ月ぶりの大幅安",
+          "headline": "ナスダックが週間4%超の下落、AI資金調達懸念で6月以来最悪の週に",
           "published": "2026-10-16",
-          "comment": "AI投資の持続性に疑問符、高金利長期化と重なりテック株に厳しい環境",
-          "source": "Yahoo Finance",
+          "comment": "AI投資ブームが過熱との見方が広がり、投資家がグロース株から逃避した",
+          "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["Nomura", "FXStreet"],
+          "corroborated_by": ["Reuters", "CNN"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-dow-sp-500-nasdaq-futures-mixed-amid-volatile-week-112939401.html"
+          "url": "https://www.cnbc.com/2026/10/15/stock-market-today-live-updates.html"
+        },
+        {
+          "headline": "チップメーカー急落でナスダック2%安、マイクロン・AMDなど大型株が5〜6%下落",
+          "published": "2026-10-16",
+          "comment": "半導体株の連続安は供給過剰や中国競合への懸念も背景にある可能性",
+          "source": "CNN",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["CNBC"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnn.com/2026/10/15/business/tech-selloff-nasdaq-ai-intl"
         }
       ]
     },
@@ -122,26 +131,25 @@
       "name": "金",
       "ticker": "GC=F",
       "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "1オンス約4,150〜4,170ドル付近。過去1ヶ月で約4%下落。米金利の高止まりが金利を生まない金の重荷となる一方、ホルムズ海峡の地政学リスクと中央銀行の継続的な買い需要が下支え。Warsh議長が10月利上げを示唆しなかったことが若干の追い風だが、方向感に乏しい。",
+      "conviction": "MID",
+      "rationale": "10月16日時点でスポット金は約4166〜4180ドル。イランとの地政学リスクが下支えするが、米CPI上振れによる利上げ観測（金利上昇＝金の機会費用増大）が上値を抑制。方向感は拮抗。",
       "catalysts": [
-        "Fed10月利上げ確率低下（16%程度）→金の機会コスト減少で若干の下支え",
-        "ホルムズ海峡緊張・イラン攻撃による安全資産需要",
-        "米CPI高止まりで実質金利が上昇すれば金に逆風",
-        "中央銀行の継続的な買い需要が下値を支える構造"
+        "米・イラン交渉停滞と中東の地政学的緊張が安全資産需要を支持",
+        "9月CPI上振れと連邦準備制度の利上げ観測が金の上値抑制要因",
+        "ドル指数が102.6（2025年4月以来の高水準）と金の逆風"
       ],
       "top_news": [
         {
-          "headline": "金スポット価格は1オンス4,165ドル付近で推移、過去1ヶ月で約4%下落後も下値は限定的",
+          "headline": "金スポットは約4166〜4180ドル圏、イラン緊張が支持するもドル高・利上げ観測が上値抑制",
           "published": "2026-10-16",
-          "comment": "高金利が重荷も地政学リスクが下支え、方向感乏しくNEUTRAL",
-          "source": "CNBC",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["Trading Economics", "Kitco"],
+          "comment": "安全資産買いと利上げ懸念が綱引き状態で、短期の方向感は出にくい",
+          "source": "Analytics Insight",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": ["Trading Economics"],
           "materiality": "mid",
           "direction": "neutral",
-          "url": "https://cnbc.com/amp/select/the-price-of-gold-today-oct-16-2026"
+          "url": "https://www.analyticsinsight.net/business/gold/mcx-gold-rises-048-to-rs-148196-amid-continued-us-iran-tensions"
         }
       ]
     },
@@ -150,218 +158,233 @@
       "ticker": "CL=F",
       "bias": "BULLISH",
       "conviction": "HIGH",
-      "rationale": "Brent原油が10月16日に109.86ドル（前日比+3.7%）で引け、5月以来の最高値圏。ホルムズ海峡付近で少なくとも9隻のタンカーがイランに攻撃され、シンガポール船籍の貨物船が沈没。供給途絶リスクが高く短期的な上昇バイアスが継続。ただし110ドル超での利食い売りや外交交渉再開で急反落リスクも残る。",
+      "rationale": "米・イランの軍事衝突が開戦8カ月目に入り供給不安が継続。ブレント原油は10月16日に約109.86ドル、WTIも97〜101ドル圏。トランプ政権はイラン制裁の一部緩和を検討中との報道もあるが、交渉は停滞。",
       "catalysts": [
-        "ホルムズ海峡でイランが10月11日以降に少なくとも9隻のタンカー攻撃",
-        "シンガポール船籍GFS Prideが沈没、海上物流の深刻な混乱",
-        "Brent原油が5月以来初めて110ドルを突破、供給途絶リスクが実体化",
-        "米国によるイラン制裁強化（8月下旬から継続）が供給圧力を維持"
+        "米・イラン戦争8カ月目、イランの石油輸出が大幅に制限され供給不安が続く",
+        "9月CPI押し上げの主因がエネルギー価格（ガソリン+9.1%）、需要も底堅い",
+        "米国によるイラン・ロシア・ベネズエラ産油タンカー制裁緩和検討の噂が出るも不透明"
       ],
       "top_news": [
         {
-          "headline": "ホルムズ海峡でイランが少なくとも9隻のタンカー攻撃、Brent原油が1バレル110ドルを突破",
+          "headline": "ブレント原油が109.86ドルに上昇、イラン供給不安で週間高水準を維持",
           "published": "2026-10-16",
-          "comment": "海峡封鎖リスクが供給ショック懸念を高め、原油価格の強い押し上げ要因に",
-          "source": "The Hill",
-          "tier": 3,
+          "comment": "イランとの戦争が長期化し、世界の原油供給に構造的な圧力がかかっている",
+          "source": "Trading Economics",
+          "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["OilPrice.com", "TokenPost"],
+          "corroborated_by": ["The National News"],
           "materiality": "high",
           "direction": "bullish",
-          "url": "https://thehill.com/policy/energy-environment/6155062-brent-crude-hits-110"
+          "url": "https://www.thenationalnews.com/business/energy/2026/10/16/oil-prices-ease-but-head-for-another-weekly-gain-on-middle-east-supply-concerns/"
+        },
+        {
+          "headline": "米・イラン交渉が停滞、トランプ大統領が制裁緩和報道を否定しエネルギー市場に緊張",
+          "published": "2026-10-15",
+          "comment": "外交的解決への期待が後退し、原油価格の高止まりが続く可能性が高まった",
+          "source": "Saxo Bank",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://www.home.saxo/en-ch/content/articles/macro/market-quick-take---risk-sentiment-crumbling-us-treasuries-a-safe-haven---15-october-2026-15102026"
         }
       ]
     },
     {
       "name": "ドル円",
       "ticker": "USDJPY",
-      "bias": "BEARISH",
+      "bias": "BULLISH",
       "conviction": "MID",
-      "rationale": "157〜159円のレンジ内で推移（直近は157.85付近）。日銀・植田総裁が利上げ継続を明言し円高圧力が継続。Warsh議長の発言でドル安が進行。介入警戒感がドル高を抑制。10月29〜30日の日銀決定会合が次の焦点で、追加利上げ示唆があれば円高が一段と加速する可能性。",
+      "rationale": "10月16日頃のドル円は158円前後。日銀の10月利上げ観測は後退（市場の織り込み約2割）、政策金利は1.25%。米CPIショックでFRBの利上げ観測が再燃し、日米金利差縮小ペースが遅れる可能性。ドル高・円安の継続要因あり。",
       "catalysts": [
-        "日銀植田総裁が「2%超の物価上昇は容認できず」と利上げ継続を強調（10月17日）",
-        "Fed・Warsh議長が10月利上げを示唆せず、ドルインデックスが101.70台へ下落",
-        "介入警戒感がドル高方向の上値を抑制",
-        "10月29〜30日の日銀会合：追加利上げ示唆なら円高加速のリスク"
+        "日銀10月利上げ観測が市場での織り込みが約2割に後退、円の支持材料薄い",
+        "米9月CPIが予想上振れ、FRBの10月FOMC利上げ観測が再浮上しドル支持",
+        "ドル指数が約102.6（2025年4月以来高水準）、全般的なドル強さが持続"
       ],
       "top_news": [
         {
-          "headline": "日銀・植田総裁、10月16日バンコクにて利上げ継続姿勢を維持、経済は「おおむね見通し通り」と発言",
+          "headline": "ドル円158円前後、日銀10月会合の利上げ見送り観測で円安圧力が続く",
           "published": "2026-10-16",
-          "comment": "日銀の継続的な引き締め姿勢が円高を支持し、ドル円下落バイアスを強める",
-          "source": "Bloomberg JP",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": ["FXStreet", "NHK", "Daily Sports"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.bloomberg.com/jp/news/articles/2026-10-06/TMF73VT9NJLS00"
+          "comment": "日米金利差が大きいままで、円買い材料が乏しい状況が続いている",
+          "source": "外為どっとコム",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.gaitame.com/media/entry/2026/10/06/162809"
         },
         {
-          "headline": "Fed・Warsh議長の「10月会合を予断しない」発言後、ドルインデックスが101.70台へ下落",
-          "published": "2026-10-16",
-          "comment": "Fed利上げ観測後退でドルが軟化、ドル円の上値が重くなる要因",
-          "source": "FXStreet",
+          "headline": "日銀・FOMCいずれも10月利上げ確率が低下、日経新聞「連続利上げ織り込み後退」",
+          "published": "2026-09-30",
+          "comment": "両中銀の利上げ見送り観測が広がり、相場は持ち合い気味だが円安バイアス残存",
+          "source": "日本経済新聞",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": ["CNBC", "Axios"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.fxstreet.com/news/dollar-index-slips-as-fed-chair-warsh-wont-prejudge-october-202610161624"
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.nikkei.com/article/DGXZQOFL300JCTQ6A930C2000000/"
         }
       ]
     },
     {
       "name": "ユーロドル",
       "ticker": "EURUSD",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "Warsh発言後にドル安が進み、EUR/USDは1.1250付近まで回復（週初の16ヶ月ぶり安値1.1113から反発）。ECBは4.25%とFed（3.75〜4.00%）より高金利で理論的にはユーロ支持的だが、欧州景気の先行き不透明感と原油高によるコストインフレが一方向への動きを抑制。",
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "ECBは9月に2.50%へ利上げ済みだが次回は12月利上げが有力で10月は据え置き見通し。一方で米CPIショックによるドル高・ドル指数の上昇が下押し圧力。欧州のエネルギーコスト高も経済の重荷。",
       "catalysts": [
-        "Warsh議長の発言でドル安、EUR/USDが1.1250付近まで反発",
-        "ECB政策金利4.25%はFedより高く、ユーロの金利面での優位性",
-        "欧州景気の先行き懸念と原油高によるコストインフレが上昇を抑制",
-        "週初の16ヶ月ぶり安値1.1113からのテクニカルな反発局面"
+        "米9月CPI上振れでドル高加速（DXY約102.6）がユーロドルを抑制",
+        "ECBは10月据え置き、次回利上げは12月予想でECBの利上げ期待が限定的",
+        "欧州のエネルギー価格高騰・ガス在庫懸念が経済見通しを下押し"
       ],
       "top_news": [
         {
-          "headline": "ユーロドルがWarsh発言後のドル安を受け1.1250付近まで回復、週初安値1.1113から反発",
-          "published": "2026-10-16",
-          "comment": "ドル軟化でユーロが反発も、欧州景気懸念と原油高が上値を抑制する可能性",
-          "source": "FXStreet",
-          "tier": 2,
-          "credibility": "HIGH",
+          "headline": "ドル指数が102.6と2025年4月以来の高水準、ユーロなど主要通貨は対ドルで軟調",
+          "published": "2026-10-13",
+          "comment": "米インフレ再加速でドルが全面高となり、ユーロは上値の重い展開",
+          "source": "Mitrade",
+          "tier": 3,
+          "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://fxstreet.com/news/euro-recovers-further-against-us-dollar-amid-ai-sell-off-narrative-202610160922"
+          "direction": "bearish",
+          "url": "https://www.mitrade.com/au/insights/daily-market-outlook/news-today/market-news-today-australia-261013"
+        },
+        {
+          "headline": "ECBは9月に2.50%へ利上げ済み、10月は据え置き・次の利上げは12月が有力",
+          "published": "2026-10-01",
+          "comment": "ECBの利上げサイクルが一服し、米金利との差が縮小しにくい状況",
+          "source": "Currency Solutions",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.currencysolutions.com/insights/october-2026-market-outlook-for-gbp-eur-and-usd/"
         }
       ]
     },
     {
       "name": "ビットコイン",
       "ticker": "BTC-USD",
-      "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "10月16日時点で約81,541ドル、80,000〜83,000ドルのサポートゾーンで推移。米CPI高止まりによるリスクオフとレバレッジポジションの大量清算（最大約9億ドル）が重荷。米国スポットBTC・ETH ETFからの資金流出（10月14日に約3.9億ドル）も圧力。Fear & Greedは49（中立）で80,000ドルのサポートが試されている。",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "10月18日時点で約81,500〜81,700ドル圏。24時間で0.5%安程度とほぼ横ばい。週間で約1.8%安。株式のリスクオフ地合いとの連動性は低く固有のカタリスト薄い。2025年10月の高値12.6万ドルからは大幅に下落した状態。",
       "catalysts": [
-        "米CPI3.7%でリスクオフ→高金利長期化観測でビットコインに売り圧力",
-        "レバレッジポジション最大約9億ドルが強制清算（10月15日・CoinGlass調べ）",
-        "米スポットBTCおよびETH ETFから10月14日に約3.9億ドル流出",
-        "80,000ドルの心理的サポートが試されている状況"
+        "株式市場のリスクオフで若干の売り圧力、ただし相関は弱い",
+        "アナリストが8.5万ドルをキーレベルとして注視、短期では方向感乏しい"
       ],
       "top_news": [
         {
-          "headline": "ビットコインが米CPI高止まりを受けて83,000ドルを割り込み81,541ドル付近、レバレッジ清算が約9億ドルに達する",
-          "published": "2026-10-15",
-          "comment": "高インフレで高金利長期化観測が再燃、リスク資産のビットコインに強い売り圧力",
-          "source": "Bitcoin Foundation",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": ["Bitget", "CoinGape", "FXDailyReport"],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://bitcoinfoundation.org/news/analysis/why-is-crypto-down-today-bitcoin-sell-off-deepens-as-771m-in-leveraged-bets-get-wiped-out/"
+          "headline": "ビットコインは約81,500ドル前後、週間約1.8%安で横ばい圏での推移が続く",
+          "published": "2026-10-18",
+          "comment": "2025年の高値（12.6万ドル）から大幅に下落した水準で推移しており、方向感は不明確",
+          "source": "CoinDesk",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Binance.US", "OKX"],
+          "materiality": "low",
+          "direction": "neutral",
+          "url": "https://www.coindesk.com/price/bitcoin"
         }
       ]
     }
   ],
   "discarded": [
     {
-      "headline": "米国・欧州株が上昇しリスク食欲が全般的に改善（一部アグリゲーター報道）",
-      "reason": "dmarketforces.comおよびequity-insider.comのみの単一tier3-4ソースで裏付け不足。CPI発表後の実際の株価下落と矛盾するため除外"
+      "headline": "2026年FX見通し：ドル安・EUR/AUD/JPYが有望との一部アナリスト予測",
+      "reason": "2025年末時点の年始予測で現在の市況と乖離が大きく、信頼性が低い"
     },
     {
-      "headline": "RBAと中国の低成長懸念に関するAAP記事",
-      "reason": "AAP記事は318日前の旧データを含むと明示されており、2026年10月の現状とは乖離があるため除外"
-    },
-    {
-      "headline": "オーストラリア中央銀行の政策金利（Trading Economicsの古いタイムスタンプ）",
-      "reason": "Trading Economicsのタイムスタンプが不信頼と注記されており、RBAの公式資料で確認した4.60%を採用したため除外"
+      "headline": "ビットコインの採掘難易度が5.92%上昇との報道",
+      "reason": "単一ソース・tier4のプレスリリースで、市場動向への影響が軽微"
     }
   ],
   "currencies": [
     {
       "code": "USD",
-      "lean": "WEAK",
-      "conviction": "MID",
-      "reason": "Warsh議長が10月利上げを示唆せず、ドルインデックスが101.70台へ軟化。ただしCPI3.7%高止まりが下値も限定"
+      "lean": "STRONG",
+      "conviction": "HIGH",
+      "reason": "9月CPI前年比3.7%の上振れを受けFRB利上げ観測再燃、ドル指数102.6と約1.5年ぶり高水準"
     },
     {
       "code": "EUR",
-      "lean": "NEUTRAL",
-      "conviction": "LOW",
-      "reason": "ECBの4.25%高金利でドルより優位だが、欧州景気懸念と原油高コストが上昇を抑制。ドル安で反発中"
+      "lean": "WEAK",
+      "conviction": "MID",
+      "reason": "ECBは10月据え置き・12月利上げ見通し、欧州のエネルギー高がユーロの重しで対ドルで軟調"
     },
     {
       "code": "GBP",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "英国固有の目立った材料なし。ユーロに連動しドル安の恩恵を受けるが固有のカタリストが乏しく様子見"
+      "reason": "英中銀は11月利上げへの転換を示唆も、10月28日の予算案発表がリスクで方向感定まらない"
     },
     {
       "code": "JPY",
-      "lean": "STRONG",
-      "conviction": "MID",
-      "reason": "植田総裁が10月17日に利上げ継続を強調、日銀が1.25%からさらなる利上げを示唆。介入警戒もドル円上値を抑制"
+      "lean": "WEAK",
+      "conviction": "HIGH",
+      "reason": "日銀10月利上げ観測が後退（市場織り込み2割台）、政策金利1.25%で日米金利差大きく円安継続"
     },
     {
       "code": "AUD",
-      "lean": "NEUTRAL",
-      "conviction": "LOW",
-      "reason": "RBAが9月に4.60%へ利上げしたが、失業率4.7%上昇と中国Q3GDP不確実性が重荷。リスクオフで上値限定"
+      "lean": "WEAK",
+      "conviction": "MID",
+      "reason": "RBAが9月に4.60%へ利上げも、リスクオフ地合いと鉄鉱石価格の中長期的な下落懸念が重し"
     },
     {
       "code": "CNY",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "9月下旬の景気刺激策が支援材料も、Q3GDP（10月19日発表）の弱い結果リスクと不動産問題が圧力"
+      "reason": "中国当局のPBOC支援と基準値設定が下支えも、中国景気と鉄鋼生産の構造的減速が不透明感を高める"
     }
   ],
   "asia_watch": [
     {
-      "headline": "中国Q3GDPが10月19日朝9時（日本時間）に発表予定、景気刺激策効果で小幅回復を見込む",
+      "headline": "AI・半導体株の世界的な売りでアジア市場もSKハイニックス・サムスン・SBGが急落",
       "published": "2026-10-15",
       "region": "CN",
-      "why": "結果次第で豪ドルや日経に直接影響、弱い数字なら追加刺激策期待でやや相殺の可能性も",
+      "why": "日本の半導体・AI関連株にも波及し、日経平均の重しとなる可能性",
       "materiality": "high",
-      "source": "Reuters",
+      "source": "CNBC",
       "tier": 2,
       "credibility": "HIGH",
-      "url": "https://finance.yahoo.com/economy/articles/china-q3-growth-set-pick-092516257.html"
+      "url": "https://www.cnbc.com/2026/10/15/sk-hynix-samsung-softbank-stocks-asia-tech-rout-ai-funding-worries.html"
     },
     {
-      "headline": "ホルムズ海峡でのイラン攻撃によるBrent原油110ドル突破が中国の輸入コスト増大リスクに",
-      "published": "2026-10-16",
+      "headline": "中国の鉄鋼生産が2020年をピークに構造的な減少局面に入り、豪州の鉄鉱石輸出収益が長期的に圧迫",
+      "published": "2026-10-15",
       "region": "CN",
-      "why": "中国は世界最大の原油輸入国、エネルギーコスト上昇で景気回復の重荷となる可能性",
-      "materiality": "mid",
-      "source": "OilPrice.com",
+      "why": "豪ドルの重要輸出品目・鉄鉱石の中国需要が長期的に減少、AUDの下押し圧力",
+      "materiality": "high",
+      "source": "IEEFA",
       "tier": 2,
       "credibility": "HIGH",
-      "url": "https://oilprice.com/Latest-Energy-News/World-News/Oil-Jumps-2-as-Iran-Steps-Up-Attacks-on-Hormuz-Tankers.html"
+      "url": "https://ieefa.org/articles/australias-green-iron-opportunity-becomes-economic-necessity-end-china-steel-boom"
     },
     {
-      "headline": "豪9月失業率が4.7%（トレンドベース4.6%）に上昇、RBAの11月追加利上げ確率は約25%にとどまる",
-      "published": "2026-10-16",
+      "headline": "RBAは9月29日に政策金利を4.60%へ25bp引き上げ（2011年以来の高水準）、全会一致で追加引き締め示唆",
+      "published": "2026-09-29",
       "region": "AU",
-      "why": "労働市場軟化でRBAが利上げを急がなければ、豪ドルの上昇余地が限られる可能性",
+      "why": "AUDの支持材料だが、リスクオフ環境ではUSD高にかき消されやすい局面",
       "materiality": "mid",
-      "source": "RBA",
-      "tier": 1,
+      "source": "FXStreet",
+      "tier": 2,
       "credibility": "HIGH",
-      "url": "https://www.rba.gov.au/publications/fsr/2026/oct/the-global-macro-financial-environment.html"
+      "url": "https://www.fxstreet.com/analysis/australian-dollar-price-forecast-hurt-by-data-202610151647"
     },
     {
-      "headline": "中国の9月下旬の景気刺激策（金利引き下げ・住宅ローン補助）が鉄鉱石需要を通じて豪ドルをやや支援",
-      "published": "2026-10-14",
-      "region": "CN",
-      "why": "中国が追加刺激策を打てば鉄鉱石・銅需要増→豪ドルの下支えとなる可能性",
+      "headline": "鉄鉱石価格は2026年91ドル/tを高値に2031年には64ドル/t水準へ低下との政府予測、豪州輸出収益が圧迫",
+      "published": "2026-06-01",
+      "region": "AU",
+      "why": "豪州の輸出収益減少見通しはAUD長期的な下押し材料、短期的影響は限定的",
       "materiality": "mid",
-      "source": "LiteFinance",
-      "tier": 3,
-      "credibility": "MID",
-      "url": "https://www.litefinance.org/blog/analysts-opinions/aussie-rises-as-us-ai-hype-fades-and-china-stimulus-hopes-grow-forecast-as-of-14102026/"
+      "source": "Orbit Remit Blog",
+      "tier": 4,
+      "credibility": "LOW",
+      "url": "https://blog.orbitremit.com/iron-ore-china-aud-exchange-rate-2026/"
     }
   ]
 }
