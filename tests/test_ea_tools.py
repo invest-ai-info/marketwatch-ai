@@ -400,7 +400,10 @@ def test_probe_prereg():
 
 def test_workflow_and_sync():
     wf = open(".github/workflows/technical-alerts.yml", encoding="utf-8").read()
-    assert "python build_signals_recent.py || true" in wf and "track-record.html signals-recent.json" in wf
+    assert "python build_signals_recent.py || true" in wf
+    # 2026-10-07 に research-list.html が間に入った＝並びは問わず、同じ git add の行に入っているかを見る
+    add = next(l for l in wf.splitlines() if "git add" in l and "track-record.html" in l).split()
+    assert "track-record.html" in add and "signals-recent.json" in add
     assert wf.index("python export_to_csv.py") < wf.index("python build_signals_recent.py")
     assert "'auto-forward.json'" in open(".github/workflows/research-lists.yml", encoding="utf-8").read()   # 届いたらリストを組み立て直す
     import check_site_consistency as C
