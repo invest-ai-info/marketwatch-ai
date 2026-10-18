@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-19", "line": '・<b>2026-10-19</b>: 🔬 解説「<a href="guide-signal-lab-128.html" style="color:#0969da"><b>研究日誌 #128 勢いが強い場面の順張りは損しやすい？</b></a>」公開'},
         {"date": "2026-10-18", "line": '・<b>2026-10-18</b>: 🧪 「<a href="guide-sore-honto.html" style="color:#0969da"><b>それ、本当？ 定説シミュレーター</b></a>」公開——RSI・MACDなどの定説を選ぶと、過去の値動きでその場で確かめられます'},
         {"date": "2026-10-18", "line": '・<b>2026-10-18</b>: 📰 解説「<a href="guide-news-2026-10-18-brent-110-oil-middle-east.html" style="color:#0969da"><b>ブレント原油が10突破──中東3重リスク</b></a>」公開'},
         {"date": "2026-10-18", "line": '・<b>2026-10-18</b>: 🕘 解説「<a href="guide-entry-tokyo-fix.html" style="color:#0969da"><b>東京の仲値（9時55分）、なぜドルが上がりやすい？</b></a>」公開'},
