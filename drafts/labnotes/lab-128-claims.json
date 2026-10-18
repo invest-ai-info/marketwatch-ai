@@ -1,0 +1,31 @@
+{
+  "article_id": "128",
+  "asof": "2026-10-19T06:11:00+09:00",
+  "hypothesis_id": "rl_tf_adx_strong",
+  "claims": [
+    {
+      "label": "事前登録前（過去データ）全体: 順張り×ADX強",
+      "filter": {"family": "tf", "adx_band": "strong", "fired_before": "2026-09-27"},
+      "k": 443,
+      "n": 1070
+    },
+    {
+      "label": "前向き追跡（全足）: 順張り×ADX強",
+      "filter": {"family": "tf", "adx_band": "strong", "fired_from": "2026-09-27"},
+      "k": 28,
+      "n": 87
+    },
+    {
+      "label": "前向き追跡（全足）: 順張り×ADX弱",
+      "filter": {"family": "tf", "adx_band": "weak", "fired_from": "2026-09-27"},
+      "k": 40,
+      "n": 106
+    },
+    {
+      "label": "前向き期間ベースライン（全シグナル）",
+      "filter": {"fired_from": "2026-09-27"},
+      "k": 160,
+      "n": 440
+    }
+  ]
+}
