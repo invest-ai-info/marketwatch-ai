@@ -58,7 +58,7 @@ import urllib.request
 from build_jp_rankings import INFO, JST, modal_date, is_regression, is_unsettled, SETTLE_JST
 import jp_markers   # 🆕 2026-10-08 朝の準備用「寄りで買わない」目印（同じ日足に相乗り・jp-highs.json の "markers"）
 import jp_taishaku  # 🆕 2026-10-08 夕方 目印の一覧に〔貸借〕の印（日本取引所グループの一覧・取れなければ印なしで続ける）
-import jp_momentum  # 🆕 2026-10-08 夜 朝のメール用「強すぎる株＝買わない側」（過去12か月で一番上げた10銘柄・研究 J42／J42F）
+import jp_momentum  # 🆕 2026-10-08 夜 朝のメール用「上がりすぎた株（今月は新しく買わない）」（過去12か月で一番上げた10銘柄・研究 J42／J42F）
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "jp-highs.json")
@@ -379,7 +379,7 @@ def main(force=False, dry_run=False):
     prev = read_json(OUT)
     prev_asof = prev.get("asof") or ""
     rank_asof = read_json(RANKINGS).get("asof") or ""
-    if not force and not dry_run and already_done(prev, rank_asof) and "momentum" in prev:   # 🆕 2026-10-08 夜 強すぎる株の欄が無ければ作り直す
+    if not force and not dry_run and already_done(prev, rank_asof) and "momentum" in prev:   # 🆕 2026-10-08 夜 上がりすぎた株の欄が無ければ作り直す
         print(f"⏭ jp-highs.json はもう {prev_asof}（jp-rankings.json と同じ営業日・同じ決まり）＝取りに行かずに終了")
         return
 
@@ -463,7 +463,7 @@ def main(force=False, dry_run=False):
         # 🆕 2026-10-08 目印C（売買代金の急増）・B候補（前の日 +5% 以上）＝朝の指標メールが読む（サイトには出さない）
         "markers": jp_markers.compute({c: b for c, b in daily.items() if sane_today(b)}, stocks, asof,
                                       jp_taishaku.load_or_none()),
-        # 🆕 2026-10-08 夜 強すぎる株（過去12か月で一番上げた10銘柄）＝朝の指標メールが読む（サイトには出さない）
+        # 🆕 2026-10-08 夜 上がりすぎた株（過去12か月で一番上げた10銘柄）＝朝の指標メールが読む（サイトには出さない）
         "momentum": momentum_or_error(daily, stocks, asof),
     }
     if not dry_run:
@@ -483,7 +483,7 @@ def main(force=False, dry_run=False):
     mo = payload["momentum"]
     for key in ("asof", "month_end"):
         x = (mo.get("lists") or {}).get(key) or {}
-        print(f"   強すぎる株（{key}・決める月 {x.get('ym')}）：{len(x.get('rows') or [])}銘柄"
+        print(f"   上がりすぎた株（{key}・決める月 {x.get('ym')}）：{len(x.get('rows') or [])}銘柄"
               f"（組 {x.get('universe')}・上場からの長さを確かめた {x.get('checked')}・不明 {x.get('age_unknown')}）"
               + (f"・⚠️ {mo['error']}" if mo.get("error") else ""))
     mk = payload["markers"]
