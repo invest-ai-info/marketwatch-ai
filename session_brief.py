@@ -31,10 +31,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 JST = dt.timezone(dt.timedelta(hours=9))
 WD = "月火水木金土日"
 SESSIONS = {
-    "london": {"name": "ロンドン時間", "flag": "🇬🇧", "open": (13, 30), "deadline": (15, 0), "close": (16, 0), "since": 9,
+    "london": {"name": "ロンドン時間", "short": "ロンドン", "flag": "🇬🇧", "open": (13, 30), "deadline": (15, 0), "close": (16, 0), "since": 9,
                "since_label": "今日の東京時間（9時〜）", "since_short": "東京時間", "until_next_day": None, "news": "europe", "news_label": "英国・ユーロ圏",
                "pairs": ("GBPJPY=X", "EURJPY=X", "GBPUSD=X", "EURUSD=X")},
-    "ny": {"name": "NY時間", "flag": "🇺🇸", "open": (18, 30), "deadline": (20, 0), "close": (21, 0), "since": 15,
+    "ny": {"name": "NY時間", "short": "NY", "flag": "🇺🇸", "open": (18, 30), "deadline": (20, 0), "close": (21, 0), "since": 15,
            "since_label": "今日の欧州時間（15時〜）", "since_short": "欧州時間", "until_next_day": (6, 0), "news": "us", "news_label": "米国",
            "pairs": ("USDJPY=X", "EURUSD=X", "GBPUSD=X", "AUDUSD=X")},
 }
@@ -199,14 +199,12 @@ def holidays_section(hol):
 
 
 def subject_of(session, kind, now, fx, ind):
+    """🆕 2026-10-19 オーナー「わかりやすいメールのタイトル」→「メモでいい」＝【ロンドン前の戦術メモ】／【NY前の戦術メモ】
+    （朝の【東京前の戦術メモ】＝send_indicator_digest.py とそろえる。強い・弱い通貨は同じ D.strong_weak）"""
     s = SESSIONS[session]
-    h = [(c, v) for c, v in ((fx or {}).get("h24") or {}).items() if v is not None]
-    tops = ""
-    if h:
-        h.sort(key=lambda x: -x[1])
-        tops = f"強い {FX.NAMES[h[0][0]]}／弱い {FX.NAMES[h[-1][0]]}・"
-    ev = f"今夜の指標 {len(ind)}件" + (f"（{ind[0][0]:%H:%M} {ind[0][1]['name']}）" if ind else "") if ind is not None else "指標の予定を読めない"
-    return f"{'⏰遅れ ' if kind == 'late' else ''}{s['flag']} {s['name']}の前 {now:%m/%d}({WD[now.weekday()]})：{tops}{ev}"
+    sw = D.strong_weak(fx)
+    ev = f"今夜の指標{len(ind)}件" + (f"（{ind[0][0]:%H:%M} {ind[0][1]['name']}）" if ind else "") if ind is not None else "指標の予定を読めない"
+    return f"{'⏰遅れ ' if kind == 'late' else ''}【{s['short']}前の戦術メモ】{now:%m/%d}({WD[now.weekday()]}) {sw + '・' if sw else ''}{ev}"
 
 
 def build(session, now, fx=None, news=None, fc=None, kind="send", events_path=D.EVENTS):
