@@ -135,7 +135,11 @@ WORKFLOW_CHECKS = [
 # ② クラウド routine: (ラベル, 毎回再生成される出力ファイル, 許容経過[時間], 重大度)
 ROUTINE_FILE_CHECKS = [
     ("市況ファンダ・ブリーフィング", "fundamental-context.json", 15, "warn"),
-    ("研究日誌・日次研究会",        "drafts/REVIEW.md",         28, "info"),
+    # 🔁 2026-10-18: 旧 drafts/REVIEW.md の鮮度で見ていたが、日誌の予約は REVIEW.md を毎回は書かず
+    #    （10/18 の #127 は書かなかった）、新刊ウォッチの予約も同じファイルを書き換える。そのため
+    #    10/16・10/17 に日誌が2日止まったのにこの行は緑のままだった。**公開そのもの**＝いちばん新しい
+    #    号の guide-signal-lab-NNN.html がいつ足されたかで見る（* を含む path は check_file が解決する）。
+    ("研究日誌・日次研究会",        "guide-signal-lab-*.html",  28, "info"),
     ("記事ネタ発掘",                "article-ideas.md",         28, "info"),
     # 🆕 2026-07-04: signal-lab-daily が draft は公開するのに tracker.json のコミットだけ漏らす事故が
     #    7/3・7/4 に連続発生（REVIEW.md は更新されるため上の監視では見えない盲点）。毎朝 06:10 の
@@ -144,6 +148,15 @@ ROUTINE_FILE_CHECKS = [
     # 🆕 2026-07-07: 進化ループ①INTAKE（idea-scout-weekly・毎週日曜14:00）。週次＝閾値10日で「1回漏れ」検知。
     #    autodraft-articleのpushレース沈黙が鮮度監視をすり抜けた前例（7/4-7/5）への横展開＝専用行で監視。
     ("週次アイデアスカウト",        "drafts/idea-inbox.md",     240, "info"),
+]
+
+# ②b 1日に何回も動く routine は「回数」で見る: (ラベル, 出力ファイル, 窓[時間], 窓の中の最少回数, 重大度)
+# 🆕 2026-10-18: ブリーフィングは 06:00 と 15:00 JST の1日2回なのに、15:00 の回が 10/14〜10/17 の
+#    4日続けて何も残さなかった。上の鮮度（15時間）は朝の回だけで満たせるので、見張り番は毎日緑だった
+#    （この見張り番は 09:30 JST に1日1回＝朝の回のあと）。2回の間隔は 9時間と15時間なので、どの時刻に
+#    見ても直近26時間には必ず2回ぶんの時刻が入る＝1回しか無ければどちらかが抜けている。
+ROUTINE_COUNT_CHECKS = [
+    ("市況ファンダ・ブリーフィング（1日2回）", "fundamental-context.json", 26, 2, "warn"),
 ]
 
 # ④ 固定ゲートの不変条件: ゲート/リンターを routine が書き換えて通過する「自己承認」を検知する。
@@ -265,15 +278,109 @@ def check_workflow(owner, repo, token, wf, max_h, now):
     return judge_runs(data.get("workflow_runs", []), max_h, now)
 
 
+def latest_numbered(names, pattern):
+    """純関数（テスト対象）＝ pattern（* を1つ含む）に合うファイルのうち、番号がいちばん大きいもの。
+    番号は * の部分の数字で比べる（文字列で比べると 999 → 1000 で順番が崩れる）。無ければ None。"""
+    head, _, tail = pattern.partition("*")
+    best, best_n = None, -1
+    for n in names:
+        if not (n.startswith(head) and n.endswith(tail)):
+            continue
+        mid = n[len(head):len(n) - len(tail)] if tail else n[len(head):]
+        if mid.isdigit() and int(mid) > best_n:
+            best, best_n = n, int(mid)
+    return best
+
+
 def check_file(owner, repo, token, path, max_h, now):
-    data = api(f"https://api.github.com/repos/{owner}/{repo}/commits?path={path}&per_page=1", token)
+    label, first = "", False
+    if "*" in path:
+        # 連番の記事（guide-signal-lab-NNN.html など）は、いちばん新しい号が**足された**日時で見る。
+        # 最終コミットで見ると、公開の翌日に人が直しただけで「動いている」に見えてしまう（10/18 の #127 は
+        # 公開の2時間後に PR #310 で直した）。号ごとのコミットは数本なので20本取れば最初の1本まで届く。
+        path = latest_numbered(list_repo_root_files(owner, repo, token), path)
+        if not path:
+            return False, "対象のファイルが見つからない"
+        label, first = f"・{path}", True
+    data = api(f"https://api.github.com/repos/{owner}/{repo}/commits?path={path}"
+               f"&per_page={20 if first else 1}", token)
     if not data:
         return False, "コミット履歴なし"
-    a = age_hours(data[0]["commit"]["committer"]["date"], now)
+    a = age_hours(data[-1 if first else 0]["commit"]["committer"]["date"], now)
     agetxt = f"{a:.1f}h前" if a < 48 else f"{a/24:.1f}日前"
     if a > max_h:
-        return False, f"{max_h}h以上更新なし（最終 {agetxt}）"
-    return True, f"更新 {agetxt}"
+        return False, f"{max_h}h以上更新なし（最終 {agetxt}{label}）"
+    return True, f"更新 {agetxt}{label}"
+
+
+def eval_run_count(commit_dates, now, window_h, min_n):
+    """純関数（テスト対象）＝窓の中のコミット回数が足りているか。commit_dates は ISO の日時の並び。"""
+    n = sum(1 for d in commit_dates if -1 <= age_hours(d, now) <= window_h)   # -1＝時計のずれの余裕
+    if n < min_n:
+        return False, f"直近{window_h}hの更新が {n} 回（{min_n} 回の予定）＝どれかの回が抜けている"
+    return True, f"直近{window_h}hに {n} 回更新（{min_n} 回以上）"
+
+
+def check_file_count(owner, repo, token, path, window_h, min_n, now):
+    since = (now - dt.timedelta(hours=window_h)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    data = api(f"https://api.github.com/repos/{owner}/{repo}/commits?path={path}"
+               f"&since={since}&per_page=20", token)
+    return eval_run_count([c["commit"]["committer"]["date"] for c in data], now, window_h, min_n)
+
+
+# ⑮ 作業ブランチへの置き去り（routine の成果が main に届いていない）
+# 🆕 2026-10-18: 予約のセッションは作業ブランチ claude/... の上で始まる。エージェントがそのブランチへ
+#    push して「コミット成功」と報告すると、**実行は成功・成果はサイトにもメールにも届かない**。
+#    実例＝ファンダ・ブリーフィングの 15:00 の回が 10/14〜10/18 に6回（＋10/17 朝）、研究日誌 #124
+#    （10/12・公開まで済ませたのに main に無く、翌日に別の題材が同じ #124 で出た）。10/12 は
+#    「出力の上限で止まった」と誤診されていた＝**原因の名前で鳴らす**のがこの節の役目。
+#    人のセッションの PR 作業も claude/... なので、routine が付けるコミットの題名だけを見る。
+STRANDED_WINDOW_H = 26
+STRANDED_MSG_PATTERNS = (
+    r"fundamental-context\.json", r"signal-lab", r"signal lab", r"研究日誌", r"REVIEW\.md",
+    r"auto-publish", r"SNS post draft", r"news (skip|escalate)", r"bookwatch", r"idea-scout",
+)
+
+
+def stranded_commits(branches, now, window_h=STRANDED_WINDOW_H, patterns=STRANDED_MSG_PATTERNS,
+                     with_pr=()):
+    """純関数（テスト対象）＝作業ブランチにだけあって main に無い、routine のコミットを拾う。
+
+    branches は [(ブランチ名, [(コミット日時ISO, 題名), ...main に無い分])]。with_pr は PR が付いている
+    ブランチ名（人のセッションの作業＝main にまだ無いのが正常なので鳴らさない）。
+    戻り値は [(ブランチ名, 日時ISO, 題名)]（窓の中・claude/ で始まる・題名が routine の形のものだけ）。
+    """
+    pat = re.compile("|".join(patterns))
+    out = []
+    for name, commits in branches:
+        if not name.startswith("claude/") or name in with_pr:
+            continue
+        for date, msg in commits:
+            if age_hours(date, now) <= window_h and pat.search(msg):
+                out.append((name, date, msg))
+    return out
+
+
+def check_stranded(owner, repo, token, now):
+    names = []
+    for page in range(1, 6):   # 作業ブランチは消されずに増える（10/18 で60本）＝100本を超えても見落とさない
+        got = api(f"https://api.github.com/repos/{owner}/{repo}/branches?per_page=100&page={page}", token)
+        names += [b["name"] for b in got if b.get("name", "").startswith("claude/")]
+        if len(got) < 100:
+            break
+    branches = []
+    for name in names:
+        tip = api(f"https://api.github.com/repos/{owner}/{repo}/commits/{name}", token)
+        if age_hours(tip["commit"]["committer"]["date"], now) > STRANDED_WINDOW_H:
+            continue   # 先頭が窓より古いブランチは中身を見ない（API の呼び出しを減らす）
+        cmp = api(f"https://api.github.com/repos/{owner}/{repo}/compare/main...{name}", token)
+        branches.append((name, [(c["commit"]["committer"]["date"], c["commit"]["message"].splitlines()[0])
+                                for c in cmp.get("commits", [])]))
+    with_pr = set()
+    for name in {n for n, _d, _m in stranded_commits(branches, now)}:
+        if api(f"https://api.github.com/repos/{owner}/{repo}/pulls?head={owner}:{name}&state=all", token):
+            with_pr.add(name)
+    return stranded_commits(branches, now, with_pr=with_pr)
 
 
 # ③ 公開記事カバレッジ（巻き戻し検知）の対象 prefix。新シリーズが増えたらここに足すだけ。
@@ -419,11 +526,35 @@ def check_ledger_freshness(owner, repo, token, path, max_days, since, today):
     return "ok", f"{path} の最終更新は {stamp}（{age}日前）"
 
 
+# 🆕 2026-10-18: シリーズの最後の回（総まとめ）の key。全レーンが「最後は series-index」で終わる形。
+#    これが残りに入っている＝**題材を足す段階ではなく、シリーズの終わり**。床を割っても補充を求めない
+#    （entry が残り2本＝#25 と総まとめ で「キュー補充が必要」と鳴った。補充すると完結の設計が崩れる）。
+SERIES_FINALE_KEY = "series-index"
+SERIES_ENDING_LEDGER_DAYS = 2   # 終わりの手前で止まっていないかは台帳の鮮度で見る（毎日1本のレーン）
+
+
+def queue_state(keys, remaining, held, floor, finale=SERIES_FINALE_KEY):
+    """純関数（テスト対象）＝キューの残りから状態を決める。
+
+    戻り値: "ok"（床以上）／"low"（床を割った＝補充が必要）／
+            "ending"（床を割ったが、残りに総まとめが入っている＝シリーズの終わり・補充は要らない）／
+            "done"（総まとめまで公開済み＝完結。QUEUE_LANES から外す番）。
+    """
+    if len(remaining) >= floor:
+        return "ok"
+    if finale in keys:
+        if finale in remaining:
+            return "ending"
+        if finale not in held:
+            return "done"
+    return "low"
+
+
 def check_topic_queue(owner, repo, token, path=QUEUE_GUIDE_PATH, prefix="", ledger=None):
     """手順書のキュー表から key を抽出し、guides.html に guide-<prefix><key>.html の
     カードが無いもの＝未公開の残りを数える。
     ローカルの陳腐化に惑わされないよう、どれも GitHub 側の最新を読む（③と同方針）。
-    戻り値: (キュー総数, いま着手できるkeyのリスト, 台帳に載っていて数えないkeyのリスト)。"""
+    戻り値: (キューの全key, いま着手できるkeyのリスト, 台帳に載っていて数えないkeyのリスト)。"""
     md = api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{path}", token)
     # 表の行「| 12 | 基礎知識 | `bonds-interest-rates` | …」から key だけを取る。
     # ⚠️ proverb / scam の表は key をバッククォートで囲っていないので任意にする
@@ -439,7 +570,7 @@ def check_topic_queue(owner, repo, token, path=QUEUE_GUIDE_PATH, prefix="", ledg
         except Exception:
             held = []          # 台帳が読めないだけで番人を止めない（数は多めに出る）
     remaining = [k for k in unpublished if k not in held]
-    return len(keys), remaining, held
+    return keys, remaining, held
 
 
 # ⑥ 「宣言した仮説」がライブトラッカーに実在するか（＝事前登録の静かな失敗の検知）。
@@ -930,6 +1061,14 @@ def main():
         body.append(f"- {'✅' if ok else '🚨'} {SEV[sev]} {label}: {note}")
         if not ok:
             bad.append((label, sev))
+    for label, path, window_h, min_n, sev in ROUTINE_COUNT_CHECKS:
+        try:
+            ok, note = check_file_count(owner, repo, token, path, window_h, min_n, now)
+        except Exception as e:
+            ok, note = False, f"確認失敗 {e}"
+        body.append(f"- {'✅' if ok else '🚨'} {SEV[sev]} {label}: {note}")
+        if not ok:
+            bad.append((label, sev))
 
     body.append("")
     body.append("### ③ 公開記事カバレッジ（guides.html カードの巻き戻し検知）")
@@ -975,11 +1114,28 @@ def main():
     body.append("### ⑤ 自動公開レーンのキュー残量（枯渇＝静かな停止）")
     for lane, path, prefix, ledger, floor in QUEUE_LANES:
         try:
-            total, remaining, held = check_topic_queue(owner, repo, token, path, prefix, ledger)
+            keys, remaining, held = check_topic_queue(owner, repo, token, path, prefix, ledger)
+            total = len(keys)
             hold = f"／台帳に載っていて数えない {len(held)}件（{', '.join(held)}）" if held else ""
+            qstate = queue_state(keys, remaining, held, floor) if total else ""
             if not total:
                 body.append(f"- 🚨 ⚪ {lane}: キューを解析できない（{path} の表形式を確認）")
-            elif len(remaining) < floor:
+            elif qstate == "ending":
+                # シリーズの終わり＝補充は要らない。その代わり「終わりの手前で止まる」を台帳の鮮度で見る
+                st, detail = check_ledger_freshness(owner, repo, token, ledger,
+                                                    SERIES_ENDING_LEDGER_DAYS,
+                                                    dt.date(2000, 1, 1), dt.date.today())
+                if st == "ok":
+                    body.append(f"- ✅ 🟢 {lane}: 完結まで残り {len(remaining)}/{total} 回"
+                                f"（{', '.join(remaining)}＝最後は総まとめ・補充は不要）{hold}")
+                else:
+                    body.append(f"- 🚨 🟡 {lane}: 完結まで残り {len(remaining)}/{total} 回なのに"
+                                f"{detail}＝終わりの手前で止まっている可能性{hold}")
+                    bad.append((f"{lane} 完結の手前で停止の疑い", "warn"))
+            elif qstate == "done":
+                body.append(f"- ✅ ⚪ {lane}: 総まとめまで公開済み＝**完結**。QUEUE_LANES から外し、"
+                            f"routine を止める番（上のコメントの畳み方）{hold}")
+            elif qstate == "low":
                 nokori = ", ".join(remaining) if remaining else "なし＝レーン停止中"
                 body.append(f"- 🚨 🟡 {lane}: いま着手できる残りが {len(remaining)}/{total} 件"
                             f"（閾値 {floor}）{hold}＝キュー補充が必要。"
@@ -1323,6 +1479,21 @@ def main():
         else:
             body.append(f"- 🚨 🟡 {label}: {msg}")
             bad.append((f"{label} の連鎖", "warn"))
+    body.append("")
+
+    body.append("### ⑮ 作業ブランチへの置き去り（routine の成果が main に届いていない＝①②は「実行は成功」に見える死角）")
+    try:
+        hits = check_stranded(owner, repo, token, now)
+        if hits:
+            for name, date, msg in hits[:10]:
+                body.append(f"- 🚨 🟡 `{name}` にだけある（{age_hours(date, now):.1f}h前）: {msg}"
+                            f"＝main に届いていない。予約の指示の push 先が `HEAD:main` か確かめる")
+            bad.append((f"routine の成果が作業ブランチに{len(hits)}件", "warn"))
+        else:
+            body.append(f"- ✅ 🟢 直近{STRANDED_WINDOW_H}hに作業ブランチへ置き去りの routine コミットなし")
+    except Exception as e:
+        # ③④と同じ方針: API一時エラー自体では Issue を立てない（記録のみ）
+        body.append(f"- 🚨 ⚪ 作業ブランチの確認失敗: {e}")
     body.append("")
 
     serious = [l for l, s in bad if s in ("critical", "warn")]
