@@ -1,0 +1,164 @@
+/* それ、本当？ 定説シミュレーター（guide-sore-honto.html に組み込み）。
+   すべて #mw-sim の中だけに効く。暗い表示はサイトと同じ body.dark で切り替える。 */
+#mw-sim{--bg:#f6f8fa; --surface:#ffffff; --ink:#1f2328; --muted:#57606a; --rule:#d0d7de;
+  --accent:#0969da; --accent-ink:#ffffff; --accent-soft:#ddf4ff;
+  --info-bg:#ddf4ff; --info-rule:#0969da;
+  --warn-bg:#ffebe9; --warn-rule:#cf222e; --warn-ink:#cf222e;
+  --good:#1a7f37; --good-bg:#dafbe1; --bad:#cf222e; --bad-bg:#ffebe9;
+  --watch:#9a6700; --watch-bg:#fff8c5; --none:#57606a; --none-bg:#eaeef2;
+  --plot-surface:#ffffff; --plot-bar:#c8d1dc; --plot-bar-hi:#7d8ba1; --plot-line:#57606a;
+  --grid:#eaeef2; --axis:#afb8c1; --mark-good:#0ca30c; --mark-bad:#d03b3b;
+  --font:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif; --r:10px;
+  font-family:var(--font);color:var(--ink);font-size:15px;line-height:1.75;
+  display:flex;flex-direction:column;gap:20px;margin:6px 0 10px}
+body.dark #mw-sim{--bg:#0d1117; --surface:#161b22; --ink:#e6edf3; --muted:#8b949e; --rule:#30363d;
+  --accent:#58a6ff; --accent-ink:#0d1117; --accent-soft:#1a2b45;
+  --info-bg:#122838; --info-rule:#58a6ff;
+  --warn-bg:#3a1a1d; --warn-rule:#f85149; --warn-ink:#ffa198;
+  --good:#3fb950; --good-bg:#12261e; --bad:#f85149; --bad-bg:#3a1a1d;
+  --watch:#d29922; --watch-bg:#2f2611; --none:#8b949e; --none-bg:#21262d;
+  --plot-surface:#161b22; --plot-bar:#30363d; --plot-bar-hi:#8b949e; --plot-line:#8b949e;
+  --grid:#21262d; --axis:#484f58; --mark-good:#0ca30c; --mark-bad:#d03b3b;}
+/* ページ側の p・h2・h3・strong の決まりがシミュレーターに混ざらないようにする */
+#mw-sim p{margin:0;font-size:inherit;color:inherit;max-width:none}
+#mw-sim h2,#mw-sim h3{margin:0;padding:0;border:0;color:var(--ink);line-height:1.45}
+#mw-sim strong{color:inherit}
+#mw-sim a{color:var(--accent)}
+#mw-sim ol,#mw-sim ul,#mw-sim dl{margin:0}
+/* 隠す指定（hidden）を、ほかの display の決まりより優先する */
+#mw-sim [hidden]{display:none!important}
+
+#mw-sim,#mw-sim *{box-sizing:border-box}
+
+#mw-sim .num{font-variant-numeric:tabular-nums}
+#mw-sim button,#mw-sim select,#mw-sim input{font:inherit;color:inherit}
+#mw-sim :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#mw-sim .layout{display:grid;grid-template-columns:minmax(0,370px) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:900px){#mw-sim .layout{grid-template-columns:minmax(0,1fr)}}
+#mw-sim .controls{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);display:flex;flex-direction:column}
+#mw-sim .step{padding:18px 18px 20px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--rule)}
+#mw-sim .step:last-child{border-bottom:0}
+#mw-sim .step h2{margin:0;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px}
+#mw-sim .stepno{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:13px;font-weight:700;flex:none}
+#mw-sim .tabs{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:3px;gap:3px}
+#mw-sim .tab{border:0;background:transparent;border-radius:6px;padding:6px 4px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
+#mw-sim .tab[aria-selected="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+#mw-sim .presets{display:flex;flex-direction:column;gap:6px}
+#mw-sim .preset{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--rule);border-radius:8px;cursor:pointer;line-height:1.5}
+#mw-sim .preset:hover{background:var(--accent-soft)}
+#mw-sim .preset input{margin-top:3px;accent-color:var(--accent);flex:none}
+#mw-sim .preset .t{font-weight:700;font-size:14px}
+#mw-sim .preset .d{display:none;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+#mw-sim .preset.is-on .d{display:block}
+#mw-sim .preset.is-on{border-color:var(--accent);background:var(--accent-soft)}
+#mw-sim .preset.is-off{opacity:.5;cursor:not-allowed}
+#mw-sim .dirtag{display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:1px;border:1px solid currentColor}
+#mw-sim .dir-buy{color:var(--good)}
+#mw-sim .dir-sell{color:var(--bad)}
+#mw-sim .params{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+#mw-sim .field{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);font-weight:500;min-width:0}
+#mw-sim .field input,#mw-sim .field select{width:100%;padding:7px 10px;border:1px solid var(--rule);border-radius:7px;background:var(--surface);font-size:14.5px;color:var(--ink)}
+#mw-sim .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#mw-sim .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+#mw-sim .seg label{position:relative}
+#mw-sim .seg input{position:absolute;opacity:0;inset:0}
+#mw-sim .seg span{display:block;text-align:center;border:1px solid var(--rule);border-radius:7px;padding:6px 2px;font-size:13px;font-weight:700;cursor:pointer;line-height:1.35;color:var(--muted)}
+#mw-sim .seg span small{display:block;font-size:11px;font-weight:400}
+#mw-sim .seg input:checked + span{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+#mw-sim .seg input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+#mw-sim .check{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;line-height:1.55}
+#mw-sim .check input{margin-top:3px;accent-color:var(--accent)}
+#mw-sim .hint{margin:0;font-size:12px;color:var(--muted);line-height:1.55}
+#mw-sim .filebtn{display:inline-flex;align-items:center;gap:8px;border:1px dashed var(--axis);border-radius:8px;padding:8px 12px;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--accent);background:transparent}
+#mw-sim .filebtn input{position:absolute;width:1px;height:1px;opacity:0}
+#mw-sim .filebtn:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+#mw-sim .err{color:var(--bad);font-size:13px;font-weight:700;margin:0}
+#mw-sim .combos{display:flex;flex-wrap:wrap;gap:6px}
+#mw-sim .combo{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink);line-height:1.5}
+#mw-sim .combo:hover{border-color:var(--accent);color:var(--accent)}
+#mw-sim .combo:disabled{opacity:.45;cursor:not-allowed}
+#mw-sim .conds{display:flex;flex-direction:column;gap:10px}
+#mw-sim .cond{border:1px solid var(--rule);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+#mw-sim .cond-top{display:flex;justify-content:space-between;align-items:center;font-size:13.5px}
+#mw-sim .linkbtn{border:0;background:none;color:var(--bad);font-weight:700;font-size:13px;cursor:pointer;padding:2px 4px}
+#mw-sim .cond-desc{margin:0;font-size:12.5px;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:6px 10px;line-height:1.6}
+#mw-sim .addbtn{border:1px dashed var(--accent);background:transparent;color:var(--accent);border-radius:8px;padding:8px 12px;font-size:13.5px;font-weight:700;cursor:pointer}
+#mw-sim .addbtn:disabled{border-color:var(--rule);color:var(--muted);cursor:not-allowed}
+#mw-sim .label-sm{font-size:12.5px;color:var(--muted);font-weight:500;margin:0}
+#mw-sim .label-sm b{color:var(--ink);font-size:13.5px}
+#mw-sim .glossary{margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px 18px}
+#mw-sim .info{display:flex;flex-direction:column;gap:8px}
+#mw-sim .info details{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:10px 14px}
+#mw-sim .info summary{cursor:pointer;font-weight:700;font-size:14px}
+#mw-sim .info .body{margin-top:8px;font-size:12.5px;color:var(--muted);line-height:1.65}
+#mw-sim .info ol,#mw-sim .info ul{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:3px}
+#mw-sim .info b{color:var(--ink)}
+#mw-sim .glossary div{padding:2px 0}
+#mw-sim .glossary dt{font-weight:700;font-size:13px;color:var(--ink)}
+#mw-sim .glossary dd{margin:0;font-size:12.5px;color:var(--muted);line-height:1.55}
+#mw-sim .exitbox .row2{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+@media (min-width:901px){#mw-sim .exitbox .row2{grid-template-columns:minmax(0,1fr)}}
+#mw-sim .exitbox{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);border-radius:8px;padding:12px;background:var(--bg)}
+#mw-sim .field input:disabled{opacity:.45}
+#mw-sim .exitline{margin:0;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:8px 14px;font-size:12.5px;line-height:1.6;color:var(--muted)}
+#mw-sim .results{display:flex;flex-direction:column;gap:20px;min-width:0}
+#mw-sim .verdict{border-radius:var(--r);padding:20px 22px;display:flex;flex-direction:column;gap:8px;border:1px solid var(--rule);background:var(--surface)}
+#mw-sim .verdict .what{font-size:13px;color:var(--muted);margin:0;line-height:1.6}
+#mw-sim .verdict h2{margin:0;font-size:clamp(19px,2.6vw,23px);font-weight:900;line-height:1.45;text-wrap:balance}
+#mw-sim .verdict p{margin:0;max-width:68ch;font-size:13.5px}
+#mw-sim .chip{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:2px 12px;border-radius:999px}
+#mw-sim .chip::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+#mw-sim .v-good{border-left:5px solid var(--good)}
+#mw-sim .v-good .chip{color:var(--good);background:var(--good-bg)}
+#mw-sim .v-bad{border-left:5px solid var(--bad)}
+#mw-sim .v-bad .chip{color:var(--bad);background:var(--bad-bg)}
+#mw-sim .v-watch{border-left:5px solid var(--watch)}
+#mw-sim .v-watch .chip{color:var(--watch);background:var(--watch-bg)}
+#mw-sim .v-none{border-left:5px solid var(--none)}
+#mw-sim .v-none .chip{color:var(--none);background:var(--none-bg)}
+#mw-sim .tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:640px){#mw-sim .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#mw-sim .tile{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+#mw-sim .tile .k{font-size:12.5px;color:var(--muted);font-weight:500}
+#mw-sim .tile .v{font-size:24px;font-weight:700;line-height:1.3}
+#mw-sim .tile .s{font-size:11.5px;color:var(--muted)}
+#mw-sim .card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+#mw-sim .card h3{margin:0;font-size:15px;font-weight:700}
+#mw-sim .card .sub{margin:0;font-size:12px;color:var(--muted);line-height:1.6}
+#mw-sim .chart{position:relative;width:100%}
+#mw-sim .chart svg{display:block;width:100%;height:auto;overflow:visible}
+#mw-sim .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted)}
+#mw-sim .legend span{display:inline-flex;align-items:center;gap:6px}
+#mw-sim .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+#mw-sim .tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--rule);box-shadow:0 4px 14px rgba(0,0,0,.14);border-radius:8px;padding:8px 10px;font-size:12.5px;line-height:1.55;min-width:120px;max-width:240px;z-index:3}
+#mw-sim .tip b{font-size:14px;display:block}
+#mw-sim .tip .m{color:var(--muted)}
+#mw-sim .scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:8px}
+#mw-sim table{border-collapse:collapse;width:100%;font-size:13.5px}
+#mw-sim th,#mw-sim td{padding:8px 12px;border-bottom:1px solid var(--rule);text-align:right;white-space:nowrap}
+#mw-sim th{font-size:12px;color:var(--muted);font-weight:700;background:var(--bg);position:sticky;top:0}
+#mw-sim td:first-child,#mw-sim th:first-child{text-align:left}
+#mw-sim tr:last-child td{border-bottom:0}
+#mw-sim .pos{color:var(--good);font-weight:700}
+#mw-sim .neg{color:var(--bad);font-weight:700}
+#mw-sim .dim td{color:var(--muted)}
+#mw-sim .tradewrap{max-height:340px;overflow:auto;border:1px solid var(--rule);border-radius:8px}
+#mw-sim details summary{cursor:pointer;font-weight:700;font-size:14px}
+#mw-sim .counter{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:var(--info-bg);border-left:4px solid var(--info-rule);border-radius:8px;padding:10px 16px;font-size:12.5px;line-height:1.6}
+#mw-sim .counter p{margin:0;max-width:62ch}
+#mw-sim .btn{border:1px solid var(--rule);background:var(--surface);border-radius:8px;padding:7px 14px;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--ink);text-decoration:none;display:inline-block}
+#mw-sim .btn:hover{border-color:var(--accent);color:var(--accent)}
+#mw-sim .btn-primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+#mw-sim .btn-primary:hover{color:var(--accent-ink);filter:brightness(1.08)}
+#mw-sim .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+#mw-sim .ok{font-size:13px;color:var(--good);font-weight:700}
+#mw-sim .busy{opacity:.55;transition:opacity .15s}
+#mw-sim .two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px}
+@media (max-width:900px){#mw-sim .two{grid-template-columns:minmax(0,1fr)}}
+#mw-sim .section{display:flex;flex-direction:column;gap:12px}
+#mw-sim .section h2{margin:0;font-size:20px;font-weight:900}
+#mw-sim .steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;counter-reset:s}
+#mw-sim .steps li{counter-increment:s;position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:10px 14px 10px 42px;line-height:1.65;font-size:14px}
+#mw-sim .steps li::before{content:counter(s);position:absolute;left:16px;top:10px;font-weight:900;color:var(--accent);font-size:15px}
+#mw-sim .plain{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;font-size:14px}
+@media (prefers-reduced-motion: reduce){#mw-sim,#mw-sim *{transition:none!important}}

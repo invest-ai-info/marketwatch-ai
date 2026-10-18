@@ -6,13 +6,13 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>それ、本当？ 投資の「定説」をデータで確かめます｜質問受付 - MarketWatch AI</title>
-  <meta name="description" content="「RSIが30を下回ったら買い」「ゴールデンクロスは買いの合図」。よく聞く投資の定説を、実際に出た売買の合図の記録で確かめて記事にします。気になる定説をメールで送ってください。">
-  <meta name="keywords" content="投資 定説 本当,RSI 30 買い 本当,ゴールデンクロス 本当,テクニカル分析 勝率,移動平均線 検証,押し目買い 本当">
+  <title>それ、本当？ 定説シミュレーター｜投資の「定説」をデータで確かめる - MarketWatch AI</title>
+  <meta name="description" content="「RSIが30を下回ったら買い」「ゴールデンクロスは買いの合図」。よく聞く投資の定説を選ぶと、過去約20年の値動きでその場で確かめられるシミュレーターです。確かめられない定説はメールで受け付けます。">
+  <meta name="keywords" content="定説 シミュレーター,テクニカル指標 バックテスト,投資 定説 本当,RSI 30 買い 本当,ゴールデンクロス 本当,テクニカル分析 勝率,移動平均線 検証,押し目買い 本当">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-sore-honto.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="それ、本当？ 投資の「定説」をデータで確かめます｜質問受付 | MarketWatch AI">
-  <meta property="og:description" content="「RSIが30を下回ったら買い」「ゴールデンクロスは買いの合図」。よく聞く投資の定説を、実際に出た売買の合図の記録で確かめて記事にします。気になる定説をメールで送ってください。">
+  <meta property="og:title" content="それ、本当？ 定説シミュレーター｜投資の「定説」をデータで確かめる | MarketWatch AI">
+  <meta property="og:description" content="「RSIが30を下回ったら買い」「ゴールデンクロスは買いの合図」。よく聞く投資の定説を選ぶと、過去約20年の値動きでその場で確かめられるシミュレーターです。確かめられない定説はメールで受け付けます。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-sore-honto.html">
   <meta property="og:site_name" content="MarketWatch AI">
   <meta property="og:locale" content="ja_JP">
@@ -25,8 +25,8 @@
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "それ、本当？ 投資の「定説」をデータで確かめます｜質問受付",
-  "description": "「RSIが30を下回ったら買い」「ゴールデンクロスは買いの合図」。よく聞く投資の定説を、実際に出た売買の合図の記録で確かめて記事にします。気になる定説をメールで送ってください。",
+  "name": "それ、本当？ 定説シミュレーター｜投資の「定説」をデータで確かめる",
+  "description": "「RSIが30を下回ったら買い」「ゴールデンクロスは買いの合図」。よく聞く投資の定説を選ぶと、過去約20年の値動きでその場で確かめられるシミュレーターです。確かめられない定説はメールで受け付けます。",
   "url": "https://marketwatch-jp.com/guide-sore-honto.html",
   "datePublished": "2026-09-23",
   "mainEntity": {
@@ -234,6 +234,7 @@ body.dark .sh-q{color:#79c0ff}
 body.dark .sh-a,body.dark .sh-col ul,body.dark .sh-flow,body.dark .sh-plain{color:#c9d1d9}
 body.dark .sh-copy{background:#0d1117;color:#e6edf3;border-color:#30363d}
 </style>
+<link rel="stylesheet" href="sore-honto-sim.css">
 </head>
 <body>
 <header>
@@ -258,24 +259,227 @@ body.dark .sh-copy{background:#0d1117;color:#e6edf3;border-color:#30363d}
   <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
 </nav>
 
-<div class="breadcrumb"><a href="index.html">ホーム</a> ＞ <a href="guides.html">解説記事</a> ＞ それ、本当？ 検証室</div>
+<div class="breadcrumb"><a href="index.html">ホーム</a> ＞ <a href="guides.html">解説記事</a> ＞ それ、本当？ 定説シミュレーター</div>
 
 <article class="article">
     <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
       ⚠️ 本記事は情報提供のみを目的としており、投資助言・特定金融商品の売買推奨・投資勧誘を構成するものではありません。掲載内容は公開情報にもとづく参考解説であり、将来の価格や成果を予測・保証するものではありません。<strong>投資の判断はご自身の責任でお願いいたします。</strong>
     </div>
 
-<h1>🔎 それ、本当？ 投資の「定説」をデータで確かめます</h1>
-<div class="meta-line">公開：2026年9月23日 ／ 読者の方からの質問を受け付けています</div>
+<h1>🔎 それ、本当？ 定説シミュレーター</h1>
+<div class="meta-line">公開：2026年9月23日 ／ 更新：2026年10月18日（シミュレーターを追加） ／ 質問も受け付けています</div>
 
 <div class="info-box"><strong>⏱️ 30秒でわかるこのページ</strong><br>
-「RSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）が30を下回ったら買い」「ゴールデンクロスは買いの合図」。投資の本やネットでよく見る「定説」は、本当に勝ちやすいのでしょうか。<br>
-このサイトでは、実際に出た売買の合図の記録を使って、定説を1つずつ確かめてきました。研究日誌は100本を超えています。<br>
-<strong>気になる定説を、メールで送ってください。</strong>確かめられるものは記事にして、できあがったらメールでお知らせします。
+「RSIが30を下回ったら買い」「ゴールデンクロスは買い」。よく聞く定説は、本当に勝ちやすいのでしょうか。<br>
+下の<strong>定説シミュレーター</strong>で定説を選ぶと、その合図どおりに売買した過去の成績を、でたらめな日に入った場合と比べて、その場で判定します。<br>
+シミュレーターで確かめられない定説は、<strong>メールで送ってください</strong>。確かめて記事にし、できあがったらお知らせします。
 </div>
 
+<h2>🧪 定説シミュレーター</h2>
+<div id="mw-sim">
+  <div class="layout">
+    <section class="controls" aria-label="確かめる条件">
+      <div class="step">
+        <h2><span class="stepno">1</span>きっかけの合図を選ぶ</h2>
+        <div class="tabs" role="tablist" aria-label="指標の種類">
+          <button class="tab" role="tab" id="sim-tab-trend" data-g="trend" aria-selected="true">トレンド系</button>
+          <button class="tab" role="tab" id="sim-tab-osc" data-g="osc" aria-selected="false">オシレーター系</button>
+          <button class="tab" role="tab" id="sim-tab-other" data-g="other" aria-selected="false">値動き・出来高</button>
+        </div>
+        <div class="presets" id="sim-presets" role="radiogroup" aria-label="定説"></div>
+        <div class="params" id="sim-params"></div>
+      </div>
+      <div class="step">
+        <h2><span class="stepno">2</span>条件を足して組み合わせる（なくても可）</h2>
+        <p class="label-sm">よく言われる組み合わせ</p>
+        <div class="combos" id="sim-combos"></div>
+        <div class="conds" id="sim-conds"></div>
+        <button class="addbtn" id="sim-addCond" type="button">＋ 条件を足す</button>
+        <p class="hint">合図の日に、条件もそろったときだけ数えます。</p>
+      </div>
+      <div class="step">
+        <h2><span class="stepno">3</span>どの値動きで確かめるか</h2>
+        <label class="field" for="sim-sym">銘柄
+          <select id="sim-sym"></select>
+        </label>
+        <p class="hint">「まとめて確かめる」は複数銘柄の合図を合計します。</p>
+        <div class="row2">
+          <label class="field" for="sim-y0">いつから<select id="sim-y0"></select></label>
+          <label class="field" for="sim-y1">いつまで<select id="sim-y1"></select></label>
+        </div>
+        <label class="filebtn" for="sim-csv">＋ 自分のCSVで確かめる<input type="file" id="sim-csv" accept=".csv,.txt,text/csv"></label>
+        <p class="hint">日付・始値・高値・安値・終値の列が必要です（出来高は任意）。ファイルは外部に送信しません。</p>
+        <p class="err" id="sim-csvErr" hidden></p>
+      </div>
+      <div class="step">
+        <h2><span class="stepno">4</span>確かめ方</h2>
+        <div class="field" role="radiogroup" aria-label="保有日数">保有日数
+          <div class="seg" id="sim-holdSeg"></div>
+          <span class="hint" id="sim-holdHint"></span>
+        </div>
+        <div class="exitbox">
+          <p class="label-sm"><b>損切り・利確</b>（任意）</p>
+          <div class="row2">
+            <label class="field" for="sim-stopMode">損切り<select id="sim-stopMode"><option value="none" selected>なし</option><option value="pct">%で指定</option><option value="atr">平均値幅の何倍</option></select></label>
+            <label class="field" for="sim-stopVal"><span id="sim-stopUnit">幅</span><input type="number" id="sim-stopVal" value="5" min="0.1" max="50" step="0.1" inputmode="decimal" disabled></label>
+          </div>
+          <div class="row2">
+            <label class="field" for="sim-tpMode">利確<select id="sim-tpMode"><option value="none" selected>なし</option><option value="pct">%で指定</option><option value="atr">平均値幅の何倍</option><option value="r">損切り幅の何倍</option></select></label>
+            <label class="field" for="sim-tpVal"><span id="sim-tpUnit">幅</span><input type="number" id="sim-tpVal" value="10" min="0.1" max="50" step="0.1" inputmode="decimal" disabled></label>
+          </div>
+          <div class="row2">
+            <label class="check" for="sim-trail" style="align-self:end"><input type="checkbox" id="sim-trail"><span>トレーリングストップ</span></label>
+            <label class="field" for="sim-trailVal">平均値幅の何倍<input type="number" id="sim-trailVal" value="3" min="0.5" max="20" step="0.5" inputmode="decimal" disabled></label>
+          </div>
+          <p class="hint">平均値幅＝直近14日の1日の値動きの平均。損切り・利確を使うと、保有日数は「最長」になります。同じ日に両方届いたら損切り扱いです。</p>
+        </div>
+        <label class="field" for="sim-cost">売買コスト（往復）
+          <select id="sim-cost">
+            <option value="0">0%</option>
+            <option value="0.02">0.02%（FXの目安）</option>
+            <option value="0.05">0.05%</option>
+            <option value="0.1" selected>0.1%（株の目安）</option>
+            <option value="0.2">0.2%</option>
+            <option value="0.5">0.5%</option>
+          </select>
+        </label>
+        <label class="check" for="sim-ovl"><input type="checkbox" id="sim-ovl" checked><span>保有中に出た合図は数えない</span></label>
+      </div>
+    </section>
+
+    <section class="results" id="sim-results" aria-live="polite">
+      <div class="verdict v-none" id="sim-verdict">
+        <p class="what" id="sim-vWhat">データを読み込んでいます…</p>
+        <span class="chip" id="sim-vChip">計算中</span>
+        <h2 id="sim-vHead">—</h2>
+        <p id="sim-vBody"></p>
+      </div>
+
+      <div class="tiles">
+        <div class="tile"><span class="k">合図の回数</span><span class="v num" id="sim-tN">—</span><span class="s" id="sim-tNs"></span></div>
+        <div class="tile"><span class="k">合図の平均損益</span><span class="v num" id="sim-tS">—</span><span class="s">コスト差引後</span></div>
+        <div class="tile"><span class="k">偽薬の平均損益</span><span class="v num" id="sim-tP">—</span><span class="s">でたらめな日に入った場合</span></div>
+        <div class="tile"><span class="k">勝率（合図 / 偽薬）</span><span class="v num" id="sim-tW">—</span><span class="s">コスト差引後</span></div>
+      </div>
+
+      <p class="exitline" id="sim-exitLine" hidden></p>
+
+      <div class="card">
+        <h3>偽薬2,000回の中での、合図の位置</h3>
+        <p class="sub" id="sim-histSub">—</p>
+        <div class="chart" id="sim-hist"></div>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--plot-bar)"></i>偽薬＜合図</span>
+          <span><i class="sw" style="background:var(--plot-bar-hi)"></i>偽薬≧合図</span>
+          <span><i class="sw" style="background:var(--accent);width:3px;height:14px;border-radius:0"></i>合図の平均</span>
+        </div>
+      </div>
+
+      <div class="card" id="sim-comboCard" hidden>
+        <h3>組み合わせの効果</h3>
+        <p class="sub" id="sim-comboSub"></p>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>比べ方</th><th>回数</th><th>合図の平均</th><th>偽薬を取る日</th><th>偽薬の平均</th><th>差</th><th>偽薬が勝った割合</th></tr></thead>
+            <tbody id="sim-comboBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>前半と後半で、同じ結果になるか</h3>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>期間</th><th>回数</th><th>合図の平均</th><th>偽薬の平均</th><th>差</th><th>偽薬が勝った割合</th></tr></thead>
+            <tbody id="sim-halvesBody"><tr><td colspan="6">—</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 id="sim-priceTitle">合図が出た場所</h3>
+        <div id="sim-breakWrap" hidden>
+          <p class="sub" id="sim-breakSub"></p>
+          <div class="scroll" style="margin-top:10px">
+            <table>
+              <thead><tr><th>銘柄</th><th>回数</th><th>合図の平均</th><th>偽薬の平均</th><th>差</th><th>差の向き</th></tr></thead>
+              <tbody id="sim-breakBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="sim-priceWrap">
+        <div class="chart" id="sim-price"></div>
+        <div class="legend">
+          <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="var(--mark-good)"></circle></svg>勝ち</span>
+          <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="3.8" fill="var(--plot-surface)" stroke="var(--mark-bad)" stroke-width="2"></circle></svg>負け</span>
+          <span id="sim-priceNote"></span>
+        </div>
+        </div>
+        <details>
+          <summary>売買の記録を見る</summary>
+          <div class="tradewrap" style="margin-top:10px">
+            <table>
+              <thead><tr id="sim-tradeHead"><th>合図の日</th></tr></thead>
+              <tbody id="sim-tradeBody"></tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+
+      <div class="counter">
+        <p id="sim-counterText">—</p>
+        <div class="actions">
+          <button class="btn" id="sim-copyBtn" type="button">結果をコピー</button>
+          <button class="btn" id="sim-resetBtn" type="button">試した回数を0に戻す</button>
+          <span class="ok" id="sim-copyOk" hidden>コピーしました</span>
+        </div>
+      </div>
+      <textarea id="sim-copyFallback" hidden readonly style="width:100%;min-height:150px;font:inherit;font-size:13px"></textarea>
+    </section>
+  </div>
+
+  <section class="info">
+    <details>
+      <summary>この検証のやり方</summary>
+      <div class="body"><ol>
+        <li>合図の<b>翌日の始値</b>で入ります（終値を見てから動くため）。</li>
+        <li>保有日数後の終値で決済。損切り・利確は先に届いたほうで決済し、コストを引きます。売りの合図は、下がれば利益で数えます。</li>
+        <li>でたらめな日に同じ回数入る<b>偽薬</b>を2,000回試し、合図と比べます。</li>
+        <li><b>前半と後半</b>のどちらでも同じ向きの差が出るかを見ます。</li>
+        <li>試すほど偶然の当たりが増えるので、合格ラインを<b>5% ÷ 試した回数</b>にします。</li>
+        <li>条件を足したときは、<b>条件の日だけの偽薬</b>とも比べます。</li>
+        <li>まとめて確かめるときは、日付の並びを保ったまま<b>時期をずらした偽薬</b>を使います（同じ日に合図が集中する分を数えすぎないため）。</li>
+      </ol></div>
+    </details>
+    <details>
+      <summary>注意点</summary>
+      <div class="body"><ul>
+        <li>日足なので、1日の中でどちらが先に動いたかはわかりません。</li>
+        <li>配当は含みません（株式分割は調整済み）。</li>
+        <li>銘柄は今も上場している大型株のみで、成績が良く見えやすくなります。</li>
+        <li>値動きの大きい銘柄を混ぜると、平均がそちらに引っぱられます。</li>
+        <li>過去の結果は、将来の成績を保証しません。</li>
+      </ul></div>
+    </details>
+    <details>
+      <summary>用語の説明</summary>
+      <div class="body"><dl class="glossary">
+        <div><dt>偽薬</dt><dd>合図と関係なく、でたらめな日に入った場合。</dd></div>
+        <div><dt>偽薬が勝った割合</dt><dd>偽薬2,000回のうち、合図以上の成績だった割合。小さいほど偶然ではない。</dd></div>
+        <div><dt>合格ライン</dt><dd>偽薬が勝った割合がこれ未満なら「偽薬より良い」。</dd></div>
+        <div><dt>平均値幅</dt><dd>直近14日の、1日の値動きの平均。</dd></div>
+        <div><dt>トレーリングストップ</dt><dd>値段が良い方向に動くたびに、損切りの位置を後ろからついていかせる方法。</dd></div>
+        <div><dt>損切り幅の何倍</dt><dd>利確の幅を、損切りの幅の何倍にするか。</dd></div>
+      </dl></div>
+    </details>
+  </section>
+  <p class="hint">価格：Yahoo! Finance の日足（2006年1月〜2026年10月16日）。金・銀は先物です。</p>
+</div>
+<script src="sore-honto-sim.js" defer></script>
+
+
 <h2>📮 質問の送り方</h2>
-<p>下のボタンを押すと、メールを書く画面が開きます。書き方の見本が入っているので、確かめてほしい定説を書いて、そのまま送ってください。</p>
+<p>下のボタンを押すと、メールを書く画面が開きます。書き方の見本が入っているので、確かめてほしい定説を書いて、そのまま送ってください。シミュレーターの「結果をコピー」で、試した結果を本文に貼ることもできます。</p>
 <div class="sh-center"><a class="sh-send" href="mailto:info0414@gmail.com?subject=%E3%80%90%E3%81%9D%E3%82%8C%E3%80%81%E6%9C%AC%E5%BD%93%EF%BC%9F%E3%80%91%E7%A2%BA%E3%81%8B%E3%82%81%E3%81%A6%E3%81%BB%E3%81%97%E3%81%84%E5%AE%9A%E8%AA%AC&body=%E7%A2%BA%E3%81%8B%E3%82%81%E3%81%A6%E3%81%BB%E3%81%97%E3%81%84%E5%AE%9A%E8%AA%AC%EF%BC%9A%0D%0A%EF%BC%88%E4%BE%8B%EF%BC%9ARSI%E3%81%8C30%E3%82%92%E4%B8%8B%E5%9B%9E%E3%81%A3%E3%81%9F%E3%82%89%E8%B2%B7%E3%81%86%E3%81%A8%E5%8B%9D%E3%81%A1%E3%82%84%E3%81%99%E3%81%84%EF%BC%89%0D%0A%0D%0A%0D%0A%E3%81%A9%E3%81%93%E3%81%A7%E8%81%9E%E3%81%84%E3%81%9F%E3%81%8B%EF%BC%88%E3%81%AA%E3%81%8F%E3%81%A6%E3%82%82%E5%A4%A7%E4%B8%88%E5%A4%AB%E3%81%A7%E3%81%99%EF%BC%89%EF%BC%9A%0D%0A%0D%0A%0D%0A%E2%80%BB%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AF%E3%80%81%E3%81%8A%E8%BF%94%E4%BA%8B%E3%81%A8%E8%A8%98%E4%BA%8B%E3%81%AE%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B%E3%81%AE%E3%81%9F%E3%82%81%E3%81%A0%E3%81%91%E3%81%AB%E4%BD%BF%E3%82%8F%E3%82%8C%E3%81%BE%E3%81%99%E3%80%82%0D%0A">✉️ メールで質問を送る</a></div>
 <p class="sh-alt">ボタンでメールの画面が開かないときは、件名に「それ、本当？」と入れて、<a href="mailto:info0414@gmail.com">info0414@gmail.com</a> へ送ってください。<button type="button" class="sh-copy" data-copy="info0414@gmail.com">アドレスをコピー</button></p>
 
@@ -301,7 +505,7 @@ body.dark .sh-copy{background:#0d1117;color:#e6edf3;border-color:#30363d}
   </div>
 </div>
 
-<h2>🔬 どうやって確かめるのか</h2>
+<h2>🔬 記事ではどうやって確かめるのか</h2>
 <p>このサイトでは、金・原油・日経平均・ビットコイン・ドル円など18の銘柄で、チャートの売買の合図を自動で出しています。そして合図のあと、「利益を確定する値段」と「損切りの値段」の<strong>どちらに先に届いたか</strong>を、すべて記録しています。</p>
 <p>この記録を使って、「定説どおりに売買していたら、どうなったか」を計算します。判断の目安は次の2つです。</p>
 <ul class="sh-plain">
