@@ -281,9 +281,9 @@
     <h3>④ ATRの倍数を使う</h3>
     <p>ATRの◯倍、という形で損切りの幅を決める考え方です。値動きが荒い局面では損切り幅も自動的に広がり、静かな局面では狭まるため、②や③と組み合わせて使われることも多いです。名前の付いた具体的な手法もいくつか知られています。</p>
     <ul>
-      <li><strong>シャンデリア・エグジット</strong>：考案者チャック・ルボー氏にちなむ手法で、「直近22本（およそ1か月分）の最高値から、ATRの3倍を差し引いた価格」という具体的な計算式を持つ、価格の動きに合わせて損切りラインも追随させるトレーリングストップ（値動きに合わせて損切りラインを追いかけさせる仕組み）の一種です。<!-- TODO(要原文確認): https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/chandelier-exit --></li>
+      <li><strong>シャンデリア・エグジット</strong>：チャック・ルボー（チャールズ・ルボー）氏が考案した手法で、買いの場合は「直近22本（日足なら、ひと月の営業日数にあたる）の最高値から、ATR（これも22本で計算）の3倍を差し引いた価格」という具体的な計算式を持ちます。価格の動きに合わせて損切りラインも追随させるトレーリングストップ（値動きに合わせて損切りラインを追いかけさせる仕組み）の一種です。</li>
       <li><strong>パラボリック</strong>：ワイルダー氏が1978年に考案した手法で、価格を追いかけるように損切りの線を少しずつ動かし、値動きの向きが変わると線も反転する、という仕組みです。</li>
-      <li><strong>タートルズの出口ルール</strong>：1980年代に活躍したトレーダー集団「タートルズ」は、損切りの位置をボラティリティ（直近の値動きの大きさ）のおよそ2倍に置き、あわせて、システムによっては10日間、別のシステムでは20日間の安値を割ったら手仕舞う、という出口ルールも使っていたとされます。<!-- TODO(要原文確認): https://www.theturtletrader.com/turtle-trading-rules/ --></li>
+      <li><strong>タートルズの出口ルール</strong>：1980年代に活躍したトレーダー集団「タートルズ」は、1日あたりの値動きの平均（彼らは「N」と呼びました。いまのATRとほぼ同じもので、20日で計算）の2倍だけ買値から離れた位置に損切りを置きました。あわせて、短い期間のシステムでは10日間、長い期間のシステムでは20日間の安値（売りの場合は高値）を割ったら手仕舞う、という出口ルールも使っていたとされます。</li>
     </ul>
 
     <h3>⑤ 想定していた値動きのシナリオが崩れたら</h3>
@@ -338,7 +338,7 @@
     <p>価格が有利な方向に動くほど、損切りの位置も同じ方向に追随させていく方法です。損切りでありながら、結果として利益を伸ばして確定する役割も兼ねます。前の章で紹介したシャンデリア・エグジットも、このトレーリングストップの一種です。ただし、窓で価格が飛んだときは、置いた位置より不利な値段で決済されることがあります。</p>
 
     <h3>⑦ フィボナッチの161.8％</h3>
-    <p>値動きの一区間に対して、黄金比と呼ばれる比率（161.8％）を当てはめた水準を、利益確定の目安にする考え方です。多くの解説で紹介される代表的な水準ですが、なぜその比率が効くのかについて、決まった説明があるわけではありません。<!-- TODO(要原文確認): https://www.investing.com/academy/analysis/fibonacci-extensions-in-stock-analysis/ --></p>
+    <p>値動きの一区間に対して、黄金比と呼ばれる比率（161.8％）を当てはめた水準を、利益確定の目安にする考え方です。多くの解説で紹介される代表的な水準で、解説の中では「フィボナッチ数列から生まれる、数学の決まった比率だから」「多くの機関投資家などが目標にしている水準だから」と説明されることもありますが、それを裏づける検証が示されているわけではありません。</p>
 
     <h3>⑧ 分けて利益を確定する</h3>
     <p>一度に全部を手仕舞うのではなく、複数回に分けて利益を確定する決め方です。一部を早めに確定して安心感を得ながら、残りは①や⑥などの方法で伸ばす、という組み合わせもよく紹介されています。</p>
@@ -352,24 +352,24 @@
     <p>ここからは、決め方の一覧を離れ、投資家が実際にどう行動しているかを調べた調査・実験を見ていきます。</p>
 
     <div class="negative-box">
-      <strong>📉 処分効果</strong>：値上がりした持ち高を実際に売却した割合は14.8％だったのに対し、値下がりした持ち高を売却した割合は9.8％にとどまった、という調査結果があります。勝っている持ち高は早く手放し、負けている持ち高は長く抱え込みやすい、という傾向です（1985年にシェフリン氏とスタットマン氏が名づけた「処分効果」を、1998年のオディーン氏が、米国の証券会社の約1万口座・1987〜93年の実際の売買記録で確かめたものです）。
+      <strong>📉 処分効果</strong>：値上がりした持ち高を実際に売却した割合は14.8％だったのに対し、値下がりした持ち高を売却した割合は9.8％にとどまった、という調査結果があります。勝っている持ち高は早く手放し、負けている持ち高は長く抱え込みやすい、という傾向です（1985年にシェフリン氏とスタットマン氏が名づけた「処分効果」を、1998年のオディーン氏が、米国の全国規模の証券会社（手数料の安いディスカウント証券会社）から選んだ1万口座の、1987〜93年の実際の売買記録で確かめたものです）。
     </div>
 
-    <p>あらかじめ損切り・利益確定の注文を出しておくと、この傾向は小さくなるのでしょうか。2017年に発表された、フィッシュバッハー氏らのグループによる実験では、参加者を「あらかじめ損切り・利益確定の注文を出せるグループ」と「そうでないグループ」に分けて売買させました。その結果、注文を出せたグループのほうが、勝ち負けを手放すタイミングの偏り（処分効果）が小さくなりました。ただし、単に「ここで売る予定でしたね」と思い出させるだけの条件では、この効果は見られなかった、とされています。<!-- TODO(要原文確認): https://academic.oup.com/rfs/article-abstract/30/6/2110/2999690 --></p>
+    <p>あらかじめ損切り・利益確定の注文を出しておくと、この傾向は小さくなるのでしょうか。2017年に発表された、フィッシュバッハー氏らのグループによる実験室での実験では、参加者を「あらかじめ損切り・利益確定の注文を出せるグループ」と「そうでないグループ」に分けて売買させました。その結果、注文を出せたグループのほうが、勝ち負けを手放すタイミングの偏り（処分効果）が小さくなりました。ただし、単に「ここで売る予定でしたね」と思い出させるだけの条件では、この効果は見られなかった、とされています。</p>
 
-    <p>注文が実際にどこに置かれているかを調べた研究もあります。2003年に発表されたオスラー氏の研究（為替の注文を調べたもの）では、利益確定の注文は「きりの良い値段」（たとえば下2桁がゼロになる値段）の近くに集まりやすく、損切りの注文は、そのきりの良い値段のすぐ外側に集まりやすい、という傾向が報告されています。<!-- TODO(要原文確認): https://onlinelibrary.wiley.com/doi/abs/10.1111/1540-6261.00588 --></p>
+    <p>注文が実際にどこに置かれているかを調べた研究もあります。2003年に発表されたオスラー氏の研究（為替の注文を調べたもの）では、利益確定の注文は「きりの良い値段」に特に強く集まり、損切りの注文は、そのきりの良い値段のすぐ外側に強く集まる、という傾向が報告されています。為替の利益確定・損切りの注文を1件ずつ記録したデータを使った、初めての研究とされています。</p>
 
-    <p>日本の個人投資家は、実際どうしているのでしょうか。日経マネーが実施した「個人投資家調査2025」では、損切りについて何らかのルールを持っている人はおよそ37％で、基準として多かったのは「買った値段から一定割合下がったら」「想定していたシナリオが崩れたら」の二つだった、と紹介されています。この調査は、自分で応募した約9,000人の回答によるもので、日本の個人投資家全体を代表するものではありません。<!-- TODO(要原文確認): https://www.nikkei.com/article/DGXZQOUB113PC0R10C25A7000000/ --></p>
+    <p>日本の個人投資家は、実際どうしているのでしょうか。日経マネーが実施した「個人投資家調査2025」では、損切りについて何らかのルールを持っている人はおよそ37％で、そのうち「ルールを絶対に守る」という人は7％にとどまりました。基準として多かったのは「買った値段から一定割合下がったら」「想定していたシナリオが崩れたら」の二つだった、と紹介されています（2025年7月12日の記事）。この調査は9,000人以上の回答によるものですが、回答者の選び方は記事には書かれていないため、日本の個人投資家全体の姿と同じとは限りません。</p>
 
     <!-- Section 4 -->
     <h2 id="section-4">4️⃣ 研究でわかっていること（損切り・利確の効果）</h2>
     <p>損切りという仕組み自体に、成績を良くする効果があるのでしょうか。ここは意見が分かれるところで、条件によって結果が変わる、というのが実際のところのようです。</p>
 
-    <p>2014年に発表されたカミンスキー氏とロー氏の研究では、値段の動きにクセ（前の動きと次の動きのつながり）が無いと仮定すると、損切りルールは平均のもうけを引き下げてしまう一方、値動きにトレンド（方向性）が続きやすい傾向があるときには、損切りルールが平均のもうけを引き上げる方向に働く、という結果が報告されています。<!-- TODO(要原文確認): https://www.sciencedirect.com/science/article/abs/pii/S138641811300030X --></p>
+    <p>2014年に発表されたカミンスキー氏とロー氏の研究では、値段の動きにクセ（前の動きと次の動きのつながり）が無いと仮定すると、損切りルールは平均のもうけを引き下げてしまう一方、値動きにトレンド（方向性）が続きやすい傾向があるときには、損切りルールが損を減らし、平均のもうけを引き上げることもある、という結果が報告されています。株価指数の先物のデータで試した例では、損切りの判定を長めの間隔で行うと、一部の損切りルールが、もうけを増やしながら値動きの荒さを大きく減らせたとされています。</p>
 
-    <p>2017年のロー氏とレモロフ氏の研究では、損切りの位置を値段に近づけすぎると、売買のたびにかかるコスト（スプレッドなど、売値と買値の差にあたる取引コスト）の影響が大きくなり、かえって不利になりやすい、という点が指摘されています。下げのリスクを減らす効果が見られた方法もありましたが、その効果は大きくなかったとされています。<!-- TODO(要原文確認): https://www.sciencedirect.com/science/article/abs/pii/S1386418117300472 --></p>
+    <p>2017年のロー氏とレモロフ氏の研究では、米国の個別株を数多く調べた結果、損切りの位置を値段に近づけすぎると、売買のたびにかかるコスト（スプレッドなど、売値と買値の差にあたる取引コスト）の影響が大きくなり、かえって不利になりやすい、という点が指摘されています。下げのリスクを減らす効果が見られた方法もありましたが、その効果は大きくなかったとされています（値動きのつながりが十分に強い株では、損切りのほうが上回ることもあり得る、とも書いています）。</p>
 
-    <p>2009年のレイ氏とリー氏の研究では、損切りルールは、買って持ち続ける場合と比べて損失を減らしも増やしもしなかった一方、ある特定の仕組みの損切りだけはリスクを下げる働きが見られた、と報告されています。著者らは、損切りの価値は「もうけを増やすこと」より「リスクを下げること」にあるのかもしれない、とまとめています。<!-- TODO(要原文確認): https://www.semanticscholar.org/paper/The-Value-of-Stop-Loss-Strategies-Lei-Li/d5a9eefdb140e749492a9af35cdd16387b447baa --></p>
+    <p>2009年のレイ氏とリー氏の研究（個別株を調べたもの）では、損切りルールは、買って持ち続ける場合と比べて損失を減らしも増やしもしなかった一方、ある特定の仕組みの損切りだけはリスクを下げる働きが見られた、と報告されています。著者らは、損切りの価値は「もうけを増やすこと」より「リスクを下げること」にあるのかもしれない、とまとめています。</p>
 
     <p>一方、利益確定の目標そのもの（たとえば、リスクリワードの倍率や、フィボナッチの161.8％といった具体的な水準）の効果を確かめた学術的な研究は、今回調べた範囲では見当たりませんでした（最適な利確・損切りの水準を数式で扱う理論の研究はあります）。損切りに比べて、利益確定は好みや相場観に委ねられている部分が大きいようです。</p>
 
@@ -435,14 +435,14 @@
     <h2>📚 出典・参考文献</h2>
     <ul>
       <li><a href="https://en.wikipedia.org/wiki/Disposition_effect" target="_blank" rel="noopener">Disposition effect - Wikipedia</a>（シェフリン氏とスタットマン氏 1985年、オディーン氏 1998年の研究。売却割合14.8％／9.8％の数値の出典）</li>
-      <li><a href="https://doi.org/10.1111/0022-1082.00072" target="_blank" rel="noopener">Odean (1998) "Are Investors Reluctant to Realize Their Losses?", The Journal of Finance 53(5)</a>（一次文献）<!-- TODO(要原文確認): 一次文献で 14.8％／9.8％ と対象（約1万口座・1987〜93年）を確かめる。DOI のリンク先も確認 --></li>
+      <li><a href="https://doi.org/10.1111/0022-1082.00072" target="_blank" rel="noopener">Odean (1998) "Are Investors Reluctant to Realize Their Losses?", The Journal of Finance 53(5), pp.1775-1798</a>（一次文献。表Iの通年の数字＝14.8％／9.8％と、1万口座・1987〜93年を確認）</li>
       <li><a href="https://academic.oup.com/rfs/article-abstract/30/6/2110/2999690" target="_blank" rel="noopener">Fischbacher, Hoffmann & Schudy (2017) "The Causal Effect of Stop-Loss and Take-Gain Orders on the Disposition Effect", The Review of Financial Studies</a></li>
-      <li><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/1540-6261.00588" target="_blank" rel="noopener">Osler (2003) "Currency Orders and Exchange Rate Dynamics", The Journal of Finance</a></li>
+      <li><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/1540-6261.00588" target="_blank" rel="noopener">Osler (2003) "Currency Orders and Exchange Rate Dynamics", The Journal of Finance 58(5)</a></li>
       <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S138641811300030X" target="_blank" rel="noopener">Kaminski & Lo (2014) "When do stop-loss rules stop losses?", Journal of Financial Markets</a></li>
       <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S1386418117300472" target="_blank" rel="noopener">Lo & Remorov (2017) "Stop-loss strategies with serial correlation, regime switching, and transaction costs", Journal of Financial Markets</a></li>
       <li><a href="https://www.semanticscholar.org/paper/The-Value-of-Stop-Loss-Strategies-Lei-Li/d5a9eefdb140e749492a9af35cdd16387b447baa" target="_blank" rel="noopener">Lei & Li (2009) "The Value of Stop Loss Strategies", Financial Services Review</a></li>
       <li><a href="https://www.nikkei.com/article/DGXZQOUB113PC0R10C25A7000000/" target="_blank" rel="noopener">日経マネー「個人投資家調査2025」（日本経済新聞）</a></li>
-      <li><a href="https://www.theturtletrader.com/turtle-trading-rules/" target="_blank" rel="noopener">The Original Turtle Trading Rules（タートルズの出口ルール）</a></li>
+      <li><a href="https://web.archive.org/web/20050131123626/http://www.originalturtles.org/docs/turtlerules.pdf" target="_blank" rel="noopener">The Original Turtle Trading Rules（OriginalTurtles.org が公開したPDF・Internet Archive の保存版）</a>（タートルズの損切り2N・10日／20日の出口）<!-- 2026-10-18: 元の出典 https://www.theturtletrader.com/turtle-trading-rules/ はサイトごと開けない（Error 400 Unknown hostname）ため、元の文書の保存版に差し替え --></li>
       <li><a href="https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/chandelier-exit" target="_blank" rel="noopener">Chandelier Exit - StockCharts ChartSchool（シャンデリア・エグジットの計算式）</a></li>
       <li><a href="https://www.investing.com/academy/analysis/fibonacci-extensions-in-stock-analysis/" target="_blank" rel="noopener">Fibonacci Extensions in Stock Analysis - Investing.com Academy</a></li>
       <li><a href="https://en.wikipedia.org/wiki/Parabolic_SAR" target="_blank" rel="noopener">Parabolic SAR - Wikipedia</a>（考案者ワイルダー氏・1978年）</li>
