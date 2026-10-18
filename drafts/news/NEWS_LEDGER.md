@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-18
+- 判定: ✅ 公開済み
+- 選定トピック: ブレント原油が2026年10月16日（金）に5月以来初の$110突破（終値$109.86）──ホルムズ海峡へのタンカー攻撃・フーシーによるサウジミサイル攻撃（ヤンブ港を迎撃）・ロシアのリャザン製油所ドローン攻撃という3重リスクが同時発生（カテゴリ: 原油・中東・エネルギー・インフレ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - BusinessToday「Brent hits $110 as Hormuz ship attacks, Houthi strikes on Saudi trigger oil rally」2026-10-17 https://www.businesstoday.in/markets/story/brent-hits-110-as-hormuz-ship-attacks-houthi-strikes-on-saudi-trigger-oil-rally-562207-2026-10-17
+  - tokenpost.com「Two Tankers Hit Off Saudi Arabia as Brent Tops $110 Friday」2026-10-17 https://www.tokenpost.com/news/investing/34116
+  - The Hill「Houthi strike on Saudi infrastructure sends oil prices soaring」2026-10-17 https://thehill.com/policy/energy-environment/6088763-oil-prices-jump-houthi-attacks/
+  - discoveryalert.com「Brent Oil Price Hits $110 as Hormuz, Saudi and Russia Risks Stack Up」2026-10-17 https://discoveryalert.com/news/brent-oil-price-110-hormuz-saudi-russia-october-2026/
+  - JKN「Saudi Missile Interception and Tanker Attack Push Brent Crude Above $110」2026-10-17 https://news.jkn.co.kr/editions/english/post/1029392
+  - nationthailand.com「Brent rises 0.35% on October 14 after Saudi Aramco attack」2026-10-14 https://www.nationthailand.com/news/world/40072291
+  - CNBC「CPI inflation report September 2026」2026-10-14（米9月CPI +3.7%の根拠）
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（INPEX名指し部分に「売買推奨ではありません」追加、「複数メディア」→「一部メディア」修正）→その後執筆側が事実修正（「10月20日（月）」→「10月19日（月）」・決算日を「10月下旬」に修正・CPI出典明記・「2桁台」→「$100台（3桁台）」・「約95%」→「ほぼ全量」）
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典7系統 ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告45件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-18-brent-110-oil-middle-east.html
+- commit: 1c3936a（main へ push 済み）
+
+---
+
 ## 2026-10-17
 - 判定: ✅ 公開済み
 - 選定トピック: インドネシア株（IHSG）がMSCIの「スタンドアロン市場」格下げ提案を受けて1998年以来最大の急落（▲11.57%・終値約5,185）、取引停止発動（カテゴリ: MSCI・新興国市場・インドネシア・IHSG・ルピア）
