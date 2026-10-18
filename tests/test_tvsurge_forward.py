@@ -166,7 +166,7 @@ def test_outputs_verified_list_and_map():
         mk = V.collect_markers([(path, "J26F", "J26F")])
         assert [r["id"] for r in mk] == ["C", "C2"] and mk[0]["n"] == st["progress"]["C"]
         m = R.collect(tmp)
-        jp = [r for r in R.collect_studies(tmp, m)["verify"] if r["cat"] == "jp"]
+        jp = [r for r in R.collect_studies(tmp, m)["verify"] if r["cat"] == "jp" and not r.get("placeholder")]   # 記録が届く前から出る行（F1GF）は外す
         assert [r["name"] for r in jp] == ["「寄りで買わない」目印C：前の日に売買代金が急に増えた日本株"] and "12営業日" in jp[0]["progress"]
     assert any(s[0] == "tvsurge-forward.json" for s in V.MARKER_SOURCES) and R.TVSURGE_FWD == "tvsurge-forward.json"
 

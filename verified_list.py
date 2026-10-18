@@ -48,6 +48,10 @@ SOURCES = [
     ("market-dip-forward.json", "J25F 相場全体が安く寄った朝の深い下げを指値で拾う・前向き（全上場の毎朝・寄り→9:30・費用後）", "J25F"),   # 🆕 2026-10-07
     ("auction-forward.json", "J31F 空売りの前向き（目印 B・C・10億円以上・寄り成行で売り引け成行で買い戻す・損切りなし／+10%・費用後）", "J31F"),   # 🆕 2026-10-08
     ("lunch-gap-forward.json", "R10F 昼休みの窓と同じ向きに後場を持つ前向き（1321.T の1時間足・費用 0.01%）", "R10F"),   # 🆕 2026-10-08
+    # 🆕 2026-10-18 F1 日本株の割安×質（手元の J-Quants で数えて送る・群の件数と差だけ＝銘柄は入れない）。
+    #    昔の時代の1回だけの結果（G ✅・Z と A ✕）と、G の前向き（判定日24本で1回だけ）
+    ("f1-early-lab.json", "F1 日本株の割安×質を昔の時代（2016-10〜2021-06）で確かめる（グレアムの守り・ズールー・資産成長・手元の J-Quants・1回だけ数えた）", "F1"),
+    ("f1g-forward.json", "F1GF グレアムの守りの前向き（点4以上と1以下の「12か月後に−30%以下」の割合の差・毎月最初の営業日・判定日24本で判定・手元で数えて送る）", "F1GF"),
 ]
 # 🆕 2026-10-06 目印（見分け方）の前向き（kind: marker）。「期待値がプラスか」ではなく「目印あり−なしの差が0より下か」を
 # 判定するので、上の SOURCES とは別の節に載せる（確認＝confirm／ストップ＝stop）
@@ -74,6 +78,16 @@ RETIRED = [
      "name": "前の日に出来高が急に増えた株のうち、前の日の終わりより3パーセント以上高く始まったものを寄りで買い、9時30分に売る形", "evidence": "J13・J14・J15・J18・J22",
      "reason": "高く始まった株は寄りのあとにほかの株より値下がりしやすい（戻されやすい）と、ほかの検証で昔の期間も最近も出ている。判定まで4〜5年かかる"},
 ]
+# 🆕 2026-10-18 過去のデータで1回だけ数えて「◯ 低い費用ならプラス」などの途中の判定だった腕を、そのあとの確かめ
+# （実際の費用の測り直しなど）を受けてオーナーが区切ったもの。記録（Actions が書く）は書き換えない＝ここに1行足すと
+# 検証済みリストの「⏹ ストップ」に載る。数字は記録の results[腕]["net"]（ベーシスポイント）から取る＝手で写さない。
+# reason は公開ページにも出す＝記号や検証の番号を入れない（番号は evidence へ）
+CLOSED = [
+    {"src": "fx-confirm-lab.json", "id": "XC1", "on": "2026-10-18", "evidence": "X3・XC1・手元の費用の測り直し（10/10）",
+     "reason": "過去のデータで2回（2012〜2026年と、使っていなかった2004〜2011年）同じ向きに出たが、使っている業者の口座で"
+               "実際の往復の費用を測ると中央値1.55pips（手数料込み）で、費用を引く前の約+1.9ベーシスポイントがほとんど残らないため、"
+               "前向きはせずに区切った（2026-10-18 オーナーの判断）"},
+]
 TRACKER = "signal-lab-tracker.json"     # 🆕 2026-10-07 シグナルの条件（仮説）の採点で終わったもの（⛔反証・⏹見込みなし）
 
 
@@ -90,6 +104,21 @@ def retired(src, cid):
     """見込みなしで止めた腕なら RETIRED の1行、そうでなければ None（src は記録の JSON のファイル名）"""
     base = src.replace("\\", "/").rsplit("/", 1)[-1]
     return next((r for r in RETIRED if r["src"] == base and r["id"] == cid), None)
+
+
+def closed(src, cid):
+    """オーナーが区切った過去のデータの腕なら CLOSED の1行、そうでなければ None"""
+    base = src.replace("\\", "/").rsplit("/", 1)[-1]
+    return next((c for c in CLOSED if c["src"] == base and c["id"] == cid), None)
+
+
+def closed_verdict(data, c):
+    """記録の results[腕]["net"]（ベーシスポイント）から「⏹ ストップ」の判定を組み立てる（verdicts と同じ単位＝割合）"""
+    res = ((data.get("results") or {}).get(c["id"]) or {})
+    net = res.get("net") or {}
+    bp = (lambda x: None if x is None else x / 10000)
+    return {"status": "stop", "decided_on": c["on"], "n": res.get("n"), "mean": bp(net.get("mean")),
+            "lo": bp(net.get("lo")), "hi": bp(net.get("hi")), "reason": c["reason"], "closed": True}
 
 
 def retired_verdict(r):
@@ -144,6 +173,8 @@ def collect(sources=SOURCES):
             v = (data.get("verdicts") or {}).get(cid)
             if not v and retired(path, cid):
                 v = retired_verdict(retired(path, cid))      # 🆕 2026-10-07 見込みなしで途中で止めた
+            if not v and closed(path, cid):
+                v = closed_verdict(data, closed(path, cid))  # 🆕 2026-10-18 途中の判定のあとオーナーが区切った
             if not v and data.get("kind") == "backtest":
                 continue          # 過去のデータで1回だけ数えたもの＝ストップ以外は載せない（前向きは別に登録する）
             fix = REASON_FIX.get((path.replace("\\", "/").rsplit("/", 1)[-1], cid))

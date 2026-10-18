@@ -53,6 +53,7 @@ MARKET_DIP_FWD = "market-dip-forward.json"   # 🆕 2026-10-07 J25F 相場全体
 AUCTION_FWD = "auction-forward.json"         # 🆕 2026-10-08 J31F 空売りの前向き（寄り成行→引け成行）
 LUNCH_FWD = "lunch-gap-forward.json"         # 🆕 2026-10-08 R10F 昼休みの窓と同じ向きに後場を持つ前向き
 MOMENTUM_FWD = "momentum-forward.json"       # 🆕 2026-10-08 夜 J42F 過去12か月で一番上げた10銘柄の前向き（月1）
+F1G_FWD = "f1g-forward.json"                 # 🆕 2026-10-18 F1GF グレアムの守りの前向き（手元で月1回数えて送る）
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
@@ -533,6 +534,21 @@ def collect_studies(root, m):
                                    "（過去のデータでは弱かったが、結果を見たあとに気づいた数字のため。買わない側の目印の確かめで、空売りの合図ではありません）",
                            "since": (mf or {}).get("fwd_start") or "2026-10",
                            "progress": f"数えた月 {n}/24（月に1回なので時間がかかります。初めて数えるのは12月上旬）"})
+
+    # 🆕 2026-10-18 F1GF＝手元で数えて送る記録なので、最初の記録が届く前（11月の初め）から「登録済み」として出す
+    fg = _load(p(F1G_FWD))
+    fgv = (fg or {}).get("verdicts") or {}
+    if not ("F1G" in fgv or V.retired(F1G_FWD, "F1G")):
+        months = (fg or {}).get("months") or {}
+        done = ((fg or {}).get("progress") or {}).get("F1G", 0)
+        verify.append({"cat": "jp", "name": "グレアムの守りの点が高い株は、1年のあいだに大きく沈みにくいか",
+                       "what": "日本株を毎月最初の営業日にグレアムの6つの基準（利益は直近10年で見る）で採点し、点の高い株（4点以上）と"
+                               "低い株（1点以下）で、1年後に30パーセント以上値下がりしている株の割合を比べています"
+                               "（過去の2つの時代では点の高い株の方が沈みにくかったが、結果を見たあとの数字のため、登録した日より後の月だけで確かめます）",
+                       "since": (fg or {}).get("fwd_start") or "2026-11-02",
+                       "progress": (f"判定日 {len(months)}本・1年後の値が出た判定日 {done}/24（月に1回なので時間がかかります）" if fg
+                                    else "登録済み・最初の判定日は 2026-11-02（手元で月1回数えて送ります・1年後の値が出た判定日が24本で判定）"),
+                       "placeholder": fg is None})   # 記録が届く前の行（記録が無くても出る＝テストは数えるときに外す）
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):
