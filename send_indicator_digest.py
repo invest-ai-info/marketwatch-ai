@@ -47,7 +47,7 @@ import sys
 
 import jp_markers
 import mail_html      # 🆕 2026-10-09 色付きの HTML メール（文字の本文はそのまま）
-import jp_momentum    # 🆕 2026-10-08 夜 強すぎる株（過去12か月で一番上げた10銘柄・J42／J42F）
+import jp_momentum    # 🆕 2026-10-08 夜 上がりすぎた株（過去12か月で一番上げた10銘柄・J42／J42F・10/18 に旧「強すぎる株」から言い換え）
 import morning_brief  # 🆕 2026-10-08 夜 今日のファンダ・決算・研究から分かっていること
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -211,11 +211,11 @@ def build(now):
                fx, today_ev, load_news(), morning_brief.RESULTS, jp_open)
 
     # 🆕 2026-10-08 日本株の「寄りで買わない」目印（前の日の引けでわかる C・B候補・💣地雷の印）＝朝の準備（7〜9時）用
-    # 🆕 2026-10-08 夜 強すぎる株＝新しく買わない側（過去12か月で一番上げた10銘柄・月1回）
+    # 🆕 2026-10-08 夜 上がりすぎた株（今月は新しく買わない）＝過去12か月で一番上げた10銘柄・月1回
     # 🆕 2026-10-09 東証の休みは2つとも出さない。研究から分かっていることは週の最初の取引日だけ（research_section の中で決める）
     if jp_open:
         L += _safe("寄りで買わない目印", jp_markers.section, markers, today)
-        L += _safe("強すぎる株", jp_momentum.section, mom, markers, today)
+        L += _safe("上がりすぎた株", jp_momentum.section, mom, markers, today)
     L += _safe("研究から分かっていること", morning_brief.research_section, today)
 
     if hol:

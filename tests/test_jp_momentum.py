@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""朝のメール用「強すぎる株＝買わない側」（jp_momentum.py）・地雷の印（jp_markers）・今日のファンダと決算（morning_brief.py）のテスト。
+"""朝のメール用「上がりすぎた株（今月は新しく買わない）」（jp_momentum.py）・地雷の印（jp_markers）・今日のファンダと決算（morning_brief.py）のテスト。
 2026-10-08 夜 新設。
 
 値動きはすべて作り物。確かめること＝①12−1 の値が研究の momentum_lab と同じ ②上場からの長さ（37か月）で外す・上位10・確かめる数の上限
@@ -112,7 +112,7 @@ def test_pick_and_section():
     markers = {"rows": [{"code": "7777", "c": True, "b": False}]}
     s = "\n".join(J.section(mom, markers, dt.date(2026, 11, 2)))
     assert "2026-10-30 の大引けで決めた一覧（11月のあいだ使う）" in s and "7777 強  12か月 +350%" in s and "〔C 売買代金の急増〕" in s
-    assert "新しく買わない側" in s and "空売りの合図でもない" in s and "J42F" in s and "J42 ✕" in s
+    assert "今月は新しく買わない（寄りでも、ほかの時間でも）" in s and "空売りの合図でもない" in s and "J42F" in s and "J42 ✕" in s
     assert J.section(mom, markers, dt.date(2026, 10, 31)) == []          # 土曜
     assert "10月に使う一覧がまだ無い（夕方の jp-highs が次に回ったときから作る）" in "\n".join(J.section(None, None, dt.date(2026, 10, 9)))
     assert "最新は 2026-10-30 の分" in "\n".join(J.section(mom, None, dt.date(2026, 12, 1)))
@@ -197,13 +197,13 @@ def test_summary_section():
     assert "・地合い（AI）：リスクオフ（売られやすい）・確度 中／日経225 中立・ドル円 上向き" in s and "今朝の見立てではない" not in s
     assert "・通貨（24時間の値動き）：強い 米ドル +0.40%・ポンド +0.06% ／ 弱い 円 -0.30%・豪ドル -0.12%" in s
     assert "・通貨（AIの見立て）：強い 米ドル（高） ／ 弱い 円（中）" in s
-    assert "・日本株：寄りで買わない目印 2銘柄（★C・B候補の両方 1・💣地雷 1）／強すぎる株 1銘柄（新しく買わない側）" in s
+    assert "・日本株：寄りで買わない目印 2銘柄（★C・B候補の両方 1・💣地雷 1）／上がりすぎた株 1銘柄（今月は新しく買わない）" in s
     assert "・決算（日本の主な銘柄）：9983 ファストリ（今日 引け後）" in s
     s = "\n".join(B.summary_section(now, [ev(J9(21, 30, 13), "米 CPI")], None, None, None, None, None))
     assert "・発表：今日はなし（次は 10/13(火) 21:30 米 CPI）" in s and "地合い" not in s and "日本株" not in s and "通貨" not in s
     assert "🟡 発表：21:30 米 CPI" in "\n".join(B.summary_section(now, [ev(J9(21, 30), "米 CPI")]))          # 6時間より先
     s = "\n".join(B.summary_section(J9(6, 20, 12), [], FC, None, mk, {"lists": "壊れた"}, EC))       # 月曜・一覧は金曜→4日以内
-    assert "今朝の見立てではない" in s and "強すぎる株" not in s and "寄りで買わない目印 2銘柄" in s
+    assert "今朝の見立てではない" in s and "上がりすぎた株" not in s and "寄りで買わない目印 2銘柄" in s
     assert "9983 ファストリ（10/09 引け後＝今日の寄りに効く）" in s and "4063 信越（今日 引け後）" in s
     assert "日本株" not in "\n".join(B.summary_section(J9(6, 20, 14), [], FC, None, mk))                 # 一覧が古い
     hol = "\n".join(B.summary_section(J9(6, 20, 12), [], FC, fx, mk, _mom(), EC, jp_open=False))        # 東証の休み
@@ -223,11 +223,11 @@ def test_wired_into_digest_and_jp_highs():
         _, body = D.build(dt.datetime(2026, 10, 9, 6, 20, tzinfo=D.JST))
     finally:
         D.load_markers, D.load_momentum = o1, o2
-    for s in ("今日のファンダ", "決算発表", "寄りで買わない目印", "💣地雷：", "強すぎる株＝新しく買わない側", "2026-09-30 の大引けで決めた一覧",
+    for s in ("今日のファンダ", "決算発表", "寄りで買わない目印", "💣地雷：", "上がりすぎた株（今月は新しく買わない）】過去12か月で一番上げた10銘柄・月1回入れ替え", "2026-09-30 の大引けで決めた一覧",
               "投資助言ではありません"):
         assert s in body, s
     assert body.index("今日の要点") < body.index("【今日】") < body.index("今日のファンダ") < body.index("【🇯🇵 日本株：寄りで買わない目印") \
-        < body.index("【🇯🇵 日本株：強すぎる株") and "研究から分かっていること" not in body                      # 金曜＝研究の欄なし
+        < body.index("【🇯🇵 日本株：上がりすぎた株") and "研究から分かっていること" not in body                      # 金曜＝研究の欄なし
     try:
         D.load_markers = lambda: {"asof": "2026-10-09", "rows": [], "universe": 3700, "n_c": 0, "n_b": 0, "keep_min_tv": 1.0}
         D.load_momentum = lambda: _mom()
@@ -236,16 +236,16 @@ def test_wired_into_digest_and_jp_highs():
     finally:
         D.load_markers, D.load_momentum = o1, o2
     assert "今日は東証の休み" in hol and "【🇯🇵" not in hol and "研究から分かっていること" not in hol and "今日のファンダ" in hol
-    assert "【🇯🇵 日本株：寄りで買わない目印" in tue and "【🇯🇵 日本株：強すぎる株" in tue and "研究から分かっていること" in tue
-    assert "寄りで買わない目印 1銘柄（★C・B候補の両方 1・💣地雷 1）／強すぎる株 1銘柄" in body
+    assert "【🇯🇵 日本株：寄りで買わない目印" in tue and "【🇯🇵 日本株：上がりすぎた株" in tue and "研究から分かっていること" in tue
+    assert "寄りで買わない目印 1銘柄（★C・B候補の両方 1・💣地雷 1）／上がりすぎた株 1銘柄（今月は新しく買わない）" in body
     try:
         D.load_momentum = lambda: {"lists": "壊れた"}                      # 壊れた欄でもメールは届く
         _, broken = D.build(dt.datetime(2026, 10, 9, 6, 20, tzinfo=D.JST))
     finally:
         D.load_momentum = o2
-    assert "【強すぎる株】" in broken and "作れなかった" in broken and "投資助言ではありません" in broken
+    assert "【上がりすぎた株】" in broken and "作れなかった" in broken and "投資助言ではありません" in broken
     _, sat = D.build(dt.datetime(2026, 10, 10, 6, 20, tzinfo=D.JST))
-    assert "強すぎる株" not in sat and "今日のファンダ" not in sat
+    assert "上がりすぎた株" not in sat and "今日のファンダ" not in sat
     src = open("build_jp_highs.py", encoding="utf-8").read()
     assert "import jp_momentum" in src and '"momentum": momentum_or_error(daily, stocks, asof)' in src and '"momentum" in prev' in src
     assert (B.FUND, B.EARN) == (o3, o4)

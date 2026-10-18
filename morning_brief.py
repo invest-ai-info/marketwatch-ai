@@ -328,7 +328,7 @@ def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None,
         except Exception:  # noqa: BLE001  壊れた欄でも要点のほかの行は出す（下の欄が「作れなかった」と書く）
             x = None
         if x:
-            part += f"／強すぎる株 {len(x['rows'])}銘柄（新しく買わない側）"
+            part += f"／上がりすぎた株 {len(x['rows'])}銘柄（今月は新しく買わない）"
         L.append("  ・日本株：" + part)
     if ec and jp_open:
         prev = _prev_weekday(today)
