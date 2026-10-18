@@ -400,7 +400,10 @@ def test_probe_prereg():
 
 def test_workflow_and_sync():
     wf = open(".github/workflows/technical-alerts.yml", encoding="utf-8").read()
-    assert "python build_signals_recent.py || true" in wf and "track-record.html signals-recent.json" in wf
+    assert "python build_signals_recent.py || true" in wf
+    # git add の行に両方あること（並びは問わない＝10/7 に research-list.html が間に入って旧の「並んでいる」前提が崩れた）
+    add = next(l for l in wf.splitlines() if l.strip().startswith("git add") and "signals-log.json" in l)
+    assert "track-record.html" in add and "signals-recent.json" in add
     assert wf.index("python export_to_csv.py") < wf.index("python build_signals_recent.py")
     assert "'auto-forward.json'" in open(".github/workflows/research-lists.yml", encoding="utf-8").read()   # 届いたらリストを組み立て直す
     import check_site_consistency as C
