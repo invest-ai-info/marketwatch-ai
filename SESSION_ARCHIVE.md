@@ -6,6 +6,19 @@ SESSION_HANDOFF.md のスリム化（2026-06-20）で、2026-06-17 以前の履�
 
 ---
 
+<!-- SESSION_HANDOFF スリム化（2026-10-19）で退避 -->
+
+## 📦 2026-10-19 退避（SESSION_HANDOFF の済んだ1節・見出しは元のまま）
+
+## ✅ 2026-10-18（クラウド）: main で落ちていたテスト2件＝どちらもテストの誤り（直しは #312・重なった #313 は閉じた）
+- **結果**：`python -m pytest -q tests/` で **1048件通過・失敗3件**（3件は任意パッケージが無いだけ）。関数・ワークフロー・データは変えていない
+- ① `test_ea_tools::test_workflow_and_sync`：10/7 に `research-list.html` が `git add` の行の間に入った → 隣どうしでなく**同じ行に両方あるか**で見る
+- ② `test_jp_markers::test_one_merged_list`：東証の年始の休みは 1/1〜1/3・**2027-01-04（月）が大発会** → 12/30 の一覧は 1/4 の朝は使える・1/5 の朝は使えない（`jp_markers.fresh` と `economic-events.json` は正しい）
+- 残る3件（fx_clock・holiday・pillar_lab_jp の休日の件）は `pip install holidays pandas_market_calendars` で通る（`exchange_calendars` ではない）
+- **教訓**：PR を出す前に `git fetch origin main`＝同じ日に別のセッションが同じ直しを先に入れていた
+
+---
+
 <!-- SESSION_HANDOFF スリム化（2026-10-18 夜）で退避③ -->
 
 ## 📦 2026-10-18 退避③（SESSION_HANDOFF の済んだ1節・見出しは元のまま）
