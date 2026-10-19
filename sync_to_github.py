@@ -376,4 +376,5 @@ SYNC_FILES = [
     "guide-company-6723-renesas.html",
     "guide-entry-tokyo-fix.html",
     "guide-news-2026-10-18-brent-110-oil-middle-east.html",
+    "guide-company-4004-resonac.html",
 ]
