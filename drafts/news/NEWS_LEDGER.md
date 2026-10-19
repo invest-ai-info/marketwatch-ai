@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-10-19
+- 判定: ✅ 公開済み
+- 選定トピック: SOX（フィラデルフィア半導体指数）が先週比-11.4%・8日続落（2008年10月以来最長）後、MetaとTesla（10/21水・引け後）を筆頭に約70社がAI決算ウィークに突入──「AI投資の持続性」が問われる（カテゴリ: AI・半導体・決算・Nasdaq・日経）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典:
+  - TheStreet「Tech Selloff Deepens as Market Rotation Continues」2026-10-16
+  - Investing.com「Chip index SOX posts longest losing streak since 2008 as AI worries deepen」2026-10-16
+  - CNBC「Meta, Tesla earnings preview: Week of Oct. 19」2026-10-18
+  - CNN「Nasdaq sinks more than 2% as investors raise questions about AI debt」2026-10-16
+  - FX Empire「The Week Ahead: Meta, Tesla and Chip Earnings Put AI Trade to the Test」2026-10-19
+  - Bloomberg「Stock Market Today: Dow, S&P Live Updates for October 19」2026-10-18
+  - Tickmill「Daily Market Outlook, October 19, 2026」2026-10-19
+  - 日本経済新聞「日経平均終値407円安」2026-10-19
+  - 読売新聞「日経平均反落、終値４０７円安」2026-10-19
+  - KuCoin「TSMC Q3 2026 Earnings: Revenue Exceeds Guidance」2026-10-15
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（編集なし）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典10系統以上 ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告46件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-19-ai-earnings-week-meta-tesla.html
+- commit: 705b71d（main へ push 済み）
+
+---
+
 ## 2026-10-18
 - 判定: ✅ 公開済み
 - 選定トピック: ブレント原油が2026年10月16日（金）に5月以来初の$110突破（終値$109.86）──ホルムズ海峡へのタンカー攻撃・フーシーによるサウジミサイル攻撃（ヤンブ港を迎撃）・ロシアのリャザン製油所ドローン攻撃という3重リスクが同時発生（カテゴリ: 原油・中東・エネルギー・インフレ）
