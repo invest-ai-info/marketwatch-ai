@@ -13,7 +13,17 @@
 - FWD: k=209/n=422 win=49.5% CI=[44.8%~54.3%] avgR=+0.154 R-CI=[+0.043,+0.265]（両端プラス・初）
 - FWD ベースライン: k=1446/n=3362 win=43.0%
 
-**自動公開ゲート**: （実行中）
+**自動公開ゲート**: verify=3/3緑 → Opusコンプラ白（3回目）→ 独立Opus白 → ✅ 自動公開済み（2026-10-20）
+- check_plain_japanese.py: ✅ EXIT=0（修正3ラウンド・19件→2件→0件）
+- signal_lab_verify.py: ✅ 3/3 GREEN → EXIT=0（下書き中の削除・SVGはみ出し修正）
+- Opusコンプラ1: グレー（「今回初めて」の不正確な表現・数値不一致）→ 修正（初めて表現削除・ぶれの行き来を明記・費用注記追加）
+- Opusコンプラ2: グレー（422vs418のCI下限差+0.043vs+0.00が未説明）→ 修正（計算方法の違いの注釈追加）
+- Opusコンプラ3（独立最終）: 🟢白（公開可）
+- verify再確認: EXIT=0 全ゲート緑
+- finalize_signal_lab.py: EXIT=0 (svg=3, kinsho=3, size=30KB)
+- publish_article.py: EXIT=0
+- check_site_consistency.py: EXIT=0（エラーなし・警告46件は既存問題）
+- PUSH: ✅ 889b9b2
 
 ---
 
