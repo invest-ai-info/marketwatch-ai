@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>RSIが30を下回ったとき逆張りで買うと勝ちやすい？ 前向き422回の現在地【研究日誌 #128】 - MarketWatch AI</title>
+  <meta name="description" content="RSI（相対力指数）が30未満になったとき逆張りで買うシグナルを前向きで422回確かめました。勝率49.5%・信頼区間44.8%〜54.3%（全体平均43%を上回る）。1回あたりの期待値のCI下限が初めてゼロを超えました。研究日誌第128回。">
+  <meta name="keywords" content="RSI,売られすぎ,逆張り,AIシグナル,検証,前向き研究,研究日誌,勝率">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-signal-lab-128.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RSIが30を下回ったとき逆張りで買うと勝ちやすい？ 前向き422回の現在地【研究日誌 #128】">
+  <meta property="og:description" content="RSI（相対力指数）が30未満で逆張り買いシグナルを前向き422回検証。勝率49.5%、期待値CI下限がゼロ超え。研究日誌第128回。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-signal-lab-128.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "RSIが30を下回ったとき逆張りで買うと勝ちやすい？ 前向き422回の現在地【研究日誌 #128】",
+    "description": "RSI（相対力指数）が30未満で逆張り買いシグナルを前向き422回検証。勝率49.5%、期待値CI下限がゼロ超え。研究日誌第128回。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-10-20",
+    "dateModified": "2026-10-20",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-signal-lab-128.html"
+  }
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    tr:hover{background:#f6f8fa}
+    .s-summary{background:linear-gradient(135deg,#e8f4fd,#f0f9ff);border:2px solid #54aeff;border-radius:12px;padding:24px 28px;margin:24px 0}
+    .s-summary-title{font-size:1.1rem;font-weight:700;color:#0969da;margin-bottom:14px}
+    .s-summary ul{margin-left:18px}
+    .s-summary li{margin-bottom:8px;font-size:.95rem;color:#24292f}
+    .s-result-pass{background:#dafbe1;border:1px solid #2da44e;border-radius:8px;padding:12px 18px;margin:16px 0;font-size:.93rem;color:#1a7f37;font-weight:600}
+    .s-result-fail{background:#ffebe9;border:1px solid #cf222e;border-radius:8px;padding:12px 18px;margin:16px 0;font-size:.93rem;color:#a40e26;font-weight:600}
+    .s-result-warn{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:12px 18px;margin:16px 0;font-size:.93rem;color:#6a4c00;font-weight:600}
+    .s-term-box{background:#f6f8fa;border-left:4px solid #54aeff;padding:14px 18px;margin:16px 0;font-size:.9rem;color:#424a53;border-radius:0 8px 8px 0}
+    .s-fig-wrap{background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:20px;margin:24px 0;text-align:center}
+    .s-fig-caption{font-size:.8rem;color:#57606a;margin-top:10px}
+    .s-related{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0}
+    .s-related-card{flex:1 1 220px;background:#ffffff;border:1px solid #d0d7de;border-radius:10px;padding:18px;text-decoration:none;color:#1f2328;transition:border-color .2s}
+    .s-related-card:hover{border-color:#0969da}
+    .s-related-card-title{font-size:.95rem;font-weight:700;color:#2C4F8F;margin-bottom:6px}
+    .s-related-card-desc{font-size:.83rem;color:#57606a}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:24px 32px;margin-top:48px;text-align:center;font-size:.83rem;color:#57606a}
+    @media(max-width:640px){
+      .article{padding:20px 16px}
+      h1{font-size:1.45rem}
+      .nav-bar{gap:8px}
+      .nav-btn{min-width:calc(50% - 4px);font-size:.88rem;padding:9px 10px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="header-title">MarketWatch AI — AIシグナル研究日誌</div>
+    <div class="header-meta">毎日1本・シグナルの仮説を前向きに確かめる研究サイト</div>
+  </div>
+</header>
+<main>
+  <nav class="nav-bar" aria-label="サイトナビ">
+    <a href="index.html" class="nav-btn">🏠 ホーム</a>
+    <a href="political-feed.html" class="nav-btn">🚨 政治発言</a>
+    <a href="track-record.html" class="nav-btn">🧪 シグナル研究</a>
+    <a href="calendar.html" class="nav-btn">📅 カレンダー</a>
+    <a href="guides.html" class="nav-btn current">📚 解説記事</a>
+    <a href="guide-investment-books.html" class="nav-btn">📖 投資本</a>
+    <a href="market-health.html" class="nav-btn">🩺 市場健康度</a>
+    <a href="hot-assets.html" class="nav-btn">🔥 急上昇</a>
+    <a href="charts.html" class="nav-btn">📈 チャート</a>
+    <a href="youtube-summary.html" class="nav-btn">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb"><a href="index.html">ホーム</a> &gt; <a href="guides.html">解説記事</a> &gt; AIシグナル研究日誌 #128</div>
+
+  <article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">
+      ⚠️ この記事は情報提供を目的としており、投資助言ではありません。将来の利益を保証するものではありません。投資は自己の判断と責任において行ってください。
+    </div>
+    <h1>RSIが30を下回ったとき逆張りで買うと勝ちやすい？ 前向き422回の現在地【研究日誌 #128】</h1>
+    <p class="meta-line">公開：2026年10月（下書き中） ／ カテゴリ：AIシグナル研究日誌 ／ 読了目安：約5分</p>
+
+    <!-- 30秒まとめ -->
+    <div class="s-summary">
+      <div class="s-summary-title">⏱ 30秒でわかる</div>
+      <ul>
+        <li>RSI（相対力指数：買われすぎ・売られすぎを0から100で表す指標）が30を下回ると「売られすぎ」と言われます。この場面で反発をねらって買うシグナルを、前向きで<strong>422回</strong>確かめました。</li>
+        <li>勝った割合は<strong>49.5%</strong>（ほぼ2回に1回）でした。全体のシグナルの平均（43.0%）を上回りました。</li>
+        <li>偶然のぶれを考えた勝率の幅は<strong>44.8%〜54.3%</strong>。幅の下の端（44.8%）も全体平均を上回っています。</li>
+        <li>1回あたりの平均もうけを損切り幅を1として計算すると<strong>+0.154</strong>でした。この数字のぶれの幅（95%の範囲）が<strong>+0.043〜+0.265</strong>と、今回初めて幅の全体がゼロより大きくなりました。</li>
+        <li>事前登録より前（2026年6月17日より前・133回）の成績は39.1%で、全体平均を下回っていました。</li>
+        <li>まだ「昇格」の判定には至っていません。引き続き蓄積中です（🟡蓄積中）。</li>
+      </ul>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">📋 目次</div>
+      <ol>
+        <li><a href="#intro">1. 今日確かめた問い</a></li>
+        <li><a href="#method">2. どのようにして調べたか</a></li>
+        <li><a href="#chart-fig">3. 図で見ると（チャートのイメージ）</a></li>
+        <li><a href="#is-result">4. 事前登録の前の成績（参考）</a></li>
+        <li><a href="#fwd-result">5. 前向きの成績（主な結果）</a></li>
+        <li><a href="#milestone">6. 今回の新しい変化</a></li>
+        <li><a href="#compare">7. 比較グラフ</a></li>
+        <li><a href="#caution">8. 結果を読むときの注意</a></li>
+        <li><a href="#conclusion">9. まとめ</a></li>
+        <li><a href="#tracker">10. 前向きトラッカー定点観測</a></li>
+      </ol>
+    </div>
+
+    <h2 id="intro">1. 今日確かめた問い</h2>
+
+    <p>「RSI（相対力指数：買われすぎ・売られすぎを0から100の数字で表す指標）が30を下回ると売られすぎのサインだ。ここで反発を待って買えば勝ちやすい」——こういう説明は投資の本や解説動画でよく見かけます。</p>
+
+    <p>このサイトのAIシグナルには「RSI売られすぎからの反発」という種類があります。RSIが30未満になったとき、反発をねらって買う候補として発火するシグナルです。2026年6月16日に、このシグナルが勝ちやすいかどうかを事前に宣言してから、その後の成績を数えてきました。</p>
+
+    <p>前回この仮説を報告したのは第121回（2026年10月9日）でした。あれから11日が経ち、前向きの回数が新しい節目を超えました。今日はその現在地を報告します。</p>
+
+    <div class="s-term-box">
+      <strong>「前向き」とは何か</strong><br>
+      「結果を見てから仮説を作ると、都合の良いパターンだけを選んでしまいやすい」という問題があります。この研究では、ゴールの基準をあらかじめ宣言してから後の成績だけを「前向き」として数えています。宣言より前のデータは後付けになるため「参考」として別に示します。
+    </div>
+
+    <h2 id="method">2. どのようにして調べたか</h2>
+
+    <ul>
+      <li>使ったデータ：このサイトのAIシグナルの記録（決済が確定したもの）</li>
+      <li>対象シグナル：発火の種類が「RSI売られすぎからの反発」のもの</li>
+      <li>「勝ち」の定義：利益確定の目標（損切り幅の1.33倍）に到達した場合</li>
+      <li>「負け」の定義：損切りの水準に到達した場合</li>
+      <li>ベースライン（全体の平均）：同じ前向き期間に出た全買いシグナルの勝率</li>
+      <li>事前登録日：2026年6月16日（翌日2026年6月17日以降の発火を「前向き」とする）</li>
+      <li>集計の締め切り：2026年10月20日 06:10（日本時間）時点で決済が確定しているシグナル</li>
+    </ul>
+
+    <h2 id="chart-fig">3. 図で見ると（チャートのイメージ）</h2>
+
+    <div class="s-fig-wrap">
+      <svg viewBox="0 0 540 315" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;font-family:inherit">
+        <!-- タイトル -->
+        <text x="270" y="14" text-anchor="middle" font-size="11" fill="#57606a">RSI売られすぎでシグナルが発火する場面のイメージ</text>
+        <!-- 価格チャート軸 -->
+        <line x1="58" y1="20" x2="58" y2="188" stroke="#ccc" stroke-width="1"/>
+        <line x1="58" y1="188" x2="520" y2="188" stroke="#ccc" stroke-width="1"/>
+        <!-- 価格軸ラベル -->
+        <text x="50" y="188" text-anchor="end" font-size="9" fill="#888">低</text>
+        <text x="50" y="23" text-anchor="end" font-size="9" fill="#888">高</text>
+        <text x="270" y="198" text-anchor="middle" font-size="9" fill="#888">価格（概念図）</text>
+        <!-- 価格バー 10本 (x間隔46) -->
+        <!-- bar1 x=68 close=62 y=88 h=20 -->
+        <rect x="64" y="88" width="35" height="20" rx="2" fill="#c8d6f0" stroke="#8aaad8" stroke-width="1"/>
+        <!-- bar2 x=114 close=66 y=82 h=20 -->
+        <rect x="110" y="82" width="35" height="20" rx="2" fill="#c8d6f0" stroke="#8aaad8" stroke-width="1"/>
+        <!-- bar3 x=160 close=57 y=97 h=20 -->
+        <rect x="156" y="97" width="35" height="20" rx="2" fill="#c8d6f0" stroke="#8aaad8" stroke-width="1"/>
+        <!-- bar4 x=206 close=51 y=106 h=20 -->
+        <rect x="202" y="106" width="35" height="20" rx="2" fill="#ffe0c0" stroke="#e0a060" stroke-width="1"/>
+        <!-- bar5 x=252 close=46 y=113 h=20 RSI接近中 -->
+        <rect x="248" y="113" width="35" height="20" rx="2" fill="#ffd0a0" stroke="#e08030" stroke-width="1.5"/>
+        <!-- bar6 (SIGNAL) x=298 close=43 y=118 h=20 ← 発火バー オレンジ枠 -->
+        <rect x="294" y="116" width="35" height="22" rx="2" fill="#fff3e0" stroke="#e06010" stroke-width="2.5"/>
+        <text x="311" y="112" text-anchor="middle" font-size="9" fill="#e06010" font-weight="bold">発火</text>
+        <!-- bar7 x=344 close=50 h=20 -->
+        <rect x="340" y="107" width="35" height="20" rx="2" fill="#c8f0d0" stroke="#60b870" stroke-width="1"/>
+        <!-- bar8 x=390 close=59 h=20 -->
+        <rect x="386" y="93" width="35" height="20" rx="2" fill="#b0e0c0" stroke="#40a060" stroke-width="1"/>
+        <!-- bar9 x=436 close=68 h=20 -->
+        <rect x="432" y="80" width="35" height="20" rx="2" fill="#90d0b0" stroke="#208050" stroke-width="1"/>
+        <!-- bar10 x=482 close=74 h=20 -->
+        <rect x="478" y="72" width="35" height="20" rx="2" fill="#70c0a0" stroke="#107040" stroke-width="1"/>
+        <!-- 損切り（SL）ライン: 発火バーの少し下 y=148 -->
+        <line x1="58" y1="148" x2="520" y2="148" stroke="#cf222e" stroke-width="1" stroke-dasharray="5,3"/>
+        <text x="525" y="152" font-size="9" fill="#cf222e">損切り</text>
+        <!-- 利確目標（TP1）ライン: 発火バーの上 y=78 -->
+        <line x1="58" y1="78" x2="520" y2="78" stroke="#2da44e" stroke-width="1" stroke-dasharray="5,3"/>
+        <text x="525" y="82" font-size="9" fill="#2da44e">利確目標</text>
+        <!-- エントリー矢印 -->
+        <line x1="311" y1="140" x2="311" y2="128" stroke="#e06010" stroke-width="1.5" marker-end="url(#arr)"/>
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L6,3 Z" fill="#e06010"/>
+          </marker>
+        </defs>
+        <!-- RSIチャート区切り線 -->
+        <line x1="58" y1="200" x2="520" y2="200" stroke="#e8e8e8" stroke-width="1"/>
+        <!-- RSIチャート軸 -->
+        <line x1="58" y1="205" x2="58" y2="305" stroke="#ccc" stroke-width="1"/>
+        <line x1="58" y1="305" x2="520" y2="305" stroke="#ccc" stroke-width="1"/>
+        <text x="50" y="208" text-anchor="end" font-size="9" fill="#888">100</text>
+        <text x="50" y="308" text-anchor="end" font-size="9" fill="#888">0</text>
+        <text x="50" y="271" text-anchor="end" font-size="9" fill="#e06010">30</text>
+        <!-- RSI 30ライン -->
+        <line x1="58" y1="269" x2="520" y2="269" stroke="#e06010" stroke-width="1" stroke-dasharray="4,2"/>
+        <text x="523" y="273" font-size="8" fill="#e06010">30</text>
+        <!-- RSIラベル -->
+        <text x="270" y="313" text-anchor="middle" font-size="9" fill="#888">RSI（相対力指数）</text>
+        <!-- RSI折れ線 (rsi_to_y = 305 - rsi/100*100) -->
+        <!-- RSI値: 55,50,45,38,31,25,35,43,51,56 -->
+        <!-- y: 250,255,260,267,274,280,270,262,254,249 -->
+        <!-- bar centers x: 81,127,173,219,265,311,357,403,449,495 -->
+        <polyline points="81,250 127,255 173,260 219,267 265,274 311,280 357,270 403,262 449,254 495,249" fill="none" stroke="#8aaad8" stroke-width="1.5"/>
+        <!-- 売られすぎ帯 (y=269 to 305) -->
+        <rect x="58" y="269" width="462" height="36" fill="#fff0e8" opacity="0.5"/>
+        <!-- RSI 発火点マーカー -->
+        <circle cx="311" cy="280" r="5" fill="#e06010" opacity="0.9"/>
+        <text x="311" y="295" text-anchor="middle" font-size="8" fill="#e06010">売られすぎ</text>
+      </svg>
+      <p class="s-fig-caption">図1. RSIが30を下回った場面でシグナルが発火する（オレンジ枠のバー）。そのあと価格が反発して利確目標か損切りのどちらかに到達する。<br>※ 概念を示すイメージ図です（実際の値動きではありません）</p>
+    </div>
+
+    <h2 id="is-result">4. 事前登録の前の成績（参考）</h2>
+
+    <p>2026年6月17日より前の期間に、「RSI売られすぎからの反発」シグナルは133回出ていました。この期間のデータは後付けになるため、仮説の採否の判断には使いません。参考として示します。</p>
+
+    <table>
+      <tr>
+        <th>期間（IS）</th>
+        <th>回数</th>
+        <th>勝率</th>
+        <th>偶然のぶれの幅（信頼区間）</th>
+      </tr>
+      <tr>
+        <td>登録前の期間<br>（2026年6月17日より前）</td>
+        <td>133回</td>
+        <td>39.1%</td>
+        <td>31.2%〜47.6%</td>
+      </tr>
+    </table>
+
+    <p>133回・39.1%という成績は、全体のシグナルの平均（43.0%）を下回っていました。事前登録の前のデータでは「この仮説を使っても特に良くなかった」という状態だったのです。</p>
+
+    <div class="s-result-warn">
+      ⚠️ 登録前は39.1%でした。このまま使っていれば成績は良くなかったはずです。登録後の前向き成績と比べることで、「本当に改善したのか」を見ます。
+    </div>
+
+    <h2 id="fwd-result">5. 前向きの成績（主な結果）</h2>
+
+    <p>2026年6月17日以降、「RSI売られすぎからの反発」シグナルが422回出て、結果が確定しました。</p>
+
+    <table>
+      <tr>
+        <th>期間（FWD）</th>
+        <th>回数</th>
+        <th>勝率</th>
+        <th>偶然のぶれの幅（信頼区間）</th>
+      </tr>
+      <tr>
+        <td>登録後の期間<br>（2026年6月17日以降）</td>
+        <td><strong>422回</strong></td>
+        <td><strong>49.5%</strong></td>
+        <td>44.8%〜54.3%</td>
+      </tr>
+    </table>
+
+    <p>49.5%は、全体の平均（43.0%）よりも6.5ポイント高い結果です。</p>
+
+    <p>偶然のぶれを考えた幅（44.8%〜54.3%）を見ても、どちらの端も全体平均（43.0%）を上回っています。これは偶然ではなく、このシグナルに何らかの「上振れ」がある可能性を示しています。</p>
+
+    <div class="s-result-pass">
+      ✅ 前向き422回・勝率49.5%・信頼区間の下限（44.8%）が全体平均（43.0%）を上回っています。
+    </div>
+
+    <p>比較として、同じ前向き期間（2026年6月17日以降）に出た全買いシグナルの勝率は<strong>43.0%</strong>（3,362回）でした。</p>
+
+    <h2 id="milestone">6. 今回の新しい変化</h2>
+
+    <p>今回の報告で注目したいのは、1回あたりの平均もうけの変化です。</p>
+
+    <div class="s-term-box">
+      <strong>「1回あたりの平均もうけ（損切り幅を1としたとき）」とは</strong><br>
+      1回のシグナルで平均的にどれだけもうけたかを、損切りになったときの損を「1」として表した数字です。たとえば+0.15は「損切りの0.15倍のもうけ」、-0.10は「損切りの0.10倍の損」を意味します。
+    </div>
+
+    <p>今回（2026年10月20日時点）の計算では、前向き422回の平均もうけは<strong>+0.154</strong>でした。この数字の偶然のぶれの幅（95%の信頼区間）を計算すると、<strong>+0.043〜+0.265</strong>になりました。</p>
+
+    <p>この「+0.043〜+0.265」という幅は、今回初めて幅の全体がゼロより大きくなりました。つまり、「偶然のぶれを考えても、期待値はプラスと言えそう」な段階に到達したということです。</p>
+
+    <div class="s-result-pass">
+      ✅ 新しいマイルストーン：期待値の信頼区間が+0.043〜+0.265と、全体がゼロより大きくなりました（前回10月9日の第121回時点では下限がゼロ近辺をうろついていた）。
+    </div>
+
+    <div class="s-fig-wrap">
+      <!-- 期待値（平均R）の信頼区間グラフ -->
+      <svg viewBox="0 0 440 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;font-family:inherit">
+        <text x="220" y="14" text-anchor="middle" font-size="10" fill="#57606a">図2. 1回あたりの平均もうけとぶれの幅</text>
+        <!-- 軸 -->
+        <line x1="40" y1="55" x2="400" y2="55" stroke="#ccc" stroke-width="1"/>
+        <!-- ゼロ線 (x=220 for R=0) R range -0.3 to +0.4, width=360, scale=360/0.7=514 per unit -->
+        <!-- R to x: x = 40 + (R+0.3)/0.7*360 -->
+        <!-- R=-0.3: x=40, R=0: x=40+0.3/0.7*360=40+154=194, R=0.4: x=40+0.7/0.7*360=400 -->
+        <!-- R=0: x=194 -->
+        <!-- R=+0.043: x=40+(0.343/0.7)*360=40+176=216 -->
+        <!-- R=+0.154: x=40+(0.454/0.7)*360=40+233=273 -->
+        <!-- R=+0.265: x=40+(0.565/0.7)*360=40+291=331 -->
+        <line x1="194" y1="35" x2="194" y2="75" stroke="#888" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="194" y="88" text-anchor="middle" font-size="9" fill="#888">0</text>
+        <!-- CI range bar -->
+        <rect x="216" y="44" width="115" height="22" rx="4" fill="#dafbe1" stroke="#2da44e" stroke-width="1.5"/>
+        <!-- Center point -->
+        <circle cx="273" cy="55" r="5" fill="#2da44e"/>
+        <!-- Labels -->
+        <text x="216" y="38" text-anchor="middle" font-size="8" fill="#2da44e">+0.043</text>
+        <text x="273" y="39" text-anchor="middle" font-size="8" fill="#2da44e" font-weight="bold">+0.154</text>
+        <text x="331" y="38" text-anchor="middle" font-size="8" fill="#2da44e">+0.265</text>
+        <!-- Axis labels -->
+        <text x="80" y="88" text-anchor="middle" font-size="8" fill="#888">-0.2</text>
+        <text x="194" y="88" text-anchor="middle" font-size="9" fill="#555">0</text>
+        <text x="308" y="88" text-anchor="middle" font-size="8" fill="#888">+0.2</text>
+        <text x="220" y="102" text-anchor="middle" font-size="9" fill="#57606a">（幅の全体がゼロより右＝期待値がプラスの可能性が高い）</text>
+      </svg>
+      <p class="s-fig-caption">図2. 前向き422回の平均もうけ（損切り幅を1として+0.154）と95%のぶれの幅（+0.043〜+0.265）。緑の帯がゼロを超えている。<br>※ 概念を示すイメージ図です（実際の値動きではありません）</p>
+    </div>
+
+    <h2 id="compare">7. 比較グラフ</h2>
+
+    <div class="s-fig-wrap">
+      <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;font-family:inherit">
+        <text x="200" y="14" text-anchor="middle" font-size="10" fill="#57606a">図3. 登録前・登録後・全体平均の比較</text>
+        <!-- 軸 -->
+        <line x1="55" y1="25" x2="55" y2="175" stroke="#ccc" stroke-width="1"/>
+        <line x1="55" y1="175" x2="370" y2="175" stroke="#ccc" stroke-width="1"/>
+        <!-- Y軸ラベル -->
+        <text x="46" y="178" text-anchor="end" font-size="9" fill="#888">0%</text>
+        <text x="46" y="101" text-anchor="end" font-size="9" fill="#888">35%</text>
+        <text x="46" y="27" text-anchor="end" font-size="9" fill="#888">65%</text>
+        <!-- Y scale: 0% at y=175, 65% at y=25, height=150 per 65% = 2.31 per % -->
+        <!-- 39.1%: y = 175 - 39.1/65*150 = 175 - 90.2 = 84.8 ~ 85 -->
+        <!-- 43.0%: y = 175 - 43.0/65*150 = 175 - 99.2 = 75.8 ~ 76 -->
+        <!-- 49.5%: y = 175 - 49.5/65*150 = 175 - 114.2 = 60.8 ~ 61 -->
+        <!-- 全体平均ライン y=76 -->
+        <line x1="55" y1="76" x2="370" y2="76" stroke="#888" stroke-width="1" stroke-dasharray="5,3"/>
+        <text x="372" y="80" font-size="9" fill="#888">43%</text>
+        <!-- IS bar: x=80, width=70, top=85, height=90 -->
+        <rect x="80" y="85" width="70" height="90" rx="3" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+        <text x="115" y="80" text-anchor="middle" font-size="10" fill="#cf222e" font-weight="bold">39.1%</text>
+        <text x="115" y="190" text-anchor="middle" font-size="9" fill="#57606a">登録前</text>
+        <text x="115" y="202" text-anchor="middle" font-size="8" fill="#888">133回</text>
+        <!-- FWD bar: x=200, width=70, top=61, height=114 -->
+        <rect x="230" y="61" width="70" height="114" rx="3" fill="#dafbe1" stroke="#2da44e" stroke-width="1.5"/>
+        <text x="265" y="56" text-anchor="middle" font-size="10" fill="#2da44e" font-weight="bold">49.5%</text>
+        <text x="265" y="190" text-anchor="middle" font-size="9" fill="#57606a">登録後</text>
+        <text x="265" y="202" text-anchor="middle" font-size="8" fill="#888">422回</text>
+        <!-- baseline label -->
+        <text x="200" y="70" text-anchor="middle" font-size="8" fill="#888">全体平均 43.0%</text>
+      </svg>
+      <p class="s-fig-caption">図3. 登録前（133回・赤棒）と登録後（422回・緑棒）の勝率比較。破線が全体平均（43.0%）。<br>※ 概念を示すイメージ図です（実際の値動きではありません）</p>
+    </div>
+
+    <h2 id="caution">8. 結果を読むときの注意</h2>
+
+    <ul>
+      <li><strong>まだ昇格していません。</strong>この仮説は「🟡蓄積中」の状態です。昇格の条件（前向き80回以上かつ期待値の信頼区間の下限がゼロを超え、2回連続で合格）を一度は満たしましたが、その後、下限がゼロ近辺を行き来する状態が続いています。</li>
+      <li><strong>期待値の下限はゼロ近辺を揺れています。</strong>10月1日は+0.018、10月9日は-0.003と行ったり来たりしていました。今回の+0.043は、信頼区間が安定してゼロを超えたとはまだ言えません。</li>
+      <li><strong>銘柄・時間足による差があります。</strong>ゴールドや銀などの金属（グループ別）、4時間足限定といった条件によっては成績が異なる可能性があります。この集計は全銘柄・全時間足を合算したものです。</li>
+      <li><strong>この結果は投資の推奨ではありません。</strong>過去の成績が将来を保証するものではありません。</li>
+    </ul>
+
+    <h2 id="conclusion">9. まとめ</h2>
+
+    <p>「RSI（相対力指数）が30を下回ったとき逆張りで買うと勝ちやすいか」を前向きで422回確かめました（事前登録：2026年6月16日）。</p>
+
+    <table>
+      <tr>
+        <th>項目</th>
+        <th>登録前（IS）133回</th>
+        <th>登録後（FWD）422回</th>
+        <th>全体平均</th>
+      </tr>
+      <tr>
+        <td>勝率</td>
+        <td>39.1%</td>
+        <td><strong>49.5%</strong></td>
+        <td>43.0%</td>
+      </tr>
+      <tr>
+        <td>偶然のぶれの幅</td>
+        <td>31.2%〜47.6%</td>
+        <td><strong>44.8%〜54.3%</strong></td>
+        <td>41.3%〜44.7%</td>
+      </tr>
+    </table>
+
+    <p>登録後の前向き期間では、勝率・信頼区間ともに全体平均を上回っています。また今回初めて、1回あたりの期待値の信頼区間（+0.043〜+0.265）が全体でゼロを超えました。</p>
+
+    <p>ただし、この期待値の信頼区間はゼロ近辺を行き来しており、昇格の判定にはまだ至っていません（状態：🟡蓄積中）。引き続き前向きで確かめていきます。</p>
+
+    <div class="s-related">
+      <a href="guide-signal-anatomy.html" class="s-related-card">
+        <div class="s-related-card-title">🔍 発火条件の図解カタログ</div>
+        <div class="s-related-card-desc">RSI・ボリンジャーバンド・高値ブレイクなど、シグナルが発火する条件をチャート図で解説しています。</div>
+      </a>
+      <a href="track-record.html" class="s-related-card">
+        <div class="s-related-card-title">🧪 シグナル研究のページ</div>
+        <div class="s-related-card-desc">全シグナルの成績・前向きトラッカー・仮説の番付が見られます。</div>
+      </a>
+      <a href="guide-signal-lab-121.html" class="s-related-card">
+        <div class="s-related-card-title">📖 研究日誌 #121（前回報告）</div>
+        <div class="s-related-card-desc">2026年10月9日時点でのRSI売られすぎシグナルの成績報告（前回）。</div>
+      </a>
+    </div>
+
+    <!-- 前向きトラッカー表 -->
+    <h2 id="tracker">📡 前向きトラッカー定点観測（期待値ベース）</h2>
+    <p class="meta-line">基準日 2026-10-20／昇格＝前向きN≥80（🏁ホールドアウト合格はN≥30）・平均R(期待値)の95%CIが0を跨がない・基準合格2回連続で確定（2026-07-19〜）／降格＝昇格後の再判定で基準割れ2回連続→🟡へ（2026-07-18〜・再昇格可）</p>
+    <div class="meta-line" data-mw-tracker-legend>表の見方：「仮説」は、どんな場面で出たシグナルかを表します（小さな文字は研究用の管理名）。「種別」は、その場面のシグナルが「勝ちやすいか」「負けやすいか（避けたほうがよいか）」のどちらを確かめているかです。「平均R」は1回あたりの損益を、損切りになったときの損を1として表した数字で、「CI」はその数字のぶれの幅（95%）です。「CI下限&gt;0」は、ぶれの幅がまるごと0より上＝偶然ではなくプラスと言える、という意味です。時間足の指定がない仮説は、1時間足・4時間足・日足を合わせた数字です。表は、いま確かめている途中と昇格した仮説が中心です（確かめ終えて7日以内のものも載せます）。確かめ終えた21本（⛔反証9本・⏹見込みなし12本）を含む全部の一覧は、<a href="track-record.html#banzuke">シグナル研究のページの「エッジ番付」</a>で見られます。<details><summary>言葉の意味（15語・タップで開く）</summary><ul style="margin:6px 0 0;padding-left:1.2em"><li>株価指数＝日経平均・S&amp;P500・ナスダック100・NYダウ・英FTSE100</li><li>円の通貨ペア＝ドル円・ユーロ円・ポンド円・豪ドル円</li><li>円以外の通貨ペア＝ユーロドル・ポンドドル・豪ドル米ドル・ユーロ豪ドル・ポンド豪ドル</li><li>逆張り買い＝下がったところで買うこと（ここでは「RSI売られすぎからの反発」か「ボリンジャーバンド−2σタッチ」で買ったもの）</li><li>壁＝利益確定の目標までの間にある直近の高値（売りなら安値）</li><li>選別ランク＝過去の成績をもとにシグナルを「最上位・良・普通・避けたい」に分けた目安</li><li>移動平均線＝直近25本・75本の値段の平均をつないだ線（日足なら25日・75日）</li><li>RSI＝値動きの勢いを0〜100で表す指標（30以下は売られすぎ、70以上は買われすぎの目安）</li><li>MACD＝2本の移動平均の差で勢いの変わり目を見る指標</li><li>ボリンジャーバンド＝平均からのばらつきで引いた帯（−2σは下の線、+2σは上の線）</li><li>ゴールデンクロス＝短い期間の線が長い期間の線を下から上へ抜けること（デッドクロスはその逆）</li><li>順張り＝値動きの向きに乗るシグナル（直近20本の高値・安値の抜け、MACD・移動平均線のクロス）</li><li>ADX＝トレンドの強さを表す指標（20未満は弱い、25以上は強いの目安。上げか下げかは表さない）</li><li>VIX＝米国株の「恐怖指数」（市場の不安が大きいほど高い）</li><li>ファンダの見立て＝毎日朝夕のまとめ（経済指標・ニュース・金融政策）から出す、その銘柄の上げ下げの見立て</li></ul></details></div>
+    <table><tr><th>仮説</th><th>種別</th><th>宣言基準</th><th>前向き現在値(平均R)</th><th>状態</th></tr>
+<tr><td>円以外の通貨ペアの買い<br><small style="opacity:.7">group=other_fx×dir=long</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.03</span><br><span style="white-space:nowrap">CI[-0.14~+0.07]</span><br><small style="opacity:.8;white-space:nowrap">385/927・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>株価指数の買い<br><small style="opacity:.7">指数×ロング(全足ライブ)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.01</span><br><span style="white-space:nowrap">CI[-0.12~+0.15]</span><br><small style="opacity:.8;white-space:nowrap">376/866・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>値段が2本の移動平均線より上の買い<br><small style="opacity:.7">ステート 上昇配置（&gt;MA25&amp;75）×ロング</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥30🏁</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.00</span><br><span style="white-space:nowrap">CI[-0.12~+0.12]</span><br><small style="opacity:.8;white-space:nowrap">360/839・勝率43%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>「RSI売られすぎからの反発」のシグナル<br><small style="opacity:.7">売られすぎ逆張り買い(rsi_oversold_bounce・全足)</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R +0.16</span><br><span style="white-space:nowrap">CI[+0.00~+0.31]</span><br><small style="opacity:.8;white-space:nowrap">207/418・勝率50%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+<tr><td>通貨の強弱と同じ向きのシグナル（9月28日以降に出たもの／買いも売りも）<br><small style="opacity:.7">通貨の強弱と同じ向き</small></td><td><span style="white-space:nowrap">勝ちやすいか</span><br><small style="opacity:.7">edge</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI下限&gt;0</span></td><td><span style="white-space:nowrap">平均R -0.48</span><br><span style="white-space:nowrap">CI[-0.81~-0.16]</span><br><small style="opacity:.8;white-space:nowrap">19/86・勝率22%</small></td><td><span style="white-space:nowrap">⛔反証</span></td></tr>
+<tr><td>逆張り買い×VIX低（15未満）（回避）<br><small style="opacity:.7">逆張り買い×VIX低(15未満)(回避)</small></td><td><span style="white-space:nowrap">負けやすいか</span><br><small style="opacity:.7">gate</small></td><td><span style="white-space:nowrap">前向きN≥80</span><br><span style="white-space:nowrap">平均RのCI上限&lt;0</span></td><td><span style="white-space:nowrap">平均R -0.03</span><br><span style="white-space:nowrap">CI[-1.23~+1.18]</span><br><small style="opacity:.8;white-space:nowrap">5/12・勝率42%</small></td><td><span style="white-space:nowrap">🟡蓄積中</span></td></tr>
+    </table>
+    <p style="font-size:.85rem;color:#57606a;margin-top:8px">※ 全仮説は <a href="track-record.html">シグナル研究のページ</a> で確認できます。</p>
+
+    <div class="disclaimer" data-disclaimer="kinsho-v1" style="margin-top:24px;font-size:.85rem;color:#57606a;border-top:1px solid #d0d7de;padding-top:12px">
+      <strong>【免責事項】</strong>本記事は情報提供を目的とした研究の記録であり、投資助言・特定の金融商品の売買推奨・投資勧誘ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。掲載した成績はすべて過去のシグナルの記録であり、将来の成績や利益を保証するものではありません。投資の判断はご自身の責任で行ってください。
+    </div>
+
+  </article>
+</main>
+<footer>
+  <p>MarketWatch AI — AIシグナル研究日誌</p>
+  <p style="margin-top:8px"><a href="privacy.html">プライバシーポリシー</a> ／ <a href="about.html">このサイトについて</a> ／ <a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:12px;font-size:.8rem" data-disclaimer="kinsho-v1">このサイトはAIによる自動分析を提供しており、投資助言ではありません。投資はご自身の判断と責任において行ってください。</p>
+</footer>
+</body>
+</html>

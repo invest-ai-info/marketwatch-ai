@@ -1,0 +1,27 @@
+{
+  "article_id": "128",
+  "asof": "2026-10-20T06:10:00+09:00",
+  "hypothesis_id": "rsi_oversold_edge",
+  "claims": [
+    {
+      "label": "IS（登録前）: RSI売られすぎ反発の買いシグナル",
+      "hypothesis_id": "rsi_oversold_edge",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_before": "2026-06-17"},
+      "k": 52,
+      "n": 133
+    },
+    {
+      "label": "FWD（前向き）: RSI売られすぎ反発の買いシグナル",
+      "hypothesis_id": "rsi_oversold_edge",
+      "filter": {"signal": "rsi_oversold_bounce", "fired_from": "2026-06-17"},
+      "k": 209,
+      "n": 422
+    },
+    {
+      "label": "FWD期間ベースライン（全ロングシグナル）",
+      "filter": {"direction": "long", "fired_from": "2026-06-17"},
+      "k": 1446,
+      "n": 3362
+    }
+  ]
+}
