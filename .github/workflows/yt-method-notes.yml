@@ -1,0 +1,59 @@
+name: YouTube Method Notes (manual)
+
+# YouTube チャンネルの動画を Gemini に見せて、手法のメモを作る（研究用・2026-10-20 新設＝オーナー「@fxism-rion の動画をすべて理解して手法をまとめて検証を」）。
+# 手元の回線は YouTube の字幕取得を止められていたため、サイトの YouTube 要約と同じく Gemini に動画の URL を渡す（画面のチャート設定も読める）。
+# 手元のセッションが `python yt_method_notes.py pull <run_id> <保存先>` で取り込み、まとめと検証は手元で行う。
+# ⚠️ 手動のみ。リポジトリには何も書かない（artifact は1日だけ残す）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "チャンネルのハンドル（@から）"
+        required: true
+        default: '@fxism-rion'
+      channel_name:
+        description: "チャンネル名（Gemini への説明用）"
+        required: false
+        default: 'FXVtuberリオンのトレードチャンネル byFXism'
+      ids:
+        description: "動画 ID をカンマ区切りで（空＝動画タブの全部）"
+        required: false
+        default: ''
+      model:
+        description: "Gemini のモデル"
+        required: false
+        default: 'gemini-2.5-flash'
+
+concurrency:
+  group: yt-method-notes
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  notes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install youtube-transcript-api
+      - name: Make notes for this shard
+        run: python -u yt_method_notes.py run --channel "${{ inputs.channel }}" --channel-name "${{ inputs.channel_name }}" --ids "${{ inputs.ids }}" --model "${{ inputs.model }}" --out yt-notes --shard ${{ matrix.shard }} --of 4
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: yt-notes-${{ matrix.shard }}
+          path: yt-notes/
+          retention-days: 1
+          if-no-files-found: ignore
