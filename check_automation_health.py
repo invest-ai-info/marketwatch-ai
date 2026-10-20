@@ -473,9 +473,11 @@ QUEUE_LANES = [
     #    （空売り規制・大量保有報告書・清算決済など専門性の高い題材は残っているが、
     #      一次情報の確認コストに対して読者層が狭いため、company レーンへ力を移す方針）。
     #    routine（tse-daily-auto）はオーナーが claude.ai 側で停止する。
-    # 🆕 2026-09-25: エントリー方法の研究（routine entry-daily-auto・毎日1本・全25回＋総まとめで完結）。
-    #    完結したら、ここからも外す（上の3レーンと同じ畳み方）。床3＝残り3回を切ったら知らせる。
-    ("entry（エントリー方法の研究）", "drafts/ENTRY_GUIDE.md", "entry-", "drafts/entry/ENTRY_LEDGER.md", 3),
+    # ⚠️ entry（エントリー方法の研究）は 2026-10-20 に #26「全25回 総まとめ」(series-index) で**完結**し、
+    #    見張りから外した。総目次＝guide-entry-series-index.html。25の入り方すべてを研究の強さ・市場・
+    #    反論の有無つきで紹介し終えた判断（上の3レーンと同じ畳み方）。
+    #    記事26本と手順書・台帳は読者向けに残す。routine（entry-daily-auto）はオーナーが claude.ai 側で
+    #    停止する（エージェントからは無効化できない）。
 ]
 
 
