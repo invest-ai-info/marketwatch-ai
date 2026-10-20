@@ -1,0 +1,593 @@
+{
+ "kind": "backtest",
+ "unit": "R",
+ "source": "手元の MT5（BigBoss）の実ティックの5分足（為替8ペア）＋ Dukascopy の XAUUSD（費用は 0.24ドルを下限）",
+ "generated_jst": "2026-10-20T19:53+09:00",
+ "prereg_sha256": "6e9a43c39963c2811f0379f83710fe03d08aa9764372d93a5d574e38504db9f7",
+ "data": "2021-10-01〜2026-09-30",
+ "titles": {
+  "RH-A": "リオン式（YouTube「FXVtuberリオンのトレードチャンネル byFXism」）の高値付近からのショート：1時間足の目立つ高値を少しだけ超えて戻されたら売る（安値は鏡で買う）・損切り掃いた先の外・利確1R（5分足・為替8ペア＋金・終日・過去のデータ・1回だけ・手元の MT5 と Dukascopy）",
+  "RH-B": "リオン式（YouTube「FXVtuberリオンのトレードチャンネル byFXism」）の高値付近からのショート：1時間足の目立つ高値を少しだけ超えて戻されたら売る（安値は鏡で買う）・東京時間（日本時間8〜12時）だけ（5分足・為替8ペア＋金・過去のデータ・1回だけ・手元の MT5 と Dukascopy）"
+ },
+ "gold_data_report": {
+  "minutes": 1802505,
+  "bars5": 360605,
+  "weekdays": 1326,
+  "missing_days": 0,
+  "missing_rate": 0.0,
+  "missing_first": [],
+  "first_utc": "2021-10-01 00:00:00+00:00",
+  "last_utc": "2026-09-30 23:55:00+00:00",
+  "bid_median": 2271.755,
+  "unit_ok": true,
+  "spread_median_raw": 0.397,
+  "spread_p90_raw": 0.71,
+  "share_below_floor": 0.00834506
+ },
+ "signal_counts": {
+  "USDJPY": {
+   "買い": {
+    "levels": 985,
+    "swept": 692,
+    "overshoot": 324,
+    "no_return": 1,
+    "no_atr": 0,
+    "signals": 367
+   },
+   "売り": {
+    "levels": 1040,
+    "swept": 862,
+    "overshoot": 320,
+    "no_return": 5,
+    "no_atr": 0,
+    "signals": 537
+   }
+  },
+  "EURJPY": {
+   "買い": {
+    "levels": 994,
+    "swept": 708,
+    "overshoot": 258,
+    "no_return": 1,
+    "no_atr": 0,
+    "signals": 449
+   },
+   "売り": {
+    "levels": 1057,
+    "swept": 860,
+    "overshoot": 217,
+    "no_return": 8,
+    "no_atr": 0,
+    "signals": 635
+   }
+  },
+  "GBPJPY": {
+   "買い": {
+    "levels": 1004,
+    "swept": 709,
+    "overshoot": 235,
+    "no_return": 4,
+    "no_atr": 0,
+    "signals": 470
+   },
+   "売り": {
+    "levels": 1052,
+    "swept": 850,
+    "overshoot": 267,
+    "no_return": 7,
+    "no_atr": 0,
+    "signals": 576
+   }
+  },
+  "AUDJPY": {
+   "買い": {
+    "levels": 990,
+    "swept": 705,
+    "overshoot": 242,
+    "no_return": 4,
+    "no_atr": 0,
+    "signals": 459
+   },
+   "売り": {
+    "levels": 1036,
+    "swept": 821,
+    "overshoot": 208,
+    "no_return": 2,
+    "no_atr": 0,
+    "signals": 611
+   }
+  },
+  "EURUSD": {
+   "買い": {
+    "levels": 1028,
+    "swept": 789,
+    "overshoot": 309,
+    "no_return": 6,
+    "no_atr": 0,
+    "signals": 474
+   },
+   "売り": {
+    "levels": 1027,
+    "swept": 773,
+    "overshoot": 309,
+    "no_return": 6,
+    "no_atr": 0,
+    "signals": 458
+   }
+  },
+  "GBPUSD": {
+   "買い": {
+    "levels": 1008,
+    "swept": 779,
+    "overshoot": 301,
+    "no_return": 5,
+    "no_atr": 0,
+    "signals": 473
+   },
+   "売り": {
+    "levels": 1019,
+    "swept": 770,
+    "overshoot": 274,
+    "no_return": 11,
+    "no_atr": 0,
+    "signals": 485
+   }
+  },
+  "AUDUSD": {
+   "買い": {
+    "levels": 1026,
+    "swept": 804,
+    "overshoot": 277,
+    "no_return": 7,
+    "no_atr": 0,
+    "signals": 520
+   },
+   "売り": {
+    "levels": 1046,
+    "swept": 828,
+    "overshoot": 301,
+    "no_return": 4,
+    "no_atr": 0,
+    "signals": 523
+   }
+  },
+  "NZDUSD": {
+   "買い": {
+    "levels": 1032,
+    "swept": 816,
+    "overshoot": 266,
+    "no_return": 6,
+    "no_atr": 0,
+    "signals": 544
+   },
+   "売り": {
+    "levels": 997,
+    "swept": 758,
+    "overshoot": 243,
+    "no_return": 3,
+    "no_atr": 0,
+    "signals": 512
+   }
+  },
+  "XAUUSD": {
+   "買い": {
+    "levels": 1077,
+    "swept": 774,
+    "overshoot": 329,
+    "no_return": 2,
+    "no_atr": 0,
+    "signals": 443
+   },
+   "売り": {
+    "levels": 1139,
+    "swept": 900,
+    "overshoot": 403,
+    "no_return": 1,
+    "no_atr": 0,
+    "signals": 496
+   }
+  }
+ },
+ "verdicts": {
+  "RH-A": {
+   "status": "stop",
+   "decided_on": "2026-10-20",
+   "n": 8483,
+   "mean": -0.17295504,
+   "lo": -0.19911304,
+   "hi": -0.14679704,
+   "reason": "費用後マイナス（過去のデータ・1回だけ数えた・手元の MT5 の5分足と Dukascopy の金・単位 R・費用前 -0.004R・勝率 40.8%〔利確1R・損切り1R〕）"
+  },
+  "RH-B": {
+   "status": "stop",
+   "decided_on": "2026-10-20",
+   "n": 1654,
+   "mean": -0.17458112,
+   "lo": -0.23289293,
+   "hi": -0.11626931,
+   "reason": "費用後マイナス（過去のデータ・1回だけ数えた・手元の MT5 の5分足と Dukascopy の金・単位 R・費用前 -0.014R・勝率 41.1%〔利確1R・損切り1R〕）"
+  }
+ },
+ "arms": {
+  "RH-A": {
+   "n": 8483,
+   "mean": -0.17295504,
+   "lo": -0.19911304,
+   "hi": -0.14679704,
+   "placebo_p": 0.01049475,
+   "placebo_mean": -0.19753548,
+   "old_mean": -0.1512689,
+   "new_mean": -0.19472827,
+   "old_n": 4250,
+   "new_n": 4233,
+   "before_mean": -0.00448592,
+   "cost_mean": 0.16846912,
+   "win": 0.40799246,
+   "avg_win": 1.00004429,
+   "avg_loss": -0.98134824,
+   "by_exit": {
+    "利確": {
+     "n": 3279,
+     "after": 1.03527874,
+     "before": 1.19269926,
+     "win": 1.0
+    },
+    "損切り": {
+     "n": 4857,
+     "after": -1.00304236,
+     "before": -0.82790021,
+     "win": 0.0
+    },
+    "時間切れ": {
+     "n": 347,
+     "after": 0.02858838,
+     "before": 0.20805859,
+     "win": 0.52449568
+    }
+   },
+   "by_pair": {
+    "USDJPY": {
+     "n": 854,
+     "after": -0.17054648,
+     "before": -0.05712971,
+     "win": 0.41100703
+    },
+    "EURJPY": {
+     "n": 1008,
+     "after": -0.09934295,
+     "before": 0.04145796,
+     "win": 0.4484127
+    },
+    "GBPJPY": {
+     "n": 976,
+     "after": -0.1442064,
+     "before": 0.00376355,
+     "win": 0.43135246
+    },
+    "AUDJPY": {
+     "n": 1014,
+     "after": -0.20833262,
+     "before": -0.02103669,
+     "win": 0.38856016
+    },
+    "EURUSD": {
+     "n": 874,
+     "after": -0.14301513,
+     "before": 0.02270432,
+     "win": 0.41075515
+    },
+    "GBPUSD": {
+     "n": 893,
+     "after": -0.17221504,
+     "before": -0.01500482,
+     "win": 0.40201568
+    },
+    "AUDUSD": {
+     "n": 979,
+     "after": -0.20788008,
+     "before": 0.00565354,
+     "win": 0.38815117
+    },
+    "NZDUSD": {
+     "n": 988,
+     "after": -0.26044578,
+     "before": -0.0148254,
+     "win": 0.37044534
+    },
+    "XAUUSD": {
+     "n": 897,
+     "after": -0.14468252,
+     "before": -0.01196048,
+     "win": 0.42251951
+    }
+   },
+   "by_market": {
+    "為替": {
+     "n": 7586,
+     "after": -0.1762981,
+     "before": -0.0036021,
+     "win": 0.40627472
+    },
+    "金": {
+     "n": 897,
+     "after": -0.14468252,
+     "before": -0.01196048,
+     "win": 0.42251951
+    }
+   },
+   "by_side": {
+    "売り（看板）": {
+     "n": 4546,
+     "after": -0.18026963,
+     "before": -0.00399107,
+     "win": 0.40365156
+    },
+    "買い（鏡）": {
+     "n": 3937,
+     "after": -0.16450898,
+     "before": -0.00505733,
+     "win": 0.41300483
+    }
+   },
+   "by_wick": {
+    "超えた足で戻された（髭）": {
+     "n": 5431,
+     "after": -0.18320644,
+     "before": -0.00199002,
+     "win": 0.39937396
+    },
+    "あとの足で戻された": {
+     "n": 3052,
+     "after": -0.1547128,
+     "before": -0.00892736,
+     "win": 0.42332896
+    }
+   },
+   "verdict": "費用後マイナス",
+   "q": 0.585,
+   "counts": {
+    "gap": 5,
+    "beyond_stop": 1,
+    "unfinished": 0,
+    "busy": 125
+   },
+   "pool_sizes": {
+    "USDJPY買": 3000,
+    "USDJPY売": 3000,
+    "EURJPY買": 3000,
+    "EURJPY売": 2999,
+    "GBPJPY買": 2999,
+    "GBPJPY売": 3000,
+    "AUDJPY買": 3000,
+    "AUDJPY売": 3000,
+    "EURUSD買": 2998,
+    "EURUSD売": 3000,
+    "GBPUSD買": 3000,
+    "GBPUSD売": 3000,
+    "AUDUSD買": 3000,
+    "AUDUSD売": 3000,
+    "NZDUSD買": 2999,
+    "NZDUSD売": 3000,
+    "XAUUSD買": 3000,
+    "XAUUSD売": 2998
+   },
+   "read_tp2": {
+    "n": 8467,
+    "mean": -0.1710273,
+    "lo": -0.20533214,
+    "hi": -0.13672247,
+    "before_mean": 0.00185451,
+    "cost_mean": 0.17288181,
+    "win": 0.3043581
+   },
+   "read_max_spread": {
+    "n": 8482,
+    "mean": -0.19532906,
+    "lo": -0.22099289,
+    "hi": -0.16966523,
+    "before_mean": -0.00417853,
+    "cost_mean": 0.19115053,
+    "win": 0.39813723
+   }
+  },
+  "RH-B": {
+   "n": 1654,
+   "mean": -0.17458112,
+   "lo": -0.23289293,
+   "hi": -0.11626931,
+   "placebo_p": 0.8165917,
+   "placebo_mean": -0.15341762,
+   "old_mean": -0.18146479,
+   "new_mean": -0.16716129,
+   "old_n": 858,
+   "new_n": 796,
+   "before_mean": -0.01444803,
+   "cost_mean": 0.16013309,
+   "win": 0.41051995,
+   "avg_win": 0.98347038,
+   "avg_loss": -0.98106007,
+   "by_exit": {
+    "利確": {
+     "n": 645,
+     "after": 1.01645721,
+     "before": 1.16897942,
+     "win": 1.0
+    },
+    "損切り": {
+     "n": 947,
+     "after": -1.0,
+     "before": -0.83222191,
+     "win": 0.0
+    },
+    "時間切れ": {
+     "n": 62,
+     "after": 0.04238581,
+     "before": 0.16492549,
+     "win": 0.5483871
+    }
+   },
+   "by_pair": {
+    "USDJPY": {
+     "n": 215,
+     "after": -0.14900201,
+     "before": -0.04188745,
+     "win": 0.42325581
+    },
+    "EURJPY": {
+     "n": 198,
+     "after": -0.04361663,
+     "before": 0.09238284,
+     "win": 0.47979798
+    },
+    "GBPJPY": {
+     "n": 184,
+     "after": -0.03412018,
+     "before": 0.0919588,
+     "win": 0.48369565
+    },
+    "AUDJPY": {
+     "n": 246,
+     "after": -0.18646365,
+     "before": -0.0221626,
+     "win": 0.40243902
+    },
+    "EURUSD": {
+     "n": 120,
+     "after": -0.172067,
+     "before": -0.00215474,
+     "win": 0.4
+    },
+    "GBPUSD": {
+     "n": 118,
+     "after": -0.16171341,
+     "before": 0.00670551,
+     "win": 0.42372881
+    },
+    "AUDUSD": {
+     "n": 218,
+     "after": -0.3359196,
+     "before": -0.13219686,
+     "win": 0.32568807
+    },
+    "NZDUSD": {
+     "n": 199,
+     "after": -0.24478953,
+     "before": -0.02150949,
+     "win": 0.37688442
+    },
+    "XAUUSD": {
+     "n": 156,
+     "after": -0.2196389,
+     "before": -0.07746692,
+     "win": 0.39102564
+    }
+   },
+   "by_market": {
+    "為替": {
+     "n": 1498,
+     "after": -0.16988886,
+     "before": -0.00788531,
+     "win": 0.41255007
+    },
+    "金": {
+     "n": 156,
+     "after": -0.2196389,
+     "before": -0.07746692,
+     "win": 0.39102564
+    }
+   },
+   "by_side": {
+    "売り（看板）": {
+     "n": 939,
+     "after": -0.19308875,
+     "before": -0.02727205,
+     "win": 0.40255591
+    },
+    "買い（鏡）": {
+     "n": 715,
+     "after": -0.1502753,
+     "before": 0.00239358,
+     "win": 0.42097902
+    }
+   },
+   "by_wick": {
+    "超えた足で戻された（髭）": {
+     "n": 990,
+     "after": -0.16464152,
+     "before": 0.01004337,
+     "win": 0.41313131
+    },
+    "あとの足で戻された": {
+     "n": 664,
+     "after": -0.18940071,
+     "before": -0.05096383,
+     "win": 0.40662651
+    }
+   },
+   "verdict": "費用後マイナス",
+   "q": 0.5521,
+   "counts": {
+    "gap": 0,
+    "beyond_stop": 0,
+    "unfinished": 0,
+    "busy": 28
+   },
+   "pool_sizes": {
+    "USDJPY買": 3000,
+    "USDJPY売": 3000,
+    "EURJPY買": 3000,
+    "EURJPY売": 3000,
+    "GBPJPY買": 3000,
+    "GBPJPY売": 3000,
+    "AUDJPY買": 3000,
+    "AUDJPY売": 3000,
+    "EURUSD買": 3000,
+    "EURUSD売": 3000,
+    "GBPUSD買": 3000,
+    "GBPUSD売": 3000,
+    "AUDUSD買": 3000,
+    "AUDUSD売": 3000,
+    "NZDUSD買": 3000,
+    "NZDUSD売": 3000,
+    "XAUUSD買": 2999,
+    "XAUUSD売": 3000
+   },
+   "read_tp2": {
+    "n": 1654,
+    "mean": -0.17240472,
+    "lo": -0.24892418,
+    "hi": -0.09588526,
+    "before_mean": -0.01069466,
+    "cost_mean": 0.16171006,
+    "win": 0.308948
+   },
+   "read_max_spread": {
+    "n": 1655,
+    "mean": -0.19276471,
+    "lo": -0.25025598,
+    "hi": -0.13527345,
+    "before_mean": -0.00992454,
+    "cost_mean": 0.18284017,
+    "win": 0.40120846
+   },
+   "read_tokyo_slope": {
+    "n": 93,
+    "mean": -0.16294326,
+    "lo": -0.43249349,
+    "hi": 0.10660697,
+    "before_mean": -0.01087259,
+    "cost_mean": 0.15207067,
+    "win": 0.40860215
+   },
+   "read_slope_only": {
+    "n": 828,
+    "mean": -0.16539904,
+    "lo": -0.24953896,
+    "hi": -0.08125912,
+    "before_mean": -0.02452477,
+    "cost_mean": 0.14087427,
+    "win": 0.40821256
+   }
+  }
+ }
+}
