@@ -14,6 +14,10 @@ MFE (Max Favorable Excursion) / MAE (Max Adverse Excursion) も計算して記�
 
 🆕 SL ヒット時には Gemini が「敗因分析」を自動生成して loss_analysis に保存。
 
+🆕 2026-10-20 利確1のその後（after_tp1）: outcome=tp1 で確定したシグナルを、確定後も 1 時間足で追い、
+利確2・入口・損切りのどれに先に届いたか／期限切れかを after_tp1 に残す（出口の比べ直し用）。
+今ある項目（outcome・hit_*_at・MFE/MAE など）は一切変えない。詳しくは track_after_tp1() の説明。
+
 GitHub Actions の technical-alerts ワークフローに後続ステップとして組み込む想定。
 """
 import os
@@ -33,6 +37,7 @@ JST = timezone(timedelta(hours=9))
 SIGNALS_LOG_FILE = "signals-log.json"
 EXPIRY_DAYS = 7  # シグナル発火から 7 日経って未到達なら expired
 EXPIRY_DAYS_1D = 21  # 🆕 2026-06-11: 日足シグナルは TP/SL が広く決着に時間がかかるため 3 週間
+AFTER_TP1_VERSION = 1  # 🆕 2026-10-20: after_tp1 の数え方の版（数え方を変えたら上げて数え直す）
 
 
 # ─────────────────────────────────────────────
@@ -544,6 +549,95 @@ def evaluate_one(entry, now_jst):
         return True
 
 
+# ─────────────────────────────────────────────
+# 🆕 2026-10-20 利確1のその後（after_tp1）
+# ─────────────────────────────────────────────
+def _after_tp1_deadline(entry):
+    """追うのをやめる期限＝発火から EXPIRY_DAYS（日足は EXPIRY_DAYS_1D）。シグナル本体の期限と同じ時計"""
+    days = EXPIRY_DAYS_1D if entry.get("timeframe") == "1d" else EXPIRY_DAYS
+    return datetime.fromisoformat(entry["fired_at"]) + timedelta(days=days)
+
+
+def track_after_tp1(entry, df, now_jst):
+    """利確1で確定したシグナルの「その後」を 1 時間足 df から数え直し、after_tp1 の中身（dict）を返す。entry は変えない。
+
+    利確1の足から期限までの足を順に見て、利確2・入口・損切りに初めて届いた足の時刻を残す。
+    - order: 届いた順。同じ足の中の順番はわからないので、悪い側を先に置く（入口→損切り→利確2）
+      ＝今の判定（同じ足なら損切りを優先）と同じ考え方
+    - 利確1の足そのもの: 入口・損切りに触れていても利確1より前とみなし数えない（上と同じく悪い側＝入口を先に置くと、
+      入口→利確1 の順になる）。触れていたことは tp1_bar_entry に残す。利確2は利確1より後にしか届かないので数える
+    - ended_by: 利確2か損切りに届いたら "tp2"／"sl"（入口に戻っただけでは終えない＝利確2まで持つ出口のために追い続ける）。
+      期限までにどちらにも届かなければ "expired"（ended_at＝期限・last_close＝期限前の最後の足の終値）。追っている間は None
+    - tp1_bar: hit_tp1_at の足が今のデータにあり利確1に届いているか（"ok"／"missing"／"mismatch"）。さかのぼって埋めた分の点検用
+    """
+    is_long = entry["direction"] == "ロング（買い）"
+    price = {"entry": entry["entry"], "sl": entry["stop_loss"], "tp2": entry["take_profit_2"]}
+    tp1 = entry["take_profit_1"]
+    tp1_ts = pd.Timestamp(datetime.fromisoformat(entry["hit_tp1_at"]))
+    deadline = _after_tp1_deadline(entry)
+
+    res = {"v": AFTER_TP1_VERSION, "tp2_at": None, "entry_at": None, "sl_at": None, "order": [],
+           "ended_by": None, "ended_at": None, "last_close": None, "tp1_bar": "missing", "tp1_bar_entry": False}
+    bars = df[(df.index >= tp1_ts) & (df.index < pd.Timestamp(deadline))]
+    last_close = None
+    for ts, hi, lo, close in zip(bars.index, bars["High"], bars["Low"], bars["Close"]):
+        hi, lo = float(hi), float(lo)
+        if is_long:
+            touched = {"entry": lo <= price["entry"], "sl": lo <= price["sl"], "tp2": hi >= price["tp2"]}
+        else:
+            touched = {"entry": hi >= price["entry"], "sl": hi >= price["sl"], "tp2": lo <= price["tp2"]}
+        if ts == tp1_ts:
+            reached_tp1 = hi >= tp1 if is_long else lo <= tp1
+            res["tp1_bar"] = "ok" if reached_tp1 and not touched["sl"] else "mismatch"
+            res["tp1_bar_entry"] = touched["entry"]
+            touched["entry"] = touched["sl"] = False
+        last_close = float(close)
+        for name in ("entry", "sl", "tp2"):          # 同じ足の中は悪い側が先
+            if touched[name] and res[name + "_at"] is None:
+                res[name + "_at"] = ts.isoformat()
+                res["order"].append(name)
+        ended = [n for n in res["order"] if n in ("sl", "tp2")]
+        if ended:
+            res["ended_by"] = ended[0]
+            res["ended_at"] = res[ended[0] + "_at"]
+            return res
+    if now_jst >= deadline:
+        res["ended_by"] = "expired"
+        res["ended_at"] = deadline.isoformat()
+        res["last_close"] = last_close
+    return res
+
+
+def update_after_tp1(log, now_jst, fetch=None):
+    """outcome=tp1 で after_tp1 が未確定のものだけを追う。値段の取得は銘柄ごとに1回（いちばん早い利確1の時刻から）。
+    書き換えた件数を返す。すでに tp1 で確定していた過去の記録も、ここで同じように埋まる（さかのぼり）"""
+    fetch = fetch or fetch_prices_since
+    targets = {}
+    for e in log:
+        if (e.get("outcome") == "tp1" and e.get("hit_tp1_at")
+                and e.get("direction") in ("ロング（買い）", "ショート（売り）")
+                and not (e.get("after_tp1") or {}).get("ended_by")):
+            targets.setdefault(e["ticker"], []).append(e)
+    if not targets:
+        return 0
+    print(f"🔭 利確1のその後: {sum(len(v) for v in targets.values())} 件を追跡（{len(targets)} 銘柄）")
+    changed = 0
+    for ticker, entries in targets.items():
+        start = min(datetime.fromisoformat(e["hit_tp1_at"]) for e in entries).astimezone(timezone.utc)
+        df = fetch(ticker, start)
+        if df is None or df.empty:
+            continue  # 値段が取れない＝次回また追う
+        for e in entries:
+            prev = e.get("after_tp1") or {}
+            res = track_after_tp1(e, df, now_jst)
+            res["made_at"] = prev.get("made_at") or now_jst.isoformat(timespec="seconds")
+            if res != prev:
+                e["after_tp1"] = res
+                changed += 1
+    print(f"  🔭 利確1のその後: {changed} 件を更新")
+    return changed
+
+
 def main():
     print("📊 シグナル結果判定スクリプト開始")
     log = load_log()
@@ -556,16 +650,25 @@ def main():
     resolved_count = sum(1 for e in log if e.get("outcome") and e.get("outcome") != "no_plan")
     print(f"  全シグナル: {len(log)} 件 / 確定済: {resolved_count} / 未確定: {len(pending)}")
 
+    updates = 0
     if not pending:
         print("✅ すべて確定済み")
-        return
-
-    updates = 0
     for entry in pending:
         if evaluate_one(entry, now_jst):
             updates += 1
 
+    # 🆕 2026-10-20 利確1のその後（失敗しても上の判定は保存する）
+    try:
+        after_updates = update_after_tp1(log, now_jst)
+    except Exception as e:
+        print(f"  ⚠️ 利確1のその後の追跡に失敗（判定本体には影響なし）: {type(e).__name__}: {str(e)[:120]}")
+        after_updates = 0
+
+    if not pending and not after_updates:
+        return
     save_log(log)
+    if not pending:
+        return
     print(f"\n💾 {updates} 件のレコードを更新")
 
     # サマリ統計
