@@ -118,8 +118,9 @@ def cmd_check(argv):
 
 
 def cmd_sync(argv):
-    print("📦 sync_to_github.py 実行...")
-    return _run(["sync_to_github.py"])
+    # 2026-10-20 fix: 引数を捨てていたため `mw sync --dry-run` が確認だけで終わらず本当に送っていた（--force・--batch も届かなかった）
+    print("📦 sync_to_github.py 実行..." + (f"（{' '.join(argv)}）" if argv else ""))
+    return _run(["sync_to_github.py"] + list(argv))
 
 
 def cmd_trigger(argv):
