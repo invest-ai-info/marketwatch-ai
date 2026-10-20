@@ -1,0 +1,48 @@
+name: Gold Bars Fetch (manual)
+
+# 金（XAUUSD）の1分足（売値と買値）を Dukascopy から取る（KJG 九条式を金で数える・2026-10-20 オーナー「5年分ぐらいでいいので早く終わらしてください」）。
+# Dukascopy は1件に10〜30秒かかり、1か所からは1分に約16件しか取れない＝16台に分けて取り、artifact に置く。
+# 手元のセッションが artifact を取り込み、C:\mt5run\duka_xau に重ねて kjg_lab.py で数える（数えるのは手元）。
+# ⚠️ 手動のみ。リポジトリには何も書かない（artifact は3日だけ残す）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      first:
+        description: "取る最初の日（UTC）"
+        required: true
+        default: '2021-09-01'
+      last:
+        description: "取る最後の日（UTC）"
+        required: true
+        default: '2026-09-30'
+
+concurrency:
+  group: gold-bars-fetch
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch this shard's days
+        run: python -u gold_bars.py fetch --first ${{ inputs.first }} --last ${{ inputs.last }} --root gold-min --shard ${{ matrix.shard }} --of 16 --workers 8 --budget-min 100
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: gold-min-${{ matrix.shard }}
+          path: gold-min/
+          retention-days: 3
+          if-no-files-found: ignore
