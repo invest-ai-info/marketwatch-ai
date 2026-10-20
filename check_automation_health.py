@@ -476,8 +476,8 @@ QUEUE_LANES = [
     # ⚠️ entry（エントリー方法の研究）は 2026-10-20 に #26「全25回 総まとめ」(series-index) で**完結**し、
     #    見張りから外した。総目次＝guide-entry-series-index.html。25の入り方すべてを研究の強さ・市場・
     #    反論の有無つきで紹介し終えた判断（上の3レーンと同じ畳み方）。
-    #    記事26本と手順書・台帳は読者向けに残す。routine（entry-daily-auto）はオーナーが claude.ai 側で
-    #    停止する（エージェントからは無効化できない）。
+    #    記事26本と手順書・台帳は読者向けに残す。routine（entry-daily-auto）は 2026-10-20 に
+    #    止めた（オーナー OK・エージェントが作った予約〔meta_mcp〕なので enabled=false にできた）。
 ]
 
 
