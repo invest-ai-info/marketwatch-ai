@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-20", "line": '・<b>2026-10-20</b>: 📚 解説「<a href="guide-entry-series-index.html" style="color:#0969da"><b>エントリー方法の研究 全25回・総まとめ</b></a>」公開'},
         {"date": "2026-10-20", "line": '・<b>2026-10-20</b>: 🔬 解説「<a href="guide-company-8308-resona.html" style="color:#0969da"><b>りそなホールディングス</b></a>」公開'},
         {"date": "2026-10-19", "line": '・<b>2026-10-19</b>: 📰 解説「<a href="guide-news-2026-10-19-ai-earnings-week-meta-tesla.html" style="color:#0969da"><b>【10/19】半導体8連敗後のAI決算ウィーク──Meta・Tesla、AI投資の持続性が問われる</b></a>」公開'},
         {"date": "2026-10-19", "line": '・<b>2026-10-19</b>: 🔍 解説「<a href="guide-entry-publication-decay.html" style="color:#0969da"><b>「過去に効いた」をどう疑うか</b></a>」公開'},
