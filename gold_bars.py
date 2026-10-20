@@ -9,6 +9,7 @@
 - ⚠️ リポジトリには置かない（手元の置き場は C:\\mt5run\\duka_xau・Actions は artifact だけ）
 
   python gold_bars.py fetch --first 2021-09-01 --last 2026-09-30 [--root DIR] [--shard 0 --of 16] [--workers 10] [--newest-first]
+  python gold_bars.py pull --run <Actions の実行番号>      （手元だけ：artifact を取り込み、手元に無いファイルだけ置く）
 """
 import argparse
 import concurrent.futures as cf
@@ -107,9 +108,63 @@ def fetch(root, todo, workers, budget_min=None, log=print):
     return errs
 
 
+def pull(run_id, root=LOCAL_ROOT, log=print):
+    """（手元だけ）Actions の実行 run_id の artifact（gold-min-*）を取り込み、root に無いファイルだけ置く。→ (置いた数, 手元にあったので飛ばした数)"""
+    import io
+    import zipfile
+    import mw   # リポジトリの根の司令塔（GitHub のトークン）
+    c = mw._cfg()
+    st, d = mw._gh("GET", f"/actions/runs/{run_id}/artifacts?per_page=100")
+    arts = [a for a in d.get("artifacts", []) if a["name"].startswith("gold-min-")]
+
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, *a, **k):
+            return None
+
+    put = skip = 0
+    for a in sorted(arts, key=lambda x: x["name"]):
+        req = urllib.request.Request(a["archive_download_url"], headers={
+            "Authorization": f"token {c['github_token']}", "Accept": "application/vnd.github+json", "User-Agent": "mw-cli"})
+        try:
+            urllib.request.build_opener(NoRedirect).open(req, timeout=60)
+            raise RuntimeError("転送先が返らなかった")
+        except urllib.error.HTTPError as e:
+            if e.code not in (301, 302, 303, 307, 308):
+                raise
+            loc = e.headers["Location"]
+        data = None
+        for k in range(5):   # 受け取りの時間切れは何回かやり直す
+            try:
+                with urllib.request.urlopen(urllib.request.Request(loc, headers={"User-Agent": "mw-cli"}), timeout=300) as r:   # 署名つきの URL＝トークンを付けない
+                    data = r.read()
+                break
+            except Exception as e:  # noqa: BLE001
+                log(f"  {a['name']}: retry {k + 1} ({type(e).__name__})")
+                time.sleep(5 * (k + 1))
+        if data is None:
+            log(f"  {a['name']}: gave up")
+            continue
+        z = zipfile.ZipFile(io.BytesIO(data))
+        for n in z.namelist():
+            if n.endswith("/") or not n.endswith(".bi5"):
+                continue
+            p = os.path.join(root, *n.split("/"))
+            if os.path.exists(p):
+                skip += 1
+                continue
+            os.makedirs(os.path.dirname(p), exist_ok=True)
+            with open(p + ".part", "wb") as f:
+                f.write(z.read(n))
+            os.replace(p + ".part", p)
+            put += 1
+        log(f"  {a['name']}: total put {put}, skipped {skip}")
+    return put, skip
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["fetch"])
+    ap.add_argument("mode", choices=["fetch", "pull"])
+    ap.add_argument("--run", help="pull：Actions の実行番号")
     ap.add_argument("--first", default="2021-09-01")
     ap.add_argument("--last", default="2026-09-30")
     ap.add_argument("--root", default=LOCAL_ROOT)
@@ -119,6 +174,10 @@ def main(argv=None):
     ap.add_argument("--budget-min", type=float, default=None)
     ap.add_argument("--newest-first", action="store_true")
     a = ap.parse_args(argv)
+    if a.mode == "pull":
+        put, skip = pull(a.run, a.root, log=lambda s: print(s, flush=True))
+        print(f"pulled: put {put}, skipped (already local) {skip}", flush=True)
+        return 0
     first, last = dt.date.fromisoformat(a.first), dt.date.fromisoformat(a.last)
     todo = [x for x in items(first, last, a.shard, a.of, a.newest_first) if not os.path.exists(path_of(a.root, *x))]
     print(f"to fetch {len(todo)} (shard {a.shard}/{a.of}, existing files skipped)", flush=True)
