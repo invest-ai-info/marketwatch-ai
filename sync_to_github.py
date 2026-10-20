@@ -379,4 +379,5 @@ SYNC_FILES = [
     "guide-company-4004-resonac.html",
     "guide-entry-publication-decay.html",
     "guide-news-2026-10-19-ai-earnings-week-meta-tesla.html",
+    "guide-company-8308-resona.html",
 ]
