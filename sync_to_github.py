@@ -381,4 +381,5 @@ SYNC_FILES = [
     "guide-news-2026-10-19-ai-earnings-week-meta-tesla.html",
     "guide-company-8308-resona.html",
     "guide-entry-series-index.html",
+    "guide-company-5801-furukawa.html",
 ]
