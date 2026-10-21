@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-10-21
+- 判定: ✅ 公開済み
+- 選定トピック: テスラ（TSLA）とスペースX（SPCX）の各取締役会が独立特別委員会を設置し合併の可能性を検討開始──マスクCEOは利益相反当事者として自ら委員会から退く（カテゴリ: M&A・テスラ・スペースX・マスク）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - Bloomberg「Musk Says SpaceX, Tesla Have Formed Committees to Explore Merger」2026-10-20
+  - NBC News「Elon Musk says SpaceX and Tesla have formed special committees to discuss merger idea」2026-10-20
+  - TechCrunch「SpaceX and Tesla boards form special committees to review merger」2026-10-20
+  - Electrek「Tesla (TSLA) Q3 2026 earnings preview」2026-10-20
+  - Yahoo Finance / Wedbush分析（合併2027年予測）
+  - Briefing.com「Tesla moves higher on potential SpaceX merger」2026-01-30
+  - Wikipedia「Initial public offering of SpaceX」
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（3箇所軽微修正：①免責の二重否定「無登録の投資助言業者ではありません」→正確な表現に修正 ②「同日」→削除（委員会発表10/20・決算10/21で日が異なる） ③「合併ニュースと同日」→「合併ニュースの直後に」）→最終🟢白
+  - 執筆側で追加修正: 「有価証券法上」→「会社法・企業統治の慣行上」（正確性改善）
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④将来断言なし ✅ ⑤noindexなし ✅ ⑥出典2系統以上 ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告47件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-21-tesla-spacex-merger-committee.html
+- commit: b76861f（main へ push 済み）
+
+---
+
 ## 2026-10-19
 - 判定: ✅ 公開済み
 - 選定トピック: SOX（フィラデルフィア半導体指数）が先週比-11.4%・8日続落（2008年10月以来最長）後、MetaとTesla（10/21水・引け後）を筆頭に約70社がAI決算ウィークに突入──「AI投資の持続性」が問われる（カテゴリ: AI・半導体・決算・Nasdaq・日経）
