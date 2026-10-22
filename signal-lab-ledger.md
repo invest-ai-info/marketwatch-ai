@@ -936,3 +936,13 @@
 **ファイル**: guide-signal-lab-124.html
 **claims**: drafts/labnotes/lab-124-claims.json
 **分析メモ**: drafts/labnotes/lab-124-analysis.md
+
+---
+
+## 研究日誌 #128 — 2026-10-23
+
+**テーマ**: トレンドが強い場面の順張りは回数が増えても負けやすい？——前向き110回の定点観測（#125の続き）
+**仮説ID**: rl_tf_adx_strong
+**ファイル**: guide-signal-lab-128.html
+**claims**: drafts/labnotes/lab-128-claims.json
+**分析メモ**: drafts/labnotes/lab-128-analysis.md
