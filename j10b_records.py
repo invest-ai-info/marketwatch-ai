@@ -165,49 +165,51 @@ def j46_records(st):
     return [r for r in st["records"] if r["date"] >= J46_START and r.get("pre_tv") is not None]
 
 
-def judge_j46(st, n_boot=N_BOOT, seed=J46_SEED):
-    """J46：pre_tv のある記録が1000件に届いていれば、その日までの記録で1回だけ判定して固定する。
-
-    日ごとに pre_tv の大きい順の上位3分の1（多い組）と下位3分の1（少ない組）の寄り→9:30 の平均の差を出し、
-    日ごとの差の平均と95％の幅（日で引き直す）で判定する。
-    """
-    if st.get("verdict_j46"):
-        return st["verdict_j46"]
-    recs = j46_records(st)
-    if len(recs) < J46_GOAL:
-        return None
+def compare_within_day(recs, n_boot=N_BOOT, seed=J46_SEED, min_day=J46_MIN_DAY):
+    """J46・J46R 共通：recs（pre_tv と r930 のある記録）→ 日ごとに pre_tv の大きい順の上位3分の1（多い組）と
+    下位3分の1（少ない組）の寄り→9:30 の平均の差を出し、日ごとの差の平均と95％の幅（日で引き直す）で判定した dict。
+    その日の記録が min_day 未満の日は比べない。"""
     by_day = {}
     for r in recs:
         by_day.setdefault(r["date"], []).append(r)
-    cnt, cut = 0, None
-    for d in sorted(by_day):
-        cnt += len(by_day[d])
-        if cnt >= J46_GOAL:
-            cut = d
-            break
     diffs, top = [], []
-    for d in sorted(x for x in by_day if x <= cut):
+    for d in sorted(by_day):
         rs = sorted(by_day[d], key=lambda r: r["pre_tv"])
-        if len(rs) < J46_MIN_DAY:
+        if len(rs) < min_day:
             continue
         k = len(rs) // 3
         hi_g, lo_g = rs[-k:], rs[:k]
         diffs.append(np.mean([r["r930"] for r in hi_g]) - np.mean([r["r930"] for r in lo_g]))
         top += [r["r930"] for r in hi_g]
     if not diffs:
-        st["verdict_j46"] = {"decided_on": cut, "n": cnt, "days_compared": 0, "mean_diff": 0.0, "lo": 0.0, "hi": 0.0,
-                             "top_net": 0.0, "status": "見えない（比べられる日が無い）"}
-        return st["verdict_j46"]
+        return {"days_compared": 0, "mean_diff": 0.0, "lo": 0.0, "hi": 0.0, "top_net": 0.0,
+                "status": "見えない（比べられる日が無い）"}
     diffs = np.array(diffs)
-    mean = float(diffs.mean())
     rng = np.random.default_rng(seed)
     sims = diffs[rng.integers(0, len(diffs), size=(n_boot, len(diffs)))].mean(1)
     lo, hi = (float(x) for x in np.percentile(sims, [2.5, 97.5]))
     top_net = float(np.mean(top)) - COST
     status = ("罠の目印（兆し）" if hi < 0 and top_net < 0 else
               "強さの目印（兆し）" if lo > 0 and top_net > 0 else "見えない")
-    st["verdict_j46"] = {"decided_on": cut, "n": cnt, "days_compared": len(diffs), "mean_diff": mean,
-                         "lo": lo, "hi": hi, "top_net": top_net, "status": status}
+    return {"days_compared": len(diffs), "mean_diff": float(diffs.mean()), "lo": lo, "hi": hi,
+            "top_net": top_net, "status": status}
+
+
+def judge_j46(st, n_boot=N_BOOT, seed=J46_SEED):
+    """J46：pre_tv のある記録が1000件に届いていれば、その日までの記録で1回だけ判定して固定する（compare_within_day）"""
+    if st.get("verdict_j46"):
+        return st["verdict_j46"]
+    recs = j46_records(st)
+    if len(recs) < J46_GOAL:
+        return None
+    cnt, cut = 0, None
+    for d in sorted({r["date"] for r in recs}):
+        cnt += sum(1 for r in recs if r["date"] == d)
+        if cnt >= J46_GOAL:
+            cut = d
+            break
+    v = compare_within_day([r for r in recs if r["date"] <= cut], n_boot, seed)
+    st["verdict_j46"] = {"decided_on": cut, "n": cnt, **v}
     return st["verdict_j46"]
 
 
