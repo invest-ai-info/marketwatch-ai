@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-10-22
+- 判定: ✅ 公開済み
+- 選定トピック: Meta Q3 2026決算──売上高646億ドル（前年比+26%）・2-for-1株式分割（Class C非議決権株・2027年1月予定）・AI設備投資見通し$135〜145B・52州司法長官との訴訟和解費用$9.89B（カテゴリ: 決算・AI投資・Meta・株式分割）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典:
+  - Bloomberg「Meta Raises Capex Guidance as Its AI Bet Pays Off」2026-10-22
+  - KuCoin「Meta Q3 2026 Revenue Surges 26% to $64.6B, Stock Rises 4%」2026-10-22
+  - Yahoo Finance「Meta earnings live: Meta beats Q3 revenue expectations, announces 2-for-1 stock split」2026-10-22
+  - Benzinga「Meta Posts Q3 Double Beat」2026-10-22
+  - Forbes「Meta Q3 2026 Earnings」2026-10-22
+  - StockTitan「Meta stock split Class C」2026-10-22
+  - SEC 8-K Exhibit 99.1（一次資料）2026-10-21
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🔴エスカレ（売上高数値・訴訟性質・分割対象・日付の事実誤り）→ 執筆側で全修正
+  - 第1Opus（再審査）: 🟡グレー（行動指示調・JSON-LDの日付）→ 軽微修正適用 → 最終🟢白
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④出典2系統以上 ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告47件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-22-meta-q3-earnings.html
+- commit: 3d3ffa3（main へ push 済み）
+
+---
+
 ## 2026-10-21
 - 判定: ✅ 公開済み
 - 選定トピック: テスラ（TSLA）とスペースX（SPCX）の各取締役会が独立特別委員会を設置し合併の可能性を検討開始──マスクCEOは利益相反当事者として自ら委員会から退く（カテゴリ: M&A・テスラ・スペースX・マスク）
