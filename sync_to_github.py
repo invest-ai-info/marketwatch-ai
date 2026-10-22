@@ -384,4 +384,5 @@ SYNC_FILES = [
     "guide-company-5801-furukawa.html",
     "guide-news-2026-10-21-tesla-spacex-merger-committee.html",
     "guide-company-4661-oriental-land.html",
+    "guide-news-2026-10-22-meta-q3-earnings.html",
 ]
