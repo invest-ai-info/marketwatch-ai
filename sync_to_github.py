@@ -385,4 +385,5 @@ SYNC_FILES = [
     "guide-news-2026-10-21-tesla-spacex-merger-committee.html",
     "guide-company-4661-oriental-land.html",
     "guide-news-2026-10-22-meta-q3-earnings.html",
+    "guide-signal-lab-128.html",
 ]
