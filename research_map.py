@@ -558,6 +558,15 @@ def collect_studies(root, m):
                                "前の日の終わりの値段との比率だけで記録しています（気配を見て寄りで買うかを決めるときの参考にするため）",
                        "since": jb.get("start") or "",
                        "progress": f"記録した朝 {days}営業日（{jb.get('goal_days') or 20}営業日で1回だけ判定）"})
+    if jb and not jb.get("verdict_j46"):        # 🆕 2026-10-22 J46（同じ記録の pre_tv の欄）
+        import j10b_records as JB
+        n46 = len(JB.j46_records({"records": [r for r in jb.get("records") or [] if isinstance(r, dict) and r.get("date")]}))
+        verify.append({"cat": "jp", "name": "寄り付きの前の注文の多さは、寄りで買うと負けやすい目印になるか",
+                       "what": "朝9時の取引が始まる前に画面に出ている注文の量（寄り前の売買代金）が、ふだんの1日の売買代金の"
+                               "どれくらいかを記録し、多い株と少ない株で、寄りから9時30分までの値動きを同じ朝の中で比べています"
+                               "（寄りで買わない目印になるかを確かめるため）",
+                       "since": JB.J46_START,
+                       "progress": f"記録 {n46}件（{JB.J46_GOAL}件で1回だけ判定）"})
 
     a = _load(p(AUTO_FWD))
     if not _ea_paused(root) and not (a and (a.get("verdicts") or {}).get("AT3")):

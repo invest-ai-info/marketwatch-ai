@@ -239,6 +239,7 @@ def test_list_page_sorts_everything_by_market():
     page = R.build_list_page(root=_list_root())
     jp, fx, ix, al = (_section(page, k) for k in ("jp", "fx", "index", "all"))
     assert "前の日の終わりの値段から離れて始まった日本株" in jp and "相場全体が安く始まった朝" in jp and "寄り付きの前の気配" in jp
+    assert "寄り付きの前の注文の多さ" in jp and "寄り付きの前の注文の多さ" not in fx      # J46（2026-10-22）
     assert "株価指数の月末月初" in ix and "株価指数の月末月初" not in jp
     names = {h: R.T.plain_name(f) for h, f in (("fx", {"group": "jpy_fx", "direction": "long"}),
                                                 ("ix", {"group": "index", "direction": "short"}))}

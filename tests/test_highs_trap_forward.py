@@ -229,6 +229,67 @@ def test_j10b_records_are_ratios_only_and_judged_once_at_20_days():
     assert B.judge(st) == v                                         # 判定は変えない
 
 
+def test_j46_pre_tv_matches_prereg_and_formula():
+    text = open("PILLAR_PREREG.md", encoding="utf-8").read()
+    sec = text[text.index("## J46 "):text.index("## 共通の決まり")]
+    assert B.J46_START == "2026-10-23" and "2026-10-23 の朝から" in sec
+    assert B.J46_GOAL == 1000 and "1000件に届いた日" in sec
+    assert B.J46_MIN_DAY == 6 and "6未満の日は比べない" in sec
+    assert B.LOT == 100 and B.TV_DAYS == 20 and B.COST == 0.001 and "往復0.1％" in sec
+    import jp_markers
+    assert B.TV_DAYS == jp_markers.TV_DAYS                           # 目印Cの分母と同じ
+    # （成行＋気配の数量）の売り買いの平均 × 100株 × 中値 ÷ ふだんの売買代金
+    assert abs(B.pre_tv_ratio(4797.5, 456, 447, 129, 382, 1e9) - (129 + 456 + 382 + 447) / 2 * 100 * 4797.5 / 1e9) < 1e-12
+    assert B.pre_tv_ratio(100, None, 447, 0, 0, 1e9) is None and B.pre_tv_ratio(100, 5, 0, 0, 0, 1e9) is None
+    assert B.pre_tv_ratio(100, 5, 5, 0, 0, None) is None
+    # ふだんの売買代金＝前の日より前の20営業日（当日と前の日は入らない）
+    day0 = dt.date(2026, 9, 1)
+    bars = [((day0 + dt.timedelta(days=i)).isoformat(), 10.0, 100.0) for i in range(22)]
+    bars[-1] = (bars[-1][0], 10.0, 1e9)                              # 前の日の急増は分母に入らない
+    bars.append(("2026-10-22", 10.0, 1e12))                          # 当日も入らない
+    assert B.base_turnover(bars, "2026-10-22") == 1000.0
+    assert B.base_turnover(bars[:20], "2026-10-22") is None
+    # 記録には pre_tv を渡したときだけ欄が足され、値段は残らない
+    r = B.make_record("2026-10-23", 4775, 4797.5, 4775, 4600, pre_tv=0.123456789)
+    assert r["pre_tv"] == 0.123457 and 4775 not in r.values()
+    assert "pre_tv" not in B.make_record("2026-10-23", 4775, 4797.5, 4775, 4600)
+
+
+def test_j46_judged_once_at_1000_records_and_within_day():
+    st = B.empty_state()
+    B.add(st, B.make_record("2026-10-22", 100, 100, 100, 90, pre_tv=9.0))   # 10/22 は読むためだけ＝数えない
+    rnd = random.Random(46)
+    day0 = dt.date(2026, 10, 23)
+    for k in range(49):
+        day = (day0 + dt.timedelta(days=k)).isoformat()
+        for _ in range(20):
+            pre = rnd.uniform(0.01, 0.6)
+            r930 = 100 * (1 - 0.02 * pre + rnd.uniform(-0.002, 0.002))   # 多いほど下げる＋全体の動きは日で消える
+            B.add(st, B.make_record(day, 100, 100, 100, r930, pre_tv=pre))
+    assert len(B.j46_records(st)) == 980 and B.judge_j46(st) is None
+    txt = B.status_text(st)
+    assert "980件" in txt and "途中の平均は出さない" in txt and "％（95" not in txt.split("J46")[1]
+    last = (day0 + dt.timedelta(days=49)).isoformat()
+    for _ in range(20):
+        pre = rnd.uniform(0.01, 0.6)
+        B.add(st, B.make_record(last, 100, 100, 100, 100 * (1 - 0.02 * pre), pre_tv=pre))
+    v = B.judge_j46(st)
+    assert v and v["decided_on"] == last and v["n"] == 1000 and v["days_compared"] == 50
+    assert v["hi"] < 0 and v["top_net"] < 0 and v["status"] == "罠の目印（兆し）"
+    B.add(st, B.make_record("2026-12-31", 100, 100, 100, 150, pre_tv=0.9))
+    assert B.judge_j46(st) == v                                       # 判定は変えない
+    # 少ない日（6未満）は比べないが件数には入る／逆向きなら強さの目印
+    st2 = B.empty_state()
+    for k in range(51):
+        day = (day0 + dt.timedelta(days=k)).isoformat()
+        n = 3 if k == 0 else 20
+        for i in range(n):
+            pre = (i + 1) / 40
+            B.add(st2, B.make_record(day, 100, 100, 100, 100 * (1 + 0.03 * pre), pre_tv=pre))
+    v2 = B.judge_j46(st2)
+    assert v2["status"] == "強さの目印（兆し）" and v2["days_compared"] == 50 and v2["n"] == 1003
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):
