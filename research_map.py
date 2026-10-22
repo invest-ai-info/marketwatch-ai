@@ -55,6 +55,7 @@ LUNCH_FWD = "lunch-gap-forward.json"         # 🆕 2026-10-08 R10F 昼休みの
 MOMENTUM_FWD = "momentum-forward.json"       # 🆕 2026-10-08 夜 J42F 過去12か月で一番上げた10銘柄の前向き（月1）
 F1G_FWD = "f1g-forward.json"                 # 🆕 2026-10-18 F1GF グレアムの守りの前向き（手元で月1回数えて送る）
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
+J46_RSS = "j46-rss.json"                   # 🆕 2026-10-22 J46R 寄り前の売買代金（RSS で約400銘柄・手元で作って送る）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
 # 🆕 2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく仕分け」
@@ -567,6 +568,16 @@ def collect_studies(root, m):
                                "（寄りで買わない目印になるかを確かめるため）",
                        "since": JB.J46_START,
                        "progress": f"記録 {n46}件（{JB.J46_GOAL}件で1回だけ判定）"})
+    jr = _load(p(J46_RSS))
+    if jr and not jr.get("verdict"):             # 🆕 2026-10-22 J46R（手元の PC が RSS で取って送る・記録が届いてから出す）
+        started = bool(jr and jr.get("start"))
+        verify.append({"cat": "jp", "name": "寄り付きの前の注文の多さ（流動性の高い約400銘柄を自動で記録）",
+                       "what": "上と同じ問いを、取引の多い約400銘柄で毎朝自動に記録して確かめます"
+                               "（記録が早くたまるよう、手元のパソコンで朝9時前と9時30分の値を取っています）",
+                       "since": (jr or {}).get("start") or "",
+                       "progress": (f"記録 {len(jr.get('records') or [])}件・{len(jr.get('days') or {})}営業日"
+                                    "（1000件以上かつ20営業日以上で1回だけ判定）" if started
+                                    else "登録済み・手元のパソコンで自動の記録の試運転中")})
 
     a = _load(p(AUTO_FWD))
     if not _ea_paused(root) and not (a and (a.get("verdicts") or {}).get("AT3")):

@@ -226,6 +226,7 @@ def _list_root():
     _dump(d, R.MARKET_DIP_FWD, {"fwd_start": "2026-10-08", "goal_down_days": 30, "titles": {"X5": "a"}, "verdicts": {},
                                 "summary": {"days": 2, "down_days": 1}})
     _dump(d, R.J10B_RECORDS, {"registered": "J10b", "start": "2026-10-07", "goal_days": 20, "records": [], "verdict": None})
+    _dump(d, R.J46_RSS, {"registered": "J46R", "start": "2026-10-27", "records": [], "days": {}, "verdict": None})
     _dump(d, R.CAL_FWD, {"fwd_start": "2026-10-06", "goal": 36, "verdicts": {}, "trades": []})
     return d
 
@@ -240,6 +241,7 @@ def test_list_page_sorts_everything_by_market():
     jp, fx, ix, al = (_section(page, k) for k in ("jp", "fx", "index", "all"))
     assert "前の日の終わりの値段から離れて始まった日本株" in jp and "相場全体が安く始まった朝" in jp and "寄り付きの前の気配" in jp
     assert "寄り付きの前の注文の多さ" in jp and "寄り付きの前の注文の多さ" not in fx      # J46（2026-10-22）
+    assert "流動性の高い約400銘柄を自動で記録" in jp and "2026-10-27 から" in jp            # J46R
     assert "株価指数の月末月初" in ix and "株価指数の月末月初" not in jp
     names = {h: R.T.plain_name(f) for h, f in (("fx", {"group": "jpy_fx", "direction": "long"}),
                                                 ("ix", {"group": "index", "direction": "short"}))}
