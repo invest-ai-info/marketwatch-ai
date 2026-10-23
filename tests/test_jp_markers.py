@@ -63,11 +63,25 @@ def test_section():
                    {"1111": {"name": "甲"}, "3333": {"name": "乙"}}, "2026-10-07")
     s = "\n".join(M.section(mk, dt.date(2026, 10, 8)))
     assert "2026-10-07 の引けで判定" in s and "🚫 C" in s and "B候補" in s and "★C・B候補の両方" in s and "乙" in s
-    assert "空売りの合図ではない" in s and "A はどの銘柄でも" in s
+    assert "空売りの合図ではない" in s and "A はどの銘柄にも当てはまる" in s
     assert M.section(mk, dt.date(2026, 10, 10)) == []                                   # 土曜は出さない
     assert "今朝は使わない" in "\n".join(M.section(mk, dt.date(2026, 10, 14)))            # 7日前の一覧
     assert "今朝は使わない" in "\n".join(M.section(mk, dt.date(2026, 10, 7)))             # 同じ日（朝に夕方の一覧はありえない）
     assert "一覧を作れていない" in "\n".join(M.section(None, dt.date(2026, 10, 8)))
+
+
+def test_guide_every_morning():
+    """2026-10-23 オーナー「朝来るメールのABCの意味を毎回簡単でいいので説明文を載せておいてください」
+    ＝一覧がある朝・古い朝・無い朝のどれでも、見出しのすぐ下に A・B・C の説明がのる（土日は節ごと出さない）"""
+    mk = M.compute({"1111": _bars(last_vol=8e5)}, {"1111": {"name": "甲"}}, "2026-10-07")
+    for markers, day in ((mk, dt.date(2026, 10, 8)), (mk, dt.date(2026, 10, 14)), (None, dt.date(2026, 10, 8))):
+        lines = M.section(markers, day)
+        assert lines[1:1 + len(M.GUIDE)] == list(M.GUIDE)
+        s = "\n".join(lines)
+        assert "📖 A・B・C の意味" in s and "    A：" in s and "    B：" in s and "    C：" in s
+    g = "\n".join(M.GUIDE)                                                              # 数字は点検表⑤と同じ
+    assert "1% 以上高く" in g and "+5% 以上" in g and "5倍以上" in g and "20営業日" in g and "TOPIX" in g
+    assert M.section(None, dt.date(2026, 10, 10)) == []
     assert "（なし）" in "\n".join(M.section(dict(mk, rows=[]), dt.date(2026, 10, 8)))
     many = dict(mk, rows=[dict(mk["rows"][0], code=str(1000 + i)) for i in range(30)])
     assert "…ほか 15銘柄" in "\n".join(M.section(many, dt.date(2026, 10, 8)))         # 2026-10-09〜 それぞれ15まで（前は25）
