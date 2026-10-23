@@ -386,4 +386,5 @@ SYNC_FILES = [
     "guide-company-4661-oriental-land.html",
     "guide-news-2026-10-22-meta-q3-earnings.html",
     "guide-signal-lab-128.html",
+    "guide-company-7013-ihi.html",
 ]
