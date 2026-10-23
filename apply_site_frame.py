@@ -33,6 +33,13 @@ LOGO_SVG = ('<svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-ali
             'stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" '
             'stroke="#ffffff" stroke-width="4"/></svg>')
 TAGLINE = "日本人投資家のためのマーケット情報サイト"
+# 🆕 2026-10-23 オーナー判断「マーケットウォッチAIの名前は残しつつ、2段目に『AI投資×行動経済学』」。
+#   ロゴの行の直下（サイト説明 TAGLINE の上）に置く。言葉や色を変えるときはここだけ直す
+#   （生成スクリプトは SUBBRAND_HTML を import。記事と STATIC_PAGES は apply_subbrand が毎回そろえる）
+SUBBRAND = "AI投資×行動経済学"
+SUBBRAND_HTML = f'<div class="mw-subbrand">{SUBBRAND}</div>'
+_BRAND_END = "</svg> MarketWatch AI</div>"  # ロゴの行の終わり（ここ以外に現れない）
+_SUBBRAND_RE = re.compile(re.escape(_BRAND_END) + r"(?!\s*" + re.escape(SUBBRAND_HTML) + ")")
 SEC_OPEN = ('<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
             '<div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">')
 
@@ -107,8 +114,13 @@ MWF_HEADER_CSS = (
 )
 # 広告枠の上下（inject_ads の .mw-ad は 32px。トップの .ad-gap と同じ 40px に）
 AD_GAP_CSS = "div.mw-ad{margin-top:40px;margin-bottom:40px}"
+# 2段目（ロゴの点と同じ金色の系統。明るい画面は白地で読める濃さ・暗い画面はロゴの点の色そのもの）
+SUBBRAND_CSS = (".mw-subbrand{font-size:1.02rem;font-weight:700;letter-spacing:.05em;line-height:1.4;"
+                "margin:1px 0 0 35px;color:#9A6700;-webkit-text-fill-color:currentColor;background:none}"
+                "body.dark .mw-subbrand{color:#E8A317}"
+                "@media(max-width:700px){.mw-subbrand{font-size:.95rem}}")
 
-FRAME_CSS = NAV_2ROW_CSS + MWF_NAV_CSS + MWF_HEADER_CSS + AD_GAP_CSS
+FRAME_CSS = NAV_2ROW_CSS + MWF_NAV_CSS + MWF_HEADER_CSS + AD_GAP_CSS + SUBBRAND_CSS
 FRAME_STYLE_TAG = "<style data-mw-frame>" + FRAME_CSS + "</style>"
 
 _STYLE_RE = re.compile(r"<style data-mw-frame>.*?</style>", re.S)
@@ -129,7 +141,7 @@ def section_for(name):
 def build_header(section):
     return ("<header data-mw-frame>\n"
             '  <div class="header-inner">\n'
-            f'    <div class="header-title">{LOGO_SVG} MarketWatch AI</div>\n'
+            f'    <div class="header-title">{LOGO_SVG} MarketWatch AI</div>{SUBBRAND_HTML}\n'
             f'    <div class="header-meta">{TAGLINE}</div>\n'
             f"    {SEC_OPEN}{section}</div></div>\n"
             "  </div>\n"
@@ -146,8 +158,13 @@ def build_nav(indent, current=DEFAULT_CURRENT, cls="nav-bar mwf-nav"):
 
 
 def is_std_header(block):
-    return (LOGO_SVG in block and TAGLINE in block and SEC_OPEN in block
+    return (LOGO_SVG in block and TAGLINE in block and SEC_OPEN in block and SUBBRAND_HTML in block
             and 'class="header-title"' in block and "<button" not in block and "<nav" not in block)
+
+
+def apply_subbrand(text):
+    """ロゴの行の直後に2段目（SUBBRAND_HTML）を1つだけ置く。冪等。手書きヘッダーの静的ページ用。"""
+    return _SUBBRAND_RE.sub(lambda m: m.group(0) + SUBBRAND_HTML, text)
 
 
 def _core_links(block):
@@ -214,6 +231,10 @@ def apply_nav(text, name):
 def process(text, name):
     notes = []
     out = apply_style(text)
+    sub = apply_subbrand(out)
+    if sub != out:
+        notes.append("subbrand")
+        out = sub
     if name.startswith("guide-"):
         out, h = apply_header(out, name)
         if h:
