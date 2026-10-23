@@ -387,4 +387,5 @@ SYNC_FILES = [
     "guide-news-2026-10-22-meta-q3-earnings.html",
     "guide-signal-lab-128.html",
     "guide-company-7013-ihi.html",
+    "guide-news-2026-10-23-france-bond-yield-5pct.html",
 ]
