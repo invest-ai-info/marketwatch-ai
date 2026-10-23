@@ -119,8 +119,13 @@ SUBBRAND_CSS = (".mw-subbrand{font-size:1.02rem;font-weight:700;letter-spacing:.
                 "margin:1px 0 0 35px;color:#9A6700;-webkit-text-fill-color:currentColor;background:none}"
                 "body.dark .mw-subbrand{color:#E8A317}"
                 "@media(max-width:700px){.mw-subbrand{font-size:.95rem}}")
+# 狭い画面でロゴの文字が右上の固定ボタン（🔍 site-search.js＝右から 62〜108px・🌙）に重ならない大きさに縮める。
+# 2026-10-23 実測（幅360px）：文字の右端 263〜275px／🔍の左端 254〜258px。文字の幅≒7.9px×文字の大きさ・
+# 左の余白とロゴの絵で 61px → 右端を（画面幅−116px）に収める式。400px より広い画面では重ならないので触らない
+BRAND_FIT_CSS = ("@media(max-width:400px){header div:has(+ .mw-subbrand)"
+                 "{font-size:max(1.1rem,min(1.6rem,calc((100vw - 180px) / 7.9)))!important}}")
 
-FRAME_CSS = NAV_2ROW_CSS + MWF_NAV_CSS + MWF_HEADER_CSS + AD_GAP_CSS + SUBBRAND_CSS
+FRAME_CSS = NAV_2ROW_CSS + MWF_NAV_CSS + MWF_HEADER_CSS + AD_GAP_CSS + SUBBRAND_CSS + BRAND_FIT_CSS
 FRAME_STYLE_TAG = "<style data-mw-frame>" + FRAME_CSS + "</style>"
 
 _STYLE_RE = re.compile(r"<style data-mw-frame>.*?</style>", re.S)
