@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-10-23
+- 判定: ✅ 公開済み
+- 選定トピック: フランス10年国債利回り5%超（2002年7月以来初）──財政赤字・議会分断・市場不信の三重苦、独仏スプレッド2011年以来最大、EUR/JPY・日本市場への波及（カテゴリ: マクロ・欧州財政・債券市場）
+- スコア: 話題性 4 / 影響 4 / 付加価値 5（合計 13/15）
+- 出典:
+  - CNBC「French 10-year bond yield hits 5% for first time since 2002 amid unrest」2026-10-21
+  - Axios「Relentless French bond yields, borrowing costs show economic crisis risk」2026-10-21
+  - The Asia Business Daily「France's 10-Year Bond Yield Tops 5%, Highest Since 2002 Amid Fiscal Crisis Fears」2026-10-21
+  - NHK（国内報道）2026-10-21
+  - Monex Japan / INSEE（政府債務GDP比119%数値）
+  - 外為どっとコム（10/23 JST市場への波及）
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（4箇所：ドル円一因の出典補強・「マジックマネー」見出し削除・「示す」→「見方がある」・「保有者は」→「という見方もある」）→ 軽微修正適用 → 最終🟢白
+  - リンク切れ修正: guide-fx-basics→guide-fx-intervention-history / guide-macro-us-economy→guide-us-cpi
+  - 出典補強: 3.2%に「出典：Axios、2026-10-21」追記
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④noindexなし ✅ ⑤出典2系統以上 ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告48件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-23-france-bond-yield-5pct.html
+- commit: 5dde224（main へ push 済み）
+
+---
+
+
 ## 2026-10-22
 - 判定: ✅ 公開済み
 - 選定トピック: Meta Q3 2026決算──売上高646億ドル（前年比+26%）・2-for-1株式分割（Class C非議決権株・2027年1月予定）・AI設備投資見通し$135〜145B・52州司法長官との訴訟和解費用$9.89B（カテゴリ: 決算・AI投資・Meta・株式分割）
