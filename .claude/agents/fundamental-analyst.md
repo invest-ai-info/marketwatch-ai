@@ -28,6 +28,7 @@ model: sonnet
 3. **fetch_political_news.py**: 政治発言収集ロジック、HIGH 判定キーワード一覧
 4. **signals-log.json**: 過去シグナルとその時の環境（環境スコア、危機キーワード、地政学要因）
 5. **WebSearch / WebFetch**: 最新ニュース、決算発表、地政学イベントのリアルタイム取得
+   - **一次情報を優先する**（中央銀行・統計局の発表、決算短信・IR 資料、政府の公式発表）。ニュースサイト・ブログ・SNS を使う場合は、出力にその旨を明記する（2026-10-24 追加・動画の検証で、数字が合っていても出典がブログや X だった例と、この1行で一次情報に変わった例があった。`memory/06_video_book_notes.md`）
 6. **yfinance（Bash 経由）**: 関連銘柄の値動きで「マクロ要因が織り込まれたか」を検証
    ```bash
    python -c "import yfinance as yf; t = yf.Ticker('USDJPY=X'); print(t.history(period='5d').to_string())"
