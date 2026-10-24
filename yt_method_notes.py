@@ -229,7 +229,7 @@ def run(a):
                 f.write(doc)
             if a.echo:
                 print(f"----- BEGIN NOTES {v['id']} -----\n{doc}----- END NOTES {v['id']} -----")
-        print(f"  {v['id']} {'ok' if text else 'FAIL'} {model} cap={usage[v['id']]['caption']} "
+        print(f"  {v['id']} {v['title'][:60]!r} {'ok' if text else 'FAIL'} {model} cap={usage[v['id']]['caption']} "
               f"in={u.get('promptTokenCount')} out={u.get('candidatesTokenCount')} {u.get('error', '')}")
         time.sleep(a.pause)
     json.dump(usage, open(os.path.join(a.out, f"_usage-{a.shard}.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
