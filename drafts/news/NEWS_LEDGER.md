@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-10-24
+- 判定: ✅ 公開済み
+- 選定トピック: 来週のMicrosoft・Alphabet（10/28水）・Amazon（10/29木）決算集中週──AI設備投資の収益性への市場の目線とMeta Q3後の文脈、日本市場への影響を整理（カテゴリ: 決算・メガテック・AI投資）
+- スコア: 話題性 4 / 影響 5 / 付加価値 4（合計 13/15）
+- 出典:
+  - Yahoo Finance「Tech Giants Set to Report Earnings Wednesday」2026-10-24
+  - Microsoft IR（Finviz経由、決算日10/28確認）
+  - Amazon IR（aboutamazon.com、決算日10/29確認）
+  - Bloomberg「Meta Raises Capex Guidance」2026-10-22
+  - FRED DGS10（米10年債利回り参考）
+  - AI Weekly「Big Tech's $725B AI spend faces reckoning」2026-10-24
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（事実確認要。曜日誤り10/27→10/28、FAANG+M表現修正、増資コスト→投資コスト、先物取引時間の記述修正、JSON-LD日付修正）→ 執筆側で全修正適用 → 第2Opus（独立確認）へ
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④noindexなし ✅ ⑤出典2系統以上 ✅ ⑥決算日付（28日水・29日木）✅ ⑦誤曜日記述なし ✅ → JSON-LD1行修正後「修正後OK（白）」→ 修正適用済み → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告48件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-24-mega-earnings-week.html
+- commit: 9725788（main へ push 済み）
+
+---
+
 ## 2026-10-23
 - 判定: ✅ 公開済み
 - 選定トピック: フランス10年国債利回り5%超（2002年7月以来初）──財政赤字・議会分断・市場不信の三重苦、独仏スプレッド2011年以来最大、EUR/JPY・日本市場への波及（カテゴリ: マクロ・欧州財政・債券市場）
