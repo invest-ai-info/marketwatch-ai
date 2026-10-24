@@ -83,6 +83,7 @@ SYNC_FORBIDDEN = {
     "combo-lab.json", "combo-lab.md",           # 組み合わせの相性ラボ（combo-lab.yml・手動）
     "exit-ind-lab.json", "exit-ind-lab.md",     # 出口の指標ラボ E1（exit-ind-lab.yml・手動）
     "exit-ind-lab-4h.json", "exit-ind-lab-4h.md",   # 🆕 2026-10-01 M7 腕A 4時間足で同じ総当たり（exit-ind-lab-4h.yml・手動）
+    "stop-entry-lab.json", "stop-entry-lab.md",     # 🆕 2026-10-24 SE 損切りの線まで待って同じ向きに指値で入る（stop-entry-lab.yml・手動）
     "combo-forward.json", "combo-forward.md",   # 🆕 2026-09-27 前向きの観察（combo-forward.yml・月1。区切りの記録を持つ）
     "yori-lab.json", "yori-lab.md",             # 🆕 2026-09-28 J4 寄り付きラボ（yori-lab.yml・手動。銘柄名は出さない）
     "yori-forward.json", "yori-forward.md",     # 🆕 2026-09-28 J4F 寄り付きの前向き（yori-forward.yml・平日。積み上げた取引と判定を持つ）
