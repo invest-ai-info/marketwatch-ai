@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-24", "line": '・<b>2026-10-24</b>: 📰 解説「<a href="guide-news-2026-10-24-mega-earnings-week.html" style="color:#0969da"><b>【10/24】来週はMicrosoft・Alphabet・Amazon決算</b></a>」公開'},
         {"date": "2026-10-24", "line": '・<b>2026-10-24</b>: 🔬 解説「<a href="guide-company-9983-fastretailing.html" style="color:#0969da"><b>ファーストリテイリング</b></a>」公開'},
         {"date": "2026-10-23", "line": '・<b>2026-10-23</b>: 📰 解説「<a href="guide-news-2026-10-23-france-bond-yield-5pct.html" style="color:#0969da"><b>【10/23】仏国債5%超、2002年以来初──欧州財政危機再来リスクを整理</b></a>」公開'},
         {"date": "2026-10-23", "line": '・<b>2026-10-23</b>: 🔬 解説「<a href="guide-company-7013-ihi.html" style="color:#0969da"><b>IHI</b></a>」公開'},
