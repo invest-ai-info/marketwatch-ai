@@ -175,7 +175,8 @@ def gemini_notes(api_key, vid, title, channel, caption, models=MODELS, tries=4, 
     prompt = PROMPTS[kind].format(channel=channel, title=title, caption=cap)
     body = {"contents": [{"parts": [{"file_data": {"file_uri": f"https://www.youtube.com/watch?v={vid}", "mime_type": "video/youtube"}},
                                     {"text": prompt}]}],
-            "generationConfig": {"temperature": 0.2, "maxOutputTokens": 16384}}
+            # 2.5 Flash は考える分も出力の上限に数える＝38分の動画（2026-10-24）で 16384 だと最後の節が切れた
+            "generationConfig": {"temperature": 0.2, "maxOutputTokens": 32768}}
     errs = []   # モデルごとの失敗を全部残す（最後の1つだけだと、先のモデルが落ちた理由が消える）
     for model in models:
         for k in range(tries):
