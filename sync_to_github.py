@@ -388,4 +388,5 @@ SYNC_FILES = [
     "guide-signal-lab-128.html",
     "guide-company-7013-ihi.html",
     "guide-news-2026-10-23-france-bond-yield-5pct.html",
+    "guide-company-9983-fastretailing.html",
 ]
