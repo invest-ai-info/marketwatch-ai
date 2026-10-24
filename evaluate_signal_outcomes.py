@@ -125,7 +125,7 @@ def translate_titles_to_jp_quick(titles, api_key):
     numbered = "\n".join([f"{i+1}. {t}" for i, (_, t) in enumerate(targets)])
     prompt = f"次の英語ニュース見出しを日本語に翻訳。番号付き行のみ出力:\n{numbered}"
     text = ""
-    for m in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+    for m in ("gemini-2.5-flash-lite", "gemini-2.5-flash"):
         try:
             text = (genai.GenerativeModel(m).generate_content(prompt).text or "").strip()
             if text:
@@ -209,7 +209,7 @@ def analyze_loss_with_ai(entry, sl_ts_iso, news_titles, vix_data, api_key):
 }}"""
 
     text = ""
-    for model_name in ("gemini-2.5-flash-lite", "gemini-2.0-flash-lite", "gemini-2.5-flash"):
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)
@@ -317,7 +317,7 @@ def analyze_win_with_ai(entry, win_ts_iso, outcome_label, news_titles, vix_data,
 }}"""
 
     text = ""
-    for model_name in ("gemini-2.5-flash-lite", "gemini-2.0-flash-lite", "gemini-2.5-flash"):
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)

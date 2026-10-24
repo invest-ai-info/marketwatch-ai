@@ -438,8 +438,8 @@ SUMMARY_PROMPT_TEXT = """あなたは日本人投資家向けの動画紹介ラ�
 - **Markdown 装飾（**、##、__、*** など）は一切使わずプレーンテキストで出力すること。見出しは「3行サマリー:」のように普通の文字列で書く"""
 
 
-TEXT_MODEL_CANDIDATES = ("gemini-2.0-flash", "gemini-2.5-flash", "gemini-flash-latest")
-VIDEO_MODEL_CANDIDATES = ("gemini-2.0-flash", "gemini-2.5-flash")
+TEXT_MODEL_CANDIDATES = ("gemini-2.5-flash", "gemini-flash-latest")
+VIDEO_MODEL_CANDIDATES = ("gemini-2.5-flash",)
 
 
 def summarize_with_gemini_video(video_url, title, channel_name, api_key):

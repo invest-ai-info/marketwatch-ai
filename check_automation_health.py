@@ -1040,6 +1040,72 @@ def check_force_push(owner, repo, token, now):
     return eval_force_push(ev, now)
 
 
+# ⑯ Gemini の出力が空（ジョブは成功・AI の欄だけ空）
+# 🆕 2026-10-24: Gemini（AI Studio）の前払いクレジットが 10/20 夜に尽き、API は全部
+#    「429 Your prepayment credits are depleted」を返すようになった。各スクリプトは失敗を握り潰して
+#    AI の欄を空のまま出すので、**ワークフローは全部 success のまま4日続いた**（①は「走ったか」しか見ない）。
+#    YouTube 要約はライブで「合計 0 本」、政治発言は英語の見出しのまま、テクニカルアラートの AI 解説・
+#    敗因/勝因分析と index の AI 判断カードも空だった。補充は AI Studio でしかできない＝この節は「早く気づく」ため。
+#    見るのは小さい2つのファイルだけ（signals-log.json は 46MB あって毎朝読むには重い）:
+#      - youtube-summary-data.json の generated_at（要約を書けたときだけ付く）。実測（2026-05-30〜10-20・
+#        275回）で次の要約までの空きは最大 31.6h（8/26→8/27）＝実測MAX + 5h で 37h
+#      - political-feed.json の title_ja（日本語化）。5か月 442件のうち訳されなかったのはクレジット切れ後の
+#        18件だけ。取り込み1回ぶんは1回の呼び出しでまとめて訳す＝一時的な失敗は回ごとに起きるので、
+#        「直近2回の取り込みがどちらも1件も訳されていない」で鳴らす（10/21 02:21・06:44 の2回で当日の朝に気づけた）
+GEMINI_YT_MAX_H = 37
+GEMINI_PF_BATCHES = 2
+
+
+def _ts(iso):
+    return dt.datetime.fromisoformat(iso.replace("Z", "+00:00"))
+
+
+def _agetxt(a):
+    return f"{a:.1f}h前" if a < 48 else f"{a/24:.1f}日前"
+
+
+def eval_youtube_summary(data, now, max_h=GEMINI_YT_MAX_H):
+    """純関数（テスト対象）＝YouTube 要約を Gemini が書けているか。戻り値 (ok, note)。
+
+    generated_at は要約を書けた動画にだけ付き、saved_at は実行のたびに書かれる。
+    saved_at が新しいのに generated_at が古い＝**実行は動いているのに Gemini が書けていない**（10/21〜の形）。"""
+    data = data or {}
+    videos = data.get("videos") or []
+    stamps = [v["generated_at"] for v in videos if v.get("generated_at")]
+    saved = data.get("saved_at") or ""
+    ran = ""
+    if saved:
+        sa = age_hours(saved, now)
+        ran = (f"実行は動いている（最終保存 {_agetxt(sa)}）のに要約が書けていない＝Gemini 側" if sa <= max_h
+               else f"実行そのものが止まっている（最終保存 {_agetxt(sa)}）")
+    if not stamps:
+        return False, f"要約 0 件＝ライブの youtube-summary.html は「合計 0 本」。{ran}"
+    a = age_hours(max(stamps, key=_ts), now)
+    if a > max_h:
+        return False, f"{max_h}h以上新しい要約なし（最後 {_agetxt(a)}・残り {len(videos)} 件）。{ran}"
+    return True, f"最新の要約 {_agetxt(a)}（{len(videos)} 件）"
+
+
+def eval_political_translation(items, batches=GEMINI_PF_BATCHES):
+    """純関数（テスト対象）＝政治発言フィードの直近の取り込みを Gemini が日本語化できているか。戻り値 (ok, note)。
+
+    同じ fetched_at の項目を1回の取り込みとして数え、直近 batches 回が**どれも1件も**訳されていなければ鳴らす。"""
+    by = {}
+    for it in items or []:
+        t = it.get("fetched_at") or ""
+        if t:
+            by.setdefault(t, []).append(bool((it.get("title_ja") or "").strip()))
+    recent = sorted(by, key=_ts, reverse=True)[:batches]
+    if len(recent) < batches:
+        return True, f"判定に足りない（取り込み {len(recent)} 回）"
+    n = sum(len(by[t]) for t in recent)
+    ja = sum(sum(by[t]) for t in recent)
+    if ja == 0:
+        return False, (f"直近{batches}回の取り込み {n} 件がどれも日本語化されていない（最後 {recent[0][:16]}）"
+                       f"＝英語の見出しのまま・一言コメントなしで公開とメールに出ている")
+    return True, f"直近{batches}回の取り込み {n} 件中 {ja} 件を日本語化"
+
+
 def main():
     owner, repo, token = get_cfg()
     if not (owner and repo and token):
@@ -1517,7 +1583,35 @@ def main():
         body.append(f"- 🚨 ⚪ 作業ブランチの確認失敗: {e}")
     body.append("")
 
-    serious = [l for l, s in bad if s in ("critical", "warn")]
+    body.append("### ⑯ Gemini の出力が空か（ジョブは成功・AI の欄だけ空＝①は「走ったか」しか見ない死角）")
+    gem_bad = 0
+    for label, path, judge in (
+        ("YouTube 要約", "youtube-summary-data.json", lambda d: eval_youtube_summary(d, now)),
+        ("政治発言の日本語化", "political-feed.json", eval_political_translation),
+    ):
+        try:
+            ok, note = judge(json.loads(api_raw(
+                f"https://api.github.com/repos/{owner}/{repo}/contents/{path}", token)))
+        except Exception as e:
+            # ③〜⑮と同じ方針: API の一時エラー自体では Issue を立てない（記録のみ）
+            body.append(f"- 🚨 ⚪ {label}の確認に失敗: {e}")
+            continue
+        if ok:
+            body.append(f"- ✅ 🟢 {label}: {note}")
+        else:
+            gem_bad += 1
+            body.append(f"- 🚨 🟡 {label}: {note}")
+            bad.append((f"{label}（Gemini）", "warn"))
+    if gem_bad == 2:
+        body.append("- 🔑 両方とも空＝個々のスクリプトではなく **Gemini API そのもの**（前払いクレジット切れ・キーの失効）を疑う。"
+                    "ジョブのログで `prepayment credits are depleted` を探し、AI Studio（https://ai.studio/projects）で残高を確かめる。"
+                    "テクニカルアラートの AI 解説・敗因/勝因分析・index の AI 判断・週次/月次の AI 欄も同時に止まっている")
+    elif gem_bad:
+        body.append("- 🔑 片方だけ＝そのスクリプトの使うモデルを疑う（ログの `404 ... no longer available` は提供終了。"
+                    "https://ai.google.dev/gemini-api/docs/deprecations で後継を確かめる）")
+    body.append("")
+
+    serious =[l for l, s in bad if s in ("critical", "warn")]
     if bad:
         body.insert(1, f"## 🚨 {len(bad)}件に異常: " + " / ".join(l for l, _ in bad) + "\n")
     else:

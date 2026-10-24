@@ -2109,7 +2109,7 @@ def translate_titles_to_jp(titles, api_key):
 ...
 """
     text = ""
-    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)
@@ -2235,7 +2235,7 @@ def generate_ai_narrative(asset_name, current_price_str, signals, indicators, ne
 **SL/TP の数値は出さない（既に上で確定済み）**、代わりに「シナリオが崩れる条件（=SL に到達する展開）」を 1 つだけ言及する。
 ニュースに該当する材料がなければ「足元のニュース材料は限定的」と書く。"""
 
-    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             response = model.generate_content(prompt)

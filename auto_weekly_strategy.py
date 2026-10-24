@@ -161,7 +161,7 @@ def generate_weekend_section_with_ai(today_jst, week_start, week_end, indicators
 
     genai.configure(api_key=api_key)
     last_err = ""
-    for model_name in ("gemini-2.0-flash", "gemini-2.5-flash"):
+    for model_name in ("gemini-2.5-flash",):
         try:
             model = genai.GenerativeModel(model_name)
             response = model.generate_content(prompt)

@@ -69,7 +69,7 @@ YYYY-MM-DDTHH:MM:00+09:00 | impact | 国 | イベント名 | note
 - 出力は表データのみ、前置きや解説は不要"""
 
     text = ""
-    for model_name in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.0-flash-lite"):
+    for model_name in ("gemini-2.5-flash", "gemini-2.5-flash-lite"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)
