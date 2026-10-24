@@ -176,7 +176,7 @@ def gemini_notes(api_key, vid, title, channel, caption, models=MODELS, tries=4, 
     body = {"contents": [{"parts": [{"file_data": {"file_uri": f"https://www.youtube.com/watch?v={vid}", "mime_type": "video/youtube"}},
                                     {"text": prompt}]}],
             "generationConfig": {"temperature": 0.2, "maxOutputTokens": 16384}}
-    last = ""
+    errs = []   # モデルごとの失敗を全部残す（最後の1つだけだと、先のモデルが落ちた理由が消える）
     for model in models:
         for k in range(tries):
             try:
@@ -186,18 +186,18 @@ def gemini_notes(api_key, vid, title, channel, caption, models=MODELS, tries=4, 
                 text = "".join(p.get("text", "") for p in parts).strip()
                 if text:
                     return text, model, d.get("usageMetadata", {})
-                last = f"{model}: empty ({d.get('candidates', [{}])[0].get('finishReason')})"
+                errs.append(f"{model}: empty ({d.get('candidates', [{}])[0].get('finishReason')})")
                 break
             except urllib.error.HTTPError as e:
-                last = f"{model}: HTTP {e.code} {e.read()[:200]!r}"
+                errs.append(f"{model}: HTTP {e.code} {e.read()[:200]!r}")
                 if e.code in (429, 500, 503):
                     time.sleep(20 * (k + 1))
                     continue
                 break
             except Exception as e:  # noqa: BLE001
-                last = f"{model}: {type(e).__name__}"
+                errs.append(f"{model}: {type(e).__name__}")
                 time.sleep(10 * (k + 1))
-    return None, None, {"error": last}
+    return None, None, {"error": " | ".join(errs)}
 
 
 def run(a):
