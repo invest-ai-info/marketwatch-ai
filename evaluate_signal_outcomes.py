@@ -18,6 +18,10 @@ MFE (Max Favorable Excursion) / MAE (Max Adverse Excursion) も計算して記�
 利確2・入口・損切りのどれに先に届いたか／期限切れかを after_tp1 に残す（出口の比べ直し用）。
 今ある項目（outcome・hit_*_at・MFE/MAE など）は一切変えない。詳しくは track_after_tp1() の説明。
 
+🆕 2026-10-24 失敗した敗因・勝因分析のやり直し（--retry-failed-ai）: 分析は決着した瞬間に1回だけなので、
+Gemini が止まっていた間（10/20 夜〜の前払いクレジット切れ）の分は {"error": "AI 分析失敗"} のまま残る。
+その分だけを分析し直す。手動のワークフロー retry-ai-analysis.yml から回す。詳しくは retry_failed_ai() の説明。
+
 GitHub Actions の technical-alerts ワークフローに後続ステップとして組み込む想定。
 """
 import os
@@ -638,6 +642,121 @@ def update_after_tp1(log, now_jst, fetch=None):
     return changed
 
 
+# ─────────────────────────────────────────────
+# 🆕 2026-10-24 失敗した敗因・勝因分析のやり直し（--retry-failed-ai）
+# ─────────────────────────────────────────────
+RETRY_AI_LIMIT = 200             # 1回に分析し直す上限（1件＝Gemini を翻訳1回・分析1回まで。失敗時は各2モデル）
+RETRY_AI_MAX_CONSECUTIVE_FAIL = 5  # 続けてこれだけ失敗したら止める＝Gemini 側がまだ止まっている（残りも同じく失敗する）
+_ANALYSIS_KEY = {"sl": "loss_analysis", "tp1": "win_analysis", "tp2": "win_analysis"}
+
+
+def ai_retry_targets(log):
+    """純関数（テスト対象）＝分析し直す欄を [(entry, "loss_analysis" か "win_analysis"), ...] で返す（決着の古い順）。
+
+    対象は ai_result に "error" がある欄だけ（＝analyze_*_with_ai が None を返した＝Gemini が答えなかった）。
+    欄は outcome に合うものだけ見る（sl→敗因・tp1/tp2→勝因）。成功した分と、JSON が読めなかった
+    {"raw_response": ...}（Gemini は答えている）は触らない"""
+    out = []
+    for e in log:
+        key = _ANALYSIS_KEY.get(e.get("outcome"))
+        if (not key or not e.get("outcome_resolved_at")
+                or e.get("direction") not in ("ロング（買い）", "ショート（売り）")):
+            continue
+        ai = (e.get(key) or {}).get("ai_result")
+        if isinstance(ai, dict) and "error" in ai:
+            out.append((e, key))
+    out.sort(key=lambda t: datetime.fromisoformat(t[0]["outcome_resolved_at"]))
+    return out
+
+
+def apply_ai_retry(entry, key, result, news, vix_data, now_jst):
+    """純関数（テスト対象）＝やり直した分析を entry[key] に入れる。入れたら True。
+
+    使えるのは primary_category のある結果だけ。None・error・raw_response なら entry は一切変えない
+    （元の {"error": ...} のまま＝次にまた押せばやり直せる・二重に壊さない）。
+    入れた欄には retried_at（やり直した時刻）を残す＝決着の時点の分析ではないことが後からわかる"""
+    if not (isinstance(result, dict) and result.get("primary_category")):
+        return False
+    entry[key] = {"vix_data": vix_data, "news_during_holding": news, "ai_result": result,
+                  "retried_at": now_jst.isoformat(timespec="seconds")}
+    return True
+
+
+def retry_failed_ai(log, api_key, now_jst, limit=RETRY_AI_LIMIT, max_consecutive_fail=RETRY_AI_MAX_CONSECUTIVE_FAIL):
+    """ai_retry_targets() の分を古い順に最大 limit 件だけ分析し直す。戻り値 (対象の件数, 試した件数, 差し替えた件数)。
+
+    分析の材料は決着のときと同じ関数で作る:
+    - VIX: 残っていればそのまま使い、無い（取れなかった）ものだけ get_vix_change で取り直す（過去の1時間足は今も取れる）
+    - 保有中のニュース: 残っている見出しを translate_titles_to_jp_quick で訳し直すだけ（失敗した回は英語のまま残っている）。
+      get_news_during_holding では取り直さない＝yfinance のニュースは「いまの最新」しか返さないので、数日後に取ると
+      保有期間の外のものばかりになる（決着のときに取れた見出しのほうが正しい）
+    差し替えは apply_ai_retry() だけが行う＝失敗した件は元のまま"""
+    targets = ai_retry_targets(log)
+    print(f"🔁 失敗した AI 分析のやり直し: 対象 {len(targets)} 件"
+          f"（敗因 {sum(1 for _, k in targets if k == 'loss_analysis')}・"
+          f"勝因 {sum(1 for _, k in targets if k == 'win_analysis')}）・今回の上限 {limit} 件")
+    tried = done = streak = 0
+    for entry, key in targets[:max(0, limit)]:
+        tried += 1
+        prev = entry.get(key) or {}
+        try:
+            resolved_at = entry["outcome_resolved_at"]
+            vix_data = prev.get("vix_data")
+            if not vix_data:
+                vix_data = get_vix_change(datetime.fromisoformat(entry["fired_at"]).astimezone(timezone.utc), resolved_at)
+            news = list(prev.get("news_during_holding") or [])
+            if news:
+                news = translate_titles_to_jp_quick(news, api_key)
+            if key == "loss_analysis":
+                result = analyze_loss_with_ai(entry, resolved_at, news, vix_data, api_key)
+            else:
+                result = analyze_win_with_ai(entry, resolved_at, entry["outcome"], news, vix_data, api_key)
+            ok = apply_ai_retry(entry, key, result, news, vix_data, now_jst)
+        except Exception as ex:  # 1件の不具合で残りを止めない（entry は apply_ai_retry 前なので元のまま）
+            print(f"    ⚠️ {entry.get('id')}: {type(ex).__name__}: {str(ex)[:100]}")
+            ok = False
+        if ok:
+            done += 1
+            streak = 0
+            ai = entry[key]["ai_result"]
+            print(f"  ✅ {entry.get('id')}（{'敗因' if key == 'loss_analysis' else '勝因'}）: "
+                  f"{ai.get('primary_category')} | {str(ai.get('primary_cause', ''))[:40]}")
+        else:
+            streak += 1
+            print(f"  ❌ {entry.get('id')}: やり直せなかった（元のまま）")
+            if streak >= max_consecutive_fail:
+                print(f"  ⏹️ {streak} 件続けて失敗＝Gemini 側がまだ止まっていると見て打ち切り（クレジット・キーを確かめる）")
+                break
+    print(f"🔁 やり直し: {tried} 件を試して {done} 件を差し替え（残りの失敗 {len(targets) - done} 件）")
+    return len(targets), tried, done
+
+
+def main_retry_failed_ai(limit=RETRY_AI_LIMIT, dry_run=False):
+    """--retry-failed-ai の入口。戻り値は終了コード: 対象なし・1件以上差し替え＝0／試したのに1件も直らない・キー無し＝1
+    （黙って緑にしない＝クレジットがまだ戻っていないのに押されたら赤で知らせる）"""
+    log = load_log()
+    if dry_run:
+        targets = ai_retry_targets(log)
+        print(f"🔁 [dry-run] 対象 {len(targets)} 件（Gemini は呼ばない・書き換えない）")
+        for e, k in targets[:max(0, limit)]:
+            print(f"  - {e.get('id')} {e.get('outcome')} {e.get('outcome_resolved_at')} → {k}")
+        return 0
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print("::error::GEMINI_API_KEY が未設定＝やり直せない")
+        return 1
+    n_targets, tried, done = retry_failed_ai(log, api_key, datetime.now(JST), limit=limit)
+    if done:
+        save_log(log)
+        print(f"💾 {done} 件を差し替えて保存")
+        return 0
+    if n_targets:
+        print(f"::error::{tried} 件を試して1件もやり直せなかった（Gemini のクレジット・キーを確かめる）")
+        return 1
+    print("✅ やり直す対象なし")
+    return 0
+
+
 def main():
     print("📊 シグナル結果判定スクリプト開始")
     log = load_log()
@@ -679,4 +798,13 @@ def main():
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser(description="シグナル結果判定（引数なし＝いつもの判定）")
+    ap.add_argument("--retry-failed-ai", action="store_true",
+                    help="判定はせず、「AI 分析失敗」のまま残った敗因・勝因分析だけをやり直す")
+    ap.add_argument("--limit", type=int, default=RETRY_AI_LIMIT, help=f"やり直す上限件数（既定 {RETRY_AI_LIMIT}）")
+    ap.add_argument("--dry-run", action="store_true", help="対象を数えて並べるだけ（Gemini を呼ばない・書き換えない）")
+    args = ap.parse_args()
+    if args.retry_failed_ai:
+        sys.exit(main_retry_failed_ai(limit=args.limit, dry_run=args.dry_run))
     main()
