@@ -1,0 +1,90 @@
+name: Retry Failed AI Analysis
+
+# 目的: 「AI 分析失敗」のまま signals-log.json に残った敗因・勝因分析だけを分析し直す（手動のみ・2026-10-24 新設）。
+#       分析は決着した瞬間に1回だけなので、Gemini が止まっていた間（10/20 夜〜の前払いクレジット切れ）の分は
+#       後から直す道が無かった。クレジットを補充したあと（見張り番 §⑯ が緑に戻ったら）Run workflow を1回押す。
+#   - 中身: python evaluate_signal_outcomes.py --retry-failed-ai（直せた分だけ差し替え・失敗した分は元のまま）
+#   - 1件も直らなかった（クレジットがまだ戻っていない）ときは赤で終わり、何も書き換えない
+#   - dry_run を付けると対象を数えて並べるだけ（Gemini を呼ばない）
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "やり直す上限件数（古い順）"
+        required: false
+        default: "200"
+      dry_run:
+        description: "対象を数えて並べるだけ（Gemini を呼ばない・書き換えない）"
+        type: boolean
+        required: false
+        default: false
+
+# signals-log.json を書く technical-alerts（4H/1H/日足）と同じ組＝同時に走らない（git 競合回避）
+concurrency:
+  group: signal-workflows
+  cancel-in-progress: false
+
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas numpy google-generativeai
+
+      - name: Retry failed AI loss/win analysis
+        env:
+          RETRY_LIMIT: ${{ inputs.limit }}
+          RETRY_DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          if [ "$RETRY_DRY_RUN" = "true" ]; then
+            python evaluate_signal_outcomes.py --retry-failed-ai --limit "$RETRY_LIMIT" --dry-run
+          else
+            python evaluate_signal_outcomes.py --retry-failed-ai --limit "$RETRY_LIMIT"
+          fi
+
+      # signals-log.json が変わったときだけ track-record.html と CSV を作り直して push（dry_run・対象なしは何もしない）
+      - name: Rebuild track-record & CSV, commit and push if changed
+        run: |
+          if git diff --quiet -- signals-log.json; then
+            echo "signals-log.json に変化なし＝何もしない"
+            exit 0
+          fi
+          python generate_track_record_page.py
+          python export_to_csv.py
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add signals-log.json signals-log.csv my-trades.csv track-record.html research-list.html 2>/dev/null || true
+          git commit -m "chore: retry failed AI loss/win analysis $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+          # push リトライ（最大 3 回）+ コンフリクト時は今回作った側を採る (-X theirs)＝technical-alerts と同じ流儀
+          # ⚠️ 3回とも失敗したら明示的に落とす（黙って緑にしない）
+          pushed=0
+          for i in 1 2 3; do
+            if git pull --rebase -X theirs origin main && git push; then
+              echo "✅ Push success on attempt $i"
+              pushed=1
+              break
+            fi
+            echo "⚠️ Push failed (attempt $i), retrying..."
+            git rebase --abort 2>/dev/null || true
+            sleep 10
+          done
+          if [ "$pushed" != "1" ]; then
+            echo "::error::3回試しても push できなかった（main の競合が継続している可能性）"
+            exit 1
+          fi
