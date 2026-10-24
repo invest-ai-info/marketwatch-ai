@@ -216,7 +216,7 @@ def ai_summary(year, month, sig_stats, api_key):
 出力はプレーンテキスト、3 セクション構成。
 """
     # マンスリーは月 1 回の最重要レポートなので、品質優先で上位モデルから試行
-    for model_name in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.5-flash-lite"):
+    for model_name in ("gemini-2.5-flash", "gemini-2.5-flash-lite"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)

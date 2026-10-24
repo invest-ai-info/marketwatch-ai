@@ -1053,7 +1053,7 @@ def generate_news_comments_batch(articles, api_key):
 - JSON として valid であること"""
 
     # クォータが緩いモデルから順に試す（無料枠の RPD/RPM 違いを考慮）
-    model_candidates = ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash")
+    model_candidates = ("gemini-2.5-flash-lite", "gemini-2.5-flash")
     last_err = ""
     for model_name in model_candidates:
         try:
@@ -1094,7 +1094,7 @@ def generate_news_comment(title, description, category, api_key):
         description=(description or "")[:400],
     )
     last_err = ""
-    for model_name in ("gemini-2.0-flash", "gemini-2.5-flash"):
+    for model_name in ("gemini-2.5-flash",):
         try:
             model = genai.GenerativeModel(model_name)
             response = model.generate_content(prompt)
@@ -1168,7 +1168,7 @@ def generate_asset_analysis(asset_name, price_str, news_titles, api_key):
     news_text = "\n".join([f"- {t[:120]}" for t in news_titles[:10]]) or "（直近の関連ニュースなし）"
     prompt = _GEMINI_ASSET_PROMPT.format(asset_name=asset_name, price=price_str, news=news_text)
     # クォータが緩いモデルから順に試す
-    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash"):
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             response = model.generate_content(prompt)

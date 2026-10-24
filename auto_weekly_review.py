@@ -239,7 +239,7 @@ def ai_lessons(sig_stats, api_key):
 出力はプレーンテキストのみで、3 セクション構成。
 """
     # 週次振り返りは月 4 回のみで重要なので、品質優先で上位モデルから試行
-    for model_name in ("gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.5-flash-lite"):
+    for model_name in ("gemini-2.5-flash", "gemini-2.5-flash-lite"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)

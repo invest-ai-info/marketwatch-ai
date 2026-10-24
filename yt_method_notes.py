@@ -19,7 +19,7 @@ import urllib.error
 import urllib.request
 
 UA = {"User-Agent": "Mozilla/5.0", "Accept-Language": "ja"}
-MODELS = ("gemini-2.5-flash", "gemini-flash-latest", "gemini-2.0-flash")
+MODELS = ("gemini-2.5-flash", "gemini-flash-latest")
 
 PROMPT = """あなたは FX トレード手法の研究者です。この動画（チャンネル「{channel}」、題名「{title}」）を最初から最後まで、音声と画面の両方を見て、手法をあとで機械で検証できるように細かくメモしてください。
 

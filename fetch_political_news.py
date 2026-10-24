@@ -233,7 +233,7 @@ def translate_and_comment_jp(items, api_key):
 - 影響なさそうなニュースは「直接的な相場影響は限定的」など
 """
     text = ""
-    for model_name in ("gemini-2.0-flash-lite", "gemini-2.5-flash-lite", "gemini-2.0-flash"):
+    for model_name in ("gemini-2.5-flash-lite", "gemini-2.5-flash"):
         try:
             model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)
