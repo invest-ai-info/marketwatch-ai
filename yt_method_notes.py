@@ -8,6 +8,11 @@ Gemini に動画の URL を渡して音声と画面の両方を読ませる（�
   手元:     python yt_method_notes.py pull <run_id> <保存先>
 
 出力は artifact だけ（リポジトリには書かない）。動画の書き起こしは作らず、決まり・数字・短い引用のメモにする。
+
+2026-10-24 追記（オーナー「この動画を見て内容をまとめて学習してください」・クラウドのセッションは YouTube も artifact の置き場も遮断）:
+  --kind summary  手法に限らない内容のまとめ（既定は method＝手法を検証するためのメモ）
+  --channel -     チャンネルの一覧を取らず --ids の動画だけ見る（題名とチャンネル名は oEmbed で取る）
+  --echo          メモをログにも出す（クラウドのセッションはジョブのログで読む）。字幕は出さない
 """
 import argparse
 import json
@@ -53,6 +58,34 @@ PROMPT = """あなたは FX トレード手法の研究者です。この動画�
 - 宣伝（講座・LINE・口座開設・ツールの配布）の部分は1行でまとめる
 - 長い書き起こしはしない（決まり・数字・短い引用のメモにする）
 {caption}"""
+
+SUMMARY_PROMPT = """あなたは日本人の個人投資家向けの調査担当です。この動画（チャンネル「{channel}」、題名「{title}」）を最初から最後まで、音声と画面の両方を見て、内容をあとで正確に学べるように細かくまとめてください。
+
+出力（Markdown・日本語）:
+## 1. 基本
+- 題名・話し手（わかる範囲）・動画の長さ・収録日や話している時点（動画内でわかれば）・主題をひとことで
+## 2. 要点（3〜7個）
+- 動画が一番伝えたいことを、大事な順に
+## 3. 流れに沿った中身（時刻つき）
+- 動画の時刻（mm:ss）ごとに、何を説明・主張したか。図表やチャートが映ったら、何が描かれているか
+## 4. 数字・固有名詞の一覧
+- 出た数字（価格・金利・期間・割合・回数・金額・日付）と、銘柄・指標・人名・組織名を、何の数字・何の話かとともに
+## 5. 主張とその根拠
+- 主張ごとに、示した根拠（データ・過去の例・理屈）。根拠を示していないものは「根拠の提示なし」
+## 6. 売買の決まり・手法（あれば）
+- 入る条件・損切り・利確・資金管理・見送る条件などを、機械で確かめられる形で。無ければ「なし」
+## 7. 大事な発言の短い引用
+- 最大5つ、各25字以内（動画の時刻つき）
+## 8. はっきりしない点・注意点
+- あいまいな部分・数字で決めていない部分・宣伝や利害関係・事実と違うかもしれない点
+
+注意:
+- 見えない・聞こえないことは書かない。推測したときは「（推測）」と付ける
+- 成績や将来の予想は「主張」として書き、確かめられた事実として扱わない
+- 宣伝（講座・LINE・口座開設・ツールの配布）の部分は1行でまとめる
+- 長い書き起こしはしない（要点・数字・短い引用のまとめにする）
+{caption}"""
+PROMPTS = {"method": PROMPT, "summary": SUMMARY_PROMPT}
 
 
 def _get(url, data=None, timeout=60):
@@ -115,6 +148,15 @@ def list_videos(channel):
     return out
 
 
+def video_meta(vid):
+    """oEmbed で（題名, チャンネル名）。取れなければ空。"""
+    try:
+        d = json.loads(_get(f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={vid}&format=json", timeout=30))
+        return d.get("title", ""), d.get("author_name", "")
+    except Exception:  # noqa: BLE001
+        return "", ""
+
+
 def caption_text(vid, limit=30000):
     """自動字幕（取れれば Gemini への参考に渡すだけ・保存しない）。取れなければ空。"""
     try:
@@ -126,11 +168,11 @@ def caption_text(vid, limit=30000):
         return "" if not os.environ.get("YT_DEBUG") else f"#ERR {type(e).__name__}"
 
 
-def gemini_notes(api_key, vid, title, channel, caption, models=MODELS, tries=4):
+def gemini_notes(api_key, vid, title, channel, caption, models=MODELS, tries=4, kind="method"):
     cap = ""
     if caption and not caption.startswith("#ERR"):
         cap = "\n参考：自動字幕（誤認識あり・数字は画面で確かめること）\n" + caption
-    prompt = PROMPT.format(channel=channel, title=title, caption=cap)
+    prompt = PROMPTS[kind].format(channel=channel, title=title, caption=cap)
     body = {"contents": [{"parts": [{"file_data": {"file_uri": f"https://www.youtube.com/watch?v={vid}", "mime_type": "video/youtube"}},
                                     {"text": prompt}]}],
             "generationConfig": {"temperature": 0.2, "maxOutputTokens": 16384}}
@@ -162,10 +204,14 @@ def run(a):
     key = os.environ.get("GEMINI_API_KEY", "")
     if not key:
         sys.exit("GEMINI_API_KEY が無い")
-    vids = list_videos(a.channel)
-    if a.ids:
-        want = a.ids.split(",")
-        vids = [v for v in vids if v["id"] in want] + [{"id": i, "title": "", "len": ""} for i in want if i not in {v["id"] for v in vids}]
+    if a.ids and a.channel in ("", "-"):
+        vids = [{"id": i, "title": t, "len": "", "author": au}
+                for i in a.ids.split(",") for t, au in [video_meta(i)]]
+    else:
+        vids = list_videos(a.channel)
+        if a.ids:
+            want = a.ids.split(",")
+            vids = [v for v in vids if v["id"] in want] + [{"id": i, "title": "", "len": ""} for i in want if i not in {v["id"] for v in vids}]
     os.makedirs(a.out, exist_ok=True)
     if a.shard == 0:
         json.dump(vids, open(os.path.join(a.out, "_videos.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
@@ -174,12 +220,15 @@ def run(a):
     usage = {}
     for v in mine:
         cap = caption_text(v["id"])
-        text, model, u = gemini_notes(key, v["id"], v["title"], a.channel_name, cap,
-                                      models=(a.model,) + tuple(m for m in MODELS if m != a.model))
+        text, model, u = gemini_notes(key, v["id"], v["title"], v.get("author") or a.channel_name, cap,
+                                      models=(a.model,) + tuple(m for m in MODELS if m != a.model), kind=a.kind)
         usage[v["id"]] = {"model": model, "caption": bool(cap and not cap.startswith("#ERR")), **u}
         if text:
+            doc = f"# {v['title']}\n\nhttps://www.youtube.com/watch?v={v['id']}（{v['len']}・{model}）\n\n{text}\n"
             with open(os.path.join(a.out, f"{v['id']}.md"), "w", encoding="utf-8") as f:
-                f.write(f"# {v['title']}\n\nhttps://www.youtube.com/watch?v={v['id']}（{v['len']}・{model}）\n\n{text}\n")
+                f.write(doc)
+            if a.echo:
+                print(f"----- BEGIN NOTES {v['id']} -----\n{doc}----- END NOTES {v['id']} -----")
         print(f"  {v['id']} {'ok' if text else 'FAIL'} {model} cap={usage[v['id']]['caption']} "
               f"in={u.get('promptTokenCount')} out={u.get('candidatesTokenCount')} {u.get('error', '')}")
         time.sleep(a.pause)
@@ -234,6 +283,8 @@ def main(argv=None):
     r.add_argument("--of", type=int, default=1)
     r.add_argument("--model", default=MODELS[0])
     r.add_argument("--pause", type=float, default=5)
+    r.add_argument("--kind", choices=sorted(PROMPTS), default="method")
+    r.add_argument("--echo", action="store_true")
     p = sub.add_parser("pull")
     p.add_argument("run_id")
     p.add_argument("dest")

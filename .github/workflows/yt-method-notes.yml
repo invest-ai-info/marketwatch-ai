@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       channel:
-        description: "チャンネルのハンドル（@から）"
+        description: "チャンネルのハンドル（@から）。ids の動画だけ見るときは -"
         required: true
         default: '@fxism-rion'
       channel_name:
@@ -24,6 +24,15 @@ on:
         description: "Gemini のモデル"
         required: false
         default: 'gemini-2.5-flash'
+      kind:
+        description: "メモの型（method＝手法を検証するためのメモ／summary＝内容のまとめ）"
+        type: choice
+        options: [method, summary]
+        default: method
+      echo:
+        description: "メモをログにも出す（クラウドのセッションは artifact を取れないため）"
+        type: boolean
+        default: false
 
 concurrency:
   group: yt-method-notes
@@ -49,7 +58,7 @@ jobs:
           python-version: '3.11'
       - run: pip install youtube-transcript-api
       - name: Make notes for this shard
-        run: python -u yt_method_notes.py run --channel "${{ inputs.channel }}" --channel-name "${{ inputs.channel_name }}" --ids "${{ inputs.ids }}" --model "${{ inputs.model }}" --out yt-notes --shard ${{ matrix.shard }} --of 4
+        run: python -u yt_method_notes.py run --channel "${{ inputs.channel }}" --channel-name "${{ inputs.channel_name }}" --ids "${{ inputs.ids }}" --model "${{ inputs.model }}" --kind "${{ inputs.kind }}" ${{ inputs.echo && '--echo' || '' }} --out yt-notes --shard ${{ matrix.shard }} --of 4
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
