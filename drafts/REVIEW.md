@@ -1,3 +1,4 @@
+2026-10-26 signal-lab: #130 下書き作成（RSI売られすぎ反発 rsi_oversold_edge・前向き430回 48.8%[44.1-53.6]。登録前133回39.1%。流れ別 上昇60.4%/下降41.7%。signal_verify 17/17 GREEN・plain_japanese 初回7件→0）。ゲート審査中
 2026-10-25 signal-lab: #129 ✅自動公開済み（出口の相性ラボ第4回・日足MAデッド売り724件・目立つ旗0。verify緑・Opus初期=白寄り軽微グレー→1文を軟化修正→数値再検証緑→独立Opus白。plain_japanese初回3件→0）
 2026-10-25 signal-lab: #129 下書き作成（出口の相性ラボ第4回・日足MAデッド売り724件。目立つ旗0。exit_lab_verify GREEN・signal_verify GREEN・plain_japanese 初回3件→0）。ゲート審査中
 2026-10-15 signal-lab: #126 ✅公開済み（通貨の強弱と同じ向き cs_aligned・前向き65回。FWD k=15/n=65 win=23.1% avgR=-0.462 R-CI=[-0.702,-0.221]両端負。対照cs_against R-CI=[-0.379,+0.164]は0含む。n=65<80で🟡蓄積中。plain_japanese✅・signal_verify 6/6 GREEN✅・SVG縮尺修正[直せる]✅・compliance白（Opus1st🟡→語調軟化・免責3層補完・図キャプション修正・IS/FWD境界注記追加）・独立Opus2nd🟢・check_site OK(EXIT=0)・push済み）
