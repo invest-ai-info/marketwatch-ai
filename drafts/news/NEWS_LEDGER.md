@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-10-25
+- 判定: ✅ 公開済み
+- 選定トピック: FOMC 10月27〜28日会合プレビュー──ホールド確率86〜94%・12月利上げが本命視・Warsh会見の焦点と円相場への影響を整理（カテゴリ: 金融政策・FOMC・FRB）
+- スコア: 話題性 4 / 影響 5 / 付加価値 4（合計 13/15）
+- 出典:
+  - Federal Reserve 公式カレンダー（10月27-28日開催・10/28 14:00 ET発表）
+  - financecalendar.com「FOMC Rate Decision October 2026」（SEPなし確認）
+  - iTiger「Markets broadly expect the Fed to hold rates steady in October」（ホールド確率86.2%）
+  - Chase「Will the Federal Reserve hike rates at October 2026 FOMC meeting?」（8割ホールド・Williams発言）
+  - Forbes「What To Look For From The Fed's October Meeting」2026-10-19（12月利上げ本命）
+  - mpamag.com「Fed issues the first rate decision of the Kevin Warsh era」（9月利上げ経緯）
+  - itiger.com（Warshのバンコク発言・「会合を予断しない」）
+  - CNBC「CPI inflation report September 2026」（9月CPI +3.7%）
+  - Pulsafi Market Summary 2026-10-24（10/23金曜終値・米10年債利回り約5.00%）
+  - Yahoo Finance 2026-10-24（10/28決算日程）
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（編集なし）→最終🟢白
+  - 執筆側で追加修正: 「2026年9月16日（火）」→「（水）」（第2Opus指摘の曜日誤り修正）
+  - 第2Opus（独立確認・Readのみ）: ①kinsho-v1×3 ✅ ②断定語なし ✅ ③銘柄推奨なし ✅ ④noindexなし ✅ ⑤出典10系統以上 ✅ ⑥事実未確定の断言なし ✅ → 総合判定🟢白（公開OK）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告49件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-25-fomc-october-28-preview.html
+
+---
+
 ## 2026-10-24
 - 判定: ✅ 公開済み
 - 選定トピック: 来週のMicrosoft・Alphabet（10/28水）・Amazon（10/29木）決算集中週──AI設備投資の収益性への市場の目線とMeta Q3後の文脈、日本市場への影響を整理（カテゴリ: 決算・メガテック・AI投資）
