@@ -36,6 +36,10 @@ START = "2026-10-08"            # この日の一覧からためる
 UP1, DOWN1 = 0.01, -0.01         # 次の日：終値どうしで +1％以上＝続伸・−1％以下＝だまし
 UP5, DOWN5 = 0.03, -0.03         # 5日後：+3％以上＝続伸・−3％以下＝だまし
 AFTER = 5                        # 5取引日あと
+# 🆕 2026-10-26 オーナー「上場来高値の銘柄は今後伸び続ける可能性があると思うので、その後を追っていってください」
+#    ＝そのあとを長く追う（PILLAR_PREREG.md「J44」の追記）。区切りは TOPIX と比べた差（その株 − 1306）で ±
+LONG = ((20, 0.05), (60, 0.10), (120, 0.15))   # (取引日, 区切り)
+INDEX_CODE = "1306"              # TOPIX 連動の上場投信＝TOPIX と比べた差の物差し
 OPEN_RETRY_DAYS = 20             # 次の日の始値が取れなかったケースは、この日数のあいだ取り直す
 RECENT_DAYS = 10                 # md の「最近のケース」に出す営業日の数
 JST = dt.timezone(dt.timedelta(hours=9))
@@ -45,11 +49,13 @@ LABEL_UP, LABEL_FLAT, LABEL_DOWN = "続伸", "横ばい", "だまし"
 FEATURES = ("date", "code", "name", "market", "sector", "period", "kind", "record", "listed", "age_days", "akaji",
             "close", "pct", "high", "prev_high", "prev_date", "breakout", "close_vs_prev", "wick", "hi_close",
             "turnover", "tv_ratio", "dev25", "streak", "days_since_prev")
-AFTER_COLS = ("d1", "gap1", "oc1", "cc1", "hi1", "below_prev1", "label1", "d5", "cc5", "max5", "min5", "label5")
+LONG_COLS = tuple(f"{k}{n}" for n, _ in LONG for k in ("d", "cc", "ex", "min", "label"))
+AFTER_COLS = ("d1", "gap1", "oc1", "cc1", "hi1", "below_prev1", "label1", "d5", "cc5", "max5", "min5", "label5") + LONG_COLS
 COLS = FEATURES + AFTER_COLS
 NUMERIC = {"record", "listed", "age_days", "akaji", "close", "pct", "high", "prev_high", "breakout", "close_vs_prev",
            "wick", "hi_close", "turnover", "tv_ratio", "dev25", "streak", "days_since_prev",
-           "gap1", "oc1", "cc1", "hi1", "below_prev1", "cc5", "max5", "min5"}
+           "gap1", "oc1", "cc1", "hi1", "below_prev1", "cc5", "max5", "min5"} | \
+    {f"{k}{n}" for n, _ in LONG for k in ("cc", "ex", "min")}
 INF = math.inf
 # (見出し, 列, 区切り)。区切り＝[(名前, 下, 上)]＝「下以上・上未満」／または {値: 名前}（そのままの値で分ける）
 BUCKETS = (
@@ -139,8 +145,9 @@ def features(row, day, bars, period=""):
     }
 
 
-def fill_after(case, bars, opens=None):
-    """そのあとを埋める。bars＝その銘柄の日足（いまの日まで）・opens＝{日付: 始値}（取れなければ None）。埋めたら True"""
+def fill_after(case, bars, opens=None, index=None):
+    """そのあとを埋める。bars＝その銘柄の日足（いまの日まで）・opens＝{日付: 始値}（取れなければ None）・
+    index＝1306 の {日付: 終値}（長い期間を埋めるときだけ・無ければ長い期間は待つ）。埋めたら True"""
     day = case["date"]
     idx = next((i for i, b in enumerate(bars) if b[0] == day), None)
     if idx is None:
@@ -166,7 +173,29 @@ def fill_after(case, bars, opens=None):
         case.update(d5=seg[-1][0], cc5=cc5, max5=max(b[1] for b in seg) / h0 - 1, min5=min(b[2] for b in seg) / c0 - 1,
                     label5=label(cc5, UP5, DOWN5))
         changed = True
+    for n, cut in LONG:
+        if case.get(f"d{n}") or not index or idx + n >= len(bars):
+            continue
+        dn, cn = bars[idx + n][0], bars[idx + n][3]
+        i0, i1 = index.get(day), index.get(dn)
+        if not i0 or not i1:
+            continue                                  # 1306 の終値が取れない日は、次の日に取り直す
+        cc = cn / c0 - 1
+        ex = cc - (i1 / i0 - 1)
+        case.update({f"d{n}": dn, f"cc{n}": cc, f"ex{n}": ex,
+                     f"min{n}": min(b[2] for b in bars[idx + 1: idx + n + 1]) / c0 - 1, f"label{n}": label(ex, cut, -cut)})
+        changed = True
     return changed
+
+
+def wants_long(case, bars):
+    """長い期間（20・60・120取引日あと）のどれかを、いまの日足で埋められるか＝1306 を取りに行く要るか"""
+    idx = next((i for i, b in enumerate(bars) if b[0] == case["date"]), None)
+    return idx is not None and any(not case.get(f"d{n}") and idx + n < len(bars) for n, _ in LONG)
+
+
+def is_done(case):
+    return bool(case.get("d5")) and all(case.get(f"d{n}") for n, _ in LONG)
 
 
 def needs_open(case, today):
@@ -178,23 +207,37 @@ def needs_open(case, today):
 
 # ════════════════════ 次の日の始値（Yahoo の日足） ════════════════════
 
-def parse_opens(result):
-    """Yahoo chart の result → {日付JST: 始値}（始値の無いバーは落とす）。純関数"""
+def _parse_field(result, field):
     q = result["indicators"]["quote"][0]
     out = {}
-    for t, o in zip(result.get("timestamp") or [], q.get("open") or []):
-        if o is None:
+    for t, v in zip(result.get("timestamp") or [], q.get(field) or []):
+        if v is None:
             continue
-        out[dt.datetime.fromtimestamp(t, JST).date().isoformat()] = float(o)
+        out[dt.datetime.fromtimestamp(t, JST).date().isoformat()] = float(v)
     return out
 
 
-def fetch_opens(code, rng="3mo", tries=2):
+def parse_opens(result):
+    """Yahoo chart の result → {日付JST: 始値}（始値の無いバーは落とす）。純関数"""
+    return _parse_field(result, "open")
+
+
+def parse_closes(result):
+    """Yahoo chart の result → {日付JST: 終値}（終値の無いバーは落とす）。純関数"""
+    return _parse_field(result, "close")
+
+
+def fetch_index_closes(code=INDEX_CODE, rng="2y", tries=2):
+    """1306 の {日付: 終値}（長い期間の TOPIX と比べた差に使う・1回の更新で多くて1回）"""
+    return fetch_opens(code, rng, tries, parse=parse_closes)
+
+
+def fetch_opens(code, rng="3mo", tries=2, parse=parse_opens):
     u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval=1d"
     for k in range(tries):
         try:
             req = urllib.request.Request(u, headers=UA)
-            return parse_opens(json.load(urllib.request.urlopen(req, timeout=25))["chart"]["result"][0])
+            return parse(json.load(urllib.request.urlopen(req, timeout=25))["chart"]["result"][0])
         except urllib.error.HTTPError as e:
             if e.code == 429 or e.code >= 500:
                 time.sleep(3 * (k + 1) ** 2)
@@ -267,10 +310,17 @@ def stats(cases):
     n = len(done)
     share = lambda lab: (sum(1 for c in done if c["label1"] == lab) / n) if n else None  # noqa: E731
     five = [c for c in cases if c.get("label5")]
-    return {"n": n, "up": share(LABEL_UP), "flat": share(LABEL_FLAT), "down": share(LABEL_DOWN),
-            "cc1": _mean([_num(c.get("cc1")) for c in done]), "oc1": _mean([_num(c.get("oc1")) for c in done]),
-            "n5": len(five), "cc5": _mean([_num(c.get("cc5")) for c in five]),
-            "down5": (sum(1 for c in five if c["label5"] == LABEL_DOWN) / len(five)) if five else None}
+    out = {"n": n, "up": share(LABEL_UP), "flat": share(LABEL_FLAT), "down": share(LABEL_DOWN),
+           "cc1": _mean([_num(c.get("cc1")) for c in done]), "oc1": _mean([_num(c.get("oc1")) for c in done]),
+           "n5": len(five), "cc5": _mean([_num(c.get("cc5")) for c in five]),
+           "down5": (sum(1 for c in five if c["label5"] == LABEL_DOWN) / len(five)) if five else None}
+    for k, _ in LONG:
+        g = [c for c in cases if c.get(f"label{k}")]
+        out.update({f"n{k}": len(g), f"ex{k}": _mean([_num(c.get(f"ex{k}")) for c in g]),
+                    f"min{k}": _mean([_num(c.get(f"min{k}")) for c in g]),
+                    f"up{k}": (sum(1 for c in g if c[f"label{k}"] == LABEL_UP) / len(g)) if g else None,
+                    f"down{k}": (sum(1 for c in g if c[f"label{k}"] == LABEL_DOWN) / len(g)) if g else None})
+    return out
 
 
 def tables(cases, buckets=BUCKETS):
@@ -295,14 +345,40 @@ def _x(x, unit="", d=1):
     return "—" if x is None or x == "" else f"{float(x):.{d}f}{unit}"
 
 
-def section(cases, buckets, days):
-    """全体・その日の特徴ごと・最近のケースの3つの表（render_md の1部ぶん）"""
+def long_rows(cases):
+    """長い期間（20・60・120取引日あと・TOPIX と比べた差）の表の行"""
+    st = stats(cases)
+    L = ["### そのあと（20・60・120取引日・TOPIX と比べた差）", "",
+         "| 取引日 | 埋まった件数 | TOPIX と比べた差の平均 | 続伸 | だまし | その間のいちばん深い下げの平均 |",
+         "|---:|---:|---:|---:|---:|---:|"]
+    for k, cut in LONG:
+        L.append(f"| {k}日（±{cut * 100:g}％） | {st[f'n{k}']:,} | {_p(st[f'ex{k}'], 2)} | {_s(st[f'up{k}'])} | "
+                 f"{_s(st[f'down{k}'])} | {_p(st[f'min{k}'])} |")
+    return L + [""]
+
+
+def long_tables(cases, buckets):
+    """上場来高値（B）だけ：その日の特徴ごとの60取引日あと（TOPIX と比べた差）"""
+    L = ["### 特徴ごとの60取引日あと（TOPIX と比べた差・±10％で続伸／だまし）", ""]
+    for title, rows in tables(cases, buckets):
+        L += [f"#### {title}（60取引日）", "", "| 区切り | 埋まった件数 | TOPIX と比べた差の平均 | 続伸 | だまし |", "|---|---:|---:|---:|---:|"]
+        for name, s in rows:
+            L.append(f"| {name} | {s['n60']:,} | {_p(s['ex60'], 2)} | {_s(s['up60'])} | {_s(s['down60'])} |")
+        L.append("")
+    return L
+
+
+def section(cases, buckets, days, long_by_feature=False):
+    """全体・そのあと（長い期間）・その日の特徴ごと・最近のケースの表（render_md の1部ぶん）"""
     st = stats(cases)
     L = ["### 全体", "", "| 件数 | 続伸 | 横ばい | だまし | 次の日の平均（終値どうし） | 次の日の寄り→大引け | 5日後（件数） | 5日後にだまし |",
          "|---:|---:|---:|---:|---:|---:|---:|---:|",
          f"| {st['n']:,} | {_s(st['up'])} | {_s(st['flat'])} | {_s(st['down'])} | {_p(st['cc1'], 2)} | {_p(st['oc1'], 2)} | "
-         f"{_p(st['cc5'], 2)}（{st['n5']:,}） | {_s(st['down5'])} |", "",
-         "### その日の特徴ごと（次の日の値動き）", ""]
+         f"{_p(st['cc5'], 2)}（{st['n5']:,}） | {_s(st['down5'])} |", ""]
+    L += long_rows(cases)
+    if long_by_feature:
+        L += long_tables(cases, buckets)
+    L += ["### その日の特徴ごと（次の日の値動き）", ""]
     for title, rows in tables(cases, buckets):
         L += [f"#### {title}", "", "| 区切り | 件数 | 続伸 | だまし | 次の日の平均 | 寄り→大引け | 5日後（件数） |", "|---|---:|---:|---:|---:|---:|---:|"]
         for name, s in rows:
@@ -342,12 +418,14 @@ def render_md(cases, now=""):
          "上場来高値の更新は年初来の更新の一部（同じ一覧に入る）。上場から20営業日未満の株は一覧に入らない",
          f"- **次の日**：終値どうしで +{UP1 * 100:g}％以上＝**{LABEL_UP}**・{DOWN1 * 100:g}％以下＝**{LABEL_DOWN}**・その間＝{LABEL_FLAT}"
          f"／**5日後**：+{UP5 * 100:g}％以上＝{LABEL_UP}・{DOWN5 * 100:g}％以下＝{LABEL_DOWN}",
+         "- **そのあとを長く**（2026-10-26〜）：" + "・".join(f"{k}取引日あと ±{c * 100:g}％" for k, c in LONG) +
+         f"（TOPIX〔{INDEX_CODE}〕と比べた差で {LABEL_UP}／{LABEL_DOWN}）。財務で分ける数え（J47）は手元で J-Quants を使って行う",
          "- **判定はしない**。目立った特徴は「候補」で、決まりにするなら別に事前登録して、それより後のケースだけで確かめる。"
          "件数が少ないうちは割合が大きく揺れる", "",
          "## A. 年初来高値の更新（全部）", ""]
     L += section(cases, BUCKETS, days)
     L += ["## B. 上場来高値の更新（記録上の最高値）だけ", ""]
-    L += section(rec, RECORD_BUCKETS, days)
+    L += section(rec, RECORD_BUCKETS, days, long_by_feature=True)
     L += ["## 注意", "",
           "- Yahoo の日足だけで数えている（値の誤り・取れない日がある）。次の日の始値が取れなかったケースは窓と寄り→大引けを空けている",
           "- 「上場来と言える」＝記録の始まりが上場の日と確かめられたもの。古い株は記録の始まりが2000年ごろ＝「記録上の最高値」",
@@ -359,8 +437,10 @@ def render_md(cases, now=""):
 
 # ════════════════════ 1日の更新 ════════════════════
 
-def update(daily, payload, prev=None, fetch=fetch_opens, path_csv=OUT_CSV, path_md=OUT_MD, now=None, sleep=0.07):
-    """build_jp_highs の最後に呼ぶ。daily＝{コード: 日足（いまの日まで）}・payload＝今日の jp-highs.json・prev＝前の jp-highs.json"""
+def update(daily, payload, prev=None, fetch=fetch_opens, path_csv=OUT_CSV, path_md=OUT_MD, now=None, sleep=0.07,
+           fetch_index=None):
+    """build_jp_highs の最後に呼ぶ。daily＝{コード: 日足（いまの日まで）}・payload＝今日の jp-highs.json・prev＝前の jp-highs.json。
+    fetch_index＝1306 の終値を取る関数（長い期間を埋められるケースがあるときだけ1回呼ぶ・既定は Yahoo）"""
     today = payload["asof"]
     cases = read_ledger(path_csv)
     have = {(c["date"], c["code"]) for c in cases}
@@ -380,14 +460,20 @@ def update(daily, payload, prev=None, fetch=fetch_opens, path_csv=OUT_CSV, path_
                 cases.append(dict({k: "" for k in AFTER_COLS}, **f))
                 have.add((day, code))
                 added += 1
-    filled = opened = 0
+    filled = opened = long_filled = 0
     want_open = set()
+    index = None
     for c in cases:
-        if c.get("d5") and not needs_open(c, today):
+        if is_done(c) and not needs_open(c, today):
             continue                                  # もう埋まった（または始値を取り直す期間を過ぎた）ケースは見ない
         bars = daily.get(c["code"])
-        if c["date"] < today and bars and fill_after(c, bars):
-            filled += 1
+        if c["date"] < today and bars:
+            if index is None and wants_long(c, bars):
+                index = (fetch_index or fetch_index_closes)() or {}
+            had = sum(1 for n, _ in LONG if c.get(f"d{n}"))
+            if fill_after(c, bars, index=index):
+                filled += 1
+                long_filled += sum(1 for n, _ in LONG if c.get(f"d{n}")) - had
         if needs_open(c, today):
             want_open.add(c["code"])
     got = {}
@@ -404,4 +490,5 @@ def update(daily, payload, prev=None, fetch=fetch_opens, path_csv=OUT_CSV, path_
         fh.write(to_csv(cases))
     with open(path_md, "w", encoding="utf-8") as fh:
         fh.write(render_md(cases, now or dt.datetime.now(JST).isoformat(timespec="minutes")))
-    return f"ケース {len(cases)}件（今回 +{added}）・そのあとを埋めた {filled}件・始値 {opened}件（{len(want_open)}銘柄を取りに行った）"
+    return (f"ケース {len(cases)}件（今回 +{added}）・そのあとを埋めた {filled}件（うち20・60・120取引日あと {long_filled}件）・"
+            f"始値 {opened}件（{len(want_open)}銘柄を取りに行った）")

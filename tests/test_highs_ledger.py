@@ -63,6 +63,71 @@ def test_prereg_matches_the_code():
     assert "**上場来高値（記録上の最高値＝一覧の record）のケースだけでも、全体・その日の特徴ごと・最近のケースの表を別に出す**" in text
     rec = [b[1] for b in L.RECORD_BUCKETS]
     assert rec[0] == "listed" and "record" not in rec and rec[1:] == [b[1] for b in L.BUCKETS if b[1] != "record"]
+    # 🆕 2026-10-26 追記＝そのあとを長く追う（20・60・120取引日・TOPIX と比べた差）
+    assert L.LONG == ((20, 0.05), (60, 0.10), (120, 0.15)) and L.INDEX_CODE == "1306"
+    assert "**20日後 ±5%・60日後 ±10%・120日後 ±15%**" in text and "`ex20`・`ex60`・`ex120`" in text
+    assert "## J47 上場来高値のその後は、業績の裏づけで分かれるか" in text
+
+
+def test_fill_after_long_horizons_against_topix():
+    bars = _bars(160)
+    day = bars[10][0]
+    bars[10] = (day, 101.0, 99.0, 100.0, 1e5)
+    bars[30] = (bars[30][0], 111.0, 109.0, 110.0, 1e5)                                   # 20日後 +10％
+    bars[15] = (bars[15][0], 95.0, 80.0, 90.0, 1e5)                                      # 途中の深い下げ（安値 80）
+    index = {b[0]: 1000.0 for b in bars}
+    index[bars[30][0]] = 1030.0                                                           # TOPIX は20日で +3％
+    case = dict({k: "" for k in L.AFTER_COLS}, date=day, code="9999")
+    c1 = dict(case)
+    L.fill_after(c1, bars[:31])
+    assert c1["d20"] == "" and c1["d5"] != ""                                             # 1306 を渡さないときは長い期間を埋めない
+    c2 = dict(case)
+    no30 = {k: v for k, v in index.items() if k != bars[30][0]}
+    L.fill_after(c2, bars[:31], index=no30)
+    assert c2["d20"] == "" and c2["d5"] != ""                                             # その日の 1306 が無い＝次の日に取り直す
+    assert L.wants_long(c2, bars[:31]) and not L.wants_long(c2, bars[:30])
+    c3 = dict(case)
+    assert L.fill_after(c3, bars[:31], index=index) and c3["d20"] == bars[30][0]
+    assert abs(c3["cc20"] - 0.10) < 1e-9 and abs(c3["ex20"] - 0.07) < 1e-9 and c3["label20"] == L.LABEL_UP
+    assert abs(c3["min20"] - (80 / 100 - 1)) < 1e-9 and c3["d60"] == "" and not L.is_done(c3)
+    assert L.fill_after(c3, bars, index=index) and c3["d60"] == bars[70][0] and c3["d120"] == bars[130][0]
+    assert c3["label60"] == L.LABEL_FLAT and L.is_done(c3)                                # 100→99.8 で TOPIX 横ばい＝横ばい
+    assert L.label(-0.10, 0.10, -0.10) == L.LABEL_DOWN and L.label(0.149, 0.15, -0.15) == L.LABEL_FLAT
+
+
+def test_parse_closes_and_update_fetches_topix_once_only_when_needed():
+    t = int(dt.datetime(2026, 10, 9, 0, 0, tzinfo=L.JST).timestamp())
+    res = {"timestamp": [t, t + 86400], "indicators": {"quote": [{"close": [416.3, None], "open": [None, 1.0]}]}}
+    assert L.parse_closes(res) == {"2026-10-09": 416.3} and L.parse_opens(res) == {"2026-10-10": 1.0}
+    days = _bdays("2026-01-05", 60)
+    a = _day_bars(days, [100.0] * 30 + [120.0] * 30)                    # days[29] より後に高値更新（ケースは days[30]）
+    b = _day_bars(days, [100.0] * 59 + [130.0])
+    case_day = days[30]
+    payload = {"asof": days[-1], "period": "年初来", "highs": [_row("2222", prev=105.0, ext=131.0, name="ビー")]}
+    calls = []
+    fetch_index = lambda: calls.append(1) or {d: 400.0 for d in days}  # noqa: E731
+    with tempfile.TemporaryDirectory() as tmp:
+        csv_p, md_p = os.path.join(tmp, "l.csv"), os.path.join(tmp, "l.md")
+        old = dict({k: "" for k in L.COLS}, date=case_day, code="1111", name="エー", record=1, kind=L.KIND_RECORD,
+                   period="年初来")
+        with open(csv_p, "w", encoding="utf-8-sig") as fh:
+            fh.write(L.to_csv([old]))
+        L.START, start = "2026-01-01", L.START
+        try:
+            msg = L.update({"1111": a, "2222": b}, payload, None, lambda code: {}, csv_p, md_p, now="x", sleep=0,
+                           fetch_index=fetch_index)
+        finally:
+            L.START = start
+        cases = {c["code"]: c for c in L.read_ledger(csv_p)}
+        assert calls == [1] and cases["1111"]["d20"] == days[50] and cases["1111"]["label20"] == L.LABEL_FLAT
+        assert "20・60・120取引日あと 1件" in msg and cases["2222"]["d20"] == ""
+        md = open(md_p, encoding="utf-8").read()
+        assert md.count("### そのあと（20・60・120取引日・TOPIX と比べた差）") == 2
+        assert md.count("### 特徴ごとの60取引日あと") == 1 and md.count("### その日の特徴ごと") == 2   # B だけに足す・数えの見出しは変えない
+        assert "そのあとを長く" in md
+        calls.clear()
+        L.update({"1111": a, "2222": b}, payload, None, lambda code: {}, csv_p, md_p, now="x", sleep=0, fetch_index=fetch_index)
+        assert calls == []                                                                # 埋められるケースが無い日は 1306 を取りに行かない
 
 
 def test_features_from_the_row_and_the_day():
