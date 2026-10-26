@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-10-26
+- 判定: ✅ 公開済み
+- 選定トピック: 日銀10月29〜30日会合プレビュー──政策金利1.25%ホールド観測・ドル円157円台・日経3日続落の背景（カテゴリ: 金融政策・日銀・BOJ・為替）
+- スコア: 話題性 4 / 影響 5 / 付加価値 4（合計 13/15）
+- 出典:
+  - 大和総研 2026-09-18（BOJ 9月利上げ 1.25%・賛成7反対2確認）
+  - digg.com/TheWorldCorrespondent「Bank of Japan raises policy rate to 1.25%」（同上確認）
+  - investinglive.com 2026-10-26「Nikkei slips; ING sees BOJ holding at 1.25%」（ホールド観測・ING/野村/大和の見方）
+  - FXStreet 2026-10-26「USD/JPY Price Forecasts: US Dollar shows hesitation below 157.20」（ドル円157.13円）
+  - BigGo「Dollar-Yen Stuck in Upper 157 Range」（同上確認）
+  - Investing.com 2026-10-26（日経3日続落確認）
+  - Pulsafi Market Summary 2026-10-24（米10年債利回り約5%・10/24週末）
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（「ホールド濃厚」→「ホールド観測」軽微修正・og:description 同修正）→ 修正適用 → 最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 🔴要修正（曜日誤り「木」→「金」×3箇所・出典あいまい×1）→ 修正適用後 🟢白（「軽い修正2点で白になります」と明示）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告50件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-26-boj-october-30-preview.html
+- commit: 104bbeb（main へ push 済み）
+
+---
+
 ## 2026-10-25
 - 判定: ✅ 公開済み
 - 選定トピック: FOMC 10月27〜28日会合プレビュー──ホールド確率86〜94%・12月利上げが本命視・Warsh会見の焦点と円相場への影響を整理（カテゴリ: 金融政策・FOMC・FRB）
