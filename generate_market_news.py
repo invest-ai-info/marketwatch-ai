@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-26", "line": '・<b>2026-10-26</b>: 📰 解説「<a href="guide-news-2026-10-26-boj-october-30-preview.html" style="color:#0969da"><b>日銀10月30日（金）会合プレビュー──1.25%ホールド観測・ドル円157円台</b></a>」公開'},
         {"date": "2026-10-26", "line": '・<b>2026-10-26</b>: 🔬 解説「<a href="guide-company-4568-daiichi-sankyo.html" style="color:#0969da"><b>第一三共</b></a>」公開'},
         {"date": "2026-10-26", "line": '・<b>2026-10-26</b>: 🧪 解説「<a href="guide-signal-lab-130.html" style="color:#0969da"><b>売られすぎからの反発をねらう買いは、前向きでも勝ちやすい？【研究日誌 #130】</b></a>」公開'},
         {"date": "2026-10-25", "line": '・<b>2026-10-25</b>: 📰 解説「<a href="guide-news-2026-10-25-fomc-october-28-preview.html" style="color:#0969da"><b>【10/25】FOMC10月28日決定プレビュー──ホールド確率86〜94%・12月が本命視</b></a>」公開'},

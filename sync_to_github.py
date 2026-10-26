@@ -395,4 +395,5 @@ SYNC_FILES = [
     "guide-news-2026-10-25-fomc-october-28-preview.html",
     "guide-signal-lab-130.html",
     "guide-company-4568-daiichi-sankyo.html",
+    "guide-news-2026-10-26-boj-october-30-preview.html",
 ]
