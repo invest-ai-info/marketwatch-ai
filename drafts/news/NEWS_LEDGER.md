@@ -24,7 +24,7 @@
 - 整合性チェック（check_site_consistency.py）: EXIT=0（警告51件は既存他ファイルの既知問題・本記事と無関係）✅
 - publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
 - 公開ファイル: guide-news-2026-10-27.html
-- commit: （本コミットで push 済み）
+- commit: 1021e8e（main へ push 済み）
 
 ---
 
