@@ -91,6 +91,7 @@ def market_of(f):
         return "fx"
     return "all"
 YUTAI_DIR = "yutai-edinet"
+J9_LAB = "j9-yutai-lab.json"              # 🆕 2026-10-28 J9 の結果（手元で1回・要約を送る）
 
 # 仮説のまとまり（条件のキーで自動で振り分ける。上から順に最初に当たったもの）
 THEMES = [
@@ -684,7 +685,7 @@ def collect_studies(root, m):
         verify.append({"cat": "all", "name": "相場の環境の統計", "what": "シグナルが効いたとき・効かなかったときの相場の環境を、毎月同じ物差しで数え直しています",
                        "since": "", "progress": "毎月2日に数え直し（くわしくは下の④）"})
 
-    if os.path.isdir(p(YUTAI_DIR)):
+    if os.path.isdir(p(YUTAI_DIR)) and not os.path.exists(p(J9_LAB)):   # 🆕 2026-10-28 結果が届いたら検証済みリストへ移る
         research.append({"cat": "jp", "name": "株主優待のある銘柄の値動き",
                          "what": "株主優待のある銘柄は、権利の日の3か月ほど前から値動きに偏りがあるか、"
                                  "空売りしにくい銘柄ほどその偏りが大きいかを確かめる準備をしています",
