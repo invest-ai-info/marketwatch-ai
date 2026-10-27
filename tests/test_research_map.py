@@ -164,6 +164,8 @@ def test_study_lists_read_forward_records_and_drop_judged():
     head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
     assert "寄り付き" not in head and "練習用の口座" not in head and "向きだけ残った" not in head
     assert "株主優待のある銘柄の値動き" in head
+    _dump(d, R.J9_LAB, {"kind": "backtest", "verdicts": {"Q1": {"status": "stop"}}})   # 結果が届いたら外れる
+    assert "株主優待" not in R.build_pane(root=d).split("① 定期的に回している研究")[0]
 
 
 def test_study_list_shows_progress_from_the_ea_record():
