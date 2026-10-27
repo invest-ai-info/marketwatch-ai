@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-10-27
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均4日ぶり大幅反発+1,078円──アンソロピックIPO目論見書報道がAI株高を波及・今週の米ビッグテック決算が次の焦点（カテゴリ: 株式市場・AI・半導体）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典:
+  - 日本経済新聞「東証大引け 日経平均は4日ぶり反発 米アンソロピックのIPO申請を好感」2026-10-27
+  - 財経新聞・ザイFX!「日経平均大引け：前日比1078.72円高の63268.37円」2026-10-27
+  - モネックス証券 media.monex.co.jp「AI・半導体銘柄が買い戻された日経平均は1,078円高の63,268円で反発」2026-10-27
+  - Investing.com「Asia stocks jump as Anthropic IPO filing revives AI trade」2026-10-27
+  - brecorder.com「Japan's Nikkei rises as Anthropic IPO filing lifts AI shares」2026-10-27
+  - EWJ News/rallies.ai「Japan's Nikkei rises as Anthropic IPO filing lifts AI shares」2026-10-27（大和証券コメント含む）
+  - Finimize「Anthropic's IPO Filing Puts AI Back In Tokyo's Driver's Seat」2026-10-27
+  - myforex.com「東京マーケットダイジェスト・27日 円安・株高」2026-10-27
+- コンプライアンス監査:
+  - 第1Opus（初期判定、1回目）: 🔴エスカレ（事実の誤り：FOMC日時・曜日・「今夜」表現） → 執筆側で3箇所修正適用
+  - 第1Opus（再審査・2回目）: 🟢白（初期判定・修正なし・法令面は全項目OK）→ 最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典8系統以上 ✅ / noindexなし ✅）→ 「そのまま公開して問題なし」
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告51件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-27.html
+- commit: （本コミットで push 済み）
+
+---
+
 ## 2026-10-26
 - 判定: ✅ 公開済み
 - 選定トピック: 日銀10月29〜30日会合プレビュー──政策金利1.25%ホールド観測・ドル円157円台・日経3日続落の背景（カテゴリ: 金融政策・日銀・BOJ・為替）
