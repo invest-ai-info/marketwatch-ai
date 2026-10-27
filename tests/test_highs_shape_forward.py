@@ -48,6 +48,7 @@ def test_prereg_matches_the_code():
     assert (F.START, F.TV_MIN, F.GAP, F.A_DEV, F.A_PCT, F.B_DEV, F.B_PCT, F.TRAP) == ("2026-10-08", 1.0, 60, 0.20, 0.10, 0.10, 0.03, -0.10)
     assert (F.GOAL, F.LATE, F.LATE_MIN, F.MIN_B, F.N_BOOT) == (100, "2027-12-31", 50, 50, 10000) and abs(F.ALPHA - 0.025) < 1e-12
     assert [(q, s) for q, _, s in F.QUESTIONS] == [("F1", 1), ("F2", -1)]
+    assert F.SEED == 20260927 and "SEED = 20260927" in open("pillar_lab.py", encoding="utf-8").read()   # 乱数の種は pillar_lab と同じ
 
 
 def test_case_rules():
@@ -127,8 +128,7 @@ def test_registered_in_workflow_sync_map_and_health():
     for s in ("workflow_dispatch", "cron: '23 23 * * 5'", "python tests/test_highs_shape_forward.py", "python highs_shape_forward.py",
               "git add highs-shape-forward.json highs-shape-forward.md"):
         assert s in wf, s
-    import check_site_consistency as C
-    assert {"highs-shape-forward.json", "highs-shape-forward.md"} <= set(C.SYNC_FORBIDDEN)
+    assert '"highs-shape-forward.json", "highs-shape-forward.md"' in open("check_site_consistency.py", encoding="utf-8").read()
     assert "HIGHS_SHAPE_FWD" in open("research_map.py", encoding="utf-8").read()
     assert '"highs-shape-forward.yml"' in open("check_automation_health.py", encoding="utf-8").read()
     assert "highs-shape-forward.yml" in open("RESEARCH_LABS.md", encoding="utf-8").read()
