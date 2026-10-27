@@ -1,0 +1,38 @@
+name: NPA Stats Watch (twice a month)
+
+# 警察庁の詐欺の統計に、Kindle の本で使っているものより新しい公表が出たらメールで知らせる。2026-10-27 新設。
+# 中身は npa_stats_watch.py の冒頭。本を直して BOOK_USES を書き換えるまで、月2回メールが届き続ける。
+# 何も書き換えない・コミットしない（ほかのワークフローを起こさない）。
+# 止まったら automation-health（check_automation_health.py の一覧）が気づく。
+
+on:
+  schedule:
+    - cron: '41 0 3,18 * *'   # 毎月3日・18日 09:41 JST（半端な分＝遅れにくい）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npa-stats-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Watch NPA fraud statistics
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+        run: python npa_stats_watch.py
