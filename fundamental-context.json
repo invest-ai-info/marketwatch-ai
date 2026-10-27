@@ -1,31 +1,45 @@
 {
-  "generated_at": "2026-10-27T15:10:00+09:00",
+  "generated_at": "2026-10-28T06:10:00+09:00",
   "risk_regime": {
-    "regime": "NEUTRAL",
-    "confidence": "LOW",
-    "rationale": "26日（月）の米株は前週の下落から反発して引け、ナスダック総合は約0.8%高（26,169）、S&P500は約0.7%高（約7,677）、ダウは約0.3%高。アンソロピックのIPO申請を受けAI・半導体株が買われた。ただし27-28日のFOMCと大手ハイテク決算、11/3の米中間選挙を控え慎重姿勢も残る。27日の市場や為替・暗号資産・中国豪州は新しい材料が検索で取れず、前回内容を維持するため確度は低め。",
+    "regime": "RISK_ON",
+    "confidence": "MID",
+    "rationale": "27日の米株は2日続伸し、S&P500は7,722.60（+0.60%）、ナスダックは26,477.81（+1.18%）、VIXは17.5へ低下。半導体株がけん引し、原油も100ドル近辺へ下落、中東の緊張緩和期待が出た。ただし28日のFOMC・アルファベット／マイクロソフト決算、30日の日銀会合を前に、短期的な反動には注意。",
     "key_drivers": [
-      "米株が反発して26日引け（ナスダック約+0.8%、S&P500約+0.7%、ダウ約+0.3%）",
-      "アンソロピックのIPO申請でAI・半導体株が上昇（半導体ETFは約+3%）",
-      "FOMC（10/27-28）と大手ハイテク決算週を控え様子見も残る",
-      "原油は高水準（ブレント110ドル前後・前回確認時）",
-      "米10年債利回りが約5%と高止まり（前回確認時）"
+      "米株2日続伸（S&P500 +0.60%、ナスダック +1.18%、VIX 17.5へ低下）",
+      "半導体・AI株が上昇、アンソロピックのIPO申請が追い風",
+      "WTI原油は100ドル割れ寸前の100.17ドル、中東緩和期待",
+      "FOMC（28日）はほぼ据え置き予想、利上げ確率は約10%",
+      "米10年債利回りは約4.99%と高止まり"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "26日の東京は小幅安で始まり6万2200〜6万2600円台（報道で数値が割れ、寄り付き時点）。約3か月ぶり安値圏だが、米株反発と原油安は下支え。",
+      "bias": "BULLISH",
+      "conviction": "LOW",
+      "rationale": "27日の日経平均は63,268円（+1,078円、+1.73%）と4日ぶりに大幅反発。アドバンテスト等の半導体株が主導。米ハイテク高と米株先物の堅調が追い風だが、日銀会合・FOMC前で上値追いは慎重。",
       "catalysts": [
-        "AI・半導体株の動向",
-        "FOMC（10/27-28）",
-        "ドル円158円台",
-        "原油と中東情勢"
+        "FOMC（28日）",
+        "日銀会合（29-30日）",
+        "アルファベット・マイクロソフト決算",
+        "ドル円158円台"
       ],
       "top_news": [
+        {
+          "headline": "日経平均は1,078円高の6万3268円で4日ぶり大幅反発、AI・半導体株に買い",
+          "published": "2026-10-27",
+          "comment": "半導体主導の戻り。日銀会合まで値動きは荒い可能性",
+          "source": "共同通信/各社",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "OANDA/Yahoo!ニュース"
+          ],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://www.oanda.jp/lab-education/market_news/kn_2026102701001008/"
+        },
         {
           "headline": "26日の日経平均は小幅安で寄り付き、6万2000円台前半〜半ば（報道で数値が割れる）",
           "published": "2026-10-26",
@@ -135,15 +149,27 @@
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "NEUTRAL",
+      "bias": "BULLISH",
       "conviction": "LOW",
-      "rationale": "26日のS&P500は午前時点で約0.9%高と反発。ただし米10年債利回り約5%・FOMC・大手決算を控え、反発の持続性は不明。",
+      "rationale": "27日のS&P500は7,722.60（+0.60%）で続伸、VIXは17.5へ低下。ただしFOMC・大型ハイテク決算・10年債約5%を控え、持続性は不透明。",
       "catalysts": [
-        "FOMC",
-        "米長期金利",
-        "SpaceXなどAI関連決算"
+        "FOMC（28日）",
+        "アルファベット・マイクロソフト決算",
+        "米長期金利"
       ],
       "top_news": [
+        {
+          "headline": "米株は続伸、S&P500は7,722.60（+0.60%）、ダウは52,377.57（+0.03%）",
+          "published": "2026-10-27",
+          "comment": "FOMC前でも半導体が支え。利上げ確率は約10%",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-october-27-dow-sp-500-nasdaq-tech-sector-160557664.html"
+        },
         {
           "headline": "米株が反発、26日午前時点でS&P500は約0.9%高、ダウは242ドル高",
           "published": "2026-10-26",
@@ -233,15 +259,27 @@
     {
       "name": "ナスダック",
       "ticker": "NQ=F",
-      "bias": "NEUTRAL",
+      "bias": "BULLISH",
       "conviction": "LOW",
-      "rationale": "26日のナスダックは午前時点で約1.3%高と反発。アンソロピックのIPO申請書公開や大手ハイテク決算週でAI関連に注目が集まる。",
+      "rationale": "27日のナスダックは26,477.81（+1.18%）で2日続伸。半導体・AI株が主導し、アンソロピックのIPO申請も材料。28日引け後のアルファベット・マイクロソフト決算が焦点。",
       "catalysts": [
-        "AI関連株の決算",
-        "長期金利",
-        "半導体株"
+        "アルファベット・マイクロソフト決算",
+        "FOMC",
+        "長期金利"
       ],
       "top_news": [
+        {
+          "headline": "ナスダックは+1.18%の26,477.81、半導体株が上昇。メタは最大950億ドルの株式調達を計画",
+          "published": "2026-10-27",
+          "comment": "AI投資の資金調達が材料。決算で収益化が試される",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-october-27-dow-sp-500-nasdaq-tech-sector-160557664.html"
+        },
         {
           "headline": "アンソロピックがIPO申請書を公開、ナスダックは約1.3%高（26日午前）",
           "published": "2026-10-26",
@@ -309,13 +347,25 @@
       "ticker": "GC=F",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "金・銀は23日も週間で下落。原油高で利下げ観測が弱まり上値が重い一方、中銀買いが下支えし方向感は乏しい。",
+      "rationale": "27日の金は4,074.20ドル（+0.89%）と反発。原油の下落で利上げ観測が和らいだが、米10年債約5%は重し。方向感は乏しい。",
       "catalysts": [
         "米長期金利",
         "中東情勢",
         "FOMC"
       ],
       "top_news": [
+        {
+          "headline": "金は4,074.20ドルへ+0.89%と反発",
+          "published": "2026-10-27",
+          "comment": "原油安で利上げ警戒が少し和らぎ、金に買い",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-october-27-dow-sp-500-nasdaq-tech-sector-160557664.html"
+        },
         {
           "headline": "金・銀は週間で下落が続く、ホルムズ緊迫で原油は116ドル超",
           "published": "2026-10-23",
@@ -371,13 +421,25 @@
       "ticker": "CL=F",
       "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "26日はブレントが約1.4%安の110ドル台と一服したが、米・イラン間の戦争を背景に高水準。供給不安は続き、外交報道で急変しうる。",
+      "rationale": "27日のWTI（12月限）は100.17ドル（-1.56%）。中東の緊張緩和期待でブレントも110ドルを割る場面があったが、ホルムズ情勢次第で急変しうる。",
       "catalysts": [
         "米イラン交渉",
         "中東での攻撃",
         "在庫統計"
       ],
       "top_news": [
+        {
+          "headline": "WTI原油は1.56%安の100.17ドル、中東緩和期待でブレントは110ドル割れ",
+          "published": "2026-10-27",
+          "comment": "緩和期待で一服。交渉が進まなければ再上昇も",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-october-27-dow-sp-500-nasdaq-tech-sector-160557664.html"
+        },
         {
           "headline": "原油が下落、ブレントは約1.4%安の110.17ドル（26日）",
           "published": "2026-10-26",
@@ -448,10 +510,10 @@
       "ticker": "USDJPY",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "157〜158円台でのもみ合い（21日時点）。日銀の利上げ観測は円を支える一方、米長期金利が約5%と高く下値は限られる。23日の終値は未確認。介入警戒も。",
+      "rationale": "158円台前半でのもみ合い（27日の新しい終値は未確認）。29-30日の日銀会合を控え利上げ観測が円を支える一方、米10年債約5%でドルも下がりにくい。介入警戒も。",
       "catalysts": [
-        "FOMC",
-        "日銀の利上げ観測",
+        "FOMC（28日）",
+        "日銀会合（29-30日）",
         "介入警戒"
       ],
       "top_news": [
@@ -501,7 +563,7 @@
       "ticker": "EURUSD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "10/20はドル安で下支えされたが、ユーロ圏固有の新しい材料は検索で確認できず中立。",
+      "rationale": "ユーロ圏固有の新しい材料は確認できず中立。FOMC待ちで方向感は乏しい。",
       "catalysts": [
         "FOMC",
         "米長期金利"
@@ -526,13 +588,25 @@
       "ticker": "BTC-USD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "8.1万ドル台の横ばい。株高に連れず、高金利と地政学リスクが重し。10/21の価格は確認できず。",
+      "rationale": "27日のビットコインは80,646ドル（+0.85%）と小幅高。株高に追随したが、高金利とFOMC待ちで上値は限定的。",
       "catalysts": [
         "米長期金利",
         "FOMC",
         "リスク選好"
       ],
       "top_news": [
+        {
+          "headline": "ビットコインは80,646ドル（+0.85%）",
+          "published": "2026-10-27",
+          "comment": "株高に連れた小幅高。FOMC待ちで様子見",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-october-27-dow-sp-500-nasdaq-tech-sector-160557664.html"
+        },
         {
           "headline": "ビットコインは8.1万ドル台で推移、1年前比で約25%安",
           "published": "2026-10-20",
@@ -565,9 +639,9 @@
   "currencies": [
     {
       "code": "USD",
-      "lean": "WEAK",
+      "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "10/20はドル安。ただ米CPI高止まりと10年債5.1%台が下支えし、FOMC前で小幅。"
+      "reason": "FOMC据え置き予想で様子見。米10年債約5%は支えだがドル全体の新材料は乏しい。"
     },
     {
       "code": "EUR",
