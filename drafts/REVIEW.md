@@ -1,3 +1,4 @@
+2026-10-28 signal-lab: #132 下書き作成（円がからまない通貨ペアの買い auto_direction-long_group-other_fx・前向き938回 40.8%[37.7-44.0]。登録前196回33.7%。signal_verify 18/18 GREEN・plain_japanese 0件）。ゲート審査中
 2026-10-26 signal-lab: #130 ✅自動公開済み（検証緑17/17・Opus初期=グレー軽微→3点を軟化/補足修正して白→数値再検証緑→独立Opus=法令白、品質補足2文を追記して公開。plain_japanese初回7件→0）
 2026-10-26 signal-lab: #130 下書き作成（RSI売られすぎ反発 rsi_oversold_edge・前向き430回 48.8%[44.1-53.6]。登録前133回39.1%。流れ別 上昇60.4%/下降41.7%。signal_verify 17/17 GREEN・plain_japanese 初回7件→0）。ゲート審査中
 2026-10-25 signal-lab: #129 ✅自動公開済み（出口の相性ラボ第4回・日足MAデッド売り724件・目立つ旗0。verify緑・Opus初期=白寄り軽微グレー→1文を軟化修正→数値再検証緑→独立Opus白。plain_japanese初回3件→0）
