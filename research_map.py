@@ -57,6 +57,7 @@ F1G_FWD = "f1g-forward.json"                 # 🆕 2026-10-18 F1GF グレアム
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 J46_RSS = "j46-rss.json"                   # 🆕 2026-10-22 J46R 寄り前の売買代金（RSS で約400銘柄・手元で作って送る）
 HIGHS_FUND = "highs-fund-lab.json"         # 🆕 2026-10-26 J47 上場来高値のその後×業績の裏づけ（手元で J-Quants を使って1回・要約を送る）
+HIGHS_SHAPE = "highs-shape-lab.json"       # 🆕 2026-10-27 J48 上場来高値の「形」（Actions で1回）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
 # 🆕 2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく仕分け」
@@ -563,6 +564,22 @@ def collect_studies(root, m):
                        "progress": ("要約が届きました（判定の前）" if hf else
                                     "登録済み・手元の株価と財務のデータ10年分（2017〜2026）で1回だけ数えます（4つの問い）"),
                        "placeholder": hf is None})   # 要約が届く前の行（テストは数えるときに外す）
+
+    # 🆕 2026-10-27 J48＝Actions で過去のデータを1回数える研究。結果の前は「登録済み」、結果のあとは ✕ 以外の問いが残っている間だけ出す
+    hs = _load(p(HIGHS_SHAPE))
+    hq = (((hs or {}).get("result") or {}).get("questions") or {})
+    left = [q for q, x in hq.items() if not str(x.get("verdict", "")).startswith("✕")]
+    if not hq or left:
+        words = [str(x.get("verdict", "")) for x in hq.values()]
+        verify.append({"cat": "jp", "name": "上場来高値の「形」で、そのあとも伸びる株と罠になる株は分かれるか",
+                       "what": "上場来高値（記録上の最高値）を更新した日本株を、じわじわ上げたか・25日線から離れすぎていないか・その日に急に"
+                               "上げたか・引けでも前の高値の上に残ったか・久しぶりの更新か・上場して間もないかで分け、次の日の寄りで買って"
+                               "60営業日持った値動きを、同じ日に全体を買った平均と比べます（2006〜2026年を3つの時代に分け、3つとも同じ向きかを見ます）",
+                       "since": "2026-10-27",
+                       "progress": ((f"過去のデータの結果：✅ {sum(w.startswith('✅') for w in words)}・△ {sum(w.startswith('△') for w in words)}"
+                                     f"・✕ {sum(w.startswith('✕') for w in words)}（✅ と △ は登録より後のケースで確かめる予定）") if hq else
+                                    "登録済み・東証の全上場の日足（2006〜2026年）で1回だけ数えます（6つの問い）"),
+                       "placeholder": hs is None})
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):
