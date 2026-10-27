@@ -1341010,7 +1341010,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.163,
-    "max_adverse_excursion_pct": -0.513,
+    "max_adverse_excursion_pct": -0.619,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1341177,13 +1341177,13 @@
     "news_count": 0,
     "news_titles": [],
     "ai_narrative": "銀先物（GC）の4H足チャートでは、RSIが過売り水準から反発し、MACDもゴールデンクロスを達成したことから、短期的な上昇転換が期待されます。これは、短期移動平均線やボリンジャーバンドの下限付近からの反発というテクニカルな観点からも支持されます。  ファンダメンタルズ面では、足元のニュース材料は限定的ですが、貴金属全般の安全資産としての需要や、インフレ懸念が再燃するような経済指標の発表があれば、さらに上昇を後押しする可能性があります。USDが最も強い通貨となっている点は、ドル建てで取引される銀にとっては、やや重石となる可能性も考慮されます。  このロングシナリオが崩れるのは、直近の安値水準を明確に下抜けた場合です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-10-27T01:00:00-04:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-10-27T01:00:00-04:00",
     "max_favorable_excursion_pct": 0.23,
-    "max_adverse_excursion_pct": -1.613,
+    "max_adverse_excursion_pct": -2.728,
     "email_sent": true,
     "watch_hit": "auto_reversal_long-True_trend-下降__flip",
     "whipsaw_check": {
@@ -1341294,6 +1341294,21 @@
         "売られすぎ/逆張り系の勝ち筋",
         "落ちるナイフ(下降中のロング)"
       ]
+    },
+    "loss_analysis": {
+      "vix_data": {
+        "start": 18.29,
+        "end": 18.39,
+        "change_pct": 0.55
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル悪化",
+        "primary_cause": "短期的な弱材料が優位となった",
+        "ai_diagnosis": "RSIの反発やMACDのゴールデンクロスといった一時的なテクニカル好転にもかかわらず、銀価格は主要移動平均線（25MA、75MA）から下方に乖離したまま推移していました。VIX指数の小幅上昇も、市場のセンチメントが完全にリスクオンではなかったことを示唆しており、短期的な下落圧力がシグナルを上回ったと考えられます。",
+        "lesson": "移動平均線からの乖離幅やVIXの動向を、シグナル発火時のテクニカル指標と併せて評価する。",
+        "category_tag": "トレンド逆行"
+      }
     }
   },
   {
@@ -1341705,7 +1341720,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.08,
-    "max_adverse_excursion_pct": -0.116,
+    "max_adverse_excursion_pct": -0.133,
     "email_sent": true,
     "watch_hit": "auto_reversal_long-True_trend-下降__flip",
     "whipsaw_check": {
@@ -1342761,6 +1342776,189 @@
       "reasons": [
         "売られすぎ/逆張り系の勝ち筋",
         "落ちるナイフ(下降中のロング)"
+      ]
+    }
+  },
+  {
+    "id": "SI=F_4h_20261027_1454",
+    "fired_at": "2026-10-27T14:54:16+09:00",
+    "timeframe": "4h",
+    "ticker": "SI=F",
+    "asset_name": "銀 先物",
+    "signal_types": [
+      "bb_lower_touch"
+    ],
+    "primary_signal": "bb_lower_touch",
+    "primary_signal_label": "🟢 ボリンジャー -2σ タッチ（反発期待）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 53.369998931884766,
+    "stop_loss": 52.33038541172022,
+    "take_profit_1": 54.75615029210415,
+    "take_profit_2": 55.449225972213846,
+    "atr": 0.6930756801096937,
+    "sl_pct": -1.9479361831941981,
+    "tp1_pct": 2.597248244258931,
+    "tp2_pct": 3.8958723663883963,
+    "indicators_at_signal": {
+      "rsi": 24.3,
+      "macd": -0.7882,
+      "macd_sig": -0.8359,
+      "ma25": 54.9332,
+      "ma75": 57.3193,
+      "bb_low": 52.9583,
+      "bb_up": 55.6261,
+      "recent_high": 57.725,
+      "recent_low": 53.03,
+      "adx": 52.28,
+      "chop": 61.13,
+      "ma_dev_pct": 4.1629,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": true,
+      "d_sup_atr": 0.491,
+      "d_res_atr": 6.284
+    },
+    "selection": {
+      "tier": "good",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": true,
+      "regime": "trend_down"
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "銀先物（53.370）は、ボリンジャーバンド-2σ（52.96）にタッチし、RSIも24.3と売られすぎ圏にあることから、短期的な反発が期待できるロング戦略が妥当です。MACDのデッドクロスも解消傾向にあり、25MAが75MAを下回っているものの、価格が25MAに接近していることから上昇転換の兆しが見えます。USDが底堅く、貴金属への資金流入が期待できるファンダメンタルズを背景に、この方向感は支持されます。シナリオが崩れるのは、52.33のストップロスを下抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": true,
+    "watch_hit": "auto_reversal_long-True_trend-下降__flip",
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "⚠️ 日足 下降トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.324,
+      "EUR": -0.256,
+      "GBP": -0.123,
+      "JPY": -0.267,
+      "AUD": 0.227
+    },
+    "risk_regime": {
+      "regime": "RISK_ON",
+      "score": 2,
+      "factors": [
+        "VIX 18.39 中立 (0)",
+        "豪ドル優位 (+1)",
+        "株>金 5d +2.3pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "other",
+      "regime": "RISK_ON",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-10-27T06:15:00+09:00",
+      "regime": "NEUTRAL",
+      "regime_confidence": "LOW",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "long",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 2,
+      "label": "MID",
+      "stars": "⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド逆張り (-1)"
+      ],
+      "edge_tier": "good",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-7.44, entry_vs_ma25=-2.85%)（観察中の候補として送信）",
+      "score": -7.436,
+      "entry_vs_ma25_signed": -2.846,
+      "range_pos": 0.072,
+      "ma_ratio_pct": -4.163
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 0,
+      "watch_matched": "auto_reversal_long-True_trend-下降__flip",
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [
+        {
+          "name": "FOMC 政策金利発表（結果発表）",
+          "hours_until": 36.1,
+          "impact": "critical",
+          "datetime": "2026-10-29T03:00+09:00"
+        }
+      ],
+      "vix": {
+        "current": 18.39,
+        "avg_30d": 16.3,
+        "change_24h_pct": -5.45
+      },
+      "atr_regime": {
+        "current_atr": 0.6931,
+        "avg_atr_30d": 0.6702,
+        "ratio": 1.03,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋",
+        "落ちるナイフ(下降中のロング)",
+        "RSI売られすぎ(<=30)"
       ]
     }
   }
