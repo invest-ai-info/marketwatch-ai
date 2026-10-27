@@ -1,0 +1,59 @@
+name: TDnet Events (weekdays)
+
+# TDnet の適時開示を毎日ためて、高値更新の台帳（J44）のケースに「その前30日の開示」を付ける（読むだけ・判定しない）。
+# 2026-10-27 オーナー「残りも二つとも進めてください」＝10/26 の候補（買収・提携・自社株買い・業績修正などの見出しをためる）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J44」の 10/27 の追記と tdnet_events.py の冒頭。TDnet は約1か月しか残らない＝止まると取りこぼす
+#    （automation-health が鮮度と「JP Highs Lows」からの起動を見張る）。
+# ⚠️ 置くのは種類・向き・時刻・コード・PDF の番号だけ（表題と会社名は置かない）。業績修正と差異は PDF の表から向きを読む。
+# ⚠️ 出力（tdnet-events.csv / tdnet-days.json / highs-tdnet.csv / .md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_run:
+    workflows: ["JP Highs Lows"]
+    types: [completed]
+  schedule:
+    - cron: '47 14 * * 1-5'   # 月〜金 23:47 JST 保険（台帳が更新されなかった日も開示はためる）
+  workflow_dispatch:
+
+concurrency:
+  group: tdnet-events
+  cancel-in-progress: false
+
+jobs:
+  tdnet:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 台帳（highs-ledger.csv）と、ためた開示の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pdftotext (with Japanese mapping)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils poppler-data
+      - name: Test with made-up pages
+        run: python tests/test_tdnet_events.py
+      - name: Collect TDnet and attach to the ledger
+        run: |
+          python tdnet_events.py
+          [ -f highs-tdnet.md ] && cat highs-tdnet.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tdnet-events.csv tdnet-days.json highs-tdnet.csv highs-tdnet.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: tdnet events $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
