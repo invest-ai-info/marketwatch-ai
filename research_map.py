@@ -58,6 +58,7 @@ J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配�
 J46_RSS = "j46-rss.json"                   # 🆕 2026-10-22 J46R 寄り前の売買代金（RSS で約400銘柄・手元で作って送る）
 HIGHS_FUND = "highs-fund-lab.json"         # 🆕 2026-10-26 J47 上場来高値のその後×業績の裏づけ（手元で J-Quants を使って1回・要約を送る）
 HIGHS_SHAPE = "highs-shape-lab.json"       # 🆕 2026-10-27 J48 上場来高値の「形」（Actions で1回）
+HIGHS_SHAPE_FWD = "highs-shape-forward.json"   # 🆕 2026-10-27 J48F 上場来高値の急騰型の罠と下げ（前向き・週1）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
 # 🆕 2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく仕分け」
@@ -580,6 +581,21 @@ def collect_studies(root, m):
                                      f"・✕ {sum(w.startswith('✕') for w in words)}（✅ と △ は登録より後のケースで確かめる予定）") if hq else
                                     "登録済み・東証の全上場の日足（2006〜2026年）で1回だけ数えます（6つの問い）"),
                        "placeholder": hs is None})
+
+    # 🆕 2026-10-27 J48F＝J44 の台帳の上場来高値で、急騰型の罠と途中の下げを前向きに。判定の前は件数だけ・判定が出たら外す
+    hf2 = _load(p(HIGHS_SHAPE_FWD))
+    if not (hf2 or {}).get("decision"):
+        cnt = (hf2 or {}).get("counts") or {}
+        verify.append({"cat": "jp", "name": "急に上げて付けた上場来高値は、そのあと大きく沈みやすいか",
+                       "what": "上場来高値（記録上の最高値）を、25日線から20パーセント以上離れたか、その日に10パーセント以上上げて付けた株と、"
+                               "ふつうに付けた株に分け、60取引日あとに TOPIX より10パーセント以上負けた割合と、その間のいちばん深い下げを、"
+                               "登録した日より後に結果が出るものだけで比べます（過去20年の数えでは、平均の伸びは同じでも急に上げた株の方が"
+                               "大きく沈む割合が高く見えた＝結果を見たあとに気づいたことなので、新しいケースで確かめます）",
+                       "since": "2026-10-27",
+                       "progress": (f"急に上げた株 {cnt.get('A_cases', 0)}件・ふつうの株 {cnt.get('B_cases', 0)}件"
+                                    f"（60取引日あとが出たもの {cnt.get('A_filled', 0)}/{(hf2 or {}).get('goal') or 100}件で1回だけ判定）"
+                                    if hf2 else "登録済み・毎週土曜に台帳から数えます（急に上げた株の60取引日あとが100件そろったら1回だけ判定）"),
+                       "placeholder": hf2 is None})
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):

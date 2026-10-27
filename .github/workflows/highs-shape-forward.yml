@@ -1,0 +1,55 @@
+name: Highs Shape Forward (weekly)
+
+# J48F 上場来高値の「急騰型」（25日線 +20%以上かその日 +10%以上）は、罠と途中の下げが大きいか（前向き）。
+# 2026-10-27 登録・オーナー「登録して進めてください」＝J48 の読むための表で3つの時代とも同じ向きに見えた傾向を、
+# J44 の台帳（highs-ledger.csv）の 2026-10-08 以降のケース（登録の時点で60取引日あとが1件も出ていない）だけで確かめる。
+# ⚠️ 決まりは PILLAR_PREREG.md「J48F」（事前登録）と highs_shape_forward.py の冒頭に固定。
+# ⚠️ 台帳を読むだけ（値段は取りに行かない）。急騰型の埋まったケースが100件に届いた週に1回だけ判定・判定は書いたら変えない。
+# ⚠️ 出力（highs-shape-forward.json / .md）は判定の前は件数だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  schedule:
+    - cron: '23 23 * * 5'   # 土曜 08:23 JST（週1。台帳の60取引日あとは毎日埋まるので週1で足りる）
+  workflow_dispatch:
+
+concurrency:
+  group: highs-shape-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 台帳（highs-ledger.csv）と記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy
+      - name: Test with made-up ledger rows
+        run: python tests/test_highs_shape_forward.py
+      - name: Count only the cases after registration
+        run: |
+          python highs_shape_forward.py
+          [ -f highs-shape-forward.md ] && cat highs-shape-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add highs-shape-forward.json highs-shape-forward.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: highs shape forward J48F $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
