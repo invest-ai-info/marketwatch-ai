@@ -120,6 +120,8 @@ SYNC_FORBIDDEN = {
     "momentum-lab.json", "momentum-lab.md",       # 🆕 2026-10-08 J42 日本株の数か月単位のモメンタム（momentum-lab.yml・手動）
     "highs-shape-lab.json", "highs-shape-lab.md",   # 🆕 2026-10-27 J48 上場来高値の「形」（highs-shape-lab.yml・手動）
     "highs-shape-forward.json", "highs-shape-forward.md",   # 🆕 2026-10-27 J48F 急騰型の罠と下げの前向き（highs-shape-forward.yml・週1。判定を持つ）
+    "tdnet-events.csv", "tdnet-days.json",       # 🆕 2026-10-27 TDnet の開示の種類（tdnet-events.yml・平日。約1か月しか残らない＝古い版で上書きすると戻せない）
+    "highs-tdnet.csv", "highs-tdnet.md",         # 🆕 2026-10-27 台帳のケース×その前30日の開示（tdnet-events.yml）
     "momentum-forward.json", "momentum-forward.md",   # 🆕 2026-10-08 J42F 一番上げた10銘柄の前向き（momentum-forward.yml・月1）
     "tsmom-lab.json", "tsmom-lab.md",             # 🆕 2026-10-08 夜 R11 株価指数・商品と為替の時系列モメンタム（tsmom-lab.yml・手動）
     "sq-morning-lab.json", "sq-morning-lab.md",   # 🆕 2026-10-09 J43 SQの日の朝は特別か（sq-morning-lab.yml・手動）
