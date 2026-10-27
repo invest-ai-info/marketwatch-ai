@@ -118,6 +118,7 @@ SYNC_FORBIDDEN = {
     "short-limits.json", "short-limits.md",   # 🆕 2026-10-08 J40 売り禁・規制の前向き記録（short-limits.yml）
     "tom-basket-lab.json", "tom-basket-lab.md",   # 🆕 2026-10-08 J41 月末月初の個別株の籠（tom-basket-lab.yml・手動）
     "momentum-lab.json", "momentum-lab.md",       # 🆕 2026-10-08 J42 日本株の数か月単位のモメンタム（momentum-lab.yml・手動）
+    "highs-shape-lab.json", "highs-shape-lab.md",   # 🆕 2026-10-27 J48 上場来高値の「形」（highs-shape-lab.yml・手動）
     "momentum-forward.json", "momentum-forward.md",   # 🆕 2026-10-08 J42F 一番上げた10銘柄の前向き（momentum-forward.yml・月1）
     "tsmom-lab.json", "tsmom-lab.md",             # 🆕 2026-10-08 夜 R11 株価指数・商品と為替の時系列モメンタム（tsmom-lab.yml・手動）
     "sq-morning-lab.json", "sq-morning-lab.md",   # 🆕 2026-10-09 J43 SQの日の朝は特別か（sq-morning-lab.yml・手動）

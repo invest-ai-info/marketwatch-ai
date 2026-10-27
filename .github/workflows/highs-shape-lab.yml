@@ -1,0 +1,74 @@
+name: Highs Shape Lab (manual)
+
+# J48 上場来高値の「形」：どんな値動きで付けた上場来高値が、そのあとも伸びるか（じわじわ度・25日線からの離れ・その日の上げ・
+#     引けの強さ・久しぶりの更新・上場1年未満）。次の日の寄り → 60本あとの引け − 同じ日の全銘柄（売買代金1億円以上）の平均。
+# 2026-10-27 登録・オーナー「上場来高値更新の銘柄をチャート分析して、どんな形状が高値を更新し続けるのか…研究してください」（テクニカルの区切りの例外）。
+# ⚠️ 決まりは PILLAR_PREREG.md「J48」（事前登録）と highs_shape_lab.py の冒頭に固定。
+# ⚠️ 手動実行のみ。先に jp-bars-cache（日足の全期間版・同じ日に作り直す）→ check（件数と台帳の再現だけ・損益は数えない）→ run は1回だけ。
+# ⚠️ 出力（highs-shape-lab.json / .md）は集計だけ・銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check＝件数だけ（損益は数えない・何も書かない）／run＝1回だけ数える"
+        required: true
+        default: check
+        type: choice
+        options: [check, run]
+
+concurrency:
+  group: highs-shape-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore the shared price store (if any)
+        uses: actions/cache/restore@v4
+        with:
+          path: jp-bars
+          key: jp-bars-none
+          restore-keys: jp-bars-
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up prices
+        run: python tests/test_highs_shape_lab.py
+      - name: Data check only (no returns)
+        if: ${{ inputs.mode == 'check' }}
+        run: |
+          python -u highs_shape_lab.py --check | tee check.json
+          { echo '```json'; tail -n +1 check.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Count with the pre-registered ruler
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          python highs_shape_lab.py
+          python verified_list.py > /dev/null
+          [ -f highs-shape-lab.md ] && cat highs-shape-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        if: ${{ inputs.mode == 'run' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add highs-shape-lab.json highs-shape-lab.md verified-list.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: highs shape lab J48 $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
