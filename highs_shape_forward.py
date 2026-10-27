@@ -16,12 +16,25 @@ A の埋まったケースが100件に届いた最初の週の実行で1回だ�
 """
 import csv
 import datetime as dt
+import hashlib
 import json
 import sys
+from zoneinfo import ZoneInfo
 
 import numpy as np
 
-import pillar_lab as P
+# pillar_lab と同じ値（pillar_lab は yfinance まで読み込むので、台帳を読むだけのこの道具では使わない＝numpy だけで動く）
+JST = ZoneInfo("Asia/Tokyo")
+PREREG = "PILLAR_PREREG.md"
+SEED = 20260927
+
+
+def prereg_sha256(path=PREREG):
+    try:
+        with open(path, "rb") as fh:
+            return hashlib.sha256(fh.read()).hexdigest()
+    except OSError:
+        return None
 
 LEDGER = "highs-ledger.csv"
 OUT_JSON, OUT_MD = "highs-shape-forward.json", "highs-shape-forward.md"
@@ -109,7 +122,7 @@ def stat(q, xs):
     return float(np.median([x["min60"] for x in xs]))
 
 
-def band(q, cs, alpha=ALPHA, n_boot=N_BOOT, seed=P.SEED):
+def band(q, cs, alpha=ALPHA, n_boot=N_BOOT, seed=SEED):
     """A − B と、ケースの日を単位に引き直した両側の幅"""
     a = [c for c in cs if c["g"] == "A"]
     b = [c for c in cs if c["g"] == "B"]
@@ -170,12 +183,12 @@ def read_tables(cs):
 
 
 def build(rows, prev=None, today=None, n_boot=N_BOOT):
-    today = today or dt.datetime.now(P.JST).date().isoformat()
+    today = today or dt.datetime.now(JST).date().isoformat()
     prev = prev or {}
     cs = cases(rows)
     f = filled(cs)
     res = {"kind": "marker", "fwd_start": START, "goal": GOAL, "titles": TITLES,
-           "generated_at": dt.datetime.now(P.JST).isoformat(timespec="minutes"), "prereg_sha256": P.prereg_sha256(),
+           "generated_at": dt.datetime.now(JST).isoformat(timespec="minutes"), "prereg_sha256": prereg_sha256(),
            "progress": {"F1": sum(c["g"] == "A" for c in f), "F2": sum(c["g"] == "A" for c in f)},
            "counts": {"A_cases": sum(c["g"] == "A" for c in cs), "B_cases": sum(c["g"] == "B" for c in cs),
                       "A_filled": sum(c["g"] == "A" for c in f), "B_filled": sum(c["g"] == "B" for c in f),
