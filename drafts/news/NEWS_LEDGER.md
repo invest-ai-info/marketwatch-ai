@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-10-28
+- 判定: ✅ 公開済み
+- 選定トピック: SKハイニックスQ3が営業利益+632%・利益率80%の過去最高──AI半導体需要を確認、KOSPIが6,000台乗せ、東京市場もキオクシア+14%で続伸（カテゴリ: 半導体・AI・株式市場）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典:
+  - SK hynix公式プレスリリース「SK hynix Announces 3Q26 Financial Results」2026-10-28 https://news.skhynix.com/en/q3-2026-business-results/
+  - Investing.com「Earnings call transcript: SK hynix posts record Q3 2026 results」2026-10-28
+  - BigGo Finance「SK hynix Q3 2026: revenue tops 100T, 80% margin on AI boom」2026-10-28
+  - TradingKey「KOSPI Crosses 6,000 as Kioxia Soars Nearly 14%, SK Hynix Jumps 11%」2026-10-28
+  - Phemex「SK hynix Q3 2026 Results: Operating Profit Up 632% YoY」2026-10-28
+  - Seoul Economic Daily「SK hynix Q3 Operating Profit Ranks Third Among Global Tech Giants」2026-10-28
+  - 日本経済新聞「日経平均大引け 続伸 685円高の6万3954円」2026-10-28
+  - ICMarkets「Wednesday 28th Oct 2026: U.S. Stock Futures Mixed Ahead of Fed Decision and Big Tech Earnings」2026-10-28
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（編集なし）→最終🟢白。事実メモ（キオクシアのHBM競合誤記・SBGの出典欠落）は執筆側で修正適用
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典多数 ✅ / noindexなし ✅）→「そのまま公開してよい」
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告52件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-28.html
+- commit: 48a81e4（main へ push 済み）
+
+---
+
 ## 2026-10-27
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均4日ぶり大幅反発+1,078円──アンソロピックIPO目論見書報道がAI株高を波及・今週の米ビッグテック決算が次の焦点（カテゴリ: 株式市場・AI・半導体）
