@@ -613,8 +613,9 @@ def collect_studies(root, m):
                                "置いた場合と60営業日持った場合の損益を、同じ時期に全体を買った場合と比べます（2006〜2026年を3つの時代に分け、"
                                "3つとも同じ向きかを見ます）",
                        "since": "2026-10-28",
-                       "progress": ((f"過去のデータの結果：✅ {sum(w.startswith('✅') for w in words)}・△ {sum(w.startswith('△') for w in words)}"
-                                     f"・✕ {sum(w.startswith('✕') for w in words)}（✅ と △ は登録より後のケースで確かめる予定）") if heq else
+                       "progress": ((f"過去のデータの結果：3つの時代で同じ向き {sum(w.startswith('✅') for w in words)}・"
+                                     f"2つの時代 {sum(w.startswith('△') for w in words)}・見えない {sum(w.startswith('✕') for w in words)}・"
+                                     f"保留 {sum(w.startswith('保留') for w in words)}（同じ向きに出たものは、登録より後のケースで確かめる予定）") if heq else
                                     "登録済み・東証の全上場の日足（2006〜2026年）で1回だけ数えます（12の問い）"),
                        "placeholder": he is None})
 
