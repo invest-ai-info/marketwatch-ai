@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-10-28T15:10:00+09:00",
+  "generated_at": "2026-10-29T06:10:00+09:00",
   "risk_regime": {
-    "regime": "RISK_ON",
-    "confidence": "MID",
-    "rationale": "27日の米株はAI関連の買いで続伸し、原油も100ドル近辺へ下落。ただし米10年債利回りは約5%と高く、28日のFOMC、30日の日銀会合を前に上値追いは慎重。",
+    "regime": "NEUTRAL",
+    "confidence": "LOW",
+    "rationale": "FRBは据え置きで、直後の米株は小動き。反対票2と会見で12月利上げ観測は残り、米10年債利回りも約5%と高い。30日の日銀会合とECB（29日）を控え方向感は限定的。検索で当日終値を確認できず確度は低め。",
     "key_drivers": [
-      "米株続伸（S&P500 7,722.60、ナスダック+1.18%）",
-      "原油100ドル近辺へ下落、中東の緊張緩和期待",
-      "FOMCは据え置き約9割、会見で12月利上げの示唆に注目",
-      "米10年債利回り4.98%と高止まり"
+      "FRB据え置き（3.75〜4.00%）、利上げ主張の反対2",
+      "ウォーシュ議長は物価の粘着性に警戒、12月利上げ観測は残る",
+      "米株は決定後ほぼ横ばい（S&P500小幅高、ナスダック小幅安）",
+      "日銀会合（30日）とECB（29日）が次の焦点"
     ]
   },
   "assets": [
@@ -19,7 +19,7 @@
       "conviction": "LOW",
       "rationale": "28日の日経平均は前日比約800円高の6万4000円台。米ハイテク高と円安が追い風。ただしFOMC・日銀会合を控え慎重姿勢も。",
       "catalysts": [
-        "FOMC結果（日本時間29日未明）",
+        "ECB・日銀会合",
         "日銀会合（30日）",
         "ドル円158円の攻防"
       ],
@@ -53,15 +53,31 @@
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "BULLISH",
+      "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "27日はAI関連が主導し0.6%高。FOMC会見と大型ハイテク決算を前に、結果次第で振れやすい。",
+      "rationale": "FRB据え置き後の反応は小幅で、指数は横ばい圏。12月利上げ観測と高い金利が上値を抑える一方、AI株の買いが下支え。",
       "catalysts": [
-        "FOMC",
+        "FRB高官発言",
         "ハイテク決算",
         "米10年債利回り"
       ],
       "top_news": [
+        {
+          "headline": "FRBは政策金利を3.75〜4.00%で据え置き。2人が利上げを主張して反対票、ウォーシュ議長は物価の粘着性に警戒し緩和を急がない姿勢",
+          "published": "2026-10-28",
+          "comment": "据え置きは想定どおり、反対票と会見で12月利上げ観測は残る",
+          "source": "CNN/FXStreet",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "CNN",
+            "FXStreet",
+            "Yahoo Finance"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
+        },
         {
           "headline": "27日の米株は上昇、S&P500は7,722.60（+0.60%）、ナスダック+1.18%。AI関連が再び主導",
           "published": "2026-10-27",
@@ -73,18 +89,6 @@
           "materiality": "high",
           "direction": "bullish",
           "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-futures-muted-oil-095309821.html"
-        },
-        {
-          "headline": "FOMCは28日（日本時間29日未明）に結果発表、据え置きが約9割の織り込み。ウォーシュ議長の会見で12月利上げの示唆に注目",
-          "published": "2026-10-28",
-          "comment": "据え置きは織り込み済み、会見の言葉遣いで動きやすい",
-          "source": "Forex/FXStreet各社",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://traderfactor.com/forex-market-today-fed-decision-fomc-and-warsh-guidance-in-focus-as-oil-volatility-reshapes-rate-outlook/"
         },
         {
           "headline": "米10年債利回りは4.98%へ小幅低下、2年債は4.71%",
@@ -103,15 +107,31 @@
     {
       "name": "ナスダック",
       "ticker": "NQ=F",
-      "bias": "BULLISH",
-      "conviction": "MID",
-      "rationale": "27日は+1.18%と半導体・AI株がけん引。金利高止まりが重荷になるリスクは残る。",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "決定直後は小幅安。AI株の強さは続くが、長期金利約5%と12月利上げ観測が重荷になりうる。",
       "catalysts": [
-        "FOMC会見",
+        "ウォーシュ議長発言",
         "AI関連の決算",
         "長期金利"
       ],
       "top_news": [
+        {
+          "headline": "FRBは政策金利を3.75〜4.00%で据え置き。2人が利上げを主張して反対票、ウォーシュ議長は物価の粘着性に警戒し緩和を急がない姿勢",
+          "published": "2026-10-28",
+          "comment": "据え置きは想定どおり、反対票と会見で12月利上げ観測は残る",
+          "source": "CNN/FXStreet",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "CNN",
+            "FXStreet",
+            "Yahoo Finance"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
+        },
         {
           "headline": "27日の米株は上昇、S&P500は7,722.60（+0.60%）、ナスダック+1.18%。AI関連が再び主導",
           "published": "2026-10-27",
@@ -143,13 +163,29 @@
       "ticker": "GC=F",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "1オンス4,000〜4,060ドルで方向感に乏しい。高金利が重荷の一方、地政学が下支え。",
+      "rationale": "1オンス4,000ドル前後で方向感に乏しい。FRBの12月利上げ観測と高金利が重荷の一方、地政学が下支え。",
       "catalysts": [
-        "FOMC会見",
+        "ウォーシュ議長発言",
         "米長期金利",
         "中東情勢"
       ],
       "top_news": [
+        {
+          "headline": "FRBは政策金利を3.75〜4.00%で据え置き。2人が利上げを主張して反対票、ウォーシュ議長は物価の粘着性に警戒し緩和を急がない姿勢",
+          "published": "2026-10-28",
+          "comment": "据え置きは想定どおり、反対票と会見で12月利上げ観測は残る",
+          "source": "CNN/FXStreet",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "CNN",
+            "FXStreet",
+            "Yahoo Finance"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
+        },
         {
           "headline": "金は約1.2%上昇し1オンス4,060ドル前後、4,000ドル近辺で推移",
           "published": "2026-10-28",
@@ -207,13 +243,29 @@
       "ticker": "USDJPY",
       "bias": "BULLISH",
       "conviction": "LOW",
-      "rationale": "157円台後半で158円を意識。FOMCがタカ派なら円安に傾きやすいが、日銀会合と介入警戒が上値を抑える。",
+      "rationale": "157円台後半で158円を意識。FRBがタカ派寄りの据え置きで円安に傾きやすいが、日銀会合（30日）と介入警戒が上値を抑える。",
       "catalysts": [
-        "FOMC",
+        "FRB高官発言",
         "日銀会合（30日）",
         "介入観測"
       ],
       "top_news": [
+        {
+          "headline": "FRBは政策金利を3.75〜4.00%で据え置き。2人が利上げを主張して反対票、ウォーシュ議長は物価の粘着性に警戒し緩和を急がない姿勢",
+          "published": "2026-10-28",
+          "comment": "据え置きは想定どおり、反対票と会見で12月利上げ観測は残る",
+          "source": "CNN/FXStreet",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "CNN",
+            "FXStreet",
+            "Yahoo Finance"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
+        },
         {
           "headline": "ドル円は157円台後半で小動き、前日NY終値157.95円。158円が意識される",
           "published": "2026-10-28",
@@ -237,18 +289,6 @@
           "materiality": "high",
           "direction": "neutral",
           "url": "https://www.zaikei.co.jp/article/20261028/875281.html"
-        },
-        {
-          "headline": "FOMCは28日（日本時間29日未明）に結果発表、据え置きが約9割の織り込み。ウォーシュ議長の会見で12月利上げの示唆に注目",
-          "published": "2026-10-28",
-          "comment": "据え置きは織り込み済み、会見の言葉遣いで動きやすい",
-          "source": "Forex/FXStreet各社",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://traderfactor.com/forex-market-today-fed-decision-fomc-and-warsh-guidance-in-focus-as-oil-volatility-reshapes-rate-outlook/"
         }
       ]
     },
@@ -257,23 +297,27 @@
       "ticker": "EURUSD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "1.11台前半で小動き。FOMC待ちで材料に乏しい。",
+      "rationale": "FRB据え置き後も大きな動きは限定的。ECB（29日）は据え置き予想で、12月利上げ観測が焦点。",
       "catalysts": [
-        "FOMC",
-        "ユーロ圏指標"
+        "ECB理事会（29日）",
+        "FRB高官発言"
       ],
       "top_news": [
         {
-          "headline": "FOMCは28日（日本時間29日未明）に結果発表、据え置きが約9割の織り込み。ウォーシュ議長の会見で12月利上げの示唆に注目",
+          "headline": "FRBは政策金利を3.75〜4.00%で据え置き。2人が利上げを主張して反対票、ウォーシュ議長は物価の粘着性に警戒し緩和を急がない姿勢",
           "published": "2026-10-28",
-          "comment": "据え置きは織り込み済み、会見の言葉遣いで動きやすい",
-          "source": "Forex/FXStreet各社",
+          "comment": "据え置きは想定どおり、反対票と会見で12月利上げ観測は残る",
+          "source": "CNN/FXStreet",
           "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "CNN",
+            "FXStreet",
+            "Yahoo Finance"
+          ],
           "materiality": "high",
           "direction": "neutral",
-          "url": "https://traderfactor.com/forex-market-today-fed-decision-fomc-and-warsh-guidance-in-focus-as-oil-volatility-reshapes-rate-outlook/"
+          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
         },
         {
           "headline": "米10年債利回りは4.98%へ小幅低下、2年債は4.71%",
@@ -294,13 +338,29 @@
       "ticker": "BTC-USD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "8万ドル前後で推移。買い戻し主体の上昇で、FOMCと米中間選挙を前に様子見。",
+      "rationale": "8万ドル前後。FRB据え置きは想定内で、米中間選挙を前に様子見。",
       "catalysts": [
-        "FOMC",
+        "FRB高官発言",
         "米中間選挙",
         "ETF資金動向"
       ],
       "top_news": [
+        {
+          "headline": "FRBは政策金利を3.75〜4.00%で据え置き。2人が利上げを主張して反対票、ウォーシュ議長は物価の粘着性に警戒し緩和を急がない姿勢",
+          "published": "2026-10-28",
+          "comment": "据え置きは想定どおり、反対票と会見で12月利上げ観測は残る",
+          "source": "CNN/FXStreet",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "CNN",
+            "FXStreet",
+            "Yahoo Finance"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
+        },
         {
           "headline": "ビットコインは約8万〜8.1万ドル、FOMCと米中間選挙を前に上昇。上げの大半は売り方の買い戻し",
           "published": "2026-10-28",
@@ -312,18 +372,6 @@
           "materiality": "mid",
           "direction": "neutral",
           "url": "https://www.coindesk.com/markets/2026/10/28/bitcoin-nears-usd81-000-ahead-of-fed-decision-as-zec-jumps-8"
-        },
-        {
-          "headline": "FOMCは28日（日本時間29日未明）に結果発表、据え置きが約9割の織り込み。ウォーシュ議長の会見で12月利上げの示唆に注目",
-          "published": "2026-10-28",
-          "comment": "据え置きは織り込み済み、会見の言葉遣いで動きやすい",
-          "source": "Forex/FXStreet各社",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://traderfactor.com/forex-market-today-fed-decision-fomc-and-warsh-guidance-in-focus-as-oil-volatility-reshapes-rate-outlook/"
         }
       ]
     }
@@ -332,6 +380,10 @@
     {
       "headline": "日付不明の日経平均終値6万6753円とする記事",
       "reason": "日付が特定できず信頼性が低いため除外"
+    },
+    {
+      "headline": "2026年7月のFOMC（9対3・ダウ急落）の記事",
+      "reason": "今回の会合ではなく日付が異なるため除外"
     }
   ],
   "currencies": [
@@ -339,13 +391,13 @@
       "code": "USD",
       "lean": "STRONG",
       "conviction": "LOW",
-      "reason": "政策金利は据え置き見込みだが、利上げ継続観測と高い長期金利が支え。会見次第"
+      "reason": "FRBは据え置きも反対2が利上げ主張、12月利上げ観測が残り支え"
     },
     {
       "code": "EUR",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "1.11台で小動き。大きな独自材料に乏しい"
+      "reason": "ECBは29日に据え置き予想、12月利上げ観測が下支え。独自材料は限定的"
     },
     {
       "code": "GBP",
