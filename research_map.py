@@ -594,7 +594,7 @@ def collect_studies(root, m):
                                "大きく沈む割合が高く見えた＝結果を見たあとに気づいたことなので、新しいケースで確かめます）",
                        "since": "2026-10-27",
                        "progress": (f"急に上げた株 {cnt.get('A_cases', 0)}件・ふつうの株 {cnt.get('B_cases', 0)}件"
-                                    f"（60取引日あとが出たもの {cnt.get('A_filled', 0)}/{(hf2 or {}).get('goal') or 100}件で1回だけ判定）"
+                                    f"（60取引日あとが出たもの {cnt.get('A_filled', 0)}件・{(hf2 or {}).get('goal') or 100}件そろったら1回だけ判定）"
                                     if hf2 else "登録済み・毎週土曜に台帳から数えます（急に上げた株の60取引日あとが100件そろったら1回だけ判定）"),
                        "placeholder": hf2 is None})
 
