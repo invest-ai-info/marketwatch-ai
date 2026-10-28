@@ -637,16 +637,23 @@ def collect_studies(root, m):
                                     if hef else "登録済み・毎週土曜に台帳と日足から数えます（それぞれ目印のある株の結果が100件そろったら1回だけ判定）"),
                        "placeholder": hef is None})
 
-    # 🆕 2026-10-28 J50＝手元で J-Quants を使って1回（J47 のあと）。要約が届く前から「登録済み」として出す（J47 と同じ形）
+    # 🆕 2026-10-28 J50＝手元で J-Quants を使って1回（J47 のあと）。要約が届く前から「登録済み」として出す。
+    # 要約の verdicts は ✕ だけ（J49 と同じ）＝結果のあとは ✕ 以外の問いが残っている間だけ出す
     hv = _load(p(HIGHS_VALUE))
-    if not ((hv or {}).get("verdicts") or V.retired(HIGHS_VALUE, "J50")):
+    hvq = (((hv or {}).get("result") or {}).get("questions") or {})
+    hv_left = [q for q, x in hvq.items() if not str(x.get("verdict", "")).startswith("✕")]
+    if (not hvq or hv_left) and not V.retired(HIGHS_VALUE, "J50"):
+        words = [str(x.get("verdict", "")) for x in hvq.values()]
         verify.append({"cat": "jp", "name": "上場来高値のあとに押したとき、業績に対して割安なら戻りやすいか",
                        "what": "上場来高値（記録上の最高値）を更新したあと、20営業日のうちに10パーセント押した日本株を、その日の予想PER・"
                                "利益の伸びと比べた割安さ・押しのあいだの業績予想の修正・同じ業種の中での割安さで分け、"
                                "60営業日後の値動きを TOPIX と比べます（過去10年を2つの時代に分け、両方で同じ向きに出るかを見ます。"
                                "どのくらいの割安さで買うと良かったかの目安も表にします）",
                        "since": "2026-10-28",
-                       "progress": ("要約が届きました（判定の前）" if hv else
+                       "progress": ((f"過去のデータの結果：2つの時代とも同じ向き {sum(w.startswith('✅') for w in words)}・"
+                                     f"片方の時代だけ {sum(w.startswith('△') for w in words)}・見えない {sum(w.startswith('✕') for w in words)}・"
+                                     f"保留 {sum(w.startswith('保留') for w in words)}（同じ向きに出たものは、登録より後のケースで確かめる予定）")
+                                    if hvq else
                                     "登録済み・手元の株価と財務のデータ10年分（2017〜2026）で1回だけ数えます（4つの問い・J47 のあと）"),
                        "placeholder": hv is None})
 
