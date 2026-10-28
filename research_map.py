@@ -61,6 +61,7 @@ HIGHS_SHAPE = "highs-shape-lab.json"       # 🆕 2026-10-27 J48 上場来高値
 HIGHS_SHAPE_FWD = "highs-shape-forward.json"   # 🆕 2026-10-27 J48F 上場来高値の急騰型の罠と下げ（前向き・週1）
 HIGHS_ENTRY = "highs-entry-lab.json"         # 🆕 2026-10-28 J49 上場来高値の罠の見分け・押し目の深さ・手じまい（Actions で1回）
 HIGHS_VALUE = "highs-value-lab.json"         # 🆕 2026-10-28 J50 押し目の割安さ（手元で J-Quants を使って1回・要約を送る）
+HIGHS_ENTRY_FWD = "highs-entry-forward.json"  # 🆕 2026-10-28 J49F 罠の目印の前向き（週1）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
 # 🆕 2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく仕分け」
@@ -618,6 +619,23 @@ def collect_studies(root, m):
                                      f"保留 {sum(w.startswith('保留') for w in words)}（同じ向きに出たものは、登録より後のケースで確かめる予定）") if heq else
                                     "登録済み・東証の全上場の日足（2006〜2026年）で1回だけ数えます（12の問い）"),
                        "placeholder": he is None})
+
+    # 🆕 2026-10-28 J49F＝J49 で ✅ だった罠の目印2つを、台帳の 10/8 以降のケースで前向きに。判定の前は件数だけ・2つとも判定が出たら外す
+    hef = _load(p(HIGHS_ENTRY_FWD))
+    dec = (hef or {}).get("decisions") or {}
+    if len(dec) < 2:
+        cnt = (hef or {}).get("counts") or {}
+        t1, t3 = cnt.get("T1F") or {}, cnt.get("T3F") or {}
+        verify.append({"cat": "jp", "name": "上場来高値の罠の目印は、これからのケースでも罠を見分けるか",
+                       "what": "過去20年の数えで、罠（そのあと60営業日で TOPIX より10パーセント以上負ける）が約2倍になった2つの目印"
+                               "（記録の日に急に上げた印が3つ以上重なる・記録のあと5日のうちに10パーセント下げる）を、登録した日より後に"
+                               "結果が出る上場来高値だけで確かめます",
+                       "since": "2026-10-28",
+                       "progress": (f"急に上げた印の重なり {t1.get('A_cases', 0)}件（結果が出たもの {t1.get('A_filled', 0)}件）・"
+                                    f"5日のうちの下げ {t3.get('A_cases', 0)}件（結果が出たもの {t3.get('A_filled', 0)}件）・"
+                                    f"それぞれ {(hef or {}).get('goal') or 100}件そろったら1回だけ判定"
+                                    if hef else "登録済み・毎週土曜に台帳と日足から数えます（それぞれ目印のある株の結果が100件そろったら1回だけ判定）"),
+                       "placeholder": hef is None})
 
     # 🆕 2026-10-28 J50＝手元で J-Quants を使って1回（J47 のあと）。要約が届く前から「登録済み」として出す（J47 と同じ形）
     hv = _load(p(HIGHS_VALUE))

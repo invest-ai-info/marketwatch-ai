@@ -1,0 +1,55 @@
+name: Highs Entry Forward (weekly)
+
+# J49F 上場来高値の罠の目印（T1F 急騰の重なり3つ以上・T3F 5本以内に終値 −10%以下）は、登録より後のケースでも罠を見分けるか（前向き）。
+# 2026-10-28 登録・オーナー「登録してください」＝J49 で3つの時代とも ✅ だった2つを、J44 の台帳（highs-ledger.csv）の
+# 2026-10-08 以降のケース（登録の時点で60取引日あとが1件も出ていない）だけで確かめる。値段は Yahoo の日足・全体は 1306。
+# ⚠️ 決まりは PILLAR_PREREG.md「J49F」（事前登録）と highs_entry_forward.py の冒頭に固定。
+# ⚠️ 問いごとに目印ありの結果が100件に届いた週に1回だけ判定・判定は書いたら変えない。判定の前は件数だけ。
+# ⚠️ 出力（highs-entry-forward.json / .md）は銘柄名なし。GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  schedule:
+    - cron: '37 23 * * 5'   # 土曜 08:37 JST（週1。60取引日あとは毎日増えるので週1で足りる）
+  workflow_dispatch:
+
+concurrency:
+  group: highs-entry-forward
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # 台帳（highs-ledger.csv）と記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance openpyxl xlrd
+      - name: Test with made-up ledger rows and prices
+        run: python tests/test_highs_entry_forward.py
+      - name: Count only the cases after registration
+        run: |
+          python highs_entry_forward.py
+          [ -f highs-entry-forward.md ] && cat highs-entry-forward.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add highs-entry-forward.json highs-entry-forward.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: highs entry forward J49F $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
