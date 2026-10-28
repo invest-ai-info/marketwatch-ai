@@ -59,6 +59,8 @@ J46_RSS = "j46-rss.json"                   # 🆕 2026-10-22 J46R 寄り前の�
 HIGHS_FUND = "highs-fund-lab.json"         # 🆕 2026-10-26 J47 上場来高値のその後×業績の裏づけ（手元で J-Quants を使って1回・要約を送る）
 HIGHS_SHAPE = "highs-shape-lab.json"       # 🆕 2026-10-27 J48 上場来高値の「形」（Actions で1回）
 HIGHS_SHAPE_FWD = "highs-shape-forward.json"   # 🆕 2026-10-27 J48F 上場来高値の急騰型の罠と下げ（前向き・週1）
+HIGHS_ENTRY = "highs-entry-lab.json"         # 🆕 2026-10-28 J49 上場来高値の罠の見分け・押し目の深さ・手じまい（Actions で1回）
+HIGHS_VALUE = "highs-value-lab.json"         # 🆕 2026-10-28 J50 押し目の割安さ（手元で J-Quants を使って1回・要約を送る）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
 
 # 🆕 2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく仕分け」
@@ -597,6 +599,37 @@ def collect_studies(root, m):
                                     f"（60取引日あとが出たもの {cnt.get('A_filled', 0)}件・{(hf2 or {}).get('goal') or 100}件そろったら1回だけ判定）"
                                     if hf2 else "登録済み・毎週土曜に台帳から数えます（急に上げた株の60取引日あとが100件そろったら1回だけ判定）"),
                        "placeholder": hf2 is None})
+
+    # 🆕 2026-10-28 J49＝Actions で過去のデータを1回数える研究（J48 と同じ形）。結果の前は「登録済み」、結果のあとは ✕ 以外の問いが残っている間だけ出す
+    he = _load(p(HIGHS_ENTRY))
+    heq = (((he or {}).get("result") or {}).get("questions") or {})
+    left = [q for q, x in heq.items() if not str(x.get("verdict", "")).startswith("✕")]
+    if not heq or left:
+        words = [str(x.get("verdict", "")) for x in heq.values()]
+        verify.append({"cat": "jp", "name": "上場来高値の罠を見分けられるか・どこまで押したら買うと良いか・いつ手じまうと良いか",
+                       "what": "上場来高値（記録上の最高値）を更新した日本株について、急に上げた形が重なったか・次の日に崩れたか・5日のうちに"
+                               "10パーセント下げたかで、そのあと大きく負ける割合が上がるかを数えます。あわせて、高値から5・10・20パーセント"
+                               "押したところや25日線で買った場合と、次の日の寄りで買った場合の損益、損切り・高値からの戻り売り・利確を"
+                               "置いた場合と60営業日持った場合の損益を、同じ時期に全体を買った場合と比べます（2006〜2026年を3つの時代に分け、"
+                               "3つとも同じ向きかを見ます）",
+                       "since": "2026-10-28",
+                       "progress": ((f"過去のデータの結果：✅ {sum(w.startswith('✅') for w in words)}・△ {sum(w.startswith('△') for w in words)}"
+                                     f"・✕ {sum(w.startswith('✕') for w in words)}（✅ と △ は登録より後のケースで確かめる予定）") if heq else
+                                    "登録済み・東証の全上場の日足（2006〜2026年）で1回だけ数えます（12の問い）"),
+                       "placeholder": he is None})
+
+    # 🆕 2026-10-28 J50＝手元で J-Quants を使って1回（J47 のあと）。要約が届く前から「登録済み」として出す（J47 と同じ形）
+    hv = _load(p(HIGHS_VALUE))
+    if not ((hv or {}).get("verdicts") or V.retired(HIGHS_VALUE, "J50")):
+        verify.append({"cat": "jp", "name": "上場来高値のあとに押したとき、業績に対して割安なら戻りやすいか",
+                       "what": "上場来高値（記録上の最高値）を更新したあと、20営業日のうちに10パーセント押した日本株を、その日の予想PER・"
+                               "利益の伸びと比べた割安さ・押しのあいだの業績予想の修正・同じ業種の中での割安さで分け、"
+                               "60営業日後の値動きを TOPIX と比べます（過去10年を2つの時代に分け、両方で同じ向きに出るかを見ます。"
+                               "どのくらいの割安さで買うと良かったかの目安も表にします）",
+                       "since": "2026-10-28",
+                       "progress": ("要約が届きました（判定の前）" if hv else
+                                    "登録済み・手元の株価と財務のデータ10年分（2017〜2026）で1回だけ数えます（4つの問い・J47 のあと）"),
+                       "placeholder": hv is None})
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):
