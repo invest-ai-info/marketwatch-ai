@@ -403,4 +403,5 @@ SYNC_FILES = [
     "guide-company-6701-nec.html",
     "guide-news-2026-10-28.html",
     "guide-signal-lab-133.html",
+    "guide-company-ba-boeing.html",
 ]
