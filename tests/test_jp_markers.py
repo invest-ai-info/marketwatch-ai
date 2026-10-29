@@ -144,6 +144,37 @@ def test_taishaku_tag():
     assert "import jp_taishaku" in src and "jp_taishaku.load_or_none()" in src
 
 
+def test_missing_stocks_are_named_not_silent():
+    """2026-10-29（10/28 のさくらインターネットが夕方の取得で抜け、朝の C の一覧から黙って消えた）
+    ＝取り直しても判定できなかった銘柄は、一覧のすぐ下に件数と名前を出す。売買が無かった株は件数だけ。"""
+    import morning_brief as B
+    miss = {"no_trade": 52, "rows": [
+        {"code": "3778", "name": "さくらインターネット", "why": "no_bar", "liquid": True, "ref": {"pct": 0.1695, "tv": 158.4, "relvol": 5.4}},
+        {"code": "6501", "name": "日立製作所", "why": "bad", "liquid": True, "ref": None},
+        {"code": "9999", "name": "小さい会社", "why": "no_data", "liquid": False, "ref": None}]}
+    mk = M.compute({"1111": _bars(last_vol=8e5)}, {"1111": {"name": "甲"}}, "2026-10-28", None, miss)
+    assert mk["missing"] is miss and M.compute({"1111": _bars()}, {}, "2026-10-28")["missing"] is None
+    lines = M.section(mk, dt.date(2026, 10, 29))
+    s = "\n".join(lines)
+    assert "⚠️ 値が取れず判定できなかった 3銘柄＝C・B候補でも上の一覧に出ていない" in s and "証券会社の画面で" in s
+    assert "3778 さくらインターネット（その日の日足が Yahoo に無い）・参考（ランキング）前の日 +17.0%・売買代金 158.4億円・出来高はふだんの 5.4倍" in s
+    assert "6501 日立製作所（その日の値が Yahoo で食い違う）〔売買の多い約400銘柄〕" in s and "9999 小さい会社（値が取れない）" in s
+    assert "出来高の比は、C の売買代金の比とは別の数字" in s and "その日に売買が無かった 52銘柄は目印になりようがないので数えない" in s
+    i = next(k for k, x in enumerate(lines) if "1111 甲" in x)                         # 一覧のすぐ下（地雷の説明より前）
+    assert i < next(k for k, x in enumerate(lines) if "判定できなかった" in x) < next(k for k, x in enumerate(lines) if "💣 地雷" in x)
+    many = dict(mk, missing=dict(miss, rows=[dict(miss["rows"][2], code=str(2000 + k)) for k in range(13)]))
+    s2 = "\n".join(M.section(many, dt.date(2026, 10, 29)))
+    assert "…ほか 3銘柄" in s2 and "参考の数字は" not in s2
+    none = dict(mk, missing={"no_trade": 60, "rows": []})
+    assert "✅ 値が取れずに判定から漏れた銘柄なし（その日に売買が無かった 60銘柄" in "\n".join(M.section(none, dt.date(2026, 10, 29)))
+    old = {k: v for k, v in mk.items() if k != "missing"}                              # 10/29 より前の形＝何も書かない
+    s3 = "\n".join(M.section(old, dt.date(2026, 10, 29)))
+    assert "判定できなかった" not in s3 and "判定から漏れた" not in s3
+    top = "\n".join(B.summary_section(dt.datetime(2026, 10, 29, 6, 20, tzinfo=dt.timezone(dt.timedelta(hours=9))), [], None, None, mk))
+    assert "・⚠️ 判定できなかった 3（さくらインターネット・日立製作所・小さい会社）" in top
+    assert "判定できなかった" not in "\n".join(B.summary_section(dt.datetime(2026, 10, 29, 6, 20, tzinfo=dt.timezone(dt.timedelta(hours=9))), [], None, None, none))
+
+
 def test_jp_taishaku_reader():
     import io
     import pandas as pd

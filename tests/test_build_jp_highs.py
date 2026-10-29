@@ -290,6 +290,117 @@ def test_parse_bars_drops_missing_and_uses_jst_date():
     assert H.parse_bars(res) == [("2026-10-05", 101.0, 97.0, 100.0, 5.0)]
 
 
+# ── 取り直し（2026-10-29〜・10/28 のさくらインターネット 3778 が「その日のバーが無い」で黙って抜けた） ──
+
+def _meta(date, high, low, close, vol):
+    """Yahoo の chart の meta（その日の気配）の形。date の 15:30 JST に最後の売買。"""
+    t = int(datetime.datetime.fromisoformat(f"{date}T15:30:00+09:00").timestamp())
+    return {"regularMarketTime": t, "regularMarketDayHigh": high, "regularMarketDayLow": low,
+            "regularMarketPrice": close, "regularMarketVolume": vol}
+
+
+def test_needs_refetch_when_missing_no_today_or_bad():
+    ok = _days("2026-09-01", 30) + [_today(99.0, 92.0, 96.0, "2026-10-28")]
+    assert not H.needs_refetch(ok, "2026-10-28")
+    assert H.needs_refetch([], "2026-10-28") and H.needs_refetch(ok[:1], "2026-10-28")
+    assert H.needs_refetch(ok[:-1], "2026-10-28")                                    # その日のバーが無い
+    assert H.needs_refetch(ok[:-1] + [_today(95.0, 92.0, 96.0, "2026-10-28")], "2026-10-28")   # 高値が終値より安い＝誤り
+
+
+def test_live_bar_reads_meta_and_jst_date():
+    assert H.live_bar(_meta("2026-10-28", 3470.0, 3040.0, 3470.0, 4564900)) == ("2026-10-28", 3470.0, 3040.0, 3470.0, 4564900.0)
+    assert H.live_bar({}) is None and H.live_bar(None) is None
+    assert H.live_bar(dict(_meta("2026-10-28", 1, 1, 1, 1), regularMarketDayHigh=None)) is None
+    assert H.live_bar(dict(_meta("2026-10-28", 3, 1, 2, 1), regularMarketVolume=None))[4] == 0.0
+
+
+def test_patch_today_appends_or_replaces_only_when_traded_that_day():
+    base = _days("2026-09-01", 30)                                                   # 最後は 2026-09-30
+    live = ("2026-10-01", 99.0, 92.0, 96.0, 7000.0)
+    assert H.patch_today(base, live, "2026-10-01") == base + [live]                  # その日のバーが無い→足す
+    bad = base + [("2026-10-01", 95.0, 92.0, 96.0, 7000.0)]
+    assert H.patch_today(bad, live, "2026-10-01") == base + [live]                   # 誤りのバー→置き換える
+    assert H.patch_today(base, ("2026-09-30", 99.0, 92.0, 96.0, 7000.0), "2026-10-01") is None   # 最後の売買が前の日
+    assert H.patch_today(base, ("2026-10-01", 99.0, 92.0, 96.0, 0.0), "2026-10-01") is None      # 出来高0
+    assert H.patch_today(base, None, "2026-10-01") is None and H.patch_today([], live, "2026-10-01") is None
+    assert H.patch_today(base, ("2026-10-01", 95.0, 92.0, 96.0, 7000.0), "2026-10-01") is None   # 補っても誤り
+    assert H.patch_today(base + [live], live, "2026-09-30") is None                  # 日足がその日より先まである
+
+
+def test_why_missing_and_report():
+    asof = "2026-10-28"
+    prev = _days("2026-09-01", 30)
+    assert H.why_missing(prev + [_today(95.0, 92.0, 96.0, asof)], None, asof) == "bad"
+    assert H.why_missing(prev, ("2026-10-28", 1, 1, 1, 9), asof) == "no_bar"
+    assert H.why_missing(prev, ("2026-09-30", 1, 1, 1, 9), asof) == "no_trade"
+    last930 = ("2026-09-30", 172.0, 168.0, 170.0, 6600.0)                             # 9/30 で売買が止まった（上場廃止とみられる3銘柄）
+    assert H.why_missing([last930], last930, asof) == "no_trade" and H.why_missing([], last930, asof) == "no_trade"
+    assert H.why_missing(prev, None, asof) == "no_bar"                                # meta が無い＝わからない→名前を出す側
+    assert H.why_missing([], None, asof) == "no_data"
+    problems = {"1788": (prev, ("2026-09-30", 1, 1, 1, 0)),           # 売買なしの小さい株＝件数だけ
+                "3778": (prev, None),                                 # 流動性上位＋ランキングにある＝名前を出す
+                "6501": (prev, ("2026-09-30", 1, 1, 1, 0)),           # 流動性上位で売買なし＝怪しいので名前を出す
+                "9999": ([], None),                                   # 取れない
+                "8888": (prev + [_today(95.0, 92.0, 96.0, asof)], None)}
+    stocks = {"3778": {"name": "さくらインターネット"}, "6501": {"name": "日立製作所"}}
+    ref = {"3778": {"pct": 0.1695, "tv": 158.4, "relvol": 5.4}}
+    rep = H.missing_report(problems, stocks, asof, {"3778", "6501"}, ref)
+    assert rep["no_trade"] == 1
+    assert [(r["code"], r["why"]) for r in rep["rows"]] == [("3778", "no_bar"), ("6501", "no_bar"), ("8888", "bad"), ("9999", "no_data")]
+    assert rep["rows"][0]["ref"] == ref["3778"] and rep["rows"][0]["name"] == "さくらインターネット" and rep["rows"][1]["liquid"]
+
+
+def test_rankings_ref_only_same_day():
+    rank = {"asof": "2026-10-28",
+            "gainers": [{"code": "3778", "pct": 0.1695, "turnover_d1": 158.4, "relvol": 5.4}],
+            "hot": [{"code": "3778", "pct": 0.1695, "turnover_d1": 158.4, "relvol": 5.4}, {"code": "3905", "pct": -0.02, "turnover_d1": 2448.1, "relvol": 18.0}],
+            "losers": [{"code": "6594", "pct": -0.08, "turnover_d1": 300.0, "relvol": None}]}
+    ref = H.rankings_ref(rank, "2026-10-28")
+    assert set(ref) == {"3778", "3905", "6594"} and ref["3778"] == {"pct": 0.1695, "tv": 158.4, "relvol": 5.4}
+    assert H.rankings_ref(rank, "2026-10-29") == {} and H.rankings_ref({}, "2026-10-28") == {}
+
+
+def test_refetch_recovers_the_3778_case_and_markers_see_it():
+    """10/28 の場面＝2年分の日足にその日のバーが無い（取った時点の Yahoo の遅れ）が、meta にはその日の値がある。
+    取り直しで補えば、目印C（約5.5倍）・B候補（+17%）・地雷の印が付く。売買の無かった株は補わない。"""
+    import jp_markers
+    asof = "2026-10-28"
+    d0 = datetime.date(2026, 9, 1)
+    prev = [((d0 + datetime.timedelta(days=i)).isoformat(), 3000.0, 2900.0, 2967.0, 980000.0) for i in range(40)]  # 約29億円/日
+    meta_3778 = _meta(asof, 3470.0, 3040.0, 3470.0, 4564900)
+    responses = {"3778": (prev, meta_3778),                                          # 取り直しても日足には無い→meta で補う
+                 "1788": (prev, _meta("2026-10-10", 1.0, 1.0, 1.0, 0)),              # その日に売買なし
+                 "2152": (prev + [(asof, 3000.0, 2950.0, 2990.0, 300.0)], {})}       # 取り直しで日足に入った
+    calls = []
+
+    def fake(code, rng, interval, tries=3):
+        calls.append((code, rng))
+        return responses[code]
+    orig, H.fetch_chart = H.fetch_chart, fake
+    try:
+        daily = {"3778": prev, "1788": prev}                                         # 1回目：その日のバーが無い（2152 は取れなかった）
+        lives, got = H.refetch(["3778", "1788", "2152"], asof, daily, pause=0)
+    finally:
+        H.fetch_chart = orig
+    assert got == {"todo": 3, "long": 1, "live": 1} and calls == [("3778", "2y"), ("1788", "2y"), ("2152", "2y")]
+    assert daily["3778"][-1] == (asof, 3470.0, 3040.0, 3470.0, 4564900.0) and daily["2152"][-1][0] == asof
+    assert daily["1788"] == prev and lives["1788"][0] == "2026-10-10"
+    left = {c: (daily.get(c) or [], lives.get(c)) for c in ("3778", "1788", "2152") if H.needs_refetch(daily.get(c) or [], asof)}
+    assert H.missing_report(left, {}, asof, {"3778"}) == {"no_trade": 1, "rows": []}
+    mk = jp_markers.compute({c: b for c, b in daily.items() if H.sane_today(b) and b[-1][0] == asof}, {"3778": {"name": "さくら"}}, asof)
+    r = next(x for x in mk["rows"] if x["code"] == "3778")
+    assert r["c"] and r["b"] and 5.4 <= r["ratio"] <= 5.5 and abs(r["ret"] - 0.1695) < 1e-3
+    assert "急騰（+15%以上）" in jp_markers.mines(r) and "売買代金の急増" in jp_markers.mines(r)
+
+
+def test_main_wires_refetch_and_missing():
+    src = open(os.path.join(ROOT, "build_jp_highs.py"), encoding="utf-8").read()
+    body = src[src.index("def main("):src.index("def audit(")]
+    assert body.index("is_unsettled(asof") < body.index("refetch(todo, asof, daily)") < body.index("mixed = [")   # 書かない回は取り直さない
+    assert "missing_report(problems, stocks, asof, liquid, rankings_ref(rank, asof))" in body
+    assert "jp_taishaku.load_or_none(), missing)" in body and H.REFETCH_MAX >= 100
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

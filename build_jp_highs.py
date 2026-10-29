@@ -39,6 +39,9 @@
   ・最終バーの日付の多数派を asof にし、少数派の銘柄は落とす（別の日を混ぜない）
   ・asof が前回より古い／大引け前（16:00 JST より前）の当日バーなら書かない
   ・取得できた銘柄が8割未満なら書かずに非ゼロ終了（偏った一覧を「最新」として出さない）
+  ・🆕 2026-10-29 取れなかった・その日のバーが無い・その日の値が誤りの銘柄（ふだん約60・多くはその日に売買が無かった小さい株）は
+    最後にもう1回取り、それでも日足にその日のバーが無ければ同じ応答の meta（その日の気配）で補う（refetch・patch_today）。
+    それでも判定できない銘柄は markers["missing"] に入れて朝のメールに名前を出す（10/28 のさくらインターネットが黙って抜けたため）
   ・その日の高値が前の日の終値の1.5倍超・安値が1/1.5未満・高値が終値より安い・安値が終値より高い＝データの誤りとして
     数えない（値幅制限があるので、ストップ高・ストップ安でもこの外には出ない）
   ・jp-rankings.json と同じ asof の一覧がもうあれば取りに行かない（jp-rankings.yml は1日に何度も走るため。--force で無視）
@@ -71,6 +74,8 @@ NEAR_DAYS = 10                  # 記録の始まりと JPX の上場日のず�
 RULE_VERSION = 6          # 判定の決まりを変えたら上げる（4＝安値 2026-10-06 夕・5＝全銘柄 同日夜・6＝JPX の上場日で確かめる 同日夜）＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
 HISTORY_KEEP = 250        # 毎日の件数の記録（約1年分）
 MIN_COVERAGE = 0.8
+REFETCH_PAUSE = 30        # 取り直しの前に待つ秒（全銘柄の最後のほうの銘柄も、1回目からすこし間を空ける）
+REFETCH_MAX = 400         # 取り直すのはこれ以下のときだけ（ふだん約60＝これより多いのは Yahoo の障害など・取り直しても長引くだけ）
 SCOPE = "all"             # 対象の範囲（履歴の件数は同じ範囲どうしでしか比べない＝400銘柄の日と混ぜない）
 JPX_LIST_PAGE = "https://www.jpx.co.jp/markets/statistics-equities/misc/01.html"   # 東証上場銘柄一覧
 JPX_NEW_PAGES = ["https://www.jpx.co.jp/listing/stocks/new/index.html"] + [
@@ -106,27 +111,32 @@ def parse_bars(result):
     return out
 
 
-def fetch_bars(code, rng, interval, tries=3):
-    """Yahoo から日足/月足を取る。失敗したら []。
+def fetch_chart(code, rng, interval, tries=3):
+    """Yahoo から日足/月足を取る。(バー, meta)。失敗したら ([], {})。
 
     全銘柄で約3,700回取りに行くので、「混んでいる」（429・5xx）や通信の途切れは間を空けて2回までやり直す。
-    404（Yahoo に無い銘柄）はやり直さない。
+    404（Yahoo に無い銘柄）はやり直さない。meta＝その日の気配の欄（live_bar が読む）。
     """
     u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}"
     for k in range(tries):
         try:
             req = urllib.request.Request(u, headers=UA)
             d = json.load(urllib.request.urlopen(req, timeout=25))["chart"]["result"][0]
-            return parse_bars(d)
+            return parse_bars(d), d.get("meta") or {}
         except urllib.error.HTTPError as e:
             if e.code == 429 or e.code >= 500:
                 THROTTLED["n"] += 1
                 time.sleep(3 * (k + 1) ** 2)
                 continue
-            return []
+            return [], {}
         except Exception:
             time.sleep(1 + k)
-    return []
+    return [], {}
+
+
+def fetch_bars(code, rng, interval, tries=3):
+    """fetch_chart のバーだけ。失敗したら []。"""
+    return fetch_chart(code, rng, interval, tries)[0]
 
 
 def find_list_link(html):
@@ -235,6 +245,91 @@ def sane_today(bars):
     prev_c = bars[-2][3]
     return (prev_c > 0 and lo > 0 and h >= c * 0.999 and lo <= c * 1.001
             and h <= prev_c * MAX_JUMP and lo >= prev_c / MAX_JUMP)
+
+
+# 🆕 2026-10-29 取り直し（10/28 のさくらインターネット 3778＝前の日比 +17%・売買代金158億円・目印Cの約5.5倍が、
+#    夕方の2年分の日足に「その日のバーが無い」65銘柄に入って黙って外れ、朝のメールの C の一覧から抜けた。
+#    65銘柄の多くはその日に売買が無かった小さい株だが、翌朝の Yahoo にはその日のバーがある＝取った時点の Yahoo の遅れ）
+def needs_refetch(bars, asof):
+    """取り直す銘柄か＝取れなかった・その日（asof）のバーが無い・その日のバーがデータの誤り。純関数。"""
+    return len(bars) < 2 or bars[-1][0] != asof or not sane_today(bars)
+
+
+def live_bar(meta):
+    """Yahoo の chart の meta（その日の気配の欄）から (日付JST, 高値, 安値, 終値, 出来高) を作る。欠けていれば None。純関数。
+
+    日足のバーと同じ数字（2026-10-29 に 3778 で確かめた＝高値・安値・終値・出来高が同じ日のバーと一致）。
+    日付は最後に売買が成立した時刻（regularMarketTime）＝その日に売買が無かった銘柄は前の日になる。
+    """
+    try:
+        t, h, lo, c = (meta[k] for k in ("regularMarketTime", "regularMarketDayHigh", "regularMarketDayLow", "regularMarketPrice"))
+        d = datetime.datetime.fromtimestamp(t, JST).date().isoformat()
+        return (d, float(h), float(lo), float(c), float(meta.get("regularMarketVolume") or 0))
+    except (KeyError, TypeError, ValueError, OverflowError, OSError):
+        return None
+
+
+def patch_today(bars, live, asof):
+    """日足にその日（asof）のバーが無い（または誤り）とき、meta から作ったその日のバーで補う。補えなければ None。純関数。
+
+    補うのは meta の日付がその日で、出来高が 0 より多いときだけ（その日に売買が無かった銘柄は補わない）。
+    その日のバーが誤りのときは置き換える。補ったあとが sane_today でなければ None（誤りのままにしない）。
+    """
+    if len(bars) < 1 or not live or live[0] != asof or live[4] <= 0 or bars[-1][0] > asof:
+        return None
+    out = (bars[:-1] if bars[-1][0] == asof else bars) + [live]
+    return out if sane_today(out) else None
+
+
+def why_missing(bars, live, asof):
+    """一覧の計算に入らなかった理由。純関数。
+
+    "bad"＝その日のバーはあるがデータの誤り／"no_bar"＝その日の日足を作れない（meta の日付がその日＝売買はあった、
+    または meta が取れず売買があったかわからない）／"no_trade"＝meta の最後の売買がその日より前（その日に売買が無かった・
+    上場廃止など＝目印にはなりようがない）／"no_data"＝日足も meta も取れない。
+    わからないときは "no_trade" にしない（名前を出す側に倒す）。
+    """
+    if bars and bars[-1][0] == asof:
+        return "bad"
+    if live:
+        return "no_bar" if live[0] == asof else "no_trade"
+    return "no_bar" if bars else "no_data"
+
+
+def rankings_ref(rank, asof):
+    """jp-rankings.json（同じ営業日のものだけ）の上昇・下落・出来高の一覧から {コード: {pct, tv, relvol}}。純関数。
+
+    メールに「参考」として出すだけ（relvol＝出来高どうしの比で、目印C の売買代金の比とは別）。
+    """
+    if not rank or rank.get("asof") != asof:
+        return {}
+    out = {}
+    for key in ("gainers", "losers", "hot"):
+        for r in rank.get(key) or []:
+            if r.get("code"):
+                out.setdefault(r["code"], {"pct": r.get("pct"), "tv": r.get("turnover_d1"), "relvol": r.get("relvol")})
+    return out
+
+
+def missing_report(problems, stocks, asof, liquid=(), ref=None):
+    """problems＝{コード: (取り直しのあとの日足, live_bar)}（一覧の計算に入らなかった銘柄）→ jp-highs.json の markers["missing"]。純関数。
+
+    その日に売買が無かった銘柄は件数だけ（目印にはなりようがない）。ただし流動性上位の約400銘柄（liquid）と
+    ランキングにある銘柄（ref）は売買があったはず＝漏れとして名前を出す。
+    """
+    ref = ref or {}
+    rows, no_trade = [], 0
+    for code, (bars, live) in problems.items():
+        why = why_missing(bars, live, asof)
+        if why == "no_trade":
+            if code not in liquid and code not in ref:
+                no_trade += 1
+                continue
+            why = "no_bar"
+        rows.append({"code": code, "name": (stocks.get(code) or {}).get("name", ""), "why": why,
+                     "liquid": code in liquid, "ref": ref.get(code)})
+    rows.sort(key=lambda r: (r["ref"] is None, not r["liquid"], -((r["ref"] or {}).get("tv") or 0), r["code"]))
+    return {"no_trade": no_trade, "rows": rows}
 
 
 # 高値／安値で変わるのは「どの値を見るか」と「どちら向きが更新か」だけ＝1つの関数で両方を判定する
@@ -362,6 +457,32 @@ def read_json(path):
         return {}
 
 
+def refetch(todo, asof, daily, pause=REFETCH_PAUSE):
+    """取り直し（2026-10-29〜）。todo の銘柄だけ2年分の日足をもう1回取り、それでもその日のバーが無い（誤り）なら
+    同じ応答の meta でその日のバーを補う（patch_today）。直ったものは daily に入れる。
+
+    戻り値＝({コード: live_bar}, {"todo", "long"＝取り直しで直った, "live"＝meta で補った})。
+    直らなかった銘柄も、取り直しで日足が取れたら daily に入れる（あとの「その日に値が無い」の除外で今までどおり数える）。
+    """
+    lives, got = {}, {"todo": len(todo), "long": 0, "live": 0}
+    if todo:
+        time.sleep(pause)
+    for code in todo:
+        bars, meta = fetch_chart(code, "2y", "1d")
+        time.sleep(0.07)
+        lives[code] = live_bar(meta)
+        if not needs_refetch(bars, asof):
+            daily[code], got["long"] = bars, got["long"] + 1
+            continue
+        base = bars if len(bars) >= 2 else daily.get(code) or bars
+        patched = patch_today(base, lives[code], asof)
+        if patched:
+            daily[code], got["live"] = patched, got["live"] + 1
+        elif len(bars) >= 2 and code not in daily:
+            daily[code] = bars
+    return lives, got
+
+
 def momentum_or_error(daily, stocks, asof):
     """jp_momentum.compute を呼ぶ。失敗しても高値・安値の一覧は止めない（{"asof", "error"} を返す）"""
     def monthly(code):
@@ -378,7 +499,8 @@ def main(force=False, dry_run=False):
     """dry_run＝最後まで数えて結果を表示するが jp-highs.json は書かない（点検のワークフローで本番の前に試す用）。"""
     prev = read_json(OUT)
     prev_asof = prev.get("asof") or ""
-    rank_asof = read_json(RANKINGS).get("asof") or ""
+    rank = read_json(RANKINGS)
+    rank_asof = rank.get("asof") or ""
     if not force and not dry_run and already_done(prev, rank_asof) and "momentum" in prev:   # 🆕 2026-10-08 夜 上がりすぎた株の欄が無ければ作り直す
         print(f"⏭ jp-highs.json はもう {prev_asof}（jp-rankings.json と同じ営業日・同じ決まり）＝取りに行かずに終了")
         return
@@ -401,16 +523,8 @@ def main(force=False, dry_run=False):
         if (i + 1) % 500 == 0:
             print(f"  ...{i+1}/{len(codes)} 取得失敗={fail} 混雑={THROTTLED['n']} 経過{(time.time()-t0)/60:.1f}分", flush=True)
         time.sleep(0.07)
-    fetched = len(daily)
 
     asof = modal_date([b[-1][0] for b in daily.values()])
-    mixed = [c for c, b in daily.items() if b[-1][0] != asof]
-    if mixed:
-        # 全銘柄では、その日に売買が成立しなかった銘柄（最後のバーが前の日）もここに入る＝その日は更新しようがない
-        print(f"ℹ️ 最終営業日が {asof} でない {len(mixed)}銘柄（その日に売買が無かった銘柄など）＝除外: {', '.join(mixed[:5])}"
-              + (" ほか" if len(mixed) > 5 else ""))
-        for c in mixed:
-            daily.pop(c)
     if is_regression(asof, prev_asof):
         print(f"⏸ 取得できた最終営業日 {asof} が前回 {prev_asof} より古い＝更新せず終了（次の回に委ねる）")
         return
@@ -419,6 +533,28 @@ def main(force=False, dry_run=False):
         print(f"⏸ {asof} はきょうで、いま {now_jst:%H:%M} JST＝大引け前後の未確定の値。"
               f"書かずに終了（{SETTLE_JST[0]}:{SETTLE_JST[1]:02d} 以降の回に委ねる）")
         return
+    # 🆕 2026-10-29 取れなかった・その日のバーが無い・誤りの銘柄だけ取り直す（その日に売買が無かった銘柄もここに入る＝ふだん約60）
+    todo = [c for c in codes if needs_refetch(daily.get(c) or [], asof)]
+    if len(todo) > REFETCH_MAX:
+        print(f"⚠️ 取り直しの対象が {len(todo)}銘柄（> {REFETCH_MAX}＝Yahoo の障害など）＝取り直さない")
+        lives, got = {}, {"todo": 0, "long": 0, "live": 0}
+    else:
+        lives, got = refetch(todo, asof, daily)
+    fetched = len(daily)
+    problems = {c: (daily.get(c) or [], lives.get(c)) for c in codes if needs_refetch(daily.get(c) or [], asof)}
+    liquid = set((read_json(INFO).get("stocks") or {}).keys())    # 流動性上位の約400銘柄＝その日に売買が無いことはまず無い
+    missing = missing_report(problems, stocks, asof, liquid, rankings_ref(rank, asof))
+    print(f"🔁 取り直し {got['todo']}銘柄 → 2年分の日足で直った {got['long']}・その日の気配（meta）で補った {got['live']}"
+          f"／判定できない {len(missing['rows'])}（その日に売買が無かった {missing['no_trade']} は除く）"
+          + "".join(f"\n     ⚠️ {r['code']} {r['name']}（{jp_markers.WHY.get(r['why'], r['why'])}{'・流動性上位' if r['liquid'] else ''}）"
+                    for r in missing["rows"][:20]))
+    mixed = [c for c, b in daily.items() if b[-1][0] != asof]
+    if mixed:
+        # 全銘柄では、その日に売買が成立しなかった銘柄（最後のバーが前の日）もここに入る＝その日は更新しようがない
+        print(f"ℹ️ 最終営業日が {asof} でない {len(mixed)}銘柄（その日に売買が無かった銘柄など）＝除外: {', '.join(mixed[:5])}"
+              + (" ほか" if len(mixed) > 5 else ""))
+        for c in mixed:
+            daily.pop(c)
     coverage = fetched / max(len(codes), 1)    # 取れたかどうかで見る（売買の無かった銘柄は取れている）
     if coverage < MIN_COVERAGE:
         print(f"🚨 取得成功 {fetched}/{len(codes)} 銘柄（{coverage:.0%} < {MIN_COVERAGE:.0%}・混雑 {THROTTLED['n']}回）＝"
@@ -461,8 +597,9 @@ def main(force=False, dry_run=False):
         "rule": RULE_VERSION, "jpx_listings": len(jpx), "highs": highs, "lows": lows,
         "history": update_history(prev.get("history"), asof, counts),
         # 🆕 2026-10-08 目印C（売買代金の急増）・B候補（前の日 +5% 以上）＝朝の指標メールが読む（サイトには出さない）
+        #    🆕 2026-10-29 取り直しても判定できなかった銘柄（"missing"）も渡す＝メールに件数と名前を出す（黙って消さない）
         "markers": jp_markers.compute({c: b for c, b in daily.items() if sane_today(b)}, stocks, asof,
-                                      jp_taishaku.load_or_none()),
+                                      jp_taishaku.load_or_none(), missing),
         # 🆕 2026-10-08 夜 上がりすぎた株（過去12か月で一番上げた10銘柄）＝朝の指標メールが読む（サイトには出さない）
         "momentum": momentum_or_error(daily, stocks, asof),
     }
@@ -477,7 +614,8 @@ def main(force=False, dry_run=False):
         except Exception as e:  # noqa: BLE001
             print(f"⚠️ 高値更新の台帳を更新できず（jp-highs.json は書けている）：{type(e).__name__}: {str(e)[:200]}")
     print(f"{'🧪 試し（書かない）' if dry_run else '✅ ' + OUT}: as of {asof} / 一覧 {len(stocks)}銘柄 → 取れた {fetched}"
-          f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
+          f"（1回目の取得失敗{fail}・取り直し{got['todo']}で直った{got['long'] + got['live']}・混雑{THROTTLED['n']}回）"
+          f"→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
           f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"
           f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
     mo = payload["momentum"]
@@ -489,7 +627,8 @@ def main(force=False, dry_run=False):
     mk = payload["markers"]
     print(f"   朝のメール用の目印：C（売買代金が20営業日平均の{jp_markers.TV_HIGH:g}倍以上）{mk['n_c']}銘柄・"
           f"B候補（前の日 +{jp_markers.UP * 100:g}% 以上）{mk['n_b']}銘柄（うち売買代金{mk['keep_min_tv']:g}億円以上を {len(mk['rows'])}件保存）"
-          f"・〔貸借〕{sum(1 for r in mk['rows'] if r.get('tai'))}件（一覧 {(mk.get('taishaku') or {}).get('asof') or '取れず'}）")
+          f"・〔貸借〕{sum(1 for r in mk['rows'] if r.get('tai'))}件（一覧 {(mk.get('taishaku') or {}).get('asof') or '取れず'}）"
+          f"・判定できず {len(missing['rows'])}銘柄（メールに名前を出す）")
     for side, name, rec in (("high", "高値", "最高値"), ("low", "安値", "最安値")):
         rows = out[side]
         print(f"   {period}{name} {len(rows)}銘柄・記録上の{rec} {sum(1 for r in rows if r['record'])}銘柄"

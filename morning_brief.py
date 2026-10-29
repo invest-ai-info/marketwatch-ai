@@ -323,6 +323,9 @@ def summary_section(now, ind, fc=None, fx=None, markers=None, mom=None, ec=None,
         n_both = sum(1 for x in rows if x.get("c") and x.get("b"))
         n_mine = sum(1 for x in rows if jp_markers.mines(x))
         part = f"寄りで買わない目印 {len(rows)}銘柄（★C・B候補の両方 {n_both}・💣地雷 {n_mine}）"
+        miss = (markers.get("missing") or {}).get("rows") or []       # 🆕 2026-10-29 値が取れず判定できなかった銘柄（jp_markers.missing_lines）
+        if miss:
+            part += f"・⚠️ 判定できなかった {len(miss)}（{'・'.join(x.get('name') or x['code'] for x in miss[:3])}{' ほか' if len(miss) > 3 else ''}）"
         try:
             x = jp_momentum.pick(mom, today)
         except Exception:  # noqa: BLE001  壊れた欄でも要点のほかの行は出す（下の欄が「作れなかった」と書く）

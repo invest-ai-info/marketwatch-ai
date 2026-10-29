@@ -18,6 +18,8 @@
 ⚠️ 決まりは「寄りで買わない」だけ（空売りの合図ではない）。
 🆕 2026-10-08 夕方（オーナー「両方登録して進めてください」・研究 J36 を受けて）：各銘柄に〔貸借〕の印＝制度信用で空売りできる銘柄
    （日本取引所グループの一覧を jp_taishaku.py で読む・build_jp_highs が夕方に取りに行く）。印だけ＝空売りの決まりではない。
+🆕 2026-10-29（10/28 のさくらインターネット 3778＝C・B候補・地雷の形が、夕方の取得でその日のバーが無く一覧から黙って抜けた）：
+   build_jp_highs が取り直しても判定できなかった銘柄を "missing" に入れる → 節の一覧のすぐ下に件数と名前（missing_lines）。
 """
 import datetime as dt
 
@@ -96,9 +98,10 @@ def mines(r):
     return out
 
 
-def compute(daily, stocks, asof, tai=None):
+def compute(daily, stocks, asof, tai=None, missing=None):
     """daily＝{コード: bars}（最後のバーが asof の銘柄だけ・データの誤りの日は除いてから渡す）→ jp-highs.json の "markers"。
-    tai＝jp_taishaku.load_or_none() の形（{"codes", "asof", "n"}）か None（一覧が取れなかった＝印を付けない）。"""
+    tai＝jp_taishaku.load_or_none() の形（{"codes", "asof", "n"}）か None（一覧が取れなかった＝印を付けない）。
+    missing＝build_jp_highs.missing_report() の形（{"no_trade", "rows"}＝値が取れず判定できなかった銘柄）か None（そのまま入れる）。"""
     rows, n_c, n_b, n_ratio = [], 0, 0, 0
     for code, bars in daily.items():
         v = stock_values(bars)
@@ -120,7 +123,7 @@ def compute(daily, stocks, asof, tai=None):
     rows.sort(key=lambda r: r["tv"], reverse=True)
     return {"asof": asof, "universe": len(daily), "with_ratio": n_ratio, "n_c": int(n_c), "n_b": int(n_b),
             "keep_min_tv": KEEP_MIN_TV, "rows": rows,
-            "taishaku": {"asof": tai.get("asof") or "", "n": len(tai["codes"])} if tai else None}
+            "taishaku": {"asof": tai.get("asof") or "", "n": len(tai["codes"])} if tai else None, "missing": missing}
 
 
 def _fmt(r):
@@ -151,6 +154,41 @@ def merged(rows, top=SHOW_TOP):
     return [r for r in rows if r["code"] in keep]
 
 
+WHY = {"no_data": "値が取れない", "no_bar": "その日の日足が Yahoo に無い", "bad": "その日の値が Yahoo で食い違う"}
+SHOW_MISSING = 10
+
+
+def missing_lines(miss):
+    """値が取れず判定できなかった銘柄の行（2026-10-29〜）。miss＝markers["missing"]。無い（それより前の一覧）なら []。純関数。
+
+    10/28 のさくらインターネット（C の5倍超・B候補・地雷の形）が一覧から黙って抜けたため＝漏れたら名前を出す。
+    その日に売買が無かった銘柄は目印になりようがない（売買代金0・前の日比0）＝件数だけ。
+    """
+    if not miss:
+        return []
+    rows, nt = miss.get("rows") or [], miss.get("no_trade", 0)
+    if not rows:
+        return ["", f"  ✅ 値が取れずに判定から漏れた銘柄なし（その日に売買が無かった {nt}銘柄は目印になりようがないので数えない）"]
+    L = ["", f"  ⚠️ 値が取れず判定できなかった {len(rows)}銘柄＝C・B候補でも上の一覧に出ていない"
+             "（寄りの前に証券会社の画面で、前の日の上げと売買代金を確かめる）："]
+    for r in rows[:SHOW_MISSING]:
+        ref = r.get("ref") or {}
+        if ref:
+            pct = "—" if ref.get("pct") is None else f"{ref['pct'] * 100:+.1f}%"
+            tv = "—" if ref.get("tv") is None else f"{ref['tv']:.1f}億円"
+            rv = "—" if ref.get("relvol") is None else f"{ref['relvol']:.1f}倍"
+            x = f"・参考（ランキング）前の日 {pct}・売買代金 {tv}・出来高はふだんの {rv}"
+        else:
+            x = "〔売買の多い約400銘柄〕" if r.get("liquid") else ""
+        L.append(f"     {r['code']} {r.get('name', '')}（{WHY.get(r.get('why'), r.get('why'))}）{x}")
+    if len(rows) > SHOW_MISSING:
+        L.append(f"     …ほか {len(rows) - SHOW_MISSING}銘柄")
+    if any(r.get("ref") for r in rows):
+        L.append("     ※ 参考の数字は日本株ランキング（売買の多い約400銘柄）から。出来高の比は、C の売買代金の比とは別の数字")
+    L.append(f"     （その日に売買が無かった {nt}銘柄は目印になりようがないので数えない）")
+    return L
+
+
 def section(markers, today):
     """朝のメールの節（行のリスト）。today＝date。平日でなければ空。一覧が無い・古いときはそう書く。純関数。"""
     if today.weekday() >= 5:
@@ -177,6 +215,7 @@ def section(markers, today):
     L += [f"     {i}. {_fmt(r)}" for i, r in enumerate(show, 1)] or ["     （なし）"]
     if len(rows) > len(show):
         L.append(f"     …ほか {len(rows) - len(show)}銘柄（売買代金の小さいもの）")
+    L += missing_lines(markers.get("missing"))
     n_mine = sum(1 for r in rows if mines(r))
     L += ["", f"  💣 地雷（研究 J21）＝前の日 +5%以上・売買代金10億円以上の株のうち、過熱（25日線 +15%超）・連騰（4日以上）・"
               f"急騰（+15%以上）・売買代金の急増（5倍以上）のどれかに当てはまるもの：{n_mine}銘柄（上の一覧に印）",
