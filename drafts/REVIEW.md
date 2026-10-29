@@ -1,3 +1,4 @@
+2026-10-30 signal-lab: #134 下書き作成（金・銀の買い auto_direction-long_group-metal・前向き382回 43.7%[38.8-48.7]。登録前87回17.2%。signal_verify 15/15緑・plain_japanese 指摘0）
 2026-10-29 signal-lab: #133 ✅自動公開済み（検証緑18/18・Opus初期=白（修正なし）・独立確認Opus=白。やさしい日本語 初回2件→0）
 2026-10-29 signal-lab: #133 下書き作成（株価指数の買い index_long_live・前向き876回 43.3%[40.0-46.6]。登録前130回52.3%。signal_verify 18/18緑・plain_japanese 初回2件→0。公開判断はゲート結果を後続行に記載）
 2026-10-28 signal-lab: #132 ✅自動公開済み（円がからまない通貨ペアの買い・前向き938回 40.8%[37.7-44.0]。検証緑18/18・Opus初期=白（修正なし）・数字の丸め0.05→0.04を担当側で修正→再検証緑→独立Opus白。plain_japanese 0件→0）
@@ -52,9 +53,6 @@
 2026-09-14 autopublish: guide-information-lag.html 公開済み ✅ 決定論緑・Opus🟡グレー修正→独立白確認 https://marketwatch-jp.com/guide-information-lag.html
 2026-09-14 signal-lab: draft-signal-lab-098.html 🚩エスカレ中（Opusコンプラ🔴黒①②③・数値訂正3件要人間レビュー）　【2026-09-24 追記・現状】[解決済み]（公開見送りで決着＝公開したのではない）＝オーナー判断で #098 は公開しない。理由＝同じ仮説（rsi_oversold_bounce）の翌日版 #099（2026-09-15 公開）と、より新しい版 #107（2026-09-23 付け公開）が既に出ており、#098 を後から出しても同じ内容の古い断面が1本増えるだけ。下書き `drafts/draft-signal-lab-098.html` と labnotes は保持。🔖 **この `[解決済み]` は番人（automation-health §⑧）を黙らせるための印であって、コンプラ審査を通ったという意味ではない**（黒①②③は未修正のまま）。公開する場合は、黒①②③を直して正規手順（verify→Opus2段→finalize→publish）を通し、この印ごと書き直すこと。
 
-
-## 2026-10-30 研究日誌 #134（金・銀の買い・定点観測）
-- 状態: ✅自動公開済み（検証緑・Opus=白 or 修正適用＋独立確認白）※公開処理中に更新
 
 ## 2026-09-18 signal-lab #103: drafts/draft-signal-lab-103.html
 
