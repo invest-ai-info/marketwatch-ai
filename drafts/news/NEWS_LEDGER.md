@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-10-29
+- 判定: ✅ 公開済み
+- 選定トピック: FOMCが金利据え置き（10-2の分裂票）──東京市場3日続伸・日経+705円、12月「再利上げ」が次の焦点（カテゴリ: 金融政策・株式市場・米連邦準備制度）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - 連邦準備制度理事会公式声明「FOMC statement October 28, 2026」https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm
+  - CNN「Fed keeps interest rates unchanged, but two officials dissented in favor of a rate hike」2026-10-28 https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october
+  - CNBC「Fed interest rate decision October 2026: Fed holds rates steady」2026-10-28 https://www.cnbc.com/2026/10/28/fed-interest-rate-decision-october-2026.html
+  - Yahoo Finance live updates（Kevin Warsh "politics played no role"）2026-10-28 https://finance.yahoo.com/economy/policy/live/fed-meeting-live-updates-federal-reserve-october-meeting-kevin-warsh-161129201.html
+  - Indeed Hiring Lab「October 2026 FOMC Reaction: A Waiting Game」2026-10-28 https://hiringlab.indeed.com/2026/10/28/october-2026-fomc-reaction-a-waiting-game/
+  - 財経新聞「日経平均大引け：前日比705.28円高の64659.47円」2026-10-29 https://www.zaikei.co.jp/article/20261029/875463.html
+  - Kabutan「日経平均は3日続伸、アドバンテストが1銘柄で約407円分押し上げ」2026-10-29 https://kabutan.jp/news/marketnews/?b=n202610290723
+  - Fox Business「October FOMC: Federal Reserves holds rates steady ahead of election」2026-10-28 https://www.foxbusiness.com/economy/federal-reserve-interest-rate-decision-october-28-2026
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（Hammack氏の肩書き「理事」→「委員」に軽微修正）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典8系統以上 ✅ / noindexなし ✅）→「そのまま公開してよい」
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告53件は既存他ファイルの既知問題・本記事と無関係）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-10-29.html
+- commit: e2db0b8（main へ push 済み）
+
+---
+
 ## 2026-10-28
 - 判定: ✅ 公開済み
 - 選定トピック: SKハイニックスQ3が営業利益+632%・利益率80%の過去最高──AI半導体需要を確認、KOSPIが6,000台乗せ、東京市場もキオクシア+14%で続伸（カテゴリ: 半導体・AI・株式市場）
