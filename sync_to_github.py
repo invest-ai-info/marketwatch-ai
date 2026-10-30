@@ -407,4 +407,5 @@ SYNC_FILES = [
     "guide-news-2026-10-29.html",
     "guide-signal-lab-134.html",
     "guide-company-5802-sumitomo-electric.html",
+    "guide-news-2026-10-30.html",
 ]
