@@ -1341531,12 +1341531,13 @@
       "v": 1,
       "tp2_at": null,
       "entry_at": "2026-10-29T01:00:00-04:00",
-      "sl_at": null,
+      "sl_at": "2026-10-30T02:00:00-04:00",
       "order": [
-        "entry"
+        "entry",
+        "sl"
       ],
-      "ended_by": null,
-      "ended_at": null,
+      "ended_by": "sl",
+      "ended_at": "2026-10-30T02:00:00-04:00",
       "last_close": null,
       "tp1_bar": "ok",
       "tp1_bar_entry": false,
@@ -1353523,7 +1353524,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.656,
+    "max_favorable_excursion_pct": 0.688,
     "max_adverse_excursion_pct": -0.519,
     "email_sent": false,
     "whipsaw_check": {
@@ -1353829,7 +1353830,7 @@
       "ended_by": null,
       "ended_at": null,
       "last_close": null,
-      "tp1_bar": "ok",
+      "tp1_bar": "missing",
       "tp1_bar_entry": false,
       "made_at": "2026-10-30T15:08:40+09:00"
     }
@@ -1355830,6 +1355831,177 @@
       "reasons": [
         "売られすぎ/逆張り系の勝ち筋"
       ]
+    }
+  },
+  {
+    "id": "YM=F_4h_20261030_1543",
+    "fired_at": "2026-10-30T15:43:09+09:00",
+    "timeframe": "4h",
+    "ticker": "YM=F",
+    "asset_name": "ダウ 30 先物",
+    "signal_types": [
+      "support_bounce"
+    ],
+    "primary_signal": "support_bounce",
+    "primary_signal_label": "🟢 サポート反発（直近安値ゾーンで下げ止まり）",
+    "signal_count": 1,
+    "direction": "ロング（買い）",
+    "entry": 52479.0,
+    "stop_loss": 52139.97046199766,
+    "take_profit_1": 52931.03938400312,
+    "take_profit_2": 53157.059076004676,
+    "atr": 226.01969200155796,
+    "sl_pct": -0.6460289601599439,
+    "tp1_pct": 0.8613719468799251,
+    "tp2_pct": 1.2920579203198879,
+    "indicators_at_signal": {
+      "rsi": 44.7,
+      "macd": -25.8062,
+      "macd_sig": -5.3294,
+      "ma25": 52587.64,
+      "ma75": 52510.1733,
+      "bb_low": 52352.0998,
+      "bb_up": 52844.9002,
+      "recent_high": 53145.0,
+      "recent_low": 52310.0,
+      "adx": 14.72,
+      "chop": 52.4,
+      "ma_dev_pct": 0.1475,
+      "ma_dir": "up",
+      "regime": "range"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": true,
+      "d_sup_atr": 0.748,
+      "d_res_atr": 2.947
+    },
+    "selection": {
+      "tier": "elite",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": true,
+      "regime": "range"
+    },
+    "news_count": 0,
+    "news_titles": [],
+    "ai_narrative": "ダウ30先物は、直近安値ゾーンでのサポート反発を確認し、ロング（買い）のシグナルが点灯しました。RSIが44.7とやや弱含みながらも、MACDはマイナス圏で推移しており、短期的な下落圧力は残るものの、25MAが75MAを上回っていることから、中期的な上昇トレンドへの回帰が期待されます。ボリンジャーバンドでは、価格が-2σ付近から反発しており、バンド上限への回帰を目指す展開が考えられます。  ファンダメンタルズ面では、足元のニュース材料は限定的ですが、米国のインフレ鈍化期待や金融政策の正常化観測が、米国株市場全体を下支えする要因となり得ます。通貨強弱ではUSDが弱含みですが、これは他の主要通貨に対して相対的なものであり、ダウ先物の上昇シナリオとは必ずしも矛盾しません。  このロングシナリオが崩れるのは、価格が52139.97（ストップロス）を下回った場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": null,
+      "higher_tf": "日足",
+      "higher_tf_trend": "中立・もみあい",
+      "explanation": "〜 日足 はもみあい、トレンド判定不能（中立）"
+    },
+    "currency_strength": {
+      "USD": -0.205,
+      "EUR": 0.354,
+      "GBP": 0.531,
+      "JPY": 0.016,
+      "AUD": -0.475
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 17.2 中立 (0)",
+        "円・ドル優位 (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "long",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-10-30T15:15:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "long",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": 6,
+      "label": "HIGH",
+      "stars": "⭐⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "選別ティア: 精鋭(runwayクリア×レンジ) (+2)",
+        "指数ロング (検証済み+EVエッジ・#21昇格・本採用・+1)"
+      ],
+      "edge_tier": "elite",
+      "chasing_downgrade": false,
+      "index_long_bonus": true
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "モメンタム不足: momentum 不足 (score=-0.36, entry_vs_ma25=-0.21%)",
+      "score": -0.357,
+      "entry_vs_ma25_signed": -0.207,
+      "range_pos": 0.202,
+      "ma_ratio_pct": 0.148
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 0,
+      "watch_matched": null,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 17.2,
+        "avg_30d": 16.35,
+        "change_24h_pct": 1.71
+      },
+      "atr_regime": {
+        "current_atr": 226.0197,
+        "avg_atr_30d": 223.4913,
+        "ratio": 1.01,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
     }
   }
 ]
