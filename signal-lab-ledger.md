@@ -1052,7 +1052,7 @@
 
 **テーマ**: ビットコインの買いは、前向きで勝ちやすかった？——前向き248回の現在地（定点観測・group=btc×dir=long）
 **仮説ID**: auto_direction-long_group-btc
-**ファイル**: draft-signal-lab-135.html（下書き中）
+**ファイル**: draft-signal-lab-135.html（公開済み）
 **claims**: drafts/labnotes/lab-135-claims.json
 **分析メモ**: drafts/labnotes/lab-135-analysis.md
 
