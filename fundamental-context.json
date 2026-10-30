@@ -1,14 +1,15 @@
 {
-  "generated_at": "2026-10-30T06:10:00+09:00",
+  "generated_at": "2026-10-30T15:15:00+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
-    "confidence": "LOW",
-    "rationale": "29日のNYはアルファベット決算を受けハイテク株中心に下落し、ナスダックは取引中に1.6％安まで売られた（終値は未確認）。ECBは据え置きでラガルド総裁は早期退任を表明。原油100ドル超でインフレ懸念も残り、日銀会合（30日）待ち。",
+    "confidence": "MID",
+    "rationale": "29日のNYはアルファベットの売上未達とAI投資負担でハイテク中心に下落し、ナスダックは1.4％安で引けた。30日の東京は日銀が1.25％で据え置き、ETF売却加速も重なり日経平均は午前に1,600円超安。米10年債利回りは4.94％に低下したが、原油高・12月利上げ観測で警戒が続く。",
     "key_drivers": [
-      "NY株はナスダックが取引中に約1.6％安、ダウも約300ドル安（終値未確認）",
-      "ECB据え置き（2.5％）、ラガルド総裁が早期退任を表明、ユーロは17カ月ぶり安値圏",
-      "原油100ドル超・12月の米利上げ観測でインフレ警戒",
-      "日銀（30日）・RBA（11月3日）が次の焦点"
+      "NY終値：ナスダック1.4％安（26,184.72）、S&P500 0.3％安、ダウ0.3％安",
+      "アルファベット株が約12〜13％下落、AI投資負担への警戒が再燃",
+      "日銀は政策金利1.25％で据え置き、ETF売却ペースを2027年1月から加速",
+      "米7-9月GDPは予想を上回り、12月利上げ観測と原油高（ブレント約110ドル）が重し",
+      "RBA（11月3日）が次の焦点"
     ]
   },
   "assets": [
@@ -16,49 +17,48 @@
       "name": "日経225",
       "ticker": "NKD=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "東京は29日続伸したが、NYのハイテク安を受け30日は重い展開になる可能性。日銀会合待ち。",
+      "conviction": "MID",
+      "rationale": "30日の日経平均は日銀据え置きとETF売却加速、NYのハイテク安で午前に1,600円超安。反発の材料は乏しい。",
       "catalysts": [
-        "日銀会合（30日）",
-        "米ハイテク決算",
-        "ドル円158円前後"
+        "日銀の植田総裁会見",
+        "NYハイテク株の動向"
       ],
       "top_news": [
         {
-          "published": "2026-10-29",
-          "comment": "ハイテク株安が米株全体の重しに。終値は要確認",
-          "source": "みんかぶ",
+          "headline": "東京株式、30日午前は1,639円安の6万3,019円。前日は64,659円で引けていた",
+          "published": "2026-10-30",
+          "comment": "NYのハイテク安と日銀のETF方針で下げ幅が拡大",
+          "source": "中日新聞",
           "tier": 3,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://fx.minkabu.jp/news/383010",
-          "headline": "29日のNY株は下落、ナスダックは取引中に約1.6％安、ダウは約300ドル安"
+          "url": ""
         },
         {
-          "headline": "29日の東京株式は続伸、日経平均は一時800円超高で6万4000円台を回復",
+          "headline": "日銀、政策金利1.25％で据え置き。ETF売却ペースは2027年1月から加速",
+          "published": "2026-10-30",
+          "comment": "据え置きは想定内でも、株の需給悪化懸念が売りを誘った",
+          "source": "Yahoo!ニュース",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": ""
+        },
+        {
+          "headline": "NY株は大幅安、ナスダック1.4％安。アルファベットは売上未達で12〜13％下落",
           "published": "2026-10-29",
-          "comment": "FRB通過の安心感。日銀会合前で上値は重め",
-          "source": "共同通信",
+          "comment": "AI投資の負担が嫌気され、ハイテク株全体の重しに",
+          "source": "Yahoo Finance / Investing.com",
           "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://news.yahoo.co.jp/articles/55db56152ac869226c1e8a314a08fe5684b1498d"
-        },
-        {
-          "headline": "アルファベットが決算後に約11％安、ハイテク株の重しに",
-          "published": "2026-10-29",
-          "comment": "大型ハイテクの決算次第で指数が振れやすい",
-          "source": "tbladvisory/株探",
-          "tier": 3,
-          "credibility": "LOW",
-          "corroborated_by": [],
-          "materiality": "mid",
+          "materiality": "high",
           "direction": "bearish",
-          "url": "https://tbladvisory.com/20261029nkam/"
+          "url": ""
         }
       ]
     },
@@ -67,53 +67,35 @@
       "ticker": "ES=F",
       "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "29日はハイテク主導で下落（取引中の数字）。12月利上げ観測と高金利が重し。",
+      "rationale": "S&P500は0.3％安と下げは限定的だが、利上げ観測とハイテク安が重し。",
       "catalysts": [
-        "大型ハイテク決算",
-        "12月利上げ観測",
-        "米中間選挙（11月3日）"
+        "12月FOMC観測",
+        "大手ハイテクの決算"
       ],
       "top_news": [
         {
+          "headline": "NY株は大幅安、ナスダック1.4％安。アルファベットは売上未達で12〜13％下落",
           "published": "2026-10-29",
-          "comment": "ハイテク株安が米株全体の重しに。終値は要確認",
-          "source": "みんかぶ",
-          "tier": 3,
+          "comment": "AI投資の負担が嫌気され、ハイテク株全体の重しに",
+          "source": "Yahoo Finance / Investing.com",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://fx.minkabu.jp/news/383010",
-          "headline": "29日のNY株は下落、ナスダックは取引中に約1.6％安、ダウは約300ドル安"
+          "url": ""
         },
         {
-          "headline": "米株は小幅高、S&P500は7,744、ナスダックは26,550で引け。FRB会見への反応は限定的",
-          "published": "2026-10-28",
-          "comment": "据え置きは想定どおりで、決算に関心が向かった",
-          "source": "Reuters",
+          "headline": "米7-9月期GDP速報は予想を上回る。市場は12月の利上げ観測を意識",
+          "published": "2026-10-29",
+          "comment": "成長の強さは利上げ観測を支え、株の重しになりうる",
+          "source": "Reuters系報道",
           "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [
-            "CNBC"
-          ],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://www.staradvertiser.com/2026/10/28/breaking-news/wall-street-rises-as-fed-holds-rates-steady-earnings-in-focus/"
-        },
-        {
-          "headline": "FRBが政策金利3.75〜4.00%で据え置き、2人が利上げを主張して10対2の票決",
-          "published": "2026-10-28",
-          "comment": "利上げ派が2人いて、12月利上げ観測が残る",
-          "source": "CNN",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [
-            "Reuters",
-            "CNBC"
-          ],
+          "credibility": "MID",
+          "corroborated_by": [],
           "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
+          "direction": "bearish",
+          "url": ""
         }
       ]
     },
@@ -122,50 +104,35 @@
       "ticker": "NQ=F",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "アルファベット決算後の売りでナスダックは取引中に約1.6％安。ハイテクの重さが続くか注目。",
+      "rationale": "ナスダックは1.4％安。アルファベット急落でAI投資の採算への警戒が再燃。",
       "catalysts": [
-        "アルファベット決算",
-        "米10年債利回り",
-        "利上げ観測"
+        "AI関連の決算",
+        "米長期金利"
       ],
       "top_news": [
         {
+          "headline": "NY株は大幅安、ナスダック1.4％安。アルファベットは売上未達で12〜13％下落",
           "published": "2026-10-29",
-          "comment": "ハイテク株安が米株全体の重しに。終値は要確認",
-          "source": "みんかぶ",
-          "tier": 3,
+          "comment": "AI投資の負担が嫌気され、ハイテク株全体の重しに",
+          "source": "Yahoo Finance / Investing.com",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://fx.minkabu.jp/news/383010",
-          "headline": "29日のNY株は下落、ナスダックは取引中に約1.6％安、ダウは約300ドル安"
+          "url": ""
         },
         {
-          "headline": "米株は小幅高、S&P500は7,744、ナスダックは26,550で引け。FRB会見への反応は限定的",
-          "published": "2026-10-28",
-          "comment": "据え置きは想定どおりで、決算に関心が向かった",
-          "source": "Reuters",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [
-            "CNBC"
-          ],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://www.staradvertiser.com/2026/10/28/breaking-news/wall-street-rises-as-fed-holds-rates-steady-earnings-in-focus/"
-        },
-        {
-          "headline": "アルファベットが決算後に約11％安、ハイテク株の重しに",
+          "headline": "米7-9月期GDP速報は予想を上回る。市場は12月の利上げ観測を意識",
           "published": "2026-10-29",
-          "comment": "大型ハイテクの決算次第で指数が振れやすい",
-          "source": "tbladvisory/株探",
-          "tier": 3,
-          "credibility": "LOW",
+          "comment": "成長の強さは利上げ観測を支え、株の重しになりうる",
+          "source": "Reuters系報道",
+          "tier": 2,
+          "credibility": "MID",
           "corroborated_by": [],
-          "materiality": "mid",
+          "materiality": "high",
           "direction": "bearish",
-          "url": "https://tbladvisory.com/20261029nkam/"
+          "url": ""
         }
       ]
     },
@@ -173,8 +140,8 @@
       "name": "金",
       "ticker": "GC=F",
       "bias": "NEUTRAL",
-      "conviction": "MID",
-      "rationale": "4,000ドル台前半でもみ合い。利上げ観測と原油高が重しで、地政学が下支え。",
+      "conviction": "LOW",
+      "rationale": "金は4,000ドル前後でもみ合いとみられるが、29日の確定値は未確認。利回り低下は下支え、利上げ観測は重し。",
       "catalysts": [
         "12月FOMC",
         "PCE",
@@ -218,13 +185,25 @@
       "ticker": "CL=F",
       "bias": "BULLISH",
       "conviction": "LOW",
-      "rationale": "WTIは100ドル超の高値圏。地政学の緊張が供給不安を支えるが、日中の変動が大きい。",
+      "rationale": "原油は高値圏だが29日は小幅安（ブレント約110.80ドル）。地政学の緊張が下値を支える一方、変動は大きい。",
       "catalysts": [
         "中東情勢",
         "在庫統計",
         "利上げ観測"
       ],
       "top_news": [
+        {
+          "headline": "原油は下落、ブレント約110.80ドル（0.8％安）。米10年債利回りは5.05％から4.94％へ低下",
+          "published": "2026-10-29",
+          "comment": "原油安が利回りを押し下げたが、水準自体は依然高い",
+          "source": "Investing.com",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": ""
+        },
         {
           "headline": "原油はWTI約100〜102ドル、ブレントは110ドル前後の高値圏で推移",
           "published": "2026-10-28",
@@ -246,13 +225,25 @@
       "ticker": "USDJPY",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "157.6〜158.1円のレンジ。日銀据え置き観測と米利上げ観測が拮抗、158円超では介入警戒。",
+      "rationale": "日銀の据え置きで円は買われにくい一方、米10年債利回りは4.94％へ低下。158円付近では介入警戒も意識される。",
       "catalysts": [
         "日銀会合結果（30日）",
         "米10年債利回り",
         "介入観測"
       ],
       "top_news": [
+        {
+          "headline": "日銀、政策金利1.25％で据え置き。ETF売却ペースは2027年1月から加速",
+          "published": "2026-10-30",
+          "comment": "据え置きは想定内でも、株の需給悪化懸念が売りを誘った",
+          "source": "Yahoo!ニュース",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": ""
+        },
         {
           "headline": "ドル円は157円台後半〜158円で小動き。日銀会合（29〜30日）と米追加利上げ観測が交錯",
           "published": "2026-10-29",
@@ -266,21 +257,6 @@
           "materiality": "high",
           "direction": "neutral",
           "url": "https://www.bloomberg.com/jp/news/articles/2026-10-28/TNJEA6KK3NY800?srnd=jp-homepage"
-        },
-        {
-          "headline": "FRBが政策金利3.75〜4.00%で据え置き、2人が利上げを主張して10対2の票決",
-          "published": "2026-10-28",
-          "comment": "利上げ派が2人いて、12月利上げ観測が残る",
-          "source": "CNN",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [
-            "Reuters",
-            "CNBC"
-          ],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.cnn.com/2026/10/28/business/live-news/federal-reserve-interest-rate-october"
         }
       ]
     },
@@ -332,7 +308,7 @@
       "ticker": "BTC-USD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "8.1万ドル前後で戻りは限定的。利上げ観測が続く間は上値が重い。",
+      "rationale": "ハイテク株安でリスク回避の流れ。利上げ観測が続く間は上値が重いが、新材料は乏しい。",
       "catalysts": [
         "米インフレ指標",
         "12月FOMC",
@@ -358,12 +334,12 @@
   ],
   "discarded": [
     {
-      "headline": "29日のNY株・為替の最終終値",
-      "reason": "検索時点で確定値が確認できず、取引中の数字のみ採用"
+      "headline": "金・ドル指数の29日終値",
+      "reason": "確定値を確認できず、時点不明の数字は不採用"
     },
     {
       "headline": "中国10月PMIの結果",
-      "reason": "該当する信頼できる報道が見つからず除外"
+      "reason": "信頼できる報道が見つからず除外"
     }
   ],
   "currencies": [
@@ -371,13 +347,13 @@
       "code": "USD",
       "lean": "NEUTRAL",
       "conviction": "MID",
-      "reason": "FRBは据え置きも12月利上げ観測が約85％。ただし米10年債利回りが5％を割りドル売りも出る。"
+      "reason": "GDP上振れで利上げ観測は続くが、米10年債利回りが低下しドル買いは限定的。"
     },
     {
       "code": "EUR",
       "lean": "WEAK",
-      "conviction": "HIGH",
-      "reason": "ECB据え置きとラガルド総裁の退任表明で売り。1.11ドル台の安値圏。"
+      "conviction": "MID",
+      "reason": "ECB据え置きとラガルド総裁の早期退任表明で、ユーロは安値圏が続く。"
     },
     {
       "code": "GBP",
@@ -387,9 +363,9 @@
     },
     {
       "code": "JPY",
-      "lean": "NEUTRAL",
+      "lean": "WEAK",
       "conviction": "LOW",
-      "reason": "日銀据え置き観測で円買いは限定的。NY株安は円の下支え要因にもなりうる。"
+      "reason": "日銀は1.25％で据え置き。株安は円の下支えだが、金利差は縮まらない。"
     },
     {
       "code": "AUD",
