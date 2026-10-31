@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-10-31", "line": '・<b>2026-10-31</b>: 📰 解説「<a href="guide-news-2026-10-31.html" style="color:#0969da"><b>【10/31】インテル株29%急落・1974年以来最大の下落</b></a>」公開'},
         {"date": "2026-10-31", "line": '・<b>2026-10-31</b>: 🔬 解説「<a href="guide-company-8801-mitsui-fudosan.html" style="color:#0969da"><b>三井不動産</b></a>」公開'},
         {"date": "2026-10-31", "line": '・<b>2026-10-31</b>: 🧪 解説「<a href="guide-signal-lab-135.html" style="color:#0969da"><b>ビットコインの買いは前向きで勝ちやすかった？【研究日誌 #135】</b></a>」公開'},
         {"date": "2026-10-30", "line": '・<b>2026-10-30</b>: 📰 解説「<a href="guide-news-2026-10-30.html" style="color:#0969da"><b>【10/30】日銀1.25%据え置き・ETF売却2.6倍加速・日経-1,369円</b></a>」公開'},
