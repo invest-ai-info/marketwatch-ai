@@ -1087,7 +1087,7 @@
 
 **テーマ**: トレンドが強い場面の順張りは、前向き144回でも負けやすい？——判定まであと16回（定点観測・rl_tf_adx_strong・#128の続き）
 **仮説ID**: rl_tf_adx_strong
-**ファイル**: draft-signal-lab-137.html（下書き中）
+**ファイル**: guide-signal-lab-137.html（公開済み）
 **claims**: drafts/labnotes/lab-137-claims.json
 **分析メモ**: drafts/labnotes/lab-137-analysis.md
 
