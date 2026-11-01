@@ -1,0 +1,142 @@
+{
+ "article_id": "137",
+ "asof": "2026-11-02T06:13:00+09:00",
+ "hypothesis_id": "rl_tf_adx_strong",
+ "claims": [
+  {
+   "label": "FWD：順張り・トレンド強の勝ち回数",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "fired_from": "2026-09-27"
+   },
+   "k": 49,
+   "n": 144
+  },
+  {
+   "label": "FWD：順張り・トレンド弱（対照）の勝ち回数",
+   "filter": {
+    "family": "tf",
+    "adx_band": "weak",
+    "fired_from": "2026-09-27"
+   },
+   "k": 56,
+   "n": 131
+  },
+  {
+   "label": "FWD：順張り全体の勝ち回数",
+   "filter": {
+    "family": "tf",
+    "fired_from": "2026-09-27"
+   },
+   "k": 123,
+   "n": 343
+  },
+  {
+   "label": "FWD：全シグナルの勝ち回数",
+   "filter": {
+    "fired_from": "2026-09-27"
+   },
+   "k": 225,
+   "n": 621
+  },
+  {
+   "label": "IS：順張り・トレンド強（登録前）の勝ち回数",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "fired_before": "2026-09-27"
+   },
+   "k": 443,
+   "n": 1070
+  },
+  {
+   "label": "FWD：トレンド強・買い",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "direction": "long",
+    "fired_from": "2026-09-27"
+   },
+   "k": 16,
+   "n": 60
+  },
+  {
+   "label": "FWD：トレンド強・売り",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "direction": "short",
+    "fired_from": "2026-09-27"
+   },
+   "k": 33,
+   "n": 84
+  },
+  {
+   "label": "FWD：トレンド強・株価指数",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "group": "index",
+    "fired_from": "2026-09-27"
+   },
+   "k": 21,
+   "n": 43
+  },
+  {
+   "label": "FWD：トレンド強・円がらみFX",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "group": "jpy_fx",
+    "fired_from": "2026-09-27"
+   },
+   "k": 5,
+   "n": 28
+  },
+  {
+   "label": "FWD：トレンド強・円がからないFX",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "group": "other_fx",
+    "fired_from": "2026-09-27"
+   },
+   "k": 14,
+   "n": 37
+  },
+  {
+   "label": "FWD：トレンド強・金銀",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "group": "metal",
+    "fired_from": "2026-09-27"
+   },
+   "k": 4,
+   "n": 14
+  },
+  {
+   "label": "FWD：トレンド強・ビットコイン",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "group": "btc",
+    "fired_from": "2026-09-27"
+   },
+   "k": 3,
+   "n": 16
+  },
+  {
+   "label": "FWD：トレンド強・原油",
+   "filter": {
+    "family": "tf",
+    "adx_band": "strong",
+    "group": "oil",
+    "fired_from": "2026-09-27"
+   },
+   "k": 1,
+   "n": 5
+  }
+ ]
+}
