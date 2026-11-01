@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-11-01
+- 判定: ✅ 公開済み
+- 選定トピック: バイナンス史上最大の暗号資産流出63億ドル──FBIが北朝鮮TraderTraitorの関与を断定、暗号資産市場への影響を中立整理（カテゴリ: 暗号資産・セキュリティ・地政学）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典:
+  - FBI公式声明「North Korea TraderTraitor Binance hack」2026-10-31（一次情報）
+  - Binance公式発表（内部資金充当・出金再開）2026-10-31〜11-01
+  - NBC News「FBI says North Korea was behind the $6.3 billion Binance crypto hack」2026-10-30 https://www.nbcnews.com/business/business-news/fbi-says-north-korea-was-6-billion-binance-crypto-hack-rcna606758
+  - Al Jazeera「FBI blames North Korea for record $6.3bn crypto heist from Binance」2026-11-01 https://www.aljazeera.com/news/2026/11/1/fbi-blames-north-korea-for-record-6-3bn-crypto-heist
+  - CNBC「Binance's $6.3 billion hack: What we know and what comes next」2026-10-30 https://www.cnbc.com/2026/10/30/billions-in-crypto-frozen-in-binance-hack-heres-what-happens-next-.html
+  - CoinDesk「FBI confirms North Korea's role in $6 billion Binance hack」2026-10-31 https://www.coindesk.com/policy/2026/10/31/fbi-confirms-north-korea-s-role-in-usd6-billion-binance-hack-asks-defi-community-to-block-btc-eth-sol-addresses
+  - Elliptic「The largest theft in history: North Korea likely behind the $6.4 billion Binance hack」2026-11-01 https://www.elliptic.co/insights/binance-largest-hack-in-history/
+  - ABC News「FBI blames North Korea for the Binance crypto hack」2026-11-01 https://www.abc.net.au/news/2026-11-01/fbi-blames-north-korea-binance-cryptocurrency-exchange-hack/107333446
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（数値整合性の補足文追加）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 事実精度3件（90%数値矛盾修正・2019年流出額修正・Binance Japan曖昧表現削除）→修正後🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典8系統 ✅ / noindexなし ✅）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告56件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-01.html
+- commit: 959c684（main へ push 済み）
+
+---
+
 ## 2026-10-31
 - 判定: ✅ 公開済み
 - 選定トピック: インテル Q4ガイダンスが大幅下振れ──株価29%急落・1974年以来最大の下落、世界の半導体株に波及した背景を中立整理（カテゴリ: 半導体・AI・米国株）
