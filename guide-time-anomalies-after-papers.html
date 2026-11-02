@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>“時間の癖”は論文のあとも残っているのか？ 月末月初・祝日・朝の窓・月末の為替を費用込みで数えた - MarketWatch AI</title>
+  <meta name="description" content="株価指数や為替で報告されてきた“時間の癖”（月末月初・祝日の前・朝の窓・月末の為替）が、論文のあとも残っているかを、売り買いの差と持ち越しの金利を引いたあとで、事前登録して1回だけ数えました。傾向が残ったのは一部だけ。結果を整理します。">
+  <meta name="keywords" content="時間の癖,アノマリー,月末月初,祝日の前,朝の窓,月末の為替,取引コスト,事前登録,投資初心者">
+  <link rel="canonical" href="https://marketwatch-jp.com/guide-time-anomalies-after-papers.html">
+  <!-- OGP -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="“時間の癖”は論文のあとも残っているのか？ 月末月初・祝日・朝の窓・月末の為替を費用込みで数えた">
+  <meta property="og:description" content="株価指数や為替で報告されてきた“時間の癖”（月末月初・祝日の前・朝の窓・月末の為替）が、論文のあとも残っているかを、売り買いの差と持ち越しの金利を引いたあとで、事前登録して1回だけ数えました。傾向が残ったのは一部だけ。結果を整理します。">
+  <meta property="og:url" content="https://marketwatch-jp.com/guide-time-anomalies-after-papers.html">
+  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://marketwatch-jp.com/08_market_stock.png">
+  <!-- 構造化データ（記事） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "“時間の癖”は論文のあとも残っているのか？ 月末月初・祝日・朝の窓・月末の為替を費用込みで数えた",
+    "description": "株価指数や為替で報告されてきた“時間の癖”（月末月初・祝日の前・朝の窓・月末の為替）が、論文のあとも残っているかを、売り買いの差と持ち越しの金利を引いたあとで、事前登録して1回だけ数えました。傾向が残ったのは一部だけ。結果を整理します。",
+    "author": {"@type": "Organization", "name": "MarketWatch AI"},
+    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "datePublished": "2026-11-02",
+    "dateModified": "2026-11-02",
+    "mainEntityOfPage": "https://marketwatch-jp.com/guide-time-anomalies-after-papers.html"
+  }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FMVFEV7Q2E');
+  </script>
+  <!-- 広告なし（2026-09-25 オーナー指示「広告はなしでいいです」）＝Google AdSense の読み込みも入れない -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Noto Sans JP','Segoe UI','Hiragino Sans','Yu Gothic',sans-serif;background:#ffffff;color:#1f2328;min-height:100vh;line-height:1.85}
+    header{background:linear-gradient(135deg,#f6f8fa,#ffffff);border-bottom:1px solid #d0d7de;padding:24px 32px}
+    .header-inner{max-width:1200px;margin:0 auto}
+    .header-title{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .header-meta{font-size:.85rem;color:#57606a;margin-top:4px}
+    main{max-width:1200px;margin:0 auto;padding:32px 24px}
+    .nav-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 32px}
+    .nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;transition:all .2s;min-width:170px}
+    .nav-btn:hover{border-color:#0969da;color:#0969da}
+    .nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}
+    .breadcrumb{font-size:.82rem;color:#57606a;margin-bottom:16px}
+    .breadcrumb a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    .breadcrumb a:hover{text-decoration:underline}
+    .article{background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:36px 40px}
+    h1{font-size:1.95rem;color:#1E3A6E;margin-bottom:8px;line-height:1.4}
+    .meta-line{font-size:.85rem;color:#57606a;margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid #d0d7de}
+    h2{font-size:1.35rem;color:#2C4F8F;margin-top:36px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #d0d7de}
+    h3{font-size:1.1rem;color:#1f2328;margin-top:24px;margin-bottom:10px}
+    p{font-size:.97rem;color:#424a53;margin-bottom:16px}
+    ul,ol{margin:10px 0 18px 28px;color:#424a53}
+    li{margin-bottom:8px;font-size:.95rem}
+    strong{color:#0969da;font-weight:700}
+    a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    a:hover{text-decoration:underline}
+    code{background:#ffffff;padding:2px 8px;border-radius:4px;font-size:.92rem;color:#1f6feb}
+    .disclaimer-banner{background:#fff8c5;border:1px solid #d4a017;border-radius:8px;padding:14px 18px;margin-bottom:24px;font-size:.88rem;color:#6a4c00;font-weight:600}
+    .toc{background:#ffffff;border:1px solid #54aeff;border-radius:10px;padding:20px 24px;margin:24px 0}
+    .toc-title{font-size:.95rem;color:#0969da;font-weight:700;margin-bottom:10px}
+    .toc ol{margin:0 0 0 22px;font-size:.92rem}
+    .toc li{margin-bottom:6px}
+    table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.93rem}
+    th,td{padding:11px 14px;border-bottom:1px solid #d0d7de;text-align:left}
+    th{background:#ffffff;color:#1f6feb;font-weight:600;font-size:.88rem}
+    td:first-child{font-weight:700;white-space:nowrap}
+    @media (max-width:600px){td:first-child{white-space:normal}th,td{padding:9px 8px}}
+    .info-box{background:#ddf4ff;border-left:4px solid #0969da;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1f6feb}
+    .info-box strong{color:#0969da}
+    .warning-box{background:#fff8c5;border-left:4px solid #9a6700;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.92rem;color:#9a6700}
+    .warning-box::before{content:"⚠️ ";font-weight:700}
+    .positive-box{background:#e6ffed;border-left:4px solid #1a7f37;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#1a7f37}
+    .negative-box{background:#ffebe9;border-left:4px solid #cf222e;border-radius:6px;padding:16px 20px;margin:18px 0;font-size:.93rem;color:#cf222e}
+    .cta-box{background:linear-gradient(135deg,#ddf4ff,#f6f8fa);border:1px solid #0969da;border-radius:12px;padding:22px 26px;margin:28px 0;text-align:center}
+    .cta-box-title{font-size:1.05rem;color:#0969da;font-weight:700;margin-bottom:8px}
+    .cta-box-desc{font-size:.88rem;color:#57606a;margin-bottom:14px}
+    .cta-btn{display:inline-block;padding:12px 28px;background:#0969da;border:1px solid #0969da;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;transition:all .2s}
+    .cta-btn:hover{background:#218bff;text-decoration:none}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+    .related-card{background:#ffffff;border:1px solid #d0d7de;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .2s;display:block}
+    .related-card:hover{border-color:#0969da;text-decoration:none}
+    .related-card-title{font-size:.92rem;font-weight:700;color:#1f6feb;margin-bottom:4px}
+    .related-card-desc{font-size:.78rem;color:#57606a;line-height:1.55}
+    p.disclaimer{font-size:.8rem;color:#6e7781;line-height:1.7;margin-top:28px;padding-top:18px;border-top:1px dashed #d0d7de}
+    footer{background:#f6f8fa;border-top:1px solid #d0d7de;padding:20px 32px;text-align:center;font-size:.78rem;color:#6e7781;margin-top:40px}
+    footer a{color:#2C4F8F;text-decoration:underline;text-underline-offset:2px}
+    /* エントリー方法の研究 概念図（インラインSVG・ライト/ダーク両対応） */
+    .chart-figure{margin:22px 0}
+    .chart-figure svg{width:100%;height:auto;display:block;background:#ffffff;border:1px solid #d0d7de;border-radius:8px}
+    .chart-caption{font-size:.82rem;color:#57606a;margin-top:8px;line-height:1.65;text-align:center}
+    .s-label-sm{fill:#6e7781;font-size:12px;font-family:'Noto Sans JP',sans-serif}
+    .s-axis{stroke:#8b949e;stroke-width:1.3}
+    .s-legend{fill:#424a53;font-size:13px;font-family:'Noto Sans JP',sans-serif}
+    .s-panel-label{fill:#6e7781;font-size:12.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note{fill:#0969da;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-g{fill:#1a7f37;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-note-r{fill:#cf222e;font-size:11.5px;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+    .s-divv{stroke:#d0d7de;stroke-width:1;stroke-dasharray:3 3}
+    .s-bar-a{fill:#0969da;opacity:.85}
+    .s-bar-b{fill:#54aeff;opacity:.85}
+    .s-bar-c{fill:#9a6700;opacity:.8}
+    @media(max-width:700px){
+      .article{padding:24px 20px}
+      h1{font-size:1.45rem}
+      .nav-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}
+    }
+    #reading-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);z-index:9998;transition:width .1s ease-out}
+    body.dark{background:#0d1117;color:#e6edf3}
+    body.dark header{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}
+    body.dark .header-meta{color:#8b949e}
+    body.dark .article{background:#161b22;border-color:#30363d}
+    body.dark .nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}
+    body.dark .nav-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    body.dark .nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}
+    body.dark .breadcrumb{color:#8b949e}
+    body.dark .meta-line{color:#8b949e;border-bottom-color:#30363d}
+    body.dark p,body.dark li{color:#c9d1d9}
+    body.dark h2{color:#79c0ff;border-bottom-color:#30363d}
+    body.dark h3{color:#e6edf3}
+    body.dark strong{color:#79c0ff}
+    body.dark a{color:#79c0ff}
+    body.dark code{background:#0d1117;color:#79c0ff}
+    body.dark .toc{background:#0d1117;border-color:#1f6feb}
+    body.dark .toc-title{color:#79c0ff}
+    body.dark th{background:#0d1117;color:#79c0ff}
+    body.dark td,body.dark th{border-bottom-color:#30363d}
+    body.dark .related-card{background:#0d1117;border-color:#30363d}
+    body.dark .related-card-title{color:#79c0ff}
+    body.dark .related-card-desc{color:#8b949e}
+    body.dark .info-box{background:#1a2030;color:#79c0ff;border-left-color:#1f6feb}
+    body.dark .warning-box{background:#2a1f0e;color:#d4a017}
+    body.dark .positive-box{background:#162416;color:#7ee787;border-left-color:#2ea043}
+    body.dark .negative-box{background:#2a1010;color:#ff8080;border-left-color:#cf222e}
+    body.dark .disclaimer-banner{background:#2a1f0e;border-color:#d4a017;color:#d4a017}
+    body.dark footer{background:#161b22;border-top-color:#30363d;color:#8b949e}
+    body.dark footer a{color:#79c0ff}
+    body.dark p.disclaimer{color:#8b949e;border-top-color:#30363d}
+    body.dark #theme-toggle{background:#161b22;border-color:#30363d;color:#fff}
+    body.dark .chart-figure svg{background:#0d1117;border-color:#30363d}
+    body.dark .chart-caption{color:#8b949e}
+    body.dark .s-label-sm{fill:#8b949e}
+    body.dark .s-axis{stroke:#8b949e}
+    body.dark .s-legend{fill:#c9d1d9}
+    body.dark .s-panel-label{fill:#8b949e}
+    body.dark .s-note{fill:#79c0ff}
+    body.dark .s-note-g{fill:#7ee787}
+    body.dark .s-note-r{fill:#ff8080}
+    body.dark .s-divv{stroke:#30363d}
+    body.dark .s-bar-a{fill:#58a6ff}
+    body.dark .s-bar-b{fill:#1f6feb}
+    body.dark .s-bar-c{fill:#d29922}
+    /* 結果の表（長い文が折り返す） */
+    table.res{table-layout:auto}
+    table.res th,table.res td{white-space:normal;vertical-align:top;line-height:1.65;font-size:.88rem}
+    table.res td:first-child{white-space:normal;font-weight:600;min-width:9em}
+    table.res td:last-child{white-space:nowrap;font-weight:600}
+    @media(max-width:600px){table.res{display:table;font-size:.78rem}table.res th,table.res td{white-space:normal;padding:8px 6px}table.res td:last-child{white-space:normal}}
+  /* readable-width v1 (2026-07-29) */@media(min-width:900px){.article p{max-width:40em}}
+  </style>
+<style id="mw-mobile-fit">
+/* 📱 スマホ最適化 v3（fix_mobile_overflow.py が注入）: 数字は桁割れさせない・スマホの表は折り返さず横スクロール＋スクロール誘導・左右余白を圧縮 */
+html,body{overflow-x:hidden}
+.article,main,section,header,footer{max-width:100%}
+*{overflow-wrap:break-word;word-break:normal}
+img,svg,iframe,video{max-width:100%!important;height:auto}
+pre,code{white-space:pre-wrap;overflow-wrap:break-word}
+td strong,td b,th strong{white-space:nowrap}
+.mw-scroll-hint{font-size:.72rem;color:#8b949e;margin:2px 2px 14px;text-align:right;font-weight:500}
+@media(min-width:601px){.mw-scroll-hint{display:none}}
+@media(max-width:600px){
+  body{font-size:.9rem;line-height:1.7}
+  .article{padding:14px 11px}
+  h1{font-size:1.26rem;line-height:1.4}
+  h2{font-size:1.08rem}
+  /* スマホでは表を無理に収めず「表の中だけ」横スクロール（PC表示は変えない）。セルは折り返さず1行＝数字も説明も縦に割れない */
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:.8rem}
+  th,td{padding-left:6px;padding-right:6px;white-space:nowrap}
+  .meta-line,.chart-cap,.disclaimer,.related-card-desc{font-size:.74rem}
+}
+@media(max-width:380px){
+  body{font-size:.86rem}
+  .article{padding:12px 8px}
+  table{font-size:.76rem}
+}
+</style>
+<script id="mw-mobile-fit-js">
+(function(){try{
+function mark(){
+if(window.innerWidth>600)return;
+var ts=document.getElementsByTagName('table');
+for(var i=0;i<ts.length;i++){(function(t){
+if(t.getAttribute('data-mw-sc'))return;
+if(t.scrollWidth-t.clientWidth>4){
+t.setAttribute('data-mw-sc','1');
+var h=document.createElement('div');
+h.className='mw-scroll-hint';
+h.textContent='\u2192 \u6a2a\u306b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u304d\u307e\u3059';
+if(t.parentNode)t.parentNode.insertBefore(h,t.nextSibling);
+t.addEventListener('scroll',function(){if(t.scrollLeft>8){h.style.display='none';}},{passive:true});
+}
+})(ts[i]);}
+}
+if(document.readyState!=='loading'){mark();}else{document.addEventListener('DOMContentLoaded',mark);}
+window.addEventListener('resize',mark);
+}catch(e){}})();
+</script>
+<style data-mw-frame>@media(min-width:900px){.nav-bar{display:flex;flex-wrap:wrap;justify-content:center;max-width:1140px;gap:10px}.nav-bar .nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}nav.nav-bar.mwf-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:1000px;margin:0 auto 28px;padding:0;background:none;border:0;box-shadow:none;position:static;box-sizing:border-box}body>nav.nav-bar.mwf-nav{margin-top:24px;padding:0 16px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;background:#f6f8fa;border:1px solid #d0d7de;border-radius:10px;color:#57606a;text-decoration:none;font-size:.95rem;font-weight:600;line-height:1.4;margin:0;transition:all .2s;min-width:170px}nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#0969da;color:#0969da}nav.nav-bar.mwf-nav a.nav-btn.current{background:#1E3A6E;border-color:#1E3A6E;color:#fff}@media(max-width:700px){nav.nav-bar.mwf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}nav.nav-bar.mwf-nav a.nav-btn{min-width:0;width:100%;padding:10px 8px;font-size:.82rem}}@media(min-width:900px){nav.nav-bar.mwf-nav{max-width:1140px}nav.nav-bar.mwf-nav a.nav-btn{box-sizing:border-box;flex:0 0 calc((100% - 50px)/6);min-width:0;padding:11px 8px;font-size:.9rem;white-space:nowrap}}body.dark nav.nav-bar.mwf-nav a.nav-btn{background:#161b22;border-color:#30363d;color:#8b949e}body.dark nav.nav-bar.mwf-nav a.nav-btn:hover{border-color:#58a6ff;color:#58a6ff}body.dark nav.nav-bar.mwf-nav a.nav-btn.current{background:#2C4F8F;border-color:#58a6ff;color:#fff}header[data-mw-frame]{box-sizing:border-box;display:block;background:linear-gradient(135deg,#f6f8fa,#fff);border-bottom:1px solid #d0d7de;padding:24px 32px;margin:0;text-align:left;position:static;box-shadow:none;color:#1f2328}header[data-mw-frame] .header-inner{display:block;max-width:1200px;margin:0 auto;padding:0}header[data-mw-frame] .header-title{font-size:1.6rem;font-weight:700;line-height:1.3;max-width:none;margin:0;padding:0;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header[data-mw-frame] .header-meta{font-size:.85rem;color:#57606a;margin:4px 0 0}@media(max-width:700px){header[data-mw-frame]{padding:18px 20px}}body.dark header[data-mw-frame]{background:linear-gradient(135deg,#161b22,#0d1117);border-bottom-color:#30363d}body.dark header[data-mw-frame] .header-meta{color:#8b949e}div.mw-ad{margin-top:40px;margin-bottom:40px}.mw-subbrand{font-size:1.02rem;font-weight:700;letter-spacing:.05em;line-height:1.4;margin:1px 0 0 35px;color:#9A6700;-webkit-text-fill-color:currentColor;background:none}body.dark .mw-subbrand{color:#E8A317}@media(max-width:700px){.mw-subbrand{font-size:.95rem}}@media(max-width:400px){header div:has(+ .mw-subbrand){font-size:max(1.1rem,min(1.6rem,calc((100vw - 180px) / 7.9)))!important}}</style>
+</head>
+<body>
+
+<div id="reading-progress"></div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="mw-subbrand">AI投資×行動経済学</div>
+    <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
+    <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
+  </div>
+</header>
+
+<main>
+  <nav class="nav-bar">
+    <a class="nav-btn" href="index.html">🏠 トップページ</a>
+    <a class="nav-btn" href="political-feed.html">🚨 政治発言ライブ</a>
+    <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
+    <a class="nav-btn" href="calendar.html">📅 経済カレンダー</a>
+    <a class="nav-btn current" href="guides.html">📚 解説記事</a>
+    <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
+    <a class="nav-btn" href="holdings.html">🏦 大量保有報告</a>
+    <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
+    <a class="nav-btn" href="hot-assets.html">🔥 出来高急増</a>
+    <a class="nav-btn" href="charts.html">📈 150年チャート</a>
+    <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">トップ</a> &gt; <a href="guides.html">解説記事</a> &gt; “時間の癖”は論文のあとも残っているのか
+  </div>
+
+  <article class="article">
+    <div class="disclaimer-banner" data-disclaimer="kinsho-v1">⚠️ 本記事は、過去のデータで“時間の癖”を数えた結果を整理した「情報提供」であり、特定の手法・銘柄・商品の売買を勧めるものではありません。過去の成績は将来の成果を約束しません。投資判断はご自身の責任でお願いします。</div>
+
+    <h1>🕰️ “時間の癖”は論文のあとも残っているのか？ 月末月初・祝日・朝の窓・月末の為替を費用込みで数えた</h1>
+    <div class="meta-line">公開：2026年11月2日 ／ 読了時間：約 10 分 ／ カテゴリ：解説</div>
+
+    <p>「月末月初は株が上がりやすい」「祝日の前は株が上がる」「朝にあいた窓（前日の終値と朝の始値のあいだの値のとび）は埋まりやすい」。こうした“時間の癖”は、投資の世界では「アノマリー」（理由ははっきりしないものの、過去のデータで繰り返し報告されてきた値動きの癖）と呼ばれ、株価指数や為替を対象に、たくさんの論文で報告されてきました。</p>
+    <p>ただ、論文で報告された癖が、論文が出たあとも残っているかは、別の問題です。論文が出れば多くの投資家がその癖を知るため、弱まるものも多い、という見方があります。また、論文の数字は、売り買いの差（スプレッド：買うときの値段と売るときの値段のひらき）や、持ち越しの金利を引く前のことがあります。</p>
+    <p>そこで当サイトは、有名な“時間の癖”を、売り買いの差と持ち越しの金利を引いたあとで、数える前に決まりを書いておいて（事前登録）、1回だけ数えました。月末月初の癖が見つかった経緯は、シリーズの別記事（<a href="guide-entry-turn-of-month.html">月替わり</a>）にまとめています。この記事は、その「あと」を数えた結果の整理です。売買を勧める記事ではなく、傾向が残ったものも、残らなかったものも、そのまま載せます。</p>
+
+    <h2>📌 この記事の結論（30秒まとめ）</h2>
+    <ul>
+      <li>売り買いの差と持ち越しの金利を引いたあとでも「◯ 傾向」が残ったのは、米国株の月末月初と、日本株の早い窓（月の最後の5日と翌月の最初の2日）の2つだけでした。</li>
+      <li>傾向が出た2つも「確定」ではありません。どちらも、偶然の当たりを避けるための関門（p値 0.0125）には届いていません（米国株は0.0437、日本株の早い窓は0.0132でわずかに手前）。また、日本株の早い窓は、期間を半分に分けた後半でほとんど消えていました。</li>
+      <li>日本株の通常の月末月初、祝日の前、連休の前、ほかの国の月末月初、朝の窓、夜の上げ、米国株の日中の勢い、月末の為替は、費用を引いたあと、偶然と区別できる差は見えませんでした（判定は「差なし」。米国株の朝の窓と日中の勢いは、費用を引くとむしろマイナスでした）。</li>
+      <li>「差なし」は癖が無いと言い切るものではなく、「傾向」も今後続くという意味ではありません。傾向が出た2つは、2026年10月から新しい月だけで前向きに数える観察を始めましたが、結果はまだありません（2026年11月2日時点）。</li>
+    </ul>
+
+    <div class="toc">
+      <div class="toc-title">📋 この記事の目次</div>
+      <ol>
+        <li><a href="#section-1">どんな癖を、どう数えたか</a></li>
+        <li><a href="#section-2">結果の一覧</a></li>
+        <li><a href="#section-3">結果から読み取れること</a></li>
+        <li><a href="#section-4">「差なし」「傾向」の読み方と限界</a></li>
+        <li><a href="#section-5">前向きの観察</a></li>
+        <li><a href="#section-6">まとめ（4つの学び）</a></li>
+      </ol>
+    </div>
+
+    <!-- Section 1 -->
+    <h2 id="section-1">1️⃣ どんな癖を、どう数えたか</h2>
+    <h3>数え方の決まり</h3>
+    <ul>
+      <li><strong>事前登録：</strong>結果を見る前に、何を、どの期間で、どうなったら「傾向」とするかを書いて、日付つきで残しました。当サイト全体の検証のしかた（先に決めて、あとから前向きに確かめる）は、<a href="guide-how-we-research.html">はじめての方へ</a>に書いています。</li>
+      <li><strong>1回だけ数える：</strong>結果を見てから決まりを変えて、数え直すことはしません。</li>
+      <li><strong>費用を引く：</strong>どの結果も、売り買いの差と持ち越しの金利を引いたあとの「1回あたりの平均」です（下の枠を参照）。</li>
+      <li><strong>95%の幅：</strong>同じ数え方を何度もくり返したとき、本当の平均が入ると見込まれる範囲のめやすです。幅が0をまたいでいれば、平均がプラスともマイナスとも言い切れません。</li>
+      <li><strong>関門とp値：</strong>p値は、「本当は癖がなくても、偶然ここまで出る確率」のめやすです。問いが複数あると偶然の当たりが出やすくなるため、p値の基準を問いの数で割って厳しくします。たとえば、米国株と日本株の月末月初、日本株の早い窓、米国株の日中の勢いの4つの問いなら、0.05を4で割った0.0125が関門です。p値がこの関門より小さいときに、はじめて偶然の当たりではない可能性が高いと見ます。</li>
+      <li><strong>前半と後半：</strong>期間を半分に分けて、前半と後半で同じように出るかを見ます。どの期間も、もとの論文が出たあとから始めています。前半と後半に分けるのは、時期によって癖の出方が変わっていないかを確かめるためです。</li>
+      <li><strong>ふつうの日との比較：</strong>月末月初の上げには、相場全体の上げも含まれます。同じ長さのふつうの日と比べて、上乗せ分があるかを見ます。</li>
+    </ul>
+
+    <div class="info-box"><strong>費用の前提：</strong> 株価指数は、売り買いの往復で0.02〜0.05%の費用に加えて、持ち越しの金利として、年3%を日割りにし、持った日数（土日・祝日を含む）の分を引きました（その日のうちに手放す朝の窓・日中の勢いには、持ち越しの金利はかかりません）。為替は、円のペアで往復1.2ピップス、それ以外のペアで往復1.8ピップスを引きました（ピップスは、為替の値動きを数える小さな単位です）。為替の①（日足の近い形）は、1晩の持ち越しの金利を入れていません。実際の費用は、業者・時間帯・注文の出し方で変わります。</div>
+
+    <h3>何を数えたか</h3>
+    <p>米国株はS&amp;P500（米国の大手企業の株価指数）、日本株は日経平均（日本の代表的な企業の株価指数）で数えました。数えた癖は、次のとおりです。</p>
+    <ul>
+      <li><strong>米国株の月末月初：</strong>月の最後の日と、翌月の最初の3日を持つ、という決まりで数えました。月末月初に株が上がりやすいという傾向は、米国だけでなく多くの国で報告されてきました（マコネル氏とシュー氏の論文、2008年が代表的です）。月の最後の日から翌月の3日目までに上げが集まることは、ラコニショック氏とスミット氏の論文（1988年）が早くに報告しており、米国株はその翌年の1989年から数えています。</li>
+      <li><strong>日本株の月末月初：</strong>米国株と同じ窓、つまり月の最後の日と翌月の最初の3日を持つ、という決まりで数えました。</li>
+      <li><strong>日本株の早い窓：</strong>月の最後の5日と、翌月の最初の2日を持つ、という決まりで数えました。</li>
+      <li><strong>米国株の日中の勢い：</strong>その日の朝の値動きの向きに、引け前の30分だけ持つ、という決まりで数えました。</li>
+      <li><strong>日本の祝日の前の日：</strong>日経平均を、祝日の前の日に1日だけ持つ、という決まりで数えました。休場の平日が2日以上続く連休の前の日も、別に数えました。</li>
+      <li><strong>ほかの国の月末月初：</strong>ドイツ・英国・フランス・ユーロ圏50・スペイン・豪州・香港の株価指数で、それぞれの月末月初の窓を持つ、という決まりで数えました。</li>
+      <li><strong>朝の窓：</strong>日本では前日の終値と朝の始値のあいだに0.5%以上の窓があいた日に、窓を埋める向きに持つ、という決まりで数えました。米国の朝の窓も、同じ考え方で数えました。</li>
+      <li><strong>夜の上げ：</strong>日本株と米国株で、終値で持ち、翌朝の始値で手放す、という決まりで数えました。</li>
+      <li><strong>月末の為替：</strong>月末のロンドン16時（為替の基準になる値決めが行われる時刻）の前に、その月に米国より株が上がった国の通貨（ユーロ・ポンド・円・豪ドル）を売る（下回った国の通貨は買う）、という決まりで数えました。</li>
+    </ul>
+
+    <p>日本の早い窓については、次の見方をもとにしています。日本では給料日が月の下旬に多いため、月末月初の上げが米国より早い時期に出る、という見方があり、<a href="https://www.sciencedirect.com/science/article/abs/pii/092214259190001S" target="_blank" rel="noopener">Ziemba 氏（1991年）</a>の論文がその出どころとしてよく紹介されています（当サイトは書誌情報と要旨までを確認し、本文は確認していません）。当サイトはこの見方をもとに、窓を「月の最後の5日と、翌月の最初の2日」と、米国の窓より早めにずらして数えました。</p>
+    <p>月末の為替についても同じです。月末に、海外の株を持つ投資家が為替の備えを調整するため、ロンドン16時の値決めの前に、その月に株が上がった国の通貨が下がりやすい、という見方があり、<a href="https://ideas.repec.org/a/eee/finmar/v22y2015icp50-72.html" target="_blank" rel="noopener">Melvin 氏と Prins 氏（2015年）</a>の論文が出どころの一つとして紹介されています（こちらも書誌情報と要旨までを確認し、本文は確認していません）。</p>
+
+    <div class="warning-box">この記事の数字は、過去のデータで数えた結果です。過去の成績は、将来の成果を約束しません。ここで見る“癖”が、これからも同じように出るとは限りません。</div>
+
+    <!-- Section 2 -->
+    <h2 id="section-2">2️⃣ 結果の一覧</h2>
+    <p>結果を4つのグループに分けて、表にまとめます。数字は、特に書いていないかぎり、売り買いの差と持ち越しの金利（かかるもの）を引いたあとの「1回あたりの平均」で、カッコの中は95%の幅です。特に書いていないものは、費用を引いたあとの数字です。</p>
+
+    <h3>① 月末月初</h3>
+    <table class="res">
+      <tr><th>問い</th><th>期間・回数</th><th>結果（費用後の1回あたり平均と95%の幅）</th><th>判定</th></tr>
+      <tr><td>米国株（S&amp;P500）の月末月初：月の最後の日と翌月の最初の3日を持つ</td><td>1989〜2026年9月・452回</td><td>+0.232%（+0.041%〜+0.420%）。前半は+0.330%、後半は+0.135%。p値は0.0437で、関門の0.0125には届かず</td><td>◯ 傾向</td></tr>
+      <tr><td>日本株（日経平均）の同じ窓</td><td>1992〜2026年9月・416回</td><td>+0.087%（−0.223%〜+0.394%）。2010年代は−0.249%、2020年からは−0.113%</td><td>差なし</td></tr>
+      <tr><td>日本株の早い窓：月の最後の5日と翌月の最初の2日を持つ</td><td>1992〜2026年9月・416回</td><td>+0.355%（+0.017%〜+0.695%）。前半は+0.675%、後半は+0.034%。p値は0.0132で、関門の0.0125のわずか手前</td><td>◯ 傾向</td></tr>
+      <tr><td>ほかの国（ドイツ・英国・フランス・ユーロ圏50・スペイン・豪州・香港）の月末月初</td><td>2009年1月〜2026年9月・1,491回（7つの指数をまとめて）</td><td>+0.000%（−0.282%〜+0.287%）。ふつうの日との差は−0.014%、p値は0.537。香港だけ+0.272%だが、判定には使わない「読むための数字」</td><td>差なし</td></tr>
+    </table>
+    <p>ほかの国は、7つの指数をまとめた結果で判定しました。1つひとつを別々に見ると、偶然でも高く出るものが混ざりやすいためです。香港の+0.272%は、そのまま使わず、読むための数字として載せています。</p>
+
+    <h3>② 祝日の前</h3>
+    <table class="res">
+      <tr><th>問い</th><th>期間・回数</th><th>結果（費用後の1回あたり平均と95%の幅）</th><th>判定</th></tr>
+      <tr><td>日本の祝日の前の日（日経平均）を1日だけ持つ</td><td>1992〜2026年9月・407回</td><td>−0.036%（−0.176%〜+0.100%）。費用を引く前は+0.005%で、ふつうの日は+0.024%</td><td>差なし</td></tr>
+      <tr><td>連休（休場の平日が2日以上）の前の日</td><td>73回</td><td>−0.089%（−0.349%〜+0.170%）</td><td>差なし</td></tr>
+    </table>
+
+    <h3>③ 朝の窓・夜の上げ・日中の勢い</h3>
+    <table class="res">
+      <tr><th>問い</th><th>期間・回数</th><th>結果（費用後の1回あたり平均と95%の幅）</th><th>判定</th></tr>
+      <tr><td>米国株の日中の勢い：朝の向きに、引け前の30分だけ乗る</td><td>2023年11月〜2026年10月・720回（期間が短く、判定の力は弱い）</td><td>−0.025%（−0.041%〜−0.009%）</td><td>差なし</td></tr>
+      <tr><td>日本の朝の窓（0.5%以上）を埋める向き</td><td>2011〜2026年9月・1,987回</td><td>−0.005%（−0.045%〜+0.036%）</td><td>差なし</td></tr>
+      <tr><td>米国の朝の窓を埋める向き</td><td>2009〜2026年9月・1,331回</td><td>−0.069%（−0.131%〜−0.009%）。米国の窓は、むしろ続く向きに動いた形</td><td>差なし</td></tr>
+      <tr><td>夜の上げ（日本株）：終値で持ち、翌朝の始値で手放す</td><td>2011〜2026年9月・3,830回</td><td>1晩あたり+0.020%。幅の下限は−0.009%で、0をまたぐ。値上がりのほぼ全部が、夜のあいだに出ていた</td><td>差なし</td></tr>
+      <tr><td>夜の上げ（米国株）：同じ決まり</td><td>2009〜2026年9月・4,463回</td><td>1晩あたり+0.004%</td><td>差なし</td></tr>
+    </table>
+
+    <h3>④ 月末の為替</h3>
+    <p>月末のロンドン16時の値決めの前に、その月に米国より株が上がった国の通貨（ユーロ・ポンド・円・豪ドル）を売る（下回った国の通貨は買う）、という決まりで、2015年1月〜2026年9月の564回を数えました。値段の種類を3つ変えて、同じ癖を確かめています。</p>
+    <table class="res">
+      <tr><th>数え方</th><th>結果（費用後の1回あたり平均と95%の幅）</th><th>判定</th></tr>
+      <tr><td>① 日足の近い形</td><td>+0.025%（−0.027%〜+0.075%）。ただし、月の真ん中の日に同じ決まりを当てても+0.032%</td><td>いったん◯ 傾向</td></tr>
+      <tr><td>② 正確な窓（ロンドン午前8時から午後4時）を、業者の記録に残った売り買いの差をもとにした1時間足で数える</td><td>−0.013%（−0.052%〜+0.025%）。月末と月の真ん中の差は+0.009%（p値は0.37）</td><td>差なし</td></tr>
+      <tr><td>③ 同じ窓を1分足で数える</td><td>−0.025%。月末と月の真ん中の差は+0.004%（p値は0.45）</td><td>差なし</td></tr>
+    </table>
+    <p>①は幅が0をまたいでいましたが、事前の決まりで、向きだけでたらめにした比べる相手（偽薬）と比べた p値が0.041だったため、いったん「◯ 傾向」としました。そのうえで、月の真ん中の日と比べる②③の数え方で確かめ直しています。②③では、月末と月の真ん中の差が偶然と区別できなかったため、全体の判定は「差なし」とし、この研究はここで止めました。</p>
+
+    <!-- Section 3 -->
+    <h2 id="section-3">3️⃣ 結果から読み取れること</h2>
+    <h3>米国株の月末月初：弱まりながら、傾向は残った</h3>
+    <p>過去の期間（1989〜2026年9月）で、費用を引いたあとの1回あたり平均は+0.232%、95%の幅の下限も0より上でした。ただしこの数字には相場全体の上げも含まれ、同じ長さのふつうの日も費用前で+0.102%上がっていました。月末月初だけの上乗せ分は+0.179%（費用前）です。</p>
+    <p>期間を半分に分けると、前半は+0.330%、後半は+0.135%で、後半のほうが小さくなっていました。p値は0.0437でしたが、問いが4つあるため基準は0.05を4で割った0.0125になり、そこには届いていません。そのため、「確定」ではなく「◯ 傾向」にとどめています。</p>
+
+    <h3>日本株の月末月初：差は見えなかった</h3>
+    <p>日本株の同じ窓では、平均は+0.087%でしたが、幅は−0.223%〜+0.394%で0をまたいでいました。時期ごとに見ると、2010年代は−0.249%、2020年からは−0.113%と、どちらもマイナスでした。米国株と同じ形の癖は、日本株では見えなかったことになります。</p>
+
+    <h3>日本株の早い窓：前半に集まり、後半ではほとんど消えた</h3>
+    <p>窓を早めにずらすと、平均は+0.355%（幅は+0.017%〜+0.695%）で、下限は0より上でした（同じ長さのふつうの日は費用前で−0.091%）。ところが期間を半分に分けると、前半は+0.675%、後半は+0.034%で、後半ではほとんど消えていました。p値は0.0132で、関門の0.0125のわずか手前です。</p>
+    <p>同じ日本株で窓の位置を変えて、複数の形を数えているぶん、偶然の当たりも出やすくなります。関門を問いの数で割っているのは、そのためです。この結果を「早い窓に癖がある」と受け取るには、慎重さが要ると見られます。</p>
+
+    <h3>祝日の前：祝日の前だけが上がる形には見えなかった</h3>
+    <p>日本の祝日の前の日は、費用を引く前で+0.005%、ふつうの日は+0.024%でした。祝日の前だけが上がりやすい形にはなっておらず、費用を引くと−0.036%になります。連休の前の日は73回と回数が少なく、幅が広い（−0.349%〜+0.170%）ため、この結果だけで連休の前に癖が無いと言うことはできません。</p>
+
+    <h3>朝の窓・夜の上げ・日中の勢い：費用を引くと、差は見えなかった</h3>
+    <p>日本の朝の窓を埋める向きは−0.005%で、ほぼ0でした。米国は−0.069%で、幅も0より下にありました。窓を埋める向きで持つと、費用を引いたあとに減る形です。費用を引いたあとにプラスで終わった日は43.7%と半分に届かず、費用を引く前の平均も−0.049%で、平均すると寄りから引けにかけて窓と同じ向きに進んでいました。ただし、この逆向きを癖として扱うかどうかは、この記事の判定の対象外です。</p>
+    <p>日本株の夜の上げは、値上がりのほぼ全部が夜のあいだに出ていました。しかし、毎晩の売り買いに費用がかかるため、費用を引いたあとは1晩あたり+0.020%と小さくなり、幅の下限も−0.009%で0をまたぎました。米国株の夜の上げは+0.004%です。米国株の日中の勢いは−0.025%で、朝の向きに乗っても、費用を引いたあとは幅も0より下（−0.041%〜−0.009%）で、むしろ減る形でした。</p>
+
+    <h3>月末の為替：月末だけの癖とは区別できなかった</h3>
+    <p>日足の近い形では+0.025%でしたが、月の真ん中の日に同じ決まりを当てても+0.032%でした。月末だけに現れる癖とは言えませんでした。業者の記録に残った売り買いの差をもとにした1時間足と、1分足で正確な窓を数え直すと、平均は−0.013%と−0.025%で、月末と月の真ん中の差も+0.009%と+0.004%でした。論文が出たあとの期間で、月末の為替の癖は見えなかった、というのが今回の結果です。</p>
+
+    <!-- Section 4 -->
+    <h2 id="section-4">4️⃣ 「差なし」「傾向」の読み方と限界</h2>
+    <h3>「差なし」は、癖が無いと言い切るものではない</h3>
+    <p>「差なし」は、「費用を引いたあと、偶然と区別できる差は見えなかった」という意味です。癖が無いと言い切っているわけではありません。回数が少ない問い（連休の前は73回）は幅が広くなり、小さな癖があっても見つけにくくなります。見えなかったことと、無いことは、同じではありません。</p>
+
+    <h3>「◯ 傾向」は、今後も続くという意味ではない</h3>
+    <p>「◯ 傾向」は、過去のこの期間では、費用を引いたあとでも平均がプラスに見えた、というだけの意味です。「今後も続く」「そのまま売買に生かせる」という意味ではありません。今回傾向が出た2つも、期間の後半で小さくなっており、関門にも届いていません。</p>
+
+    <h3>数え方の限界</h3>
+    <ul>
+      <li><strong>値段：</strong>値段は、指数そのもの（配当は含まない）や、上場投資信託の値段（分割と配当を調整した値）で代用しました。為替は日足・1時間足・1分足です。先物など実際に売買するものとの値段のずれは入れていません。実際の取引では、値段が少し違います。</li>
+      <li><strong>費用：</strong>売り買いの差と持ち越しの金利は、前提を置いた計算です。実際の費用は、業者・時間帯・注文の出し方で変わります。</li>
+      <li><strong>偶然：</strong>問いが多いほど、偶然の当たりも出やすくなります。そのため関門を厳しくしていますが、関門を通っても、偶然の可能性がゼロになるわけではありません。</li>
+      <li><strong>期間：</strong>数えたのは過去の期間です。市場のしくみや参加者が変われば、同じ癖が出なくなることもあります。</li>
+    </ul>
+
+    <div class="warning-box">この記事は、過去のデータで数えた結果の整理であり、特定の手法・銘柄・商品の売買を勧めるものではありません。過去の成績は、将来の成果を約束しません。傾向が出た結果も、今後も同じように出ることを示すものではありません。</div>
+
+    <!-- Section 5 -->
+    <h2 id="section-5">5️⃣ 前向きの観察</h2>
+    <p>過去のデータだけでは、後づけで当たりを拾っている可能性が残ります。そこで、「◯ 傾向」となった2つ（米国株の月末月初と、日本株の早い窓）については、2026年10月から、新しい月だけで前向き（これから起きることを、起きる前に決めた決まりで数えていくこと）に数える観察を始めました。</p>
+    <p>決まりは、36回たまるごとに、費用を引いたあとの平均がマイナスなら止める、というものです。この観察の役目は、傾向が崩れていないかを見張ることです。月に1回しか窓が来ないため、前向きの数字だけで「プラスが確かめられた」と言えるまでには数十年かかります。前向きの観察が続いても、それだけで「確定」とは言いません。36回分がたまるまでには、約3年かかります。最初の窓は10月下旬から11月初めで、<strong>前向きの結果はまだありません</strong>（2026年11月2日時点）。結果が出るまで、この記事の読み方は変わりません。</p>
+    <p>当サイトがいま検証していることは、<a href="track-record.html#map">研究の地図</a>にまとめています。</p>
+
+    <!-- Section 6 -->
+    <h2 id="section-6">6️⃣ まとめ（4つの学び）</h2>
+    <ul>
+      <li><strong>① 論文の癖は、出たあとに弱まることがある。</strong>今回傾向が出た2つも、期間の後半では小さくなっていました（米国株は+0.330%から+0.135%へ、日本株の早い窓は+0.675%から+0.034%へ）。</li>
+      <li><strong>② 費用は小さく見えても、1回あたり0.1%前後の癖なら、その多くを消してしまう。今回の前提では、1回あたりの費用は持つ日数によって約0.02〜0.12%でした。</strong>株価指数の往復の費用は0.02〜0.05%で、そこに持ち越しの金利が加わります。祝日の前は、費用を引く前でも+0.005%と小さく、引いたあとは−0.036%でした。日本株の夜の上げも、値上がりの大半が夜のあいだに出ていたのに、費用を引くと差が見えなくなりました。</li>
+      <li><strong>③ 「月末だけ」と思った癖が、ふつうの日にも同じだけあることがある。</strong>米国株では、ふつうの日も費用前で+0.102%上がっていました。月末の為替でも、月の真ん中の日に同じ決まりを当てると+0.032%でした。比べる相手を置かないと、癖ではないものを癖と見まちがえます。</li>
+      <li><strong>④ 数える前に、決まりを書いておく。</strong>結果を見てから決まりを選ぶと、偶然の当たりを拾いやすくなります。問いの数で関門を厳しくし、1回だけ数えるのは、そのためです。</li>
+    </ul>
+    <p>有名な“時間の癖”のうち、費用を引いたあとでも傾向が残ったのは、ごく一部でした。その傾向も、まだ「確定」ではありません。これからは前向きの観察で、傾向が崩れていないかを、時間をかけて見張っていきます。</p>
+
+    <h2>🔗 関連記事</h2>
+    <div class="related-grid">
+      <a class="related-card" href="guide-entry-turn-of-month.html">
+        <div class="related-card-title">📆 月替わりになると株は上がりやすい？ 90年分のデータでわかったこと【エントリー方法の研究 #10】</div>
+        <div class="related-card-desc">月末月初の癖が見つかった経緯と、論文でのその後の検証を整理した記事。この記事の前提になります。</div>
+      </a>
+      <a class="related-card" href="guide-how-we-research.html">
+        <div class="related-card-title">🧭 はじめての方へ：MarketWatch AI は何をしているサイト？</div>
+        <div class="related-card-desc">事前登録・前向きの検証など、当サイトが投資の「定説」を確かめるしくみの説明。</div>
+      </a>
+      <a class="related-card" href="track-record.html#map">
+        <div class="related-card-title">🗺️ 研究の地図（シグナル研究）</div>
+        <div class="related-card-desc">当サイトがいま検証していることを、データから組み立てて一覧にしたページ。</div>
+      </a>
+    </div>
+
+    <h2>📚 出典・参考文献</h2>
+    <ul>
+      <li><a href="https://ideas.repec.org/a/taf/ufajxx/v64y2008i2p49-64.html" target="_blank" rel="noopener">McConnell &amp; Xu (2008) "Equity Returns at the Turn of the Month", Financial Analysts Journal 64(2)</a>（月末月初の癖の出どころとして紹介しています。論文の中の数値は、この記事では引用していません）</li>
+      <li><a href="https://ideas.repec.org/a/oup/rfinst/v1y1988i4p403-425.html" target="_blank" rel="noopener">Lakonishok &amp; Smidt (1988) "Are Seasonal Anomalies Real? A Ninety-Year Perspective", The Review of Financial Studies 1(4)</a>（書誌情報と要旨の範囲で確認、本文は未確認。論文の中の数値は引用していません）</li>
+      <li><a href="https://www.sciencedirect.com/science/article/abs/pii/092214259190001S" target="_blank" rel="noopener">Ziemba (1991)</a>（書誌情報と要旨の範囲で確認、本文は未確認）</li>
+      <li><a href="https://ideas.repec.org/a/eee/finmar/v22y2015icp50-72.html" target="_blank" rel="noopener">Melvin &amp; Prins (2015)</a>（書誌情報と要旨の範囲で確認、本文は未確認）</li>
+      <li>この記事の数字は、当サイトの検証の記録（論文が出たあとの期間・事前登録・1回だけ数えた結果）によるものです。論文の中の数値は、この記事では引用していません。</li>
+    </ul>
+
+    <p class="disclaimer" data-disclaimer="kinsho-v1">⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は、過去のデータで“時間の癖”を数えた結果の紹介を情報提供として整理したものであり、特定銘柄・特定手法の売買推奨や投資助言ではありません。過去の成績は将来の成果を約束するものではなく、記載の数値による利益を保証するものでもありません。数え方では、値段や費用を実際の取引と少し違う形で置いています。投資判断はご自身の責任で行ってください。</p>
+
+  </article>
+</main>
+
+<footer>
+  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
+  <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
+  <a href="contact.html">お問い合わせ</a></p>
+  <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+</footer>
+
+<script>
+(function(){var hasExplicit=false;try{var ss=document.styleSheets;for(var i=0;i<ss.length;i++){try{var r=ss[i].cssRules||ss[i].rules;if(!r)continue;for(var j=0;j<r.length;j++){if(r[j].selectorText&&/body\.dark[^-]/.test(r[j].selectorText+' ')){hasExplicit=true;break}}}catch(e){}if(hasExplicit)break}}catch(e){}if(!hasExplicit){var s=document.createElement('style');s.textContent='body.dark{background:#0d1117!important;color:#e6edf3!important}body.dark header,body.dark footer,body.dark nav.nav-bar{background:#161b22!important;color:#e6edf3!important;border-color:#30363d!important}body.dark .nav-btn{background:#161b22!important;border-color:#30363d!important;color:#8b949e!important}body.dark .nav-btn:hover{border-color:#58a6ff!important;color:#58a6ff!important}body.dark .nav-btn.current{background:#2C4F8F!important;border-color:#58a6ff!important;color:#fff!important}body.dark a{color:#79c0ff!important}body.dark h1,body.dark h2,body.dark h3,body.dark h4{color:#e6edf3!important}body.dark p,body.dark li,body.dark td{color:#c9d1d9!important}body.dark th{background:#0d1117!important;color:#79c0ff!important}body.dark #theme-toggle{background:#161b22!important;border-color:#30363d!important;color:#fff!important}';document.head.appendChild(s)}function setTheme(t){document.body.classList.toggle('dark',t==='dark');var b=document.getElementById('theme-toggle');if(b)b.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('theme',t)}catch(e){}}window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}setTheme(t);})();
+window.addEventListener('scroll',function(){var s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight,p=document.getElementById('reading-progress');if(p)p.style.width=(d>0?(s/d*100):0)+'%'});
+</script>
+
+<script src="site-search.js" defer></script>
+<!-- ===== ↑上に戻る（全ページ共通・safe_writeが一括注入） ===== -->
+<style data-mw-scoped="widget">
+#mw-back-to-top{position:fixed;right:16px;bottom:18px;z-index:900;width:44px;height:44px;border-radius:50%;border:1px solid #d0d7de;background:rgba(255,255,255,.92);color:#57606a;font-size:1.15rem;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.14);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+#mw-back-to-top.show{opacity:1;visibility:visible}
+#mw-back-to-top:hover{border-color:#0969da;color:#0969da}
+body.dark #mw-back-to-top{background:rgba(22,27,34,.92);border-color:#30363d;color:#8b949e}
+body.dark #mw-back-to-top:hover{border-color:#58a6ff;color:#58a6ff}
+</style>
+<button id="mw-back-to-top" aria-label="ページ上部へ戻る" title="上に戻る">↑</button>
+<script>
+(function(){var b=document.getElementById('mw-back-to-top');if(!b)return;var t=null;
+window.addEventListener('scroll',function(){if(t)return;t=setTimeout(function(){t=null;
+if(window.scrollY>600){b.classList.add('show')}else{b.classList.remove('show')}},150)},{passive:true});
+b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});})();
+</script>
+<!-- ===== /上に戻る ===== -->
+</body>
+</html>
