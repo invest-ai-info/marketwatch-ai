@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-02", "line": '・<b>2026-11-02</b>: 🕰️ 解説「<a href="guide-time-anomalies-after-papers.html" style="color:#0969da"><b>“時間の癖”は論文のあとも残る？ 費用込みで数えた</b></a>」公開'},
         {"date": "2026-11-02", "line": '・<b>2026-11-02</b>: 📰 解説「<a href="guide-news-2026-11-02.html" style="color:#0969da"><b>キオクシア株-13%急落・日経続落208円安</b></a>」公開'},
         {"date": "2026-11-02", "line": '・<b>2026-11-02</b>: 🔬 解説「<a href="guide-company-8267-aeon.html" style="color:#0969da"><b>イオン</b></a>」公開'},
         {"date": "2026-11-02", "line": '・<b>2026-11-02</b>: 🧪 解説「<a href="guide-signal-lab-137.html" style="color:#0969da"><b>トレンドが強い場面の順張りは、前向き144回でも負けやすい？【研究日誌 #137】</b></a>」公開'},
