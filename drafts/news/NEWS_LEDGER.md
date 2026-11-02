@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-11-02
+- 判定: ✅ 公開済み
+- 選定トピック: キオクシア株-13%急落──10〜12月期の業績見通しが市場予想を下回り、日経続落208円安の背景を中立整理（カテゴリ: 半導体・日本株・メモリ市場）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 出典:
+  - 日本経済新聞「東証大引け 日経平均は続落 キオクシア15%安」2026-11-02 https://www.nikkei.com/article/DGXZQOFL024L10S6A101C2000000/
+  - BigGo Finance「日経平均は208円安の6万3081円、キオクシア急落15%が重荷」2026-11-02 https://finance.biggo.jp/news/a24fe544-322f-4f32-9a0c-a6a8a98774ce
+  - Investing.com「キオクシア株が本日急落した理由とは」2026-11-02 https://jp.investing.com/news/stock-market-news/article-93CH-1735987
+  - TradingKey「キオクシア株が単日で15%超急落、5月以来の安値に」2026-11-02 https://www.tradingkey.com/jp/analysis/stocks/more/262263277-japan-kioxia-price-jpy-sox-intc-sndk-amd-tradingkey
+  - 外為どっとコム「ドル円、米株急落と原油高で荒い値動き──中間選挙控え神経質」2026-11-02 https://www.gaitame.com/media/entry/2026/11/02/071402
+  - BigGo Finance英語版「Memory Chip Stocks Rebound Overnight」2026-11-02 https://finance.biggo.com/news/e65c4b1d-8b75-4917-8642-5e2f1d792067
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（2件軽微修正: 「上場後の安値圏」→「直近の安値圏」・「半導体セクター全般に売り」→「半導体関連の一部銘柄にも売り」）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典5系統以上 ✅）→「そのまま公開してよい」
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告57件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-02.html
+- commit: cefade6（main へ push 済み）
+
+---
+
 ## 2026-11-01
 - 判定: ✅ 公開済み
 - 選定トピック: バイナンス史上最大の暗号資産流出63億ドル──FBIが北朝鮮TraderTraitorの関与を断定、暗号資産市場への影響を中立整理（カテゴリ: 暗号資産・セキュリティ・地政学）
