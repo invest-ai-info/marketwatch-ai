@@ -1119,7 +1119,7 @@
 
 **テーマ**: 移動平均線の上にいるときの買いは、前向き887回で勝ちやすい？ 後半は勝率が下がった（定点観測・state_maup_long）
 **仮説ID**: state_maup_long
-**ファイル**: guide-signal-lab-139.html（下書き）
+**ファイル**: guide-signal-lab-139.html（公開済み）
 **claims**: drafts/labnotes/lab-139-claims.json
 **分析メモ**: drafts/labnotes/lab-139-analysis.md
 
