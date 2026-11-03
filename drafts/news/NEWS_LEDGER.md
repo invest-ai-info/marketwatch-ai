@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-11-03
+- 判定: ✅ 公開済み
+- 選定トピック: Apple FY2026 Q4決算：売上高+12%・純利益307億ドルも株価-3%──新CEO John Ternus初の決算とマージン圧縮の背景を中立整理（カテゴリ: 米国株・テクノロジー・決算）
+- スコア: 話題性 5 / 影響 4 / 付加価値 5（合計 14/15）
+- 出典:
+  - Apple公式ニュースルーム「Apple reports fourth quarter results」2026-11-02 https://www.apple.com/newsroom/2026/11/apple-reports-fourth-quarter-results/
+  - SEC Form 8-K FY2026 Q4 https://www.sec.gov/Archives/edgar/data/0000320193/000032019326000024/a8-kex991q4202609262026.htm
+  - 9to5Mac「Apple reports Q4 2026 earnings: $114.5 billion in revenue, up 12%」2026-11-02 https://9to5mac.com/2026/11/02/apple-reports-q4-2026-earnings/
+  - Benzinga「Apple Q4 2026 Earnings Call Transcript」2026-11-02 https://www.benzinga.com/news/26/11/62804611/apple-q4-2026-earnings-call-transcript
+  - AppleInsider「Apple beats Wall Street forecasts in first Ternus-led Q4 earnings」2026-11-02 https://appleinsider.com/articles/26/11/02/apple-beats-wall-street-forecasts-in-first-ternus-led-q4-earnings
+  - Beebom「Apple Confirms Q4 2026 Earnings Call Date and It Will Be John Ternus' First as CEO」2026-11-02 https://gadgets.beebom.com/news/apple-confirms-q4-2026-earnings-call-date
+  - MacTrast「Apple Posts Fiscal Q4 2026 Results: $30.7B Profit on $114.5B Revenue」2026-11-02 https://www.mactrast.com/2026/11/apple-posts-fiscal-q4-2026-results-30-7b-profit-on-114-5b-revenue/amp/
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（3件軽微修正: 「影響する」→「影響しうる」・「説明が行われた」→「焦点とされた」・「変わらないとみる」→「大きな変化はないとみる」）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典7系統 ✅ / noindexなし ✅）→「そのまま公開してよい」（関連記事リンク切れ1件をメイン側で修正済み）
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告58件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-03.html
+- commit: ee00cf8（main へ push 済み）
+
+---
+
 ## 2026-11-02
 - 判定: ✅ 公開済み
 - 選定トピック: キオクシア株-13%急落──10〜12月期の業績見通しが市場予想を下回り、日経続落208円安の背景を中立整理（カテゴリ: 半導体・日本株・メモリ市場）
