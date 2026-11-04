@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-11-04T06:10:00+09:00",
+  "generated_at": "2026-11-04T15:20:00+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
-    "confidence": "LOW",
-    "rationale": "2日のNYはAI投資の採算不安でナスダック100が調整局面入りし、半導体株が急落した。一方でダウは上昇し、原油急落で物価不安はやや後退。米中間選挙（3日）と米利上げ観測を控え、リスク回避が優勢と見られる。ただし原油安や防衛的な資金移動もあり、全面的な逃避とは言い切れない。 【注】4日朝の検索では3日NY引けの確定情報を取得できず、内容は2日NY引け時点の整理。選挙結果の反応は未反映。",
+    "confidence": "MID",
+    "rationale": "米中間選挙の開票で民主党が下院優勢と伝わり、AI・データセンター規制への警戒から4日の東京株は半導体株中心に急落した。米長期金利の低下で円は買われた。3日のNYは半導体株の戻りでS&P500とナスダックが上昇したが、東京では選挙結果を受けた売りが優勢。最終的な選挙結果は未確定で、下げは一時的との見方もある。",
     "key_drivers": [
-      "アルファベット・アマゾン・インテルの決算失望によるAI投資への警戒",
-      "半導体指数が3％超下落、オラクルやマーベルの資金調達計画も重しに",
-      "米大統領がイラン攻撃を中間選挙後まで見送り、原油が急落",
-      "米連邦準備制度理事会（FRB）の12月利上げ観測と米中間選挙",
-      "中国の公式製造業PMIが49.3と景気判断の節目を下回る"
+      "米中間選挙で民主党が下院優勢、AI規制強化への警戒",
+      "日経平均が前場3.56%安、午後は下げ幅が一時3000円超に拡大",
+      "米長期金利が4.8%台後半へ低下しドル円が157円台半ばへ急落",
+      "豪準備銀行が政策金利を4.85%へ引き上げ（6対3の割れた採決）",
+      "米連邦準備制度理事会（FRB）の12月利上げ観測と原油高止まり"
     ]
   },
   "assets": [
@@ -17,98 +17,55 @@
       "name": "日経225",
       "ticker": "NKD=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "2日の日経平均は63,081円（0.33％安）。米ハイテク安を受けシカゴ先物は63,060円付近と横ばい圏。AI関連が重く上値は抑えられやすいが、原油安は輸入コスト面で追い風。",
-      "catalysts": [
-        "米ハイテク株・半導体株の動向",
-        "米中間選挙の結果",
-        "円相場（1ドル=158円近辺）",
-        "日銀の12月利上げ観測"
-      ],
+      "conviction": "MID",
+      "rationale": "4日は米中間選挙で民主党優勢と伝わり、AI・半導体株を中心に急落した。6万円割れを警戒する声がある一方、下げは一時的との見方もあり、反発の余地も残る。",
+      "catalysts": ["米中間選挙の最終結果", "AI・データセンター規制の議論", "半導体株の値動き", "ドル円の水準"],
       "top_news": [
         {
-          "headline": "日経平均は小幅続落、2日の大引けは63,081円86銭（前日比208円安）",
-          "published": "2026-11-02",
-          "comment": "米ハイテク安と選挙前の様子見で小幅安にとどまった",
-          "source": "日本経済新聞/各社",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.nikkei.com/markets/"
-        },
-        {
-          "headline": "ダウ先物高でシカゴ日経先物は63,060円。NY市場の引け後に買い戻し",
-          "published": "2026-11-03",
-          "comment": "米株先物が持ち直し、東京市場にも下支えとなりうる",
-          "source": "株探/みんかぶ",
+          "headline": "日経平均が前場3.56%安の6万835円、約3カ月ぶりに6万1000円割れ",
+          "published": "2026-11-04",
+          "comment": "選挙後のAI規制懸念で半導体株が売られ、指数を押し下げた",
+          "source": "Newsweek Japan",
           "tier": 3,
           "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "neutral",
-          "url": "https://s.kabutan.jp/news/n202611030062/"
-        },
-        {
-          "headline": "ナスダック100が10月6日の高値から1割超下げ調整局面入り。アルファベット・アマゾン・インテルの決算失望でAI投資への警戒が拡大",
-          "published": "2026-11-02",
-          "comment": "AI投資の採算不安がハイテク株の重しに。調整が続くかは決算次第",
-          "source": "Bloomberg",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [
-            "CNBC",
-            "Yahoo Finance"
-          ],
+          "corroborated_by": ["日本経済新聞", "みんかぶ"],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-11-02/nasdaq-100-enters-correction-as-megacap-results-amplify-ai-fears"
+          "url": "https://www.newsweekjapan.jp/articles/-/338953"
+        },
+        {
+          "headline": "日経平均、午後に下げ幅一時3000円超 民主党の下院奪還観測で半年ぶり安値",
+          "published": "2026-11-04",
+          "comment": "下げが加速。専門家は一時的とみる一方、6万円割れも警戒",
+          "source": "日本経済新聞",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": ["Newsweek Japan"],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.nikkei.com/article/DGXZQOUB041HV0U6A101C2000000/"
         }
       ]
     },
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "S&P500は0.5％安の7,541。ハイテクの比重が高く、AI投資懸念と12月利上げ観測が重しだが、金利低下と原油安が下支え。",
-      "catalysts": [
-        "アップルの決算",
-        "米中間選挙（3日）",
-        "FRBの12月会合（8〜9日）",
-        "AI関連企業の設備投資・資金調達"
-      ],
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "3日は半導体株の戻りで3日続落を止めたが、その後の選挙結果で時間外は不安定になりやすい。AI規制への見方で上下どちらにも振れる。",
+      "catalysts": ["米中間選挙の結果", "FRBの12月利上げ観測", "米長期金利", "AI関連株の決算後の評価"],
       "top_news": [
         {
-          "headline": "ナスダック100が10月6日の高値から1割超下げ調整局面入り。アルファベット・アマゾン・インテルの決算失望でAI投資への警戒が拡大",
-          "published": "2026-11-02",
-          "comment": "AI投資の採算不安がハイテク株の重しに。調整が続くかは決算次第",
-          "source": "Bloomberg",
+          "headline": "S&P500は0.36%高の7568.92、3日続落を脱出 半導体株が反発",
+          "published": "2026-11-03",
+          "comment": "選挙当日はAI関連の戻りが指数を支えた",
+          "source": "CNBC",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": [
-            "CNBC",
-            "Yahoo Finance"
-          ],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-11-02/nasdaq-100-enters-correction-as-megacap-results-amplify-ai-fears"
-        },
-        {
-          "headline": "2日のNY市場：ダウは213ドル高の51,983.98ドル、S&P500は0.5％安の7,541、ナスダック総合は約1％安。半導体指数は3％超下落",
-          "published": "2026-11-02",
-          "comment": "ハイテクから景気に左右されにくい業種へ資金が移動した",
-          "source": "共同通信/各社",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [
-            "CNBC",
-            "Yahoo Finance"
-          ],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.chunichi.co.jp/article/1334124"
+          "corroborated_by": ["Yahoo Finance", "TradingView"],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.cnbc.com/2026/11/02/stock-market-today-live-updates.html"
         }
       ]
     },
@@ -116,135 +73,99 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "ナスダック100は10％超の下落で調整局面入り。半導体株の下げがきつく、アップル決算前で警戒が強い。短期は反発もあり得るが、地合いは弱い。",
-      "catalysts": [
-        "アップルの決算",
-        "半導体株の戻りの強さ",
-        "AI設備投資への市場の評価"
-      ],
+      "conviction": "LOW",
+      "rationale": "3日は半導体の戻りで上昇したが、民主党優勢でAI規制が強まるとの見方が東京の半導体株を急落させた。ハイテク株には重しになりやすい。",
+      "catalysts": ["AI・データセンター規制", "半導体株の動向", "米長期金利"],
       "top_news": [
         {
-          "headline": "ナスダック100が10月6日の高値から1割超下げ調整局面入り。アルファベット・アマゾン・インテルの決算失望でAI投資への警戒が拡大",
-          "published": "2026-11-02",
-          "comment": "AI投資の採算不安がハイテク株の重しに。調整が続くかは決算次第",
-          "source": "Bloomberg",
+          "headline": "ナスダック総合は0.83%高の2万5372 半導体株が反発、アップルは利益見通しで下落",
+          "published": "2026-11-03",
+          "comment": "選挙当日は買い戻しが優勢。結果次第で流れが変わる可能性",
+          "source": "Yahoo Finance",
           "tier": 2,
           "credibility": "HIGH",
-          "corroborated_by": [
-            "CNBC",
-            "Yahoo Finance"
-          ],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.bloomberg.com/news/articles/2026-11-02/nasdaq-100-enters-correction-as-megacap-results-amplify-ai-fears"
+          "corroborated_by": ["TradingView", "SRN News"],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/election-day-trading-splits-benchmarks-163100939.html"
         },
         {
-          "headline": "半導体指数が3％超下落。インテル9％安、マイクロン6％安、マーベル13％安",
-          "published": "2026-11-02",
-          "comment": "AI向け需要の期待が揺らぎ、半導体に売りが集中",
-          "source": "各社",
-          "tier": 3,
+          "headline": "民主党が両院で優勢ならAI株に売り圧力との見方（JPモルガン）",
+          "published": "2026-11-03",
+          "comment": "規制強化への警戒がAI関連株の重しになりうる",
+          "source": "Yahoo Finance",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-2-dow-sp-500-nasdaq-091835095.html"
+          "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-nasdaq-recover-ai-232955884.html"
         }
       ]
     },
     {
       "name": "金",
       "ticker": "GC=F",
-      "bias": "NEUTRAL",
+      "bias": "BULLISH",
       "conviction": "LOW",
-      "rationale": "原油安で物価不安が和らぐ一方、地政学リスクの後退は安全資産需要を弱める。直近の終値水準は今回の検索では確認できず、方向感は定まらない。",
-      "catalysts": [
-        "FRBの12月利上げ観測",
-        "中東情勢と原油の動き",
-        "米中間選挙後のドル相場"
-      ],
+      "rationale": "選挙の不透明感と原油安による金利低下で買われやすい。ただし米長期金利は5%前後と高く、上値は限られる可能性がある。",
+      "catalysts": ["米長期金利の動き", "選挙後の政策不透明感", "FRBの12月利上げ観測"],
       "top_news": [
         {
-          "headline": "米大統領が中間選挙後までイラン攻撃を見送り、原油先物が急反落。WTI・北海ブレントとも寄り付きで7％超下落",
-          "published": "2026-11-02",
-          "comment": "中東の供給不安が和らぎ原油は急落。ただ交渉次第で再び揺れる",
-          "source": "みんかぶ/各社",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [
-            "Yahoo Finance"
-          ],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://fx.minkabu.jp/news/383312"
+          "headline": "金は3900ドル台後半で推移、原油安と米金利低下が支え",
+          "published": "2026-11-03",
+          "comment": "原油安で物価不安が和らぎ、金利低下が金の追い風に",
+          "source": "Mitrade",
+          "tier": 4,
+          "credibility": "LOW",
+          "corroborated_by": ["Investing.com"],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-oil-tumbles-diplomacy-midterms"
         }
       ]
     },
     {
       "name": "原油",
       "ticker": "CL=F",
-      "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "イラン攻撃の見送りと米イラン協議への期待で、原油は2日に急落した。10月は大きく上昇していたため調整が入りやすい。ただし協議が決裂すれば急反発のリスクがある。",
-      "catalysts": [
-        "米イラン協議の進展",
-        "中間選挙後の米政権の対応",
-        "中東の供給不安"
-      ],
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "2日にイラン情勢の緩和観測で急落した後、3日は反発した。WTIは96〜97ドル前後で、中東情勢次第で上下に振れやすい。",
+      "catalysts": ["米イラン関係", "中東情勢", "米需要の見通し"],
       "top_news": [
         {
-          "headline": "米大統領が中間選挙後までイラン攻撃を見送り、原油先物が急反落。WTI・北海ブレントとも寄り付きで7％超下落",
-          "published": "2026-11-02",
-          "comment": "中東の供給不安が和らぎ原油は急落。ただ交渉次第で再び揺れる",
-          "source": "みんかぶ/各社",
+          "headline": "WTIは96〜97ドル前後、ブレントは104ドル前後で推移",
+          "published": "2026-11-03",
+          "comment": "急落後の反発局面。情報源で数字にばらつきあり",
+          "source": "Investing.com",
           "tier": 3,
           "credibility": "MID",
-          "corroborated_by": [
-            "Yahoo Finance"
-          ],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://fx.minkabu.jp/news/383312"
+          "corroborated_by": ["Trading Economics", "Armenpress"],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://fortune.com/article/price-of-oil-11-03-2026/"
         }
       ]
     },
     {
       "name": "ドル円",
       "ticker": "USDJPY",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "2日のNY終値は1ドル=157.9円前後。選挙前のポジション調整の円売りと、米長期金利低下・原油安のドル買い抑制が拮抗。日銀の12月利上げ観測は円の支えだが、介入警戒も続く。",
-      "catalysts": [
-        "米中間選挙の結果",
-        "FRBの12月利上げ観測",
-        "日銀の12月会合",
-        "政府・日銀の介入観測"
-      ],
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "4日は開票で米長期金利が低下し、一時157円台半ばへ急落した。株安によるリスク回避の円買いも加わる。一方で日米金利差は大きく、158円台からの戻りもあり、当局の円安けん制にも注意。",
+      "catalysts": ["米長期金利", "米中間選挙の結果", "当局の円安けん制", "日経平均の動き"],
       "top_news": [
         {
-          "headline": "2日のNY外為市場、円は前週末比30銭安の1ドル=157円90銭〜158円00銭で取引終了",
-          "published": "2026-11-02",
-          "comment": "選挙前の円売りと金利低下のドル安要因が打ち消し合った",
-          "source": "共同通信/中日新聞",
+          "headline": "ドルが一時157円台半ばに急落、民主党優勢と米金利低下で",
+          "published": "2026-11-04",
+          "comment": "開票序盤の金利低下が円買いを誘った",
+          "source": "時事通信",
           "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "neutral",
-          "url": "https://www.chunichi.co.jp/article/1334124"
-        },
-        {
-          "headline": "日銀の12月利上げを予想する声が多数、エコノミストの約7割が年内利上げを見込む",
-          "published": "2026-10-29",
-          "comment": "利上げが近づけば円には支えになるが、織り込み次第",
-          "source": "investingLive",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
+          "credibility": "HIGH",
+          "corroborated_by": ["日本経済新聞"],
+          "materiality": "high",
           "direction": "bearish",
-          "url": "https://investinglive.com/central-banks/boj-seen-lifting-rates-to-1-50-in-december-as-69-of-economists-expect-a-q4-hike/"
+          "url": "https://news.yahoo.co.jp/articles/73cd630dd739f548d83c1bf328dbdfea6aef9405"
         }
       ]
     },
@@ -253,135 +174,66 @@
       "ticker": "EURUSD",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "ECBは据え置き後に12月の利上げ観測がある一方、米利上げ観測もあり方向感に乏しい。直近の水準は今回確認できず、材料は薄い。",
-      "catalysts": [
-        "ECBの12月会合",
-        "FRBの12月会合",
-        "米中間選挙後のドル相場"
-      ],
-      "top_news": [
-        {
-          "headline": "ECBは政策金利を据え置き、市場では12月の利上げ観測",
-          "published": "2026-10-29",
-          "comment": "ユーロの下値を支える一方、米利上げ観測と拮抗",
-          "source": "FXStreet",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "neutral",
-          "url": "https://www.fxstreet.com/analysis/the-ecb-the-bank-of-japan-and-the-fed-prefer-to-wait-until-december-202610291351"
-        }
-      ]
+      "rationale": "直近の確かな材料が検索で取れなかった。米金利低下はドル安材料だが、判断できる根拠は薄い。",
+      "catalysts": ["米長期金利", "ECBの金融政策", "米中間選挙の結果"],
+      "top_news": []
     },
     {
       "name": "ビットコイン",
       "ticker": "BTC-USD",
-      "bias": "BEARISH",
+      "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "ビットコインは2日に約1％安で7.7万ドル前後。ナスダック調整に連動しつつ、大手取引所のハッキング報道も重しだが、株ほどには下がっていない。",
-      "catalysts": [
-        "ナスダック・ハイテク株の動向",
-        "取引所ハッキング問題の影響",
-        "米利上げ観測"
-      ],
+      "rationale": "7万7000ドル前後でほぼ横ばい。史上最高値からは約4割低い水準で、選挙との関連は確認できなかった。",
+      "catalysts": ["米規制法案の行方", "リスク資産全体の動き", "米長期金利"],
       "top_news": [
         {
-          "headline": "ビットコインは2日に約1％安、7.7万ドル前後。ナスダック調整とバイナンスのハッキング報道が重し",
-          "published": "2026-11-02",
-          "comment": "株安と取引所不安が重なり、リスク資産として売られた",
-          "source": "Crypto Briefing",
+          "headline": "ビットコインは7万7000ドル前後、24時間でほぼ横ばい",
+          "published": "2026-11-04",
+          "comment": "選挙前は様子見ムード。大きな方向感はまだない",
+          "source": "OKX",
           "tier": 4,
           "credibility": "LOW",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://cryptobriefing.com/nasdaq-100-drops-4-erasing-13t-bitcoin-falls-below-77k/"
+          "corroborated_by": ["Fortune"],
+          "materiality": "low",
+          "direction": "neutral",
+          "url": "https://www.okx.com/en-us/price/bitcoin-btc"
         }
       ]
     }
   ],
   "discarded": [
-    {
-      "headline": "11月3日付のNY為替で1ドル=153円台とする記事",
-      "reason": "日付と年の表記が不明確で、他の確定値と矛盾するため採用せず"
-    },
-    {
-      "headline": "金・ユーロドルの2日終値に関する各種記事",
-      "reason": "11月2日の確定値が確認できず、古い日付の数字しか見つからなかったため"
-    }
+    {"headline": "ビットコインが6万3000ドル割れ、Binanceで約60億ドルの流出", "reason": "他の相場情報と大きく食い違い、単一の出所で裏付けがないため除外"}
   ],
   "currencies": [
-    {
-      "code": "USD",
-      "lean": "NEUTRAL",
-      "conviction": "LOW",
-      "reason": "12月利上げ観測は支えだが、米長期金利低下と選挙前の様子見で方向感は乏しい"
-    },
-    {
-      "code": "EUR",
-      "lean": "NEUTRAL",
-      "conviction": "LOW",
-      "reason": "ECB据え置き後に12月利上げ観測があるが、材料は限定的"
-    },
-    {
-      "code": "GBP",
-      "lean": "STRONG",
-      "conviction": "LOW",
-      "reason": "5日の英中銀会合で利上げ観測があり、政策金利3.75％からの引き上げが意識される"
-    },
-    {
-      "code": "JPY",
-      "lean": "WEAK",
-      "conviction": "LOW",
-      "reason": "1ドル=158円近辺で円安が続くが、日銀の12月利上げ観測と介入警戒が下支え"
-    },
-    {
-      "code": "AUD",
-      "lean": "STRONG",
-      "conviction": "MID",
-      "reason": "RBAが3日に25bp利上げし政策金利4.85％。ただし賛成6対反対3で、織り込み済みの面も強い"
-    },
-    {
-      "code": "CNY",
-      "lean": "STRONG",
-      "conviction": "LOW",
-      "reason": "人民元は4年超ぶりの高値圏とされ堅調。ただ公式製造業PMIは49.3と弱く、材料は割れている"
-    }
+    {"code": "USD", "lean": "WEAK", "conviction": "LOW", "reason": "米長期金利が低下し、開票を受けてドル円が急落。ただし12月利上げ観測は残る"},
+    {"code": "EUR", "lean": "NEUTRAL", "conviction": "LOW", "reason": "確かな新規材料を確認できず。ドル安がやや支え"},
+    {"code": "GBP", "lean": "NEUTRAL", "conviction": "LOW", "reason": "5日の英中銀会合待ちで材料が薄い"},
+    {"code": "JPY", "lean": "STRONG", "conviction": "MID", "reason": "株安と米金利低下で円買い。当局の円安けん制観測も支え"},
+    {"code": "AUD", "lean": "NEUTRAL", "conviction": "MID", "reason": "RBAが4.85%へ利上げしたが採決は6対3で、市場は穏当と受け止め小幅安"},
+    {"code": "CNY", "lean": "NEUTRAL", "conviction": "LOW", "reason": "10月の製造業PMIは49.3と節目割れ。直近の新材料は確認できず"}
   ],
   "asia_watch": [
     {
-      "headline": "豪準備銀行（RBA）が政策金利を0.25％引き上げ4.85％に。今年5回目の利上げ、決定は6対3",
+      "headline": "豪準備銀行が政策金利を4.85%に引き上げ、18年ぶりの高水準 採決は6対3",
       "published": "2026-11-03",
       "region": "AU",
-      "why": "事前予想どおりだが、反対3票で追加利上げ観測の強さが焦点。豪ドルの支えとなりうる",
+      "why": "採決が割れ、今後は様子見との姿勢で豪ドルは小幅安。次回は12月8日",
       "materiality": "high",
-      "source": "Investing.com/みんかぶ",
-      "tier": 3,
-      "credibility": "MID",
-      "url": "https://jp.investing.com/news/stock-market-news/article-1738140"
-    },
-    {
-      "headline": "中国の10月公式製造業PMIは49.3に低下（前月50.1）。非製造業は49.7",
-      "published": "2026-10-31",
-      "region": "CN",
-      "why": "景気の節目の50割れで、豪ドルや鉄鉱石、日経への重しになりうる",
-      "materiality": "high",
-      "source": "NBS/FXStreet",
-      "tier": 1,
-      "credibility": "HIGH",
-      "url": "https://www.fxstreet.com/news/chinas-nbs-manufacturing-pmi-falls-to-493-in-october-non-manufacturing-pmi-eases-to-497-202611012335"
-    },
-    {
-      "headline": "中国の民間製造業PMI（RatingDog）は52.0で予想の51.6を上回る。11カ月連続で50超",
-      "published": "2026-11-02",
-      "region": "CN",
-      "why": "公式PMIと食い違い、輸出企業の堅調を示す。豪ドルへは中立〜やや支え",
-      "materiality": "mid",
-      "source": "S&P Global/Newsquawk",
+      "source": "Bloomberg",
       "tier": 2,
       "credibility": "HIGH",
-      "url": "https://www.newsquawk.com/headlines/chinese-ratingdog-manufacturing-pmi-oct-520-vs-exp-516-prev-521"
+      "url": "https://www.abc.net.au/news/2026-11-03/rba-lifts-interest-rates-november-2026-highest-rate-in-18-years/107340050"
+    },
+    {
+      "headline": "中国の10月公式製造業PMIは49.3と景気判断の節目を下回る",
+      "published": "2026-10-31",
+      "region": "CN",
+      "why": "中国景気の弱さは豪ドルや資源関連、日経の重しになりうる",
+      "materiality": "mid",
+      "source": "中国国家統計局",
+      "tier": 1,
+      "credibility": "HIGH",
+      "url": "https://www.stats.gov.cn/"
     }
   ]
 }
