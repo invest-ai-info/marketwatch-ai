@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-11-04
+- 判定: ✅ 公開済み
+- 選定トピック: 米中間選挙で民主党が上下院制覇──AI・半導体規制強化懸念から日経平均一時2,800円超安、大引けは893.23円安（1.41%）の62,188.63円の背景を中立整理（カテゴリ: マクロ・政治・日本株・為替）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典:
+  - CBS News「Live election results for 2026 midterms as Democrats decisively win control of House and Senate」2026-11-03 https://www.cbsnews.com/live-updates/election-day-2026-midterms/
+  - CNBC「2026 Midterm elections: House, Senate results live updates」2026-11-03 https://www.cnbc.com/2026/11/03/midterm-elections-2026-live-updates.html
+  - Yahoo News「Midterms 2026 election results and live updates」2026-11-03 https://www.yahoo.com/news/politics/live/midterms-2026-live-updates-election-day-voters-head-to-the-polls-as-democrats-look-to-flip-gop-control-of-the-house-and-senate-110000715.html
+  - フィスコ（Yahoo!ファイナンス）「日経平均は大幅続落、米中間選挙受け半導体・AI関連株に売り／相場概況」2026-11-04 https://finance.yahoo.co.jp/news/detail/2d4d62cce493dab1649e0f4ded05174120f1964c
+  - Investing.com「Japan stocks lower at close of trade; Nikkei 225 down 1.41%」2026-11-04 https://investing.com/news/stock-market-news/japan-stocks-lower-at-close-of-trade-nikkei-225-down-141-4997534
+  - 日本経済新聞「日経平均大幅安、米中間選挙で民主優勢「下げ一時的」「6万円割れも」市場の見方」2026-11-04 https://www.nikkei.com/article/DGXZQOFL0423STU6A101C2000000/
+  - Yahoo Finance / WRAL「Asian stocks and dollar fall as Democrats gain ground in US midterms」2026-11-04 https://finance.yahoo.com/markets/world-indices/articles/asian-stocks-dollar-fall-democrats-054714764.html
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（4件軽微修正: 「押し目買いが入りやすい水準」→「下げ止まりやすいとの市場関係者の見方も報じられた」・「執権党」→「政権与党」ほか表現軟化2件）→最終🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典7系統以上 ✅）→「そのまま公開してよい」
+  - 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告59件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-04.html
+- commit: 1e0c793（main へ push 済み）
+
+---
+
 ## 2026-11-03
 - 判定: ✅ 公開済み
 - 選定トピック: Apple FY2026 Q4決算：売上高+12%・純利益307億ドルも株価-3%──新CEO John Ternus初の決算とマージン圧縮の背景を中立整理（カテゴリ: 米国株・テクノロジー・決算）
