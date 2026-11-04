@@ -5916,6 +5916,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-04", "line": '・<b>2026-11-04</b>: 📰 解説「<a href="guide-news-2026-11-04.html" style="color:#0969da"><b>【11/4】米中間選挙で民主党が上下院制覇──AI規制懸念で日経平均893円安</b></a>」公開'},
         {"date": "2026-11-04", "line": '・<b>2026-11-04</b>: 🔬 解説「<a href="guide-company-8766-tokio-marine.html" style="color:#0969da"><b>東京海上ホールディングス</b></a>」公開'},
         {"date": "2026-11-04", "line": '・<b>2026-11-04</b>: 🧪 解説「<a href="guide-signal-lab-139.html" style="color:#0969da"><b>移動平均線の上での買いは勝ちやすい？ 前向き887回【研究日誌 #139】</b></a>」公開'},
         {"date": "2026-11-03", "line": '・<b>2026-11-03</b>: 📰 解説「<a href="guide-news-2026-11-03.html" style="color:#0969da"><b>【11/3】Apple Q4決算：売上高+12%も株価-3%──新CEO初の決算とマージン圧縮</b></a>」公開'},
