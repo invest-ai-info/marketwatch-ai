@@ -77,6 +77,8 @@ jobs:
       FORCE_WEEKLY: ${{ github.event.inputs.force_weekly || 'false' }}
       # 🆕 2026-11-05 オーナー決定：新しいトップページ（build_home_v2）を使う。元に戻すときはこの行を消すか "0" にする
       HOME_V2: "1"
+      # 🆕 2026-11-05 オーナー決定：記事ページの新しい枠（apply_site_frame の FRAME_V2＝1行のヘッダー・横1列のナビ）。戻すときはこの行を消すか "0" にする
+      FRAME_V2: "1"
 
     steps:
       - name: Checkout repository
