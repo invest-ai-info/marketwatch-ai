@@ -65,7 +65,7 @@ jobs:
           fi
           gh release create "${{ steps.dates.outputs.tag }}" \
             --title "📦 ${{ steps.dates.outputs.prev_month }} 月次バックアップ" \
-            --notes "MarketWatch AI シグナル & 取引記録の月次スナップショット
+            --notes "時短投資ラボのシグナル & 取引記録の月次スナップショット
 
           ## 📊 統計
           - シグナル累計: ${{ steps.counts.outputs.signals }} 件
