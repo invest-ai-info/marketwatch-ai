@@ -1108,8 +1108,8 @@ def build_list_page(root=".", now=None, model=None):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>検証中リスト｜MarketWatch AI</title>
-<meta name="description" content="MarketWatch AI がいま確かめている投資の研究を、日本株・為替（FX）・株価指数・金や原油・すべての市場に共通、に分けて並べた一覧です。登録した日より後のデータだけで採点し、判定が出るまで結論を出しません。">
+<title>検証中リスト｜時短投資ラボ</title>
+<meta name="description" content="時短投資ラボがいま確かめている投資の研究を、日本株・為替（FX）・株価指数・金や原油・すべての市場に共通、に分けて並べた一覧です。登録した日より後のデータだけで採点し、判定が出るまで結論を出しません。">
 <link rel="canonical" href="https://marketwatch-jp.com/{LIST_PAGE}">
 <style>{LIST_CSS}</style>
 {F.FRAME_STYLE_TAG}
