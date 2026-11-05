@@ -156,14 +156,14 @@ def build_html(items):
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>🚨 政治発言ライブフィード｜MarketWatch AI</title>
+<title>🚨 政治発言ライブフィード｜時短投資ラボ</title>
 <meta name="description" content="トランプ Truth Social・WhiteHouse 公式声明・主要中銀発言を 30 分ごとに自動収集。重要度別ランク付け、影響銘柄推定、Gemini による日本語化と一言コメント。">
 <link rel="canonical" href="https://marketwatch-jp.com/political-feed.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="🚨 政治発言ライブフィード｜MarketWatch AI">
+<meta property="og:title" content="🚨 政治発言ライブフィード｜時短投資ラボ">
 <meta property="og:description" content="トランプ・パウエル・植田など相場を動かす発言を 30 分ごと自動収集。重要度別ランク・影響銘柄・AI 一言コメント付き。">
 <meta property="og:url" content="https://marketwatch-jp.com/political-feed.html">
-<meta property="og:site_name" content="MarketWatch AI">
+<meta property="og:site_name" content="時短投資ラボ">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://marketwatch-jp.com/05_top_news_frb.png">
 <meta property="og:image:width" content="1200">
@@ -251,7 +251,7 @@ body.dark footer{{background:#161b22;color:#8b949e;border-top-color:#30363d}}
 </head>
 <body>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div class="header-inner"><div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>{SUBBRAND_HTML}<div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">🚨 政治発言ライブ</div></div></div></header>
+<header><div class="header-inner"><div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> 時短投資ラボ</div>{SUBBRAND_HTML}<div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">🚨 政治発言ライブ</div></div></div></header>
 
 <main>
 <nav class="nav-bar">
@@ -316,7 +316,7 @@ body.dark footer{{background:#161b22;color:#8b949e;border-top-color:#30363d}}
 </div>
 
 </main>
-<footer>© 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a> ｜ <a href="track-record.html">シグナル研究</a><p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
+<footer>© 2026 時短投資ラボ ｜ <a href="index.html">トップに戻る</a> ｜ <a href="guides.html">解説記事一覧</a> ｜ <a href="track-record.html">シグナル研究</a><p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
 
 <script>
