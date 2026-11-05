@@ -533,7 +533,7 @@ def main():
             "url": "https://disclosure2.edinet-fsa.go.jp/",
             "terms": TERMS_URL,
             "note": "出典：EDINET閲覧サイト（https://disclosure2.edinet-fsa.go.jp/）"
-                    "をもとに MarketWatch AI 作成。公共データ利用規約（PDL1.0）に基づき利用。",
+                    "をもとに時短投資ラボ作成。公共データ利用規約（PDL1.0）に基づき利用。",
         },
         "items": items,
     }
