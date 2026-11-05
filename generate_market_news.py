@@ -7035,7 +7035,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 #     build_weekly_history_item／日本株＝jp-rankings.json／通貨の強弱＝fetch_currency_strength。
 #   部品が作れないときはその部品だけ消える（トップ全体は止めない）。
 # ─────────────────────────────────────────
-SITE_NAME_V2 = "時短投資ラボ"
+SITE_NAME_V2 = "MarketWatch AI"   # 2026-11-05 オーナー：新しい名前の候補「時短投資ラボ」は商標を確かめてから全ページ一度に替える（それまでは今の名前）
 
 # ナビ（上の6つ）と「もっと見る」の小さな一覧。絵文字は付けない
 HOME_V2_NAV = [
@@ -7669,7 +7669,7 @@ def build_home_v2(data, hist, now_jst, news=None, touraku=None):
     <h1>AIと協力して、<br>投資の時間は<span class="em">短く。</span><span class="em2">資産を増やす道は、データで確かめる。</span></h1>
     <p class="lead">ニュース・経済指標・値動きを AI と一緒に毎日集めて、朝5分で読める順番に整理しています。よく聞く投資の定説は、結果を見る前に登録してから確かめ、うまくいかなかった結果も消さずに公開しています。</p>{stats_html}
     <div class="cta">
-      <a class="btn pri" href="#today">今朝の5分を読む</a>
+      <a class="btn pri" href="#today">今日の5分を読む</a>
       <a class="btn" href="track-record.html">検証の結果を見る</a>
       <a class="btn" href="guide-how-we-research.html">はじめての方へ</a>
     </div>
@@ -7718,7 +7718,7 @@ def build_home_v2(data, hist, now_jst, news=None, touraku=None):
 <footer class="ft" data-v2="footer">
   <div class="wrap">
     <nav aria-label="サイトの情報">
-      <a href="about.html">運営者情報</a><a href="about.html">編集方針・訂正の方針</a><a href="privacy.html">プライバシーポリシー</a><a href="contact.html">お問い合わせ</a>
+      <a href="about.html">運営者情報</a><a href="about.html#policy">編集方針・訂正の方針</a><a href="privacy.html">プライバシーポリシー</a><a href="contact.html">お問い合わせ</a>
     </nav>
     <p data-disclaimer="kinsho-v1">当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。掲載している情報は売買の推奨や投資助言ではありません。投資の判断はご自身でお願いします。</p>
     <p>データの出所：値段・日本株の動き・通貨の強弱は Yahoo Finance（遅れて表示されます）／経済指標の日程は各国の公式の発表をもとに作成／ニュースの見出しは各社の配信</p>

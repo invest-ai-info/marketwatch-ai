@@ -142,7 +142,7 @@ def test_other_local_links_point_at_real_files(offline):
     rest = h[:i] + h[j:]
     for href in set(re.findall(r'href="([^"#:?]+\.html)(?:#[^"]*)?"', rest)):
         assert os.path.exists(href), href
-    assert 'href="about.html">編集方針・訂正の方針' in h
+    assert 'href="about.html#policy">編集方針・訂正の方針' in h
 
 
 def test_picks_are_six_real_files():
