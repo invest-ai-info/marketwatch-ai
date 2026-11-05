@@ -1739,7 +1739,7 @@ def build_ai_analysis_section(nikkei_val=None, sp500_val=None, gold_val=None, bt
     return f'''
   <!-- AI 投資判断（Gemini）。2026-09-23 アクション欄を廃止し4列に -->
   <section class="ai-analysis-section" id="ai">
-    <p class="section-title">🤖 AI 投資判断 <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が地合いを判定。売買の推奨ではありません。投資判断は自己責任で）</span></p>
+    <p class="section-title">🤖 AI の見立て <span style="font-size:.7rem;color:#57606a;font-weight:500">（直近ニュースと価格から AI が地合いを判定。売買の推奨ではありません。投資判断は自己責任で）</span></p>
     <div class="ai-analysis-grid">
       {''.join(cards)}
     </div>
@@ -7035,7 +7035,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 #     build_weekly_history_item／日本株＝jp-rankings.json／通貨の強弱＝fetch_currency_strength。
 #   部品が作れないときはその部品だけ消える（トップ全体は止めない）。
 # ─────────────────────────────────────────
-SITE_NAME_V2 = "時短投資ラボ"
+SITE_NAME_V2 = "MarketWatch AI"   # 2026-11-05 オーナー：新しい名前の候補「時短投資ラボ」は商標を確かめてから全ページ一度に替える（それまでは今の名前）
 
 # ナビ（上の6つ）と「もっと見る」の小さな一覧。絵文字は付けない
 HOME_V2_NAV = [
@@ -7521,7 +7521,7 @@ def _v2_jp_card(path):
     return f'''<section class="card">
       <h2><span class="ico coral"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6"/></svg></span>日本株の動き <small>{html.escape(asof)} 終値・主な{html.escape(str(uni))}銘柄</small></h2>
       <table class="tbl">{"".join(rows)}</table>
-      <p class="note">{facts}大きく動いた銘柄を並べた情報で、売買の推奨ではありません。</p>
+      <p class="note">{facts}値上がり率・値下がり率の大きい順に機械で選んだもので、売買の推奨ではありません。</p>
       <a class="more-link" href="hot-assets.html">ランキングと出来高急増をもっと見る →</a>
     </section>'''
 
@@ -7667,9 +7667,9 @@ def build_home_v2(data, hist, now_jst, news=None, touraku=None):
   {_V2_HERO_DECO}
   <div class="wrap hero">
     <h1>AIと協力して、<br>投資の時間は<span class="em">短く。</span><span class="em2">資産を増やす道は、データで確かめる。</span></h1>
-    <p class="lead">ニュース・経済指標・値動きを AI と一緒に毎日集めて、朝5分で読める順番に整理しています。よく聞く投資の定説は、結果を見る前に登録してから確かめ、うまくいかなかった結果も消さずに公開しています。</p>{stats_html}
+    <p class="lead">ニュース・経済指標・値動きを AI と一緒に毎日集めて、朝5分で読める順番に整理しています。よく聞く投資の定説は、条件を先に登録し、その後のデータで確かめて、うまくいかなかった結果も消さずに公開しています。</p>{stats_html}
     <div class="cta">
-      <a class="btn pri" href="#today">今朝の5分を読む</a>
+      <a class="btn pri" href="#today">今日の5分を読む</a>
       <a class="btn" href="track-record.html">検証の結果を見る</a>
       <a class="btn" href="guide-how-we-research.html">はじめての方へ</a>
     </div>
@@ -7683,7 +7683,7 @@ def build_home_v2(data, hist, now_jst, news=None, touraku=None):
     <section class="card k-blue" data-v2="points">
       <h2><span class="step">1</span>今日の要点 <small>自動のまとめ・{hm} 更新</small></h2>
       <ul>{points_html}</ul>
-      <p class="note">値段と経済カレンダーから自動で作ったまとめで、売買の推奨ではありません。</p>{ai_fold}
+      <p class="note">値段のデータから自動で作ったまとめで、売買の推奨ではありません。</p>{ai_fold}
     </section>
     <section class="card k-amber" data-v2="schedule">
       <h2><span class="step">2</span>今日と、この先の予定</h2>
@@ -7706,10 +7706,10 @@ def build_home_v2(data, hist, now_jst, news=None, touraku=None):
     </div>
   </section>
 
+{mkt_html}{news_html}
   <div data-v2="ad">
 {AD2_BLOCK}
   </div>
-{mkt_html}{news_html}
   <section class="nl-v2" data-v2="newsletter" aria-label="メールマガジンの登録">
 {NEWSLETTER_FORM}
   </section>
@@ -7718,9 +7718,9 @@ def build_home_v2(data, hist, now_jst, news=None, touraku=None):
 <footer class="ft" data-v2="footer">
   <div class="wrap">
     <nav aria-label="サイトの情報">
-      <a href="about.html">運営者情報</a><a href="about.html">編集方針・訂正の方針</a><a href="privacy.html">プライバシーポリシー</a><a href="contact.html">お問い合わせ</a>
+      <a href="about.html">運営者情報</a><a href="about.html#policy">編集方針・訂正の方針</a><a href="privacy.html">プライバシーポリシー</a><a href="contact.html">お問い合わせ</a>
     </nav>
-    <p data-disclaimer="kinsho-v1">当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。掲載している情報は売買の推奨や投資助言ではありません。投資の判断はご自身でお願いします。</p>
+    <p data-disclaimer="kinsho-v1">当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
     <p>データの出所：値段・日本株の動き・通貨の強弱は Yahoo Finance（遅れて表示されます）／経済指標の日程は各国の公式の発表をもとに作成／ニュースの見出しは各社の配信</p>
     <p>最終更新: {time_str}・© {year} {SITE_NAME_V2}</p>
   </div>
