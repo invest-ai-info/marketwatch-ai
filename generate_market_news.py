@@ -7024,6 +7024,713 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
 
 # ─────────────────────────────────────────
+# 🆕 2026-11-05 トップの新しいデザイン（第1段階・オーナーが見本を承認）
+#   環境変数 HOME_V2=1 のときだけ main() が build_html の代わりに build_home_v2 を使う。
+#   既定はオフ＝本番の index.html は今のまま（build_html には手を入れていない）。
+#   中身のデータは今のトップと同じ関数・同じファイルから取る（数字の出どころを二つにしない）:
+#     数字3つ＝research_map.collect と _latest_signal_lab（build_research_band と同じ）／
+#     値動き＝BAND_ITEMS と main() の data／予定＝find_upcoming_events と ECONOMIC_EVENTS_2026／
+#     新着＝build_html の _history_items（ソースから読む＝publish_article.py の書き込み先は1か所のまま）＋
+#     build_weekly_history_item／日本株＝jp-rankings.json／通貨の強弱＝fetch_currency_strength。
+#   部品が作れないときはその部品だけ消える（トップ全体は止めない）。
+# ─────────────────────────────────────────
+SITE_NAME_V2 = "時短投資ラボ"
+
+# ナビ（上の6つ）と「もっと見る」の小さな一覧。絵文字は付けない
+HOME_V2_NAV = [
+    ("index.html", "ホーム"),
+    ("guide-how-we-research.html", "はじめての方へ"),
+    ("guides.html", "解説記事"),
+    ("track-record.html", "検証の結果"),
+    ("market-health.html", "市場データ"),
+    ("calendar.html", "経済カレンダー"),
+]
+HOME_V2_MORE = [
+    ("political-feed.html", "政治発言ライブ"),
+    ("hot-assets.html", "出来高急増"),
+    ("charts.html", "150年チャート"),
+    ("holdings.html", "大量保有報告"),
+    ("guide-investment-books.html", "投資本"),
+    ("youtube-summary.html", "YouTube要約"),
+    ("research-list.html", "検証中リスト"),
+    # 計算ツール6本の並びは記事一覧の「計算ツール」欄が単一の真実（check_tools_strip が見張る）＝そこへ案内する
+    ("guides.html#cat-tools", "計算ツール"),
+]
+# よく読まれている解説（固定の6枚）: (ファイル, 札の色, 札, 題名, 一言)
+HOME_V2_PICKS = [
+    ("guide-nisa.html", "teal", "制度", "新NISAの基本ガイド", "制度のしくみと、長く続けるための考え方"),
+    ("guide-nikkei-vs-topix.html", "blue", "投資の基礎", "日経平均とTOPIXの違い", "2026年10月からの TOPIX の見直しまで"),
+    ("guide-bonds-interest-rates.html", "blue", "投資の基礎", "金利が上がると債券はどうなる？", "債券の値段と金利の関係を図で"),
+    ("guide-yen-carry-trade.html", "amber", "為替", "円キャリートレードとは", "円安と急な円高のしくみ"),
+    ("guide-bank-stocks-2026-05.html", "coral", "業種", "日銀の利上げで銀行株は？", "メガバンクと地方銀行の違い"),
+    ("guide-investment-books.html", "teal", "本", "投資本の系統別ガイド", "入門から偉人の哲学まで、9つの系統で"),
+]
+# 予定のカウントダウン（今のトップの「今日の3行」と同じ4つ）: (指標名に含まれる文字, 国)
+_V2_COUNTDOWN = [("米CPI", "us"), ("FOMC（結果発表）", "us"), ("日銀会合（結果発表）", "jp"), ("米雇用統計", "us")]
+_V2_FLAG = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "uk": "🇬🇧", "cn": "🇨🇳"}
+_V2_CUR = {"USD": ("🇺🇸", "米ドル"), "EUR": ("🇪🇺", "ユーロ"), "GBP": ("🇬🇧", "ポンド"),
+           "JPY": ("🇯🇵", "円"), "AUD": ("🇦🇺", "豪ドル")}
+_V2_LOGO = ('<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--brand)"/>'
+            '<path d="M6.5 22.5l6-6.5 4.5 3.5 8.5-9.5" fill="none" stroke="var(--bg)" stroke-width="2.6" '
+            'stroke-linecap="round" stroke-linejoin="round"/><circle cx="25.5" cy="10" r="2.3" fill="var(--bg)"/></svg>')
+_V2_SEARCH_ICON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">'
+                   '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>')
+_V2_HERO_DECO = ('<svg class="hero-deco" viewBox="0 0 520 220" aria-hidden="true">'
+                 '<path d="M0 190 L70 160 L120 172 L190 120 L250 132 L320 80 L380 96 L450 40 L520 52" fill="none" '
+                 'stroke="var(--brand)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".28"/>'
+                 '<path d="M0 205 L80 186 L150 194 L230 160 L300 168 L370 130 L440 140 L520 104" fill="none" '
+                 'stroke="var(--teal)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".25"/>'
+                 '<circle cx="450" cy="40" r="9" fill="var(--brand)" opacity=".35"/></svg>')
+
+# 見た目（見本 mock.css の明るい版）。暗い表示は今のサイトと同じ仕組み＝body.dark（🌙 ボタン・localStorage "theme"）
+# ※ プレーン文字列（f-string ではない）
+HOME_V2_CSS = """
+:root{--bg:#ffffff;--surface:#f5f8fc;--line:#dbe3ee;--ink:#1b2433;--muted:#526075;--faint:#7b879a;
+  --brand:#1766d6;--brand-ink:#ffffff;--link:#1263cc;--up:#16884a;--down:#d9363e;--chip:#edf2f9;
+  --teal:#0b8f82;--amber:#c97a00;--coral:#e0493f;
+  --t-blue:#eaf3ff;--t-teal:#e4f6f2;--t-amber:#fff3dc;--t-coral:#fdecea;--radius:14px}
+body.dark{--bg:#0e141c;--surface:#151d28;--line:#283444;--ink:#e7edf5;--muted:#a1adbd;--faint:#7f8b9b;
+  --brand:#5b9dff;--brand-ink:#0e141c;--link:#7fb2ff;--up:#4cc77a;--down:#ff7a72;--chip:#1b2533;
+  --teal:#3cc7b8;--amber:#f0b24a;--coral:#ff7a6e;
+  --t-blue:#13233a;--t-teal:#102c2a;--t-amber:#2e2410;--t-coral:#351c1b;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 'Noto Sans JP','Hiragino Sans','Yu Gothic',system-ui,sans-serif;overflow-wrap:anywhere}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+#ss-btn{display:none!important}
+/* ヘッダー */
+.hd{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:50}
+.hd-in{display:flex;align-items:center;gap:8px;min-height:60px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:19px;letter-spacing:.02em}
+.logo:hover{text-decoration:none}
+.logo svg{width:30px;height:30px;flex:none}
+.hd-sp{flex:1}
+.icon-btn{width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--muted);display:grid;place-items:center;cursor:pointer;font-size:17px;line-height:1;padding:0}
+.icon-btn:hover{background:var(--surface)}
+.icon-btn svg{width:18px;height:18px}
+.nav-row{display:flex;align-items:flex-start;gap:4px;padding:0 0 8px}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0;margin:0 0 0 -4px}
+.nav::-webkit-scrollbar{display:none}
+.nav a,.nav-more>summary{flex:none;padding:6px 12px;border-radius:8px;color:var(--ink);font-size:14.5px;font-weight:500;white-space:nowrap}
+.nav a:hover,.nav-more>summary:hover{background:var(--surface);text-decoration:none}
+.nav a.cur{background:var(--t-blue);color:var(--brand);font-weight:700}
+.nav-more{position:relative;flex:none}
+.nav-more>summary{list-style:none;cursor:pointer;color:var(--muted)}
+.nav-more>summary::-webkit-details-marker{display:none}
+.nav-more[open]>summary{background:var(--chip);color:var(--ink)}
+.nav-more ul{position:absolute;right:0;top:calc(100% + 6px);z-index:60;min-width:200px;margin:0;padding:6px;list-style:none;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(15,30,60,.16)}
+.nav-more li a{display:block;padding:8px 12px;border-radius:8px;color:var(--ink);font-size:14.5px;white-space:nowrap}
+.nav-more li a:hover{background:var(--surface);text-decoration:none}
+/* 最初の画面 */
+.hero-band{background:var(--t-blue);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero{padding-block:36px 28px;position:relative}
+.hero-deco{position:absolute;right:-10px;bottom:0;width:min(46vw,520px);height:auto;opacity:.9;pointer-events:none}
+.hero h1{font-size:clamp(26px,4.4vw,40px);line-height:1.35;margin:0 0 12px;letter-spacing:.01em;position:relative}
+.hero h1 .em{color:var(--brand)}
+.hero h1 .em2{display:block;font-size:.62em;line-height:1.45;margin-top:10px;color:var(--ink);font-weight:700}
+.hero p.lead{max-width:640px;color:var(--muted);margin:0 0 20px;font-size:16.5px;position:relative}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin:0 0 22px;padding:0;list-style:none;position:relative}
+.stats b{display:block;font-size:24px;line-height:1.2;color:var(--ink)}
+.stats span{font-size:13px;color:var(--muted)}
+.stats li:nth-child(1) b{color:var(--brand)}.stats li:nth-child(2) b{color:var(--teal)}.stats li:nth-child(3) b{color:var(--amber)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;position:relative}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:15px;background:var(--bg)}
+.btn:hover{text-decoration:none;background:var(--surface)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.pri:hover{opacity:.92;background:var(--brand)}
+/* 朝の5分 */
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:26px 0 0;font-size:14px;color:var(--muted)}
+.flow b{color:var(--ink);font-size:15px}
+.step{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:999px;background:var(--brand);color:var(--brand-ink);font-size:13px;font-weight:700;flex:none;line-height:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+.grid1{display:grid;grid-template-columns:1fr;gap:16px;margin:24px 0}
+.card{border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;background:var(--bg);min-width:0}
+.card h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;line-height:1.5}
+.card h2 small{font-size:12px;font-weight:400;color:var(--faint)}
+.card ul{margin:0;padding-left:1.1em}
+.card li{margin:3px 0}
+.card.k-blue{background:var(--t-blue);border-color:transparent}
+.card.k-amber{background:var(--t-amber);border-color:transparent}
+.card.k-amber .step{background:var(--amber)}
+.more-link{display:inline-block;margin-top:10px;margin-right:14px;font-size:14px;font-weight:600}
+.note{font-size:12px;color:var(--faint);margin:8px 0 0}
+.up{color:var(--up)}.down{color:var(--down)}.na{color:var(--faint)}
+.sched{list-style:none;margin:0;padding:0!important}
+.sched li{display:flex;gap:10px;padding:5px 0;margin:0;border-bottom:1px dashed var(--line)}
+.sched li:last-child{border-bottom:0}
+.sched .d{flex:none;width:56px;color:var(--muted);font-size:14px}
+.sched .hot{color:var(--coral);font-weight:700}
+details.fold{margin-top:10px}
+details.fold>summary{cursor:pointer;color:var(--link);font-weight:600;font-size:14px;list-style:none;display:inline-block}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::after{content:" ▾"}
+details.fold[open]>summary::after{content:" ▴"}
+/* 資産ごとの見立て（今の AI 投資判断の部品をそのまま入れる） */
+.ai-analysis-section{margin:10px 0 0}
+.ai-analysis-section .section-title{font-size:13px;color:var(--muted);margin:0 0 8px}
+.ai-analysis-section .section-title span{color:var(--faint)!important}
+.ai-analysis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.ai-asset-card{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.ai-asset-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ai-asset-icon{font-size:1.3rem}
+.ai-asset-name-wrap{flex:1;min-width:0}
+.ai-asset-name{font-size:.92rem;font-weight:700}
+.ai-asset-price{font-size:.75rem;color:var(--muted)}
+.ai-asset-sentiment{font-size:.74rem;font-weight:700;padding:3px 9px;border-radius:12px;white-space:nowrap}
+.ai-meter{margin:8px 0 10px}
+.ai-meter-track{position:relative;height:8px;background:linear-gradient(90deg,#fee2e2 0%,#fef3c7 50%,#dcfce7 100%);border-radius:4px}
+.ai-meter-dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);transform:translate(-50%,-50%)}
+.ai-meter-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-top:4px}
+.ai-reason{font-size:.82rem;color:var(--ink);line-height:1.6}
+.ai-reason strong{color:var(--amber)}
+/* 値動き */
+.tick-wrap{margin:16px 0 6px}
+.tick-wrap .flowlbl{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:8px}
+.tick{display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--line);border-radius:var(--radius);margin:0;overflow:hidden;background:var(--bg)}
+.tick>div{padding:10px 12px;border-left:1px solid var(--line);min-width:0}
+.tick>div:first-child{border-left:0}
+.tick .n{font-size:12px;color:var(--muted);white-space:nowrap}
+.tick .v{font-weight:700;font-size:15.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tick .c{font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums}
+/* 新着・解説 */
+.sec{margin:32px 0}
+.sec h2{font-size:20px;margin:0 0 12px}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.list li{display:flex;gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line)}
+.list li a{min-width:0}
+.list time{flex:none;font-size:13px;color:var(--faint);width:44px}
+.tag{flex:none;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--chip);color:var(--muted);white-space:nowrap}
+.tag.res{background:var(--t-teal);color:var(--teal)}.tag.co{background:var(--t-amber);color:var(--amber)}.tag.nw{background:var(--t-blue);color:var(--brand)}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pick{border:1px solid var(--line);border-radius:var(--radius);padding:34px 16px 14px;color:var(--ink);display:block;position:relative;background:var(--bg)}
+.pick:hover{text-decoration:none;border-color:var(--brand);box-shadow:0 2px 10px rgba(23,102,214,.10)}
+.pick b{display:block;font-size:15.5px;line-height:1.5;margin-bottom:4px}
+.pick span{font-size:13px;color:var(--muted)}
+.pick .cat{position:absolute;top:12px;left:16px;font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:999px;line-height:1.6}
+.pick .cat.blue{background:var(--t-blue);color:var(--brand)}.pick .cat.teal{background:var(--t-teal);color:var(--teal)}
+.pick .cat.amber{background:var(--t-amber);color:var(--amber)}.pick .cat.coral{background:var(--t-coral);color:var(--coral)}
+/* 日本株・通貨 */
+.ico{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;flex:none}
+.ico svg{width:16px;height:16px}
+.ico.teal{background:var(--t-teal);color:var(--teal)}.ico.coral{background:var(--t-coral);color:var(--coral)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl td{padding:6px 0;border-bottom:1px solid var(--line)}
+.tbl td.r{text-align:right;white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums}
+.tbl td.s{color:var(--faint);font-size:12px;padding-left:8px;white-space:nowrap}
+.bars{list-style:none;margin:0;padding:0!important}
+.bars li{display:grid;grid-template-columns:84px 1fr 58px;white-space:nowrap;gap:8px;align-items:center;padding:4px 0;margin:0;font-size:14px}
+.bars li>span:last-child{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:4px;background:var(--surface);position:relative;overflow:hidden}
+.bar::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.bar i{position:absolute;top:0;bottom:0;border-radius:4px}
+/* 最新マーケットニュース（今の外部の見出しの一覧を閉じた形で） */
+.news-v2{border:1px solid var(--line);border-radius:var(--radius);margin:32px 0;background:var(--bg)}
+.news-v2>summary{cursor:pointer;list-style:none;padding:14px 20px;display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px}
+.news-v2>summary::-webkit-details-marker{display:none}
+.news-v2>summary h2{font-size:17px;margin:0}
+.news-v2>summary small{font-size:12px;color:var(--faint)}
+.news-v2>summary::after{content:"開く ▾";margin-left:auto;font-size:13px;font-weight:600;color:var(--link)}
+.news-v2[open]>summary::after{content:"閉じる ▴"}
+.news-v2 .inner{padding:0 20px 16px}
+.news-v2 .inner div[style*="background:#ffffff"]{background:transparent!important;border:0!important;padding:0!important;margin:0!important}
+.news-v2 .inner div[style*="background:#ffffff"]>div:first-child>span:first-child{display:none}
+body.dark .news-v2 #mwTickerList a{color:var(--link)!important}
+body.dark .news-v2 #mwTickerList>div{border-bottom-color:var(--line)!important}
+body.dark .news-v2 #mwTickerList>div>span:first-child,body.dark .news-v2 #mwTickerList>div>span:last-child,
+body.dark .news-v2 #mwTickerMeta,body.dark .news-v2 .inner span[style*="color:#6e7781"]{color:var(--muted)!important}
+/* メルマガ（MailerLite のフォームはそのまま。見た目だけ合わせる） */
+html body.v2 .nl-v2 .mw-newsletter{max-width:none;margin:32px 0;padding:0}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-embedWrapper{background:var(--t-teal);border:0;border-radius:var(--radius)}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-embedBody{padding:22px;display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-embedContent{flex:1 1 300px;margin:0;min-width:0}
+html body.v2 .nl-v2 .mw-newsletter .mw-nl-badge{color:var(--teal);background:var(--bg);border-color:transparent}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-embedContent h4{color:var(--ink);font-size:17px}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-embedContent p{color:var(--muted);font-size:14px}
+html body.v2 .nl-v2 .mw-newsletter .ml-block-form{flex:1 1 280px;display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;min-width:0}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-formContent{flex:1 1 200px;min-width:0}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-fieldRow{margin:0}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-fieldRow input{background:var(--bg);color:var(--ink);border-color:var(--line);border-radius:10px}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-embedSubmit{flex:0 0 auto}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-embedSubmit button{width:auto;min-height:44px;padding:10px 20px;border-radius:10px;background:var(--brand);color:var(--brand-ink)}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-successContent h4{color:var(--up)}
+html body.v2 .nl-v2 .mw-newsletter .ml-form-successContent p{color:var(--muted)}
+/* フッター */
+.ft{border-top:1px solid var(--line);margin-top:40px;padding:24px 0 40px;color:var(--muted);font-size:13.5px}
+.ft nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px}
+.ft nav a{color:var(--muted)}
+.ft p{margin:6px 0}
+@media (max-width:900px){
+  .tick{grid-template-columns:repeat(4,1fr)}
+  .tick>div:nth-child(5){border-left:0}
+  .tick>div:nth-child(n+5){border-top:1px solid var(--line)}
+  .cards3{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body{font-size:15.5px}
+  .hero{padding-block:24px 20px}
+  .hero-deco{width:70vw;opacity:.45}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stats b{font-size:20px}.stats span{font-size:12px;line-height:1.5;display:block}
+  .grid2{grid-template-columns:1fr}
+  .cards3{grid-template-columns:1fr}
+  .tick{grid-template-columns:repeat(2,1fr)}
+  .tick>div:nth-child(odd){border-left:0}
+  .tick>div:nth-child(even){border-left:1px solid var(--line)}
+  .tick>div:nth-child(n+3){border-top:1px solid var(--line)}
+  .btn{flex:1 1 auto;justify-content:center;min-height:44px}
+  .icon-btn{width:44px;height:44px}
+  .nav a,.nav-more>summary{padding:9px 12px}
+  .news-v2>summary,.news-v2 .inner{padding-left:16px;padding-right:16px}
+  .card{padding:16px}
+}
+"""
+
+# 🌙 暗い表示（今のサイトと同じ localStorage "theme"・body.dark）／🔍 検索（site-search.js の窓を開く）／もっと見るを閉じる
+HOME_V2_JS = """<script>(function(){
+var tb=document.getElementById('theme-toggle');
+function setTheme(t){document.body.classList.toggle('dark',t==='dark');if(tb){tb.textContent=t==='dark'?'\\u2600\\ufe0f':'\\ud83c\\udf19';tb.setAttribute('aria-pressed',t==='dark'?'true':'false')}try{localStorage.setItem('theme',t)}catch(e){}}
+window.toggleTheme=function(){setTheme(document.body.classList.contains('dark')?'light':'dark')};
+var t='light';try{t=localStorage.getItem('theme')||'light'}catch(e){}
+setTheme(t);
+if(tb)tb.addEventListener('click',window.toggleTheme);
+var sb=document.getElementById('v2-search');
+if(sb)sb.addEventListener('click',function(){var b=document.getElementById('ss-btn');if(b){b.click()}else{location.href='guides.html'}});
+var more=document.querySelector('.nav-more');
+document.addEventListener('click',function(e){if(more&&more.open&&!more.contains(e.target))more.open=false});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&more&&more.open)more.open=false});
+})();</script>"""
+
+
+def _index_builder():
+    """index.html を作る関数を選ぶ。環境変数 HOME_V2=1 のときだけ新しい版（既定は今の build_html）。"""
+    return build_home_v2 if os.environ.get("HOME_V2", "").strip() == "1" else build_html
+
+
+def _v2_get(data, key):
+    """main() の data から (値, 前日の値, 変化率%) を取る。形がおかしければ全部 None。"""
+    v = (data or {}).get(key)
+    if isinstance(v, (tuple, list)) and len(v) >= 3:
+        return v[0], v[1], v[2]
+    return None, None, None
+
+
+def _v2_signed(v, digits=2):
+    """+1.23 / −1.23（マイナスは読みやすい − の字）。"""
+    return f"{v:+.{digits}f}".replace("-", "−")
+
+
+def _v2_part(name, fn, *args, **kwargs):
+    """部品を作る。失敗したらその部品だけ空にする（トップ全体は止めない）。"""
+    try:
+        return fn(*args, **kwargs)
+    except Exception as e:  # noqa: BLE001 — トップは本番出力。部品の不具合で止めない
+        print(f"  ⚠️ 新しいトップの部品「{name}」を作れませんでした: {e}")
+        return ""
+
+
+def _v2_vix_level(v):
+    """VIX の水準のことば（今のトップの「今日の3行」と同じ区切り）。"""
+    if v < 13:
+        return "きわめて落ち着いた水準"
+    if v < 17:
+        return "落ち着いた水準"
+    if v < 22:
+        return "やや神経質な水準"
+    if v < 30:
+        return "警戒水準"
+    return "強い警戒水準"
+
+
+def _v2_stats():
+    """最初の画面の数字3つ（build_research_band と同じ数え方）。作れなければ []。"""
+    import research_map
+    m = research_map.collect()
+    n_journal, _latest = _latest_signal_lab()
+    return [(m["n_active"], "いま追っている仮説"), (n_journal, "研究日誌（毎朝1本）"),
+            (len(m["ended"]), "終わった検証")]
+
+
+def _v2_ticker(data):
+    """③ 値動きの8つの帯。値が無いときは「—」（前日比の誤りの直しは別の作業）。"""
+    cells = []
+    for key, name, _sym, dec in BAND_ITEMS:
+        last, _prev, chg = _v2_get(data, key)
+        price = f"{last:,.{dec}f}" if last is not None else "—"
+        if chg is None:
+            c = '<div class="c na">—</div>'
+        else:
+            cls = "up" if chg > 0 else "down" if chg < 0 else "na"
+            arrow = "▲" if chg > 0 else "▼" if chg < 0 else "±"
+            c = f'<div class="c {cls}">{arrow}{abs(chg):.2f}%</div>'
+        cells.append(f'<div><div class="n">{name}</div><div class="v">{price}</div>{c}</div>')
+    return "\n    ".join(cells)
+
+
+def _v2_points(data, label, vix_val):
+    """① 今日の要点（3行まで）＝値動きの大きい順・地合い・VIX。事実とデータだけ。"""
+    movers = []
+    for key, name, _sym, _dec in BAND_ITEMS:
+        chg = _v2_get(data, key)[2]
+        if chg is not None:
+            movers.append((name, chg))
+    movers.sort(key=lambda x: abs(x[1]), reverse=True)
+    lines = []
+    if movers:
+        parts = "・".join(
+            f'{nm} <span class="{"up" if c > 0 else "down" if c < 0 else "na"}">{"▲" if c > 0 else "▼" if c < 0 else "±"}{abs(c):.1f}%</span>'
+            for nm, c in movers[:3])
+        lines.append(f"値動きが大きかった順：{parts}（前日比）")
+        lines.append(f"地合いは「<b>{html.escape(label)}</b>」（日経平均・S&amp;P500・金・ビットコインの上げ下げの数から判定）")
+    if vix_val is not None:
+        lines.append(f"恐怖指数（VIX）は <b>{vix_val:.1f}</b>＝{_v2_vix_level(vix_val)}")
+    return lines[:3]
+
+
+def _v2_schedule(now_jst):
+    """② 今日と、この先の予定（今日の指標＋CPI・FOMC・日銀・雇用統計の次の日）と、今ある案内のリンク。"""
+    today = now_jst.date()
+    rows = []
+    todays = [e for e in find_upcoming_events(now_jst, days_ahead=0) if e["date"] == today]
+    for e in todays[:3]:
+        rows.append(f'<li><span class="d hot">今日</span><span>{_V2_FLAG.get(e["country"], "")} '
+                    f'{html.escape(e["name"])}</span></li>')
+    if len(todays) > 3:
+        rows.append(f'<li><span class="d hot">今日</span><span>ほか{len(todays) - 3}件</span></li>')
+    if not todays:
+        rows.append('<li><span class="d">今日</span><span>主な経済指標の予定はありません</span></li>')
+    nxt = []
+    for sub, _c in _V2_COUNTDOWN:
+        best = None
+        for m, d, c, _imp, n, _desc in ECONOMIC_EVENTS_2026:
+            if sub not in n:
+                continue
+            try:
+                ed = datetime(now_jst.year, m, d).date()
+            except ValueError:
+                continue
+            if ed > today and (best is None or ed < best[0]):
+                best = (ed, c, n)
+        if best:
+            nxt.append(best)
+    nxt.sort(key=lambda x: x[0])
+    for ed, c, n in nxt:
+        rows.append(f'<li><span class="d">{ed.month}/{ed.day}</span><span>{_V2_FLAG.get(c, "")} '
+                    f'{html.escape(n)}（あと{(ed - today).days}日）</span></li>')
+    links = ['<a class="more-link" href="calendar.html">経済カレンダー →</a>']
+    wk_file, _wk_date = _find_latest_weekly_article()
+    if wk_file:
+        links.append(f'<a class="more-link" href="{html.escape(wk_file)}">今週の投資戦略 →</a>')
+    if _load_indicator_results(now_jst):
+        links.append('<a class="more-link" href="preview.html">指標の結果速報 →</a>')
+    elif any(e.get("importance") == "high" for e in find_upcoming_events(now_jst, days_ahead=3)):
+        links.append('<a class="more-link" href="preview.html">発表前の見どころ →</a>')
+    return "\n        ".join(rows), "".join(links)
+
+
+def _history_items_from_build_html():
+    """build_html の中の _history_items（更新履歴の手書きの一覧）をソースから読む。
+    publish_article.py が足す先は build_html の中の1か所だけ＝ここで写しを持たない。"""
+    import ast
+    import inspect
+    import textwrap
+    import warnings
+    with warnings.catch_warnings():   # build_html の中の JS の正規表現が出す SyntaxWarning（もとからある）を黙らせる
+        warnings.simplefilter("ignore", SyntaxWarning)
+        tree = ast.parse(textwrap.dedent(inspect.getsource(build_html)))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "_history_items"
+                                                for t in node.targets):
+            return [dict(x) for x in ast.literal_eval(node.value)]
+    return []
+
+
+def _v2_new_items(now_jst, n=5):
+    """新着＝今の更新履歴と同じ並べ方（手書きの一覧＋週次戦略・日付の新しい順）の最新 n 件。
+    返り値: [(日付 'M/D', 札のクラス, 札の名前, ファイル, 題名)]"""
+    items = _history_items_from_build_html()
+    wk = build_weekly_history_item(now_jst)
+    if wk:
+        items.append(wk)
+    items.sort(key=lambda x: x["date"], reverse=True)  # 安定ソート＝同日は手書きを先に（build_html と同じ）
+    out = []
+    for it in items[:n]:
+        m = re.search(r'<a href="([^"]+)"[^>]*>(.*?)</a>', it.get("line", ""), re.S)
+        if not m:
+            continue
+        href = m.group(1)
+        title = html.unescape(re.sub(r"<[^>]+>", "", m.group(2))).strip()
+        if href.startswith("guide-signal-lab-"):
+            # トップ（広告のあるページ）に成績の数字を出さない＝研究の帯と同じ切り方（法務チェック 2026-09-26）
+            cls, tag, title = "res", "研究日誌", research_band_title(title, href)
+        elif href.startswith("guide-company-"):
+            cls, tag = "co", "企業"
+            code = re.match(r"guide-company-(\d{4})-", href)
+            if code and code.group(1) not in title:
+                title = f"{title}（{code.group(1)}）"
+        elif href.startswith("guide-news-"):
+            cls, tag = "nw", "ニュース"
+        else:
+            cls, tag = "", "解説"
+        try:
+            d = datetime.strptime(it["date"], "%Y-%m-%d")
+            when = f"{d.month}/{d.day}"
+        except (KeyError, ValueError):
+            when = ""
+        out.append((when, cls, tag, href, title))
+    return out
+
+
+def _v2_jp_card(path):
+    """日本株の動き（値上がり上位3・値下がり上位3・値上がり値下がりの数・強い業種と弱い業種）。
+    データは build_top_rankings・build_sector_panel と同じ jp-rankings.json。無ければ空文字。"""
+    import unicodedata
+    d = _load_rankings(path)
+    if not d:
+        return ""
+
+    def _row(r):
+        pct = (r.get("pct") or 0) * 100
+        cls = "up" if pct > 0 else "down" if pct < 0 else ""
+        nm = html.escape(unicodedata.normalize("NFKC", str(r.get("name", ""))))
+        return (f'<tr><td>{nm}</td><td class="r {cls}">{_v2_signed(pct)}%</td>'
+                f'<td class="s">{html.escape(str(r.get("sector", "")))}</td></tr>')
+
+    rows = [_row(r) for r in (d.get("gainers") or [])[:3]] + [_row(r) for r in (d.get("losers") or [])[:3]]
+    if not rows:
+        return ""
+    asof = str(d.get("asof", ""))
+    try:
+        _a = datetime.strptime(asof, "%Y-%m-%d")
+        asof = f"{_a.month}/{_a.day}"
+    except ValueError:
+        pass
+    facts = ""
+    b = d.get("breadth") or {}
+    if b:
+        facts += f'値上がり{b.get("up", 0)}・値下がり{b.get("down", 0)}。'
+    ok = sorted((s for s in (d.get("sectors") or []) if s.get("n", 0) >= 5), key=lambda s: -s.get("avg", 0))
+    if ok:
+        top = ok[:3]
+        bot = [s for s in ok[-3:] if s not in top][::-1]   # 弱い順
+        facts += "強かった業種＝" + "・".join(html.escape(s["sector"]) for s in top)
+        if bot:
+            facts += "／弱かった業種＝" + "・".join(html.escape(s["sector"]) for s in bot)
+        facts += "。"
+    uni = d.get("universe", "")
+    return f'''<section class="card">
+      <h2><span class="ico coral"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12l4-4 3 3 5-6"/></svg></span>日本株の動き <small>{html.escape(asof)} 終値・主な{html.escape(str(uni))}銘柄</small></h2>
+      <table class="tbl">{"".join(rows)}</table>
+      <p class="note">{facts}大きく動いた銘柄を並べた情報で、売買の推奨ではありません。</p>
+      <a class="more-link" href="hot-assets.html">ランキングと出来高急増をもっと見る →</a>
+    </section>'''
+
+
+def _v2_fx_card(cs):
+    """通貨の強弱（build_currency_strength_panel と同じ計算結果）。値が無ければ空文字。"""
+    valid = sorted([(c, v) for c, v in (cs or {}).items() if v is not None and c in _V2_CUR], key=lambda x: -x[1])
+    if not valid:
+        return ""
+    mx = max(abs(v) for _, v in valid) or 1
+    rows = []
+    for c, v in valid:
+        w = abs(v) / mx * 50
+        bar = (f"left:50%;width:{w:.1f}%;background:var(--up)" if v >= 0
+               else f"right:50%;width:{w:.1f}%;background:var(--down)")
+        cls = "up" if v > 0 else "down" if v < 0 else ""
+        fl, nm = _V2_CUR[c]
+        rows.append(f'<li><span>{fl} {nm}</span><span class="bar"><i style="{bar}"></i></span>'
+                    f'<span class="{cls}">{_v2_signed(v)}%</span></li>')
+    return f'''<section class="card">
+      <h2><span class="ico teal"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5h9l-2-2M13 11H4l2 2"/></svg></span>通貨の強弱 <small>直近24時間・9つのペアから</small></h2>
+      <ul class="bars">{"".join(rows)}</ul>
+      <p class="note">右に伸びるほど、ほかの通貨より買われています（各通貨を含むペアの変化率の平均）。</p>
+      <a class="more-link" href="market-health.html">市場データをもっと見る →</a>
+    </section>'''
+
+
+def build_home_v2(data, hist, now_jst, news=None, touraku=None):
+    """新しいトップページ（index.html 全体）の HTML を返す。引数は build_html と同じ。
+    main() は HOME_V2=1 のときだけこれを使う（_index_builder）。hist・touraku は今は使わない（形をそろえるため）。"""
+    date_str = now_jst.strftime("%Y年%#m月%#d日") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日")
+    time_str = now_jst.strftime("%Y年%#m月%#d日 %H:%M JST") if os.name == "nt" else now_jst.strftime("%Y年%-m月%-d日 %H:%M JST")
+    hm = now_jst.strftime("%H:%M")
+    md = f"{now_jst.month}/{now_jst.day}"
+    if news is None:
+        news = {cat: [] for cat in ["top", "stocks", "fx", "commodity", "crypto"]}
+
+    nk, _, nk_chg = _v2_get(data, "nikkei")
+    sp, _, sp_chg = _v2_get(data, "sp500")
+    gld, _, gld_chg = _v2_get(data, "gold")
+    btc, _, btc_chg = _v2_get(data, "btc")
+    label, _color, _emoji = sentiment([nk_chg, sp_chg, btc_chg, gld_chg])
+
+    # ── 部品（どれも失敗したらその部品だけ消える）──
+    fc_ctx = load_fundamental_context_for_site()
+    ai_html = _v2_part("資産ごとの見立て", build_ai_analysis_section,
+                       nikkei_val=nk, sp500_val=sp, gold_val=gld, btc_val=btc, fc_ctx=fc_ctx,
+                       stocks_news=news.get("stocks", []), commodity_news=news.get("commodity", []),
+                       crypto_news=news.get("crypto", []))
+    try:
+        vix_val = get_price("^VIX")[0]
+    except Exception as e:  # noqa: BLE001
+        print(f"  ⚠️ VIX を取れませんでした: {e}")
+        vix_val = None
+    stats = _v2_part("数字3つ", _v2_stats) or []
+    points = _v2_part("今日の要点", _v2_points, data, label, vix_val) or []
+    sched = _v2_part("予定", _v2_schedule, now_jst) or ("", "")
+    new_items = _v2_part("新着", _v2_new_items, now_jst) or []
+    jp_card = _v2_part("日本株の動き", _v2_jp_card, JP_RANKINGS_PATH)
+    fx_card = _v2_part("通貨の強弱", lambda: _v2_fx_card(fetch_currency_strength()))
+    ticker_news = _v2_part("最新マーケットニュース", build_news_ticker_section)
+
+    # ── ヘッダーとナビ ──
+    _cur = ' class="cur" aria-current="page"'
+    nav_links = "".join(f'<a{_cur if h == "index.html" else ""} href="{h}">{t}</a>' for h, t in HOME_V2_NAV)
+    more_links = "".join(f'<li><a href="{h}">{t}</a></li>' for h, t in HOME_V2_MORE)
+
+    # ── 最初の画面 ──
+    stats_html = ('\n    <ul class="stats">' + "".join(f"<li><b>{n}本</b><span>{t}</span></li>" for n, t in stats)
+                  + "</ul>") if stats else ""
+
+    # ── ① 今日の要点 ──
+    points_html = "".join(f"<li>{ln}</li>" for ln in points) or "<li>値段のデータを取得できませんでした。</li>"
+    ai_fold = (f'\n      <details class="fold"><summary>資産ごとの見立て（AI）を見る</summary>{ai_html}</details>'
+               if ai_html.strip() else "")
+
+    # ── 新着・よく読まれている解説 ──
+    new_html = "\n      ".join(
+        f'<li><time>{w}</time><span class="tag {c}">{t}</span><a href="{html.escape(h)}">{html.escape(ti)}</a></li>'
+        for w, c, t, h, ti in new_items)
+    new_sec = f'''
+  <section class="sec" data-v2="new">
+    <h2>新着</h2>
+    <ul class="list">
+      {new_html}
+    </ul>
+    <a class="more-link" href="guides.html">記事の一覧 →</a>
+  </section>
+''' if new_items else ""
+    picks = "\n      ".join(
+        f'<a class="pick" href="{f}"><span class="cat {col}">{cat}</span><b>{t}</b><span>{d}</span></a>'
+        for f, col, cat, t, d in HOME_V2_PICKS)
+
+    # ── 日本株と通貨（片方しか無ければ1列）──
+    mkt_cards = [c for c in (jp_card, fx_card) if c]
+    mkt_html = (f'\n  <div class="{"grid2" if len(mkt_cards) == 2 else "grid1"}" data-v2="markets">\n    '
+                + "\n    ".join(mkt_cards) + "\n  </div>\n") if mkt_cards else ""
+    news_html = f'''
+  <details class="news-v2" data-v2="headlines">
+    <summary><h2>⚡ 最新マーケットニュース</h2><small>各社の見出しを自動で集めたもの・毎時更新・リンク先は外部のサイト</small></summary>
+    <div class="inner">
+{ticker_news}
+    </div>
+  </details>
+''' if ticker_news else ""
+
+    year = now_jst.year
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  {seo_head("", f"マーケットニュース {date_str}", "日経平均・ダウ・S&P500・ドル円・原油・金・ビットコインの最新価格と日本語ニュースを毎日2回更新。AIが市場センチメントを判定し、日本人投資家にとっての注目ポイントを解説します。")}
+  {GA4_TAG}
+  <style data-home-v2>{HOME_V2_CSS}</style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2552122294306014" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+{FRAME_STYLE_TAG}
+</head>
+<body class="v2">
+
+<header class="hd" data-v2="header">
+  <div class="wrap">
+    <div class="hd-in">
+      <a class="logo" href="index.html">{_V2_LOGO}{SITE_NAME_V2}</a>
+      <span class="hd-sp"></span>
+      <button class="icon-btn" type="button" id="v2-search" aria-label="記事を検索" title="記事を検索（/ または Ctrl+K）">{_V2_SEARCH_ICON}</button>
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="明るい表示と暗い表示の切り替え" aria-pressed="false">🌙</button>
+    </div>
+    <div class="nav-row" data-v2="nav">
+      <nav class="nav" aria-label="メイン">{nav_links}</nav>
+      <details class="nav-more"><summary>もっと見る ▾</summary><ul>{more_links}</ul></details>
+    </div>
+  </div>
+</header>
+
+<section class="hero-band" data-v2="hero">
+  {_V2_HERO_DECO}
+  <div class="wrap hero">
+    <h1>AIと協力して、<br>投資の時間は<span class="em">短く。</span><span class="em2">資産を増やす道は、データで確かめる。</span></h1>
+    <p class="lead">ニュース・経済指標・値動きを AI と一緒に毎日集めて、朝5分で読める順番に整理しています。よく聞く投資の定説は、結果を見る前に登録してから確かめ、うまくいかなかった結果も消さずに公開しています。</p>{stats_html}
+    <div class="cta">
+      <a class="btn pri" href="#today">今朝の5分を読む</a>
+      <a class="btn" href="track-record.html">検証の結果を見る</a>
+      <a class="btn" href="guide-how-we-research.html">はじめての方へ</a>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="flow" id="today"><b>朝の5分はこの順番で</b><span class="step">1</span>今日の要点<span class="step">2</span>今日の予定<span class="step">3</span>値動き</div>
+
+  <div class="grid2">
+    <section class="card k-blue" data-v2="points">
+      <h2><span class="step">1</span>今日の要点 <small>自動のまとめ・{hm} 更新</small></h2>
+      <ul>{points_html}</ul>
+      <p class="note">値段と経済カレンダーから自動で作ったまとめで、売買の推奨ではありません。</p>{ai_fold}
+    </section>
+    <section class="card k-amber" data-v2="schedule">
+      <h2><span class="step">2</span>今日と、この先の予定</h2>
+      <ul class="sched">
+        {sched[0]}
+      </ul>
+      {sched[1]}
+    </section>
+  </div>
+
+  <div class="tick-wrap" data-v2="prices"><div class="flowlbl"><span class="step">3</span>値動き</div><div class="tick" aria-label="主な市場の値段">
+    {_v2_ticker(data)}
+  </div></div>
+  <p class="note">前日終値との比べ・{md} {hm} 時点・遅れて表示されます。前日の値が取れないときは「—」にします。</p>
+{new_sec}
+  <section class="sec" data-v2="picks">
+    <h2>よく読まれている解説</h2>
+    <div class="cards3">
+      {picks}
+    </div>
+  </section>
+
+  <div data-v2="ad">
+{AD2_BLOCK}
+  </div>
+{mkt_html}{news_html}
+  <section class="nl-v2" data-v2="newsletter" aria-label="メールマガジンの登録">
+{NEWSLETTER_FORM}
+  </section>
+</main>
+
+<footer class="ft" data-v2="footer">
+  <div class="wrap">
+    <nav aria-label="サイトの情報">
+      <a href="about.html">運営者情報</a><a href="about.html">編集方針・訂正の方針</a><a href="privacy.html">プライバシーポリシー</a><a href="contact.html">お問い合わせ</a>
+    </nav>
+    <p data-disclaimer="kinsho-v1">当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。掲載している情報は売買の推奨や投資助言ではありません。投資の判断はご自身でお願いします。</p>
+    <p>データの出所：値段・日本株の動き・通貨の強弱は Yahoo Finance（遅れて表示されます）／経済指標の日程は各国の公式の発表をもとに作成／ニュースの見出しは各社の配信</p>
+    <p>最終更新: {time_str}・© {year} {SITE_NAME_V2}</p>
+  </div>
+</footer>
+{HOME_V2_JS}
+<script src="site-search.js" defer></script>
+</body>
+</html>"""
+
+
+# ─────────────────────────────────────────
 # メイン
 # ─────────────────────────────────────────
 # ─────────────────────────────────────────
@@ -7203,7 +7910,8 @@ def main():
     # ── index.html 生成（メインページ）──
     print("🖊️  index.html 生成中...")
     try:
-        index_content = build_html(data, hist, now_jst, news, touraku=touraku_ratio)
+        # 🆕 2026-11-05 新しいトップは HOME_V2=1 のときだけ（既定は今の build_html）
+        index_content = _index_builder()(data, hist, now_jst, news, touraku=touraku_ratio)
         if safe_write(index_path, index_content):
             print(f"✅ index.html 生成完了 ({now_jst.strftime('%Y-%m-%d %H:%M JST')})")
         else:
