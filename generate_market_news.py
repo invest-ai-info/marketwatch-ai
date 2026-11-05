@@ -13,7 +13,7 @@ import urllib.parse
 from datetime import datetime, timezone, timedelta
 from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
 from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
-from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
+from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML, SITE_NAME  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
 from inject_ads import build_block as _ad_block  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
@@ -7036,7 +7036,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 #     build_weekly_history_item／日本株＝jp-rankings.json／通貨の強弱＝fetch_currency_strength。
 #   部品が作れないときはその部品だけ消える（トップ全体は止めない）。
 # ─────────────────────────────────────────
-SITE_NAME_V2 = "時短投資ラボ"   # 2026-11-05 オーナー：新しい名前の候補「時短投資ラボ」は商標を確かめてから全ページ一度に替える（それまでは今の名前）
+SITE_NAME_V2 = SITE_NAME   # サイト名の単一の真実は apply_site_frame.SITE_NAME（2026-11-05 オーナー決定「時短投資ラボ」・商標確認済み）
 
 # ナビ（上の6つ）と「もっと見る」の小さな一覧。絵文字は付けない
 HOME_V2_NAV = [

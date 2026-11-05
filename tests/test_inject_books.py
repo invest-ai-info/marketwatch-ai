@@ -43,7 +43,7 @@ def test_入れると全部の本と枠にリンクと広告の表示が付く(s
     n_books = books.count('<div class="book-t">')
     assert done[IB.BOOKS_PAGE] == n_books == 28
     assert books.count('<span class="mw-bk-label">広告</span>') == n_books
-    assert "Amazonのアソシエイトとして、MarketWatch AIは適格販売により収入を得ています。" in books
+    assert f"Amazonのアソシエイトとして、{IB.SITE_NAME}は適格販売により収入を得ています。" in books
     assert books.count("tag=test-22") == n_books
     assert books.count("hb.afl.rakuten.co.jp/hgc/" + RID) == n_books
     assert 'rel="sponsored nofollow noopener"' in books

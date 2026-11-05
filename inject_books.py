@@ -39,7 +39,7 @@ AMAZON_TAG = ""     # Amazon アソシエイトのトラッキングID（例 "ma
 RAKUTEN_ID = ""     # 楽天アフィリエイトID（例 "1a2b3c4d.5e6f7a8b.1a2b3c4d.5e6f7a8b"）
 # ────────────────────────────────────────────────────────────────────────────
 
-SITE_NAME = "MarketWatch AI"
+from apply_site_frame import SITE_NAME   # サイト名の単一の真実（2026-11-05「時短投資ラボ」）
 BOOKS_PAGE = "guide-investment-books.html"
 # 読者の多い記事に置く枠（書名は投資本のページにある本だけ＝著者はそこから取る）
 BOXES = {
