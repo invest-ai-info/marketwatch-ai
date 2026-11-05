@@ -383,7 +383,7 @@ def build_preview_html(event):
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="robots" content="noindex,follow"><!-- 自動生成の指標プレビュー：薄ページのためインデックス除外（AdSense低価値対策） -->
-  <title>{title} - MarketWatch AI</title>
+  <title>{title} - 時短投資ラボ</title>
   <meta name="description" content="{event_date_jp}発表の{info['name']}を事前プレビュー。注目ポイント・3シナリオ別の市場反応・トレード戦略を解説。">
   <meta name="keywords" content="{info['name_short']},経済指標,プレビュー,{event_date.strftime('%Y年%-m月') if os.name != 'nt' else event_date.strftime('%Y年%#m月')},ドル円,株式">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-auto-{key}-{event_date_full}.html">
@@ -391,10 +391,10 @@ def build_preview_html(event):
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{event_date_jp}発表の{info['name']}を事前プレビュー。3シナリオ別の市場反応を解説。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-auto-{key}-{event_date_full}.html">
-  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:site_name" content="時短投資ラボ">
   <meta property="og:locale" content="ja_JP">
   <script type="application/ld+json">
-  {{"@context":"https://schema.org","@type":"NewsArticle","headline":"{title}","description":"{info['name']}の事前プレビュー。3シナリオ別の市場反応を解説。","author":{{"@type":"Organization","name":"MarketWatch AI"}},"publisher":{{"@type":"Organization","name":"MarketWatch AI"}},"datePublished":"{today}","dateModified":"{today}","mainEntityOfPage":"https://marketwatch-jp.com/guide-auto-{key}-{event_date_full}.html"}}
+  {{"@context":"https://schema.org","@type":"NewsArticle","headline":"{title}","description":"{info['name']}の事前プレビュー。3シナリオ別の市場反応を解説。","author":{{"@type":"Organization","name":"時短投資ラボ"}},"publisher":{{"@type":"Organization","name":"時短投資ラボ"}},"datePublished":"{today}","dateModified":"{today}","mainEntityOfPage":"https://marketwatch-jp.com/guide-auto-{key}-{event_date_full}.html"}}
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
   <script>
@@ -472,7 +472,7 @@ def build_preview_html(event):
 <div id="reading-progress"></div>
 <header>
   <div class="header-inner">
-    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>{SUBBRAND_HTML}
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> 時短投資ラボ</div>{SUBBRAND_HTML}
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
   </div>
 </header>
@@ -545,7 +545,7 @@ def build_preview_html(event):
 </main>
 
 <footer>
-  © 2026 MarketWatch AI ｜ <a href="index.html">トップに戻る</a>
+  © 2026 時短投資ラボ ｜ <a href="index.html">トップに戻る</a>
 <p data-disclaimer="kinsho-v1" style="margin-top:10px;padding-top:10px;border-top:1px dashed #d0d7de;font-size:.78rem;color:#6e7781;line-height:1.6">⚠️ <b>当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。</b> 本サイトの情報は投資助言ではなく、投資判断はご自身の責任で行ってください。</p>
 </footer>
 
