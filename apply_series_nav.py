@@ -22,6 +22,8 @@ import os
 import re
 import sys
 
+from apply_site_frame import SITE_SUFFIX_RE
+
 # ── シリーズ定義（key, ファイル glob, 表示名, 一覧ページ, 連番から除くファイル）
 SERIES = [
     {
@@ -114,7 +116,7 @@ BLOCK_RE = re.compile(re.escape(BEGIN) + r".*?" + re.escape(END) + r"\n?", re.S)
 
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S | re.I)
 DATE_RE = re.compile(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})')
-SITE_SUFFIX = re.compile(r"\s*[-|｜]\s*MarketWatch AI\s*$")
+SITE_SUFFIX = SITE_SUFFIX_RE  # 新旧どちらの名前も外す（apply_site_frame が単一の真実）
 
 # 2026-09-27: ページ独自の `nav a{white-space:nowrap}`（研究日誌 #060・#070・#071）が <nav class="mw-sernav"> の
 #   ボタンにもかかり、題名が1行に伸びて枠からはみ出していた＝列は minmax(0,1fr)・ボタンと題名は折り返しを明記する
