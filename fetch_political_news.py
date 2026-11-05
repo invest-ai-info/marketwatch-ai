@@ -298,7 +298,7 @@ def send_alert_email(new_high_items):
     body_lines.append("━━━━━━━━━━━━━━━━━━━━━")
     body_lines.append("📊 ライブフィード: https://marketwatch-jp.com/political-feed.html")
     body_lines.append("━━━━━━━━━━━━━━━━━━━━━")
-    body_lines.append("MarketWatch AI Political Alerts")
+    body_lines.append("時短投資ラボ Political Alerts")
 
     body = "\n".join(body_lines)
 
