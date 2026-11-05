@@ -222,7 +222,7 @@ def send_report_email(year, month, todos, stats, raw_text):
           "決算  = build_earnings_calendar.py（Nasdaq API + yfinance）",
           "休場  = generate_market_holidays.py（米英は2027年・東証は2028年まで自動）",
           "見張り = automation-health §⑬（先詰まりを毎朝チェック）",
-          "MarketWatch AI Calendar"]
+          "時短投資ラボ Calendar"]
 
     msg = MIMEMultipart()
     msg["From"] = sender
