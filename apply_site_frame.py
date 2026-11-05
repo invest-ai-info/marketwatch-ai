@@ -257,9 +257,10 @@ _L2, _D2 = dict(V2_LIGHT), dict(V2_DARK)
 FRAME_V2_DISCLAIMER_CSS = (
     _DTV + "{" + _imp(f"box-sizing:border-box;margin:0 0 16px;padding:8px 12px;border:1px solid {_L2['line']};"
                       f"border-radius:8px;background:{_L2['surface']};box-shadow:none;color:{_L2['muted']};"
-                      "font-size:.78rem;font-weight:400;line-height:1.65;text-align:left") + "}"
+                      "font-size:.85rem;font-weight:400;line-height:1.65;text-align:left") + "}"  # 2026-11-05 コンプラ点検＝公開日の行と同じ大きさ（ページで一番小さい字にしない）
     + _DTV + " :is(p,span,strong,b,em,small){" + _imp("font-size:inherit;color:inherit") + "}"
     + _DTV + " p{" + _imp("margin:0") + "}" + _DTV + " p+p{" + _imp("margin-top:.35em") + "}"
+    + _DTV + " :is(strong,b){" + _imp("font-weight:700") + "}"  # 「投資の判断はご自身の責任で」の太字を残す
     + "body.dark " + _DTV + "{" + _imp(f"background:{_D2['surface']};border-color:{_D2['line']};color:{_D2['muted']}") + "}"
 )
 FRAME_V2_STYLE_TAG = "<style data-mw-frame-v2>" + FRAME_V2_CSS + FRAME_V2_DISCLAIMER_CSS + "</style>"

@@ -15,7 +15,7 @@ from build_health_history import ZONES, classify_zone  # 判定閾値の単一�
 from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
 from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML, SITE_NAME  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
 from apply_site_frame import LOGO_V2_SVG, NAV_V2, NAV_V2_MORE  # 新しいトップと記事の新しい枠（FRAME_V2）で共通のロゴとナビの並び
-from inject_ads import build_block as _ad_block  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
+from inject_ads import build_block as _ad_block, add_page_ad  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
 import re as _re_for_ja
@@ -4590,6 +4590,9 @@ def safe_write(path, content):
     if not isinstance(content, str):
         print(f"❌ 書き込み拒否 ({path}): content型不正 {type(content)}")
         return False
+    # 0.35) 🆕 2026-11-05 生成ページの広告（カレンダー・チャート等＝inject_ads.PAGE_ADS。メルマガの前に1つだけ・冪等）
+    if path.endswith(".html"):
+        content = add_page_ad(content, os.path.basename(path))
     # 0.4) 無料メルマガ登録フォームを全 .html の <footer> 直前に一括注入（冪等）
     if path.endswith(".html") and "mw-newsletter" not in content and "<footer" in content:
         content = content.replace("<footer", NEWSLETTER_FORM + "<footer", 1)

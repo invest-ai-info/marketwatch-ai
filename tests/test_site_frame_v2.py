@@ -224,7 +224,7 @@ def test_new_css_stays_inside_the_frame():
 
 def test_top_disclaimer_rule_is_small_and_not_hidden():
     rule = F.FRAME_V2_DISCLAIMER_CSS
-    assert "font-size:.78rem!important" in rule and "background:#f5f8fc!important" in rule
+    assert "font-size:.85rem!important" in rule and "background:#f5f8fc!important" in rule
     for bad in ("display:none", "visibility:hidden", "opacity:0", "height:0"):
         assert bad not in rule
 

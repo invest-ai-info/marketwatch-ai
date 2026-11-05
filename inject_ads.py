@@ -263,6 +263,33 @@ def build_block(keys):
     )
 
 
+
+# 🆕 2026-11-05 スクリプトで作るページと静的ページの広告（オーナー「広告が入っていないところに入れておいてください」）
+#    記事（guide-*）と違い、生成ページは注入しても次の生成で消える＝各生成スクリプトが書く直前に add_page_ad() をかける。
+#    静的ページ（guides.html・holdings.html）は --all のたびにかける（冪等）。
+#    入れないページ＝研究（track-record・research-list＝研究日誌と同じ理由）・サイトの決まり（about・contact・privacy）
+PAGE_ADS = {
+    "calendar.html": FX_POOL, "political-feed.html": FX_POOL,
+    "charts.html": KABU_POOL, "hot-assets.html": KABU_POOL, "youtube-summary.html": KABU_POOL,
+    "guides.html": KABU_POOL, "holdings.html": KABU_POOL,
+    "vix.html": IDX_POOL, "market-health.html": IDX_POOL,
+}
+STATIC_AD_PAGES = ("guides.html", "holdings.html")
+
+
+def add_page_ad(html, name):
+    """PAGE_ADS のページに広告を1つだけ（メルマガの前、無ければ footer の前）。広告があれば何もしない。純関数。"""
+    keys = PAGE_ADS.get(name)
+    if not keys or HAND_AD_RE.search(html):
+        return html
+    block = build_block(keys)
+    if NL_MARKER in html:
+        return html.replace(NL_MARKER, block + "\n" + NL_MARKER, 1)
+    if "<footer" in html:
+        return html.replace("<footer", block + "\n<footer", 1)
+    return html
+
+
 def main():
     ap = argparse.ArgumentParser(description="A8広告をランダム表示で記事末に注入（既定＝未注入ページのみ）")
     ap.add_argument("--dry-run", action="store_true", help="書き込まず変更内容だけ表示")
@@ -334,6 +361,25 @@ def main():
             with open(path, "w", encoding="utf-8", newline="\n") as f:
                 f.write(new)
             print(f"  {tag} {','.join(keys):9} -> {name}")
+
+    if args.all:  # 静的ページ（guides.html・holdings.html）にも1つだけ
+        for name in STATIC_AD_PAGES:
+            path = os.path.join(HERE, name)
+            if not os.path.exists(path):
+                continue
+            with open(path, "r", encoding="utf-8") as f:
+                c = f.read()
+            new = add_page_ad(c, name)
+            if new == c:
+                already += 1
+                continue
+            injected += 1
+            if args.dry_run:
+                print(f"  [dry] {','.join(PAGE_ADS[name]):9} -> {name}")
+            else:
+                with open(path, "w", encoding="utf-8", newline="\n") as f:
+                    f.write(new)
+                print(f"  OK   {','.join(PAGE_ADS[name]):9} -> {name}")
 
     print("-" * 32)
     head = "DRY-RUN " if args.dry_run else ""
