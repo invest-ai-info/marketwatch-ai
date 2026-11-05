@@ -126,6 +126,7 @@ DENY_EXACT = {
                                 #   当サイト自身の出口の検証を載せる＝研究日誌と同じ理由（コンプラ監査の指摘9）
     "guide-entry-methods.html",  # ①エントリーの決め方（2026-09-25・利確・損切り版と対）。研究の紹介記事＝同じ扱い
     "guide-kuse-check.html",     # ①投資のクセ診断（2026-09-27）＝「商品・会社を勧めない・広告を置かない」と本文で約束している
+    "guide-time-anomalies-after-papers.html",  # ①“時間の癖”の研究のまとめ（R3〜R7・2026-11-02）＝研究日誌と同じ理由
 }
 # SYNC禁忌の自動生成ページは that 自体が guide-*.html ではないので対象外だが、事故防止に明示しておく
 DENY_EXACT |= {
@@ -155,6 +156,13 @@ def classify(html):
     if best == idx:
         return IDX_POOL
     return KABU_POOL
+
+
+# 🆕 2026-11-05 手置きの広告の見分け＝広告の要素（class="mw-ad"）があるか。
+#    🚨 前は文字の「mw-ad」があるかで見ていた。9/23 から全ページの共通 CSS（apply_site_frame の
+#    AD_GAP_CSS＝`div.mw-ad{...}`）に同じ文字が入ったため、9/23 より後の記事は「広告あり」と
+#    誤って飛ばされ、52本に広告が一度も入っていなかった（ニュース解説・週と月の記事・指標の見どころ）。
+HAND_AD_RE = re.compile(r'class="mw-ad[\s"]')
 
 
 def is_denied(name):
@@ -304,7 +312,7 @@ def main():
                 continue
             replaced += 1
             tag = "REPL"
-        elif "mw-ad" in c:
+        elif HAND_AD_RE.search(c):
             already += 1        # 手置きの広告がある＝触らない
             continue
         elif NL_MARKER in c:
