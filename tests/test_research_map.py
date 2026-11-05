@@ -262,7 +262,7 @@ def test_list_page_is_plain_framed_and_has_disclaimers():
     import apply_site_frame as F
     navs = set(re.findall(r'class="nav-btn[^"]*"\s+href="([^"]+)"', page))
     assert navs == {h for h, _ in F.NAV_BUTTONS} and 'class="nav-btn current" href="track-record.html"' in page
-    assert page.count('data-disclaimer="kinsho-v1"') >= 2 and "<title>検証中リスト｜MarketWatch AI</title>" in page
+    assert page.count('data-disclaimer="kinsho-v1"') >= 2 and "<title>検証中リスト｜時短投資ラボ</title>" in page
     assert "<style data-mw-frame>" in page and 'href="track-record.html#map"' in page
     empty = tempfile.mkdtemp()
     assert "いまはありません" in R.build_list_page(root=empty)                # データが無くてもページは作る
