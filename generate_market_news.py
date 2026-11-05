@@ -13,7 +13,7 @@ import urllib.parse
 from datetime import datetime, timezone, timedelta
 from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
 from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
-from apply_site_frame import FRAME_STYLE_TAG, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
+from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
 from inject_ads import build_block as _ad_block  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
@@ -248,7 +248,7 @@ b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})
 #   - 各ページの <head> に title/description/canonical/OGP/Twitter/JSON-LD を出力
 #   - GitHub Pages の URL 構造に合わせる
 # ─────────────────────────────────────────
-SITE_NAME = "MarketWatch AI"
+SITE_NAME = "時短投資ラボ"
 SITE_TAGLINE = "日本人投資家のためのマーケット情報サイト"
 BASE_URL = "https://marketwatch-jp.com/"
 OG_IMAGE = BASE_URL + "og-image.png"  # 後で画像設置可。当面は無くても致命傷ではない
@@ -294,7 +294,7 @@ def brand_header(page_emoji, page_title, updated="", compact=False):
             '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
             '<div style="font-size:1.6rem;font-weight:700;line-height:1.3;'
             'background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;'
-            '-webkit-text-fill-color:transparent;background-clip:text">' + _BRAND_LOGO_SVG + ' MarketWatch AI</div>' + SUBBRAND_HTML +
+            '-webkit-text-fill-color:transparent;background-clip:text">' + _BRAND_LOGO_SVG + ' 時短投資ラボ</div>' + SUBBRAND_HTML +
             '<div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div>'
             f'{upd}'
             '</div></header>'
@@ -306,7 +306,7 @@ def brand_header(page_emoji, page_title, updated="", compact=False):
         '<header><div style="max-width:1200px;margin:0 auto;text-align:left">'
         '<div style="font-size:1.6rem;font-weight:700;line-height:1.3;'
         'background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;'
-        '-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>' + SUBBRAND_HTML +
+        '-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> 時短投資ラボ</div>' + SUBBRAND_HTML +
         '<div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div>'
         '<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
         f'<div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">{page_emoji} {page_title}</div>'
@@ -319,7 +319,7 @@ def seo_head(slug: str, title: str, description: str, og_type: str = "website") 
     """ページごとの SEO 用 <head> 要素を返す。
 
     slug: "" なら index、それ以外は "vix.html" 等のファイル名
-    title: ページタイトル（"〜 - MarketWatch AI" の "〜" 部分）
+    title: ページタイトル（"〜 - 時短投資ラボ" の "〜" 部分）
     description: 100〜160 文字程度の要約。検索結果スニペットに出る
     og_type: "website" / "article" など
     """
@@ -5388,7 +5388,7 @@ def _latest_signal_lab():
         return 0, None
     num, path, h = max(found)
     t = re.search(r"<title>(.*?)</title>", h, re.S)
-    title = re.sub(r"\s*[-|｜]\s*MarketWatch AI\s*$", "", html.unescape(t.group(1)).strip()) if t else f"研究日誌 #{num}"
+    title = SITE_SUFFIX_RE.sub("", html.unescape(t.group(1)).strip()) if t else f"研究日誌 #{num}"
     d = re.search(r'"datePublished"\s*:\s*"(\d{4})-(\d{2})-(\d{2})', h)
     date = f"{int(d.group(2))}月{int(d.group(3))}日" if d else ""
     return len(found), (os.path.basename(path), title, date)
@@ -6085,6 +6085,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-05", "line": '・<b>2026-11-05</b>: 🏷️ <a href="about.html" style="color:#0969da"><b>サイト名を「時短投資ラボ」に変更しました</b></a>（旧名 MarketWatch AI。アドレスはそのままです）'},
         {"date": "2026-11-05", "line": '・<b>2026-11-05</b>: 📰 解説「<a href="guide-news-2026-11-05.html" style="color:#0969da"><b>【11/5】日経4日続落61,077円・TOPIX逆行高──アドバンテスト-15%・トヨタ+16%、「2銘柄で日経を1000円押し下げ」の構造を中立整理</b></a>」公開'},
         {"date": "2026-11-05", "line": '・<b>2026-11-05</b>: 🔬 解説「<a href="guide-company-6501-hitachi.html" style="color:#0969da"><b>日立製作所</b></a>」公開'},
         {"date": "2026-11-05", "line": '・<b>2026-11-05</b>: 🧪 解説「<a href="guide-signal-lab-140.html" style="color:#0969da"><b>下降トレンド中の逆張り買いは勝ちやすい？【研究日誌 #140】</b></a>」公開'},
@@ -6991,8 +6992,8 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 
 {featured_guides}
   <div style="background:#f6f8fa;border:1px solid #d0d7de;border-radius:12px;padding:26px 30px;margin-top:28px">
-    <h2 style="font-size:1.25rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 MarketWatch AI でできること</h2>
-    <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">MarketWatch AI は、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
+    <h2 style="font-size:1.25rem;color:#2C4F8F;margin:0 0 12px;border-bottom:1px solid #d0d7de;padding-bottom:8px">📘 時短投資ラボでできること</h2>
+    <p style="font-size:.96rem;color:#424a53;line-height:1.85;margin-bottom:14px">時短投資ラボは、日本人投資家のための情報サイトです。単なる市場データの寄せ集めではなく、<strong>「市場データ」＋「独自の解説」＋「AIシグナルの透明な成績公開」</strong>を一つにまとめ、投資家が<strong>感情に振り回されず、規律と平常心で判断できるようになる</strong>ことを目指しています。主に次のことができます。</p>
     <ul style="margin:6px 0 16px 0;padding:0;list-style:none;color:#424a53;font-size:.95rem;line-height:1.8">
       <li style="margin-bottom:10px">🧪 <strong><a href="track-record.html" style="color:#0969da">シグナル研究（成績と検証を隠さず公開）</a></strong> — 投資の「定説」や売買の合図が本当に効くのかを、見つけた条件を登録してから、その後のデータで確かめ直し、<strong>うまくいかなかった結果も</strong>そのまま公開しています。いま確かめていることは<a href="track-record.html#map" style="color:#0969da">「いま検証中のこと」</a>で、しくみは<a href="guide-how-we-research.html" style="color:#0969da">「はじめての方へ」</a>で見られます。</li>
       <li style="margin-bottom:10px">📚 <strong><a href="guides.html" style="color:#0969da">解説記事（49本以上）</a></strong>でじっくり学ぶ — <strong>投資心理（損切り・メンタル）／リスク管理（ポジションサイジング）／テクニカル分析（移動平均・RSI・MACD・ボリンジャー等）／経済指標</strong>を、手描きの図解つきで初心者〜中上級まで二層構造で解説。</li>
@@ -7035,7 +7036,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 #     build_weekly_history_item／日本株＝jp-rankings.json／通貨の強弱＝fetch_currency_strength。
 #   部品が作れないときはその部品だけ消える（トップ全体は止めない）。
 # ─────────────────────────────────────────
-SITE_NAME_V2 = "MarketWatch AI"   # 2026-11-05 オーナー：新しい名前の候補「時短投資ラボ」は商標を確かめてから全ページ一度に替える（それまでは今の名前）
+SITE_NAME_V2 = "時短投資ラボ"   # 2026-11-05 オーナー：新しい名前の候補「時短投資ラボ」は商標を確かめてから全ページ一度に替える（それまでは今の名前）
 
 # ナビ（上の6つ）と「もっと見る」の小さな一覧。絵文字は付けない
 HOME_V2_NAV = [
