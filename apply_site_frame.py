@@ -38,7 +38,25 @@ TAGLINE = "日本人投資家のためのマーケット情報サイト"
 #   （生成スクリプトは SUBBRAND_HTML を import。記事と STATIC_PAGES は apply_subbrand が毎回そろえる）
 SUBBRAND = "AI投資×行動経済学"
 SUBBRAND_HTML = f'<div class="mw-subbrand">{SUBBRAND}</div>'
-_BRAND_END = "</svg> MarketWatch AI</div>"  # ロゴの行の終わり（ここ以外に現れない）
+# 🆕 2026-11-05 オーナー決定＝サイト名を「時短投資ラボ」へ（旧名は他社の登録商標と重なる）。ここが単一の真実。
+#    process() が毎回 rename_site をかける＝クラウドの記事レーンが旧名で書いても次の update-market-news で直る。
+#    替えるのは旧名の完全一致だけ＝ドメイン・メルマガの目印（固定の検査が見る）・通信の名乗りは触らない。
+#    ⚠️ ドメインの移転は別の作業。生成スクリプトの旧名は check_site_consistency が止める
+SITE_NAME = "時短投資ラボ"
+OLD_SITE_NAME = "MarketWatch AI"
+_JP = "぀-ヿ一-鿿"
+# 日本語に隣り合う半角スペースは詰める。「旧名 ○○」「旧名「○○」」は案内なので残す
+_RENAME_RE = re.compile(rf"(?:(?<=[{_JP}、。）]) )?(?<!旧名 )(?<!旧名「){re.escape(OLD_SITE_NAME)}(?: (?=[{_JP}]))?")
+_RENAME_PAIRS = (
+    (f"{OLD_SITE_NAME}（マーケットウォッチAI）", f"{SITE_NAME}（じたんとうしラボ）"),
+    (f"{OLD_SITE_NAME}. All", f"{SITE_NAME} All"),
+    (f"{OLD_SITE_NAME}. 本サイト", f"{SITE_NAME}。本サイト"),
+    (f"{OLD_SITE_NAME} シグナル", f"{SITE_NAME}のシグナル"),
+    (',MarketWatch">', f',{SITE_NAME}">'),  # 検索用キーワードの末尾
+)
+# 題名の末尾のサイト名を外す。移行中は新旧どちらも来る
+SITE_SUFFIX_RE = re.compile(r"\s*[-|｜]\s*(?:" + re.escape(OLD_SITE_NAME) + "|" + SITE_NAME + r")\s*$")
+_BRAND_END = f"</svg> {SITE_NAME}</div>"  # ロゴの行の終わり（ここ以外に現れない）
 _SUBBRAND_RE = re.compile(re.escape(_BRAND_END) + r"(?!\s*" + re.escape(SUBBRAND_HTML) + ")")
 SEC_OPEN = ('<div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)">'
             '<div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">')
@@ -132,7 +150,7 @@ _STYLE_RE = re.compile(r"<style data-mw-frame>.*?</style>", re.S)
 _HEADER_RE = re.compile(r"<header(?=[\s>])[^>]*>.*?</header>", re.S)
 _NAV_RE = re.compile(r"(?P<indent>[ \t]*)<nav(?=[\s>])[^>]*>.*?</nav>", re.S)
 _BODY_RE = re.compile(r"<body[^>]*>")
-_SITE_HEADER_MARKS = ("MarketWatch", 'rx="21" fill="#1E3A6E"', "header-title", "header-meta")
+_SITE_HEADER_MARKS = (SITE_NAME, "MarketWatch", 'rx="21" fill="#1E3A6E"', "header-title", "header-meta")
 _BUTTON_RE = re.compile(r"<button\b[^>]*theme-toggle[^>]*>.*?</button>|<button\b[^>]*>.*?</button>", re.S)
 
 
@@ -146,7 +164,7 @@ def section_for(name):
 def build_header(section):
     return ("<header data-mw-frame>\n"
             '  <div class="header-inner">\n'
-            f'    <div class="header-title">{LOGO_SVG} MarketWatch AI</div>{SUBBRAND_HTML}\n'
+            f'    <div class="header-title">{LOGO_SVG} {SITE_NAME}</div>{SUBBRAND_HTML}\n'
             f'    <div class="header-meta">{TAGLINE}</div>\n'
             f"    {SEC_OPEN}{section}</div></div>\n"
             "  </div>\n"
@@ -165,6 +183,13 @@ def build_nav(indent, current=DEFAULT_CURRENT, cls="nav-bar mwf-nav"):
 def is_std_header(block):
     return (LOGO_SVG in block and TAGLINE in block and SEC_OPEN in block and SUBBRAND_HTML in block
             and 'class="header-title"' in block and "<button" not in block and "<nav" not in block)
+
+
+def rename_site(text):
+    """旧サイト名を新しい名前へ。冪等。ドメインやメルマガの目印などは変えない（SITE_NAME の注記）。"""
+    for old, new in _RENAME_PAIRS:
+        text = text.replace(old, new)
+    return _RENAME_RE.sub(SITE_NAME, text)
 
 
 def apply_subbrand(text):
@@ -235,7 +260,10 @@ def apply_nav(text, name):
 
 def process(text, name):
     notes = []
-    out = apply_style(text)
+    out = rename_site(text)  # 先に替える＝2段目の位置決めとヘッダーの判定は新しい名前で見る
+    if out != text:
+        notes.append("rename")
+    out = apply_style(out)
     sub = apply_subbrand(out)
     if sub != out:
         notes.append("subbrand")
