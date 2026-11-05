@@ -21,7 +21,7 @@ Verified 2026-07-29: a `codex exec` run read `CLAUDE.md` this way and received
 
 # AGENTS.md — このフォルダで作業する AI エージェントへ
 
-MarketWatch AI（marketwatch-jp.com）の作業フォルダ。
+時短投資ラボ（旧名 MarketWatch AI・marketwatch-jp.com）の作業フォルダ。
 **Claude Code と Codex が同じガードで動くための共有ファイル**（2026-07-29 新設）。
 
 ## 大原則
