@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-11-05
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均4日続落61,077円・TOPIX逆行高──アドバンテスト-14.7%・東京エレクトロン-9.4%・トヨタ+16%、「2銘柄で日経を1,000円超押し下げ」の構造と3シナリオを中立整理（カテゴリ: 日本株・半導体・自動車・市場構造）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典:
+  - みんかぶ「日経平均 大引け｜ 4日続落、AI・半導体関連が引き続き売られる (11月5日)」2026-11-05 https://minkabu.jp/news/4651708
+  - 財経新聞「日経平均は1259円安（前場）、企業決算や米経済指標に関心」2026-11-05 https://www.zaikei.co.jp/article/20261105/876294.html
+  - rallies.ai「Japan's Nikkei tumbles on tech rout despite strength in wider market」2026-11-05 https://rallies.ai/news/japans-nikkei-tumbles-on-tech-rout-despite-strength-in-wider-market-ea1f7197ff16e43c
+  - jp.investing.com「アジア株式が混在中、KOSPI急落」2026-11-05 https://www.investing.com/news/stock-market-news/asia-stocks-mixed-as-chip-rout-triggers-kospi-trading-halt-china-outperforms-5002134
+  - GuruFocus「Toyota Reports Profit Growth, Raises Annual Forecast to 3.9 Trillion Yen」2026-11-04 https://www.gurufocus.com/news/9172779/toyota-reports-profit-growth-raises-annual-forecast-to-39-trillion-yen
+  - Nippon.com（時事通信）「Toyota Raises FY 2026 Net Profit Forecast」2026-11-04 https://www.nippon.com/en/articles/-/56935
+  - Yahoo Finance UK（ロイター）「Toyota hikes profit forecasts on strong demand, weak yen」2026-11-04 https://uk.finance.yahoo.com/news/toyota-hikes-profit-forecasts-strong-061552804.html
+  - 株探「日経平均の下げ幅が1400円を超える」2026-11-05 https://s.kabutan.jp/news/n202611051167/
+  - みんかぶFX「日経平均急落、韓国5%超安 ナスダック先物下げ拡大」2026-11-05 https://fx.minkabu.jp/news/383594
+  - media-ir.com「日経平均１１１０円安、キオクシア１３％安など半導体株急落――トヨタ１６％高」2026-11-05 https://www.media-ir.com/news/?p=187320
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（禁止語なし・kinsho-v1×3箇所確認・銘柄推奨なし・出典多数）。事実誤り1件を指摘（「60,000円台割れ」→「60,786円まで売られる」）→メイン側で修正済み
+  - 適用修正: 第1Opusは事実修正のみ指摘（表現修正なし）。メイン側でh3の見出しとチェックポイント本文を修正
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典10系統以上 ✅）→「そのまま公開してよい」
+  - 最終判定: 🟢白 / 公開OK
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告60件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-05.html
+- commit: b794cb9（main へ push 済み）
+
+---
+
 ## 2026-11-04
 - 判定: ✅ 公開済み
 - 選定トピック: 米中間選挙で民主党が上下院制覇──AI・半導体規制強化懸念から日経平均一時2,800円超安、大引けは893.23円安（1.41%）の62,188.63円の背景を中立整理（カテゴリ: マクロ・政治・日本株・為替）
