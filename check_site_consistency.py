@@ -554,6 +554,24 @@ def check_tools_strip(guides_html, gen_py="generate_market_news.py"):
                           f"（{gen_py} の <div id=\"tools\">）に無い → ボタンを1つ足す")
 
 
+def check_site_name(sync_files):
+    """サイト名の変更の取りこぼし（2026-11-05）。記事と静的ページは apply_site_frame が毎回直すが、
+    生成スクリプトに旧名が残るとコアページが旧名で作られ続ける＝スクリプト側だけ error にする。"""
+    from apply_site_frame import OLD_SITE_NAME, SITE_NAME, STATIC_PAGES, rename_site
+    keep = {"apply_site_frame.py", "apply_logo.py", "check_plain_japanese.py", "check_site_consistency.py"}
+    for f in sync_files:
+        if f.endswith(".py") and f not in keep and not f.startswith("tests/") and _exists(f):
+            text = _read(f)
+            if rename_site(text) != text:
+                errors.append(f"🚨 {f} に旧サイト名「{OLD_SITE_NAME}」が残っている（「{SITE_NAME}」へ。"
+                              "案内で旧名を書くときは「旧名 …」の形に）")
+    guides = [os.path.basename(p) for p in glob.glob(os.path.join(SD, "guide-*.html"))]
+    left = [p for p in guides + STATIC_PAGES if _exists(p) and rename_site(_read(p)) != _read(p)]
+    if left:
+        warnings.append(f"旧サイト名が残る記事・静的ページ {len(left)} 本"
+                        "（次の update-market-news の apply_site_frame.py --all で直る）")
+
+
 def check_guides_sections(guides_html):
     """guides.html: data-category を宣言した欄と、カードのバッジが一致するか（2026-09-26 新設）。
     🚨 旧 publish_article は入れる欄が無いと記事一覧の先頭（🧮 計算ツール欄）へ黙って入れており、
@@ -761,6 +779,9 @@ def main():
 
     # 10. カードと記事の食い違い・下書きへのリンク（2026-10-04 新設・#115 上書き公開事故の再発防止）
     check_card_dates(guides_html)
+
+    # 11. 旧サイト名の残り（2026-11-05 新設・サイト名の変更）
+    check_site_name(sync_files)
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
