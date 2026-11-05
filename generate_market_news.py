@@ -14,7 +14,8 @@ from datetime import datetime, timezone, timedelta
 from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
 from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
 from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML, SITE_NAME  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
-from inject_ads import build_block as _ad_block  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
+from apply_site_frame import LOGO_V2_SVG, NAV_V2, NAV_V2_MORE  # 新しいトップと記事の新しい枠（FRAME_V2）で共通のロゴとナビの並び
+from inject_ads import build_block as _ad_block, add_page_ad  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
 import re as _re_for_ja
@@ -4589,6 +4590,9 @@ def safe_write(path, content):
     if not isinstance(content, str):
         print(f"❌ 書き込み拒否 ({path}): content型不正 {type(content)}")
         return False
+    # 0.35) 🆕 2026-11-05 生成ページの広告（カレンダー・チャート等＝inject_ads.PAGE_ADS。メルマガの前に1つだけ・冪等）
+    if path.endswith(".html"):
+        content = add_page_ad(content, os.path.basename(path))
     # 0.4) 無料メルマガ登録フォームを全 .html の <footer> 直前に一括注入（冪等）
     if path.endswith(".html") and "mw-newsletter" not in content and "<footer" in content:
         content = content.replace("<footer", NEWSLETTER_FORM + "<footer", 1)
@@ -7038,26 +7042,9 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
 # ─────────────────────────────────────────
 SITE_NAME_V2 = SITE_NAME   # サイト名の単一の真実は apply_site_frame.SITE_NAME（2026-11-05 オーナー決定「時短投資ラボ」・商標確認済み）
 
-# ナビ（上の6つ）と「もっと見る」の小さな一覧。絵文字は付けない
-HOME_V2_NAV = [
-    ("index.html", "ホーム"),
-    ("guide-how-we-research.html", "はじめての方へ"),
-    ("guides.html", "解説記事"),
-    ("track-record.html", "検証の結果"),
-    ("market-health.html", "市場データ"),
-    ("calendar.html", "経済カレンダー"),
-]
-HOME_V2_MORE = [
-    ("political-feed.html", "政治発言ライブ"),
-    ("hot-assets.html", "出来高急増"),
-    ("charts.html", "150年チャート"),
-    ("holdings.html", "大量保有報告"),
-    ("guide-investment-books.html", "投資本"),
-    ("youtube-summary.html", "YouTube要約"),
-    ("research-list.html", "検証中リスト"),
-    # 計算ツール6本の並びは記事一覧の「計算ツール」欄が単一の真実（check_tools_strip が見張る）＝そこへ案内する
-    ("guides.html#cat-tools", "計算ツール"),
-]
+# ナビ（上の6つ）と「もっと見る」の小さな一覧。並びの単一の真実は apply_site_frame（記事の新しい枠も同じ並び）
+HOME_V2_NAV = NAV_V2
+HOME_V2_MORE = NAV_V2_MORE
 # よく読まれている解説（固定の6枚）: (ファイル, 札の色, 札, 題名, 一言)
 HOME_V2_PICKS = [
     ("guide-nisa.html", "teal", "制度", "新NISAの基本ガイド", "制度のしくみと、長く続けるための考え方"),
@@ -7072,9 +7059,7 @@ _V2_COUNTDOWN = [("米CPI", "us"), ("FOMC（結果発表）", "us"), ("日銀会
 _V2_FLAG = {"jp": "🇯🇵", "us": "🇺🇸", "eu": "🇪🇺", "uk": "🇬🇧", "cn": "🇨🇳"}
 _V2_CUR = {"USD": ("🇺🇸", "米ドル"), "EUR": ("🇪🇺", "ユーロ"), "GBP": ("🇬🇧", "ポンド"),
            "JPY": ("🇯🇵", "円"), "AUD": ("🇦🇺", "豪ドル")}
-_V2_LOGO = ('<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--brand)"/>'
-            '<path d="M6.5 22.5l6-6.5 4.5 3.5 8.5-9.5" fill="none" stroke="var(--bg)" stroke-width="2.6" '
-            'stroke-linecap="round" stroke-linejoin="round"/><circle cx="25.5" cy="10" r="2.3" fill="var(--bg)"/></svg>')
+_V2_LOGO = LOGO_V2_SVG   # ロゴの単一の真実は apply_site_frame（記事の新しい枠も同じ絵）
 _V2_SEARCH_ICON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">'
                    '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>')
 _V2_HERO_DECO = ('<svg class="hero-deco" viewBox="0 0 520 220" aria-hidden="true">'

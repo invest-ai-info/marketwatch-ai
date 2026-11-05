@@ -25,3 +25,20 @@ def test_研究のまとめは外す():
     assert IA.is_denied("guide-time-anomalies-after-papers.html")
     assert IA.is_denied("guide-signal-lab-140.html")
     assert not IA.is_denied("guide-news-2026-11-04-us-midterms.html")
+
+
+def test_生成ページに広告を1つだけ():
+    page = ('<html><body><main>表</main>' + IA.NL_MARKER + ' --><div class="mw-newsletter"></div>'
+            '<footer>f</footer></body></html>')
+    once = IA.add_page_ad(page, "calendar.html")
+    assert once.count('class="mw-ad"') == 1
+    assert once.find('class="mw-ad"') < once.find(IA.NL_MARKER)      # メルマガの前
+    assert IA.add_page_ad(once, "calendar.html") == once              # 冪等
+    no_nl = IA.add_page_ad("<html><body><footer>f</footer></body></html>", "charts.html")
+    assert no_nl.find('class="mw-ad"') < no_nl.find("<footer")
+
+
+def test_研究と決まりのページには入れない():
+    page = "<html><body><footer>f</footer></body></html>"
+    for name in ("track-record.html", "research-list.html", "about.html", "contact.html", "privacy.html", "index.html"):
+        assert IA.add_page_ad(page, name) == page, name
