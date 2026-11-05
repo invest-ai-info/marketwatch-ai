@@ -1144,11 +1144,11 @@ def build_html(signals, tracker=None):
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>📊 シグナル品質トラッキング - MarketWatch AI</title>
-  <meta name="description" content="MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。登録した仮説の、その後の成績も公開。">
+  <title>📊 シグナル品質トラッキング - 時短投資ラボ</title>
+  <meta name="description" content="時短投資ラボが配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。登録した仮説の、その後の成績も公開。">
   <link rel="canonical" href="https://marketwatch-jp.com/track-record.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="📊 シグナル品質トラッキング - MarketWatch AI">
+  <meta property="og:title" content="📊 シグナル品質トラッキング - 時短投資ラボ">
   <meta property="og:description" content="4H テクニカルシグナルの的中率を完全公開。AI 投資の透明性を追求。">
   <meta property="og:url" content="https://marketwatch-jp.com/track-record.html">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMVFEV7Q2E"></script>
@@ -1244,7 +1244,7 @@ def build_html(signals, tracker=None):
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
 <header>
   <div class="header-inner">
-    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div>{SUBBRAND_HTML}
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> 時短投資ラボ</div>{SUBBRAND_HTML}
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">🧪 シグナル研究</div></div>
   </div>
 </header>
@@ -1270,7 +1270,7 @@ def build_html(signals, tracker=None):
   <div class="page-header">
     <h1>📊 シグナル品質トラッキング</h1>
     <div class="page-desc">
-      MarketWatch AI が配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。
+      時短投資ラボが配信する 4H テクニカルシグナルの的中率・期待 R を自動集計。
       AI シグナルの透明性を追求し、勝ちも負けもすべて記録しています。
       <span style="color:#6e7781">（最終更新: {last_updated}）</span>
     </div>
@@ -1362,7 +1362,7 @@ df.groupby("is_month_end")["win"].mean()</code></pre>
 </main>
 
 <footer>
-  <p>© 2026 MarketWatch AI | <a href="about.html">サイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
+  <p>© 2026 時短投資ラボ | <a href="about.html">サイトについて</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="contact.html">お問い合わせ</a></p>
   <p style="margin-top:8px;font-size:.72rem;color:#8b949e">
     本ページの数値は yfinance の価格データを基に機械的に判定したものであり、実際の取引結果を保証するものではありません。
     投資判断は自己責任でお願いします。
