@@ -16,6 +16,8 @@ finalize_signal_lab.py — drafts/draft-signal-lab-NNN.html(簡素head・noindex
 import json
 import os, re, subprocess, sys
 
+from apply_site_frame import SITE_SUFFIX_RE
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 GA_ID = "G-FMVFEV7Q2E"
 ADSENSE = "ca-pub-2552122294306014"
@@ -81,10 +83,10 @@ def main():
     orig = c
 
     title = re.search(r'<title>(.*?)</title>', c, re.S)
-    title = title.group(1).strip() if title else f"AIシグナル研究日誌 #{int(nnn)} - MarketWatch AI"
+    title = title.group(1).strip() if title else f"AIシグナル研究日誌 #{int(nnn)} - 時短投資ラボ"
     desc = _meta(c, "description")
     keywords = _meta(c, "keywords")
-    og_title = re.sub(r'\s*-\s*MarketWatch AI\s*$', '', title)
+    og_title = SITE_SUFFIX_RE.sub('', title)
     og_desc = (desc[:110]).strip()
     slug = f"guide-signal-lab-{nnn}.html"
 
@@ -104,7 +106,7 @@ def main():
   <meta property="og:title" content="{og_title}">
   <meta property="og:description" content="{og_desc}">
   <meta property="og:url" content="https://marketwatch-jp.com/{slug}">
-  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:site_name" content="時短投資ラボ">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="{OG_IMAGE}">
   <meta name="twitter:card" content="summary_large_image">
@@ -115,8 +117,8 @@ def main():
     "@type": "Article",
     "headline": "{og_title}",
     "description": "{og_desc}",
-    "author": {{"@type": "Organization", "name": "MarketWatch AI"}},
-    "publisher": {{"@type": "Organization", "name": "MarketWatch AI"}},
+    "author": {{"@type": "Organization", "name": "時短投資ラボ"}},
+    "publisher": {{"@type": "Organization", "name": "時短投資ラボ"}},
     "datePublished": "{date}",
     "dateModified": "{date}",
     "mainEntityOfPage": "https://marketwatch-jp.com/{slug}"
