@@ -486,27 +486,183 @@ HISTORICAL_EVENTS = [
 # ─────────────────────────────────────────
 # データ取得関数
 # ─────────────────────────────────────────
-def _last_two_distinct(closes):
-    """終値の列から (最新, 直前の異なる値) を返す。異なる値が2つ無ければ None。純関数。
+def _last_two_distinct_dated(bars):
+    """[(日付, 終値), ...]（古い順）から ((最新の日付, 最新値), (直前の異なる値の日付, その値)) を返す。
+    異なる値が2つ無ければ None。純関数。
 
     🆕 2026-09-23: トップの S&P500 が「▼0.00%」と表示されていた。休場日明けなどに yfinance が
     同じ終値の行を2つ返すと、最後の2行を比べるだけでは前日比が 0 になる。指数や為替で
     2営業日続けて終値が小数2桁まで一致することは実質ないので、同じ値が続いたら遡る。
+    🆕 2026-11-05: 日付も返す＝「前の取引日」の終値かどうかを確かめるため（choose_prev_close）。
     """
-    vals = [float(c) for c in closes]
-    if not vals:
+    rows = [(d, float(c)) for d, c in bars]
+    if not rows:
         return None
-    last = vals[-1]
-    for v in reversed(vals[:-1]):
+    last_day, last = rows[-1]
+    for d, v in reversed(rows[:-1]):
         if v != last:
-            return last, v
+            return (last_day, last), (d, v)
     return None
 
 
+# ── 前日比の「前の終値」選び（2026-11-05） ──────────────────────────────
+# 事故: 2026-11-05 12:47 JST のトップで 金 ▲5.20%・WTI原油 ▼9.52%・ビットコイン ▲4.15% と出た。
+#   どれも「2日前の終値」との比べだった（正しくは +1.8% / −1.3% / +0.2% 前後）。過去15日の生成
+#   約330回を逆算すると、金・原油は米東部18〜24時（日本時間の朝〜昼）の生成の約半数、ビットコインは
+#   約4分の1が2日前比だった。原因は2つ:
+#   ① Yahoo の日足に行が抜ける／終値が空（NaN）の日がある（BTC-USD の 11/4・^N225 の 11/4 午前など）。
+#      空の行を落とすと「最後の2つ」が2日前になる。
+#   ② CME 先物（GC=F・CL=F）は、Yahoo が「1日」を米東部の暦日で区切る。米東部18時に次の取引日の
+#      夜間セッションが始まっても24時までは当日の行に入るため、当日の行の終値が夜間の最新値で
+#      上書きされ、当日の清算値が日足から消える＝1つ前の行は前々日の清算値。日付は1日違いなので、
+#      日付の飛びを見るだけでは見つからない。Yahoo 自身の前日終値（チャートの付帯情報）も同じ暦日の
+#      考え方なので、この時間帯は前々日の値を返すことがある＝そのまま信じない（_usable_alt_prev）。
+# 決まり: 間違った数字を出すより出さない（前日比は None＝帯は「―」・カードは空欄）。
+CME_SESSION_LAST_HOUR = 16   # CME の1日の取引は米東部17時に終わる＝16時の1時間足の終値がその日の最後の値
+
+
+def _is_24h_symbol(symbol):
+    """24時間・土日も動く銘柄（暗号資産）。前の取引日＝暦の前日。"""
+    return symbol.endswith("-USD")
+
+
+def _is_cme_futures(symbol):
+    return symbol.endswith("=F")
+
+
+def _expected_prev_day(last_day, trading_days=None, always_open=False):
+    """最新の足の日付から「前の取引日」を返す。純関数。
+    24時間の銘柄は暦の前日。それ以外は Yahoo の取引日の一覧（tradingPeriods＝祝日を除いてある）の
+    うち最新の足より前の平日で一番新しい日。一覧が無ければ単に前の平日（祝日は知らない）。
+    ⚠️ 先物・為替の一覧には日曜（夜に取引が始まる日）が入るので平日に限る。"""
+    if always_open:
+        return last_day - timedelta(days=1)
+    cands = [d for d in (trading_days or []) if d < last_day and d.weekday() < 5]
+    if cands:
+        return max(cands)
+    d = last_day - timedelta(days=1)
+    while d.weekday() >= 5:
+        d -= timedelta(days=1)
+    return d
+
+
+def _same_price(a, b):
+    """同じ値か（日足は float32 由来の誤差があるので 0.001% まで同じとみなす）。"""
+    return abs(a - b) <= abs(b) * 1e-5
+
+
+def _usable_alt_prev(value, bars, last, oldest_ok):
+    """日足以外から取った「前の終値」を使ってよいか。純関数。
+    使わないもの: 数でない・0以下／最新値と同じ（開場前の Yahoo は「今日の前日終値」＝最新値を返す）／
+    oldest_ok より古い日足の終値と同じ（＝結局2日以上前の終値）。"""
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return False
+    if not (v > 0 and v != float("inf")):
+        return False
+    if _same_price(v, last):
+        return False
+    return not any(_same_price(v, c) for d, c in bars if d < oldest_ok)
+
+
+def _call_quietly(fn, *args):
+    """取得関数を呼ぶ。無い・失敗したら None（前日比を「―」にするだけで、ページは止めない）。"""
+    if fn is None:
+        return None
+    try:
+        return fn(*args)
+    except Exception as e:
+        print(f"  ⚠️ 前日終値の別の取り方に失敗: {e}")
+        return None
+
+
+def choose_prev_close(symbol, bars, trading_days=None, now_local=None,
+                      fetch_yahoo_prev=None, fetch_session_close=None):
+    """日足から (最新値, 前の取引日の終値 または None, 取り方) を決める。異なる値が2つ無ければ None。
+
+    bars: [(日付, 終値), ...] 古い順・NaN を落とした日足（日付は取引所の時間帯）
+    trading_days: Yahoo の取引日の一覧（無ければ None）
+    now_local: いまの時刻（取引所の時間帯）。先物の夜間セッションの判定に使う
+    fetch_yahoo_prev(): Yahoo 自身の前日終値（チャートの付帯情報）。必要なときだけ呼ぶ
+    fetch_session_close(day): 先物の day の米東部17時の最後の値（1時間足）。必要なときだけ呼ぶ
+    取り方: "daily"（日足のまま＝ふだん）／"yahoo-prev"／"session-close"／"unknown"（出さない）
+    """
+    pair = _last_two_distinct_dated(bars)
+    if pair is None:
+        return None
+    (last_day, last), (prev_day, prev) = pair
+
+    # 原因②: 先物の夜間セッション（月〜木の米東部18時以降で、最新の足が今日の日付）＝今日の清算値が日足に無い
+    if (_is_cme_futures(symbol) and now_local is not None and now_local.hour >= 18
+            and now_local.weekday() <= 3 and last_day == now_local.date()):
+        v = _call_quietly(fetch_yahoo_prev)
+        if _usable_alt_prev(v, bars, last, oldest_ok=last_day):
+            return last, float(v), "yahoo-prev"
+        v = _call_quietly(fetch_session_close, last_day)
+        if _usable_alt_prev(v, bars, last, oldest_ok=last_day):
+            return last, float(v), "session-close"
+        return last, None, "unknown"
+
+    # ふだん: 日足の直前の値が「前の取引日」の終値ならそのまま（追加の通信なし）
+    always_open = _is_24h_symbol(symbol)
+    expected = _expected_prev_day(last_day, trading_days, always_open)
+    if expected <= prev_day < last_day:
+        return last, prev, "daily"
+
+    # 原因①: 前の取引日の足が抜けている → Yahoo 自身の前日終値。取引日の一覧があれば抜けは本物＝
+    #    直前の値（2日以上前）と同じなら使わない。一覧が無いときは祝日かもしれないので直前の値と同じなら可
+    oldest_ok = expected if (always_open or trading_days) else prev_day
+    v = _call_quietly(fetch_yahoo_prev)
+    if _usable_alt_prev(v, bars, last, oldest_ok=oldest_ok):
+        return last, float(v), "yahoo-prev"
+    return last, None, "unknown"
+
+
+_PREV_HOW_LABEL = {
+    "yahoo-prev": "日足に前の取引日の終値が無い → Yahoo の前日終値を使用",
+    "session-close": "先物の夜間セッション中で当日の清算値が日足に無い → 米東部17時の最後の値（1時間足）を使用",
+    "unknown": "前の取引日の終値が取れない → 前日比は出さない（―）",
+}
+
+
+def _yahoo_prev_close(symbol):
+    """Yahoo 自身の前日終値（チャート API の付帯情報 chartPreviousClose・range=1d）。"""
+    u = ("https://query1.finance.yahoo.com/v8/finance/chart/" + urllib.parse.quote(symbol)
+         + "?range=1d&interval=1d")
+    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+    meta = json.load(urllib.request.urlopen(req, timeout=15))["chart"]["result"][0]["meta"]
+    return meta.get("chartPreviousClose") or meta.get("previousClose")
+
+
+def _session_close_from_hourly(hourly, day):
+    """1時間足 [(時刻, 終値), ...] から day の米東部16時の足の終値（＝17時の最後の値）。無ければ None。純関数。"""
+    vals = [c for ts, c in hourly if ts.date() == day and ts.hour == CME_SESSION_LAST_HOUR]
+    return vals[-1] if vals else None
+
+
+def _cme_session_close(symbol, day):
+    h = yf.Ticker(symbol).history(period="5d", interval="1h")
+    closes = h["Close"].dropna() if not h.empty else []
+    return _session_close_from_hourly([(ts, float(c)) for ts, c in closes.items()], day)
+
+
+def _trading_days_from_meta(meta):
+    """yfinance の history_metadata の tradingPeriods（取引日ごとの表）から取引日の一覧。取れなければ None。"""
+    try:
+        idx = getattr((meta or {}).get("tradingPeriods"), "index", None)
+        if idx is None or len(idx) == 0:
+            return None
+        return sorted({ts.date() for ts in idx})
+    except Exception:
+        return None
+
+
 def get_price(ticker_symbol):
-    """直近終値・前日比を取得。
+    """直近値・前の取引日の終値・前日比(%) を取得。前の取引日の終値が決められなければ (直近値, None, None)。
     短期間 period では yfinance が 0〜1 行しか返さないことがある（特に ^N225 等の
     アジア指数 / 市場クローズ直後）。空なら段階的に期間を広げてリトライする。
+    前の終値の選び方は choose_prev_close（2026-11-05 の2日前比の事故の対策）。
     """
     last_err = None
     for period in ("5d", "1mo"):
@@ -515,12 +671,25 @@ def get_price(ticker_symbol):
             hist = t.history(period=period)
             # NaN を落としてから判定
             closes = hist["Close"].dropna() if not hist.empty else None
-            pair = _last_two_distinct(list(closes)) if closes is not None else None
-            if pair:
-                last, prev = pair
-                if prev == 0:
-                    continue
-                return last, prev, (last - prev) / prev * 100
+            if closes is None or closes.empty:
+                continue
+            bars = [(ts.date(), float(c)) for ts, c in closes.items()]
+            tz = getattr(closes.index, "tz", None)
+            now_local = datetime.now(timezone.utc).astimezone(tz) if tz is not None else None
+            picked = choose_prev_close(
+                ticker_symbol, bars,
+                trading_days=_trading_days_from_meta(getattr(t, "history_metadata", None)),
+                now_local=now_local,
+                fetch_yahoo_prev=lambda: _yahoo_prev_close(ticker_symbol),
+                fetch_session_close=lambda day: _cme_session_close(ticker_symbol, day))
+            if picked is None:
+                continue
+            last, prev, how = picked
+            if how != "daily":
+                print(f"  ↪ {ticker_symbol}: {_PREV_HOW_LABEL[how]}（前の終値={prev}）")
+            if not prev:
+                return last, None, None
+            return last, prev, (last - prev) / prev * 100
         except Exception as e:
             last_err = e
             continue
