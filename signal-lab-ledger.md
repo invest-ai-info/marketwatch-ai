@@ -1151,7 +1151,7 @@
 
 **テーマ**: 順張りのシグナルで、利確の手前に壁があると勝ちにくい？ 前向き125回で確かめた（定点観測・rl_tf_blocked）
 **仮説ID**: rl_tf_blocked
-**ファイル**: guide-signal-lab-141.html（下書き中）
+**ファイル**: guide-signal-lab-141.html（公開済み）
 **claims**: drafts/labnotes/lab-141-claims.json
 **分析メモ**: drafts/labnotes/lab-141-analysis.md
 
