@@ -6,7 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>レバレッジとナンピンの正体｜強制ロスカットの仕組みと「下手なナンピン、スカンピン」の本当の意味 - MarketWatch AI</title>
+  <title>レバレッジとナンピンの正体｜強制ロスカットの仕組みと「下手なナンピン、スカンピン」の本当の意味 - 時短投資ラボ</title>
   <meta name="description" content="レバレッジは少ない資金で大きく動かす仕組みだが、証拠金維持率が閾値を割ると強制ロスカット（強制決済）が発動する。ナンピンは平均コストを下げる一方でポジション量とリスク量が増え、下落が続くと損失は非線形に拡大する。「下手なナンピン、スカンピン」の本当の意味と、ポジションサイジングによる防ぎ方を図解で解説。">
   <meta name="keywords" content="レバレッジ,ナンピン,強制ロスカット,証拠金維持率,難平,FX,信用取引,破産確率,ポジションサイジング,リスク管理,投資心理">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-leverage.html">
@@ -15,7 +15,7 @@
   <meta property="og:title" content="レバレッジとナンピンの正体｜強制ロスカットの仕組みと「下手なナンピン、スカンピン」の本当の意味">
   <meta property="og:description" content="レバレッジ・ナンピンがなぜ資産を溶かすのか。証拠金維持率・強制ロスカット・損失の非線形性を図解で解説。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-leverage.html">
-  <meta property="og:site_name" content="MarketWatch AI">
+  <meta property="og:site_name" content="時短投資ラボ">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:image" content="https://marketwatch-jp.com/08_market_stock.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -27,8 +27,8 @@
     "@type": "Article",
     "headline": "レバレッジとナンピンの正体｜強制ロスカットの仕組みと「下手なナンピン、スカンピン」の本当の意味",
     "description": "レバレッジ・ナンピンがなぜ資産を溶かすのか。証拠金維持率・強制ロスカット・損失の非線形性を図解で解説。",
-    "author": {"@type": "Organization", "name": "MarketWatch AI"},
-    "publisher": {"@type": "Organization", "name": "MarketWatch AI"},
+    "author": {"@type": "Organization", "name": "時短投資ラボ"},
+    "publisher": {"@type": "Organization", "name": "時短投資ラボ"},
     "datePublished": "2026-06-11",
     "dateModified": "2026-06-11",
     "mainEntityOfPage": "https://marketwatch-jp.com/guide-leverage.html"
@@ -250,7 +250,7 @@ window.addEventListener('resize',mark);
 
 <header>
   <div class="header-inner">
-    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> MarketWatch AI</div><div class="mw-subbrand">AI投資×行動経済学</div>
+    <div class="header-title"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> 時短投資ラボ</div><div class="mw-subbrand">AI投資×行動経済学</div>
     <div class="header-meta">日本人投資家のためのマーケット情報サイト</div>
     <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E">📚 解説記事</div></div>
   </div>
@@ -563,7 +563,7 @@ window.addEventListener('resize',mark);
 
     <!-- Section 8 -->
     <h2 id="section-8">8️⃣ 当サイトでの活かし方</h2>
-    <p>MarketWatch AI のテクニカルシグナルは、この章で述べた考え方を組み込んで設計されています。</p>
+    <p>時短投資ラボのテクニカルシグナルは、この章で述べた考え方を組み込んで設計されています。</p>
     <ul>
       <li><strong>SL（ストップロス）の目安がシグナルに含まれる</strong>：メール通知には、エントリーの目安だけでなく<strong>ATRをベースにしたSLの目安</strong>が必ず記載されます。強制ロスカットに頼るのではなく、ルールに従って自分で損切りラインを置くための参考値です。<span style="font-size:.9em">（※ あくまで機械的に算出した参考値。売買推奨ではありません）</span></li>
       <li><strong>ポジションプランの計算ロジック</strong>：シグナルメールには口座資金額に対するリスク割合（2%ルール準拠）でのロットサイズの目安も掲載されます。「いくら入れるか」より「いくら失うか」を先に決めるための仕組みです。</li>
@@ -718,7 +718,7 @@ function ml_webform_success_42383897(){var $=ml_jQuery||jQuery;$('.ml-subscribe-
 <!-- ===== /無料メルマガ登録 ===== -->
 
 <footer>
-  <p>© 2026 MarketWatch AI &nbsp;|&nbsp;
+  <p>© 2026 時短投資ラボ &nbsp;|&nbsp;
   <a href="about.html">運営者情報</a> &nbsp;|&nbsp;
   <a href="privacy.html">プライバシーポリシー</a> &nbsp;|&nbsp;
   <a href="contact.html">お問い合わせ</a></p>
