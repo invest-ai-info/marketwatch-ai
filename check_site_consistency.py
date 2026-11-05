@@ -559,6 +559,8 @@ def check_site_name(sync_files):
     生成スクリプトに旧名が残るとコアページが旧名で作られ続ける＝スクリプト側だけ error にする。"""
     from apply_site_frame import OLD_SITE_NAME, SITE_NAME, STATIC_PAGES, rename_site
     keep = {"apply_site_frame.py", "apply_logo.py", "check_plain_japanese.py", "check_site_consistency.py"}
+    if sync_files is None:  # クラウド（sync_to_github.py が読めない）＝リポジトリ直下の .py を全部見る（2026-11-05 クラウドで止まった）
+        sync_files = sorted(os.path.basename(p) for p in glob.glob(os.path.join(SD, "*.py")))
     for f in sync_files:
         if f.endswith(".py") and f not in keep and not f.startswith("tests/") and _exists(f):
             text = _read(f)

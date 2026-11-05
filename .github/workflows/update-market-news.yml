@@ -75,6 +75,8 @@ jobs:
       JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
       # 強制再生成フラグ（workflow_dispatch input から）
       FORCE_WEEKLY: ${{ github.event.inputs.force_weekly || 'false' }}
+      # 🆕 2026-11-05 オーナー決定：新しいトップページ（build_home_v2）を使う。元に戻すときはこの行を消すか "0" にする
+      HOME_V2: "1"
 
     steps:
       - name: Checkout repository
