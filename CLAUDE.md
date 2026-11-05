@@ -1,4 +1,4 @@
-# MarketWatch AI（marketwatch-jp.com）— プロジェクト全体像
+# 時短投資ラボ（旧名 MarketWatch AI・marketwatch-jp.com）— プロジェクト全体像
 
 **サイト目的**: 日本人投資家向けの情報収集サイト。投資家が幸福になる手助けが第一目的。
 
@@ -30,15 +30,15 @@
 
 解説記事は `guide-*.html` として個別公開（25+ 件、最新は guides.html 最上段）。
 
-### ナビバー（10 ボタン、利用頻度順、2026-06-15 に 📖 投資本 を追加）
+### ナビバー（10 ボタン、利用頻度順）
 
 ```
 🏠 index → 🚨 political-feed → 🧪 track-record(シグナル研究・2026-09-26 に「シグナル成績」から改名) → 📅 calendar → 📚 guides → 📖 投資本(guide-investment-books)
 → 🩺 market-health → 🔥 hot-assets → 📈 charts → 📺 youtube-summary
 ```
 
-- ⚠️ **vix.html はナビバー対象外**（charts / market-health / guide-vix.html 経由で到達）。10ボタンはモバイル2列×5行・375pxで崩れ無し確認済
-- 🆕 **2026-09-23〜 枠の単一の真実＝`apply_site_frame.py`**（11ボタンの並び `NAV_BUTTONS`・パソコン幅6+5の2段・解説記事ヘッダーの標準形・広告の上下40px）。**update-market-news が毎回 `--all`**＝クラウドの記事レーンが崩したヘッダー/ナビも次の実行で戻る。生成スクリプト8本は `FRAME_STYLE_TAG` を import。テスト＝`_test_site_frame.py`
+- ⚠️ **vix.html はナビバー対象外**（charts / market-health / guide-vix.html 経由で到達）
+- 🆕 **2026-09-23〜 枠の単一の真実＝`apply_site_frame.py`**（サイト名 `SITE_NAME`・11ボタンの並び `NAV_BUTTONS`・パソコン幅6+5の2段・解説記事ヘッダーの標準形・広告の上下40px）。**update-market-news が毎回 `--all`**＝クラウドの記事レーンが崩したヘッダー/ナビも次の実行で戻る。生成スクリプト8本は `FRAME_STYLE_TAG` を import。テスト＝`_test_site_frame.py`
 - ナビバー変更時は **決定論ツールで一括更新**：
   - **guide-*.html（約75本）＝ `python unify_navbar.py --apply`**（10ボタン標準を内蔵。投資本ページのみ自身を current、他は guides.html を current）
   - **生成スクリプト8本＋guides.html＋about/contact/privacy ＝ `python apply_books_nav_scripts.py --apply`**（各 `guides.html` の nav 行直後に挿入・冪等）。対象スクリプト＝`generate_market_news.py`（nav 7ブロック）／`generate_youtube_summary.py`／`generate_track_record_page.py`／`build_political_feed_page.py`／`auto_weekly_strategy.py`／`auto_weekly_review.py`／`generate_monthly_report.py`／`auto_indicator_preview.py`
