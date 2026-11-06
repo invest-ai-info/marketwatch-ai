@@ -1,6 +1,11 @@
+import os
+import sys
+
 import numpy as np
 import pandas as pd
-import exit_ind_lab as E
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # 2026-11-06 直接実行（python tests/…）でも読めるように＝ほかのテストと同じ
+import exit_ind_lab as E  # noqa: E402
 
 
 def _x(o, h, l, c, atr=1.0):

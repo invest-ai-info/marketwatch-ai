@@ -2,8 +2,8 @@
 """記事の新しい枠（apply_site_frame.py の FRAME_V2＝段階2）のテスト。2026-11-05 新設。
 
 固定すること:
-  ・スイッチ（環境変数 FRAME_V2=1）が無ければ今の枠のまま（今の関数をそのまま順にかけた結果と同じ・
-    今の記事は1バイトも変わらない）
+  ・スイッチ（環境変数 FRAME_V2=1）が無ければ前の枠のまま（前の関数をそのまま順にかけた結果と同じ）
+  ・公開中の記事は本番の設定（update-market-news.yml の FRAME_V2・11/5 からオン）で1バイトも変わらない
   ・オンなら新しいヘッダー・ナビ・<style> が1つずつ、ナビはヘッダーの直後。もう一度かけても変わらない
   ・オフに戻すと前の形に戻る（新しい形の跡が残らない）。もう一度オンにすると同じ結果
   ・記事の表紙（h1 入りの <header>）・免責の数と文面には触らない
@@ -117,10 +117,23 @@ def test_off_is_the_v1_chain_exactly():
         assert F.build_nav("  ") in out          # ナビはもとの場所（<main> の中）のまま
 
 
-def test_off_keeps_real_articles_byte_for_byte():
+def _live_frame_v2():
+    """本番の設定＝update-market-news.yml の FRAME_V2（2026-11-05 オーナー決定で "1"）。戻したらテストも自動でついてくる"""
+    y = open(os.path.join(ROOT, ".github", "workflows", "update-market-news.yml"), encoding="utf-8").read()
+    m = re.search(r'^\s*FRAME_V2:\s*"?(\w*)"?', y, re.M)
+    return bool(m and m.group(1) == "1")
+
+
+def test_live_setting_keeps_real_articles_byte_for_byte():
+    """公開中の記事は本番の設定でもう一度かけても1バイトも変わらない（毎回の --all で記事が揺れない）。
+    2026-11-06 改め：スイッチを入れる前は「オフで変わらない」を見ていたが、11/5 に入れたあとは記事が新しい形
+    （669本すべて）なので、オフでは前の形に戻る＝見る向きを本番の設定に合わせた。オン→オフ→オンで元に戻ることも見る"""
+    live = _live_frame_v2()
     for name in REAL:
         text = _real(name)
-        assert F.process(text, name, False) == (text, []), name
+        assert F.process(text, name, live) == (text, []), name
+        if live:
+            assert _on(_off(text, name), name) == text, name
 
 
 def test_on_leaves_non_guide_pages_as_off():
