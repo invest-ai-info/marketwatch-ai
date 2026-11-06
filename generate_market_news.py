@@ -6089,6 +6089,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-06", "line": '・<b>2026-11-06</b>: 🏦 解説「<a href="guide-broker-compare.html" style="color:#0969da"><b>自分に合う証券会社を条件で絞り込む</b></a>」公開'},
         {"date": "2026-11-06", "line": '・<b>2026-11-06</b>: 🔬 解説「<a href="guide-company-7832-bandai-namco.html" style="color:#0969da"><b>バンダイナムコHD</b></a>」公開'},
         {"date": "2026-11-06", "line": '・<b>2026-11-06</b>: 🧪 解説「<a href="guide-signal-lab-141.html" style="color:#0969da"><b>順張りで利確の手前に壁があると勝ちにくい？【研究日誌 #141】</b></a>」公開'},
         {"date": "2026-11-05", "line": '・<b>2026-11-05</b>: 🏷️ <a href="about.html" style="color:#0969da"><b>サイト名を「時短投資ラボ」に変更しました</b></a>（旧名 MarketWatch AI。アドレスはそのままです）'},
@@ -6991,6 +6992,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     <a href="guide-goal-calc.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🎯 目標逆算</a>
     <a href="guide-withdrawal-sim.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🏖️ 取り崩し</a>
     <a href="guide-kuse-check.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🧠 クセ診断</a>
+    <a href="guide-broker-compare.html" style="color:#0969da;background:#ffffff;border:1px solid #54aeff;padding:5px 13px;border-radius:16px;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap">🏦 証券会社の比較</a>
   </div>
 
   <!-- 騰落レシオ: 2026-07-04 トップ整理で market-health へ移設（ゲージはあちらに常設） -->
