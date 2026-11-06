@@ -428,4 +428,5 @@ SYNC_FILES = [
     "guide-company-6501-hitachi.html",
     "guide-news-2026-11-05.html",
     "guide-signal-lab-141.html",
+    "guide-company-7832-bandai-namco.html",
 ]
