@@ -92,7 +92,12 @@ FEEDS = [
     # 暗号資産専用（2026-08-01 追加）。総合ソースは暗号資産の見出しを1日1件程度しか出さず、
     # 暗号資産カードのミニ見出しが枠(CAT_QUOTA=3)を満たせなかったため専門媒体を2本置いている。
     {"name": "CoinPost",    "url": "https://coinpost.jp/?feed=rss2", "kw": False, "stale_days": 7},
-    {"name": "CoinDesk JP", "url": "https://www.coindeskjapan.com/feed/", "kw": False, "stale_days": 7},
+    # 🔁 2026-11-06 CoinDesk JAPAN → NADA NEWS に差し替え。旧 coindeskjapan.com/feed/ は 10/20 08:30 を最後に
+    #    毎時0件（automation-health §⑦ が 11/3〜11/5 に3日続けて検知）。運営の N.Avenue が米 CoinDesk との
+    #    ブランド契約を終え、独自ブランド「NADA NEWS」（nadanews.com）へ移った（2025-12-15 の発表）。
+    #    クラウドからは両方のホストに届かないため、Actions の毎時の実行のログ（「NADA NEWS N件」）で実測して確かめる。
+    #    0件のままなら §⑦ が7日で再び鳴る（観測開始の時刻から数える）＝そのときは gnews("site:nadanews.com when:1d") へ。
+    {"name": "NADA NEWS",   "url": "https://www.nadanews.com/feed/", "kw": False, "stale_days": 7},
     # --- 公的機関（2026-08-06 追加）。発行元固定の一次情報＝報道より先に原文が出る。
     #     8/6 実測プローブ: 日銀 whatsnew=60件/最新9.2h・財務省 news.rss=100件/最新3.2h（国債入札・大臣会見）。
     #     低頻度（週末は沈黙）なので停止閾値は30日。

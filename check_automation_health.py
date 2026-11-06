@@ -961,21 +961,33 @@ def check_chain(owner, repo, token, wf, max_days, since, now, event="workflow_ru
 # 祝日カレンダーを持たずに判定するため、**上流自身の最終営業日**と突き合わせる。
 JP_PROBE_TICKER = "7203.T"          # 流動性の高い代表銘柄（上流の営業日を知るためだけに使う）
 JP_SETTLE_HOUR_JST = 15, 30         # 東京クローズ15:00＋余裕。これ以前の当日バーは未確定扱い
+# 🆕 2026-11-06 夕方に作る一覧（jp-rankings.json → jp-highs.json）が当日分を書き終える目安。
+#    実測: ランキング 17:52・高値安値 18:04〜18:15 JST（routine の 17:5x の push に相乗り・2本目は 19:1x）。
+#    番人の cron は 09:30 JST だが実際は 15:47〜16:07 JST に走っており（11/4・11/5）、当日の足は確定（15:30〜）・
+#    一覧はまだ前の営業日＝2日続けて「古い」と誤検知した。一覧にはこの時刻より前なら前の営業日を求める。
+JP_LISTS_READY_JST = 20, 30
 
 
-def latest_settled_trading_date(dates, now):
+def latest_settled_trading_date(dates, now, ready=JP_SETTLE_HOUR_JST):
     """上流の日付列から「確定済みの最終営業日」を返す（純関数）。
 
     場中は当日の未確定バーが最後に来るので1本落とす。番人は 09:30 JST に走るため、
     この処理が無いと毎朝「当日 vs 前営業日」で必ず誤検知する。
+    ready＝当日分を求め始める時刻（JST）。夕方に作る一覧は JP_LISTS_READY_JST を渡す（expected_list_date）。
     """
     if not dates:
         return None
     jst = now.astimezone(dt.timezone(dt.timedelta(hours=9)))
-    h, m = JP_SETTLE_HOUR_JST
+    h, m = ready
     if dates[-1] == jst.date().isoformat() and (jst.hour, jst.minute) < (h, m):
         return dates[-2] if len(dates) >= 2 else None
     return dates[-1]
+
+
+def expected_list_date(dates, now):
+    """純関数: 夕方に作る一覧（jp-rankings.json・jp-highs.json）に求める asof。
+    当日の足が確定していても、一覧を作る回より前（JP_LISTS_READY_JST まで）は前の営業日でよい。"""
+    return latest_settled_trading_date(dates, now, ready=JP_LISTS_READY_JST)
 
 
 def fetch_jp_trading_dates(ticker=JP_PROBE_TICKER):
@@ -1440,17 +1452,17 @@ def main():
         rank = json.loads(api_raw(
             f"https://api.github.com/repos/{owner}/{repo}/contents/jp-rankings.json", token))
         jp_dates = fetch_jp_trading_dates()
-        settled = latest_settled_trading_date(jp_dates, now)
+        settled = expected_list_date(jp_dates, now)          # 夕方に作る一覧＝作る回より前は前の営業日でよい
         asof = rank.get("asof") or ""
         if settled and asof and asof < settled:
             body.append(f"- 🚨 🟡 日本株ランキングが古い: jp-rankings.json の asof={asof} / "
-                        f"上流(Yahoo)の確定最終営業日={settled}。**ライブ hot-assets は前の営業日の"
+                        f"求める営業日={settled}（上流の確定最終営業日・夕方の作成 {JP_LISTS_READY_JST[0]}:{JP_LISTS_READY_JST[1]:02d} JST より前は前の営業日）。**ライブ hot-assets は前の営業日の"
                         f"順位を出したまま**。build_jp_rankings.py は多数派の営業日しか書かない"
                         f"（2026-08-29 のガード）ので、上流が追いつけば次の回で自動的に直る。"
                         f"2日以上続くなら cron の実行時刻が上流の公開前にずれていないかを見る")
             bad.append(("日本株ランキングの鮮度", "warn"))
         elif settled and asof:
-            body.append(f"- ✅ 🟢 asof={asof}（上流の確定最終営業日と一致）")
+            body.append(f"- ✅ 🟢 asof={asof}（求める営業日と一致）")
         else:
             body.append(f"- ⚪ 判定不能（asof={asof or 'なし'} / 上流={settled or 'なし'}）")
     except Exception as e:
@@ -1482,15 +1494,15 @@ def main():
         hi = json.loads(api_raw(
             f"https://api.github.com/repos/{owner}/{repo}/contents/jp-highs.json", token))
         dates = jp_dates or fetch_jp_trading_dates()
-        h_settled = latest_settled_trading_date(dates, now)
+        h_settled = expected_list_date(dates, now)            # ランキングと同じ（夕方に作る一覧）
         h_asof = hi.get("asof") or ""
         if h_settled and h_asof and h_asof < h_settled:
-            body.append(f"- 🚨 🟡 高値・安値の更新銘柄が古い: jp-highs.json の asof={h_asof} / 上流の確定最終営業日={h_settled}。"
+            body.append(f"- 🚨 🟡 高値・安値の更新銘柄が古い: jp-highs.json の asof={h_asof} / 求める営業日={h_settled}。"
                         f"**hot-assets の「高値・安値の更新銘柄」が前の営業日の一覧のまま**。jp-highs.yml（ランキングの完了で起動）の"
                         f"ログ「Build JP new highs and lows」を見る（JPX の一覧が取れない・Yahoo の混雑で取得8割未満など）")
             bad.append(("高値・安値の更新銘柄の鮮度", "warn"))
         elif h_settled and h_asof:
-            body.append(f"- ✅ 🟢 高値・安値の更新銘柄 asof={h_asof}（上流の確定最終営業日と一致）")
+            body.append(f"- ✅ 🟢 高値・安値の更新銘柄 asof={h_asof}（求める営業日と一致）")
         else:
             body.append(f"- ⚪ 高値・安値の更新銘柄: 判定不能（asof={h_asof or 'なし'} / 上流={h_settled or 'なし'}）")
         # 🆕 2026-10-09 J44 高値更新の台帳（highs_ledger.py が jp-highs と同じ回に書く）＝一覧より古ければ台帳だけ止まっている
