@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-11-06
+- 判定: ✅ 公開済み
+- 選定トピック: 日経225が60,000円割れ・5.96%急落（57,434.77円）──6月最高値71,053円から安値ベース-20.1%でテクニカルベアマーケット入り、SoftBank約-11%、背景と3シナリオを中立整理（カテゴリ: 日本株・グローバル株安・AI過剰投資懸念）
+- スコア: 話題性 5 / 影響 5 / 付加価値 5（合計 15/15）
+- 出典:
+  - Bloomberg「Japan's Nikkei Breaks Below Key 60,000 Level on AI Selloff」2026-11-06
+  - CNBC「Nikkei 225 enters bear market: Live updates」2026-11-05/06
+  - Seeking Alpha「AI selloff: Japan's Nikkei enters bear market, SoftBank slides 11%」2026-11-06
+  - IBTimes「Nikkei Crashes 6% Into Bear Market」2026-11-06
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（kinsho-v1×3確認 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典4系統 ✅）。「ベアマーケート」誤字を指摘→メイン側でsed一括修正済み（17箇所→正表記）
+  - 適用修正: 誤字修正のみ（表現軟化・免責追加の必要なし）
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典4系統以上 ✅）→「そのまま公開してよい」
+  - 最終判定: 🟢白 / 公開OK
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告61件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-06.html
+- commit: 376fc2c（main へ push 済み）
+
+---
+
 ## 2026-11-05
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均4日続落61,077円・TOPIX逆行高──アドバンテスト-14.7%・東京エレクトロン-9.4%・トヨタ+16%、「2銘柄で日経を1,000円超押し下げ」の構造と3シナリオを中立整理（カテゴリ: 日本株・半導体・自動車・市場構造）
