@@ -62,3 +62,9 @@ def test_checked_date_matches_script():
 
 def test_disclaimer_marker_present():
     assert HTML.count('data-disclaimer="kinsho-v1"') >= 3
+
+
+def test_browser_translation_is_off():
+    # 自動翻訳で金融の言葉が別の意味に化けると誤解を招く（2026-11-06「食べる前に考えること」）
+    assert '<html lang="ja" translate="no">' in HTML
+    assert '<meta name="google" content="notranslate">' in HTML
