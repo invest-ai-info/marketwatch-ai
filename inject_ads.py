@@ -127,6 +127,7 @@ DENY_EXACT = {
     "guide-entry-methods.html",  # ①エントリーの決め方（2026-09-25・利確・損切り版と対）。研究の紹介記事＝同じ扱い
     "guide-kuse-check.html",     # ①投資のクセ診断（2026-09-27）＝「商品・会社を勧めない・広告を置かない」と本文で約束している
     "guide-time-anomalies-after-papers.html",  # ①“時間の癖”の研究のまとめ（R3〜R7・2026-11-02）＝研究日誌と同じ理由
+    "guide-broker-compare.html",  # ①証券会社の比較（2026-11-06 オーナー「広告関係なく」）＝本文で広告リンクなしと約束している
 }
 # SYNC禁忌の自動生成ページは that 自体が guide-*.html ではないので対象外だが、事故防止に明示しておく
 DENY_EXACT |= {
