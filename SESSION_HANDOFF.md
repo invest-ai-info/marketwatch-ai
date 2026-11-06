@@ -2,10 +2,11 @@
 
 > 🧹 **2026-10-08 に 358KB → 約30KB に軽くした**（目安 30KB・`mw declutter`）。**10/7 夕より前の節は `SESSION_ARCHIVE.md` の【2026-10-08 退避】へ移した**（消していない・見出しのまま検索できる）。研究の結果の一覧＝`RESEARCH_LABS.md`（各ワークフローの行の「結果」）と `memory/03_initiatives.md`。「🛡️ コードが強制しているルール一覧」は `OPERATIONS.md` の最後へ移した。新しい節は**この下の一番上**に足し、古くなった節は同じ形で SESSION_ARCHIVE へ移す
 
-## 🔧 2026-11-06（クラウド）: 見張り番の誤検知2つと止まったフィードを直した（オーナー「問題があれば直してください」）
-- ⑫・⑫c（ランキング・高値安値の一覧の鮮度）＝番人が実際は 15:47〜16:07 JST に走り、確定した当日の足（15:30〜）と夕方（17:52・18:15）に作る前の一覧を比べて 11/4・11/5 に誤検知 → 一覧には 20:30 JST より前なら前の営業日を求める（`expected_list_date`・テスト `tests/test_health_jp_lists.py`）。信用残 ⑫b は変えない
-- ⑦ CoinDesk JP（10/20 から0件）＝**NADA NEWS に改名**（N.Avenue が米 CoinDesk との契約を終えた）→ `https://www.nadanews.com/feed/` に差し替え。クラウドからは届かないので Actions の毎時のログ「NADA NEWS N件」で確かめる。0件のままなら gnews("site:nadanews.com when:1d") へ
-- テスト：`tests/test_site_frame_v2.py` の1本が 11/5 の FRAME_V2 オンのあと古いまま落ちていた → 本番の設定（update-market-news.yml）で記事が変わらないかを見る形に。`tests/test_exit_ind_lab.py` を直接実行でも読めるように
+## 🔧 2026-11-06（クラウド）: 見張り番の誤検知2つと止まったフィードを直した（オーナー「問題があれば直してください」・invest-ai-info/marketwatch-ai#377）
+- ⑫・⑫c（一覧の鮮度）＝番人が実際は 16時前後に走り、確定した当日の足と夕方（17:52・18:15）に作る前の一覧を比べて 11/4・11/5 に誤検知 → 一覧には 20:30 JST より前なら前の営業日を求める（`expected_list_date`・`tests/test_health_jp_lists.py`）。信用残 ⑫b は変えない
+- ⑦ CoinDesk JP（10/20 から0件）＝**NADA NEWS に改名** → `nadanews.com/feed/` に差し替え（Actions の実行で9件を確かめた）
+- テスト：`test_site_frame_v2.py` を本番の設定（FRAME_V2 オン）で記事が変わらないかを見る形に／`test_exit_ind_lab.py` を直接実行でも読めるように
+- ✅ 11/6 16:07 の番人で ⑦・⑫・⑫c とも緑。⚠️ 同じ回の **④「check_site_consistency.py が Claude により変更」は正しい変更**（dc55e2b・#372 をオーナーがマージ・クラウドで検査が止まる不具合を直す2行）＝**revert しない**。26時間の窓を過ぎる次の回で消える
 
 ## 🏁 2026-11-05（クラウド）: 最終目標の確認・名前とデザインの見直し・収益の打ち手（オーナーと相談）
 - **最終目標（オーナー決定）**＝人の作業を大きく減らし、投資に使う時間を短くする（①システムトレードで資産を増やす ②情報を集めて整理し、人は売買の決断だけ）。CLAUDE.md 冒頭と `memory/03_initiatives.md` の先頭に記録
