@@ -1365952,9 +1365952,11 @@
     "after_tp1": {
       "v": 1,
       "tp2_at": null,
-      "entry_at": null,
+      "entry_at": "2026-11-06T03:00:00+00:00",
       "sl_at": null,
-      "order": [],
+      "order": [
+        "entry"
+      ],
       "ended_by": null,
       "ended_at": null,
       "last_close": null,
@@ -1367484,13 +1367486,13 @@
       "米ドル価格予測：FRBの決定を控え、DXYは102.59を突破できるか、EUR/USDとGBP/USDは下落"
     ],
     "ai_narrative": "ポンドドルは、ボリンジャーバンド+2σを上抜け、直近20本高値もブレイクしており、テクニカル的には上昇トレンドが継続しています。RSIは68.4と買われすぎの領域に近づきつつありますが、25MAと75MAが横ばいで推移しており、明確な抵抗帯も見られません。通貨強弱でも、GBPがUSDに対して優位に立っており、このロングシナリオを後押ししています。直近のニュースは米中間選挙やFRBの政策金利決定に焦点が当たっており、ドル安要因となる可能性が示唆されているため、ファンダメンタルズとも整合性が取れています。このシナリオは、1.34を明確に下抜けた場合に崩れる可能性があります。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-11-06T06:00:00+00:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
+    "hit_sl_at": "2026-11-06T06:00:00+00:00",
     "max_favorable_excursion_pct": 0.294,
-    "max_adverse_excursion_pct": -0.126,
+    "max_adverse_excursion_pct": -0.45,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1367611,6 +1367613,24 @@
       "verdict": "yellow",
       "score": 0,
       "reasons": []
+    },
+    "loss_analysis": {
+      "vix_data": {
+        "start": 19.14,
+        "end": 28.15,
+        "change_pct": 47.07
+      },
+      "news_during_holding": [
+        "米ドル価格予測：BOEを前にGBP/USDが1.3500を試す中、DXYは101.10に注目",
+        "米ドル価格予測：選挙結果を受けEUR/USD、GBP/USDが上昇する中、DXYは101.180に注目"
+      ],
+      "ai_result": {
+        "primary_category": "ボラ拡大",
+        "primary_cause": "VIX急騰がドル買いを招いた",
+        "ai_diagnosis": "シグナル発火時、RSIは買われすぎ領域に近づきつつも、MAや通貨強弱はGBP優位を示唆しており、ファンダメンタルズもドル安要因が示唆されていました。しかし、VIXが47%も急騰し、リスクオフムードが強まったことで、安全資産とされるドルが買われ、ロングポジションがSLにかかったと考えられます。",
+        "lesson": "VIXの急激な変動に注意し、リスクオフ時はドル高に傾く可能性を考慮する。",
+        "category_tag": "VIX高騰 / リスクオフ"
+      }
     }
   },
   {
@@ -1372196,7 +1372216,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 3.052,
+    "max_favorable_excursion_pct": 3.615,
     "max_adverse_excursion_pct": -2.41,
     "email_sent": true,
     "watch_hit": "rsi_oversold_4h",
@@ -1373651,12 +1373671,12 @@
       "民主党の中間選挙圧勝後、半導体株と原油が下落"
     ],
     "ai_narrative": "WTI原油は、直近安値ゾーンへの接近から反発の兆しを見せており、RSIの低さとMACDのデッドクロスは過売圏を示唆しています。民主党中間選挙圧勝による地政学的リスク後退の思惑から原油価格は下落しましたが、今回の反発はテクニカルなサポートからの押し目買いの可能性を示唆します。USDが弱含み、AUDが強含んでいる点も、ドル建て商品である原油のロング戦略を支持します。シナリオが崩れるのは、86.65ドルを明確に下抜けた場合です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-11-06T01:00:00-05:00",
+    "hit_tp1_at": "2026-11-06T01:00:00-05:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 4.096,
+    "max_favorable_excursion_pct": 4.664,
     "max_adverse_excursion_pct": -0.319,
     "email_sent": false,
     "whipsaw_check": {
@@ -1373775,6 +1373795,44 @@
         "落ちるナイフ(下降中のロング)",
         "RSI売られすぎ(<=30)"
       ]
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 17.16,
+        "end": 28.15,
+        "change_pct": 64.04
+      },
+      "news_during_holding": [
+        "2021年以来最悪の3日間下落後、原油は反発したが、エネルギー株は追随せず",
+        "テック株の暴落と選挙後の取引に支えられ、住宅ローン金利は再び下落",
+        "株式市場：S&P500は本日、上昇か下落か？",
+        "原油は週足で急落の見通しだが、中東の供給懸念が下支え",
+        "原油価格は落ち着くも、市場は成長とインフレを懸念",
+        "PRIO SA (PTRRY) (2026年第3四半期) 決算説明会ハイライト：PRIO SA、記録的な生産量と利益を達成...",
+        "利回り5%超の配当株3選",
+        "安価な原油がマージンを圧迫する中、注目すべき精製株3選"
+      ],
+      "ai_result": {
+        "primary_category": "テクニカル順当 / 環境追い風 / 信頼度高の的中",
+        "primary_cause": "過売圏からのテクニカル反発が成功",
+        "ai_diagnosis": "RSI(24.47)とMACDのデッドクロスは明確な過売圏を示唆し、テクニカルサポートからの押し目買いが機能した。USDの弱含みとAUDの強含みも、ドル建て商品である原油のロング戦略を後押しした。AI解説で示唆された地政学的リスク後退思惑による下落が、テクニカル的な反転のトリガーとなった可能性が高い。",
+        "lesson": "過売圏でのテクニカル指標とファンダメンタルズの合致は、再現性の高いロングシグナルとなる。同様の状況で積極的にエントリーを検討すべき。",
+        "category_tag": "過売圏反発 / 環境良好",
+        "repeatable": "high"
+      }
+    },
+    "after_tp1": {
+      "v": 1,
+      "tp2_at": null,
+      "entry_at": null,
+      "sl_at": null,
+      "order": [],
+      "ended_by": null,
+      "ended_at": null,
+      "last_close": null,
+      "tp1_bar": "ok",
+      "tp1_bar_entry": false,
+      "made_at": "2026-11-06T16:07:30+09:00"
     }
   },
   {
@@ -1374412,12 +1374470,14 @@
     },
     "after_tp1": {
       "v": 1,
-      "tp2_at": null,
+      "tp2_at": "2026-11-05T23:00:00+00:00",
       "entry_at": null,
       "sl_at": null,
-      "order": [],
-      "ended_by": null,
-      "ended_at": null,
+      "order": [
+        "tp2"
+      ],
+      "ended_by": "tp2",
+      "ended_at": "2026-11-05T23:00:00+00:00",
       "last_close": null,
       "tp1_bar": "ok",
       "tp1_bar_entry": false,
@@ -1374485,12 +1374545,12 @@
       "米ドル価格予測：FRB据え置きを受けDXYは102.59を目指す、ユーロ/ドルとポンド/ドルは反発"
     ],
     "ai_narrative": "ポンドドルはMACDのデッドクロスにより短期的な下降転換を示唆しており、テクニカル的にショートが優位と判断します。25MAと75MAがほぼ同水準で推移し、ボリンジャーバンド-2σ付近の1.34を試す展開も想定されます。通貨強弱でもポンド弱・ドル強と、このショートシナリオと一致しています。  ファンダメンタルズでは、米中間選挙やFRBの政策金利据え置きに関するニュースがドルを支える可能性を示唆しており、ポンドドルにとっては下押し圧力となり得ます。  もし、1.35のストップロスを上抜けるような展開となれば、このショートシナリオは一旦見直しが必要となります。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-11-06T07:00:00+00:00",
+    "hit_tp1_at": "2026-11-06T07:00:00+00:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.125,
+    "max_favorable_excursion_pct": 0.449,
     "max_adverse_excursion_pct": -0.173,
     "email_sent": false,
     "whipsaw_check": {
@@ -1374614,6 +1374674,35 @@
       "reasons": [
         "上昇中のショート"
       ]
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 16.79,
+        "end": 28.15,
+        "change_pct": 67.66
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル順当 / 環境追い風 / 信頼度高の的中",
+        "primary_cause": "MACDデッドクロスとドル高材料が機能",
+        "ai_diagnosis": "MACDのデッドクロスが短期的な下降を示唆し、AI解説の通りテクニカル的にショート優位となりました。FRB据え置き観測や米中間選挙といったファンダメンタルズ要因もドルを支え、ポンドドルの下落を後押ししました。VIXの急騰もリスクオフを強め、安全通貨とされるドルへの資金流入を促したと考えられます。",
+        "lesson": "MACDデッドクロス＋ドル高材料＋VIX急騰の組み合わせはショートの有効性が高い。次回も類似条件なら積極的にエントリーを検討。",
+        "category_tag": "テクニカル＋ファンダ",
+        "repeatable": "high"
+      }
+    },
+    "after_tp1": {
+      "v": 1,
+      "tp2_at": null,
+      "entry_at": null,
+      "sl_at": null,
+      "order": [],
+      "ended_by": null,
+      "ended_at": null,
+      "last_close": null,
+      "tp1_bar": "ok",
+      "tp1_bar_entry": false,
+      "made_at": "2026-11-06T16:07:30+09:00"
     }
   },
   {
@@ -1375675,7 +1375764,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.202,
+    "max_favorable_excursion_pct": 0.492,
     "max_adverse_excursion_pct": -0.079,
     "email_sent": false,
     "whipsaw_check": {
@@ -1375870,12 +1375959,12 @@
       "GBP/USD、AUD/USDが勢いを失う中、USD/CADは強気に転じる"
     ],
     "ai_narrative": "豪ドル米ドル（AUD/USD）は、4時間足チャートでMACDのデッドクロスとボリンジャーバンドの-2σタッチ、直近安値割れという複数のテクニカルシグナルが重なり、短期的な下降トレンドへの転換が示唆されています。これは、RSIが30台後半と売られすぎを示唆する水準に近づいていることからも、短期的な下落圧力の強まりを示唆します。  ファンダメンタルズ面では、豪ドルは対米ドルで弱含んでおり、通貨強弱もAUDの弱さ、USDの強さを示しており、このショートシナリオを支持しています。中国経済の動向はAUDの主要な影響要因ですが、上海総合指数は直近で明確な方向性を示しておらず、テック株の反発など混在した動きが見られます。  このショートシナリオが崩れるとすれば、中国本土の経済指標が予想を大きく上回り、AUDの買い支え材料となる場合が考えられます。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
-    "hit_tp2_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-11-06T03:00:00+00:00",
+    "hit_tp1_at": "2026-11-06T03:00:00+00:00",
+    "hit_tp2_at": "2026-11-06T03:00:00+00:00",
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.436,
+    "max_favorable_excursion_pct": 1.183,
     "max_adverse_excursion_pct": 0.035,
     "email_sent": false,
     "whipsaw_check": {
@@ -1376023,6 +1376112,37 @@
       "reasons": [
         "環境C(警戒)"
       ]
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 26.12,
+        "end": 28.15,
+        "change_pct": 7.77
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル順当 / トレンド継続 / 環境追い風 / 信頼度高の的中 / マルチTF整合",
+        "primary_cause": "複数の下降シグナルと環境要因が重なり、順張り成功。",
+        "ai_diagnosis": "MACDのデッドクロス、-2σタッチ、直近安値割れといった短期下降転換のテクニカルサインが複数重なり、RSIも下落圧力の強まりを示唆していました。さらに、AUDの通貨弱さとUSDの通貨強さ、VIXの上昇（リスクオフ志向）といった環境要因もショートシナリオを支持し、上位足との整合性も取れていたため、TP1達成に至りました。",
+        "lesson": "信頼度HIGH、環境スコアCでも、複数の下降シグナルとリスクオフ環境が重なれば積極的にエントリー。マルチTF整合は重要。",
+        "category_tag": "順張り高精度",
+        "repeatable": "medium"
+      }
+    },
+    "after_tp1": {
+      "v": 1,
+      "tp2_at": "2026-11-06T03:00:00+00:00",
+      "entry_at": null,
+      "sl_at": null,
+      "order": [
+        "tp2"
+      ],
+      "ended_by": "tp2",
+      "ended_at": "2026-11-06T03:00:00+00:00",
+      "last_close": null,
+      "tp1_bar": "ok",
+      "tp1_bar_entry": false,
+      "made_at": "2026-11-06T16:07:30+09:00"
     }
   },
   {
@@ -1376081,12 +1376201,12 @@
     "news_count": 0,
     "news_titles": [],
     "ai_narrative": "ユーロ/豪ドルは、MACDのゴールデンクロスとボリンジャーバンドの+2σ突破という短期的な上昇シグナルが点灯しました。これは、価格が短期的な上昇トレンドに転換した可能性を示唆しています。  ファンダメンタルズ面では、ユーロが優位で豪ドルが弱い通貨強弱が、このロングの方向性と一致しています。特に豪ドルは中国経済の影響を強く受けるため、香港ハンセン指数の上昇など、中国テクノロジー株の回復は豪ドルへの追い風となり得ます。  このシナリオが崩れるのは、中国経済への懸念が再燃し、豪ドルが急速に弱まる展開です。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-11-06T06:00:00+00:00",
+    "hit_tp1_at": "2026-11-06T06:00:00+00:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.352,
+    "max_favorable_excursion_pct": 0.851,
     "max_adverse_excursion_pct": -0.009,
     "email_sent": false,
     "whipsaw_check": {
@@ -1376237,6 +1376357,35 @@
         "弱いタイプ(macd_golden)",
         "環境C(警戒)"
       ]
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 26.12,
+        "end": 28.15,
+        "change_pct": 7.77
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル順当",
+        "primary_cause": "MACDゴールデンクロスとMAのサポート",
+        "ai_diagnosis": "MACDのゴールデンクロスは短期的な上昇トレンド転換を示唆し、25MAおよび75MAがサポートラインとして機能したことが価格上昇の要因と考えられます。RSI 66.45 は買われすぎの初期段階であり、上昇余地がありました。VIXの上昇はリスクオフの兆候ですが、このトレードではユーロの強さがそれを上回りました。",
+        "lesson": "MAサポートとMACDクロスが重なる局面は、順張りロングの好機。信頼度スコアが低くても、テクニカルが揃えば積極的に検討。",
+        "category_tag": "MAサポート順張り",
+        "repeatable": "medium"
+      }
+    },
+    "after_tp1": {
+      "v": 1,
+      "tp2_at": null,
+      "entry_at": null,
+      "sl_at": null,
+      "order": [],
+      "ended_by": null,
+      "ended_at": null,
+      "last_close": null,
+      "tp1_bar": "ok",
+      "tp1_bar_entry": false,
+      "made_at": "2026-11-06T16:07:30+09:00"
     }
   },
   {
@@ -1376297,12 +1376446,12 @@
     "news_count": 0,
     "news_titles": [],
     "ai_narrative": "ポンド/豪ドル（1.93783）の4時間足では、RSIの過熱感、ボリンジャーバンドの+2σ突破といった利確を意識させるサインと、MACDのゴールデンクロス、直近高値ブレイクといった上昇継続のサインが混在しています。しかし、25MA、75MAが右肩上がりで、直近20本高値も更新していることから、短期的な上昇トレンドの継続を優先します。通貨強弱でもポンドが堅調、豪ドルが軟調と、この方向感と一致しています。中国情勢では、香港ハンセン指数の上昇やTencent株の好調など、一部テック関連の回復が見られますが、上海総合指数は不透明であり、AUDの上値には引き続き警戒が必要です。このロングシナリオが崩れるのは、25MA（1.92）を下抜ける展開が考えられます。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-11-06T06:00:00+00:00",
+    "hit_tp1_at": "2026-11-06T06:00:00+00:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.231,
+    "max_favorable_excursion_pct": 0.76,
     "max_adverse_excursion_pct": -0.077,
     "email_sent": false,
     "whipsaw_check": {
@@ -1376451,6 +1376600,35 @@
       "reasons": [
         "環境C(警戒)"
       ]
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 26.12,
+        "end": 28.15,
+        "change_pct": 7.77
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル順当",
+        "primary_cause": "MAと直近高値更新による上昇トレンド継続",
+        "ai_diagnosis": "25MAと75MAが右肩上がりで、直近高値更新という明確な上昇トレンドの兆候があった。RSIの過熱感はあったものの、MACDのゴールデンクロスもこれを補強。通貨強弱もポンド優位で、環境スコアが低かったにも関わらず、テクニカルが先行した。",
+        "lesson": "短期上昇トレンドの強さを重視し、RSIの過熱感は一旦無視。環境スコア低でもテクニカル優位なら積極的に。VIX上昇はリスクオフだが、トレンドが強ければ影響は限定的。",
+        "category_tag": "MAトレンド継続",
+        "repeatable": "medium"
+      }
+    },
+    "after_tp1": {
+      "v": 1,
+      "tp2_at": null,
+      "entry_at": null,
+      "sl_at": null,
+      "order": [],
+      "ended_by": null,
+      "ended_at": null,
+      "last_close": null,
+      "tp1_bar": "ok",
+      "tp1_bar_entry": false,
+      "made_at": "2026-11-06T16:07:30+09:00"
     }
   },
   {
@@ -1376514,7 +1376692,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 1.643,
-    "max_adverse_excursion_pct": -0.73,
+    "max_adverse_excursion_pct": -1.252,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -1376706,7 +1376884,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.807,
+    "max_favorable_excursion_pct": 1.23,
     "max_adverse_excursion_pct": 0.155,
     "email_sent": false,
     "whipsaw_check": {
@@ -1376889,12 +1377067,12 @@
       "円が予測を上回る下落 - 米国金利の上昇と原油高が円を圧迫"
     ],
     "ai_narrative": "豪ドル円（AUD/JPY）は4時間足で直近20本安値割れ、RSIは33.0と売られすぎ水準に近づいており、テクニカルにはショートの優位性が見て取れます。MACDもデッドクロスを示唆しており、下落トレンドへの移行が示唆されています。  ファンダメンタルズでは、円が米国金利上昇と原油高で圧迫されているというニュースがあり、これは円安要因となり、豪ドル円の上昇をサポートする可能性もあります。しかし、通貨強弱ではAUDが弱く、JPYが強いため、この組み合わせでは円高方向への圧力が相対的に強まります。  中国経済の動向はAUDの重要なファンダメンタルズですが、上海総合指数は前日比で変化なし、香港ハンセン指数は上昇しており、明確な下落シグナルは出ていません。しかし、テック株の反発やApple決算の影響など、市場全体には不透明感も残ります。  このショートシナリオが崩れるのは、中国経済の急激な改善や、円安を加速させるような大きな米国の金融政策変更が観測された場合でしょう。",
-    "outcome": null,
-    "outcome_resolved_at": null,
-    "hit_tp1_at": null,
+    "outcome": "tp1",
+    "outcome_resolved_at": "2026-11-06T06:00:00+00:00",
+    "hit_tp1_at": "2026-11-06T06:00:00+00:00",
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.322,
+    "max_favorable_excursion_pct": 0.843,
     "max_adverse_excursion_pct": -0.109,
     "email_sent": false,
     "whipsaw_check": {
@@ -1377045,6 +1377223,35 @@
         "売られすぎ/逆張り系の勝ち筋",
         "環境D(指標直前/危機)"
       ]
+    },
+    "win_analysis": {
+      "vix_data": {
+        "start": 28.15,
+        "end": 28.15,
+        "change_pct": 0.0
+      },
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル順当",
+        "primary_cause": "直近安値割れと移動平均線デッドクロス",
+        "ai_diagnosis": "4H足での直近安値更新とRSIの売られすぎ接近、MACDのデッドクロスがショートの優位性を示唆しました。25MAと75MAのデッドクロスも下落トレンドへの移行を裏付け、テクニカル要因が成功に大きく寄与しました。AI解説にあった「AUD弱・JPY強」の通貨強弱も円高圧力として機能したと考えられます。",
+        "lesson": "明確なテクニカルシグナルと通貨強弱の整合性が確認できれば、積極的にショートエントリーを検討すべきです。信頼度MIDでも期待値は高い。",
+        "category_tag": "テクニカル順当",
+        "repeatable": "high"
+      }
+    },
+    "after_tp1": {
+      "v": 1,
+      "tp2_at": null,
+      "entry_at": null,
+      "sl_at": null,
+      "order": [],
+      "ended_by": null,
+      "ended_at": null,
+      "last_close": null,
+      "tp1_bar": "ok",
+      "tp1_bar_entry": false,
+      "made_at": "2026-11-06T16:07:30+09:00"
     }
   },
   {
@@ -1377114,7 +1377321,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.371,
-    "max_adverse_excursion_pct": -0.738,
+    "max_adverse_excursion_pct": -0.918,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -1377306,7 +1377513,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.882,
-    "max_adverse_excursion_pct": -1.474,
+    "max_adverse_excursion_pct": -2.098,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -1377498,7 +1377705,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.158,
+    "max_favorable_excursion_pct": 0.584,
     "max_adverse_excursion_pct": -0.413,
     "email_sent": false,
     "whipsaw_check": {
@@ -1377690,8 +1377897,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.789,
+    "max_adverse_excursion_pct": -0.307,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1377884,8 +1378091,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 1.225,
+    "max_adverse_excursion_pct": 0.087,
     "email_sent": true,
     "watch_hit": "auto_reversal_long-True_trend-下降__flip",
     "whipsaw_check": {
@@ -1378081,8 +1378288,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.01,
+    "max_adverse_excursion_pct": -0.274,
     "email_sent": true,
     "watch_hit": "rsi_oversold_4h",
     "whipsaw_check": {
@@ -1378277,8 +1378484,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": -0.513,
+    "max_adverse_excursion_pct": -0.791,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -1378472,8 +1378679,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.23,
+    "max_adverse_excursion_pct": -0.049,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1378666,13 +1378873,13 @@
       "GBP/USD、AUD/USDが勢いを失う中、USD/CADは強気に転換"
     ],
     "ai_narrative": "豪ドル米ドル（0.69329）は、RSIが過売り圏から反発し、直近安値ゾーンで下げ止まったことから、テクニカルには買いシグナルが点灯しています。しかし、通貨強弱ではAUDが弱く、USDが強いため、このシグナルは複合逆張りとして警戒が必要です。中国情勢に目を向けると、香港ハンセン指数が上昇するなど一部に明るい兆しも見られますが、上海総合指数の動向が不明確であり、AUDの直接的な追い風となるかは不透明です。このロングシナリオは、0.69を下抜ける展開となれば崩れると考えられます。",
-    "outcome": null,
-    "outcome_resolved_at": null,
+    "outcome": "sl",
+    "outcome_resolved_at": "2026-11-06T03:00:00+00:00",
     "hit_tp1_at": null,
     "hit_tp2_at": null,
-    "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "hit_sl_at": "2026-11-06T03:00:00+00:00",
+    "max_favorable_excursion_pct": -0.021,
+    "max_adverse_excursion_pct": -0.825,
     "email_sent": true,
     "watch_hit": "rsi_oversold_4h",
     "whipsaw_check": {
@@ -1378822,6 +1379029,434 @@
       "reasons": [
         "売られすぎ/逆張り系の勝ち筋",
         "落ちるナイフ(下降中のロング)",
+        "環境D(指標直前/危機)"
+      ]
+    },
+    "loss_analysis": {
+      "vix_data": null,
+      "news_during_holding": [],
+      "ai_result": {
+        "primary_category": "テクニカル悪化",
+        "primary_cause": "RSI反発が一時的でトレンド継続",
+        "ai_diagnosis": "シグナル発火時、RSIは31.11と過売り圏を示唆していましたが、MACDはマイナス圏で方向感に欠け、短期MAも長期MAを下回っており、全体的なテクニカルは下落トレンドを示唆していました。エントリー後、市場は下落トレンドを継続し、0.69を一時的に下抜ける動きを見せたため、ロングポジションはSLにヒットしました。ATRが0だったことは、市場が静かで方向転換のエネルギーが不足していた可能性を示唆します。",
+        "lesson": "過売り圏からの反発でも、MAやMACDのトレンド方向を確認し、複合的な判断を徹底する。",
+        "category_tag": "トレンド逆行"
+      }
+    }
+  },
+  {
+    "id": "CL=F_4h_20261106_1607",
+    "fired_at": "2026-11-06T16:07:17+09:00",
+    "timeframe": "4h",
+    "ticker": "CL=F",
+    "asset_name": "原油 WTI 先物",
+    "signal_types": [
+      "first_pullback_short"
+    ],
+    "primary_signal": "first_pullback_short",
+    "primary_signal_label": "🔴 初押し（トレンド継続・ブレイク後 38h で旧サポリテスト）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 91.41999816894531,
+    "stop_loss": 94.11671527164465,
+    "take_profit_1": 87.8243753653462,
+    "take_profit_2": 86.02656396354664,
+    "atr": 1.7978114017995594,
+    "sl_pct": 2.9498109349288892,
+    "tp1_pct": -3.9330812465718528,
+    "tp2_pct": -5.8996218698577785,
+    "indicators_at_signal": {
+      "rsi": 39.93,
+      "macd": -2.3463,
+      "macd_sig": -2.5916,
+      "ma25": 93.9144,
+      "ma75": 98.7849,
+      "bb_low": 85.4166,
+      "bb_up": 100.2854,
+      "recent_high": 98.82,
+      "recent_low": 86.65,
+      "adx": 41.58,
+      "chop": 36.63,
+      "ma_dev_pct": 4.9304,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": 2.653,
+      "d_res_atr": 4.116
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "原油、2021年以来最大の3日間続落から反発も、エネルギー株は追随せず",
+      "テック株急落と選挙後の取引に後押しされ、住宅ローン金利が再び低下",
+      "過去最悪の週次下落寸前、タンカー襲撃相次ぐも原油価格は上昇基調",
+      "株式市場：S&P500は今日、上昇して始まるか、下落して始まるか？",
+      "中東の供給懸念が下支え、原油は週次で大幅下落へ"
+    ],
+    "ai_narrative": "WTI原油は、25MAを下抜け、RSIも39台と弱気を示唆しており、75MAがレジスタンスとして機能する展開が予想されます。過去3日間続落からの反発も鈍く、エネルギー株が追随しない状況は、原油価格の上昇鈍化を示唆しています。JPYがUSDを上回る通貨強弱も、ドル建て原油にはややネガティブです。このシナリオが崩れるのは、75MAを明確に上抜ける場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 5.8,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "CL=F_4h_20261106_1020"
+    },
+    "trend_alignment": {
+      "aligned": false,
+      "higher_tf": "日足",
+      "higher_tf_trend": "上昇",
+      "explanation": "⚠️ 日足 上昇トレンドに対しシグナルは逆方向（逆張り、要警戒）"
+    },
+    "currency_strength": {
+      "USD": 0.777,
+      "EUR": 0.084,
+      "GBP": 0.123,
+      "JPY": 0.891,
+      "AUD": -1.823
+    },
+    "risk_regime": {
+      "regime": "RISK_OFF",
+      "score": -5,
+      "factors": [
+        "VIX 28.18 >25 (-2)",
+        "VIX急騰 +69.66% (-1)",
+        "円・ドル優位 (-1)",
+        "金>株 5d -7.1pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "risk",
+      "regime": "RISK_OFF",
+      "allowed": "short",
+      "signal_direction": "short",
+      "aligned": true
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-11-06T15:10:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "LOW",
+      "asset_bias": "NEUTRAL",
+      "asset_conviction": "LOW",
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": null,
+    "china_context": null,
+    "confidence": {
+      "score": -4,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 D (-2)",
+        "上位足トレンド逆張り (-1)",
+        "反転検知あり (-2)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "全シグナルが内部ログ専用 (email_silent): ['first_pullback_short']",
+      "score": null,
+      "entry_vs_ma25_signed": null,
+      "range_pos": null,
+      "ma_ratio_pct": null
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 0,
+      "watch_matched": null,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "D",
+      "score_label": "🚫 取引禁止",
+      "size_factor": 0.0,
+      "size_label": "取引非推奨",
+      "warnings": [
+        "🟡 重要指標まで 6.4h: 米雇用統計 NFP（10月分）",
+        "🟠 VIX 28.18 高水準",
+        "🟠 VIX 24h +69.7% 急騰",
+        "🟡 危機キーワード 1 件: 急落"
+      ],
+      "danger_count": 4,
+      "upcoming_events": [
+        {
+          "name": "米雇用統計 NFP（10月分）",
+          "hours_until": 6.4,
+          "impact": "critical",
+          "datetime": "2026-11-06T22:30+09:00"
+        }
+      ],
+      "vix": {
+        "current": 28.18,
+        "avg_30d": 17.39,
+        "change_24h_pct": 69.66
+      },
+      "atr_regime": {
+        "current_atr": 1.7978,
+        "avg_atr_30d": 1.6259,
+        "ratio": 1.11,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 1,
+        "matched_keywords": [
+          "急落"
+        ],
+        "matched_titles": [
+          "テック株急落と選挙後の取引に後押しされ、住宅ローン金利が再び低下"
+        ]
+      }
+    },
+    "discipline_filter": {
+      "verdict": "red",
+      "score": -2,
+      "reasons": [
+        "環境D(指標直前/危機)"
+      ]
+    }
+  },
+  {
+    "id": "AUDUSD=X_4h_20261106_1607",
+    "fired_at": "2026-11-06T16:07:17+09:00",
+    "timeframe": "4h",
+    "ticker": "AUDUSD=X",
+    "asset_name": "豪ドル米ドル（オージードル）",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 0.6875687837600708,
+    "stop_loss": 0.6907052937980823,
+    "take_profit_1": 0.6833867703760554,
+    "take_profit_2": 0.6812957636840478,
+    "atr": 0.002091006692007666,
+    "sl_pct": 0.45617400209169373,
+    "tp1_pct": -0.6082320027889251,
+    "tp2_pct": -0.9123480041833875,
+    "indicators_at_signal": {
+      "rsi": 21.84,
+      "macd": -0.0028,
+      "macd_sig": -0.0015,
+      "ma25": 0.6981,
+      "ma75": 0.7014,
+      "bb_low": 0.6887,
+      "bb_up": 0.7062,
+      "recent_high": 0.7027,
+      "recent_low": 0.6877,
+      "adx": 31.96,
+      "chop": 28.84,
+      "ma_dev_pct": 0.469,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 7.232
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "オーストラリアの住宅市場低迷と金利上昇：豪ドルにとっての意味合いは？",
+      "AUD/USD、NZD/USD、USD/JPY 2026年9月7日の短期予測",
+      "米国債利回りの上昇がドルを支え、USD/JPYはブレイクアウトを狙う",
+      "EUR/USD、EUR/JPY、AUD/USD、ジャクソンホール会議のボラティリティに警戒",
+      "GBP/USD、AUD/USDが勢いを失う中、USD/CADは強気に転じる"
+    ],
+    "ai_narrative": "豪ドル米ドル（オージードル）4H足チャート、直近20本安値割れ（0.69下抜け）のシグナルを受け、ショート（売り）方向での分析を行います。  テクニカル面では、RSIが21.8と売られすぎ水準にあり、MACDもシグナルを下回っています。25MA、75MAは横ばいで、ボリンジャーバンドの-2σ近辺での推移は下落圧力の強さを示唆しています。直近20本の安値（0.69）を下抜けたことは、さらなる下落への強いサインと解釈できます。  ファンダメンタル面では、豪ドルは中国景気に大きく依存していますが、上海総合指数や香港ハンセン指数が前日比で下落しており、中国経済の軟調さがAUDの下落圧力となっています。また、通貨強弱でもAUDが弱く、USDが強いため、このショートシナリオと一致しています。  このショートシナリオが崩れる条件としては、0.69（ストップロス水準）を明確に上抜けて、ボリンジャーバンドの+2σ（0.71）近辺まで上昇する展開が考えられます。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": true,
+      "hours_since_prev": 5.8,
+      "prev_direction": "ロング（買い）",
+      "prev_signal_id": "AUDUSD=X_4h_20261106_1020"
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.777,
+      "EUR": 0.084,
+      "GBP": 0.123,
+      "JPY": 0.891,
+      "AUD": -1.823
+    },
+    "risk_regime": {
+      "regime": "RISK_OFF",
+      "score": -5,
+      "factors": [
+        "VIX 28.18 >25 (-2)",
+        "VIX急騰 +69.66% (-1)",
+        "円・ドル優位 (-1)",
+        "金>株 5d -7.1pt (-1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "RISK_OFF",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-11-06T15:10:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "LOW",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ AUD 弱（-1.82%）× USD 強（+0.78%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": -2.6,
+      "base_strength": -1.823,
+      "quote_strength": 0.777
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": 3641.44,
+          "change_pct": -1.31
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 24526.83,
+          "change_pct": -1.09
+        }
+      },
+      "news": [
+        "香港証券取引所、第3四半期利益の落ち込みと市場活動の鈍化で株価2％近く下落",
+        "テンセント、Hunyuan AIモデル発表後、株価6％上昇し3週間ぶり高値",
+        "テック株回復と米大統領選、アジア株式市場を揺さぶる",
+        "マイケル・バリー氏、ある銘柄に最大140％の上昇余地を見込む",
+        "アップル第3四半期決算、ホリデーシーズンの取引閑散化でアジア株を圧迫"
+      ]
+    },
+    "confidence": {
+      "score": 0,
+      "label": "LOW",
+      "stars": "⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 D (-2)",
+        "上位足トレンド順張り (+2)",
+        "反転検知あり (-2)",
+        "FX 強弱順張り (+1)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "昇格エッジ非該当（promoted 0 件に不一致）",
+      "score": 2.484,
+      "entry_vs_ma25_signed": 1.509,
+      "range_pos": -0.006,
+      "ma_ratio_pct": -0.469
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 0,
+      "watch_matched": null,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "D",
+      "score_label": "🚫 取引禁止",
+      "size_factor": 0.0,
+      "size_label": "取引非推奨",
+      "warnings": [
+        "🟡 重要指標まで 6.4h: 米雇用統計 NFP（10月分）",
+        "🟠 VIX 28.18 高水準",
+        "🟠 VIX 24h +69.7% 急騰"
+      ],
+      "danger_count": 3,
+      "upcoming_events": [
+        {
+          "name": "米雇用統計 NFP（10月分）",
+          "hours_until": 6.4,
+          "impact": "critical",
+          "datetime": "2026-11-06T22:30+09:00"
+        }
+      ],
+      "vix": {
+        "current": 28.18,
+        "avg_30d": 17.39,
+        "change_24h_pct": 69.66
+      },
+      "atr_regime": {
+        "current_atr": 0.0021,
+        "avg_atr_30d": 0.0016,
+        "ratio": 1.34,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "red",
+      "score": -1,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋",
         "環境D(指標直前/危機)"
       ]
     }
