@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-11-07
+- 判定: ✅ 公開済み
+- 選定トピック: 米10月雇用統計+16.5万人、市場予想の2.5倍超のサプライズ──12月利上げ確率78%へ急上昇・S&P500+0.3%・Nasdaq+1.1%部分反発・日経先物+1,260円（カテゴリ: マクロ・米雇用・金融政策・AI株）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 出典:
+  - BLS USDL-26-1632（米労働統計局 公式発表）2026-11-06
+  - Bloomberg live blog「US Employment Report for October」2026-11-06 https://www.bloomberg.com/news/live-blog/2026-11-06/us-employment-report-for-october-live-updates
+  - Babypips「U.S. Jobs Report October 2026: Payrolls Jump 165,000」https://www.babypips.com/news/headline-us-jobs-report-october-2026-payrolls-beat-fed
+  - CBS News / Sharecast（米国株終値）2026-11-06 https://www.cbsnews.com/news/stocks-tech-sell-off-nasdaq-correction-dow/
+  - 株探「日経225先物：7日2時＝1260円高、5万8670円」2026-11-07 https://kabutan.jp/news/marketnews/?b=n202611070032
+  - Charles Schwab（10年債利回り）2026-11-06 https://www.schwab.com/learn/story/stock-market-update-open
+  - finwire.io「U.S. Jobs Report October 2026: Payrolls Jump 165,000」https://finwire.io/news/forex-news/us-jobs-report-october-2026-payrolls-jump-165000
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（kinsho-v1×3確認 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典多数 ✅ / noindexなし ✅）。「円安が輸出株に恩恵をもたらす一方」→「もたらしうる一方」に軟化提案 → メイン側で適用済み
+  - 適用修正: 表現軟化1件（断定→推量）のみ
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典7系統以上 ✅）→「そのまま公開してよい」（数値整合性の事実確認は別工程で実施済み）
+  - 最終判定: 🟢白 / 公開OK
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告62件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-07.html
+- commit: 3d953ed（main へ push 済み）
+
+---
+
 ## 2026-11-06
 - 判定: ✅ 公開済み
 - 選定トピック: 日経225が60,000円割れ・5.96%急落（57,434.77円）──6月最高値71,053円から安値ベース-20.1%でテクニカルベアマーケット入り、SoftBank約-11%、背景と3シナリオを中立整理（カテゴリ: 日本株・グローバル株安・AI過剰投資懸念）
