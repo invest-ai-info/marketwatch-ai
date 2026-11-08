@@ -1,0 +1,130 @@
+{
+ "article_id": "144",
+ "asof": "2026-11-09T06:12:00+09:00",
+ "hypothesis_id": "auto_signal-low_break",
+ "claims": [
+  {
+   "label": "FWD：安値ブレイクの売りの勝ち回数",
+   "filter": {
+    "signal": "low_break",
+    "fired_from": "2026-06-23"
+   },
+   "k": 133,
+   "n": 311
+  },
+  {
+   "label": "FWD：売りのシグナル全体（対照）の勝ち回数",
+   "filter": {
+    "direction": "short",
+    "fired_from": "2026-06-23"
+   },
+   "k": 488,
+   "n": 1143
+  },
+  {
+   "label": "FWD：全シグナルの勝ち回数",
+   "filter": {
+    "fired_from": "2026-06-23"
+   },
+   "k": 1951,
+   "n": 4563
+  },
+  {
+   "label": "IS：安値ブレイク（登録前・参考）の勝ち回数",
+   "filter": {
+    "signal": "low_break",
+    "fired_before": "2026-06-23"
+   },
+   "k": 26,
+   "n": 85
+  },
+  {
+   "label": "IS：売りのシグナル全体（登録前・参考）の勝ち回数",
+   "filter": {
+    "direction": "short",
+    "fired_before": "2026-06-23"
+   },
+   "k": 112,
+   "n": 268
+  },
+  {
+   "label": "FWD：安値ブレイク・1時間足",
+   "filter": {
+    "signal": "low_break",
+    "tf": "1h",
+    "fired_from": "2026-06-23"
+   },
+   "k": 64,
+   "n": 131
+  },
+  {
+   "label": "FWD：安値ブレイク・4時間足",
+   "filter": {
+    "signal": "low_break",
+    "tf": "4h",
+    "fired_from": "2026-06-23"
+   },
+   "k": 62,
+   "n": 160
+  },
+  {
+   "label": "FWD：安値ブレイク・株価指数",
+   "filter": {
+    "signal": "low_break",
+    "asset_class": "index",
+    "fired_from": "2026-06-23"
+   },
+   "k": 40,
+   "n": 95
+  },
+  {
+   "label": "FWD：安値ブレイク・FX",
+   "filter": {
+    "signal": "low_break",
+    "asset_class": "fx",
+    "fired_from": "2026-06-23"
+   },
+   "k": 63,
+   "n": 144
+  },
+  {
+   "label": "FWD：安値ブレイク・金銀原油",
+   "filter": {
+    "signal": "low_break",
+    "asset_class": "commodity",
+    "fired_from": "2026-06-23"
+   },
+   "k": 17,
+   "n": 46
+  },
+  {
+   "label": "FWD：安値ブレイク・ビットコイン",
+   "filter": {
+    "signal": "low_break",
+    "asset_class": "crypto",
+    "fired_from": "2026-06-23"
+   },
+   "k": 8,
+   "n": 18
+  },
+  {
+   "label": "FWD：安値ブレイク・前半（〜9月15日）",
+   "filter": {
+    "signal": "low_break",
+    "fired_from": "2026-06-23",
+    "fired_before": "2026-09-16"
+   },
+   "k": 101,
+   "n": 232
+  },
+  {
+   "label": "FWD：安値ブレイク・後半（9月16日〜）",
+   "filter": {
+    "signal": "low_break",
+    "fired_from": "2026-09-16"
+   },
+   "k": 32,
+   "n": 79
+  }
+ ]
+}
