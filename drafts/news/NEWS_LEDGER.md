@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-11-08
+- 判定: ✅ 公開済み
+- 選定トピック: 米民主党の「AIデータセンター禁止法案（S.4214）」──Sanders-AOC法案の中身・賛否・日本半導体装置株への波及経路と週明け3論点を中立整理（カテゴリ: AI規制・米政策・半導体・日本株）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 出典:
+  - CNBC「Top Democrats call to rein in AI buildout after midterms sweep」2026-11-05 https://www.cnbc.com/2026/11/05/democrats-data-center-restrictions-midterms.html
+  - Al Jazeera「AI stocks plunge after US election」2026-11-05 https://www.aljazeera.com/economy/2026/11/5/ai-stocks-plunge-after-election-driving-down-us-markets
+  - Sanders Senate公式プレスリリース「AI Data Center Moratorium Act (S.4214)」2026-03-25 https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/
+  - Axios「Sanders and AOC unveil data center moratorium bill」2026-03-25 https://www.axios.com/2026/03/25/sanders-aoc-data-center-moratorium-bill
+  - Morgan Stanley「What the U.S. Midterm Sweep Could Mean for Markets」2026-11月 https://www.morganstanley.com/insights/articles/2026-us-midterm-election-results-market-impact
+  - TechCrunch「After the midterms, a bigger clash over data centers could be coming」2026-11-04 https://techcrunch.com/2026/11/04/after-the-midterms-a-bigger-clash-over-data-centers-could-be-coming/
+  - CNBC「Midterm elections could jolt stocks as Democrats look poised to sweep Congress」2026-11-03 https://www.cnbc.com/2026/11/03/midterm-election-stock-market.html
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（「過剰反応であり」が言い切り）→「過剰反応だった可能性があり」に軟化Edit適用済み。なお「フィラデルフィア半導体指数（SOXX）」の誤記をメイン側で「iShares半導体ETF（SOXX）」に修正（コンプラ外・事実修正）
+  - 適用修正: 表現軟化1件（断定→推量）＋SOXX誤記訂正1件（事実修正）
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典多数 ✅）→「そのまま公開してよい」
+  - 最終判定: 🟢白 / 公開OK
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告63件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-08-us-ai-datacenter-bill-nikkei.html
+- commit: 7f882fc（main へ push 済み）
+
+---
+
 ## 2026-11-07
 - 判定: ✅ 公開済み
 - 選定トピック: 米10月雇用統計+16.5万人、市場予想の2.5倍超のサプライズ──12月利上げ確率78%へ急上昇・S&P500+0.3%・Nasdaq+1.1%部分反発・日経先物+1,260円（カテゴリ: マクロ・米雇用・金融政策・AI株）
