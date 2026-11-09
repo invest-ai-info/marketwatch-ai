@@ -1,0 +1,143 @@
+{
+ "article_id": "145",
+ "asof": "2026-11-10T06:12:00+09:00",
+ "hypothesis_id": "rsi_oversold_4h",
+ "claims": [
+  {
+   "label": "FWD：売られすぎ反発・4時間足の勝ち回数",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "fired_from": "2026-09-28"
+   },
+   "k": 25,
+   "n": 58
+  },
+  {
+   "label": "FWD：4時間足の買い全体（対照）の勝ち回数",
+   "filter": {
+    "tf": "4h",
+    "direction": "long",
+    "fired_from": "2026-09-28"
+   },
+   "k": 148,
+   "n": 393
+  },
+  {
+   "label": "FWD：4時間足の全シグナル（対照）の勝ち回数",
+   "filter": {
+    "tf": "4h",
+    "fired_from": "2026-09-28"
+   },
+   "k": 211,
+   "n": 545
+  },
+  {
+   "label": "IS：売られすぎ反発・4時間足（登録前・参考）の勝ち回数",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "fired_before": "2026-09-28"
+   },
+   "k": 82,
+   "n": 170
+  },
+  {
+   "label": "IS：4時間足の買い全体（登録前・参考）の勝ち回数",
+   "filter": {
+    "tf": "4h",
+    "direction": "long",
+    "fired_before": "2026-09-28"
+   },
+   "k": 563,
+   "n": 1331
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・株価指数",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "group": "index",
+    "fired_from": "2026-09-28"
+   },
+   "k": 11,
+   "n": 19
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・円がらみFX",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "group": "jpy_fx",
+    "fired_from": "2026-09-28"
+   },
+   "k": 0,
+   "n": 3
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・円がらまないFX",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "group": "other_fx",
+    "fired_from": "2026-09-28"
+   },
+   "k": 6,
+   "n": 19
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・金銀",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "group": "metal",
+    "fired_from": "2026-09-28"
+   },
+   "k": 7,
+   "n": 14
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・ビットコイン",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "group": "btc",
+    "fired_from": "2026-09-28"
+   },
+   "k": 1,
+   "n": 2
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・原油",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "group": "oil",
+    "fired_from": "2026-09-28"
+   },
+   "k": 0,
+   "n": 1
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・前半（〜10月19日）",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "fired_from": "2026-09-28",
+    "fired_before": "2026-10-20"
+   },
+   "k": 10,
+   "n": 26
+  },
+  {
+   "label": "FWD：売られすぎ反発・4時間足・後半（10月20日〜）",
+   "filter": {
+    "signal": "rsi_oversold_bounce",
+    "tf": "4h",
+    "fired_from": "2026-10-20"
+   },
+   "k": 15,
+   "n": 32
+  }
+ ]
+}
