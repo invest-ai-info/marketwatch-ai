@@ -23,7 +23,7 @@ C={
 R={}; claims=[]
 for key,(lab,f) in C.items():
     k,n=v.compute(data,f); lo,hi=v.wilson(k,n)
-    if lo<1: lo,hi=lo*100,hi*100
+    if hi<=1: lo,hi=lo*100,hi*100
     R[key]=dict(k=k,n=n,p=100*k/n,lo=lo,hi=hi)
     claims.append({"label":lab,"filter":f,"k":k,"n":n})
 json.dump({"article_id":"145","asof":ASOF,"hypothesis_id":"rsi_oversold_4h","claims":claims},open('drafts/labnotes/lab-145-claims.json','w'),ensure_ascii=False,indent=1)
