@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-11-09
+- 判定: 🚩要人間レビュー（コンプライアンス・事実確認不足）
+- 選定トピック: Nvidia CEO Jensen Huang スパイ疑惑・取締役会独立調査開始──AI株・日本半導体関連への4論点を中立整理（カテゴリ: AI・米国株・ガバナンス）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 出典（確認済み）:
+  - Washington Post「Nvidia board to investigate CEO over relationship with suspected Chinese spy」2026-11-08
+  - CNBC「Nvidia investigates CEO Jensen Huang's relationship with alleged Chinese spy」2026-11-08
+  - Axios「Nvidia CEO Jensen Huang admits affair, board to launch investigation」2026-11-08
+  - NPR「Nvidia launches investigation into CEO's alleged relationship with Chinese spy」2026-11-08
+  - Invezz「Nvidia stock today: Why Jensen Huang probe is rattling investors」2026-11-09
+  - CryptoTimes 2026-11-09、Free Press Journal 2026-11-09
+- エスカレ理由（Opus第1審査・要協議と判定）:
+  - 曜日誤り: 元ファイル「11月17日（月）」「11月18日（火）」→正しくは（火）（水）→下書きで修正済み
+  - 議会説明日・決算日が1社出典のまま「✅確認済み」→下書きで「⚠️報道段階（1社のみ）」に修正済み
+  - NYT報道の出典表記不整合→下書きで修正済み
+  - 中国政府の否定発言の出典欠落→下書きで「確認中」と明記
+  - 誤字「頭風」→「逆風」に修正済み
+  - Opus所見: 「中立性は良好だが実在の人物への重い疑惑を扱う速報のため一次情報の再確認が必要」
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー→編集範囲を超えると判断し「エスカレ（要協議）」と返した
+  - 第2Opus（独立確認）: 未実施（第1Opusがエスカレのため中止）
+  - 最終判定: 🚩要人間レビュー
+- 下書き: drafts/news/draft-news-2026-11-09.html（noindex、曜日・出典修正済み版）
+- 公開ファイル: なし（エスカレ）
+
+---
+
 ## 2026-11-08
 - 判定: ✅ 公開済み
 - 選定トピック: 米民主党の「AIデータセンター禁止法案（S.4214）」──Sanders-AOC法案の中身・賛否・日本半導体装置株への波及経路と週明け3論点を中立整理（カテゴリ: AI規制・米政策・半導体・日本株）
