@@ -64,11 +64,16 @@ jobs:
         run: python build_jp_rankings.py
       - name: Build JP margin balance (JPX official daily Excel, no key)
         run: python build_jp_margin.py || echo "margin build failed (non-fatal)"
+      # 🆕 2026-11-10 オーナー「値動きの原因であろうニュースをそれぞれ3つくらいリンクを…文字も小さく」＝hot-assets の各銘柄の下に
+      #    TDnet の開示と Google ニュースの見出し（最大3本・AI 不使用）。失敗してもランキングは止めない（non-fatal）
+      - name: Build news links for ranked stocks (TDnet + Google News, no key)
+        run: python tests/test_build_rank_news.py && python build_rank_news.py || echo "rank news failed (non-fatal)"
       - name: Commit jp-rankings.json / jp-margin.json
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add jp-rankings.json jp-margin.json
+          git add jp-rank-news.json 2>/dev/null || true   # 🆕 2026-11-10 ランキングの銘柄の下のニュース
           if git diff --cached --quiet; then
             echo "No changes."
           else
