@@ -441,4 +441,5 @@ SYNC_FILES = [
     "guide-signal-lab-145.html",
     "guide-company-8058-mitsubishi-corp.html",
     "guide-news-2026-11-10-nikkei-rebound.html",
+    "guide-signal-lab-146.html",
 ]
