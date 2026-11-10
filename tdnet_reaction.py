@@ -18,10 +18,19 @@
     （その日の残り＝その日の引け ÷ 直前の値段 も別に出す）
   ・引け後（15:30 以降）＝その日の終値 → 次の取引日の引け
   ・窓＝反応の日の寄り ÷ その前の取引日の終値
-- 出す：`tdnet-reaction.csv`（コード・種類・数字だけ＝表題と会社名は置かない）／`tdnet-reaction-days.json`（日ごとの件数と送った時刻）。
+- 出す：`tdnet-reaction.csv`（コード・種類・数字だけ＝表題と会社名は置かない）／`tdnet-reaction-days.json`（日ごとの件数と送った時刻）／`tdnet-reaction-trend.json`（傾向）。
   メール＝開示の日ごとに1通（反応の日の 16:30 より後）。表題と会社名はメールにだけ載せる（オーナー宛て）
 
-⚠️ 読むだけ・判定しない。種類ごとの平均を売買の決まりにするなら、別に事前登録して登録より後の分で確かめる。
+🆕 2026-11-10 夜 オーナー「この内容を毎日蓄積していって、どんなニュースがあったときに次の日、もしくは1週間、1ヶ月…
+上がるのか下がるのか、どんな動きをするのか、傾向を登録して蓄積していってください」（PILLAR_PREREG.md「J51」の追記）:
+- あとから埋める：反応の日を1日目として **5日目（1週間）・20日目（1か月）の引け**（直前の値段から・TOPIX と比べた差も）と、
+  1週間のうちの一番高い・安い値段（TOPIX を引かない）。毎回、引けが確定した分を埋める（値段は比で戻す＝台帳に値段は置かない）
+- 傾向：`tdnet-reaction-trend.json`＝種類（23）×期間（次の日・1週間・1か月）の累積（社数・平均・中央値・上げた割合）を毎回まとめ直す
+  （読むだけ）。**判定は升ごとに1回だけ**＝2026-11-11 からの開示で、2027-02-15 以降に 100社・開示の日20日以上たまったら、
+  開示の日でまとめた標準誤差で z が 69の升で割った基準（両側 0.05/69＝約3.38）を超え、前半と後半が同じ向きなら「✅ 上向き／下向き」、
+  それ以外は「✕ 見えない」。一度決めたら変えない。メールの最後に「これまでの傾向」を毎回のせる
+
+⚠️ 判定が ✅ でも、売買の決まりにするなら別に事前登録して登録より後の分で確かめる（費用も入れて）。
 ⚠️ 出力は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
 
 実行: python tdnet_reaction.py                 （まだ送っていない開示の日を測って送る。Actions の tdnet-reaction.yml から）
@@ -51,9 +60,21 @@ READY = (16, 30)                # 反応の日のこの時刻より後に測る�
 OPEN_MIN, CLOSE_MIN = 9 * 60, 15 * 60 + 30
 BAR_MIN = 5
 TOPIX = "1306"
-LEDGER, DAYS = "tdnet-reaction.csv", "tdnet-reaction-days.json"
+LEDGER, DAYS, TREND = "tdnet-reaction.csv", "tdnet-reaction-days.json", "tdnet-reaction-trend.json"
 COLS = ("date", "code", "slot", "time", "docs", "tags", "rev", "diff", "base_on", "react_on",
-        "gap", "rest", "react", "topix", "ex", "ok")
+        "gap", "rest", "react", "topix", "ex", "ok",
+        "d5", "tx5", "ex5", "hi5", "lo5", "d20", "tx20", "ex20")   # 🆕 11/10 夜 1週間（5取引日）・1か月（20取引日）＝あとから埋める
+# 🆕 2026-11-10 夜 オーナー「毎日蓄積していって、どんなニュースがあったときに次の日、もしくは1週間、1ヶ月…上がるのか下がるのか、
+#    傾向を登録して蓄積していってください」＝PILLAR_PREREG.md「J51」の 11/10 夜の追記。ここの数字は登録から（結果を見る前に固定）
+HORIZONS = (("d5", "tx5", "ex5", 5), ("d20", "tx20", "ex20", 20))   # 反応の日を1日目として5日目・20日目の引け
+H_KEYS = (("次の日", "ex"), ("1週間", "ex5"), ("1か月", "ex20"))
+KINDS = ("決算", "上方修正", "下方修正", "実績の上振れ", "実績の下振れ", "増配", "減配", "自社株買い", "自社株買いの進み",
+         "自己株式の消却", "M&A", "TOB・上場廃止", "提携", "増資・売出し", "大株主の異動", "株主総会・提案", "中期計画",
+         "株主還元の方針", "株式分割", "特別利益", "特別損失", "不祥事・事故・調査", "その他")   # 判定する種類（23×3＝69の升）
+JUDGE_START = "2026-11-11"      # 判定に使う開示の日（登録した 11/10 より後だけ。11/9・11/10 は読むだけ）
+JUDGE_FROM = "2027-02-15"       # この日より前は判定しない（決算の季節1つだけで決めないため・約60取引日）
+JUDGE_N, JUDGE_DAYS = 100, 20   # 升ごとに 100社以上・開示の日が20日以上たまったら1回だけ
+ALPHA = 0.05                    # 69の升で割る（多重検定）＝両側 0.05/69
 SKIP = T.SKIP_TITLE + r"|投資法人|インフラファンド"
 FIX = r"訂正"
 PAUSE = 0.15
@@ -256,8 +277,8 @@ def stock_line(i, g):
     return [head + nums + " " + tags, f"     「{short(main_title(g))}」{more}"]
 
 
-def build_mail(day, groups, n_docs):
-    """→ (件名, 本文)。groups は measure 済み"""
+def build_mail(day, groups, n_docs, trend=None):
+    """→ (件名, 本文)。groups は measure 済み・trend＝build_trend の結果（あれば「これまでの傾向」を足す）"""
     react_days = sorted({g["react_on"] for g in groups if g["react_on"]})
     nxt = [d for d in react_days if d > day]
     rd = nxt[0] if nxt else (react_days[0] if react_days else day)
@@ -301,6 +322,8 @@ def build_mail(day, groups, n_docs):
         L += ["", title + (f"＝{len(lst)}社のうち {LIST_N}社" if len(lst) > LIST_N else "")]
         for i, g in enumerate(lst[:LIST_N], 1):
             L += stock_line(i, g)
+    if trend:
+        L += trend_lines(trend)
     L += ["", "━" * 24,
           "※ 読むだけの記録（試験・PILLAR_PREREG.md「J51」）。1日だけの数字で、売買の決まりではない（決まりにするなら別に事前登録して確かめる）",
           "※ 測り方：開示の直前の値段（引け後＝その日の終値・場中＝開示の時刻までの最後の5分足・寄り前＝前の日の終値）→ 開示のあとの最初の丸1日の引け。"
@@ -308,6 +331,221 @@ def build_mail(day, groups, n_docs):
           "※ 種類は表題の言葉で付けた（業績修正・差異の向きは PDF の表から）。AI は使っていない＝トークンは使わない。値段は Yahoo の日足と5分足（約16分遅れ）",
           "※ 同じ会社の同じ日の開示は1社にまとめた。ETF・投資信託・投資法人は除いた"]
     return subj, "\n".join(L)
+
+
+# ════════════════════ あとから埋める（1週間・1か月）＝純関数 ════════════════════
+
+def ohlc_map(bars):
+    """[(時刻, 始, 高, 安, 終, 出来高)] → {日付 ISO: (始, 高, 安, 終)}"""
+    return {t.date().isoformat(): (o, h, l, c) for t, o, h, l, c, v in bars}
+
+
+def horizon_day(days, react_on, k):
+    """反応の日を1日目として k 日目の取引日（まだ無ければ None）"""
+    if react_on not in days:
+        return None
+    i = days.index(react_on) + k - 1
+    return days[i] if i < len(days) else None
+
+
+def matured(day, now):
+    """その日の引けが確定したか（当日は 16:30 より後）"""
+    t = now.date().isoformat()
+    return day < t or (day == t and (now.hour, now.minute) >= READY)
+
+
+def close_upto(ohlc, start, end):
+    """start〜end のうち end 以前で最後の終値（取引の無かった日は前の値のまま）"""
+    ks = [d for d in ohlc if start <= d <= end]
+    return ohlc[max(ks)][3] if ks else None
+
+
+def needs_fill(r, days, now):
+    """1週間・1か月のうち、引けが確定したのにまだ空いている升があるか"""
+    if str(r.get("ok")) != "1" or not r.get("react") or not r.get("react_on"):
+        return False
+    for key, _, _, k in HORIZONS:
+        if r.get(key):
+            continue
+        if r["react_on"] < days[0]:
+            return True                                   # 古すぎて取引日が分からない＝na にする
+        t = horizon_day(days, r["react_on"], k)
+        if t and matured(t, now):
+            return True
+    return False
+
+
+def fill_row(r, days, ohlc, tx, now):
+    """台帳の1行（文字の dict）に 1週間・1か月を足す。値段は比で戻す（直前の値段＝反応の日の終値 ÷ (1＋反応)）。
+    株式分割があっても同じ Yahoo の系列から取るのでそろう。→ 変えたら True"""
+    R = r["react_on"]
+    changed = False
+    for key, txk, exk, k in HORIZONS:
+        if r.get(key):
+            continue
+        if R < days[0] or ((ohlc and tx) and (R not in ohlc or R not in tx)):
+            r[key] = r[txk] = r[exk] = "na"              # 古すぎる・その銘柄の反応の日の値段が無い（上場廃止など）
+            changed = True
+            continue
+        if not ohlc or not tx:
+            continue                                      # 値段が取れなかった回＝次の回にもう一度
+        t = horizon_day(days, R, k)
+        if not t or not matured(t, now):
+            continue
+        base = ohlc[R][3] / (1 + float(r["react"]))
+        tbase = tx[R][3] / (1 + float(r["topix"]))
+        c, tc = close_upto(ohlc, R, t), close_upto(tx, R, t)
+        if c is None or tc is None:
+            r[key] = r[txk] = r[exk] = "na"
+            changed = True
+            continue
+        d, x = c / base - 1, tc / tbase - 1
+        r[key], r[txk], r[exk] = f"{d:.6f}", f"{x:.6f}", f"{d - x:.6f}"
+        if k == 5:
+            win = [ohlc[x_] for x_ in ohlc if R <= x_ <= t]
+            r["hi5"] = f"{max(b[1] for b in win) / base - 1:.6f}"
+            r["lo5"] = f"{min(b[2] for b in win) / base - 1:.6f}"
+        changed = True
+    return changed
+
+
+def fill_all(rows, days, now, getter=None, pause=PAUSE, log=print):
+    """台帳の行のうち、引けが確定した 1週間・1か月を埋める（その銘柄の日足を1回だけ取る）。→ 埋めた行の数"""
+    getter = getter or fetch_chart
+    todo = [r for r in rows if needs_fill(r, days, now)]
+    if not todo:
+        return 0
+    tx = ohlc_map(getter(TOPIX, "1d", "3mo") or [])
+    cache, n = {}, 0
+    for r in todo:
+        c = r["code"]
+        if c not in cache:
+            time.sleep(pause)
+            cache[c] = ohlc_map(getter(c, "1d", "3mo") or [])
+        n += 1 if fill_row(r, days, cache[c], tx, now) else 0
+    log(f"  1週間・1か月を埋めた：{n}行（{len(cache)}社）")
+    return n
+
+
+# ════════════════════ 傾向（累積と、1回だけの判定）＝純関数 ════════════════════
+
+def row_kinds(r):
+    tags = [t for t in (r.get("tags") or "").split("|") if t]
+    return kind_keys({"tags": tags, "rev": r.get("rev") or "", "diff": r.get("diff") or ""})
+
+
+def num(v):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def cell_values(rows, kind, col, since=None, until=None):
+    """→ [(開示の日, その列の値)]（測れた行だけ・na と空は除く）"""
+    out = []
+    for r in rows:
+        if str(r.get("ok")) != "1" or (since and r["date"] < since) or (until and r["date"] > until):
+            continue
+        v = num(r.get(col))
+        if v is not None and kind in row_kinds(r):
+            out.append((r["date"], v))
+    return out
+
+
+def cluster_z(vals):
+    """開示の日ごとにまとめた（同じ日の会社は同じ相場の動きを受ける）標準誤差で、平均 ÷ 標準誤差。→ (平均, z, 日数)"""
+    n = len(vals)
+    if n == 0:
+        return None, None, 0
+    mean = sum(v for _, v in vals) / n
+    by = {}
+    for d, v in vals:
+        s_, k = by.get(d, (0.0, 0))
+        by[d] = (s_ + v, k + 1)
+    g = len(by)
+    if g < 2:
+        return mean, None, g
+    var = g / (g - 1) * sum((s_ - k * mean) ** 2 for s_, k in by.values()) / n ** 2
+    return mean, (mean / var ** 0.5 if var > 0 else None), g
+
+
+def z_crit(cells=len(KINDS) * len(H_KEYS), alpha=ALPHA):
+    return statistics.NormalDist().inv_cdf(1 - alpha / (2 * cells))
+
+
+def judge_cell(vals, today):
+    """1つの升（種類×期間）を判定できれば判定して返す。できなければ None（まだたまり中）"""
+    if today < JUDGE_FROM or len(vals) < JUDGE_N:
+        return None
+    mean, z, g = cluster_z(vals)
+    if g < JUDGE_DAYS or z is None:
+        return None
+    vs = sorted(vals)
+    h = len(vs) // 2
+    m1 = sum(v for _, v in vs[:h]) / h
+    m2 = sum(v for _, v in vs[h:]) / (len(vs) - h)
+    zc = z_crit()
+    if z >= zc and m1 > 0 and m2 > 0:
+        st = "✅ 上向き"
+    elif z <= -zc and m1 < 0 and m2 < 0:
+        st = "✅ 下向き"
+    else:
+        st = "✕ 見えない"
+    return {"decided_on": today, "n": len(vals), "days": g, "mean": round(mean, 6), "z": round(z, 3),
+            "z_crit": round(zc, 3), "first_half": round(m1, 6), "second_half": round(m2, 6), "status": st}
+
+
+def build_trend(rows, prev, today):
+    """→ 傾向の記録。cells＝11/9 からの累積（読むだけ）・verdicts＝1回だけの判定（一度決めたら変えない）"""
+    verdicts = dict((prev or {}).get("verdicts") or {})
+    cells = {}
+    for kind in KINDS:
+        c = {}
+        for name, col in H_KEYS:
+            vals = [v for _, v in cell_values(rows, kind, col)]
+            c[name] = {"n": len(vals)}
+            if vals:
+                c[name].update(mean=round(statistics.mean(vals), 6), median=round(statistics.median(vals), 6),
+                               up=round(sum(1 for v in vals if v > 0) / len(vals), 3))
+            key = f"{kind}|{name}"
+            if key not in verdicts:
+                v = judge_cell(cell_values(rows, kind, col, since=JUDGE_START, until=today), today)
+                if v:
+                    verdicts[key] = v
+        for name, col in (("1週間の途中の高値", "hi5"), ("1週間の途中の安値", "lo5")):
+            vals = [v for _, v in cell_values(rows, kind, col)]
+            if vals:
+                c[name] = {"n": len(vals), "median": round(statistics.median(vals), 6)}
+        cells[kind] = c
+    return {"registered": "J51（2026-11-10 夜の追記）", "updated": today, "start": START, "judge_start": JUDGE_START,
+            "judge_from": JUDGE_FROM, "judge_n": JUDGE_N, "judge_days": JUDGE_DAYS, "z_crit": round(z_crit(), 3),
+            "cells": cells, "verdicts": verdicts}
+
+
+def trend_lines(tr, min_n=MIN_N):
+    """メールの「これまでの傾向」の行"""
+    L = ["", f"【これまでの傾向（{wd(tr['start'])}からの累積・TOPIX と比べた差の平均・読むだけ）】"]
+    rows = [(k, c) for k, c in tr["cells"].items() if c["次の日"]["n"] >= min_n]
+    rows.sort(key=lambda kc: -kc[1]["次の日"]["n"])
+    for k, c in rows:
+        parts = []
+        for name, _ in H_KEYS:
+            x = c[name]
+            parts.append(f"{name} {pct(x.get('mean'))}（{x['n']}社）" if x["n"] else f"{name} —")
+        L.append(f"・{k}：" + "／".join(parts))
+        hi, lo = c.get("1週間の途中の高値"), c.get("1週間の途中の安値")
+        if hi and lo and hi["n"] >= min_n:
+            L.append(f"   1週間の途中の値幅（中央値・TOPIX を引かない）：高値 {pct(hi['median'])}・安値 {pct(lo['median'])}")
+    if not rows:
+        L.append(f"・まだ {min_n}社以上たまった種類なし")
+    done = [(k, v) for k, v in sorted(tr["verdicts"].items())]
+    if done:
+        L.append("・判定（1回だけ・固定）：" + "／".join(f"{k.replace('|', 'の')} {v['status']}（{v['n']}社・{pct(v['mean'])}）"
+                                                for k, v in done))
+    L.append(f"（{min_n}社以上の種類だけ。判定は {tr['judge_from']} 以降、{tr['judge_start']} からの開示で"
+             f"升ごとに {tr['judge_n']}社・開示の日 {tr['judge_days']}日がたまったら1回だけ＝{len(KINDS) * len(H_KEYS)}の升で割った厳しい基準）")
+    return L
 
 
 # ════════════════════ 取る（Yahoo） ════════════════════
@@ -370,14 +608,27 @@ def ledger_rows(groups):
     return out
 
 
-def write_ledger(old, day, groups, path=LEDGER):
-    rows = [r for r in old if r["date"] != day] + ledger_rows(groups)
-    rows.sort(key=lambda r: (r["date"], r["time"], r["code"]))
+def save_ledger(rows, path=LEDGER):
+    rows = sorted(rows, key=lambda r: (r["date"], r["time"], r["code"]))
     with open(path, "w", encoding="utf-8-sig", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=COLS)
         w.writeheader()
         for r in rows:
             w.writerow({k: r.get(k, "") for k in COLS})
+
+
+def read_json(path, empty):
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return empty
+
+
+def save_json(obj, path):
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(obj, fh, ensure_ascii=False, indent=1)
+        fh.write("\n")
 
 
 def read_days(path=DAYS):
@@ -435,27 +686,31 @@ def run_day(day, trading_days, events, getter=fetch_chart, fetcher=T.fetch_day, 
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="TDnet の開示 → 次の丸1日の値動き（読むだけ・試験）")
+    ap = argparse.ArgumentParser(description="TDnet の開示 → 次の丸1日・1週間・1か月の値動き（読むだけ・試験）")
     ap.add_argument("--day", help="開示の日を決めて測る（YYYY-MM-DD）")
     ap.add_argument("--dry-run", action="store_true", help="送らず本文を表示するだけ（記録も書かない）")
+    ap.add_argument("--no-fill", action="store_true", help="1週間・1か月を埋めない（試すときに速くする）")
     ap.add_argument("--html-out", help="メールの HTML をこのファイルにも書く")
     ap.add_argument("--now", help="時刻を決めて試す（例 2026-11-11T17:10）")
     a = ap.parse_args(argv)
     now = dt.datetime.fromisoformat(a.now).replace(tzinfo=JST) if a.now else dt.datetime.now(JST)
+    today = now.date().isoformat()
     state = read_days()
     tx = fetch_chart(TOPIX, "1d", "3mo") or []
     trading_days = sorted(daily_map(tx))
     if not trading_days:
         print("🚨 1306 の日足が取れない＝今回は測らない")
         return 1
+    ledger = read_ledger()
+    prev_trend = read_json(TREND, {})
+    if not a.no_fill:
+        fill_all(ledger, trading_days, now)               # ① 引けが確定した 1週間・1か月を埋める（毎回）
     todo = [a.day] if a.day else pending_days(now, {d for d, v in state["days"].items() if v.get("mailed")}, trading_days)
     if not todo:
         print("  まだ送っていない日で、反応の日の引けが済んだものは無い")
-        return 0
-    events = T.read_events()
-    ledger = read_ledger()
+    events = T.read_events() if todo else []
     sent = 0
-    for day in todo:
+    for day in todo:                                      # ② まだ送っていない開示の日を測って送る
         if sent >= MAX_MAIL:
             break
         got = run_day(day, trading_days, events)
@@ -465,7 +720,15 @@ def main(argv=None):
         if not groups:
             state["days"][day] = {"docs": n_docs, "groups": 0, "measured": 0, "mailed": "（開示なし）"}
             continue
-        subject, body = build_mail(day, groups, n_docs)
+        old = {(r["date"], r["code"], r["react_on"]): r for r in ledger if r["date"] == day}
+        new = ledger_rows(groups)
+        for r in new:                                     # 測り直した日でも、埋めた 1週間・1か月は残す
+            o = old.get((r["date"], r["code"], r["react_on"]))
+            if o:
+                r.update({k: o.get(k, "") for k in COLS[16:] if o.get(k)})
+        ledger = [r for r in ledger if r["date"] != day] + new
+        trend = build_trend(ledger, prev_trend, today)
+        subject, body = build_mail(day, groups, n_docs, trend)
         if a.html_out:
             import mail_html
             with open(a.html_out, "w", encoding="utf-8") as fh:
@@ -473,19 +736,20 @@ def main(argv=None):
         if a.dry_run:
             print(f"Subject: {subject}\n\n{body}")
             continue
-        write_ledger(ledger, day, groups)
-        ledger = read_ledger()
+        save_ledger(ledger)                               # 送る前に台帳を書く（送ったあとに落ちても数字は残る）
         ok = send(subject, body)
         state["days"][day] = {"docs": n_docs, "groups": len(groups), "measured": sum(1 for g in groups if g.get("ok")),
                               "react_on": next((x for x in trading_days if x > day), ""),
                               "mailed": dt.datetime.now(JST).isoformat(timespec="minutes") if ok else ""}
         sent += 1 if ok else 0
-    if not a.dry_run:
-        with open(DAYS, "w", encoding="utf-8") as fh:
-            json.dump(state, fh, ensure_ascii=False, indent=1)
-            fh.write("\n")
+    trend = build_trend(ledger, prev_trend, today)        # ③ 傾向（累積と1回だけの判定）を毎回まとめ直す
+    if a.dry_run:
+        print("\n".join(trend_lines(trend)))
+        return 0
+    save_ledger(ledger)
+    save_json(trend, TREND)
+    save_json(state, DAYS)
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
