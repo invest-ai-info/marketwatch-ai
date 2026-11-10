@@ -123,7 +123,7 @@ def test_mail_and_ledger_privacy():
     assert "10社未満（参考・平均だけ）：" in body and "上方修正 1社 +5.0%" in body
     assert "トークンは使わない" in body
     rows = R.ledger_rows(gs)
-    assert set(rows[0]) == set(R.COLS)
+    assert set(rows[0]) == set(R.COLS[:16])                              # 1週間・1か月はあとから埋める
     flat = " ".join(str(v) for r in rows for v in r.values())
     assert "あいう商事" not in flat and "修正に関する" not in flat      # 台帳には会社名・表題を置かない
     import mail_html
@@ -160,17 +160,115 @@ def test_main_title():
                                   {"time": "15:00", "title": "訂正", "tags": ["訂正"]}]}) == "人事"
 
 
+def _days(start, n):
+    out, d = [], dt.date.fromisoformat(start)
+    while len(out) < n:
+        if d.weekday() < 5:
+            out.append(d.isoformat())
+        d += dt.timedelta(days=1)
+    return out
+
+
+def test_fill_horizons():
+    days = _days("2026-11-09", 30)                      # 11/9（月）から30取引日
+    R_ = days[1]                                         # 反応の日＝11/10
+    ohlc = {d: (100.0 + i, 101.0 + i, 99.0 + i, 100.0 + i) for i, d in enumerate(days)}
+    tx = {d: (400.0, 400.0, 400.0, 400.0 * (1 + 0.001 * i)) for i, d in enumerate(days)}
+    r = {"ok": "1", "react_on": R_, "react": "0.010000", "topix": "0.000000"}
+    base = ohlc[R_][3] / 1.01
+    t5, t20 = R.horizon_day(days, R_, 5), R.horizon_day(days, R_, 20)
+    assert t5 == days[5] and t20 == days[20]
+    # 5日目の引けの前（当日 16:00）＝まだ埋めない
+    early = dt.datetime.fromisoformat(f"{t5}T16:00").replace(tzinfo=JST)
+    assert not R.needs_fill(dict(r), days, early)
+    late = dt.datetime.fromisoformat(f"{t5}T16:31").replace(tzinfo=JST)
+    assert R.needs_fill(dict(r), days, late)
+    assert R.fill_row(r, days, ohlc, tx, late)
+    assert abs(float(r["d5"]) - (ohlc[t5][3] / base - 1)) < 1e-6
+    tbase = tx[R_][3]
+    assert abs(float(r["ex5"]) - (float(r["d5"]) - (tx[t5][3] / tbase - 1))) < 1e-6
+    assert abs(float(r["hi5"]) - (ohlc[t5][1] / base - 1)) < 1e-6        # 1週間で一番高い＝5日目の高値（上げ続ける作り物）
+    assert abs(float(r["lo5"]) - (ohlc[R_][2] / base - 1)) < 1e-6
+    assert not r.get("d20")                                                # 1か月はまだ
+    later = dt.datetime.fromisoformat(f"{t20}T17:00").replace(tzinfo=JST)
+    assert R.fill_row(r, days, ohlc, tx, later) and r["d20"]
+    assert not R.needs_fill(r, days, later)
+    # 取引の無かった日は前の値（5日目が無い）
+    o2 = {k: v for k, v in ohlc.items() if k != t5}
+    r2 = {"ok": "1", "react_on": R_, "react": "0", "topix": "0"}
+    R.fill_row(r2, days, o2, tx, late)
+    assert abs(float(r2["d5"]) - (ohlc[days[4]][3] / ohlc[R_][3] - 1)) < 1e-6
+    # 反応の日の値段が無い（上場廃止など）＝na・値段が取れなかった回＝空のまま（次の回にもう一度）
+    r3 = {"ok": "1", "react_on": R_, "react": "0", "topix": "0"}
+    R.fill_row(r3, days, {days[0]: ohlc[days[0]]}, tx, late)
+    assert r3["d5"] == "na"
+    r4 = {"ok": "1", "react_on": R_, "react": "0", "topix": "0"}
+    assert not R.fill_row(r4, days, {}, tx, late) and not r4.get("d5")
+
+
+def _rows(kind_tag, rev, vals_by_day):
+    out = []
+    for d, vals in vals_by_day.items():
+        for i, v in enumerate(vals):
+            out.append({"date": d, "code": f"{i:04d}", "ok": "1", "tags": kind_tag, "rev": rev, "diff": "",
+                        "ex": f"{v:.6f}", "ex5": f"{v:.6f}", "ex20": ""})
+    return out
+
+
+def test_judge_rules():
+    days = _days("2026-11-11", 40)
+    up = _rows("業績修正", "上方", {d: [0.02 + 0.001 * (i % 3), 0.01, 0.03] for i, d in enumerate(days)})   # 120社・40日
+    # 判定の日より前は判定しない
+    assert R.judge_cell(R.cell_values(up, "上方修正", "ex"), "2027-02-14") is None
+    v = R.judge_cell(R.cell_values(up, "上方修正", "ex"), "2027-02-15")
+    assert v and v["status"] == "✅ 上向き" and v["n"] == 120 and v["days"] == 40
+    # 100社に届かない・開示の日が20日に届かない＝たまり中
+    assert R.judge_cell(R.cell_values(up[:99], "上方修正", "ex"), "2027-03-01") is None
+    few_days = _rows("業績修正", "上方", {d: [0.02] * 10 for d in days[:12]})
+    assert R.judge_cell(R.cell_values(few_days, "上方修正", "ex"), "2027-03-01") is None
+    # 前半と後半で向きが逆＝見えない
+    mixed = _rows("業績修正", "上方", {d: [0.05 if i < 20 else -0.01] * 3 for i, d in enumerate(days)})
+    assert R.judge_cell(R.cell_values(mixed, "上方修正", "ex"), "2027-03-01")["status"] == "✕ 見えない"
+    # 平均 0 のまわりでばらつく＝見えない
+    noise = _rows("決算", "", {d: ([0.03, 0.01, 0.02] if i % 2 == 0 else [-0.03, -0.01, -0.02]) for i, d in enumerate(days)})
+    assert R.judge_cell(R.cell_values(noise, "決算", "ex"), "2027-03-01")["status"] == "✕ 見えない"
+    # 開示の日でまとめる＝同じ日の会社が多くても日数で割る
+    m, z, g = R.cluster_z([("a", 0.01), ("a", 0.01), ("b", 0.03)])
+    assert g == 2 and abs(m - 0.05 / 3) < 1e-12
+    assert 3.3 < R.z_crit() < 3.5
+
+
+def test_trend_build_and_fix():
+    days = _days("2026-11-11", 40)
+    up = _rows("業績修正", "上方", {d: [0.02 + 0.001 * (i % 3), 0.01, 0.03] for i, d in enumerate(days)})
+    early = _rows("業績修正", "上方", {"2026-11-09": [-0.5] * 5})            # 登録より前の開示＝累積には入るが判定には使わない
+    tr = R.build_trend(up + early, {}, "2027-02-15")
+    c = tr["cells"]["上方修正"]
+    assert c["次の日"]["n"] == 125 and c["1か月"]["n"] == 0
+    v = tr["verdicts"]["上方修正|次の日"]
+    assert v["n"] == 120 and v["status"] == "✅ 上向き"
+    # 一度決めた判定は、あとでデータが変わっても変えない
+    flipped = [dict(r, ex="-0.100000") for r in up]
+    tr2 = R.build_trend(flipped, tr, "2027-03-01")
+    assert tr2["verdicts"]["上方修正|次の日"] == v
+    lines = "\n".join(R.trend_lines(tr))
+    assert "【これまでの傾向" in lines and "上方修正：次の日 " in lines and "判定（1回だけ・固定）" in lines
+    gs = _measured_groups()
+    subj, body = R.build_mail("2026-11-10", gs, 3, tr)
+    assert "【これまでの傾向" in body
+
+
 def test_wiring():
     wf = open(".github/workflows/tdnet-reaction.yml", encoding="utf-8").read()
     for w in ("python tests/test_tdnet_reaction.py", "python tdnet_reaction.py", "GMAIL_APP_PASSWORD",
-              "tdnet-reaction.csv", "tdnet-reaction-days.json", "concurrency", "workflow_dispatch"):
+              "tdnet-reaction.csv", "tdnet-reaction-days.json", "tdnet-reaction-trend.json", "concurrency", "workflow_dispatch"):
         assert w in wf, w
     import check_site_consistency as C
-    for f in ("tdnet-reaction.csv", "tdnet-reaction-days.json"):
+    for f in ("tdnet-reaction.csv", "tdnet-reaction-days.json", "tdnet-reaction-trend.json"):
         assert f in C.SYNC_FORBIDDEN, f
     assert "tdnet-reaction.yml" in open("check_automation_health.py", encoding="utf-8").read()
     pre = open("PILLAR_PREREG.md", encoding="utf-8").read()
-    assert "## J51 " in pre and "tdnet_reaction.py" in pre
+    assert "## J51 " in pre and "tdnet_reaction.py" in pre and "2027-02-15" in pre and "0.05/69" in pre
     assert "tdnet-reaction.yml" in open("RESEARCH_LABS.md", encoding="utf-8").read()
 
 

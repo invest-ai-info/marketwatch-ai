@@ -5,6 +5,8 @@ name: TDnet Reaction Mail (weekdays, trial)
 # 結果はメールだけで、とりあえずは試験的に」。AI は使わない（表題の言葉で種類分け・数字はプログラム）＝トークンは使わない。
 # ⚠️ 開示の日ごとに1通（反応の日の 16:30 JST より後）。送った日は tdnet-reaction-days.json に残す＝同じ日に2通送らない。
 # ⚠️ 台帳に置くのはコード・種類・数字だけ（表題と会社名はメールにだけ）。出力は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+# 🆕 2026-11-10 夜 毎回、引けが確定した 1週間（5日目）・1か月（20日目）を台帳に埋め、種類ごとの傾向を tdnet-reaction-trend.json に
+#    まとめ直す（判定は升ごとに1回だけ・2027-02-15 以降＝PILLAR_PREREG.md「J51」の追記）。メールの最後に「これまでの傾向」。
 # ⚠️ cron は遅れる（CLAUDE.md）＝3本置いて、最初に当たった回が送る。止めるときはこのファイルを消すか、schedule を外す。
 
 on:
@@ -21,7 +23,7 @@ concurrency:
 jobs:
   reaction:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     permissions:
       contents: write
     steps:
@@ -43,7 +45,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tdnet-reaction.csv tdnet-reaction-days.json 2>/dev/null || true
+          git add tdnet-reaction.csv tdnet-reaction-days.json tdnet-reaction-trend.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes."
           else

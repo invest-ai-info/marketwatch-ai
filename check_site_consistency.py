@@ -124,7 +124,7 @@ SYNC_FORBIDDEN = {
     "highs-entry-forward.json", "highs-entry-forward.md",   # 🆕 2026-10-28 J49F 罠の目印の前向き（highs-entry-forward.yml・週1。判定を持つ）
     "tdnet-events.csv", "tdnet-days.json",       # 🆕 2026-10-27 TDnet の開示の種類（tdnet-events.yml・平日。約1か月しか残らない＝古い版で上書きすると戻せない）
     "highs-tdnet.csv", "highs-tdnet.md",         # 🆕 2026-10-27 台帳のケース×その前30日の開示（tdnet-events.yml）
-    "tdnet-reaction.csv", "tdnet-reaction-days.json",   # 🆕 2026-11-10 J51 開示→次の丸1日の値動き（tdnet-reaction.yml・平日・試験。送った日の記録を持つ＝古い版で上書きすると同じメールが2通になる）
+    "tdnet-reaction.csv", "tdnet-reaction-days.json", "tdnet-reaction-trend.json",   # 🆕 2026-11-10 J51 開示→次の丸1日の値動き（tdnet-reaction.yml・平日・試験。送った日の記録と1回だけの判定を持つ＝古い版で上書きすると同じメールが2通・判定が消える）
     "momentum-forward.json", "momentum-forward.md",   # 🆕 2026-10-08 J42F 一番上げた10銘柄の前向き（momentum-forward.yml・月1）
     "tsmom-lab.json", "tsmom-lab.md",             # 🆕 2026-10-08 夜 R11 株価指数・商品と為替の時系列モメンタム（tsmom-lab.yml・手動）
     "sq-morning-lab.json", "sq-morning-lab.md",   # 🆕 2026-10-09 J43 SQの日の朝は特別か（sq-morning-lab.yml・手動）
