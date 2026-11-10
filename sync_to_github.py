@@ -440,4 +440,5 @@ SYNC_FILES = [
     "guide-company-5334-ngk-spark-plug.html",
     "guide-signal-lab-145.html",
     "guide-company-8058-mitsubishi-corp.html",
+    "guide-news-2026-11-10-nikkei-rebound.html",
 ]
