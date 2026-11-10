@@ -6,7 +6,8 @@
 値動きの原因であろうニュースをそれぞれ3つくらいリンクを貼り付けるのでいいので、それと文字も小さくしてもらって表示してください」。
 
 - 対象：`jp-rankings.json` の値上がり率・値下がり率・人気急上昇（出来高急増）の各20銘柄と、`jp-highs.json` の上場来高値
-  （記録上の最高値）のうち売買代金の大きい順に HIGHS_MAX 銘柄
+  （記録上の最高値）・上場来安値（記録上の最安値・11/10 夜 オーナー「上場来安値でもお願いします」）のうち売買代金の大きい順に
+  それぞれ HIGHS_MAX 銘柄
 - 集める（1銘柄 最大3本）：
   ① TDnet の開示（会社の公式発表）のうち、**値動きの時間帯＝2取引日前の 15:00 から、その日の 15:30 まで**に出たもの
      （場中の決算は次の日に大きく動くことがある＝11/9 14:00 の古河電工・KOKUSAI は 11/10 に S高近く・11/6 の TOWA は2日続けて）。
@@ -213,12 +214,13 @@ def targets(rank, highs):
         for r in (rank or {}).get(key) or []:
             t = out.setdefault(r["code"], {"name": r.get("name", ""), "asof": rank.get("asof", ""), "lists": []})
             t["lists"].append(label)
-    rec = sorted([r for r in (highs or {}).get("highs") or [] if r.get("record")], key=lambda r: -(r.get("turnover") or 0))
-    for r in rec[:HIGHS_MAX]:
-        t = out.setdefault(r["code"], {"name": r.get("name", ""), "asof": highs.get("asof", ""), "lists": []})
-        t["lists"].append("上場来高値")
-        if highs.get("asof", "") > t["asof"]:
-            t["asof"] = highs["asof"]
+    for key, label in (("highs", "上場来高値"), ("lows", "上場来安値")):   # 🆕 11/10 夜 安値も（オーナー「上場来安値でもお願いします」）
+        rec = sorted([r for r in (highs or {}).get(key) or [] if r.get("record")], key=lambda r: -(r.get("turnover") or 0))
+        for r in rec[:HIGHS_MAX]:
+            t = out.setdefault(r["code"], {"name": r.get("name", ""), "asof": highs.get("asof", ""), "lists": []})
+            t["lists"].append(label)
+            if highs.get("asof", "") > t["asof"]:
+                t["asof"] = highs["asof"]
     return out
 
 
