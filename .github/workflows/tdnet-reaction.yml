@@ -1,0 +1,57 @@
+name: TDnet Reaction Mail (weekdays, trial)
+
+# TDnet の開示 → 次の丸1日の値動きを追う（読むだけ・試験・結果はメールだけ）。PILLAR_PREREG.md「J51」・tdnet_reaction.py。
+# 2026-11-10 オーナー「すべてを読んで、その次の日にどんな動きをしたのか追う」→「一から…メディアの見出しはいりません。
+# 結果はメールだけで、とりあえずは試験的に」。AI は使わない（表題の言葉で種類分け・数字はプログラム）＝トークンは使わない。
+# ⚠️ 開示の日ごとに1通（反応の日の 16:30 JST より後）。送った日は tdnet-reaction-days.json に残す＝同じ日に2通送らない。
+# ⚠️ 台帳に置くのはコード・種類・数字だけ（表題と会社名はメールにだけ）。出力は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+# ⚠️ cron は遅れる（CLAUDE.md）＝3本置いて、最初に当たった回が送る。止めるときはこのファイルを消すか、schedule を外す。
+
+on:
+  schedule:
+    - cron: '7 8 * * 1-5'     # 17:07 JST
+    - cron: '43 10 * * 1-5'   # 19:43 JST
+    - cron: '13 14 * * 1-5'   # 23:13 JST（保険）
+  workflow_dispatch:
+
+concurrency:
+  group: tdnet-reaction
+  cancel-in-progress: false
+
+jobs:
+  reaction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main   # ためた開示（tdnet-events.csv の向き）と、送った日の記録の最新を読む
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test with made-up data
+        run: python tests/test_tdnet_reaction.py
+      - name: Measure and mail
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
+        run: python tdnet_reaction.py
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tdnet-reaction.csv tdnet-reaction-days.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: tdnet reaction $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi
