@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-11-10
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均+1,684円・6万円台回復──米半導体株高・原油安・中東緊張緩和の3要因と3論点を中立整理（カテゴリ: 日本株・半導体・マクロ・原油・中東）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 出典（確認済み）:
+  - みんかぶ FX/為替ニュース 2026-11-10 https://fx.minkabu.jp/news/383929
+  - 財経新聞/Fisco 2026-11-10 https://www.zaikei.co.jp/article/20261110/876913.html
+  - mikenブログ（大引け数値参照）2026-11-10 https://miken.muragon.com/entry/3303.html
+  - LBC「Oil prices fall to two-month low as Trump says new Iran strikes unlikely」2026-11-09
+  - Rigzone「Oil Prices Sink on Iran Peace Hopes」2026-11-09
+  - The Next Web「House chairs ask Nvidia's Jensen Huang to brief Congress」2026-11-10
+  - ING「FX Daily: US inflation to offer some support to USD today」2026-11-10
+  - Kiplinger「October CPI Report: What to Expect」2026-11-10
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（Nvidia CEO「取締役会の独立調査」が事実確認できない）→エスカレ（事実修正必要）→メイン側で事実修正適用済み（「米議会関係者が非公開の説明を要請」と差し替え・不正の疑いなしの注記追加）
+  - 適用修正: 事実修正1件（取締役会調査→議会ブリーフィング要請へ差し替え）
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典10系統以上 ✅）→「そのまま公開してよい」
+  - 最終判定: 🟢白 / 公開OK
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告65件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-10-nikkei-rebound.html
+- commit: 7d6c8c4（main へ push 済み）
+
+---
+
 ## 2026-11-09
 - 判定: 🚩要人間レビュー（コンプライアンス・事実確認不足）
 - 選定トピック: Nvidia CEO Jensen Huang スパイ疑惑・取締役会独立調査開始──AI株・日本半導体関連への4論点を中立整理（カテゴリ: AI・米国株・ガバナンス）
