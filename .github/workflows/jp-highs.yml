@@ -43,6 +43,9 @@ jobs:
         run: pip install pandas openpyxl xlrd
       - name: Build JP new highs and lows (all TSE stocks, Yahoo prices only, no key)
         run: python build_jp_highs.py
+      # 🆕 2026-11-10 上場来高値（売買代金の大きい30銘柄）の下のニュースも足す（ランキングの分は使い回す・失敗しても止めない）
+      - name: Build news links for ranked stocks (TDnet + Google News, no key)
+        run: python tests/test_build_rank_news.py && python build_rank_news.py || echo "rank news failed (non-fatal)"
       - name: Commit jp-highs.json and ask for a redraw
         env:
           GH_TOKEN: ${{ github.token }}
@@ -51,6 +54,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add jp-highs.json
           git add highs-ledger.csv highs-ledger.md 2>/dev/null || true   # 🆕 2026-10-09 高値更新の台帳（J44・highs_ledger.py）
+          git add jp-rank-news.json 2>/dev/null || true   # 🆕 2026-11-10 ランキングの銘柄の下のニュース
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0

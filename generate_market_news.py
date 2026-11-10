@@ -2738,6 +2738,52 @@ def _build_hot_rows(rows, show_volume=True):
     return html
 
 
+def _load_rank_news():
+    """ランキングの銘柄の下に出すニュース（jp-rank-news.json＝build_rank_news.py・jp-rankings / jp-highs の中で毎日作る）"""
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "jp-rank-news.json")
+    try:
+        with open(p, encoding="utf-8") as fh:
+            return json.load(fh).get("items") or {}
+    except Exception:
+        return {}
+
+
+def _rank_news_row(news, code, asof, ncols):
+    """🆕 2026-11-10 オーナー「なぜこのランキングに表示されるほど値動きをしたのか調べるのを時間を短縮するために…
+    値動きの原因であろうニュースをそれぞれ3つくらいリンクを…文字も小さくして」。銘柄の行のすぐ下の小さな行
+    （📄TDnet の開示・📰ニュースの見出し＝最大3本＋🔎株探のニュース一覧）。その一覧の日付の分が無ければ空文字。"""
+    v = news.get(str(code)) if news else None
+    if not v or v.get("asof") != asof:
+        return ""
+    parts = []
+    for ln in (v.get("links") or [])[:3]:
+        u = str(ln.get("u") or "")
+        if not u.startswith("http"):
+            continue
+        icon = "📄" if str(ln.get("s", "")).startswith("TDnet") else "📰"
+        parts.append(f'<div>{icon}<a href="{html.escape(u, quote=True)}" target="_blank" rel="noopener nofollow">'
+                     f'{html.escape(str(ln.get("t", "")))}</a> <span class="jpr-news-s">{html.escape(str(ln.get("s", "")))}'
+                     f' {html.escape(str(ln.get("w", "")))}</span></div>')
+    if not parts:
+        parts.append('<div class="jpr-news-s">この時間帯の開示・見出しは見つかりませんでした</div>')
+    kab = (f'<a class="jpr-news-k" href="https://kabutan.jp/stock/news?code={html.escape(str(code), quote=True)}" '
+           f'target="_blank" rel="noopener nofollow">🔎 株探のニュース一覧</a>')
+    return (f'<tr class="jpr-news-row"><td></td><td colspan="{ncols - 1}"><div class="jpr-news">'
+            f'{"".join(parts)}<div>{kab}</div></div></td></tr>')
+
+
+def _with_news(row, news_row):
+    """銘柄の行＋ニュースの行（ニュースがあれば、銘柄の行の下の線を消して1つの組に見せる）"""
+    if not news_row:
+        return row
+    return row.replace("<tr>", '<tr class="jpr-hasnews">', 1) + news_row
+
+
+RANK_NEWS_NOTE = ("📰 <b>各銘柄の下の小さな文字</b>＝その銘柄が動いた時間帯（2取引日前の15:00〜その日の15:30）に出た"
+                  "会社の開示（📄TDnet）と、社名が見出しに入ったニュース（📰）を自動で集めた候補です（値動きの原因とは限りません・"
+                  "最大3本）。🔎＝株探のその銘柄のニュース一覧。")
+
+
 def build_jp_rankings_section(now_jst):
     """日本株 値上がり率/値下がり率 トップ20（jp-rankings.json）を hot-assets 最上段に描画。
     事実の市場データの中立提示＋教育注記（飛びつき注意）。買い/売り推奨ではない。データ無ければ空文字。"""
@@ -2757,6 +2803,9 @@ def build_jp_rankings_section(now_jst):
             return '<span title="直近開示の決算が黒字" aria-label="黒字">🟢</span>'
         return '<span title="決算情報なし" style="color:#8b949e">—</span>'
 
+    news = _load_rank_news()
+    asof = d.get("asof", "")
+
     def _rows(items, ud):
         out = ""
         for r in items:
@@ -2766,11 +2815,12 @@ def build_jp_rankings_section(now_jst):
             sec = str(r.get("sector", ""))[:6]
             t1 = r.get("turnover_d1") or 0
             t2 = r.get("turnover_d2") or 0
-            out += (f'<tr><td class="jpr-rk">{r.get("rank","")}</td>'
-                    f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
-                    f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
-                    f'<td class="jpr-to">{t1:,.0f}<br><span class="jpr-to2">{t2:,.0f}</span></td>'
-                    f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>')
+            out += _with_news(f'<tr><td class="jpr-rk">{r.get("rank","")}</td>'
+                              f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
+                              f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
+                              f'<td class="jpr-to">{t1:,.0f}<br><span class="jpr-to2">{t2:,.0f}</span></td>'
+                              f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>',
+                              _rank_news_row(news, r.get("code", ""), asof, 5))
         return out or '<tr><td colspan="5" style="text-align:center;color:#6e7781;padding:16px">データ取得中…</td></tr>'
 
     head = ('<tr><th>#</th><th>銘柄</th><th style="text-align:right">騰落率</th>'
@@ -2790,12 +2840,13 @@ def build_jp_rankings_section(now_jst):
             ud = "up" if pct >= 0 else "down"
             nm = str(r.get("name", ""))[:14]
             sec = str(r.get("sector", ""))[:6]
-            out += (f'<tr><td class="jpr-rk">{r.get("rank","")}</td>'
-                    f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
-                    f'<td class="jpr-pct" style="text-align:right">×{r.get("relvol","")}</td>'
-                    f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
-                    f'<td class="jpr-to">{(r.get("turnover_d1") or 0):,.0f}</td>'
-                    f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>')
+            out += _with_news(f'<tr><td class="jpr-rk">{r.get("rank","")}</td>'
+                              f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
+                              f'<td class="jpr-pct" style="text-align:right">×{r.get("relvol","")}</td>'
+                              f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
+                              f'<td class="jpr-to">{(r.get("turnover_d1") or 0):,.0f}</td>'
+                              f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>',
+                              _rank_news_row(news, r.get("code", ""), asof, 6))
         return out
 
     hot_items = d.get("hot", [])
@@ -2817,7 +2868,7 @@ def build_jp_rankings_section(now_jst):
   <section class="jprank">
     <div class="jprank-h">💹 日本株 値上がり率・値下がり率 ランキング</div>
     <div class="jprank-sub">流動性上位 約400銘柄 ／ 前日比（{asof} 終値・自動集計／無保証）。<b>売買代金＝終値×出来高の概算（億円・上＝前日／下＝前々日）</b>。決算アイコン＝直近開示が🟢黒字／🔴赤字。
-    <b>⚠️ 大きく動いた銘柄＝良い投資対象ではありません</b>（素の値上がり率上位は飛びつき高値づかみ・落ちるナイフになりやすい）。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
+    <b>⚠️ 大きく動いた銘柄＝良い投資対象ではありません</b>（素の値上がり率上位は飛びつき高値づかみ・落ちるナイフになりやすい）。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。<br>{RANK_NEWS_NOTE}</div>
     <div class="jprank-grid">
       <div class="jprank-col up"><h3>📈 値上がり率 TOP20</h3>
         <div class="table-wrap"><table class="jprank-table"><thead>{head}</thead><tbody>{up}</tbody></table></div></div>
@@ -2935,12 +2986,15 @@ def build_jp_highs_section(now_jst):
         return (f'<tr><td colspan="6" style="text-align:center;color:#6e7781;padding:10px">'
                 f'ほか {n:,}銘柄（売買代金の大きい順に {JPH_MAX_SHOW}銘柄まで表示）</td></tr>') if n > 0 else ""
 
-    def _rec_body(items):
+    news = _load_rank_news()
+
+    def _rec_body(items, with_news=False):
         return "".join(
-            f'<tr><td class="jpr-rk">{i}</td>{_name(r)}'
-            f'<td class="jpr-to jph-sp-hide">{(r.get("price") or 0):,.1f}</td>{_pct(r)}'
-            f'<td class="jpr-to" style="text-align:center">{_since(r)}</td>'
-            f'<td class="jpr-to">{(r.get("turnover") or 0):,.1f}</td></tr>'
+            _with_news(f'<tr><td class="jpr-rk">{i}</td>{_name(r)}'
+                       f'<td class="jpr-to jph-sp-hide">{(r.get("price") or 0):,.1f}</td>{_pct(r)}'
+                       f'<td class="jpr-to" style="text-align:center">{_since(r)}</td>'
+                       f'<td class="jpr-to">{(r.get("turnover") or 0):,.1f}</td></tr>',
+                       _rank_news_row(news, r.get("code", ""), asof, 6) if with_news else "")
             for i, r in enumerate(items[:JPH_MAX_SHOW], 1)) + _more(items) or empty
 
     def _ytd_body(items, badge):
@@ -2983,10 +3037,10 @@ def build_jp_highs_section(now_jst):
     <div class="jprank-sub">{scope_txt}、{asof} の高値（安値）＝取引時間中の値がそれまでの高値（安値）を上回った（下回った）銘柄（大引け後に自動集計／無保証）。
     <b>{period}高値・安値＝{sy}年1月以降の高値・安値</b>（日本の慣例どおり、1〜3月は前の年の1月からの「昨年来」）。並びは売買代金（終値×出来高の概算・億円）の大きい順。
     <b>この日：{period}高値 {len(highs)}銘柄・{period}安値 {len(lows)}銘柄</b>{prev_txt}。
-    <b>⚠️ 高値を更新した銘柄＝良い投資対象、安値を更新した銘柄＝割安・買い場、という意味ではありません</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。</div>
+    <b>⚠️ 高値を更新した銘柄＝良い投資対象、安値を更新した銘柄＝割安・買い場、という意味ではありません</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。<br>{RANK_NEWS_NOTE}（上場来高値は売買代金の大きい30銘柄まで）</div>
     <div class="jprank-grid">
       <div class="jprank-col up"><h3>🏆 上場来高値・記録上の最高値 {len(rec_hi)}銘柄</h3>
-        <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_hi)}</tbody></table></div></div>
+        <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_hi, True)}</tbody></table></div></div>
       <div class="jprank-col down"><h3>🔻 上場来安値・記録上の最安値 {len(rec_lo)}銘柄</h3>
         <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_lo)}</tbody></table></div></div>
     </div>
@@ -3121,6 +3175,15 @@ def build_hot_assets_html(hot_data, now_jst):
     .jpr-to{{font-variant-numeric:tabular-nums;text-align:right;font-size:.74rem;color:#1f2328;white-space:nowrap;line-height:1.2}}
     .jpr-to2{{color:#8b949e;font-size:.68rem}}
     .jpr-fin{{text-align:center}}
+    .jprank-table tr.jpr-hasnews td{{border-bottom:0;padding-bottom:2px}}
+    .jprank-table tr.jpr-news-row td{{padding-top:0}}
+    .jpr-news{{font-size:.66rem;line-height:1.45;color:#6e7781;word-break:break-all}}
+    .jpr-news a{{color:#0969da;text-decoration:none}}
+    .jpr-news a:hover{{text-decoration:underline}}
+    .jpr-news-s{{color:#8b949e;white-space:nowrap}}
+    .jpr-news a.jpr-news-k{{color:#6e7781}}
+    body.dark .jpr-news a{{color:#58a6ff}}
+    body.dark .jpr-news a.jpr-news-k,body.dark .jpr-news-s{{color:#8b949e}}
     .jprank-foot{{margin-top:14px;font-size:.76rem;color:#57606a;line-height:1.6;border-top:1px dashed #d0d7de;padding-top:10px}}
     @media(max-width:760px){{.jprank-grid{{grid-template-columns:1fr;gap:18px}}}}
     .jph-nm{{min-width:6.5em}}
