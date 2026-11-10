@@ -31,6 +31,10 @@ RSS = """<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>
 <pubDate>Tue, 10 Nov 2026 03:00:00 GMT</pubDate><source url="https://kabutan.jp">株探</source></item>
 <item><title>古河電工 新製品のお知らせ - PR TIMES</title><link>https://news.google.com/rss/articles/a5</link>
 <pubDate>Tue, 10 Nov 2026 03:10:00 GMT</pubDate><source url="https://prtimes.jp">PR TIMES</source></item>
+<item><title>古河電工 地域のイベントに出展 - ウォーカープラス</title><link>https://news.google.com/rss/articles/a7</link>
+<pubDate>Tue, 10 Nov 2026 05:00:00 GMT</pubDate><source url="https://walkerplus.com">ウォーカープラス</source></item>
+<item><title>古河電気工業(株)【5801】:株価・株式情報 - Yahoo!ファイナンス</title><link>https://news.google.com/rss/articles/a8</link>
+<pubDate>Tue, 10 Nov 2026 06:00:00 GMT</pubDate><source url="https://finance.yahoo.co.jp">Yahoo!ファイナンス</source></item>
 <item><title>古河電工の古い記事 - 株探</title><link>https://news.google.com/rss/articles/a6</link>
 <pubDate>Wed, 04 Nov 2026 03:10:00 GMT</pubDate><source url="https://kabutan.jp">株探</source></item>
 </channel></rss>"""
@@ -80,11 +84,13 @@ def test_tdnet_order():
 
 def test_rss_and_filter():
     es = B.parse_rss(RSS)
-    assert len(es) == 6 and es[0]["t"] == "古河電工が急伸、上期の大幅増益と通期上方修正を好感" and es[0]["s"] == "株探"
+    assert len(es) == 8 and es[0]["t"] == "古河電工が急伸、上期の大幅増益と通期上方修正を好感" and es[0]["s"] == "株探"
     since = dt.datetime(2026, 11, 6, 15, 0, tzinfo=B.JST)
     got = B.gn_links(es, B.aliases("古河電気工業", "古河電工"), since)
     ts = [g["t"] for g in got]
-    assert ts == ["電線株がそろって高い 古河電工など", "古河電工が急伸、上期の大幅増益と通期上方修正を好感"], ts  # 新しい順・同じ見出しは1本
+    # 金融のニュースを先に（それぞれ新しい順）・株価のページは除く・同じ見出しは1本・生活の記事はあと
+    assert ts == ["電線株がそろって高い 古河電工など", "古河電工が急伸、上期の大幅増益と通期上方修正を好感",
+                  "古河電工 地域のイベントに出展"], ts
     assert got[0]["w"] == "11/10 11:00"                       # JST
     assert B.parse_rss("<<壊れた>>") == []
 
@@ -120,6 +126,11 @@ def test_targets_and_build():
     calls.clear()
     out2 = B.build(tg, DAYS, out, day_rows, fetch, pause=0, log=lambda *_: None)
     assert calls == [] and out2["items"]["5801"] == v
+    # 選び方の版が違えば、同じ日付でも引き直す
+    old = {"items": {k: dict(x, v=B.VERSION - 1) for k, x in out["items"].items()}}
+    calls.clear()
+    B.build(tg, DAYS, old, day_rows, fetch, pause=0, log=lambda *_: None)
+    assert len(calls) == 3
     # 断られたら残りは TDnet だけ（gn=False＝次の回にもう一度）
     out3 = B.build(tg, DAYS, {}, day_rows, lambda u: "BLOCKED", pause=0, log=lambda *_: None)
     assert all(not x["gn"] for x in out3["items"].values()) and out3["items"]["5801"]["links"][0]["s"] == "TDnet"

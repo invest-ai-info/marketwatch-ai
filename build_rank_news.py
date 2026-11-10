@@ -47,6 +47,7 @@ OUT = "jp-rank-news.json"
 RANKINGS, HIGHS = "jp-rankings.json", "jp-highs.json"
 LISTS = (("gainers", "値上がり率"), ("losers", "値下がり率"), ("hot", "人気急上昇"))
 HIGHS_MAX = 30
+VERSION = 2                  # 選び方を変えたら上げる（同じ日付でも版が違えば引き直す）
 MAX_LINKS, MAX_TDNET = 3, 2
 OPEN_FROM = "15:00"          # 2取引日前のこの時刻から（15:00 の決算も入る）
 BACK = 2                     # 何取引日さかのぼるか
@@ -55,6 +56,12 @@ PAUSE_GN = 1.2
 TITLE_MAX = 60
 UA = {"User-Agent": "Mozilla/5.0 marketwatch-jp/1.0"}
 SUFFIX = r"(ホールディングス|ホールディング|グループ|株式会社|\(株\)|コーポレーション|ＨＤ|HD)$"
+# 🆕 11/10 夜 Actions の最初の実行で「(株)ジャパンディスプレイ【JPDYY】:株価・株式情報」のような株価のページが混ざった＝外す
+QUOTE_PAGE = r"株価・株式情報|株価情報|株価チャート|[:：]\s*株価|掲示板|株価予想|銘柄情報$"
+# 金融のニュースを先に（同じ組の中は新しい順）。ほかの発行元（生活・地域の記事など）は空いた枠にだけ入る
+FIN_SOURCES = ("株探", "かぶたん", "Yahoo!ファイナンス", "日本経済新聞", "日経", "ロイター", "Reuters", "ブルームバーグ", "Bloomberg",
+               "みんかぶ", "MINKABU", "東洋経済", "ダイヤモンド", "時事", "QUICK", "四季報", "フィスコ", "FISCO",
+               "トレーダーズ", "モーニングスター", "Moomoo", "moomoo", "日刊工業", "日経クロステック", "ITmedia", "NHK")
 
 
 # ════════════════════ 名前・時間帯（純関数） ════════════════════
@@ -158,10 +165,12 @@ def parse_rss(text):
 
 
 def gn_links(entries, names, since):
-    """見出しに名前が入り、since 以降の記事（新しい順・同じ見出しは1本）"""
+    """見出しに名前が入り、since 以降の記事（金融のニュースを先に・それぞれ新しい順・株価のページは除く・同じ見出しは1本）"""
     seen, out = set(), []
-    for e in sorted(entries, key=lambda e: e["dt"], reverse=True):
-        if e["dt"] < since or not has_alias(e["t"], names) or NT.is_ng_publisher(e["s"]):
+    newest = sorted(entries, key=lambda e: e["dt"], reverse=True)
+    for e in sorted(newest, key=lambda e: 0 if any(f in e["s"] for f in FIN_SOURCES) else 1):   # 金融のニュースを先に（安定）
+        if (e["dt"] < since or not has_alias(e["t"], names) or NT.is_ng_publisher(e["s"])
+                or re.search(QUOTE_PAGE, nfkc(e["t"]))):
             continue
         k = NT.norm(e["t"])
         if k in seen:
@@ -229,7 +238,7 @@ def build(tg, days, old, day_rows, gn_fetch=None, pause=PAUSE_GN, log=print):
         d = t["asof"]
         p = start_day(days, d)
         prev = (old or {}).get("items", {}).get(code)
-        if prev and prev.get("asof") == d and prev.get("gn"):
+        if prev and prev.get("asof") == d and prev.get("gn") and prev.get("v") == VERSION:
             items[code] = prev                             # 同じ日付で引けたもの＝使い回す
             continue
         rows = idx.get(code[:4], [])
@@ -247,7 +256,8 @@ def build(tg, days, old, day_rows, gn_fetch=None, pause=PAUSE_GN, log=print):
                 since = dt.datetime.fromisoformat(f"{p or d}T{OPEN_FROM}").replace(tzinfo=JST)
                 gn, got = gn_links(parse_rss(text), names, since), True
                 n_gn += 1
-        items[code] = {"asof": d, "name": nfkc(t["name"]), "lists": t["lists"], "links": pick(td_win, gn, td_after), "gn": got}
+        items[code] = {"asof": d, "name": nfkc(t["name"]), "lists": t["lists"], "links": pick(td_win, gn, td_after), "gn": got,
+                       "v": VERSION}
     log(f"  ニュース：{len(items)}銘柄（Google ニュースを引いた {n_gn}・リンクあり {sum(1 for v in items.values() if v['links'])}）")
     return {"built": dt.datetime.now(JST).isoformat(timespec="minutes"), "items": items}
 
