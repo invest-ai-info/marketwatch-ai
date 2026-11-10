@@ -109,9 +109,13 @@ def test_targets_and_build():
     rank = {"asof": "2026-11-10", "gainers": [{"code": "5801", "name": "古河電気工業"}], "losers": [],
             "hot": [{"code": "5801", "name": "古河電気工業"}, {"code": "2914", "name": "日本たばこ産業"}]}
     highs = {"asof": "2026-11-10", "highs": [{"code": "6532", "name": "ベイカレント", "record": True, "turnover": 240},
-                                             {"code": "9999", "name": "年初来だけ", "record": False, "turnover": 999}]}
+                                             {"code": "9999", "name": "年初来だけ", "record": False, "turnover": 999}],
+             "lows": [{"code": "4061", "name": "デンカ", "record": True, "turnover": 10},
+                      {"code": "8888", "name": "年初来安値だけ", "record": False, "turnover": 99}]}
     tg = B.targets(rank, highs)
-    assert set(tg) == {"5801", "2914", "6532"} and tg["5801"]["lists"] == ["値上がり率", "人気急上昇"]
+    assert set(tg) == {"5801", "2914", "6532", "4061"} and tg["5801"]["lists"] == ["値上がり率", "人気急上昇"]
+    assert tg["4061"]["lists"] == ["上場来安値"]                  # 上場来安値も（年初来だけの安値は入れない）
+    tg = {k: v for k, v in tg.items() if k != "4061"}
     day_rows = {"2026-11-09": [_r("14:00", "58010", "通期連結業績予想の修正に関するお知らせ", "d2")]}
     calls = []
 

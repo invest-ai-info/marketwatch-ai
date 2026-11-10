@@ -3037,12 +3037,12 @@ def build_jp_highs_section(now_jst):
     <div class="jprank-sub">{scope_txt}、{asof} の高値（安値）＝取引時間中の値がそれまでの高値（安値）を上回った（下回った）銘柄（大引け後に自動集計／無保証）。
     <b>{period}高値・安値＝{sy}年1月以降の高値・安値</b>（日本の慣例どおり、1〜3月は前の年の1月からの「昨年来」）。並びは売買代金（終値×出来高の概算・億円）の大きい順。
     <b>この日：{period}高値 {len(highs)}銘柄・{period}安値 {len(lows)}銘柄</b>{prev_txt}。
-    <b>⚠️ 高値を更新した銘柄＝良い投資対象、安値を更新した銘柄＝割安・買い場、という意味ではありません</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。<br>{RANK_NEWS_NOTE}（上場来高値は売買代金の大きい30銘柄まで）</div>
+    <b>⚠️ 高値を更新した銘柄＝良い投資対象、安値を更新した銘柄＝割安・買い場、という意味ではありません</b>。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。<br>{RANK_NEWS_NOTE}（上場来高値・上場来安値は、それぞれ売買代金の大きい30銘柄まで）</div>
     <div class="jprank-grid">
       <div class="jprank-col up"><h3>🏆 上場来高値・記録上の最高値 {len(rec_hi)}銘柄</h3>
         <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_hi, True)}</tbody></table></div></div>
       <div class="jprank-col down"><h3>🔻 上場来安値・記録上の最安値 {len(rec_lo)}銘柄</h3>
-        <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_lo)}</tbody></table></div></div>
+        <div class="table-wrap"><table class="jprank-table"><thead>{rec_head}</thead><tbody>{_rec_body(rec_lo, True)}</tbody></table></div></div>
     </div>
     <div class="jprank-foot" style="margin-top:8px">「比べた期間」＝上場来＝東証に上場した日からの記録すべてと比べた（記録が上場から始まっていると確かめられた銘柄だけ＝2022年以降の上場は JPX の新規上場の一覧の上場日で確かめています。名証などほかの取引所から東証に来た銘柄は、それより前のほかの取引所での売買を含みません）。<b>※の銘柄は、Yahoo の記録がその年からしかなく、それより前（1990年前後のバブル期など）の値とは比べていません</b>＝上場来高値・上場来安値かどうかは確かめられていません（記録のある期間の最高値・最安値です）。</div>
     <div class="jprank-grid" style="margin-top:18px">
