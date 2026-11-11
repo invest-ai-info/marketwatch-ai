@@ -1,0 +1,56 @@
+name: FX Minute Bars Fetch (manual)
+
+# 為替の1分足（売値と買値）を Dukascopy から取る（FLC 円の流れを昔の期間で確かめる・2026-11-11 オーナー「昔のデータで確かめる」）。
+# gold-bars-fetch.yml と同じ道具（gold_bars.py）を、銘柄を変えて使う。16台に分けて取り、artifact に置く。
+# 手元のセッションが artifact を取り込み、C:\mt5run\duka_fx\<銘柄> に置いて数える（数えるのは手元）。
+# ⚠️ 手動のみ。リポジトリには何も書かない（artifact は3日だけ残す）。
+
+on:
+  workflow_dispatch:
+    inputs:
+      symbols:
+        description: "銘柄（空白で区切る）"
+        required: true
+        default: 'USDJPY EURJPY GBPJPY AUDJPY'
+      first:
+        description: "取る最初の日（UTC）"
+        required: true
+        default: '2017-01-01'
+      last:
+        description: "取る最後の日（UTC）"
+        required: true
+        default: '2022-05-31'
+
+concurrency:
+  group: fx-min-fetch
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch this shard's days (each symbol in turn)
+        run: |
+          for s in ${{ inputs.symbols }}; do
+            echo "== $s"
+            python -u gold_bars.py fetch --symbol "$s" --first ${{ inputs.first }} --last ${{ inputs.last }} --root "fx-min/$s" --shard ${{ matrix.shard }} --of 16 --workers 8 --budget-min 75
+          done
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: fx-min-${{ matrix.shard }}
+          path: fx-min/
+          retention-days: 3
+          if-no-files-found: ignore
