@@ -444,4 +444,5 @@ SYNC_FILES = [
     "guide-signal-lab-146.html",
     "guide-company-6981-murata.html",
     "guide-news-2026-11-11-softbank-loss.html",
+    "guide-signal-lab-147.html",
 ]
