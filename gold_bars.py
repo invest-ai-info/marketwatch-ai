@@ -26,7 +26,7 @@ try:
 except ImportError:
     pass
 
-URL = "https://datafeed.dukascopy.com/datafeed/XAUUSD/{y}/{m0:02d}/{d:02d}/{side}_candles_min_1.bi5"
+URL = "https://datafeed.dukascopy.com/datafeed/{sym}/{y}/{m0:02d}/{d:02d}/{side}_candles_min_1.bi5"   # sym＝XAUUSD（既定）・USDJPY など（2026-11-11 FLC で為替にも使う）
 SIDES = ("BID", "ASK")
 BUSY_WAITS = (5, 15, 30, 60, 90)
 OTHER_WAITS = (2, 4, 8, 16, 32)
@@ -52,9 +52,9 @@ def items(first, last, shard=0, of=1, newest_first=False):
     return xs[::-1] if newest_first else xs
 
 
-def get(side, day, tries=6, pause=0.3, timeout=90):
+def get(side, day, tries=6, pause=0.3, timeout=90, sym="XAUUSD"):
     """→ バイト列（無い日は b""）か、取れなかった理由の文字列"""
-    url = URL.format(y=day.year, m0=day.month - 1, d=day.day, side=side)
+    url = URL.format(sym=sym, y=day.year, m0=day.month - 1, d=day.day, side=side)
     last = "失敗"
     for k in range(tries):
         try:
@@ -85,14 +85,14 @@ def save(root, side, day, body):
     os.replace(tmp, p)
 
 
-def fetch(root, todo, workers, budget_min=None, log=print):
+def fetch(root, todo, workers, budget_min=None, log=print, sym="XAUUSD"):
     errs, done, t0 = [], 0, time.monotonic()
 
     def job(item):
         if budget_min is not None and (time.monotonic() - t0) / 60 > budget_min:
             return item, "時間切れ（予算）"
         side, day = item
-        body = get(side, day)
+        body = get(side, day, sym=sym)
         if isinstance(body, str):
             return item, body
         save(root, side, day, body)
@@ -108,14 +108,14 @@ def fetch(root, todo, workers, budget_min=None, log=print):
     return errs
 
 
-def pull(run_id, root=LOCAL_ROOT, log=print):
+def pull(run_id, root=LOCAL_ROOT, log=print, prefix="gold-min-"):
     """（手元だけ）Actions の実行 run_id の artifact（gold-min-*）を取り込み、root に無いファイルだけ置く。→ (置いた数, 手元にあったので飛ばした数)"""
     import io
     import zipfile
     import mw   # リポジトリの根の司令塔（GitHub のトークン）
     c = mw._cfg()
     st, d = mw._gh("GET", f"/actions/runs/{run_id}/artifacts?per_page=100")
-    arts = [a for a in d.get("artifacts", []) if a["name"].startswith("gold-min-")]
+    arts = [a for a in d.get("artifacts", []) if a["name"].startswith(prefix)]
 
     class NoRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, *a, **k):
@@ -173,15 +173,17 @@ def main(argv=None):
     ap.add_argument("--workers", type=int, default=10)
     ap.add_argument("--budget-min", type=float, default=None)
     ap.add_argument("--newest-first", action="store_true")
+    ap.add_argument("--symbol", default="XAUUSD", help="Dukascopy の銘柄（XAUUSD・USDJPY など）")
+    ap.add_argument("--prefix", default="gold-min-", help="pull：取り込む artifact の名前の頭")
     a = ap.parse_args(argv)
     if a.mode == "pull":
-        put, skip = pull(a.run, a.root, log=lambda s: print(s, flush=True))
+        put, skip = pull(a.run, a.root, log=lambda s: print(s, flush=True), prefix=a.prefix)
         print(f"pulled: put {put}, skipped (already local) {skip}", flush=True)
         return 0
     first, last = dt.date.fromisoformat(a.first), dt.date.fromisoformat(a.last)
     todo = [x for x in items(first, last, a.shard, a.of, a.newest_first) if not os.path.exists(path_of(a.root, *x))]
     print(f"to fetch {len(todo)} (shard {a.shard}/{a.of}, existing files skipped)", flush=True)
-    errs = fetch(a.root, todo, a.workers, a.budget_min, log=lambda s: print(s, flush=True))
+    errs = fetch(a.root, todo, a.workers, a.budget_min, log=lambda s: print(s, flush=True), sym=a.symbol)
     os.makedirs(a.root, exist_ok=True)
     with open(os.path.join(a.root, f"fetch-errors-{a.shard}.txt"), "w", encoding="utf-8") as f:
         f.write("\n".join(errs))
