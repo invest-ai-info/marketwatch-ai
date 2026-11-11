@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-11-11
+- 判定: ✅ 公開済み
+- 選定トピック: ソフトバンクグループ（9984）2027年3月期Q2純損失約1兆1,153億円──AIデータセンター向け発電設備損失・インテル株評価損が主因・今後の3論点を中立整理（カテゴリ: 個別銘柄・AI・日本株・ガバナンス）
+- スコア: 話題性 5 / 影響 4 / 付加価値 5（合計 14/15）
+- 出典（確認済み）:
+  - Bloomberg「SoftBank Group Shares Drop 10% After Booking $7 Billion Loss」2026-11-11
+  - CNBC「SoftBank swings to $7 billion loss after U.S. data center hit and Intel share decline」2026-11-10
+  - かぶちょ（kabucho.com）「ソフトバンクグループ（9984）決算 2026年11月 内容まとめ」2026-11-11
+  - GuruFocus「SoftBank Group Reports Massive Loss in Q2 FY2026」2026-11-11
+  - 財経新聞/Fisco 2026-11-11
+  - みんかぶ FX/為替ニュース 2026-11-11
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（meta description等3か所の軽微修正）→ 修正適用済み → 🟢白
+  - 適用修正3件: ①meta description「-10%超」→「10%前後下落したと報じられている」②インテル株評価損の留保「報道ベース」明記③🟢上がる材料に「一時的かどうかは今後の開示で確認が必要」追加
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典6系統以上 ✅）→「そのまま公開してよい」
+  - 最終判定: 🟢白 / 公開OK
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告66件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-11-softbank-loss.html
+- commit: 936c470（main へ push 済み）
+
+---
+
 ## 2026-11-10
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均+1,684円・6万円台回復──米半導体株高・原油安・中東緊張緩和の3要因と3論点を中立整理（カテゴリ: 日本株・半導体・マクロ・原油・中東）
