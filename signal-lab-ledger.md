@@ -1265,7 +1265,7 @@
 
 **テーマ**: 2本の移動平均線より下で出た「MACDのゴールデンクロス」は勝ちやすい？ 前向き212回で確かめた（定点観測・state_macdg_below）
 **仮説ID**: state_macdg_below
-**ファイル**: guide-signal-lab-148.html（下書き中）
+**ファイル**: guide-signal-lab-148.html
 **claims**: drafts/labnotes/lab-148-claims.json
 **分析メモ**: drafts/labnotes/lab-148-analysis.md
 
