@@ -78,7 +78,10 @@ def test_judge_match_and_far_missing_is_note():
     today = D(2026, 11, 12)
     found = [D(2026, 11, 19), D(2026, 12, 17), D(2027, 1, 21)]
     problems, notes = _run(found, [D(2026, 11, 19), D(2026, 12, 17)], [D(2026, 11, 19), D(2026, 12, 17)], today)
-    assert problems == [] and len(notes) == 1 and "2027-01-21" in notes[0]  # 70日先の未登録は知らせるだけ
+    # 70日先の未登録は知らせるだけ。台帳と元の表（翌年の ECONOMIC_EVENTS_2027）の両方について知らせる
+    # （2026-11-12 まで元の表は 2026年の日付しか見ず、翌年の抜けを知らせなかった）
+    assert problems == [] and len(notes) == 2 and all("2027-01-21" in n for n in notes), notes
+    assert notes[0].startswith("economic-events.json") and notes[1].startswith("ECONOMIC_EVENTS_2027")
 
 
 def test_judge_wrong_date_is_problem():
