@@ -47,6 +47,7 @@ NY = zoneinfo.ZoneInfo("America/New_York")
 LONDON = zoneinfo.ZoneInfo("Europe/London")
 FRANKFURT = zoneinfo.ZoneInfo("Europe/Berlin")
 SHANGHAI = zoneinfo.ZoneInfo("Asia/Shanghai")
+SYDNEY = zoneinfo.ZoneInfo("Australia/Sydney")   # 豪中銀（シドニー）・豪統計局（キャンベラ）は同じ時刻
 
 # 種類ごとの発表条件。すべて economic-events.json の既存29件から抽出した実績値。
 #   pattern    : ECONOMIC_EVENTS_2026 の name に対する照合
@@ -140,6 +141,20 @@ RULES = [
          assets=JP_SET, country="JP", label="鉱工業生産", json_pattern=r"^鉱工業生産"),
     dict(pattern=r"^貿易統計",       tz=JST, local_time=(8, 50), impact="high",
          assets=JP_SET, country="JP", label="貿易統計", json_pattern=r"^貿易統計"),
+    # ── 🇦🇺 豪州（2026-11-12 追加・オーナー決定）────────────────────────────────
+    # なぜ必要か: 監視18銘柄のうち4つが豪ドルのペアなのに、豪州の指標が1つも無かった
+    # ＝豪中銀の発表の前でも環境警戒スコアが鳴らなかった（FLH の検証で気づいた）。
+    # 時刻の出どころ: 豪中銀「The decision is published on our website at 2.30pm after each meeting」
+    #   （rba.gov.au/monetary-policy/about.html・会合は2日間で発表は2日目）／豪統計局の雇用統計・CPI は
+    #   11:30（abs.gov.au の各ページ「Release date and time」・キャンベラ時間＝シドニーと同じ）。
+    # 🔑 現地時刻＋tz で書く＝夏時間（AEDT）は zoneinfo が吸収する（日本時間 12:30／豪州の冬は 13:30）。
+    #   ⚠️ MT5 の経済カレンダーは豪中銀の時刻が夏時間の月に1時間遅い＝時刻の元にしない。
+    dict(pattern=r"豪中銀",          tz=SYDNEY, local_time=(14, 30), impact="critical",
+         assets=AUD_PAIRS, country="AU", label="豪中銀 政策金利発表", json_pattern=r"豪中銀|RBA"),
+    dict(pattern=r"^豪雇用統計",     tz=SYDNEY, local_time=(11, 30), impact="high",
+         assets=AUD_PAIRS, country="AU", label="豪雇用統計", json_pattern=r"^豪雇用統計"),
+    dict(pattern=r"^豪CPI",          tz=SYDNEY, local_time=(11, 30), impact="high",
+         assets=AUD_PAIRS, country="AU", label="豪CPI", json_pattern=r"^豪CPI"),
     # ── 🇺🇸 ISM（10:00 ET）。⚠️ 非製造業を先に置く（先に一致した規則が採用されるため）──
     dict(pattern=r"ISM非製造業",     tz=NY, local_time=(10, 0), impact="high",
          assets=["all"], country="US", label="米 ISM非製造業景況感",
