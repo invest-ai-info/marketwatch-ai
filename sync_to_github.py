@@ -446,4 +446,5 @@ SYNC_FILES = [
     "guide-news-2026-11-11-softbank-loss.html",
     "guide-signal-lab-147.html",
     "guide-company-7011-mhi.html",
+    "guide-news-2026-11-12-nvidia-ceo-nikkei-drop.html",
 ]
