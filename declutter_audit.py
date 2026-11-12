@@ -35,7 +35,10 @@ MEM = os.path.expanduser("~/.claude/projects/C--Users-info0/memory/MEMORY.md")
 # 閉じたQは既にアーカイブ済みで、残っているのは全て進行中＝退避できるものが無い）。
 # 監視は一次側に一本化する。⚠️ 閾値の単一ソースは `_doctrine_check.QUEUE_WARN_N/QUEUE_ERR_N`。
 DOC_LIMITS_KB = {"SESSION_HANDOFF.md": 30, "CLAUDE.md": 32}
-MEMORY_LIMIT_KB = 4  # auto-memory索引（毎セッション自動注入）。詳細は各memoryファイル側へ
+MEMORY_LIMIT_KB = 10  # auto-memory索引（毎セッション自動注入）。詳細は各memoryファイル側へ
+# ↑ 2026-11-12 オーナー決定で 4→10。81件ある索引はリンクだけで約5KB＝4KB は行を短くしても届かず、
+#   見張りが毎回鳴るだけになっていた（同日に 13.4KB→9.5KB まで短くした）。10KB を超えたら
+#   行を短くするのではなく、関連する覚え書きをまとめて件数を減らす（`/consolidate-memory`）。
 MEMORY_FILE_LIMIT_KB = 20   # 個別memoryファイル。recall時に丸ごと文脈へ入る＝1件の重さが実コスト
 SCRATCH_LIMIT = 30          # 使い捨てscriptがこれを超えたらアーカイブ候補
 SCRATCH_RE = re.compile(r"^_(fix|push|probe|test|recon|inspect|check|verify|apply|reset|syntax|"
@@ -67,7 +70,7 @@ def main():
         if size > lim:
             findings.append(("🟡", f"{f} が {size:.0f}KB（目安{lim}KB超）＝古い完了セクションを SESSION_ARCHIVE.md へ退避してスリム化"))
     if kb(MEM) > MEMORY_LIMIT_KB:
-        findings.append(("🟡", f"MEMORY.md が {kb(MEM):.0f}KB（目安{MEMORY_LIMIT_KB}KB超）＝索引行を短く・詳細は各memoryファイルへ（毎セッション自動注入されるため）"))
+        findings.append(("🟡", f"MEMORY.md が {kb(MEM):.0f}KB（目安{MEMORY_LIMIT_KB}KB超）＝索引行を短く・関連する覚え書きをまとめて件数を減らす・詳細は各memoryファイルへ（毎セッション自動注入されるため）"))
 
     # ②（参考）ハンドオフ内の「✅完了」古セクション数（アーカイブ候補の目安）
     hp = p("SESSION_HANDOFF.md")
