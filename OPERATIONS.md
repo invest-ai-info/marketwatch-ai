@@ -93,6 +93,7 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 - **記事公開は `python mw.py publish --file ... --category ... --emoji ... --card-title ... --desc ...`** で ②〜⑤→整合性チェック→sync→workflow起動まで一気通貫（`--dry-run` で確認）。
 - **sync 前に `python mw.py check`** を習慣に（特に SYNC禁忌の混入を自動で止められる）。
 - 🆕 **手元のセッションは起動時に `[auto_pull]` の行が文脈に入る**（auto_pull.py の結果）。**⚠️「まだ GitHub に送っていないファイル」が出ていたら、ほかの作業の前に片付ける**：「手元だけ変更」→ `mw check` → `mw sync`／「両方で変更」→ `_auto_pull_conflicts/<ファイル>`（GitHub 側の版）と手元の版を統合してから sync（`--force` で押し切らない）。取得に失敗した回は、送る前に `python auto_pull.py` をやり直す
+- 🆕 **手元専用の回帰テスト（`_test_*.py`・31本）は週1回まとめて動く**（2026-11-12・`_run_local_tests.py`＝手元専用／予約＝タスク スケジューラ `MarketWatch_LocalTests`・毎週日曜 06:45・PC が切れていたら次に点いたとき）。`_` 始まりは GitHub に無く Actions では動かないので、だれも動かさないと本体を直したときにテストだけ取り残される（11/12 に31本中8本が古くなっていた＝どれも本体は正しかった）。**通らないものがあると ①フォルダに「回帰テスト_要確認.txt」が出る ②起動時に `[local_tests]` の行が文脈に入る**（全部通っていれば何も出ない・10日より長く動いていないときも1行出る）。その行が出ていたら、ほかの作業の前に原因を調べる：本体の意図した変更にテストが追いついていないだけならテストを今の形に合わせる／本体が壊れていれば本体を直す → `python -X utf8 _run_local_tests.py` で確かめる（全部通ると知らせは自動で消える）。落ちたものは1回だけ単独でやり直してから「通らない」に数える。フックの設定＝`.claude/settings.local.json` の SessionStart
 
 ---
 
