@@ -18,7 +18,7 @@
 やること:
    ① 豪中銀（RBA）の年間の会合日程 … 金融政策の会合は2日間。**2日目が発表日**
    ② 豪統計局（ABS）の雇用統計・CPI のページの「Future releases」（＝公式に出ている次の数回）
-   を取得して `economic-events.json` / `ECONOMIC_EVENTS_2026` と突合。
+   を取得して `economic-events.json` / 年ごとの表 `ECONOMIC_EVENTS_<年>` と突合。
    次のどれかで exit 1（Actions が Issue 化する）:
      - 公式に無い日付を載せている（誤登録）
      - 21日以内（NEAR）の公式の発表が economic-events.json に無い（＝発表の前にカレンダーが黙る）
@@ -34,7 +34,7 @@ import datetime as dt
 import re
 import sys
 
-from verify_uk_eu_calendar import HORIZON, JST, MONTH_RE, MONTHS, fetch, ours_from_json, ours_from_master, plain_text, wd
+from verify_uk_eu_calendar import HORIZON, JST, MONTH_RE, MONTHS, fetch, master_label, ours_from_json, ours_from_master, plain_text, wd
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -91,7 +91,7 @@ def parse_abs_next(text):
 
 
 def judge(label, found, js, ms, today, problems, notes):
-    """公式の日付 found と、台帳 js（economic-events.json）・元の表 ms（ECONOMIC_EVENTS_2026）を突き合わせる"""
+    """公式の日付 found と、台帳 js（economic-events.json）・元の表 ms（年ごとの ECONOMIC_EVENTS_<年>）を突き合わせる"""
     future = [d for d in found if today <= d <= today + HORIZON]
     if not future:
         problems.append(f"{label}: 今日以降の公式の日付を1件も読み取れない（解析ミスか、公式の更新停止）→ {ME} を確認")
@@ -104,14 +104,14 @@ def judge(label, found, js, ms, today, problems, notes):
                                 f"＝発表の前にカレンダーが黙る → ECONOMIC_EVENTS に足して monthly-calendar-reminder.yml を手動実行")
             else:
                 notes.append(f"economic-events.json: {d}（{wd(d)}）の{label}が未登録")
-        if d.year == 2026 and d not in ms:
-            notes.append(f"ECONOMIC_EVENTS_2026: {d}（{wd(d)}）の{label}が未登録")
+        if d not in ms:                     # どの年でも見る（2026-11-12 まで 2026年だけ＝翌年の表の抜けを知らせなかった）
+            notes.append(f"{master_label(d)}: {d}（{wd(d)}）の{label}が未登録")
     # 逆向き＝うちにあって公式に無い日付（＝誤登録）。公式がまだ出していない先の期間は正常なので、公式の最終日までだけ見る
     last, official = max(found), set(found)
-    for where, mine in (("economic-events.json", js), ("ECONOMIC_EVENTS_2026", ms)):
+    for where, mine in (("economic-events.json", js), (None, ms)):
         for d in sorted(mine):
             if today <= d <= last and d not in official:
-                problems.append(f"🚨 {where}: {d}（{wd(d)}）に{label}を載せているが、公式の日程に無い")
+                problems.append(f"🚨 {where or master_label(d)}: {d}（{wd(d)}）に{label}を載せているが、公式の日程に無い")
 
 
 def main():
@@ -158,7 +158,7 @@ def main():
         print(f"\n❌ 食い違い/検証不能 {len(problems)} 件")
         for p in problems:
             print(f"   {p}")
-        print("\n→ generate_market_news.py の ECONOMIC_EVENTS_2026 を公式の日付に直し、monthly-calendar-reminder.yml を"
+        print("\n→ generate_market_news.py の ECONOMIC_EVENTS_<年> を公式の日付に直し、monthly-calendar-reminder.yml を"
               "手動実行してください（economic-events.json は GitHub 側で作る）。**曜日から推測しないこと**。")
         return 1
     print("✅ 豪州：公式日程と一致（今日以降の回）")
