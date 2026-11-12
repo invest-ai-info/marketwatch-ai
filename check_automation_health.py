@@ -874,9 +874,9 @@ def check_smtp_auth():
 #    monthly-calendar-reminder.yml は「メールを送る」だけで success を返し続けていた。
 #    実害はシグナル側で、8月は指標発表24時間前に出た113本のシグナルに
 #    「🚫 重要指標まで X h」が付かなかった（うち12本は発表0.6時間前）。
-#    いまは sync_economic_events.py が ECONOMIC_EVENTS_2026 から自動生成するので
+#    いまは sync_economic_events.py が年ごとの表 ECONOMIC_EVENTS_<年> から自動生成するので
 #    人手の転記は無いが、**その元表が尽きれば同じ形で静かに空になる**
-#    （2027年ぶんは未整備＝年が変われば実際に起きる）。だからデータ側で見る。
+#    （2027年の表は 2026-11-12 に作った。翌年の表が無いまま年が変われば実際に起きる）。だからデータ側で見る。
 FORWARD_DAYS = 21      # 先を見る窓。月次補充(25日)＋cron滑りを跨いでも余裕がある長さ
 # 判定は「枯れたか」＝0件かどうかで見る。2件等の下限は根拠が無く、
 # 9月下旬のように元表が薄い時期を誤検知した（2026-08-30 の全日スイープで実測）。
@@ -1538,7 +1538,8 @@ def main():
                 f"- 🚨 🟡 今後{FORWARD_DAYS}日の経済指標が {n_cal} 件（閾値 {FORWARD_MIN} 以上）"
                 f"＝カレンダーが尽きかけている。**シグナルの「🚫 重要指標まで X h」が出なくなる**"
                 f"（2026-08 に2か月ゼロで113本のシグナルが無警告だった事故と同じ形）。"
-                f"直し方＝generate_market_news.py の ECONOMIC_EVENTS_2026 に翌月以降を追記し、"
+                f"直し方＝generate_market_news.py の年ごとの表 ECONOMIC_EVENTS_<年> に翌月以降を追記し"
+                f"（翌年の表が無ければ ECONOMIC_EVENTS_<翌年> = [...] を作る・日付は公式で確かめる）、"
                 f"monthly-calendar-reminder.yml を手動実行する（sync_economic_events.py が"
                 f"そこから economic-events.json を生成する）。⚠️ economic-events.json を直接"
                 f"編集しても次回の生成対象にはならない。市場休場は別枠で自動補充されるので"
