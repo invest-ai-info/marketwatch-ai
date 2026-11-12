@@ -199,7 +199,7 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 
 **目的＝毎セッションの固定オーバーヘッドと無駄な読み書きを最小化**（監視は `mw declutter` が自動）。
 
-1. **文書サイズ予算（超過は declutter_audit が警告）**: CLAUDE.md ≤32KB / SESSION_HANDOFF.md ≤30KB / MEMORY.md ≤4KB。完了した ✅セクションは SESSION_ARCHIVE.md へ退避。memory 索引は1行/件、詳細は各ファイル側へ
+1. **文書サイズ予算（超過は declutter_audit が警告）**: CLAUDE.md ≤32KB / SESSION_HANDOFF.md ≤30KB / MEMORY.md ≤10KB。完了した ✅セクションは SESSION_ARCHIVE.md へ退避。memory 索引は1行/件、詳細は各ファイル側へ
 2. **ファイルはまず Grep・部分 Read（offset/limit）**。全文 Read は編集対象ファイルのみ。読んだファイルの再 Read 禁止
 3. **コマンド出力は絞る**: `| tail` / `| grep` で要点のみ。大きい JSON/CSV は Python で集計値だけ print（生ダンプ禁止）
 4. **サブエージェント委任は3条件のみ**: ①5ファイル超の横断調査 ②独立監査（コンプラ/品質＝Opus 必須） ③本文が長大な執筆。単発の調査・数行の確認は自分で Grep。機械的作業のモデルは sonnet で足りる
