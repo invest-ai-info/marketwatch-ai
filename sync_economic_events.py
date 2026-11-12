@@ -1,5 +1,9 @@
 """economic-events.json の「経済指標」エントリを generate_market_news.py の
-ECONOMIC_EVENTS_2026 から生成する（台帳の二重管理を解消する）。
+年ごとの表 ECONOMIC_EVENTS_<年>（2026・2027…）から生成する（台帳の二重管理を解消する）。
+
+🆕 2026-11-12 年またぎ: 表は年ごとに1つ（ECONOMIC_EVENTS_2026・ECONOMIC_EVENTS_2027…）。**表の名前の年が
+そのまま日付の年**で、ある表はぜんぶ読む。＝12月のうちから翌年1月の発表が台帳に入り、1月になっても動く。
+それまでは表の名前と年の既定（"2026"）が直に書いてあり、年が変わると発表前のメールが黙る形だった。
 
 ── なぜ要るのか（2026-08-30 に判明した事故） ──
 economic-events.json の指標は **2026-07-31 を最後に2か月ゼロ**だった。原因は
@@ -50,7 +54,7 @@ SHANGHAI = zoneinfo.ZoneInfo("Asia/Shanghai")
 SYDNEY = zoneinfo.ZoneInfo("Australia/Sydney")   # 豪中銀（シドニー）・豪統計局（キャンベラ）は同じ時刻
 
 # 種類ごとの発表条件。すべて economic-events.json の既存29件から抽出した実績値。
-#   pattern    : ECONOMIC_EVENTS_2026 の name に対する照合
+#   pattern    : ECONOMIC_EVENTS_<年> の name に対する照合
 #   local_time : 発表元の現地時刻（tz 変換で JST にする＝夏時間を取り違えない）
 #   day_offset : 現地日から見た開催日のズレ（FOMC は現地14:00＝翌日 JST になるが
 #                これは tz 変換が吸収するので 0。ここは開催日そのものの補正用）
@@ -173,18 +177,42 @@ NO_PRECEDENT = [
 ]
 
 
-def load_source_rows():
-    """generate_market_news.py の ECONOMIC_EVENTS_2026 を読む（import しない＝副作用回避）。"""
-    s = io.open(SOURCE_PY, encoding="utf-8").read()
-    m = re.search(r"ECONOMIC_EVENTS_2026\s*=\s*\[(.*?)\n\]", s, re.S)
-    if not m:
-        raise SystemExit("❌ ECONOMIC_EVENTS_2026 が見つからない（定義が動いた？）")
-    rows = re.findall(
-        r"\(\s*(\d+)\s*,\s*(\d+)\s*,\s*\"(\w+)\"\s*,\s*\"(\w+)\"\s*,\s*\"([^\"]+)\"\s*,\s*\"([^\"]*)\"",
-        m.group(1))
-    if not rows:
-        raise SystemExit("❌ ECONOMIC_EVENTS_2026 を1件も解釈できなかった（書式が変わった？）")
-    return [(int(a), int(b), c, d, e, f) for a, b, c, d, e, f in rows]
+# 年ごとの表「ECONOMIC_EVENTS_<4桁の年> = [ ... ]」をぜんぶ拾う。
+# 🚨 2026-11-12: それまでは "ECONOMIC_EVENTS_2026" と年の既定 "2026" が直に書いてあり、年が変わると
+#    ①翌年の表を作っても読まれない ②1月になっても前の年の表を「今年」として読む、の両方が起きる形だった。
+#    いまは**表の名前の年がそのまま日付の年**＝ここにも呼ぶ側にも年を書かない。
+TABLE_RE = re.compile(r"^ECONOMIC_EVENTS_(\d{4})\s*=\s*\[(.*?)\n\]", re.S | re.M)
+ROW_RE = re.compile(
+    r"\(\s*(\d+)\s*,\s*(\d+)\s*,\s*\"(\w+)\"\s*,\s*\"(\w+)\"\s*,\s*\"([^\"]+)\"\s*,\s*\"([^\"]*)\"")
+
+
+def parse_source_tables(source_text):
+    """generate_market_news.py の中身から {年: [(月, 日, 国, 重要度, 名前, 説明), ...]} を作る（純関数＝テスト用）。"""
+    tables = {}
+    for m in TABLE_RE.finditer(source_text):
+        tables[int(m.group(1))] = [(int(a), int(b), c, d, e, f)
+                                   for a, b, c, d, e, f in ROW_RE.findall(m.group(2))]
+    return tables
+
+
+def load_source_tables():
+    """generate_market_news.py の年ごとの表を読む（import しない＝副作用回避）。"""
+    tables = parse_source_tables(io.open(SOURCE_PY, encoding="utf-8").read())
+    if not tables:
+        raise SystemExit("❌ ECONOMIC_EVENTS_<年> の表が見つからない（定義が動いた？）")
+    for year, rows in sorted(tables.items()):
+        if not rows:
+            raise SystemExit(f"❌ ECONOMIC_EVENTS_{year} を1件も解釈できなかった（書式が変わった？）")
+    return tables
+
+
+def load_source_rows(year=None):
+    """(月, 日, 国, 重要度, 名前, 説明) の並び。year を渡せばその年の表だけ・省けば全部の年をつなげたもの。
+    ⚠️ 年が要る処理（日付を作る）は load_source_tables() を使う。これは名前の決まりを確かめる用。"""
+    tables = load_source_tables()
+    if year is not None:
+        return list(tables.get(year, []))
+    return [row for y in sorted(tables) for row in tables[y]]
 
 
 def match_rule(name):
@@ -214,17 +242,17 @@ def build_entry(year, month, day, rule, name):
         "affected_assets": list(rule["assets"]),
         "country": rule["country"],
         "category": "economic_indicator",
-        "note": f"sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成"
+        "note": f"sync_economic_events.py が ECONOMIC_EVENTS_{year} から生成"
                 f"（現地 {local.strftime('%H:%M %Z')}）",
     }
 
 
-def main():
-    year = int(os.environ.get("EVENTS_YEAR", "2026"))
-    apply_changes = "--write" in sys.argv
+def plan_additions(tables, existing, now_jst):
+    """年ごとの表 tables と、いまの台帳 existing から「足す行」を決める（純関数＝テスト用・書き込まない）。
 
-    data = json.load(open(TARGET_JSON, encoding="utf-8"))
-    existing = data["events"]
+    戻り値: dict(added, skipped, conflicts, already, past)
+    🔑 年は表ごとに決まる。12月のうちから翌年1月の発表が足され、1月になっても前の年の表を読み違えない。
+    """
     existing_ind = [e for e in existing if e.get("category") != "market_holiday"]
     # 既存の (日付, 種類ラベル) を索引化＝同じ日の同じ指標は二重に足さない
     # 既存エントリを RULES に写像する。名前の表記ゆれ（「米雇用統計 6 月 NFP」等）が
@@ -236,43 +264,68 @@ def main():
         return None
 
     have = set()
-    have_month_label = {}
+    have_month_label = {}                       # (年-月, 種類) → その月に台帳にある日時（1つの月に2回出る種類もある）
     for e in existing_ind:
         lab = rule_of_existing(e["name"])
         if not lab:
             continue
         have.add((e["datetime"][:10], lab))
-        have_month_label.setdefault((e["datetime"][:7], lab), e["datetime"][:16])
+        have_month_label.setdefault((e["datetime"][:7], lab), []).append(e["datetime"][:16])
 
     # シグナルの事前警告が用途なので、過ぎたイベントは足さない（履歴の水増しを避ける）。
     # 7日の猶予＝当日/前日ぶんを取りこぼさない。
-    cutoff = (dt.datetime.now(JST) - dt.timedelta(days=7)).isoformat(timespec="minutes")
+    cutoff = (now_jst - dt.timedelta(days=7)).isoformat(timespec="minutes")
 
     added, skipped_no_precedent, conflicts, already, past = [], [], [], 0, 0
-    for month, day, _country, _imp, name, _desc in load_source_rows():
-        rule = match_rule(name)
-        if rule is None:
-            if is_known_skip(name):
-                skipped_no_precedent.append(f"{month}/{day:02d} {name}")
-            else:
-                skipped_no_precedent.append(f"{month}/{day:02d} {name}  ⚠️未分類")
-            continue
-        entry = build_entry(year, month, day, rule, name)
+    planned = []                                # 表の行のうち決まり（RULES）に当たるもの＝(台帳に入れる形, 決まり)
+    for year in sorted(tables):
+        for month, day, _country, _imp, name, _desc in tables[year]:
+            rule = match_rule(name)
+            if rule is None:
+                if is_known_skip(name):
+                    skipped_no_precedent.append(f"{year}/{month}/{day:02d} {name}")
+                else:
+                    skipped_no_precedent.append(f"{year}/{month}/{day:02d} {name}  ⚠️未分類")
+                continue
+            try:
+                planned.append((build_entry(year, month, day, rule, name), rule))
+            except ValueError:    # 2/30 のような行。1行の書き間違いで、ほかの全部の取り込みまで止めない（一覧に出す）
+                skipped_no_precedent.append(f"{year}/{month}/{day:02d} {name}  ⚠️ありえない日付")
+    in_table = {(e["datetime"][:10], r["label"]) for e, r in planned}
+
+    for entry, rule in planned:
         key = (entry["datetime"][:10], rule["label"])
-        # 既存台帳に同じ月・同じ種類があるなら、日付が合うかを突き合わせる
-        prev = have_month_label.get((entry["datetime"][:7], rule["label"]))
-        if prev and prev[:10] != entry["datetime"][:10]:
-            conflicts.append((rule["label"], prev, entry["datetime"][:16]))
-            continue          # ← 不一致は黙って上書きしない。人が判断する
-        if key in have or prev:
+        if key in have:
             already += 1
+            continue
+        # 台帳の同じ月・同じ種類に「表には無い日付」があれば食い違い（どちらかが誤り＝黙って足さない。人が判断する）。
+        # ⚠️ 表にもある日付は相手にしない＝1つの月に2回出る種類（豪CPI の 2027-01-06 と 01-27）の2回目を
+        #    「食い違い」と取り違えない（片方だけ先に台帳へ入っていても、もう片方を足せる）
+        stray = [p for p in have_month_label.get((entry["datetime"][:7], rule["label"]), [])
+                 if (p[:10], rule["label"]) not in in_table]
+        if stray:
+            conflicts.append((rule["label"], stray[0], entry["datetime"][:16]))
             continue
         if entry["datetime"] < cutoff:
             past += 1
             continue
         added.append(entry)
+        have.add(key)             # 同じ表に同じ行が2つあっても二重に足さない
+    return dict(added=added, skipped=skipped_no_precedent, conflicts=conflicts, already=already, past=past)
 
-    print(f"ECONOMIC_EVENTS_2026: {len(load_source_rows())} 行")
+
+def main():
+    apply_changes = "--write" in sys.argv
+
+    data = json.load(open(TARGET_JSON, encoding="utf-8"))
+    existing = data["events"]
+    tables = load_source_tables()
+    plan = plan_additions(tables, existing, dt.datetime.now(JST))
+    added, skipped_no_precedent, conflicts = plan["added"], plan["skipped"], plan["conflicts"]
+    already, past = plan["already"], plan["past"]
+
+    for year in sorted(tables):
+        print(f"ECONOMIC_EVENTS_{year}: {len(tables[year])} 行")
     print(f"  既に economic-events.json にある: {already} 件")
     print(f"  過ぎたイベント（足さない）      : {past} 件")
     print(f"  先例が無いので足さない          : {len(skipped_no_precedent)} 件")
@@ -287,11 +340,11 @@ def main():
     if future_c:
         print(f"  🚨 今後分で日付が食い違う      : {len(future_c)} 件（どちらも採用しない＝人が直す）")
         for label, a, b in future_c:
-            print(f"      - {label}: economic-events.json={a} / ECONOMIC_EVENTS_2026={b}")
+            print(f"      - {label}: economic-events.json={a} / ECONOMIC_EVENTS_{b[:4]}={b}")
     if past_c:
         print(f"  （参考）過ぎた回の食い違い      : {len(past_c)} 件（直しても影響なし・記録のみ）")
         for label, a, b in past_c:
-            print(f"      - {label}: economic-events.json={a} / ECONOMIC_EVENTS_2026={b}")
+            print(f"      - {label}: economic-events.json={a} / ECONOMIC_EVENTS_{b[:4]}={b}")
     print(f"  追加する                        : {len(added)} 件")
     for e in sorted(added, key=lambda x: x["datetime"]):
         print(f"      + {e['datetime'][:16]} [{e['impact']:8s}] {e['name']}")
