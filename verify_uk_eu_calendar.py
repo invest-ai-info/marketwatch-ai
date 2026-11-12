@@ -24,7 +24,7 @@
 やること:
    ① BOE の MPC 日程 / ECB 理事会日程（＝年間日程が公式に出ている）
    ② ONS 各速報の「Next release」（＝公式に確定しているのは**次回1件だけ**）
-   を取得して `economic-events.json` / `ECONOMIC_EVENTS_2026` と突合。
+   を取得して `economic-events.json` / 年ごとの表 `ECONOMIC_EVENTS_<年>` と突合。
    食い違い・欠落・解析不能があれば標準出力に出して exit 1（Actions が Issue 化する）。
 
 ⚠️ 黙って通さない: ページ構造が変わって解析できなかった場合も **exit 1**
@@ -161,18 +161,38 @@ def ours_from_json(pattern):
             for e in d.get("events", []) if re.search(pattern, e.get("name", ""))}
 
 
+# 年ごとの表「ECONOMIC_EVENTS_<4桁の年> = [ ... ]」。表の名前の年がそのまま発表日の年
+# （2026-11-12 まで "ECONOMIC_EVENTS_2026" と dt.date(2026, …) が直に書いてあり、翌年の表を読めなかった。
+#   verify_au_calendar.py もここの ours_from_master を借りている）
+MASTER_TABLE_RE = re.compile(r"^ECONOMIC_EVENTS_(\d{4})\s*=\s*\[(.*?)\n\]", re.S | re.M)
+MASTER_ROW_RE = re.compile(r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"')
+
+
+def master_from_source(src, pattern):
+    """generate_market_news.py の中身から、名前が pattern に当たる行の日付の集まりを作る（純関数＝テスト用）。"""
+    out = set()
+    for t in MASTER_TABLE_RE.finditer(src):
+        year = int(t.group(1))
+        for mo, dy, _c, _i, name in MASTER_ROW_RE.findall(t.group(2)):
+            if not re.search(pattern, name):
+                continue
+            try:
+                out.add(dt.date(year, int(mo), int(dy)))
+            except ValueError:
+                continue
+    return out
+
+
 def ours_from_master(pattern):
     path = os.path.join(HERE, "generate_market_news.py")
     if not os.path.exists(path):
         return set()
-    src = open(path, encoding="utf-8").read()
-    m = re.search(r"ECONOMIC_EVENTS_2026\s*=\s*\[(.*?)\n\]", src, re.S)
-    if not m:
-        return set()
-    return {dt.date(2026, int(mo), int(dy))
-            for mo, dy, _c, _i, name in re.findall(
-                r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"', m.group(1))
-            if re.search(pattern, name)}
+    return master_from_source(open(path, encoding="utf-8").read(), pattern)
+
+
+def master_label(d):
+    """その日付が入るはずの表の名前（お知らせ・食い違いの文に出す）。"""
+    return f"ECONOMIC_EVENTS_{d.year}"
 
 
 def wd(d):
@@ -212,15 +232,15 @@ def check_policy(key, url, label, parse, pattern, today, problems, notes):
     for d in future:
         if d not in js:
             notes.append(f"economic-events.json: {d}（{wd(d)}）の{label}が未登録")
-        if d.year == 2026 and d not in ms:
-            notes.append(f"ECONOMIC_EVENTS_2026: {d}（{wd(d)}）の{label}が未登録")
+        if d not in ms:
+            notes.append(f"{master_label(d)}: {d}（{wd(d)}）の{label}が未登録")
     # 逆向き＝我々にあって公式に無い日付（＝誤登録）。ただし公式が先の年をまだ出していない
     # 期間は正常に起きるので、**公式の最終日より前のものだけ**を食い違いとして扱う。
     last, official = max(found), set(found)
-    for lbl, mine in (("economic-events.json", js), ("ECONOMIC_EVENTS_2026", ms)):
+    for lbl, mine in (("economic-events.json", js), (None, ms)):
         for d in sorted(mine):
             if today <= d <= last and d not in official:
-                problems.append(f"🚨 {lbl}: {d} に{label}の発表を載せているが、公式日程に無い")
+                problems.append(f"🚨 {lbl or master_label(d)}: {d} に{label}の発表を載せているが、公式日程に無い")
 
 
 def main():
@@ -264,8 +284,8 @@ def main():
             continue
         if nxt not in ours_from_json(pattern):
             notes.append(f"economic-events.json: {nxt}（{wd(nxt)}）の{key}が未登録")
-        if nxt.year == 2026 and nxt not in ours_from_master(pattern):
-            notes.append(f"ECONOMIC_EVENTS_2026: {nxt}（{wd(nxt)}）の{key}が未登録")
+        if nxt not in ours_from_master(pattern):
+            notes.append(f"{master_label(nxt)}: {nxt}（{wd(nxt)}）の{key}が未登録")
 
     print("\n" + "-" * 50)
     for n in notes:
@@ -274,7 +294,7 @@ def main():
         print(f"\n❌ 食い違い/検証不能 {len(problems)} 件")
         for p in problems:
             print(f"   {p}")
-        print("\n→ generate_market_news.py の ECONOMIC_EVENTS_2026 と economic-events.json を"
+        print("\n→ generate_market_news.py の ECONOMIC_EVENTS_<年> と economic-events.json を"
               "公式の日付に直してください。**曜日から推測しないこと**。")
         return 1
     print("✅ 公式日程と一致（今日以降の回）")
