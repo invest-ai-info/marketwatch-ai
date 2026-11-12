@@ -65,7 +65,7 @@
 | **indicator-digest.yml** 🆕 | **routine の push に相乗り（06:13-06:20 JST）**＋cron保険 | **今日の重要指標を朝いちでメール**（`send_indicator_digest.py`）。🚨 2026-09-17 の実損が動機＝英中銀の発表27分前に建てて当日損失の約半分を出した。環境警戒スコアは**シグナルが出たときのメールの中身でしか届かない**ので、手動の発注は誰も見張っていなかった。**判断の直前ではなくポジションを持つ前に渡す**のが趣旨。件名で状態がわかる（🚨今日ある／📅7日以内／⚪無し）。読むだけでデータは書き換えない。🆕 2026-10-08〜 日本株の「寄りで買わない」目印 C・B候補の銘柄一覧の節（`jp_markers.py`＝夕方の jp-highs が同じ日足で作る `jp-highs.json` の markers・自分用のメールだけ＝サイトには出さない）。10-08夜〜 💣地雷の印・上がりすぎた株（`jp_momentum.py`・J42F）・今日のファンダ／決算／研究の要約（`morning_brief.py`）・通貨の強弱（`fx_strength.py`）・中国豪州の見出し（`asia_news.py`）。**平日15時前・20時前のロンドン前／NY前のメール＝`session-brief.yml`**（相乗り・`session_brief.py`） |
 | **automation-health.yml** 🆕 | 09:30 | 裏方自動化の見張り番（cron/routineの沈黙の失敗を検知。Actionsは実行成否、routineは出力鮮度で判定→異常時Issue化。`check_automation_health.py`） |
 | **edinet-yuho.yml** 🆕 | 平日 19:40 | 話題の企業の有報本文→`edinet-yuho.json`（company-weekly-auto の日本株用。詳細は SYNC禁忌節） |
-| **verify-calendar.yml** 🆕 | 月曜 07:10 ＋ 毎月25日 07:10 | **米・英・ユーロ圏の発表日を各国の公式日程と機械で突合**（米=`verify_economic_calendar.py`／英EU=`verify_uk_eu_calendar.py`。**2本を1ステップで回す**＝片方が落ちても両方のレポートが Issue に載る）。食い違い・解析不能・比較0件のいずれでも Issue 化。🔑 **Claude セッションからは bls.gov が egress 遮断されるが Actions のランナーからは届く**＝検証はここで回す |
+| **verify-calendar.yml** 🆕 | 月曜 07:10 ＋ 毎月25日 07:10 | **米・英・ユーロ圏・豪州の発表日を各国の公式日程と機械で突合**（米=`verify_economic_calendar.py`／英EU=`verify_uk_eu_calendar.py`／豪=`verify_au_calendar.py`。**3本を1ステップで回す**＝1本が落ちても全部のレポートが Issue に載る）。食い違い・解析不能・比較0件のいずれでも Issue 化。🔑 **Claude セッションからは bls.gov が egress 遮断されるが Actions のランナーからは届く**＝検証はここで回す |
 | **jp-rankings.yml** 🆕 | **routine の push に相乗り**（news 台帳 17:5x・sns 19:1x JST）＋cron 保険4本（16:40〜19:10 のつもりが実測 21〜23時台） | 日本株ランキング生成（`build_jp_rankings.py`→`jp-rankings.json`。詳細は下の SYNC禁忌節の同名項目）＋ 完了で **jp-highs.yml** を起動（下の行） |
 | **jp-highs.yml** 🆕 | **jp-rankings の完了**（`workflow_run`） | **高値・安値の更新銘柄**（2026-10-06 オーナー依頼・東証の全上場 約3,700）＝`build_jp_highs.py`→`jp-highs.json`→hot-assets「🏔️ 高値・安値更新」。1回13〜15分・**一覧が変わったときだけ** update-market-news を起動。年初来・上場来の決め方（Yahoo の記録の始まりと JPX の上場日の確かめ）は OPERATIONS.md「CLAUDE.md から移した詳しい説明」。点検 `jp-highs-audit.yml`・テスト `tests/test_build_jp_highs.py`・鮮度は automation-health §⑫c |
 | **研究ラボ・前向きの検証（約50本）** 🆕 | 手動のみ／前向きは平日・毎月 | **一覧・登録・結果＝`RESEARCH_LABS.md`**（2026-10-08 に CLAUDE.md から移した＝肥大で予約が文脈あふれで止まったため）。🚨 **新しいラボ・前向きを足したら `RESEARCH_LABS.md` に1行（CLAUDE.md には書かない）**。共通の決まり＝事前登録 `PILLAR_PREREG.md`（結果を見る前にコミット）・check（損益なし）→ run 1回・出力は GitHub 側生成＝push 禁止（SYNC禁忌）・前向きは研究の地図（`research_map.collect_studies` に `cat` 付き）・見張り番（`check_automation_health.py`）・検証済みリスト（`verified_list.SOURCES`／`MARKER_SOURCES`）に登録・値段の置き場は `jp-bars-cache.yml`（為替は `fx-bars-cache.yml`） |
@@ -182,7 +182,7 @@ FX (AUD):     AUDUSD, EURAUD, GBPAUD
 | **`publish_article.py`** | 記事公開の②〜⑤を1コマンド・冪等（上書き・置き場所・カテゴリのゲート付き） |
 | **`apply_site_frame.py`**／**`apply_logo.py`**／**`apply_series_nav.py`** | サイト共通の枠・ロゴ・シリーズの前後リンクを冪等に敷く（前後リンクは手で書かない） |
 | **`inject_ads.py`** | 広告を記事末に冪等注入（選ばれた1つだけ描画・「広告」ラベル必須・推奨文を足さない） |
-| **`sync_economic_events.py`**／**`verify_economic_calendar.py`**／**`verify_uk_eu_calendar.py`** | 指標カレンダーの生成（`RULES` に無い指標は警告が鳴らない）と一次情報との突合（曜日ルールは足さない） |
+| **`sync_economic_events.py`**／**`verify_*_calendar.py`**（米・英EU・豪） | 指標カレンダーの生成（`RULES` に無い指標は警告が鳴らない）と一次情報との突合（曜日ルールは足さない） |
 | **`check_plain_japanese.py`** | 研究日誌の「やさしい日本語」検査（固定・編集禁止） |
 | **`auto_pull.py`**／**`_reconcile.py`** | 手元を GitHub の最新にそろえる／手元と本番の差を向き付きで出す（手元専用） |
 | **`style_diagnosis.py`** | 投資スタイル診断（口座履歴は入力も出力も `research/` の下だけ） |
