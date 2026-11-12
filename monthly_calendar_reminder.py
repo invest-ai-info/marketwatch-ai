@@ -51,6 +51,7 @@ def ask_gemini_for_calendar(year, month, api_key):
 - EU: ECB 政策金利、ラガルド総裁会見
 - 英国: BOE 政策金利、ベイリー総裁会見
 - 中国: CPI、PMI、貿易収支
+- 豪州: RBA 政策金利、雇用統計、CPI
 - OPEC: 月次会合
 
 【出力フォーマット】
@@ -101,6 +102,7 @@ def build_json_template(events_text):
                 "UK": '["GBPUSD=X", "GBPJPY=X", "GBPAUD=X"]',
                 "JP": '["NKD=F", "USDJPY=X"]',
                 "CN": '["NKD=F", "CL=F", "AUDJPY=X"]',
+                "AU": '["AUDJPY=X", "AUDUSD=X", "EURAUD=X", "GBPAUD=X"]',
                 "OPEC": '["CL=F"]',
             }
             affected = affected_map.get(country, '["all"]')
