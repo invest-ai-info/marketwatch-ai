@@ -44,6 +44,11 @@ SCRATCH_LIMIT = 30          # 使い捨てscriptがこれを超えたらアー�
 SCRATCH_RE = re.compile(r"^_(fix|push|probe|test|recon|inspect|check|verify|apply|reset|syntax|"
                         r"martingale|overshoot|panic|selection|strategy|trendfollow|volume|money|"
                         r"mfe|sr_|xtab|validate_)")
+# 使い捨てに数えないもの（2026-11-12）。`_test_*.py` は 7月から「手元専用の回帰テスト」の置き場になり
+# （`_test_site_frame.py`・`_test_compliance_gate.py` など31本）、`_reconcile.py` は現役の道具。
+# 上の SCRATCH_RE は 6月の「一度きりの _test/_recon」を想定したままで、34本のうち32本が現役＝
+# 「保管庫へ移せ」という警告が片付けようのない数になっていた。現役のものを保管庫へ移すとテストが動かなくなる。
+SCRATCH_KEEP_RE = re.compile(r"^_(test_.+|reconcile)\.py$")
 
 # セクション見出し（h2）。⚠️ 2026-07-29: 旧実装は `l.startswith("## ")` だったが、SESSION_HANDOFF は
 # 全体が引用ブロック記法（`> ## …`）で書かれているため **14個中10個の見出しが不可視＝検出0個** で、
@@ -95,9 +100,9 @@ def main():
 
     # ④ 使い捨てスクラッチ script の堆積
     allpy = [os.path.basename(x) for x in glob.glob(p("*.py"))]
-    scratch = [x for x in allpy if SCRATCH_RE.match(x)]
+    scratch = [x for x in allpy if SCRATCH_RE.match(x) and not SCRATCH_KEEP_RE.match(x)]
     if len(scratch) > SCRATCH_LIMIT:
-        findings.append(("🟡", f"使い捨てscriptが {len(scratch)}本（_fix/_push/_probe/_test等）＝`_scratch_archive/` へ移動でフォルダ整理（稼働系 _jp_* は対象外）"))
+        findings.append(("🟡", f"使い捨てscriptが {len(scratch)}本（_fix/_push/_probe等）＝`_scratch_archive/` へ移動でフォルダ整理（稼働系 _jp_*・回帰テスト _test_*・_reconcile は対象外）"))
 
     # ⑤ 記憶の"重さ"（⚠️ 2026-07-29 改定＝「件数」→「1ファイルのKB」・オーナー承認）
     # 旧実装は MEMORY.md の索引行が30件以上で `/consolidate-memory` を促していたが、実測すると
