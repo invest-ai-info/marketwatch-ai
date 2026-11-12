@@ -136,7 +136,7 @@ def assess_state(now_jst):
     todos, stats = [], {}
     now_iso = now_jst.isoformat(timespec="minutes")
 
-    # ── 経済指標（sync_economic_events.py が ECONOMIC_EVENTS_2026 から生成）──
+    # ── 経済指標（sync_economic_events.py が年ごとの表 ECONOMIC_EVENTS_<年> から生成）──
     try:
         ev = json.load(open(os.path.join(here, "economic-events.json"), encoding="utf-8"))["events"]
         ind = sorted((e for e in ev if e.get("category") != "market_holiday"),
@@ -147,8 +147,8 @@ def assess_state(now_jst):
         stats["ind_next3"] = [(e["datetime"][:16], e["name"]) for e in fut[:3]]
         if not fut:
             todos.append(
-                "🚨 経済指標の未来分が **0件**。generate_market_news.py の "
-                "ECONOMIC_EVENTS_2026 に翌月以降を追記してから、このワークフローを再実行してください。"
+                "🚨 経済指標の未来分が **0件**。generate_market_news.py の年ごとの表 "
+                "ECONOMIC_EVENTS_<年> に翌月以降を追記してから、このワークフローを再実行してください。"
                 "（economic-events.json を直接編集しても生成対象にはなりません）")
         else:
             runway = (datetime.fromisoformat(fut[-1]["datetime"]) - now_jst).days
@@ -156,8 +156,10 @@ def assess_state(now_jst):
             if runway < 75:
                 todos.append(
                     f"⚠️ 経済指標が **あと{runway}日ぶん**（最終 {fut[-1]['datetime'][:10]}）。"
-                    f"ECONOMIC_EVENTS_2026 は年ごとのハードコード表なので、"
-                    f"**翌年ぶんを書き足さないと年明けに空になります。**下の候補リストを材料にどうぞ")
+                    f"元の表は年ごと（ECONOMIC_EVENTS_<年>）で、公式がまだ出していない先の分は入っていません。"
+                    f"**各国の公式の日程で確かめて書き足さないと、その先が空になります**"
+                    f"（翌年の表が無ければ ECONOMIC_EVENTS_<翌年> = [...] を作るだけで読まれます）。下の候補リストは材料です"
+                    f"（そのまま写さず公式で確かめる）")
     except Exception as e:
         todos.append(f"🚨 economic-events.json を読めませんでした: {e}")
 
@@ -212,7 +214,7 @@ def send_report_email(year, month, todos, stats, raw_text):
         if raw_text:
             L += ["━━━━━━━━━━━━━━━━━━━━━",
                   f"【材料】Gemini が挙げた {year}年{month}月の主要指標候補",
-                  "  ※ そのまま貼らず、ECONOMIC_EVENTS_2026 の書式",
+                  "  ※ そのまま貼らず、ECONOMIC_EVENTS_<年> の書式",
                   "     (月, 日, \"us\", \"high\", \"名称\", \"説明\") に直して追記してください", "",
                   raw_text, ""]
     else:
@@ -220,7 +222,7 @@ def send_report_email(year, month, todos, stats, raw_text):
               "✅ 対応は要りません。指標も決算も自動で更新済みです。", ""]
 
     L += ["━━━━━━━━━━━━━━━━━━━━━",
-          "指標  = sync_economic_events.py（ECONOMIC_EVENTS_2026 から生成）",
+          "指標  = sync_economic_events.py（年ごとの表 ECONOMIC_EVENTS_<年> から生成）",
           "決算  = build_earnings_calendar.py（Nasdaq API + yfinance）",
           "休場  = generate_market_holidays.py（米英は2027年・東証は2028年まで自動）",
           "見張り = automation-health §⑬（先詰まりを毎朝チェック）",
