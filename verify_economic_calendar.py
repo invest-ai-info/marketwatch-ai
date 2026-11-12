@@ -15,7 +15,7 @@
 
 やること:
    BLS の公式スケジュール（CPI / Employment Situation）を取得 → 対象月と発表日を抽出 →
-   `economic-events.json` と `ECONOMIC_EVENTS_2026`（generate_market_news.py）の日付と突合。
+   `economic-events.json` と年ごとの表 `ECONOMIC_EVENTS_<年>`（generate_market_news.py）の日付と突合。
    食い違い・欠落があれば標準出力に出して exit 1（Actions が Issue 化する）。
 
 ⚠️ 黙って通さない: ページ構造が変わって解析できなかった場合も **exit 1**（「検証できなかった」を
@@ -132,6 +132,12 @@ def parse_schedule(html_text, debug=False):
     return found
 
 
+# 台帳の名前は sync_economic_events.py のラベル＋括弧＝「米 CPI（12月分）」「米雇用統計 NFP（12月分）」。
+# 🚨 2026-11-12: 「 NFP」を読めず、台帳の米雇用統計が1件も当たっていなかった（登録済みなのに毎回「未登録」と出て、
+#    台帳の日付が誤っていても気づけない形だった）。
+JSON_NAME_RE = re.compile(r"^米 ?(CPI|雇用統計)(?: ?NFP)?（(\d{1,2})月分）")
+
+
 def ours_from_json():
     """economic-events.json から {(年, 対象月, 指標): date} を作る。"""
     path = os.path.join(HERE, "economic-events.json")
@@ -141,7 +147,7 @@ def ours_from_json():
     out = {}
     for e in d.get("events", []):
         name = e.get("name", "")
-        m = re.match(r"^米 ?(CPI|雇用統計)（(\d{1,2})月分）", name)
+        m = JSON_NAME_RE.match(name)
         if not m:
             continue
         when = dt.datetime.fromisoformat(e["datetime"]).astimezone(JST).date()
@@ -150,25 +156,37 @@ def ours_from_json():
     return out
 
 
+# 年ごとの表「ECONOMIC_EVENTS_<4桁の年> = [ ... ]」。表の名前の年がそのまま発表日の年
+# （2026-11-12 まで "ECONOMIC_EVENTS_2026" と dt.date(2026, …) が直に書いてあり、翌年の表を読めなかった）
+MASTER_TABLE_RE = re.compile(r"^ECONOMIC_EVENTS_(\d{4})\s*=\s*\[(.*?)\n\]", re.S | re.M)
+MASTER_ROW_RE = re.compile(r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"')
+
+
+def master_from_source(src):
+    """generate_market_news.py の中身から {(年, 対象月, 指標): date} を作る（純関数＝テスト用）。
+    年は発表日ではなく**対象月の年**（1月に出る12月分は前の年）。"""
+    out = {}
+    for t in MASTER_TABLE_RE.finditer(src):
+        year = int(t.group(1))
+        for mo, dy, _c, _i, name in MASTER_ROW_RE.findall(t.group(2)):
+            k = re.match(r"^米(CPI|雇用統計)（(\d{1,2})月分）", name)
+            if not k:
+                continue
+            try:
+                rel = dt.date(year, int(mo), int(dy))
+            except ValueError:
+                continue
+            ref_mo = int(k.group(2))
+            out[(rel.year if ref_mo <= rel.month else rel.year - 1, ref_mo, k.group(1))] = rel
+    return out
+
+
 def ours_from_master():
-    """generate_market_news.py の ECONOMIC_EVENTS_2026 から {(年, 対象月, 指標): date}。"""
+    """generate_market_news.py の年ごとの表（ECONOMIC_EVENTS_<年>）から {(年, 対象月, 指標): date}。"""
     path = os.path.join(HERE, "generate_market_news.py")
     if not os.path.exists(path):
         return {}
-    src = open(path, encoding="utf-8").read()
-    m = re.search(r"ECONOMIC_EVENTS_2026\s*=\s*\[(.*?)\n\]", src, re.S)
-    if not m:
-        return {}
-    out = {}
-    for mo, dy, _c, _i, name in re.findall(
-            r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"', m.group(1)):
-        k = re.match(r"^米(CPI|雇用統計)（(\d{1,2})月分）", name)
-        if not k:
-            continue
-        rel = dt.date(2026, int(mo), int(dy))
-        ref_mo = int(k.group(2))
-        out[(rel.year if ref_mo <= rel.month else rel.year - 1, ref_mo, k.group(1))] = rel
-    return out
+    return master_from_source(open(path, encoding="utf-8").read())
 
 
 def main():
@@ -205,7 +223,7 @@ def main():
             if rel < today:
                 continue                       # 過ぎた回は直しても意味がない
             compared += 1
-            for label, mine in (("economic-events.json", js), ("ECONOMIC_EVENTS_2026", ms)):
+            for label, mine in (("economic-events.json", js), (f"ECONOMIC_EVENTS_{rel.year}", ms)):
                 got = mine.get((yr, mo, key))
                 if got is None:
                     notes.append(f"{label}: {yr}年{mo}月分の{prefix}が未登録（公式は {rel}）")
@@ -225,7 +243,7 @@ def main():
         print(f"\n❌ 食い違い/検証不能 {len(problems)} 件")
         for p in problems:
             print(f"   {p}")
-        print("\n→ generate_market_news.py の ECONOMIC_EVENTS_2026 と economic-events.json を"
+        print("\n→ generate_market_news.py の ECONOMIC_EVENTS_<年> と economic-events.json を"
               "公式の日付に直してください。**曜日から推測しないこと**（2026-09-11 事故）。")
         return 1
     print("✅ 公式スケジュールと一致（今日以降の回）")
