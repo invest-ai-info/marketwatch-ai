@@ -2239,6 +2239,266 @@ ECONOMIC_EVENTS_2026 = [
     (12,18, "jp","high","日銀会合（結果発表）",""),
 ]
 
+# ─────────────────────────────────────────
+# 2027年の主要経済イベント（書式は2026年の表と同じ）。2026-11-12 に作った。
+# 🔑 **日付はぜんぶ、各発表元の公式ページで 2026-11-12 に確かめた**（曜日や前の年の並びからの推測は1件も無い）。
+#    行は scratch の組み立てスクリプトが日付の一覧から機械で作った（手で打った行は無い＝写し間違いを避ける）。
+#    出どころ:
+#      米雇用統計・米CPI・PPI＝米労働省 bls.gov/schedule/news_release/（empsit・cpi・ppi）
+#      小売売上高＝米国勢調査局 census.gov/retail/release_schedule.html（Advance Monthly Sales）
+#      米GDP・PCEデフレーター＝米経済分析局 bea.gov/news/schedule/next-year（2つは同じ日に出る）
+#      FOMC＝federalreserve.gov/monetarypolicy/fomccalendars.htm（* の回が経済見通しあり。FRB は「前の会合で確定するまで仮」と書いている）
+#      日銀会合＝boj.or.jp/mopo/mpmsche_minu/index.htm／日銀短観＝日銀「統計データの公表・掲載予定」
+#      全国CPI・鉱工業生産＝e-Stat の公表予定（00200573・00550300）／日本GDP＝内閣府の公表予定／貿易統計＝財務省 customs.go.jp/toukei/calendar/calend.htm
+#      ECB＝ecb.europa.eu の理事会の日程（Day 2）／ユーロ圏HICP速報＝ECB の統計カレンダー（Eurostat 本体は2027年分を未掲載）
+#      ユーロ圏GDP速報＝Eurostat の QNA_release_calendar.pdf（Preliminary GDP flash・**暫定**と明記あり）
+#      英中銀＝bankofengland.co.uk の 2027 confirmed dates／英CPI・英雇用統計・英GDP＝ons.gov.uk/releases/ の各ページ（36件とも Release date を確認）
+#      豪中銀＝rba.gov.au の会合日程／豪雇用統計・豪CPI＝abs.gov.au の各ページの Future releases
+# 🚧 **公式がまだ出していないので入れていないもの**（出たら足す。推測で埋めない）:
+#      中国（CPI・製造業PMI・月次の経済指標・GDP）…… 国家統計局の2027年の表は例年12月下旬〜年明けに出る。財新PMI も未確認
+#      ISM製造業・ISM非製造業 …… 公式の日程のページがログイン必須で読めない
+#      日銀短観 6月調査より先（7月〜）／全国CPI・鉱工業生産 4月の発表より先／日本GDP 5月の発表より先／貿易統計 5月の発表より先
+#        …… 日本の統計は年度ごとに予定が出る（2027年4月以降の分は例年1〜3月に出る）
+#      豪雇用統計 2月より先・豪CPI 2月より先 …… 豪統計局は数回先までしか出さない（verify_au_calendar.py が毎週見て、近づくと知らせる）
+#    足したら `python sync_economic_events.py`（書き込まず結果だけ見る）→ sync → monthly-calendar-reminder.yml（月次メールが1通飛ぶ）。
+ECONOMIC_EVENTS_2027 = [
+    # ── 1月 ──
+    ( 1,  6, "eu","mid","ユーロ圏HICP速報（12月分）",""),
+    ( 1,  6, "au","mid","豪CPI（11月分）","日本時間9:30・豪中銀の判断材料"),
+    ( 1,  8, "us","high","米雇用統計（12月分）",""),
+    ( 1, 13, "us","high","米CPI（12月分）",""),
+    ( 1, 14, "us","mid","PPI（12月分）",""),
+    ( 1, 15, "us","mid","小売売上高（12月分）",""),
+    ( 1, 15, "uk","mid","英GDP（月次・11月分）",""),
+    ( 1, 19, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 1, 20, "uk","high","英CPI（12月分）","BOEの金利判断に直結"),
+    ( 1, 21, "jp","high","日銀金融政策決定会合（1日目）",""),
+    ( 1, 21, "jp","mid","貿易統計（12月分）",""),
+    ( 1, 21, "au","mid","豪雇用統計（12月分）","日本時間9:30・豪中銀の判断材料"),
+    ( 1, 22, "jp","high","日銀会合（結果発表）","展望レポートあり"),
+    ( 1, 22, "jp","mid","全国CPI（12月分）",""),
+    ( 1, 26, "us","high","FOMC（1日目）",""),
+    ( 1, 27, "us","high","FOMC（結果発表）",""),
+    ( 1, 27, "au","mid","豪CPI（12月分）","日本時間9:30・豪中銀の判断材料"),
+    ( 1, 28, "us","mid","米GDP速報値（Q4）",""),
+    ( 1, 28, "us","mid","PCEデフレーター（12月分）","FRB重視のインフレ指標"),
+    ( 1, 29, "jp","mid","鉱工業生産（12月速報）",""),
+    ( 1, 29, "eu","mid","ユーロ圏GDP速報（Q4）",""),
+    # ── 2月 ──
+    ( 2,  2, "eu","mid","ユーロ圏HICP速報（1月分）",""),
+    ( 2,  4, "eu","high","ECB理事会（金利決定）",""),
+    ( 2,  4, "uk","high","英中銀 政策金利発表（MPC）","日本時間21:00（英12:00）"),
+    ( 2,  5, "us","high","米雇用統計（1月分）",""),
+    ( 2,  9, "au","high","豪中銀 政策金利発表（RBA）","日本時間12:30（豪14:30）"),
+    ( 2, 11, "us","high","米CPI（1月分）",""),
+    ( 2, 12, "us","mid","PPI（1月分）",""),
+    ( 2, 12, "uk","mid","英GDP（月次・12月分）",""),
+    ( 2, 15, "jp","mid","日本GDP速報値（Q4）","10〜12月期・1次速報"),
+    ( 2, 16, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 2, 17, "us","mid","小売売上高（1月分）",""),
+    ( 2, 17, "jp","mid","貿易統計（1月分）",""),
+    ( 2, 17, "uk","high","英CPI（1月分）","BOEの金利判断に直結"),
+    ( 2, 19, "jp","mid","全国CPI（1月分）",""),
+    ( 2, 25, "us","mid","米GDP改定値（Q4）",""),
+    ( 2, 25, "us","mid","PCEデフレーター（1月分）","FRB重視のインフレ指標"),
+    ( 2, 26, "jp","mid","鉱工業生産（1月速報）",""),
+    # ── 3月 ──
+    ( 3,  2, "eu","mid","ユーロ圏HICP速報（2月分）",""),
+    ( 3,  5, "us","high","米雇用統計（2月分）",""),
+    ( 3, 10, "us","high","米CPI（2月分）",""),
+    ( 3, 11, "uk","mid","英GDP（月次・1月分）",""),
+    ( 3, 12, "us","mid","PPI（2月分）",""),
+    ( 3, 16, "us","mid","小売売上高（2月分）",""),
+    ( 3, 16, "us","high","FOMC（1日目）","経済見通し・ドットプロット"),
+    ( 3, 16, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 3, 17, "us","high","FOMC（結果発表）","記者会見あり"),
+    ( 3, 17, "jp","high","日銀金融政策決定会合（1日目）",""),
+    ( 3, 17, "jp","mid","貿易統計（2月分）",""),
+    ( 3, 18, "jp","high","日銀会合（結果発表）",""),
+    ( 3, 18, "eu","high","ECB理事会（金利決定）",""),
+    ( 3, 18, "uk","high","英中銀 政策金利発表（MPC）","日本時間21:00（英12:00）"),
+    ( 3, 19, "jp","mid","全国CPI（2月分）",""),
+    ( 3, 23, "au","high","豪中銀 政策金利発表（RBA）","日本時間12:30（豪14:30）"),
+    ( 3, 24, "uk","high","英CPI（2月分）","BOEの金利判断に直結"),
+    ( 3, 31, "us","mid","米GDP確定値（Q4）",""),
+    ( 3, 31, "us","mid","PCEデフレーター（2月分）","FRB重視のインフレ指標"),
+    ( 3, 31, "jp","mid","鉱工業生産（2月速報）",""),
+    # ── 4月 ──
+    ( 4,  1, "jp","high","日銀短観（3月調査）","企業景況感"),
+    ( 4,  1, "eu","mid","ユーロ圏HICP速報（3月分）",""),
+    ( 4,  2, "us","high","米雇用統計（3月分）",""),
+    ( 4, 13, "us","high","米CPI（3月分）",""),
+    ( 4, 14, "us","mid","PPI（3月分）",""),
+    ( 4, 14, "uk","mid","英GDP（月次・2月分）",""),
+    ( 4, 16, "us","mid","小売売上高（3月分）",""),
+    ( 4, 20, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 4, 21, "jp","mid","貿易統計（3月分）",""),
+    ( 4, 21, "uk","high","英CPI（3月分）","BOEの金利判断に直結"),
+    ( 4, 27, "us","high","FOMC（1日目）",""),
+    ( 4, 27, "jp","high","日銀金融政策決定会合（1日目）",""),
+    ( 4, 28, "us","high","FOMC（結果発表）",""),
+    ( 4, 28, "jp","high","日銀会合（結果発表）","展望レポートあり"),
+    ( 4, 29, "us","mid","米GDP速報値（Q1）",""),
+    ( 4, 29, "us","mid","PCEデフレーター（3月分）","FRB重視のインフレ指標"),
+    ( 4, 29, "eu","high","ECB理事会（金利決定）",""),
+    ( 4, 29, "uk","high","英中銀 政策金利発表（MPC）","日本時間20:00（英12:00）"),
+    ( 4, 30, "eu","mid","ユーロ圏GDP速報（Q1）",""),
+    # ── 5月 ──
+    ( 5,  3, "eu","mid","ユーロ圏HICP速報（4月分）",""),
+    ( 5,  4, "au","high","豪中銀 政策金利発表（RBA）","日本時間13:30（豪14:30）"),
+    ( 5,  7, "us","high","米雇用統計（4月分）",""),
+    ( 5, 12, "us","high","米CPI（4月分）",""),
+    ( 5, 13, "us","mid","PPI（4月分）",""),
+    ( 5, 14, "us","mid","小売売上高（4月分）",""),
+    ( 5, 14, "uk","mid","英GDP（月次・3月分）",""),
+    ( 5, 18, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 5, 19, "uk","high","英CPI（4月分）","BOEの金利判断に直結"),
+    ( 5, 27, "us","mid","米GDP改定値（Q1）",""),
+    ( 5, 27, "us","mid","PCEデフレーター（4月分）","FRB重視のインフレ指標"),
+    # ── 6月 ──
+    ( 6,  1, "eu","mid","ユーロ圏HICP速報（5月分）",""),
+    ( 6,  4, "us","high","米雇用統計（5月分）",""),
+    ( 6,  8, "us","high","FOMC（1日目）","経済見通し・ドットプロット"),
+    ( 6,  9, "us","high","FOMC（結果発表）","記者会見あり"),
+    ( 6, 10, "us","high","米CPI（5月分）",""),
+    ( 6, 10, "jp","high","日銀金融政策決定会合（1日目）",""),
+    ( 6, 10, "eu","high","ECB理事会（金利決定）",""),
+    ( 6, 11, "us","mid","PPI（5月分）",""),
+    ( 6, 11, "jp","high","日銀会合（結果発表）",""),
+    ( 6, 15, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 6, 16, "us","mid","小売売上高（5月分）",""),
+    ( 6, 16, "uk","high","英CPI（5月分）","BOEの金利判断に直結"),
+    ( 6, 17, "uk","high","英中銀 政策金利発表（MPC）","日本時間20:00（英12:00）"),
+    ( 6, 17, "uk","mid","英GDP（月次・4月分）",""),
+    ( 6, 22, "au","high","豪中銀 政策金利発表（RBA）","日本時間13:30（豪14:30）"),
+    ( 6, 25, "us","mid","米GDP確定値（Q1）",""),
+    ( 6, 25, "us","mid","PCEデフレーター（5月分）","FRB重視のインフレ指標"),
+    # ── 7月 ──
+    ( 7,  1, "eu","mid","ユーロ圏HICP速報（6月分）",""),
+    ( 7,  2, "us","high","米雇用統計（6月分）",""),
+    ( 7, 14, "us","high","米CPI（6月分）",""),
+    ( 7, 14, "uk","mid","英GDP（月次・5月分）",""),
+    ( 7, 15, "us","mid","PPI（6月分）",""),
+    ( 7, 16, "us","mid","小売売上高（6月分）",""),
+    ( 7, 20, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 7, 21, "jp","high","日銀金融政策決定会合（1日目）",""),
+    ( 7, 21, "uk","high","英CPI（6月分）","BOEの金利判断に直結"),
+    ( 7, 22, "jp","high","日銀会合（結果発表）","展望レポートあり"),
+    ( 7, 22, "eu","high","ECB理事会（金利決定）",""),
+    ( 7, 27, "us","high","FOMC（1日目）",""),
+    ( 7, 28, "us","high","FOMC（結果発表）",""),
+    ( 7, 29, "us","mid","米GDP速報値（Q2）",""),
+    ( 7, 29, "us","mid","PCEデフレーター（6月分）","FRB重視のインフレ指標"),
+    ( 7, 29, "uk","high","英中銀 政策金利発表（MPC）","日本時間20:00（英12:00）"),
+    ( 7, 30, "eu","mid","ユーロ圏GDP速報（Q2）",""),
+    # ── 8月 ──
+    ( 8,  3, "eu","mid","ユーロ圏HICP速報（7月分）",""),
+    ( 8,  6, "us","high","米雇用統計（7月分）",""),
+    ( 8, 10, "us","mid","PPI（7月分）",""),
+    ( 8, 10, "au","high","豪中銀 政策金利発表（RBA）","日本時間13:30（豪14:30）"),
+    ( 8, 11, "us","high","米CPI（7月分）",""),
+    ( 8, 13, "uk","mid","英GDP（月次・6月分）",""),
+    ( 8, 16, "us","mid","小売売上高（7月分）",""),
+    ( 8, 17, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 8, 18, "uk","high","英CPI（7月分）","BOEの金利判断に直結"),
+    ( 8, 25, "us","mid","米GDP改定値（Q2）",""),
+    ( 8, 25, "us","mid","PCEデフレーター（7月分）","FRB重視のインフレ指標"),
+    # ── 9月 ──
+    ( 9,  1, "eu","mid","ユーロ圏HICP速報（8月分）",""),
+    ( 9,  3, "us","high","米雇用統計（8月分）",""),
+    ( 9,  9, "eu","high","ECB理事会（金利決定）",""),
+    ( 9, 10, "us","mid","PPI（8月分）",""),
+    ( 9, 10, "uk","mid","英GDP（月次・7月分）",""),
+    ( 9, 14, "us","high","米CPI（8月分）",""),
+    ( 9, 14, "us","high","FOMC（1日目）","経済見通し・ドットプロット"),
+    ( 9, 14, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    ( 9, 15, "us","high","FOMC（結果発表）","記者会見あり"),
+    ( 9, 15, "uk","high","英CPI（8月分）","BOEの金利判断に直結"),
+    ( 9, 16, "us","mid","小売売上高（8月分）",""),
+    ( 9, 16, "uk","high","英中銀 政策金利発表（MPC）","日本時間20:00（英12:00）"),
+    ( 9, 21, "jp","high","日銀金融政策決定会合（1日目）",""),
+    ( 9, 22, "jp","high","日銀会合（結果発表）",""),
+    ( 9, 28, "au","high","豪中銀 政策金利発表（RBA）","日本時間13:30（豪14:30）"),
+    ( 9, 30, "us","mid","米GDP確定値（Q2）",""),
+    ( 9, 30, "us","mid","PCEデフレーター（8月分）","FRB重視のインフレ指標"),
+    # ── 10月 ──
+    (10,  1, "eu","mid","ユーロ圏HICP速報（9月分）",""),
+    (10,  8, "us","high","米雇用統計（9月分）",""),
+    (10, 14, "us","high","米CPI（9月分）",""),
+    (10, 14, "uk","mid","英GDP（月次・8月分）",""),
+    (10, 15, "us","mid","PPI（9月分）",""),
+    (10, 15, "us","mid","小売売上高（9月分）",""),
+    (10, 19, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    (10, 20, "uk","high","英CPI（9月分）","BOEの金利判断に直結"),
+    (10, 26, "us","high","FOMC（1日目）",""),
+    (10, 27, "us","high","FOMC（結果発表）",""),
+    (10, 28, "us","mid","米GDP速報値（Q3）",""),
+    (10, 28, "us","mid","PCEデフレーター（9月分）","FRB重視のインフレ指標"),
+    (10, 28, "jp","high","日銀金融政策決定会合（1日目）",""),
+    (10, 28, "eu","high","ECB理事会（金利決定）",""),
+    (10, 29, "jp","high","日銀会合（結果発表）","展望レポートあり"),
+    (10, 29, "eu","mid","ユーロ圏GDP速報（Q3）",""),
+    # ── 11月 ──
+    (11,  2, "au","high","豪中銀 政策金利発表（RBA）","日本時間12:30（豪14:30）"),
+    (11,  4, "eu","mid","ユーロ圏HICP速報（10月分）",""),
+    (11,  4, "uk","high","英中銀 政策金利発表（MPC）","日本時間21:00（英12:00）"),
+    (11,  5, "us","high","米雇用統計（10月分）",""),
+    (11, 10, "us","high","米CPI（10月分）",""),
+    (11, 12, "us","mid","PPI（10月分）",""),
+    (11, 12, "uk","mid","英GDP（月次・9月分）",""),
+    (11, 16, "us","mid","小売売上高（10月分）",""),
+    (11, 16, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    (11, 17, "uk","high","英CPI（10月分）","BOEの金利判断に直結"),
+    (11, 24, "us","mid","米GDP改定値（Q3）",""),
+    (11, 24, "us","mid","PCEデフレーター（10月分）","FRB重視のインフレ指標"),
+    # ── 12月 ──
+    (12,  1, "eu","mid","ユーロ圏HICP速報（11月分）",""),
+    (12,  3, "us","high","米雇用統計（11月分）",""),
+    (12,  7, "us","high","FOMC（1日目）","経済見通し・ドットプロット"),
+    (12,  8, "us","high","FOMC（結果発表）","記者会見あり"),
+    (12, 10, "us","high","米CPI（11月分）",""),
+    (12, 10, "uk","mid","英GDP（月次・10月分）",""),
+    (12, 14, "uk","mid","英雇用統計（失業率・賃金）","賃金の伸びはBOEの判断材料"),
+    (12, 14, "au","high","豪中銀 政策金利発表（RBA）","日本時間12:30（豪14:30）"),
+    (12, 15, "us","mid","PPI（11月分）",""),
+    (12, 15, "us","mid","小売売上高（11月分）",""),
+    (12, 15, "uk","high","英CPI（11月分）","BOEの金利判断に直結"),
+    (12, 16, "jp","high","日銀金融政策決定会合（1日目）",""),
+    (12, 16, "eu","high","ECB理事会（金利決定）",""),
+    (12, 16, "uk","high","英中銀 政策金利発表（MPC）","日本時間21:00（英12:00）"),
+    (12, 17, "jp","high","日銀会合（結果発表）",""),
+    (12, 22, "us","mid","米GDP確定値（Q3）",""),
+    (12, 22, "us","mid","PCEデフレーター（11月分）","FRB重視のインフレ指標"),
+]
+
+# ── 年ごとの表をまとめて引く（2026-11-12）──────────────────────────────
+# 🚨 それまでは使う側がどこも ECONOMIC_EVENTS_2026 を直に読み、年は「今日の年」を当てていた。そのまま年が変わると
+#    ①12月のカレンダーの「翌月」＝2027年1月の枠に、**2026年1月の発表**が並ぶ ②1月からは全部の発表が1年前の日付の
+#    まま「今年」として出る、の両方が起きる形だった。
+# 🔑 いまは **表の名前の年がそのまま日付の年**。次の年は ECONOMIC_EVENTS_2028 = [...] を書き足すだけでよい
+#    （下の辞書は名前から自動で拾う。sync_economic_events.py・verify_*_calendar.py・check_site_consistency.py も
+#     「ECONOMIC_EVENTS_<4桁の年> = [」という名前の表をぜんぶ読む＝年を直に書いた場所はどこにも無い）。
+ECONOMIC_EVENTS_BY_YEAR = {int(_k[-4:]): _v for _k, _v in list(globals().items())
+                           if re.fullmatch(r"ECONOMIC_EVENTS_\d{4}", _k)}
+
+
+def economic_events_of(year):
+    """その年の表（まだ無い年は空）。行は (月, 日, 国, 重要度, 名前, 説明)。"""
+    return ECONOMIC_EVENTS_BY_YEAR.get(year, [])
+
+
+def dated_economic_events():
+    """全部の年の行を (日付, 国, 重要度, 名前, 説明) にして返す。ありえない日付の行は捨てる。"""
+    out = []
+    for year in sorted(ECONOMIC_EVENTS_BY_YEAR):
+        for m, d, c, imp, n, desc in ECONOMIC_EVENTS_BY_YEAR[year]:
+            try:
+                out.append((datetime(year, m, d).date(), c, imp, n, desc))
+            except ValueError:
+                continue
+    return out
+
+
 # 各指標の日本語解説（初心者向け）
 _EVENT_DESCRIPTIONS = {
     "米雇用統計": "非農業部門雇用者数と失業率。FRBの利下げ判断に直結。予想より強いとドル高・円安に。",
@@ -2562,14 +2822,10 @@ def find_upcoming_events(now_jst, days_ahead=3):
     today = now_jst.date()
     # range を 0 始まりにして「発表当日」も含める（当日にプレビューが消える不具合の修正・2026-06-05）
     target_dates = [today + timedelta(days=i) for i in range(0, days_ahead + 1)]
-    target_year = now_jst.year
 
     upcoming = []
-    for m, d, c, imp, n, desc in ECONOMIC_EVENTS_2026:
-        try:
-            event_date = datetime(target_year, m, d).date()
-        except ValueError:
-            continue
+    # 年は行が入っている表（ECONOMIC_EVENTS_<年>）で決まる＝年末に「数日先」が翌年へまたいでも拾える
+    for event_date, c, imp, n, desc in dated_economic_events():
         if event_date in target_dates:
             upcoming.append({
                 "date": event_date,
@@ -3364,7 +3620,8 @@ def build_calendar_html(now_jst):
     next_year = cur_year if cur_month < 12 else cur_year + 1
 
     def events_for_month(year, month):
-        return [(d, c, imp, n, desc) for m, d, c, imp, n, desc in ECONOMIC_EVENTS_2026 if m == month]
+        # その年の表から取る（12月の「翌月」＝翌年1月は翌年の表。前の年の1月の行を出さない）
+        return [(d, c, imp, n, desc) for m, d, c, imp, n, desc in economic_events_of(year) if m == month]
 
     def country_css(c):
         return {"jp": "jp", "us": "us", "eu": "eu", "cn": "cn"}.get(c, "us")
@@ -3428,7 +3685,7 @@ def build_calendar_html(now_jst):
         grid += '</div>\n'
         return grid
 
-    def build_event_list(events, month):
+    def build_event_list(events, year, month):
         html = f'<p style="font-size:.95rem;font-weight:600;color:#57606a;margin-bottom:12px">📋 {month}月の重要イベント詳細</p>\n'
         html += '<div class="event-list">\n'
         seen_days = set()
@@ -3440,7 +3697,7 @@ def build_calendar_html(now_jst):
             tag_i = tag_class(imp)
             imp_label = "⭐最重要" if imp == "high" else "●重要"
             detail = desc if desc else _get_event_detail(n)
-            dow_idx = cal_module.weekday(cur_year, month, d)
+            dow_idx = cal_module.weekday(year, month, d)   # 翌月が翌年のときは翌年の曜日（cur_year だと1年ずれる）
             dow_ja = DOW_JA[dow_idx]
             html += f'''<div class="event-card">
 <div class="event-date-box"><div class="event-date-day">{d}</div><div class="event-date-dow">{dow_ja}</div></div>
@@ -3455,8 +3712,8 @@ def build_calendar_html(now_jst):
     ev_next = events_for_month(next_year, next_month)
     grid_cur = build_month_grid(cur_year, cur_month, ev_cur, True)
     grid_next = build_month_grid(next_year, next_month, ev_next, False)
-    list_cur = build_event_list(ev_cur, cur_month)
-    list_next = build_event_list(ev_next, next_month)
+    list_cur = build_event_list(ev_cur, cur_year, cur_month)
+    list_next = build_event_list(ev_next, next_year, next_month)
     earnings_section = build_earnings_section()
 
     return f"""<!DOCTYPE html>
@@ -5604,12 +5861,8 @@ def build_morning_digest_banner(now_jst, data, sentiment_label):
         chips = []
         for sub, lbl in keys:
             nxt_date = None
-            for m, d, c, imp, n, desc in ECONOMIC_EVENTS_2026:
+            for ed, c, imp, n, desc in dated_economic_events():   # 年またぎ＝12月の発表が済んだら翌年1月を数える
                 if sub not in n:
-                    continue
-                try:
-                    ed = datetime(now_jst.year, m, d).date()
-                except ValueError:
                     continue
                 if ed >= today and (nxt_date is None or ed < nxt_date):
                     nxt_date = ed
@@ -7486,12 +7739,8 @@ def _v2_schedule(now_jst):
     nxt = []
     for sub, _c in _V2_COUNTDOWN:
         best = None
-        for m, d, c, _imp, n, _desc in ECONOMIC_EVENTS_2026:
+        for ed, c, _imp, n, _desc in dated_economic_events():   # 年またぎ＝12月の発表が済んだら翌年1月を出す
             if sub not in n:
-                continue
-            try:
-                ed = datetime(now_jst.year, m, d).date()
-            except ValueError:
                 continue
             if ed > today and (best is None or ed < best[0]):
                 best = (ed, c, n)
