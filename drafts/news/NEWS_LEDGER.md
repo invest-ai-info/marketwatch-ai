@@ -3,6 +3,37 @@
 
 ---
 
+## 2026-11-12
+- 判定: ✅ 公開済み
+- 選定トピック: エヌビディア（Nvidia）CEO Jensen Huang去就不透明→東京市場で半導体関連株に売り・日経225が前日比429.23円安（-0.70%）の60,819.36円と4日ぶり反落──背景と3つの論点を中立整理（カテゴリ: AI・米国株・日本株・半導体）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 出典（確認済み）:
+  - kabutan「日経平均は4日ぶり反落、後場に値を崩し半導体関連が重荷」2026-11-12
+  - 財経新聞/Fisco「日経平均は533円安、企業決算や米経済指標などに関心」「後場に注目すべき3つのポイント～エヌビディア報道で一時マイナス圏も持ち直す」2026-11-12
+  - Business Recorder「Japan's Nikkei edges higher on tech strength; Nvidia-linked suppliers drag」2026-11-12
+  - OANDA Japan「東京マーケットダイジェスト・12日 円もみ合い・株まちまち」2026-11-12
+  - Wall Street Journal（取締役会がHuang CEO去就協議報道）2026-11-11
+  - Reuters（取締役会が11日夜に会合）2026-11-11
+  - CNN「Nvidia board discusses Jensen Huang's future」2026-11-11
+  - Nvidia公式プレスリリース（投資家向け）「Statement from NVIDIA Board of Directors」2026-11-08
+  - AP通信・WDBJ「Nvidia investigates whether CEO was targeted by Chinese spy」2026-11-09
+  - Axios「Nvidia sinks after report implicates CEO in 2nd affair」2026-11-11
+  - Yahoo Finance / CBS News（時価総額消失推計・Huang声明）2026-11-11〜12
+  - stockanalysis.com「Nvidia falls 4.5% premarket; Q3 earnings November 17」2026-11-10
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー→エスカレ（4点の指摘：「国家安全部」表現・「前元」誤字・CBS出典の事実確認・Nikkei数値の確認不足）
+  - メインが指摘4点を修正: ①「国家安全部」→「中国の情報活動に関わると疑われている」へ軟化 ②「前元SEC議長」→「元SEC議長」誤字修正 ③CBS News出典→Nvidia公式プレスリリースへ変更 ④「+500円超」→「+200円超（寄り付き+226円）」へ数値修正
+  - 追加修正（第2Opus指摘）: ⑤「と報じられた」留保追加 ⑥「押し下げ主犯」→「押し下げ要因」⑦フッターにdata-disclaimer="kinsho-v1"属性追加
+  - 第2Opus（独立確認・Readのみ）: 修正後OK（金商法・景表法・銘柄推奨なし全白。kinsho-v1×3・出典複数系統・noindexなし・中立性OK）→「直せば白で公開してよい」
+  - 最終判定: 🟢白（修正後OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告67件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-12-nvidia-ceo-nikkei-drop.html
+- commit: 7b9a4f7（main へ push 済み）
+
+---
+
 ## 2026-11-11
 - 判定: ✅ 公開済み
 - 選定トピック: ソフトバンクグループ（9984）2027年3月期Q2純損失約1兆1,153億円──AIデータセンター向け発電設備損失・インテル株評価損が主因・今後の3論点を中立整理（カテゴリ: 個別銘柄・AI・日本株・ガバナンス）
