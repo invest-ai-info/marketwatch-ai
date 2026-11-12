@@ -234,43 +234,71 @@ def get_sync_files():
     return set(re.findall(r'"([^"]+)"', m.group(1)))
 
 
-def check_economic_events():
+def check_economic_events(today=None):
     """経済カレンダーの決定論検査（2026-07-02 の日付誤り事故=CPI 7/10等の再発防止）。
     誤りやすいのは「パターン外挿で足した未来の日付」。機械で検査できる不変条件だけ見る:
-      雇用統計=金曜 / high・mid指標が土日は疑わしい / FOMC結果=公式2026日程±1日 / ECB=木曜が通例。"""
+      雇用統計=金曜 / high・mid指標が土日は疑わしい / FOMC結果=公式日程（FOMC_OFFICIAL）±1日 / ECB=木曜が通例。
+    年ごとの表（ECONOMIC_EVENTS_<年>）をぜんぶ見る＝年は表の名前で決まる。"""
     import datetime as dt
     if not _exists("generate_market_news.py"):
         return
-    m = re.search(r"ECONOMIC_EVENTS_2026\s*=\s*\[(.*?)\n\]", _read("generate_market_news.py"), re.S)
-    if not m:
-        warnings.append("ECONOMIC_EVENTS_2026 が解析できない → カレンダー日付検査をスキップ")
+    tables = _economic_event_tables()
+    if not tables:
+        warnings.append("ECONOMIC_EVENTS_<年> の表が解析できない → カレンダー日付検査をスキップ")
         return
-    rows = re.findall(r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"', m.group(1))
-    # 2026年のFOMC決定日（federalreserve.gov 公式・ET基準）。年替わりでここを更新する
-    fomc_official = {(1, 28), (3, 18), (4, 29), (6, 17), (7, 29), (9, 16), (10, 28), (12, 9)}
-    today = dt.date.today()
-    for mo_s, dy_s, region, imp, name in rows:
-        mo, dy = int(mo_s), int(dy_s)
-        try:
-            d = dt.date(2026, mo, dy)
-            wd = d.weekday()
-        except ValueError:
-            warnings.append(f"カレンダー: {mo}/{dy}「{name}」＝存在しない日付")
-            continue
-        if d < today:
-            continue  # 過去分は表示済み＝修正不能。検査は未来の日付のみ（警告ノイズ防止）
-        if "中国" in name and "PMI" in name:
-            continue  # 中国国家統計局PMIは月末公表＝土日もあり得る（正当な例外）
-        if "雇用統計" in name and region == "us" and wd != 4:   # 英雇用統計（ONS）は火曜が通例＝金曜の決まりは米だけ
-            warnings.append(f"カレンダー: {mo}/{dy}「{name}」が金曜でない（米雇用統計は原則金曜）＝要確認")
-        elif wd >= 5 and "休場" not in name:
-            warnings.append(f"カレンダー: {mo}/{dy}「{name}」が{'土日'[wd - 5]}曜＝日付要確認")
-        if "FOMC" in name and "結果" in name:
-            near = any(abs((dt.date(2026, mo, dy) - dt.date(2026, om, od)).days) <= 1 for om, od in fomc_official)
-            if not near:
-                warnings.append(f"カレンダー: {mo}/{dy}「{name}」が公式FOMC日程(±1日)と不一致＝要確認")
-        if "ECB" in name and wd != 3:
-            warnings.append(f"カレンダー: {mo}/{dy}「{name}」が木曜でない（ECB理事会は木曜が通例）＝要確認")
+    today = today or dt.date.today()            # today を渡せるのはテスト用（年またぎを固定の日付で確かめる）
+    # 🆕 2026-11-12 年またぎ: 今年の表が無い＝カレンダーも発表前のメールも黙る。翌年の表は10月から催促する
+    #    （米労働省・FRB・日銀・ECB・英中銀は、例年この時期までに翌年の日程を出している）
+    #    ⚠️ error にはしない＝ここで止めると関係のない記事の公開まで全部止まる。先詰まりは月次メールと automation-health §⑬ も見ている
+    if today.year not in tables:
+        warnings.append(f"🚨 カレンダー: ECONOMIC_EVENTS_{today.year} の表が無い（今年の経済指標が1件も出ない・発表前のメールも黙る）"
+                        f"→ generate_market_news.py に公式の日程で作る")
+    elif today.month >= 10 and today.year + 1 not in tables:
+        warnings.append(f"カレンダー: ECONOMIC_EVENTS_{today.year + 1} の表がまだ無い（年が変わると経済指標が空になる）"
+                        f"→ 各国の公式の日程で確かめて作る（曜日や前の年から推測しない）")
+    for year in sorted(tables):
+        fomc_official = FOMC_OFFICIAL.get(year)
+        if fomc_official is None and year >= today.year and any("FOMC" in r[4] and "結果" in r[4] for r in tables[year]):
+            warnings.append(f"カレンダー: {year}年のFOMCの公式日程が check_site_consistency.py の FOMC_OFFICIAL に無い"
+                            f"＝FOMC の日付を点検できない（federalreserve.gov の日程を足す）")
+        for mo_s, dy_s, region, imp, name in tables[year]:
+            mo, dy = int(mo_s), int(dy_s)
+            try:
+                d = dt.date(year, mo, dy)
+                wd = d.weekday()
+            except ValueError:
+                warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」＝存在しない日付")
+                continue
+            if d < today:
+                continue  # 過去分は表示済み＝修正不能。検査は未来の日付のみ（警告ノイズ防止）
+            if "中国" in name and "PMI" in name:
+                continue  # 中国国家統計局PMIは月末公表＝土日もあり得る（正当な例外）
+            if "雇用統計" in name and region == "us" and wd != 4:   # 英雇用統計（ONS）は火曜が通例＝金曜の決まりは米だけ
+                warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が金曜でない（米雇用統計は原則金曜）＝要確認")
+            elif wd >= 5 and "休場" not in name:
+                warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が{'土日'[wd - 5]}曜＝日付要確認")
+            if "FOMC" in name and "結果" in name and fomc_official is not None:
+                near = any(abs((d - dt.date(year, om, od)).days) <= 1 for om, od in fomc_official)
+                if not near:
+                    warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が公式FOMC日程(±1日)と不一致＝要確認")
+            if "ECB" in name and wd != 3:
+                warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が木曜でない（ECB理事会は木曜が通例）＝要確認")
+
+
+# FOMC の決定日（federalreserve.gov/monetarypolicy/fomccalendars.htm・米東部の日付）。年ごとに1行足す
+FOMC_OFFICIAL = {
+    2026: {(1, 28), (3, 18), (4, 29), (6, 17), (7, 29), (9, 16), (10, 28), (12, 9)},
+    2027: {(1, 27), (3, 17), (4, 28), (6, 9), (7, 28), (9, 15), (10, 27), (12, 8)},   # 2026-11-12 に公式で確かめた
+}
+
+
+def _economic_event_tables():
+    """generate_market_news.py の年ごとの表「ECONOMIC_EVENTS_<4桁の年> = [...]」を {年: [(月, 日, 国, 重要度, 名前), ...]} で返す。
+    🚨 2026-11-12 まで "ECONOMIC_EVENTS_2026" と dt.date(2026, …) が直に書いてあり、翌年の表を作っても点検されなかった。"""
+    out = {}
+    for t in re.finditer(r"^ECONOMIC_EVENTS_(\d{4})\s*=\s*\[(.*?)\n\]", _read("generate_market_news.py"), re.S | re.M):
+        out[int(t.group(1))] = re.findall(r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"', t.group(2))
+    return out
 
 
 def check_sync_forbidden(sync_files):
@@ -501,7 +529,7 @@ def check_card_dates(guides_html, gen_py="generate_market_news.py"):
             errors.append(f"🚨 {gen_py} の更新履歴が下書きを指している: {m.group(1)}（トップに下書きへのリンクが出る）")
 
 
-def check_us_monthly_indicators():
+def check_us_monthly_indicators(today=None):
     """米CPI・米雇用統計が「今日以降の各月にちょうど1件」あるかを見る（2026-09-11 新設）。
 
     🚨 なぜ曜日で検査しないか＝**この事故は曜日の思い込みが原因だった**。
@@ -513,29 +541,30 @@ def check_us_monthly_indicators():
     import datetime as dt
     if not _exists("generate_market_news.py"):
         return
-    m = re.search(r"ECONOMIC_EVENTS_2026\s*=\s*\[(.*?)\n\]", _read("generate_market_news.py"), re.S)
-    if not m:
+    tables = _economic_event_tables()
+    if not tables:
         return                      # 解析不能は check_economic_events 側が既に警告する
-    rows = re.findall(r'\(\s*(\d+),\s*(\d+),\s*"(\w+)",\s*"(\w+)",\s*"([^"]+)"', m.group(1))
-    today = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date()
-    year = today.year
-    for label, pat in (("米CPI", r"^米CPI"), ("米雇用統計", r"^米雇用統計")):
-        by_month = {}
-        for mo, dy, _c, _i, name in rows:
-            if re.match(pat, name):
-                by_month.setdefault(int(mo), []).append((int(dy), name))
-        for mo in range(today.month, 13):
-            got = by_month.get(mo, [])
-            if not got:
-                warnings.append(f"カレンダー: {year}/{mo}月に「{label}」が無い（毎月1回の指標＝抜け落ちの疑い）")
-            elif len(got) > 1:
-                warnings.append(f"カレンダー: {year}/{mo}月の「{label}」が {len(got)} 件（{got}）＝重複の疑い")
-        # CPI は「対象月の翌月の中旬」に出る。粗い窓から外れたら要確認（曜日は見ない）
-        if label == "米CPI":
-            for mo, got in by_month.items():
-                for dy, name in got:
-                    if mo >= today.month and not (8 <= dy <= 16):
-                        warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が中旬(8〜16日)から外れる＝BLS公式で要確認")
+    today = today or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date()
+    # 今年の表は今月から12月まで・翌年より先の表は1月から12月まで見る（米労働省は翌年の全部の月を秋に出す）
+    for year in sorted(y for y in tables if y >= today.year):
+        first_month = today.month if year == today.year else 1
+        for label, pat in (("米CPI", r"^米CPI"), ("米雇用統計", r"^米雇用統計")):
+            by_month = {}
+            for mo, dy, _c, _i, name in tables[year]:
+                if re.match(pat, name):
+                    by_month.setdefault(int(mo), []).append((int(dy), name))
+            for mo in range(first_month, 13):
+                got = by_month.get(mo, [])
+                if not got:
+                    warnings.append(f"カレンダー: {year}/{mo}月に「{label}」が無い（毎月1回の指標＝抜け落ちの疑い）")
+                elif len(got) > 1:
+                    warnings.append(f"カレンダー: {year}/{mo}月の「{label}」が {len(got)} 件（{got}）＝重複の疑い")
+            # CPI は「対象月の翌月の中旬」に出る。粗い窓から外れたら要確認（曜日は見ない）
+            if label == "米CPI":
+                for mo, got in by_month.items():
+                    for dy, name in got:
+                        if mo >= first_month and not (8 <= dy <= 16):
+                            warnings.append(f"カレンダー: {year}/{mo}/{dy}「{name}」が中旬(8〜16日)から外れる＝BLS公式で要確認")
 
 
 def check_tools_strip(guides_html, gen_py="generate_market_news.py"):
