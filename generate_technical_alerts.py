@@ -2844,6 +2844,30 @@ def watch_email_header(h):
     return "\n".join(lines)
 
 
+# ─────────────────────────────────────────────
+# 🆕 2026-11-14 費用が重い時間の印（オーナー「印を付けて」）
+#   NY 17時台（日本時間 夏6時台・冬7時台）は業者がスプレッドを広げる。MT5 BigBoss の5分足（2022-07〜2026-05）の実測で
+#   FX 9ペアともふだんの3〜10倍＝1時間足の損切り幅に対して1回 0.13〜0.38R（よく動く時間は 0.03〜0.07R）。
+#   次の1時間（NY 18時台）もふだんの1.3〜2倍。メールを読んでから入るまでの間を見て、直前15分（NY 16:45〜）から印を付ける。
+#   ⚠️ 表示だけ＝送信可否・signals-log の記録・ロットは変えない。時差が読めないときは印を付けない。
+# ─────────────────────────────────────────────
+def cost_heavy_window(now=None):
+    """いまが費用の重い時間なら (件名に足す印, 本文の注意) を返す。違えば None。now は時差付きの datetime。"""
+    try:
+        from zoneinfo import ZoneInfo
+        ny_tz = ZoneInfo("America/New_York")
+        ny = (now or datetime.now(timezone.utc)).astimezone(ny_tz)
+    except Exception:
+        return None
+    minutes = ny.hour * 60 + ny.minute
+    if not (16 * 60 + 45 <= minutes < 18 * 60):
+        return None
+    heavy_h = ny.replace(hour=17, minute=0, second=0, microsecond=0).astimezone(JST).hour
+    note = (f"💸 費用が重い時間：日本時間 {heavy_h}時台（ニューヨークの取引の終わり）は、スプレッドがふだんの3〜10倍に広がります"
+            f"（実測で1回あたり損切り幅の13〜38%）。次の {(heavy_h + 1) % 24}時台もふだんより広めです。")
+    return " 💸費用重", note
+
+
 def match_promoted_hypothesis(promoted_hyps, probe):
     """probe（signals-log 相当の属性 dict）が昇格仮説のいずれかに合致すればその仮説を返す。
     照合は固定オラクル signal_lab_verify.match をそのまま使う（判定意味の二重実装を避ける）。"""
@@ -3283,6 +3307,11 @@ def main():
         # R2: 「シグナル:」ラベルを省略してコンパクト化
         sig_label = primary['label'].split('（')[0].strip()
         subject = f"{reversal_tag}{env_prefix}{emoji} {name} {tf_label_display} {sig_label}{trend_tag}{conf_tag}{holiday_tag}"
+        # 🆕 2026-11-14 費用が重い時間（日本時間 夏6時台・冬7時台）の印＝表示だけ
+        _cost_heavy = cost_heavy_window()
+        if _cost_heavy:
+            subject += _cost_heavy[0]
+            body = _cost_heavy[1] + "\n\n" + body
         # 重要指標が 24h 以内ならその名前も件名に（R2: 「まで」「発表」「（X月）」を削除）
         if env["upcoming_events"]:
             nearest = env["upcoming_events"][0]
