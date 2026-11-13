@@ -6419,6 +6419,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-13", "line": '・<b>2026-11-13</b>: 📰 解説「<a href="guide-news-2026-11-13-anthropic-ipo.html" style="color:#0969da"><b>【11/13】Anthropic来週NASDAQ上場──価格帯$70-78設定・評価額1.4兆ドル・3論点</b></a>」公開'},
         {"date": "2026-11-13", "line": '・<b>2026-11-13</b>: 🔬 解説「<a href="guide-company-6702-fujitsu.html" style="color:#0969da"><b>富士通</b></a>」公開'},
         {"date": "2026-11-13", "line": '・<b>2026-11-13</b>: 🧪 解説「<a href="guide-signal-lab-148.html" style="color:#0969da"><b>移動平均線の下のMACDゴールデンクロスは勝ちやすい？【#148】</b></a>」公開'},
         {"date": "2026-11-12", "line": '・<b>2026-11-12</b>: 📰 解説「<a href="guide-news-2026-11-12-nvidia-ceo-nikkei-drop.html" style="color:#0969da"><b>エヌビディアCEO去就不透明→日経4日ぶり反落</b></a>」公開'},
