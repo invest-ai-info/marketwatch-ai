@@ -105,6 +105,23 @@ CLOSED = [
                "実際の往復の費用を測ると中央値1.55pips（手数料込み）で、費用を引く前の約+1.9ベーシスポイントがほとんど残らないため、"
                "前向きはせずに区切った（2026-10-18 オーナーの判断）"},
 ]
+# 🆕 2026-11-13 期待値でも目印でもない「気配や注文が寄りまでにどう動くか」の問い（オーナー「両方とも進めてください」＝
+# J10b の判定を検証済みリストに載せる）。記録の JSON の判定の欄（key）に固定された判定をそのまま写す＝手で書かない。
+# 判定の前は載せない（数えている途中は検証中リストと研究の地図が受け持つ）。mean＝判定の欄の平均の名前。
+# means＝結果の言葉ごとの読み方（記号や検証の番号を入れない）。新しい問いを足すときはここに1行
+OBSERVE_SOURCES = [
+    {"src": "j10b-records.json", "key": "verdict", "sec": "J10b", "mean": "mean",
+     "title": "寄り前（8:59）の気配の窓の大きさは、寄り値までに縮むか（8:59 の窓の大きさ − 寄りの窓の大きさ・オーナーの画面の記録・20営業日で1回だけ）",
+     "means": {"縮みやすい": "8:59 の気配が前の日の終値から離れているほど、寄り値では終値の側へ戻って寄りやすい。"
+                            "8:59 の気配で付けた「寄りで買わない」目印は仮で、ぎりぎりの銘柄は寄り値で決める（点検表 日本株⑤）",
+               "広がりやすい": "8:59 の気配より、寄り値のほうが前の日の終値から離れて寄りやすい",
+               "見えない": "8:59 の気配と寄り値で、窓の大きさに決まった向きの差は見えない"}},
+    {"src": "j10b-records.json", "key": "verdict_j46", "sec": "J46", "mean": "mean_diff",
+     "title": "寄り前の注文の多さ（ふだんの1日の売買代金に対する割合）で、寄り→9:30 は分かれるか（同じ朝の多い3分の1 − 少ない3分の1・1000件で1回だけ）",
+     "means": {"罠の目印（兆し）": "寄り前の注文が多い株は、同じ朝のほかの株より寄りのあと下げやすく、費用を引くとマイナス（使う前に別の前向きで確かめる）",
+               "強さの目印（兆し）": "寄り前の注文が多い株は、同じ朝のほかの株より寄りのあと上げやすく、費用を引いてもプラス（使う前に別の前向きで確かめる）",
+               "見えない": "寄り前の注文の多さで、寄り→9:30 に決まった向きの差は見えない"}},
+]
 TRACKER = "signal-lab-tracker.json"     # 🆕 2026-10-07 シグナルの条件（仮説）の採点で終わったもの（⛔反証・⏹見込みなし）
 
 
@@ -246,6 +263,41 @@ def render_markers(rows):
     return L + [""]
 
 
+def collect_observe(sources=None):
+    """気配・注文の動き方の問い（OBSERVE_SOURCES）→ 判定の出たものだけの行の一覧。記録が無い・判定がまだなら飛ばす"""
+    out = []
+    for s in (OBSERVE_SOURCES if sources is None else sources):
+        try:
+            with open(s["src"], encoding="utf-8") as fh:
+                data = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        v = data.get(s["key"])
+        if not isinstance(v, dict) or not v.get("status"):
+            continue
+        status = v["status"]
+        word = next((w for w in s.get("means", {}) if status.startswith(w)), None)
+        out.append({"sec": s["sec"], "title": s["title"], "status": status, "decided_on": v.get("decided_on") or "—",
+                    "n": v.get("n"), "mean": v.get(s.get("mean", "mean")), "lo": v.get("lo"), "hi": v.get("hi"),
+                    "means": s.get("means", {}).get(word, "") if word else ""})
+    return out
+
+
+def render_observe(rows):
+    """気配・注文の動き方の問いの節（判定の出たものだけ）"""
+    L = ["## 📏 気配・注文の動き方の問い（前向き・決めた件数で1回だけ判定）", "",
+         "期待値や「入らない方がいい」目印ではなく、寄り前の気配や注文が寄りまでにどう動くかを、オーナーの画面の記録で数えたもの。"
+         "数字は平均と、日で引き直した95％の幅。判定が出たものだけ載せる（数えている途中は検証中リスト）。", ""]
+    if not rows:
+        return L + ["- まだ無い", ""]
+    L += ["| 検証 | 問い | 結果 | 判定日 | 件数 | 平均 | 95％の幅 | 読み方 |", "|---|---|---|---|---:|---:|---|---|"]
+    esc = (lambda t: str(t).replace("|", "\\|"))           # 表の中の縦線で列が崩れないように
+    for r in rows:
+        L.append(f"| {r['sec']} | {esc(r['title'])} | {esc(r['status'])} | {r['decided_on']} | {r['n'] if r['n'] is not None else '—'} | "
+                 f"{_pct(r['mean'])} | {_pct(r['lo'])}〜{_pct(r['hi'])} | {esc(r['means'] or '—')} |")
+    return L + [""]
+
+
 def collect_tracker(path=TRACKER):
     """シグナルの条件（仮説）の採点で終わったもの → 行の一覧（新しく止めた順）。⛔反証＝期待と逆向きにはっきり出た／
     ⏹見込みなし＝signal_lab_tracker.futility（効きが小さすぎる・時間がかかりすぎる）"""
@@ -360,7 +412,7 @@ def render_screens(screens):
     return L
 
 
-def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=()):
+def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), observe=()):
     now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(timespec="minutes")
     L = ["# 検証済みリスト", "",
          f"更新: {now}（GitHub Actions が記録から組み立てる。手で書かない）。",
@@ -389,6 +441,7 @@ def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=()):
     L += ["", "## 👀 いま前向きで数えているもの", ""]
     L += [f"- {_label(r)} {r['title']}（{_progress(r)}）" for r in watching] or ["- 無い"]
     L += [""] + render_markers(list(markers))
+    L += render_observe(list(observe))
     L += render_tracker(list(tracker))
     L += render_screens(screens)
     L += ["詳しい決まりは `PILLAR_PREREG.md` の各節。", "", "---", "",
@@ -397,7 +450,8 @@ def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=()):
 
 
 def main():
-    md = render(*collect(), screens=collect_screens(), markers=collect_markers(), tracker=collect_tracker())
+    md = render(*collect(), screens=collect_screens(), markers=collect_markers(), tracker=collect_tracker(),
+                observe=collect_observe())
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
     print(md)
