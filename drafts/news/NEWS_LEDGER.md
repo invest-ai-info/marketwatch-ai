@@ -3,6 +3,34 @@
 
 ---
 
+## 2026-11-13
+- 判定: ✅ 公開済み
+- 選定トピック: アンソロピック（Anthropic）、来週19日にNASDAQ上場へ──価格帯$70-78設定・評価額最大1.4兆ドル・Google/NVIDIA各100億ドル追加出資・3つの論点を中立整理（カテゴリ: AI・米国株・IPO・テクノロジー）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 出典（確認済み）:
+  - Yahoo Finance/CNBC「Anthropic Sets IPO Price Range at $70 to $78, Valuing Company at Up to $1.4 Trillion」2026-11-10
+  - UPI「Anthropic stock to be priced in $70-78 range per share」2026-11-10
+  - Forbes「Anthropic IPO Targets $1.3 Trillion Valuation And A $90 Billion Raise」2026-11-10
+  - financefeeds「Anthropic IPO Date: $70-$78 Price Range Set, Trading Reported From 19 November」2026-11-13
+  - digitaltoday「Anthropic to debut on Nasdaq Nov. 19, seeks $78 a share in IPO」2026-11-13
+  - FourWeekMBA「Nvidia, Google Buy $10B Each of Anthropic's $26B Placement」2026-11-10〜13
+  - StockTwits「Google, Nvidia, AMD And Others To Invest $26B In Anthropic Alongside IPO」2026-11-13
+  - investinglive「Anthropic lines up $26 billion from Nvidia, Google, others」2026-11-13
+  - CNN「Anthropic set to make stock market debut as questions swirl about safety of AI」2026-10-26
+  - cryptobriefing「Investors scramble for Anthropic exposure ahead of what could be the largest tech IPO」2026-11-13
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー→エスカレ（4点の指摘：曜日誤り×2・「確定」→「設定」×3・評価額年度不明確・「史上最大規模」出典なし）
+  - メイン修正（6件）: ①曜日修正（火→水・水→木）×2箇所 ②「確定」→「設定」×3箇所（title/h1/JSON-LD）③「2025年5月」→「直近の資金調達ラウンド」に修正 ④「史上最大規模」→「大規模な〜（Forbes/cryptobriefing出典追加）」
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典10系統以上 ✅）→「そのまま公開してよい」
+  - 最終判定: 🟢白（修正後OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告68件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-13-anthropic-ipo.html
+- commit: 0d109b2（main へ push 済み）
+
+---
+
 ## 2026-11-12
 - 判定: ✅ 公開済み
 - 選定トピック: エヌビディア（Nvidia）CEO Jensen Huang去就不透明→東京市場で半導体関連株に売り・日経225が前日比429.23円安（-0.70%）の60,819.36円と4日ぶり反落──背景と3つの論点を中立整理（カテゴリ: AI・米国株・日本株・半導体）
