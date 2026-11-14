@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-11-14T15:10:00+09:00",
+  "generated_at": "2026-11-15T06:10:00+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
     "confidence": "LOW",
-    "rationale": "エヌビディアCEO辞任でAI株が崩れ、米10年債利回りは5%台、12月の米利上げ観測も重しです。一方でPPIは予想を下回り、日本株は円安と買い戻しで反発しました。ビットコインなど一部の価格は確認できず、判断は限定的です。",
+    "rationale": "エヌビディアCEO辞任でAI株が崩れ、米10年債利回りは5.1%台、12月の米利上げは確実視されています。ドル指数は2025年4月以来の高値、ビットコインも7万ドルを割りました。週末で新しい材料は薄く、判断は限定的です。",
     "key_drivers": [
       "エヌビディアCEO辞任とAI・半導体株の動揺",
-      "米10年債利回り5%台と12月の米利上げ観測",
-      "米10月PPIは予想を下回り利上げ観測がやや後退",
-      "ドル円160円付近での介入警戒"
+      "米10年債利回り5.1%台と12月の米利上げ観測（0.5%幅の議論も）",
+      "ドル指数が2025年4月以来の高値",
+      "ビットコインが8月以来の7万ドル割れ"
     ]
   },
   "assets": [
@@ -200,7 +200,7 @@
       "ticker": "USDJPY",
       "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "米金利高で160円を試すが、当局の介入警戒が上値を抑える。",
+      "rationale": "ドル指数が高値で円は売られやすいが、160円付近は介入警戒が上値を抑える。",
       "catalysts": [
         "介入観測",
         "米金利",
@@ -276,14 +276,28 @@
     {
       "name": "ビットコイン",
       "ticker": "BTC-USD",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "当日の価格・材料を確認できず、金利上昇とAI株安のリスク回避が重しになりうる程度。",
+      "rationale": "金利上昇とAI株安のリスク回避で、ビットコインは8月以来の7万ドル割れ。週末の薄商いで振れやすい。",
       "catalysts": [
-        "米長期金利",
-        "リスク資産全般の地合い"
+        "米長期金利5%台",
+        "AI株の動揺",
+        "来週のFOMC議事要旨"
       ],
-      "top_news": []
+      "top_news": [
+        {
+          "headline": "ビットコインが8月以来初めて7万ドルを割り込む",
+          "published": "2026-11-13",
+          "comment": "金利上昇とリスク回避で売りが先行。ただし反発もあり得る",
+          "source": "Reuters/Benzinga",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.benzinga.com/markets/market-summary/26/11/63269563/this-week-on-wall-street-nvidia-huang-amd-broadcom-fed-hike"
+        }
+      ]
     }
   ],
   "discarded": [
@@ -296,8 +310,8 @@
     {
       "code": "USD",
       "lean": "STRONG",
-      "conviction": "MID",
-      "reason": "米10年債5%台と12月利上げ観測で堅調。PPI後は伸び悩み。"
+      "conviction": "HIGH",
+      "reason": "ドル指数が2025年4月以来の高値。米10年債5.1%台と12月利上げ観測が支え。"
     },
     {
       "code": "EUR",
