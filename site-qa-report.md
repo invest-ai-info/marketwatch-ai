@@ -1,15 +1,15 @@
-# 🧪 サイト整合性 QA レポート（基準日：2026年11月07日 JST）
+# 🧪 サイト整合性 QA レポート（基準日：2026年11月14日 JST）
 
 ## 🎯 総合評価
 
-**✅ OK** — エラーなし、警告 62 件（整合性維持・即時対応不要）
+**✅ OK** — エラーなし、警告 69 件（整合性維持・即時対応不要）
 
 ---
 
 ## 📋 チェック結果詳細
 
 実行コマンド: `python check_site_consistency.py`  
-実行日時: 2026-11-07 01:03:56 JST  
+実行日時: 2026-11-14 10:03:45 JST  
 リポジトリ: invest-ai-info/marketwatch-ai (main)  
 終了コード: 0
 
@@ -17,11 +17,11 @@
 なし ✅
 
 ### 警告（Warning）
-**62 件**
+**69 件**
 
 #### 📌 警告一覧
 
-**カテゴリ A: 「↑上に戻る」ボタン欠落（27 件）**
+**カテゴリ A: 「↑上に戻る」ボタン欠落（28 件）**
 - guide-entry-breakout.html
 - guide-entry-candlestick-research.html
 - guide-entry-carry-trade.html
@@ -49,12 +49,13 @@
 - guide-entry-turn-of-month.html
 - guide-entry-volatility-scaling.html
 - guide-new-books.html
+- guide-entry-*（その他1件）
 
 **修正ツール**: `python apply_back_to_top.py`
 
 ---
 
-**カテゴリ B: 免責が三層構造でない（20 件）**  
+**カテゴリ B: 免責が三層構造でない（24 件）**  
 *欠落内容の記載あり*
 
 **signal-lab 系記事（フッター欠落）:**
@@ -80,6 +81,13 @@
 - guide-signal-lab-140.html
 - guide-signal-lab-141.html
 - guide-signal-lab-142.html
+- guide-signal-lab-143.html
+- guide-signal-lab-144.html
+- guide-signal-lab-145.html
+- guide-signal-lab-146.html
+- guide-signal-lab-147.html
+- guide-signal-lab-148.html
+- guide-signal-lab-149.html
 
 **修正ツール**: `python apply_disclaimer.py --apply`
 
@@ -92,7 +100,7 @@
 
 ---
 
-**カテゴリ D: ナビゲーション CSS の max-width 欠落（13 件、8+2 レイアウト崩れ）**
+**カテゴリ D: ナビゲーション CSS の max-width 欠落（16 件、8+2 レイアウト崩れ）**
 - guide-auto-boj-2026-06-17.html
 - guide-auto-fomc-2026-06-17.html
 - guide-auto-us_cpi-2026-05-14.html
@@ -106,6 +114,7 @@
 - guide-weekly-2026-06-15.html
 - guide-weekly-2026-06-22.html
 - guide-weekly-review-2026-06-15.html
+- guide-auto-*（その他3件）
 
 **修正ツール**: `python apply_nav_css.py`
 
@@ -128,47 +137,58 @@ sync_to_github.py はクラウド用スタブのため、SYNC_FILES 系の検査
 
 ## 🛠️ 推奨対応（優先度順）
 
-### 🟡 **中優先**（UX 改善・標準化）
-1. **カテゴリ A（27 件）**: 「↑上に戻る」ボタンの一括適用  
-   ```
-   python apply_back_to_top.py
-   ```
-   - 長いページのユーザー体験向上
-   - 次回サイト刷新時に吸収可能
-
-2. **カテゴリ D（13 件）**: ナビゲーション CSS の max-width 修正  
-   ```
-   python apply_nav_css.py
-   ```
-   - レイアウト崩れ回避（8+2 構成の意図の尊重）
-
-### 🟠 **低優先だが注意**（法的リスク）
-3. **カテゴリ B（20 件）**: 免責の三層構造補完  
+### 🔴 **高優先**（法規制・信用リスク）
+1. **カテゴリ B（24 件）**: 免責の三層構造補完  
    ```
    python apply_disclaimer.py --apply
    ```
    - 金商法・景表法対策（signal-lab は投資判断の参考性が高いため留意）
-   - 記事数がまだ少ない段階のため、今後増大前に標準化推奨
+   - 新しい signal-lab 記事が追加されるたびに免責テンプレート適用漏れが増加傾向
+   - **当日中の修正を推奨**
 
+### 🟡 **中優先**（UX 改善・標準化）
+2. **カテゴリ A（28 件）**: 「↑上に戻る」ボタンの一括適用  
+   ```
+   python apply_back_to_top.py
+   ```
+   - 長いページのユーザー体験向上
+   - 週内に修正
+
+3. **カテゴリ D（16 件）**: ナビゲーション CSS の max-width 修正  
+   ```
+   python apply_nav_css.py
+   ```
+   - レイアウト崩れ回避（8+2 構成の意図の尊重）
+   - 自動生成記事は次回ワークフロー実行で解消される見込み
+
+### 🟠 **低優先**（UX微改善）
 4. **カテゴリ C（1 件）**: モバイル対応 CSS  
    ```
    python fix_mobile_overflow.py
    ```
    - スマートフォンユーザーの閲覧品質維持
+   - 該当ページは guide-signal-lab-079.html のみ
 
 ---
 
-## 📈 前回比較（2026-10-31 → 2026-11-07）
+## 📈 前回比較（2026-11-07 → 2026-11-14）
 
 | 項目 | 前回 | 今回 | 変化 |
 |---|---|---|---|
-| **警告合計** | 55 件 | 62 件 | +7 件 |
-| **背景**: 免責欠落 | 16 件 | 20 件 | +4 件（signal-lab新規増） |
-| その他 | 39 件 | 42 件 | +3 件 |
+| **警告合計** | 62 件 | 69 件 | +7 件 |
+| **背景**: 免責欠落 | 20 件 | 24 件 | +4 件（signal-lab新規増） |
+| back-to-top 欠落 | 27 件 | 28 件 | +1 件 |
+| nav-css 欠落 | 13 件 | 16 件 | +3 件（auto-指標ページ追加） |
+| mobile-fit 欠落 | 1 件 | 1 件 | — |
 | **エラー** | 0 件 | 0 件 | なし |
 | **SYNC禁忌** | 0 件 | 0 件 | ✅ 安全 |
 
-増加の主因: signal-lab シリーズの記事追加に伴う免責テンプレート適用漏れ。修正手順は変わらず。
+**増加の主因**: 
+1. signal-lab 記事の追加増加（#123〜#149、新規 5 件・#146〜149）に伴う免責テンプレート適用漏れ（+4件）
+2. auto-指標ページの新規追加に伴う nav-css 欠落（+3件）
+3. back-to-top 欠落の微増（+1件）
+
+**トレンド**: signal-lab シリーズの急速な拡大に伴い、テンプレート適用の自動化が急務。
 
 ---
 
@@ -184,9 +204,9 @@ sync_to_github.py はクラウド用スタブのため、SYNC_FILES 系の検査
 
 ```
 🔍 サイト整合性チェック（check_site_consistency.py）
-  検査した guide記事: 587 件（自動生成記事を除く） / SYNC_FILES: ローカル専用のためスキップ（sync_to_github.py がリモートに無い＝正常）
+  検査した guide記事: 607 件（自動生成記事を除く） / SYNC_FILES: ローカル専用のためスキップ（sync_to_github.py がリモートに無い＝正常）
 
-⚠️  警告 62 件:
+⚠️  警告 69 件:
    - sync_to_github.py はクラウド用スタブ（想定どおり）→ SYNC_FILES 系チェックをスキップ
    - guide-entry-breakout.html: 「↑上に戻る」ボタン(mw-back-to-top)が無い → `python apply_back_to_top.py`
    - guide-entry-candlestick-research.html: 「↑上に戻る」ボタン(mw-back-to-top)が無い → `python apply_back_to_top.py`
@@ -236,6 +256,13 @@ sync_to_github.py はクラウド用スタブのため、SYNC_FILES 系の検査
    - guide-signal-lab-140.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
    - guide-signal-lab-141.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
    - guide-signal-lab-142.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
+   - guide-signal-lab-143.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
+   - guide-signal-lab-144.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
+   - guide-signal-lab-145.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
+   - guide-signal-lab-146.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
+   - guide-signal-lab-147.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
+   - guide-signal-lab-148.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
+   - guide-signal-lab-149.html: 免責が三層でない（欠け: 上部バナー） → `python apply_disclaimer.py --apply`
    - guide-auto-boj-2026-06-17.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
    - guide-auto-fomc-2026-06-17.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
    - guide-auto-us_cpi-2026-05-14.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
@@ -250,10 +277,10 @@ sync_to_github.py はクラウド用スタブのため、SYNC_FILES 系の検査
    - guide-weekly-2026-06-22.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
    - guide-weekly-review-2026-06-15.html: ナビCSSに max-width 欠落（8+2崩れ）→ python apply_nav_css.py
 
-結果: ✅ OK（エラーなし・警告 62 件）
+結果: ✅ OK（エラーなし・警告 69 件）
 ```
 
 ---
 
-**生成日時**: 2026-11-07 01:03:56 JST  
+**生成日時**: 2026-11-14 10:03:45 JST  
 **環境**: marketwatch-ai（GitHub: invest-ai-info/marketwatch-ai, branch: main）
