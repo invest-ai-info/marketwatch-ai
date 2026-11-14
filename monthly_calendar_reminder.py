@@ -122,7 +122,97 @@ def build_json_template(events_text):
     return "\n".join(json_lines)
 
 
-def assess_state(now_jst):
+# ── 種類ごとの先詰まり（2026-11-14）─────────────────────────────────────
+# なぜ要るか：下の assess_state は、指標が「全体であと何日ぶんあるか」しか見ていなかった。
+#   2027年は米・英・ユーロ圏が12月まで入っているので、**中国や日本の統計が1件も無くても「✅ 対応不要」**と出る。
+#   足し忘れると、その種類だけ発表前のメール（indicator-alert・indicator-digest）と環境警戒が黙る。
+# 物差し：「まだ登録の無い次の発表」（＝最後の登録日＋その種類の間隔）が KIND_LEAD_DAYS 日より近づいたら知らせる。
+#   月に1回の種類 → 最後の登録日まで45日以内／年8回の会合 → 29日以内／
+#   四半期に1回（GDP・日銀短観）→ 登録が残っているうちは鳴らさない（次まで約3か月ある＝過ぎてから知らせても間に合う）。
+#   間隔は sync_economic_events.py の RULES の every_days（書いていなければ月に1回）。
+#   ⚠️ 物差しをゆるめない：やらなくていい作業を毎月催促するメールは読まれなくなる（assess_state の説明と同じ）。
+KIND_LEAD_DAYS = 75
+_COUNTRY_ORDER = ["US", "JP", "CN", "EU", "UK", "AU"]          # 「やること」の中の並び（国ごとにまとめる）
+
+
+def kind_runway(events, now_jst, rules=None, lead_days=KIND_LEAD_DAYS):
+    """種類（RULES の label）ごとに、台帳の最後の登録日を見る（純関数＝読まない・書かない・通信しない）。
+
+    events : economic-events.json の events（市場休場は読み飛ばす）。名前と種類の照合は json_pattern
+             （先に一致した決まりを採る＝sync_economic_events.plan_additions と同じ）。
+    戻り値 : RULES と同じ順の list。1件＝dict(label, country, every_days, last, future, days_left, state)
+             state  "none"＝今より先の登録が1件も無い ／ "soon"＝もうすぐ登録が尽きる ／ "ok"
+             last   最後の登録日（日本時間の日付。台帳に1件も無ければ None）
+    """
+    import re
+    import sync_economic_events as S          # 種類の決まりの単一の真実。ここで読む＝読めなくても月次メール自体は出せる
+    rules = S.RULES if rules is None else rules
+    seen = {}
+    for e in events:
+        if e.get("category") == "market_holiday":
+            continue
+        name = e.get("name") or ""
+        rule = next((r for r in rules if re.search(r["json_pattern"], name)), None)
+        if rule is None:
+            continue
+        try:
+            when = datetime.fromisoformat(e.get("datetime") or "")
+        except (TypeError, ValueError):       # 読めない日付の行は数えない（＝その種類は「無い」側に倒れる）
+            continue
+        if when.tzinfo is None:
+            when = when.replace(tzinfo=JST)
+        seen.setdefault(rule["label"], []).append(when.astimezone(JST))
+
+    today = now_jst.astimezone(JST).date()
+    rows = []
+    for rule in rules:
+        whens = seen.get(rule["label"], [])
+        every = S.every_days_of(rule)
+        future = sum(1 for w in whens if w >= now_jst)
+        last = max(whens).date() if whens else None
+        days_left = (last - today).days if future else None
+        if not future:
+            state = "none"
+        elif days_left <= lead_days - every:
+            state = "soon"
+        else:
+            state = "ok"
+        rows.append(dict(label=rule["label"], country=rule.get("country", ""), every_days=every,
+                         last=last, future=future, days_left=days_left, state=state))
+    return rows
+
+
+def _how_often(every_days):
+    return "四半期に1回" if every_days >= 80 else "年8回" if every_days >= 40 else "月1回"
+
+
+def kind_runway_todo(rows):
+    """kind_runway の結果から「あなたがやること」の文を **1件** 作る（知らせる種類が無ければ None）。"""
+    order = lambda r: _COUNTRY_ORDER.index(r["country"]) if r["country"] in _COUNTRY_ORDER else len(_COUNTRY_ORDER)  # noqa: E731
+    none = sorted((r for r in rows if r["state"] == "none"), key=order)       # sorted は元の順（RULES の順）を保つ
+    soon = sorted((r for r in rows if r["state"] == "soon"), key=order)
+    if not none and not soon:
+        return None
+    pad = "     "
+    L = [f"⚠️ 指標を種類ごとに見ると、**先の登録が無い・残りが少ない種類が {len(none) + len(soon)}種類**あります。"
+         f"このままだと、その種類だけ発表前のメールと環境警戒が鳴りません。",
+         f"{pad}各国の公式の日程で確かめて、generate_market_news.py の ECONOMIC_EVENTS_<年> に足してください"
+         f"（公式がまだ日程を出していない種類は、出てから足す）。",
+         f"{pad}足したあと、このワークフローをもう一度動かすと台帳に入ります（動かさなくても次の25日に入ります）。"]
+    if none:
+        L.append(f"{pad}▼ 先の登録が1件も無い（{len(none)}種類）")
+        for r in none:
+            tail = f"最後の登録 {r['last'].isoformat()}" if r["last"] else "台帳に1件も無い"
+            L.append(f"{pad}   ・{r['label']}（{_how_often(r['every_days'])}・{tail}）")
+    if soon:
+        L.append(f"{pad}▼ もうすぐ登録が尽きる（{len(soon)}種類）")
+        for r in soon:
+            L.append(f"{pad}   ・{r['label']}（{_how_often(r['every_days'])}・"
+                     f"最後の登録 {r['last'].isoformat()}＝あと{r['days_left']}日）")
+    return "\n".join(L)
+
+
+def assess_state(now_jst, here=None):
     """自動更新の結果を読み、**人がやるべきことだけ**を todos に返す。
 
     2026-08-30 まで、このメールは「economic-events.json に翌月の指標を手で追加して
@@ -131,10 +221,13 @@ def assess_state(now_jst):
     ⚠️ **やらなくていい作業を毎月催促するメールは読まれなくなる。**実際、今回の事故
     （指標が2か月ゼロ）は、このメールが届き続けたのに誰も動かなかった結果でもある。
     ⇒ 依頼をやめ、状態の報告に変える。todos が空なら「対応不要」と明示する。
+
+    here : 台帳のある場所（省けばこのファイルと同じ場所。テストが作り物の台帳を渡すためのもの）
     """
-    here = os.path.dirname(os.path.abspath(__file__))
+    here = here or os.path.dirname(os.path.abspath(__file__))
     todos, stats = [], {}
     now_iso = now_jst.isoformat(timespec="minutes")
+    ev = fut = None
 
     # ── 経済指標（sync_economic_events.py が年ごとの表 ECONOMIC_EVENTS_<年> から生成）──
     try:
@@ -163,6 +256,19 @@ def assess_state(now_jst):
     except Exception as e:
         todos.append(f"🚨 economic-events.json を読めませんでした: {e}")
 
+    # ── 種類ごとの先詰まり（全体では先まで入っていても、中国や日本だけ空ということがある）──
+    if ev is not None:
+        try:
+            rows = kind_runway(ev, now_jst)
+            stats["kind_total"] = len(rows)
+            stats["kind_none"] = sum(1 for r in rows if r["state"] == "none")
+            stats["kind_soon"] = sum(1 for r in rows if r["state"] == "soon")
+            todo = kind_runway_todo(rows)
+            if todo and fut != []:            # 指標が全部0件のときは、上の「未来分が0件」の1件で足りる
+                todos.append(todo)
+        except Exception as e:                # 見張りが動かないのを黙って通さない
+            todos.append(f"🚨 種類ごとの先詰まりを調べられませんでした（monthly_calendar_reminder.py の kind_runway）: {e}")
+
     # ── 決算予定（build_earnings_calendar.py が Nasdaq API + yfinance で取得）──
     try:
         ec = json.load(open(os.path.join(here, "earnings-calendar.json"), encoding="utf-8"))
@@ -181,14 +287,8 @@ def assess_state(now_jst):
     return todos, stats
 
 
-def send_report_email(year, month, todos, stats, raw_text):
-    sender = os.environ.get("GMAIL_USER", "")
-    password = os.environ.get("GMAIL_APP_PASSWORD", "")
-    recipient = os.environ.get("ALERT_RECIPIENT", "") or sender
-    if not sender or not password:
-        print("  ⚠️ GMAIL_USER / GMAIL_APP_PASSWORD 未設定＝送信スキップ")
-        return False
-
+def build_report(year, month, todos, stats, raw_text):
+    """メールの件名と本文を作る（送らない＝テストと --no-email の見本で同じ文面を見られる）。"""
     if todos:
         subject = f"⚠️ [要対応 {len(todos)}件] {year}年{month}月 カレンダー自動更新"
     else:
@@ -199,8 +299,11 @@ def send_report_email(year, month, todos, stats, raw_text):
          "━━━━━━━━━━━━━━━━━━━━━", ""]
     L += ["【いまの状態】",
           f"  経済指標   未来 {stats.get('ind_future', '?')} 件"
-          + (f"（最終 {stats['ind_last']} ／あと{stats.get('ind_runway','?')}日ぶん）" if stats.get("ind_last") else ""),
-          f"  決算予定   米 {stats.get('ern_us', '?')} 件 / 日 {stats.get('ern_jp', '?')} 件"
+          + (f"（最終 {stats['ind_last']} ／あと{stats.get('ind_runway','?')}日ぶん）" if stats.get("ind_last") else "")]
+    if "kind_total" in stats:
+        L += [f"  種類ごと   {stats['kind_total']} 種類のうち 先の登録なし {stats['kind_none']}"
+              f" ／ もうすぐ尽きる {stats['kind_soon']}"]
+    L += [f"  決算予定   米 {stats.get('ern_us', '?')} 件 / 日 {stats.get('ern_jp', '?')} 件"
           f"（更新 {stats.get('ern_updated', '?')}）", ""]
     if stats.get("ind_next3"):
         L.append("  直近の指標:")
@@ -227,13 +330,25 @@ def send_report_email(year, month, todos, stats, raw_text):
           "休場  = generate_market_holidays.py（米英は2027年・東証は2028年まで自動）",
           "見張り = automation-health §⑬（先詰まりを毎朝チェック）",
           "時短投資ラボ Calendar"]
+    return subject, chr(10).join(L)
+
+
+def send_report_email(year, month, todos, stats, raw_text):
+    sender = os.environ.get("GMAIL_USER", "")
+    password = os.environ.get("GMAIL_APP_PASSWORD", "")
+    recipient = os.environ.get("ALERT_RECIPIENT", "") or sender
+    if not sender or not password:
+        print("  ⚠️ GMAIL_USER / GMAIL_APP_PASSWORD 未設定＝送信スキップ")
+        return False
+
+    subject, body = build_report(year, month, todos, stats, raw_text)
 
     msg = MIMEMultipart()
     msg["From"] = sender
     msg["To"] = recipient
     msg["Subject"] = subject
     msg["Date"] = formatdate(localtime=True)
-    msg.attach(MIMEText(chr(10).join(L), "plain", "utf-8"))
+    msg.attach(MIMEText(body, "plain", "utf-8"))
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as server:
             server.login(sender, password)
@@ -277,7 +392,9 @@ def main():
             print(f"  ✅ Gemini から {len(raw_text)} 文字取得")
 
     if no_email:
-        print("  🔇 メール送信スキップ (--no-email)")
+        print("  🔇 メール送信スキップ (--no-email)。送るはずだった文面は下のとおり:")
+        subject, body = build_report(target_year, target_month, todos, stats, raw_text)
+        print(f"\n件名: {subject}\n\n{body}")
         return
 
     send_report_email(target_year, target_month, todos, stats, raw_text)
