@@ -107,7 +107,7 @@
 <body>
 <div id="reading-progress"></div>
 <button id="theme-toggle" onclick="toggleTheme()" aria-label="テーマ切替" style="position:fixed;top:16px;right:16px;width:42px;height:42px;border-radius:50%;border:1px solid #d0d7de;background:#fff;cursor:pointer;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:18px;display:flex;align-items:center;justify-content:center">🌙</button>
-<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> 時短投資ラボ</div><div class="mw-subbrand">AI投資×行動経済学</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">📅 マクロ経済カレンダー</div><div class="header-meta" style="margin-top:2px">🕒 最終更新: 2026年11月14日 19:14 JST</div></div></div></header>
+<header><div style="max-width:1200px;margin:0 auto;text-align:left"><div style="font-size:1.6rem;font-weight:700;line-height:1.3;background:linear-gradient(90deg,#1E3A6E,#2C4F8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"><svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/><polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="74" cy="27" r="10.5" fill="#E8A317" stroke="#ffffff" stroke-width="4"/></svg> 時短投資ラボ</div><div class="mw-subbrand">AI投資×行動経済学</div><div class="header-meta" style="font-size:.85rem;margin-top:4px">日本人投資家のためのマーケット情報サイト</div><div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(128,128,128,.22)"><div style="font-size:1.3rem;font-weight:700;color:#1E3A6E;line-height:1.35">📅 マクロ経済カレンダー</div><div class="header-meta" style="margin-top:2px">🕒 最終更新: 2026年11月14日 20:34 JST</div></div></div></header>
 <main>
 <nav class="nav-bar">
   <a class="nav-btn" href="index.html">🏠 トップページ</a>
@@ -199,12 +199,18 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">16</div>
+<span class="cal-event jp"><span class="imp">●</span> 日本GDP速報値（Q3）</span>
+<span class="cal-event cn"><span class="imp">●</span> 中国経済指標（10月分）</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">17</div>
+<span class="cal-event us"><span class="imp">●</span> 小売売上高（10月分）</span>
+<span class="cal-event us"><span class="imp">●</span> 英雇用統計（失業率・賃…</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">18</div>
+<span class="cal-event jp"><span class="imp">●</span> 貿易統計（10月分）</span>
+<span class="cal-event us"><span class="imp">⭐</span> 英CPI（10月分）</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">19</div>
@@ -212,6 +218,7 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">20</div>
+<span class="cal-event jp"><span class="imp">●</span> 全国CPI（10月分）</span>
 </div>
 <div class="cal-cell sat">
 <div class="cal-day">21</div>
@@ -228,6 +235,8 @@
 <div class="cal-cell">
 <div class="cal-day">25</div>
 <span class="cal-event us"><span class="imp">●</span> 豪CPI（10月分）</span>
+<span class="cal-event us"><span class="imp">●</span> 米GDP改定値（Q3）</span>
+<span class="cal-event us"><span class="imp">●</span> PCEデフレーター（1…</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">26</div>
@@ -243,6 +252,8 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">30</div>
+<span class="cal-event jp"><span class="imp">●</span> 鉱工業生産（10月速報）</span>
+<span class="cal-event cn"><span class="imp">●</span> 中国製造業PMI（11…</span>
 </div>
 <div class="cal-cell empty"></div>
 <div class="cal-cell empty"></div>
@@ -276,6 +287,12 @@
 <div class="event-body">
 <div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> 米CPI（10月分）</div>
 <div class="event-desc">消費者物価指数。インフレの代表指標。コアCPI（食品・エネ除く）が特に重要。</div>
+</div></div>
+<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">18</div><div class="event-date-dow">水</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇬🇧</span><span class="event-tag tag-high">⭐最重要</span> 英CPI（10月分）</div>
+<div class="event-desc">BOEの金利判断に直結</div>
 </div></div>
 </div>
 
@@ -317,6 +334,7 @@
 <div class="cal-cell">
 <div class="cal-day">9</div>
 <span class="cal-event us"><span class="imp">⭐</span> FOMC</span>
+<span class="cal-event cn"><span class="imp">●</span> 中国CPI（11月分）</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">10</div>
@@ -324,6 +342,7 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">11</div>
+<span class="cal-event us"><span class="imp">●</span> 英GDP（月次・10月…</span>
 </div>
 <div class="cal-cell sat">
 <div class="cal-day">12</div>
@@ -333,12 +352,19 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">14</div>
+<span class="cal-event jp"><span class="imp">⭐</span> 日銀短観（12月調査）</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">15</div>
+<span class="cal-event us"><span class="imp">●</span> PPI（11月分）</span>
+<span class="cal-event us"><span class="imp">●</span> 英雇用統計（失業率・賃…</span>
+<span class="cal-event cn"><span class="imp">●</span> 中国経済指標（11月分）</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">16</div>
+<span class="cal-event us"><span class="imp">●</span> 小売売上高（11月分）</span>
+<span class="cal-event jp"><span class="imp">●</span> 貿易統計（11月分）</span>
+<span class="cal-event us"><span class="imp">⭐</span> 英CPI（11月分）</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">17</div>
@@ -350,6 +376,7 @@
 <div class="cal-cell">
 <div class="cal-day">18</div>
 <span class="cal-event jp"><span class="imp">⭐</span> 日銀会合</span>
+<span class="cal-event jp"><span class="imp">●</span> 全国CPI（11月分）</span>
 </div>
 <div class="cal-cell sat">
 <div class="cal-day">19</div>
@@ -365,6 +392,8 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">23</div>
+<span class="cal-event us"><span class="imp">●</span> 米GDP確定値（Q3）</span>
+<span class="cal-event us"><span class="imp">●</span> PCEデフレーター（1…</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">24</div>
@@ -380,6 +409,7 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">28</div>
+<span class="cal-event jp"><span class="imp">●</span> 鉱工業生産（11月速報）</span>
 </div>
 <div class="cal-cell">
 <div class="cal-day">29</div>
@@ -389,6 +419,7 @@
 </div>
 <div class="cal-cell">
 <div class="cal-day">31</div>
+<span class="cal-event cn"><span class="imp">●</span> 中国製造業PMI（12…</span>
 </div>
 <div class="cal-cell empty"></div>
 <div class="cal-cell empty"></div>
@@ -425,6 +456,18 @@
 <div class="event-body">
 <div class="event-name"><span class="event-tag tag-us">🇺🇸</span><span class="event-tag tag-high">⭐最重要</span> 米CPI（11月分）</div>
 <div class="event-desc">消費者物価指数。インフレの代表指標。コアCPI（食品・エネ除く）が特に重要。</div>
+</div></div>
+<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">14</div><div class="event-date-dow">月</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-jp">🇯🇵</span><span class="event-tag tag-high">⭐最重要</span> 日銀短観（12月調査）</div>
+<div class="event-desc">企業景況感</div>
+</div></div>
+<div class="event-card">
+<div class="event-date-box"><div class="event-date-day">16</div><div class="event-date-dow">水</div></div>
+<div class="event-body">
+<div class="event-name"><span class="event-tag tag-us">🇬🇧</span><span class="event-tag tag-high">⭐最重要</span> 英CPI（11月分）</div>
+<div class="event-desc">BOEの金利判断に直結</div>
 </div></div>
 <div class="event-card">
 <div class="event-date-box"><div class="event-date-day">17</div><div class="event-date-dow">木</div></div>
