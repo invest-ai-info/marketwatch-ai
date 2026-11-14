@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-11-14
+- 判定: ✅ 公開済み
+- 選定トピック: 米10月CPI(+0.4%・予想上回り)+PPI(+6.5%YoY・2022年来最高)が揃い12月FOMCの利上げ確率ほぼ100%──米10年債利回り5.1%台・ドル円159円・金週間4%安、日本株・為替への影響を3論点で中立整理（カテゴリ: マクロ・FRB・金融政策・為替・日本株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - BLS（米労働統計局）「Consumer Price Index October 2026」2026-11-10
+  - BLS（米労働統計局）「Producer Price Index October 2026」2026-11-13
+  - CNBC「CPI inflation report: October 2026」2026-11-10
+  - CBS News「Inflation remained elevated in October, CPI report shows」2026-11-10
+  - CNN「Bond yields surge most in 19 months as traders brace for Fed rate hikes」2026-11-10
+  - FXStreet/USAGold「Gold Steadies Near $3,890 As Tame October PPI Fails To Cool December Hike Bets」2026-11-13
+  - Yahoo Finance「Gold price today, Friday, November 13, 2026」2026-11-13
+  - Investing.com「Japan stocks higher at close of trade; Nikkei 225 up 0.54%」2026-11-13
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー → 修正適用済み → 🟢白（修正6件: ①「12月利上げほぼ確定」→「観測が一段と強まる」×5箇所 ②meta説明に「CME FedWatch」出典追加×3箇所 ③曜日誤り修正×2箇所 11/10(月)→(火)・11/17(月)→(火)）
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典BLS・CME・CNBC等複数系統 ✅）→「そのまま公開OK」
+  - 最終判定: 🟢白（修正後OK）
+- 決定論チェック: kinsho-v1×3 ✅ / 禁止語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告69件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-14-fed-hike.html
+- commit: a260eca（main へ push 済み）
+
+---
+
 ## 2026-11-13
 - 判定: ✅ 公開済み
 - 選定トピック: アンソロピック（Anthropic）、来週19日にNASDAQ上場へ──価格帯$70-78設定・評価額最大1.4兆ドル・Google/NVIDIA各100億ドル追加出資・3つの論点を中立整理（カテゴリ: AI・米国株・IPO・テクノロジー）
