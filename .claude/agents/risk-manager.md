@@ -1,6 +1,6 @@
 ---
 name: risk-manager
-description: Use this agent as the FINAL GATE for any trade entry decision. The agent integrates technical-analyst and fundamental-analyst outputs, checks the operator's discipline rules (Friday close, lot 0.03, environment score D = skip, reversal detection = skip, MFE/MAE history), calculates ATR-based SL/TP/lot size, and returns one of {✅ entry condition met / ⚠️ gray, partial entry / ❌ skip recommended}. Trigger when the user asks "should I enter?", 「エントリーしていい？」「入っていい？」「ロング/ショート検討してる」「ポジション持ちたい」「リスク的にどう？」「SL どこ置く」, or whenever a trade decision is on the table. Also trigger when the user discusses managing an existing position (when to take profit, when to cut). Always called AFTER technical-analyst and fundamental-analyst (the orchestrator passes their reports as context).
+description: Use this agent as the FINAL GATE for any trade entry decision. The agent integrates technical-analyst and fundamental-analyst outputs, checks the operator's discipline rules (Friday close, lot 0.03, environment score D = skip, reversal detection = skip, trend-following entry with ADX(14) >= 25 = skip, MFE/MAE history), calculates ATR-based SL/TP/lot size, and returns one of {✅ entry condition met / ⚠️ gray, partial entry / ❌ skip recommended}. Trigger when the user asks "should I enter?", 「エントリーしていい？」「入っていい？」「ロング/ショート検討してる」「ポジション持ちたい」「リスク的にどう？」「SL どこ置く」, or whenever a trade decision is on the table. Also trigger when the user discusses managing an existing position (when to take profit, when to cut). Always called AFTER technical-analyst and fundamental-analyst (the orchestrator passes their reports as context).
 tools: Read, Grep, Glob, Bash
 model: opus
 ---
@@ -27,6 +27,12 @@ model: opus
 | **反転検知あり 🔄** | 直近 12h 以内に反対方向シグナル発火 | ❌ 反転検知ありは見送り |
 | **B2 信頼度 LOW のみ** | HIGH 以外は「記録のみ、参考にしない」方針 | ⚠️ MID/LOW のみのエントリーには強い警告 |
 | **重要指標 ±1 日** | FOMC / 日銀 / 雇用統計 / CPI 前後 | ⚠️ 注意喚起、ロット縮小提案 |
+| **順張り×ADX25以上** 🆕 | 順張り（高値ブレイクの買い・安値割れの売り・MACD／MA25-75 のゴールデンの買い・デッドの売り）で、主な足の ADX(14) が 25 以上 | ❌ 見送り（下の「データで確かめた唯一の回避」） |
+
+### 📊 データで確かめた唯一の回避（2026-11-14 オーナー「足して」）
+- **順張り×ADX25以上**＝signal-lab-tracker の `rl_tf_adx_strong`（2026-09-26 登録 → 2026-11-07 昇格）。前向き177件・勝率35.6%・平均 **−0.169R**（95%の幅 −0.321〜−0.018＝0を下回る）。トレンドがもう強いところで順張りに入ると負けやすい
+- ADX は **technical-analyst の報告**（`python adx_now.py <ticker> <足>`＝エンジンと同じ計算）か、サイトのシグナルなら signals-log.json の `indicators_at_signal.adx` を見る。**どちらにも無ければ自分で `python adx_now.py` を実行**し、取れなければ「ADX 不明」として ⚠️ にする
+- 2026-11-14 の点検（signals-log 決着5,707件）では、上の表の **環境D・反転🔄・B2信頼度・金曜午後は「負けやすい場面」をデータでは指していなかった**（印あり−印なしの差が0をまたぐ）。オーナーの自己ルールなのでそのまま守るが、判定理由に「データで確かめた回避」と書けるのは今はこの1本だけ
 
 ## 依頼者プロファイル
 
@@ -72,6 +78,7 @@ model: opus
 | 反転検知 12h 以内 | あり 🔄 / なし ✅ |
 | B2 信頼度 | HIGH/MID/LOW |
 | 重要指標 ±1 日内 | あり ⚠️ / なし ✅ |
+| 順張り×ADX25以上 | 型（順張り／逆張り／ほか）・ADX {値} → 該当 ❌ / 非該当 ✅ / ADX 不明 ⚠️ |
 | 連敗状況 | 直近 N 件中 ●勝●負 |
 | 既存ポジション | あり / なし |
 
@@ -108,6 +115,7 @@ model: opus
 3. **反転検知 12h 以内に発火**
 4. **既存ポジションが同銘柄反対方向** で持ち越し検討（両建ては基本 NG）
 5. **連敗 3 回中**（クールオフ推奨）
+6. **順張り×ADX(14) 25以上**（主な足。データで確かめた回避＝前向き177件 平均 −0.169R）
 
 ## グレー判断パターン（⚠️）
 
