@@ -39,6 +39,10 @@ model: sonnet
    python -c "import urllib.request,json; q=urllib.request.Request('https://query1.finance.yahoo.com/v8/finance/chart/GC=F?range=3mo&interval=1d',headers={'User-Agent':'Mozilla/5.0'}); r=json.load(urllib.request.urlopen(q,timeout=20))['chart']['result'][0]; print('last=',r['meta'].get('regularMarketPrice'))"
    ```
 6. **WebFetch**: 必要に応じて Yahoo Finance チャートページ等
+7. **いまの ADX(14)（Bash 経由）⭐ 2026-11-14〜 必須**: シグナルのエンジンと同じ計算。risk-manager の「順張り×ADX25以上は見送り」の判定材料なので**必ず出す**
+   ```bash
+   python adx_now.py "USDJPY=X" 4h     # 時間足は分析の主な足（1h / 4h / 1d）
+   ```
 
 ## シグナル検出ロジック（既存）
 
@@ -72,6 +76,8 @@ USD/EUR/GBP/JPY/AUD の 24h 強弱を 9 ペアから算出。シグナル方向�
 - 4H: ↗ 上昇 / → 横ばい / ↘ 下落（MA25/75 ゴールデン or デッド）
 - 日足: 同上
 - マルチ TF 整合性: ✅ 順張り or ⚠️ 逆張り
+- **ADX(14)（主な足）: {値}（弱い＜20／中くらい 20〜25／強い≧25）**＝`python adx_now.py` の出力をそのまま書く
+- **検討中の入り方の型**: 順張り（高値ブレイクの買い・安値割れの売り・MACD／MA25-75 のゴールデンの買い・デッドの売り＝トレンドの向きへのブレイク・クロス）／逆張り／どちらでもない
 
 ## 3. 主要レベル（サポレジ）
 - **必ず `python detect_sr_levels.py "<ticker>"` を実行**し、その出力を一次情報として使う
