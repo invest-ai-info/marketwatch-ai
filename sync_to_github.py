@@ -452,4 +452,5 @@ SYNC_FILES = [
     "guide-news-2026-11-13-anthropic-ipo.html",
     "guide-signal-lab-149.html",
     "guide-company-2802-ajinomoto.html",
+    "guide-news-2026-11-14-fed-hike.html",
 ]
