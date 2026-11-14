@@ -72,6 +72,17 @@ EUR_SET = ["EURUSD=X", "EURJPY=X", "EURAUD=X"]
 CN_SET = AUD_PAIRS + ["NKD=F", "CL=F"]          # 豪ドル＋日経＋原油
 JP_SET = JPY_CROSS + ["NKD=F"]
 
+# 発表の間隔の目安（日）。RULES に every_days を書いていない種類は「月に1回」（every_days_of）。
+# 使い道＝月次メールの「種類ごとの先詰まり」（monthly_calendar_reminder.kind_runway・2026-11-14）。
+#   「まだ登録の無い次の発表」が近づいた種類だけを知らせるので、間隔が長い種類（四半期に1回）を
+#   月に1回の種類と同じ物差しで測ると、年末まで入っていても毎月まちがって鳴る。
+# 🔑 新しい種類を足すとき：年8回の会合・四半期に1回の発表なら every_days を書く。書き忘れても
+#   「月に1回」として早めに鳴る側へ倒れる（黙る側には倒れない）。
+#   本物の表の間隔との食い違いは tests/test_calendar_kind_runway.py が見張る。
+EVERY_DAYS_MONTHLY = 30
+EVERY_DAYS_MEETING = 46      # 年8回の会合（FOMC・ECB・日銀・英中銀・豪中銀）
+EVERY_DAYS_QUARTERLY = 91    # 四半期に1回（GDP・日銀短観）
+
 RULES = [
     # ── 米国（8:30 ET 発表群）──
     dict(pattern=r"米雇用統計",      tz=NY, local_time=(8, 30),  impact="critical",
@@ -88,12 +99,12 @@ RULES = [
          assets=["all"], country="US", label="米 PCE デフレーター", json_pattern=r"PCE"),
     # ── 政策金利（現地14:00 ET → JST では翌日未明。tz変換が日跨ぎを処理する）──
     dict(pattern=r"FOMC（結果発表）", tz=NY, local_time=(14, 0), impact="critical",
-         assets=["all"], country="US", label="FOMC 政策金利発表", json_pattern=r"FOMC"),
+         assets=["all"], country="US", label="FOMC 政策金利発表", every_days=EVERY_DAYS_MEETING, json_pattern=r"FOMC"),
     # ── 欧州・英国・日本・中国 ──
     dict(pattern=r"ECB理事会",       tz=FRANKFURT, local_time=(14, 15), impact="high",
-         assets=["all"], country="EU", label="ECB 政策金利発表", json_pattern=r"ECB"),
+         assets=["all"], country="EU", label="ECB 政策金利発表", every_days=EVERY_DAYS_MEETING, json_pattern=r"ECB"),
     dict(pattern=r"日銀会合（結果発表）", tz=JST, local_time=(12, 0), impact="critical",
-         assets=JP_SET, country="JP", label="日銀金融政策決定会合",
+         assets=JP_SET, country="JP", label="日銀金融政策決定会合", every_days=EVERY_DAYS_MEETING,
          # ⚠️ r"日銀" だと **日銀短観** まで拾ってしまい、同じ月の別イベントとして
          #    誤った食い違い警告＋二重登録を生む（2026-09-17 に実際に発生）。
          json_pattern=r"日銀金融政策決定会合|日銀会合"),
@@ -107,7 +118,7 @@ RULES = [
     # 🔑 現地時刻＋tz で書けば夏時間は zoneinfo が吸収する＝JST を手計算しない。
     dict(pattern=r"英中銀",          tz=LONDON, local_time=(12, 0), impact="critical",
          assets=GBP_SET, country="UK",
-         label="英中銀 政策金利発表", json_pattern=r"英中銀|BOE"),
+         label="英中銀 政策金利発表", every_days=EVERY_DAYS_MEETING, json_pattern=r"英中銀|BOE"),
     dict(pattern=r"^英CPI",          tz=LONDON, local_time=(7, 0),  impact="high",
          assets=GBP_SET, country="UK",
          label="英CPI", json_pattern=r"^英CPI"),
@@ -122,7 +133,7 @@ RULES = [
          label="ユーロ圏HICP速報", json_pattern=r"ユーロ圏HICP"),
     dict(pattern=r"^ユーロ圏GDP",    tz=FRANKFURT, local_time=(11, 0), impact="high",
          assets=EUR_SET, country="EU",
-         label="ユーロ圏GDP速報", json_pattern=r"ユーロ圏GDP"),
+         label="ユーロ圏GDP速報", every_days=EVERY_DAYS_QUARTERLY, json_pattern=r"ユーロ圏GDP"),
     # ── 🇨🇳 中国（2026-09-17 追加・オーナー指示「豪ドル系に効くので必ず入れる」）──────
     #    国家統計局 09:30／財新 09:45／月次指標・GDP 10:00（いずれも北京時間）
     dict(pattern=r"中国製造業PMI",   tz=SHANGHAI, local_time=(9, 30), impact="high",
@@ -133,14 +144,14 @@ RULES = [
          assets=CN_SET, country="CN", label="中国 月次経済指標",
          json_pattern=r"中国 ?月次経済指標|中国経済指標"),
     dict(pattern=r"^中国GDP",        tz=SHANGHAI, local_time=(10, 0), impact="critical",
-         assets=CN_SET, country="CN", label="中国 GDP", json_pattern=r"中国 ?GDP"),
+         assets=CN_SET, country="CN", label="中国 GDP", every_days=EVERY_DAYS_QUARTERLY, json_pattern=r"中国 ?GDP"),
     # ── 🇯🇵 日本（総務省 08:30／内閣府・経産省・財務省・日銀 08:50）────────────────
     dict(pattern=r"^全国CPI",        tz=JST, local_time=(8, 30), impact="high",
          assets=JP_SET, country="JP", label="全国CPI", json_pattern=r"^全国CPI"),
     dict(pattern=r"^日銀短観",       tz=JST, local_time=(8, 50), impact="high",
-         assets=JP_SET, country="JP", label="日銀短観", json_pattern=r"^日銀短観"),
+         assets=JP_SET, country="JP", label="日銀短観", every_days=EVERY_DAYS_QUARTERLY, json_pattern=r"^日銀短観"),
     dict(pattern=r"^日本GDP",        tz=JST, local_time=(8, 50), impact="high",
-         assets=JP_SET, country="JP", label="日本GDP速報", json_pattern=r"^日本GDP"),
+         assets=JP_SET, country="JP", label="日本GDP速報", every_days=EVERY_DAYS_QUARTERLY, json_pattern=r"^日本GDP"),
     dict(pattern=r"^鉱工業生産",     tz=JST, local_time=(8, 50), impact="high",
          assets=JP_SET, country="JP", label="鉱工業生産", json_pattern=r"^鉱工業生産"),
     dict(pattern=r"^貿易統計",       tz=JST, local_time=(8, 50), impact="high",
@@ -154,7 +165,7 @@ RULES = [
     # 🔑 現地時刻＋tz で書く＝夏時間（AEDT）は zoneinfo が吸収する（日本時間 12:30／豪州の冬は 13:30）。
     #   ⚠️ MT5 の経済カレンダーは豪中銀の時刻が夏時間の月に1時間遅い＝時刻の元にしない。
     dict(pattern=r"豪中銀",          tz=SYDNEY, local_time=(14, 30), impact="critical",
-         assets=AUD_PAIRS, country="AU", label="豪中銀 政策金利発表", json_pattern=r"豪中銀|RBA"),
+         assets=AUD_PAIRS, country="AU", label="豪中銀 政策金利発表", every_days=EVERY_DAYS_MEETING, json_pattern=r"豪中銀|RBA"),
     dict(pattern=r"^豪雇用統計",     tz=SYDNEY, local_time=(11, 30), impact="high",
          assets=AUD_PAIRS, country="AU", label="豪雇用統計", json_pattern=r"^豪雇用統計"),
     dict(pattern=r"^豪CPI",          tz=SYDNEY, local_time=(11, 30), impact="high",
@@ -222,6 +233,20 @@ def match_rule(name):
     return None
 
 
+def rule_of_json_name(name):
+    """台帳（economic-events.json）の名前から決まりを引く。名前の表記ゆれ（「米雇用統計 6 月 NFP」等）が
+    あるので文字列一致ではなく json_pattern で当てる（先に一致した決まりを採る）。"""
+    for r in RULES:
+        if re.search(r["json_pattern"], name or ""):
+            return r
+    return None
+
+
+def every_days_of(rule):
+    """その種類の発表の間隔の目安（日）。書いていなければ月に1回。"""
+    return int(rule.get("every_days", EVERY_DAYS_MONTHLY))
+
+
 def is_known_skip(name):
     return any(re.search(p, name) for p in NO_PRECEDENT)
 
@@ -258,10 +283,8 @@ def plan_additions(tables, existing, now_jst):
     # 既存エントリを RULES に写像する。名前の表記ゆれ（「米雇用統計 6 月 NFP」等）が
     # あるので文字列一致ではなく json_pattern で当てる。
     def rule_of_existing(nm):
-        for r in RULES:
-            if re.search(r["json_pattern"], nm):
-                return r["label"]
-        return None
+        r = rule_of_json_name(nm)
+        return r["label"] if r else None
 
     have = set()
     have_month_label = {}                       # (年-月, 種類) → その月に台帳にある日時（1つの月に2回出る種類もある）
