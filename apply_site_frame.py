@@ -28,7 +28,13 @@
   python apply_site_frame.py                 # dry-run（--all と同じ対象）
   python apply_site_frame.py --all           # guide-*.html と STATIC_PAGES に適用
   python apply_site_frame.py --files a.html  # 指定ページに適用（guide 以外は ① だけ）
-  FRAME_V2=1 python apply_site_frame.py --all  # 新しい枠で適用（guide-*.html だけ。ほかは今と同じ）
+  FRAME_V2=1 python apply_site_frame.py --all  # 新しい枠で適用（guide-*.html。記事以外は下の段階3）
+
+🆕 2026-11-15 段階3＝トップ以外のページもすべてトップの見た目に（オーナー依頼）。V2_PAGES の15本（生成ページ10本＋
+  STATIC_PAGES）に新しいヘッダー・ナビ・ページ名の帯・共通の見た目（SKIN_V2）をかける。記事は標準のひな形だけ SKIN_V2。
+  スイッチ＝PAGES_V2_ON（1行・環境変数 PAGES_V2=0/1 で上書き）。生成スクリプト（generate_market_news.safe_write・
+  generate_track_record_page・research_map・generate_youtube_summary・build_political_feed_page）は書く前に finish_page を通す。
+  テスト＝tests/test_site_pages_v2.py
 """
 import glob
 import os
@@ -211,7 +217,8 @@ FRAME_V2_CSS = (
     + _HV + "{" + _imp("box-sizing:border-box;display:block;position:static;margin:0;padding:8px 16px 0;"
                        "background:var(--bg);border:0;box-shadow:none;color:var(--ink);text-align:left;"
                        f"font:400 16px/1.5 {_FONT_V2}") + "}"
-    + _HV + " .mwf-hd-in{" + _imp("display:flex;align-items:center;max-width:1080px;min-height:58px;"
+    # 中身の幅 1048px＝トップの .wrap（max-width:1080px・左右 16px）の中身と同じ＝ロゴの左端がトップとそろう
+    + _HV + " .mwf-hd-in{" + _imp("box-sizing:border-box;display:flex;align-items:center;max-width:1048px;min-height:58px;"
                                   "margin:0 auto;padding:0 112px 0 0") + "}"
     + _HV + " a.mwf-logo{" + _imp("display:inline-flex;align-items:center;gap:10px;color:var(--ink);"
                                   "-webkit-text-fill-color:currentColor;background:none;font-size:19px;font-weight:700;"
@@ -221,7 +228,7 @@ FRAME_V2_CSS = (
     + _NV + "{" + _imp("box-sizing:border-box;display:block;position:relative;z-index:50;width:auto;max-width:none;"
                        "margin:0;padding:0 16px 8px;background:var(--bg);border:0;border-bottom:1px solid var(--line);"
                        f"border-radius:0;box-shadow:none;font:400 16px/1.5 {_FONT_V2}") + "}"
-    + _NV + " .mwf-in{" + _imp("display:flex;align-items:flex-start;gap:4px;max-width:1080px;margin:0 auto;padding:0") + "}"
+    + _NV + " .mwf-in{" + _imp("box-sizing:border-box;display:flex;align-items:flex-start;gap:4px;max-width:1048px;margin:0 auto;padding:0") + "}"
     + _NV + " .mwf-row{" + _imp("display:flex;flex-wrap:nowrap;gap:4px;flex:1 1 auto;min-width:0;margin:0 0 0 -4px;"
                                 "padding:0;overflow-x:auto;scrollbar-width:none") + "}"
     + _NV + " .mwf-row::-webkit-scrollbar{display:none}"
@@ -274,8 +281,164 @@ NAV_V2_JS = ("<script>(function(){var n=document.currentScript&&document.current
              "document.addEventListener('click',function(e){if(d.open&&!d.contains(e.target))d.open=false});"
              "document.addEventListener('keydown',function(e){if(e.key==='Escape'&&d.open)d.open=false})})();</script>")
 
+# ── 🆕 2026-11-15 段階3＝トップ以外のページもトップの見た目に（オーナー依頼「すべてのホームページのデザインを
+#    トップページのデザインに合わせてください」）──────────────────────────────
+#  ① 記事以外のページ（V2_PAGES＝生成ページ10本と静的ページ5本）に、記事と同じ新しいヘッダー（ロゴとサイト名の1行）と
+#     横1列のナビ（6項目＋「もっと見る」）をかける。前のヘッダーにあったサイトの説明と2段目（AI投資×行動経済学）は
+#     トップと同じく出さない
+#  ② 前のヘッダーにあった「ページ名＋最終更新」は、ページに見出し（h1）が無ければ（カレンダー・チャート等の6本）、
+#     ナビの下の水色の帯（トップの最初の画面と同じ色と飾りの線）に h1 として移す。h1 があるページは帯を作らない
+#  ③ 共通の見た目（SKIN_V2_CSS）＝文字・地の色・中身の幅（トップと同じ 1048px）・見出しとリンクの色・パンくず・
+#     フッター・ページの表紙の箱（.page-header・.doc-card・記事の .article）をトップの値に。**要素だけを選ぶ**ので
+#     クラスで色を決めているページごとの部品（表・グラフ・カード・ボタン）には勝たない＝中身の作りは変えない
+#  記事（guide-*）は記事の新しい枠（FRAME_V2）がオンのとき、標準のひな形（h1 が #1E3A6E の形＝約660本）だけに
+#  ③ をかける。独自の色の仕組み（--c-bg 等）を持つ記事は触らない（暗い表示で文字が沈むのを避ける）
+#  スイッチ＝PAGES_V2_ON（ここ1行。環境変数 PAGES_V2=0/1 で上書き）。オフにすると生成ページは次の生成で、
+#  静的ページは次の apply_site_frame --all で前の形に戻る。生成スクリプトは書き出す直前に finish_page を通す
+PAGES_V2_ON = True
+
+
+def pages_v2_enabled():
+    """トップ以外のページの新しい見た目のスイッチ。環境変数 PAGES_V2 が "0"/"1" ならそれ、無ければ PAGES_V2_ON。"""
+    v = os.environ.get("PAGES_V2", "").strip()
+    if v in ("0", "1"):
+        return v == "1"
+    return PAGES_V2_ON
+
+
+# 新しい見た目にするページと、ナビで「今いるページ」にする項目（None＝どれも光らせない）
+V2_PAGES = {
+    "calendar.html": "calendar.html",
+    "preview.html": "calendar.html",          # 経済指標プレビュー＝経済カレンダーの仲間
+    "market-health.html": "market-health.html",
+    "vix.html": "market-health.html",         # VIX＝市場データの仲間（ナビには無いページ）
+    "charts.html": "charts.html",
+    "hot-assets.html": "hot-assets.html",
+    "track-record.html": "track-record.html",
+    "research-list.html": "research-list.html",
+    "youtube-summary.html": "youtube-summary.html",
+    "political-feed.html": "political-feed.html",
+    "guides.html": "guides.html",
+    "holdings.html": "holdings.html",
+    "about.html": None,
+    "contact.html": None,
+    "privacy.html": None,
+}
+# 前の形に戻すとき（スイッチをオフ）の静的ページのページ名の行とナビの「今いるページ」。生成ページは生成スクリプトが作り直す
+V1_STATIC_SECTION = {"guides.html": "📚 解説記事"}
+V1_STATIC_CURRENT = {"guides.html": "guides.html", "holdings.html": "holdings.html"}
+
+# 色はトップの HOME_V2_CSS と同じ値（tests が突き合わせる）。記事やページが自分の --bg 等を持っていることがあるので、
+# 変数を足さずに値をそのまま書く
+_SK = dict(V2_LIGHT, link="#1263cc", faint="#7b879a", teal="#0b8f82")
+_SKD = dict(V2_DARK, link="#7fb2ff", faint="#7f8b9b", teal="#3cc7b8")
+_SK_T_TEAL = "#e4f6f2"   # トップの --t-teal（メルマガの箱の地）
+_FONT_LINK = ('<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" '
+              'rel="stylesheet" data-mw-font>')
+
+
+def _deco_url(brand, teal):
+    """トップの最初の画面の右下にある飾りの線（generate_market_news._V2_HERO_DECO と同じ形）を背景の絵にする"""
+    svg = ("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 220'>"
+           "<path d='M0 190 L70 160 L120 172 L190 120 L250 132 L320 80 L380 96 L450 40 L520 52' fill='none' "
+           f"stroke='{brand}' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' opacity='.28'/>"
+           "<path d='M0 205 L80 186 L150 194 L230 160 L300 168 L370 130 L440 140 L520 104' fill='none' "
+           f"stroke='{teal}' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' opacity='.25'/>"
+           f"<circle cx='450' cy='40' r='9' fill='{brand}' opacity='.35'/></svg>")
+    return 'url("data:image/svg+xml,' + svg.replace("#", "%23").replace("<", "%3C").replace(">", "%3E") + '")'
+
+
+_DECO_L = _deco_url(_SK["brand"], _SK["teal"])
+_DECO_D = _deco_url(_SKD["brand"], _SKD["teal"])
+_DECO_POS = " no-repeat right -12px bottom/auto 100%"
+_DECO_POS_BOX = " no-repeat right -8px bottom/auto 72%"   # 本文の中の表紙の箱は説明文が長いので小さめ
+_FONT_V2_STACK = "'Noto Sans JP','Hiragino Sans','Yu Gothic',system-ui,sans-serif"
+# ③ 共通の見た目。要素の選び方だけ（h1・main 等）か、表紙の箱のクラス1つ＝ページ側の同じ強さの指定より後ろに置くので勝ち、
+#    クラスで決めている部品の色には負ける。暗い表示の地・見出し・リンク・フッターの色はページ側の body.dark の指定に任せる
+#    （ページ側の方が強い＝前と同じ）。ここで暗い色を持つのは表紙の箱と帯だけ
+SKIN_V2_CSS = (
+    f"body{{font-family:{_FONT_V2_STACK};background:{_SK['bg']};color:{_SK['ink']}}}"
+    "main{box-sizing:border-box;max-width:1080px;padding-left:16px;padding-right:16px}"
+    f"h1,h2{{color:{_SK['ink']}}}h2{{border-bottom-color:{_SK['line']}}}"
+    f"a{{color:{_SK['link']}}}"
+    f".breadcrumb{{color:{_SK['muted']}}}.breadcrumb a{{color:{_SK['link']}}}"
+    f".article,.doc-card{{background:{_SK['bg']};border-color:{_SK['line']};border-radius:14px}}"
+    f".page-header{{background:{_SK['t-blue']} {_DECO_L}{_DECO_POS_BOX};border-color:transparent;border-radius:14px}}"
+    f".page-header h1{{color:{_SK['ink']}}}.page-desc{{color:{_SK['muted']}}}"
+    f"footer{{background:{_SK['bg']};border-top:1px solid {_SK['line']};color:{_SK['muted']};text-align:left;"
+    "font-size:13.5px;line-height:1.75;margin-top:40px;padding:24px max(16px,calc(50% - 524px)) 40px}"
+    f"footer a{{color:{_SK['muted']};text-decoration:none}}footer a:hover{{text-decoration:underline}}"
+    # メルマガの登録の箱（safe_write 等が入れる部品）をトップと同じ薄い緑の地・青いボタンに。部品の <style> は本文の中＝
+    # こちらより後ろにあるので、html body を付けて1段強くする。暗い表示は部品の body.dark の指定（もっと強い）のまま
+    f"html body .mw-newsletter .ml-form-embedWrapper{{background:{_SK_T_TEAL};border:0;border-radius:14px}}"
+    f"html body .mw-newsletter .mw-nl-badge{{color:{_SK['teal']};background:{_SK['bg']};border-color:transparent}}"
+    f"html body .mw-newsletter .ml-form-embedContent h4{{color:{_SK['ink']}}}"
+    f"html body .mw-newsletter .ml-form-embedContent p{{color:{_SK['muted']}}}"
+    f"html body .mw-newsletter .ml-form-fieldRow input{{border-color:{_SK['line']};border-radius:10px}}"
+    f"html body .mw-newsletter .ml-form-embedSubmit button{{background:{_SK['brand']};border-radius:10px}}"
+)
+# 暗い表示を持つページ（記事・解説記事の一覧・シグナル研究など）だけに足す：題名と表紙の箱をトップの暗い色に
+SKIN_V2_DARK_CSS = (
+    # h1 は記事の多くが暗い表示の色を持たず、紺のまま暗い地に沈んでいた（2026-11-15 実測）＝トップの暗い表示の文字色に
+    f"body.dark h1{{color:{_SKD['ink']}}}"
+    f"body.dark .article,body.dark .doc-card{{background:{_SKD['surface']};border-color:{_SKD['line']}}}"
+    f"body.dark .page-header{{background:{_SKD['t-blue']} {_DECO_D}{_DECO_POS_BOX};border-color:transparent}}"
+    f"body.dark .page-header h1{{color:{_SKD['ink']}}}body.dark .page-desc{{color:{_SKD['muted']}}}"
+)
+# ② ページ名の帯（トップの .hero-band と同じ水色と飾りの線）。中身の左端はヘッダーのロゴとそろえる
+_PT = "div.mwf-ptitle[data-v2]"
+PAGE_TITLE_V2_CSS = (
+    _PT + "{" + _imp(f"box-sizing:border-box;display:block;margin:0;padding:0 16px;"
+                     f"background:{_SK['t-blue']} {_DECO_L}{_DECO_POS};border:0;border-bottom:1px solid {_SK['line']}") + "}"
+    + _PT + " .mwf-pt-in{" + _imp("box-sizing:border-box;max-width:1048px;margin:0 auto;padding:28px 0 24px") + "}"
+    + _PT + " h1{" + _imp(f"margin:0;padding:0;border:0;background:none;color:{_SK['ink']};-webkit-text-fill-color:currentColor;"
+                          f"font:700 clamp(24px,3.6vw,32px)/1.35 {_FONT_V2_STACK};letter-spacing:.01em;text-align:left") + "}"
+    + _PT + " .mwf-pt-meta{" + _imp(f"margin:8px 0 0;padding:0;color:{_SK['muted']};font-size:14px;line-height:1.6") + "}"
+    + "@media(max-width:640px){" + _PT + " .mwf-pt-in{" + _imp("padding:20px 0 18px") + "}}"
+)
+PAGE_TITLE_V2_DARK_CSS = (
+    "body.dark " + _PT + "{" + _imp(f"background:{_SKD['t-blue']} {_DECO_D}{_DECO_POS};border-bottom-color:{_SKD['line']}") + "}"
+    + "body.dark " + _PT + " h1{" + _imp(f"color:{_SKD['ink']}") + "}"
+    + "body.dark " + _PT + " .mwf-pt-meta{" + _imp(f"color:{_SKD['muted']}") + "}"
+)
+# 暗い表示を持たないページ（カレンダー・市場健康度など。🌙 を押しても中身は明るいまま＝前から）では、
+# ヘッダーとナビも明るいままにする（暗いのは枠だけ、にならないように）。FRAME_V2_CSS の暗い色の指定と同じ強さで後ろに置く
+LIGHT_LOCK_CSS = f"body.dark {_HV},body.dark {_NV}{{{_vars(V2_LIGHT)}}}"
+SKIN_V2_STYLE_TAG = ("<style data-mw-skin-v2>" + SKIN_V2_CSS + SKIN_V2_DARK_CSS + PAGE_TITLE_V2_CSS
+                     + PAGE_TITLE_V2_DARK_CSS + "</style>")
+SKIN_V2_LIGHT_STYLE_TAG = "<style data-mw-skin-v2>" + SKIN_V2_CSS + PAGE_TITLE_V2_CSS + LIGHT_LOCK_CSS + "</style>"
+# 暗い表示を持つページの見分け方＝ページ自身の <style>（data-mw-* の付いた枠・部品の <style> は除く）に、広告・メルマガ・
+# 検索・上に戻る・🌙 以外の body.dark の指定が10以上ある（2026-11-15 実測: 持つページは17〜40・持たないページは0〜5）
+_OWN_DARK_MIN = 10
+_WIDGET_SEL_RE = re.compile(r"mw-ad|mw-newsletter|back-to-top|ss-|theme-toggle")
+
+
+def has_own_dark(text):
+    n = 0
+    for m in re.finditer(r"<style([^>]*)>(.*?)</style>", text, re.S):
+        if "data-mw" in m.group(1):
+            continue
+        n += sum(1 for sel in re.findall(r"(body\.dark[^{,]*)[{,]", m.group(2)) if not _WIDGET_SEL_RE.search(sel))
+    return n >= _OWN_DARK_MIN
+
+
+def skin_tag_for(text):
+    """そのページに置く共通の見た目の <style>（暗い表示を持つページは暗い色つき・持たないページは明るいまま）"""
+    return SKIN_V2_STYLE_TAG if has_own_dark(text) else SKIN_V2_LIGHT_STYLE_TAG
+
+
+# 記事の標準のひな形（h1 の色が前のブランドの紺）。これに当たる記事だけ ③ をかける
+_SKIN_STD_RE = re.compile(r"(?:^|[\s{};>])h1\{font-size:[\d.]+rem;color:#1E3A6E")
+_PTITLE_RE = re.compile(r'\n?<div class="mwf-ptitle" data-v2>.*?</div>\n</div>', re.S)
+# 前のヘッダーのページ名の行（brand_header・各生成スクリプトの SEC_OPEN の形）: 区切り線の div の中の1つ目がページ名、
+# 2つ目（あれば）が最終更新
+_SEC_IN_HEADER_RE = re.compile(
+    r'border-top:1px solid rgba\(128,128,128,\.22\)"><div[^>]*>(?P<title>.*?)</div>'
+    r'(?:<div class="header-meta"[^>]*>(?P<meta>.*?)</div>)?', re.S)
+
 _STYLE_RE = re.compile(r"<style data-mw-frame>.*?</style>", re.S)
 _STYLE_V2_RE = re.compile(r"<style data-mw-frame-v2>.*?</style>", re.S)
+_SKIN_V2_RE = re.compile(r"<style data-mw-skin-v2>.*?</style>", re.S)
 _HEADER_RE = re.compile(r"<header(?=[\s>])[^>]*>.*?</header>", re.S)
 _NAV_RE = re.compile(r"(?P<indent>[ \t]*)<nav(?=[\s>])[^>]*>.*?</nav>", re.S)
 _BODY_RE = re.compile(r"<body[^>]*>")
@@ -291,11 +454,13 @@ def section_for(name):
 
 
 def build_header(section):
+    """前の形のサイトヘッダー。section が空なら区分名の行を出さない（運営者情報などの静的ページの形）。"""
+    sec = f"    {SEC_OPEN}{section}</div></div>\n" if section else ""
     return ("<header data-mw-frame>\n"
             '  <div class="header-inner">\n'
             f'    <div class="header-title">{LOGO_SVG} {SITE_NAME}</div>{SUBBRAND_HTML}\n'
             f'    <div class="header-meta">{TAGLINE}</div>\n'
-            f"    {SEC_OPEN}{section}</div></div>\n"
+            f"{sec}"
             "  </div>\n"
             "</header>")
 
@@ -381,14 +546,15 @@ def apply_style(text):
     return text
 
 
-def apply_style_v2(text, v2):
-    """新しい枠の <style> を、オンなら ① の <style> の直後に1つだけ置き、オフなら取り除く。
-    オフで新しい枠の <style> が無いページ（今の全ページ）は何も変わらない。"""
-    want = FRAME_V2_STYLE_TAG if v2 else ""
+def apply_style_v2(text, v2, skin=""):
+    """新しい枠の <style>（skin＝共通の見た目の <style>。空なら置かない）を、オンなら ① の <style> の直後に1つずつ置き、
+    オフなら取り除く。オフで新しい枠の <style> が無いページは何も変わらない。"""
+    want = (FRAME_V2_STYLE_TAG + (skin or "")) if v2 else ""
     m = _STYLE_RE.search(text)
-    if v2 and m and text[m.end():m.end() + len(want)] == want and len(_STYLE_V2_RE.findall(text)) == 1:
+    if (v2 and m and text[m.end():m.end() + len(want)] == want and len(_STYLE_V2_RE.findall(text)) == 1
+            and len(_SKIN_V2_RE.findall(text)) == (1 if skin else 0)):
         return text
-    out = _STYLE_V2_RE.sub("", text)
+    out = _SKIN_V2_RE.sub("", _STYLE_V2_RE.sub("", text))
     if v2:
         m = _STYLE_RE.search(out)
         if m:
@@ -418,13 +584,16 @@ def apply_header(text, name, v2=False):
     blk = site.group(0)
     if (blk == new) if v2 else is_std_header(blk):
         return text, None
-    # ヘッダー内にあったテーマ切替ボタンは、標準ページと同じ右上固定のボタンとして残す
-    keep = ""
+    return text[:site.start()] + _kept_theme_button(blk) + new + text[site.end():], "replace"
+
+
+def _kept_theme_button(blk):
+    """ヘッダー内にあったテーマ切替ボタンは、標準ページと同じ右上固定のボタンとして残す（無ければ空）"""
     bm = re.search(r"<button\b[^>]*theme-toggle[^>]*>.*?</button>", blk, re.S)
-    if bm:
-        btn = re.sub(r'\sstyle="[^"]*"', "", bm.group(0), count=1)
-        keep = btn.replace("<button", f'<button style="{THEME_BTN_STYLE}"', 1) + "\n"
-    return text[:site.start()] + keep + new + text[site.end():], "replace"
+    if not bm:
+        return ""
+    btn = re.sub(r'\sstyle="[^"]*"', "", bm.group(0), count=1)
+    return btn.replace("<button", f'<button style="{THEME_BTN_STYLE}"', 1) + "\n"
 
 
 def _find_site_nav(text):
@@ -454,7 +623,11 @@ def apply_nav(text, name):
 def apply_nav_v2(text, name):
     """③ の新しい形。サイトナビ（前の形・新しい形のどちらでも）を取り除き、新しい形をサイトヘッダー
     （build_header_v2）の直後に置く。ナビが無いページには足す。ヘッダーが無ければ（<body> の無い記事）その場で置き換える。"""
-    current = SELF_CURRENT.get(name, DEFAULT_CURRENT)
+    return _place_nav_v2(text, SELF_CURRENT.get(name, DEFAULT_CURRENT))
+
+
+def _place_nav_v2(text, current):
+    """apply_nav_v2 の中身。current＝ナビで光らせる項目（None ならどれも光らせない）。記事以外のページも使う"""
     new = build_nav_v2(current)
     head = build_header_v2()
     hi = text.find(head)
@@ -480,19 +653,109 @@ def apply_nav_v2(text, name):
     return text[:anchor] + "\n" + new + text[anchor:], note
 
 
-def process(text, name, v2=None):
-    """v2=None なら環境変数 FRAME_V2 で決める（frame_v2_enabled）。新しい形は guide-*.html だけ。"""
+def build_page_title_v2(title, meta=""):
+    """② ページ名の帯（h1 と最終更新）。ナビの直後に置く"""
+    m = f'\n    <p class="mwf-pt-meta">{meta}</p>' if meta else ""
+    return ('<div class="mwf-ptitle" data-v2>\n'
+            '  <div class="mwf-pt-in">\n'
+            f"    <h1>{title}</h1>{m}\n"
+            "  </div>\n"
+            "</div>")
+
+
+def apply_page_v2(text, name):
+    """記事以外のページ（V2_PAGES）を新しい形に。冪等。① ヘッダー ② ナビ ③ ページ名の帯 ④ フォント。
+    <style> は process が置く。本文・免責・フッターの中身には触らない。"""
+    notes = []
+    if "fonts.googleapis.com/css2?family=Noto+Sans+JP" not in text:   # トップと同じ字（無いページだけ足す）
+        m = _STYLE_RE.search(text)
+        if m:
+            text = text[:m.start()] + _FONT_LINK + "\n" + text[m.start():]
+            notes.append("font")
+    head = build_header_v2()
+    title = meta = ""
+    site = _find_site_header(text)
+    if site is None:
+        b = _BODY_RE.search(text)
+        if b:
+            text = text[:b.end()] + "\n" + head + text[b.end():]
+            notes.append("header:insert")
+    elif site.group(0) != head:
+        blk = site.group(0)
+        sm = _SEC_IN_HEADER_RE.search(blk)
+        if sm:
+            title, meta = sm.group("title").strip(), (sm.group("meta") or "").strip()
+        text = text[:site.start()] + _kept_theme_button(blk) + head + text[site.end():]
+        notes.append("header:replace")
+    current = V2_PAGES.get(name)
+    text, n = _place_nav_v2(text, current)
+    if n:
+        notes.append(f"nav:{n}")
+    # ページ名の帯：前のヘッダーからページ名を取れて、ページにほかの h1 が無いときだけ（h1 は1ページに1つ）
+    if title and "<h1" not in _PTITLE_RE.sub("", text):
+        nav = build_nav_v2(current)
+        i = text.find(nav)
+        if i >= 0:
+            text = _PTITLE_RE.sub("", text)
+            i = text.find(nav) + len(nav)
+            text = text[:i] + "\n" + build_page_title_v2(title, meta) + text[i:]
+            notes.append("title")
+    return text, notes
+
+
+def revert_page_v2(text, name):
+    """スイッチをオフにしたとき、新しい形になっている静的ページを前の形（前のヘッダーと11ボタンのナビ）に戻す。
+    新しい形の跡が無いページ（生成スクリプトが作ったばかりのページ・前の形のまま）は何も変えない。"""
+    notes = []
+    out = _PTITLE_RE.sub("", text)
+    if out != text:
+        notes.append("title-removed")
+    head = build_header_v2()
+    hi = out.find(head)
+    if hi >= 0:
+        out = out[:hi] + build_header(V1_STATIC_SECTION.get(name, "")) + out[hi + len(head):]
+        notes.append("header:v1")
+        m = _find_site_nav(out)
+        if m is not None and "mwf-v2" in m.group(0)[:200]:
+            out = out[:m.start()] + build_nav(m.group("indent"), V1_STATIC_CURRENT.get(name)) + out[m.end():]
+            notes.append("nav:v1")
+    font = re.sub(r"\n?" + re.escape(_FONT_LINK), "", out)
+    if font != out:
+        notes.append("font-removed")
+    return font, notes
+
+
+def finish_page(html, name):
+    """生成スクリプトが書き出す直前に通す（generate_market_news.safe_write・成績ページ・検証中リスト・YouTube要約・
+    政治発言）。V2_PAGES に無いページ（トップ等）はそのまま返す。"""
+    if name not in V2_PAGES:
+        return html
+    return process(html, name)[0]
+
+
+def process(text, name, v2=None, pages_v2=None):
+    """v2=None なら環境変数 FRAME_V2 で決める（frame_v2_enabled）＝記事の新しい枠。
+    pages_v2=None なら pages_v2_enabled()＝記事以外のページ（V2_PAGES）の新しい形。"""
     if v2 is None:
         v2 = frame_v2_enabled()
+    if pages_v2 is None:
+        pages_v2 = pages_v2_enabled()
     guide = name.startswith("guide-")
+    page = (not guide) and name in V2_PAGES
     notes = []
     out = rename_site(text)  # 先に替える＝2段目の位置決めとヘッダーの判定は新しい名前で見る
     if out != text:
         notes.append("rename")
     out = apply_style(out)
-    st = apply_style_v2(out, v2 and guide)
+    if guide:
+        want = v2
+        skin = skin_tag_for(out) if v2 and _SKIN_STD_RE.search(out) else ""
+    else:
+        want = page and pages_v2
+        skin = skin_tag_for(out) if want else ""
+    st = apply_style_v2(out, want, skin)
     if st != out:
-        notes.append("style:v2" if v2 and guide else "style:v2-removed")
+        notes.append(("style:v2+skin" if skin else "style:v2") if want else "style:v2-removed")
         out = st
     sub = apply_subbrand(out)
     if sub != out:
@@ -509,6 +772,9 @@ def process(text, name, v2=None):
         hi, ni = out.find("<header data-mw-frame>"), out.find('<nav class="nav-bar mwf-nav">')
         if not v2 and 0 <= ni < hi:
             notes.append("order:nav-before-header")
+    elif page:
+        out, pn = (apply_page_v2 if pages_v2 else revert_page_v2)(out, name)
+        notes += pn
     return out, notes
 
 
@@ -524,7 +790,7 @@ def main():
     for path in files:
         with open(path, encoding="utf-8") as f:
             text = f.read()
-        out, notes = process(text, path, v2)
+        out, notes = process(text, os.path.basename(path), v2)
         for n in notes:
             counts[n] = counts.get(n, 0) + 1
         if out != text:
@@ -533,7 +799,8 @@ def main():
                 with open(path, "w", encoding="utf-8", newline="") as f:
                     f.write(out)
     mode = "APPLIED" if apply else "DRY-RUN"
-    print(f"[{mode}]{' frame=v2' if v2 else ''} files={len(files)} changed={len(changed)} " +
+    print(f"[{mode}]{' frame=v2' if v2 else ''}{' pages=v2' if pages_v2_enabled() else ''} "
+          f"files={len(files)} changed={len(changed)} " +
           " ".join(f"{k}={v}" for k, v in sorted(counts.items())))
     for p, notes in changed[:15]:
         print("  ~", p, ",".join(notes))

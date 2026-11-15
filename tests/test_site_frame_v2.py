@@ -137,8 +137,10 @@ def test_live_setting_keeps_real_articles_byte_for_byte():
 
 
 def test_on_leaves_non_guide_pages_as_off():
+    """記事の枠のスイッチ（FRAME_V2）は記事以外のページを決めない（ページは PAGES_V2＝tests/test_site_pages_v2.py）"""
     text = _real("guides.html")
-    assert F.process(text, "guides.html", True) == F.process(text, "guides.html", False)
+    for pages_v2 in (True, False):
+        assert F.process(text, "guides.html", True, pages_v2) == F.process(text, "guides.html", False, pages_v2)
 
 
 # ── オン＝新しいヘッダーとナビが1つずつ ──

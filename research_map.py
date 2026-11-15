@@ -1159,7 +1159,8 @@ try{{if(localStorage.getItem('theme')==='dark'){{document.body.classList.add('da
 
 
 def write_list_page(path=LIST_PAGE, root="."):
-    html_text = build_list_page(root=root)
+    import apply_site_frame as F
+    html_text = F.finish_page(build_list_page(root=root), os.path.basename(path))  # 🆕 2026-11-15 トップと同じ見た目
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(html_text)
     return path

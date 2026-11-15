@@ -20,6 +20,7 @@ import json
 from datetime import datetime, timezone, timedelta
 from collections import defaultdict
 from apply_site_frame import FRAME_STYLE_TAG, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
+from apply_site_frame import finish_page  # 🆕 2026-11-15 トップと同じ見た目（新しいヘッダー・ナビ・共通の見た目）
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -1522,7 +1523,7 @@ def main():
     signals = [s for s in signals if not is_weekend_closed_fire(s)]
     print(f"  シグナル: {len(signals)} 件（週末閉場中の発火 {n_all - len(signals)} 件を集計から除外）")
 
-    html = build_html(signals, tracker)
+    html = finish_page(build_html(signals, tracker), OUTPUT_FILE)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html)
     size_kb = os.path.getsize(OUTPUT_FILE) / 1024
