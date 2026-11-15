@@ -1,0 +1,55 @@
+name: YouTube Video Analysis (manual)
+# 🆕 2026-11-15 オーナー依頼「（及川さんの動画の）内容の分析もお願いします」
+# 目的: YouTube の動画1本を Gemini に読ませて、時刻つきの分析を作る（手動のみ）。
+#   - クラウドのセッションからは YouTube が確認画面へ回すので読めない。Gemini の「URL を渡す」機能は
+#     Google の中から動画を取りに行く正式な道なので、ここ（Actions）で GitHub の Secrets のキーを使って読む
+#   - 結果は「ジョブのまとめ」と成果物（youtube-analysis.md）にだけ出す。サイトには載せない・コミットしない
+#   - 配信前・配信中の動画は読まない（中身が無いので推測の答えになる）＝終わりの番号 3 で止まる
+#   - 中身: analyze_youtube_video.py（共通の部品は gemini_youtube.py）
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "YouTube の URL（watch?v= / youtu.be / live のどれでも）"
+        required: true
+      question:
+        description: "特に知りたいこと（空でもよい）"
+        required: false
+        default: ""
+
+concurrency:
+  group: youtube-analyze
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 入力は env で渡す（${{ }} を run の中に直接書かない＝入力の文字がコマンドとして動かない）
+      - name: Analyze the video with Gemini
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          VIDEO_URL: ${{ inputs.url }}
+          QUESTION: ${{ inputs.question }}
+        run: python analyze_youtube_video.py --url "$VIDEO_URL" --question "$QUESTION"
+
+      - name: Upload the analysis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-analysis
+          path: youtube-analysis.md
+          if-no-files-found: ignore
+          retention-days: 30
