@@ -127,6 +127,34 @@ def test_summary_skips_not_ready_and_drops_old_guesses():
     assert not Y.summarized_before_ready({"title": "長さの欄が無い古い記録"})
 
 
+def test_long_videos_from_the_old_path_are_redone_once(monkeypatch):
+    monkeypatch.setattr(Y, "hours_since", lambda s: 5.0)
+    old = {"duration_sec": 4939, "summary_method": "video", "published": "p"}
+    assert Y.needs_resummary(old)                                         # 前の道（記録なし）で作った長い動画
+    assert Y.needs_resummary(dict(old, summary_method="text"))            # 題名と説明文だけの要約
+    assert not Y.needs_resummary(dict(old, summary_engine=Y.SUMMARY_ENGINE))
+    assert not Y.needs_resummary(dict(old, summary_engine="sdk", lowres_tried=True))   # 新しい道で試した＝毎回やり直さない
+    assert not Y.needs_resummary(dict(old, duration_sec=1200))            # 短い動画はふつうの画質で読める
+    monkeypatch.setattr(Y, "hours_since", lambda s: 80.0)
+    assert not Y.needs_resummary(old)                                     # 窓の外は外すと作り直せない＝残す
+
+
+def test_summary_reads_with_low_resolution_first(monkeypatch):
+    seen = {}
+
+    def fake(url, prompt, key, **kw):
+        seen["prompt"] = prompt
+        return "要約", "gm", {}
+
+    monkeypatch.setattr(Y.gemini_youtube, "generate_from_youtube", fake)
+    assert Y.summarize_with_gemini_video("u", "題名", "ch", "k") == ("要約", Y.SUMMARY_ENGINE)
+    assert "題名" in seen["prompt"]
+    monkeypatch.setattr(Y.gemini_youtube, "generate_from_youtube",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("x")))
+    monkeypatch.setitem(sys.modules, "google.generativeai", None)          # SDK が無い環境＝予備の道も無い
+    assert Y.summarize_with_gemini_video("u", "題名", "ch", "k") == (None, None)
+
+
 def test_fetch_channel_videos_marks_live(monkeypatch):
     def fake_get(endpoint, params, key):
         if endpoint == "channels":

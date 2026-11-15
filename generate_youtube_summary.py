@@ -335,6 +335,14 @@ def summarized_before_ready(v):
     return "duration_sec" in v and (v.get("duration_sec") or 0) <= 0
 
 
+def needs_resummary(v):
+    """前の道（ふつうの画質）や題名と説明文だけで作った、長い動画の要約か。72時間の窓の中だけ（外せば次の回の候補に戻る。
+    窓の外のものは外すと作り直せないので残す）"""
+    return ((v.get("duration_sec") or 0) > LONG_VIDEO_SEC and v.get("summary_engine") != SUMMARY_ENGINE
+            and not v.get("lowres_tried")   # 新しい道を一度試したもの（それでも読めなかった）は毎回やり直さない
+            and 0 <= hours_since(v.get("published", "")) <= MAX_AGE_HOURS)
+
+
 def hours_since(published_str):
     """発行時刻から経過時間（時間単位）。パース失敗時は -1"""
     if not published_str:
@@ -447,16 +455,30 @@ SUMMARY_PROMPT_TEXT = """あなたは日本人投資家向けの動画紹介ラ�
 
 TEXT_MODEL_CANDIDATES = ("gemini-2.5-flash", "gemini-flash-latest")
 VIDEO_MODEL_CANDIDATES = ("gemini-2.5-flash",)
+# 🆕 2026-11-15 要約をどの道で作ったか（summary_engine）。画質を下げて読む道＝この名前。前の道（記録なし・"sdk"）で
+#   作った長い動画の要約は、72時間の窓の中なら1回だけ外して作り直す（needs_resummary）
+SUMMARY_ENGINE = "lowres"
+LONG_VIDEO_SEC = 3300   # これより長い動画は、ふつうの画質だと読み込む量の上限（約100万）を超える（約300/秒）
 
 
 def summarize_with_gemini_video(video_url, title, channel_name, api_key):
-    """Gemini で YouTube 動画を直接要約（複数モデルで試行）"""
+    """Gemini で YouTube 動画を直接要約する。返り値＝(文章, 使った道)。読めなければ (None, None)。
+    🆕 2026-11-15 画質を下げて読む道（gemini_youtube・新しいモデルから）を先に使う。ふつうの画質の道（SDK）は
+    1時間を超える動画で読み込む量の上限を超え、中身と合わない要約を書いていた（及川さんの生配信 1:22:19 で
+    「ドル円のロングで利益」＝動画では「ドル円は手を出さない方がよい」と話していた）。SDK の道は予備"""
+    prompt = SUMMARY_PROMPT_VIDEO.format(channel_name=channel_name, title=title)
+    try:
+        text, model, _usage = gemini_youtube.generate_from_youtube(video_url, prompt, api_key, max_output_tokens=8192,
+                                                                   log=lambda m: print(m))
+        print(f"    🎬 画質を下げて読みました（{model}）")
+        return text, SUMMARY_ENGINE
+    except Exception as e:  # noqa: BLE001 — 予備の道へ
+        print(f"    ↩️ 画質を下げて読めませんでした（{str(e)[:160]}）→ ふつうの画質で読み直します")
     try:
         import google.generativeai as genai
     except ImportError:
-        return None
+        return None, None
     genai.configure(api_key=api_key)
-    prompt = SUMMARY_PROMPT_VIDEO.format(channel_name=channel_name, title=title)
     last_err = ""
     for model_name in VIDEO_MODEL_CANDIDATES:
         try:
@@ -467,21 +489,12 @@ def summarize_with_gemini_video(video_url, title, channel_name, api_key):
             ])
             text = (response.text or "").strip()
             if text:
-                return text
+                return text, "sdk"
         except Exception as e:
             last_err = f"{model_name}: {type(e).__name__}: {str(e)[:80]}"
             continue
-    # 🆕 2026-11-15 長い動画（生配信の録画など1時間超）は、ふつうの画質だと読み込む量の上限を超えて失敗し、
-    #   題名と説明文だけの要約（text）に落ちていた。画質を下げて（読み込む量が約3分の1）もう一度読む
-    print(f"    ↩️ video 要約失敗（{last_err}）→ 画質を下げて読み直します")
-    try:
-        text, model, _usage = gemini_youtube.generate_from_youtube(video_url, prompt, api_key, max_output_tokens=8192,
-                                                                   log=lambda m: print(m))
-        print(f"    ✅ 画質を下げて読めました（{model}）")
-        return text
-    except Exception as e:  # noqa: BLE001
-        print(f"    ⚠️ video 要約失敗（全モデル・画質を下げても）: {last_err} / {str(e)[:160]}")
-    return None
+    print(f"    ⚠️ video 要約失敗（全モデル）: {last_err}")
+    return None, None
 
 
 def summarize_text_only(title, channel_name, description, api_key):
@@ -938,6 +951,10 @@ def main():
             removed += 1
             print(f"  🧹 既存から除外 (配信前・配信中に要約していた＝録画ができてから作り直す): {title[:50]}")
             continue
+        if needs_resummary(v):
+            removed += 1
+            print(f"  🧹 既存から除外 (長い動画を前の道で要約していた＝画質を下げて作り直す・{dur}秒): {title[:50]}")
+            continue
         if is_youtube_short(v.get("video_id", ""), title, desc, dur):
             removed += 1
             print(f"  🧹 既存から除外 (Shorts): {title[:50]}")
@@ -1025,8 +1042,9 @@ def main():
         method_used = None
         if video_url_works is not False:
             print(f"    🎬 動画 URL 方式 (Gemini video) で要約中...")
-            summary_text = summarize_with_gemini_video(v["url"], v["title"], v["channel_name"], api_key)
+            summary_text, engine = summarize_with_gemini_video(v["url"], v["title"], v["channel_name"], api_key)
             if summary_text:
+                v["summary_engine"] = engine
                 video_url_works = True
                 method_used = "video"
             elif video_url_works is None:
@@ -1043,6 +1061,7 @@ def main():
         v["summary_raw"] = summary_text
         v["summary_parsed"] = parse_summary(summary_text)
         v["summary_method"] = method_used
+        v["lowres_tried"] = True   # 🆕 2026-11-15 画質を下げて読む道を先に試した要約（needs_resummary が見る）
         v["generated_at"] = now_iso  # ← 永続化用タイムスタンプ
         new_summaries.append(v)
         print(f"    ✅ 要約完了 [{method_used}] ({len(summary_text)} 字)")
