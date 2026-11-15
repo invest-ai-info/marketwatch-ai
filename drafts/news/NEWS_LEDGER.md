@@ -3,6 +3,28 @@
 
 ---
 
+## 2026-11-15
+- 判定: ✅ 公開済み
+- 選定トピック: 2026年11月9〜13日の週、日経平均+6.46%（+3,708円→61,142円）と5ヶ月ぶり最大週間上昇。①エヌビディア以外の米AI関連株（ブロードコム・アルファベット）上昇、②前週-9.25%急落後の自律反発、③国内好業績銘柄への見直し買い、の3要因を中立整理。来週GDP・Nvidia決算に言及。
+- スコア: 話題性 4 / 影響 4 / 付加価値 3（合計 11/15）
+- 出典（確認済み）:
+  - Business Recorder「Japan's Nikkei records best weekly performance in 5 months」2026-11-13
+  - rallies.ai「Nikkei 225 Weekly Report: November 9–13, 2026」2026-11-13
+  - Finimize「Japan Stocks Extend Rally...」2026-11-13
+  - 5paisa「Nikkei jumps as Nvidia rebound lifts Asian chip stocks」2026-11-14
+  - TBL Advisory「Japan Equities Weekly Brief」2026-11-13
+  - CME FedWatch（12月FOMC市場織り込み確認）
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー → 事実誤り6件修正（①表ヘッダー11/7→11/6 ②セクション名「半導体以外」→「エヌビディア以外」 ③EWJをメディア名として使用→Business Recorderへ統一 ④アナリスト実名除去 ⑤週数不整合修正 ⑥出典表記統一）→ 🟢白
+  - 最終判定: 🟢白（修正後OK）
+- 決定論チェック: kinsho-v1×3（L180/L334/L364）✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典5系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告70件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-15-nikkei-weekly-recovery.html
+- commit: 5edef32（main へ push 済み）
+
+---
+
 ## 2026-11-14
 - 判定: ✅ 公開済み
 - 選定トピック: 米10月CPI(+0.4%・予想上回り)+PPI(+6.5%YoY・2022年来最高)が揃い12月FOMCの利上げ確率ほぼ100%──米10年債利回り5.1%台・ドル円159円・金週間4%安、日本株・為替への影響を3論点で中立整理（カテゴリ: マクロ・FRB・金融政策・為替・日本株）
