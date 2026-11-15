@@ -1,0 +1,159 @@
+{
+ "article_id": "151",
+ "asof": "2026-11-16T06:11:00+09:00",
+ "hypothesis_id": "auto_signal-ma_dead",
+ "claims": [
+  {
+   "label": "FWD：移動平均のデッドクロスの売りの勝ち回数",
+   "filter": {
+    "signal": "ma_dead",
+    "fired_from": "2026-06-26"
+   },
+   "k": 58,
+   "n": 138
+  },
+  {
+   "label": "FWD：売り全体（対照）の勝ち回数",
+   "filter": {
+    "direction": "short",
+    "fired_from": "2026-06-26"
+   },
+   "k": 474,
+   "n": 1116
+  },
+  {
+   "label": "FWD：全シグナル（対照）の勝ち回数",
+   "filter": {
+    "fired_from": "2026-06-26"
+   },
+   "k": 1904,
+   "n": 4467
+  },
+  {
+   "label": "IS：デッドクロスの売り（登録前・参考）の勝ち回数",
+   "filter": {
+    "signal": "ma_dead",
+    "fired_before": "2026-06-26"
+   },
+   "k": 20,
+   "n": 32
+  },
+  {
+   "label": "IS：全シグナル（登録前・参考）の勝ち回数",
+   "filter": {
+    "fired_before": "2026-06-26"
+   },
+   "k": 467,
+   "n": 1158
+  },
+  {
+   "label": "FWD：デッドクロスの売り・1時間足",
+   "filter": {
+    "signal": "ma_dead",
+    "tf": "1h",
+    "fired_from": "2026-06-26"
+   },
+   "k": 29,
+   "n": 75
+  },
+  {
+   "label": "FWD：デッドクロスの売り・4時間足",
+   "filter": {
+    "signal": "ma_dead",
+    "tf": "4h",
+    "fired_from": "2026-06-26"
+   },
+   "k": 28,
+   "n": 54
+  },
+  {
+   "label": "FWD：デッドクロスの売り・日足",
+   "filter": {
+    "signal": "ma_dead",
+    "tf": "1d",
+    "fired_from": "2026-06-26"
+   },
+   "k": 1,
+   "n": 9
+  },
+  {
+   "label": "FWD：デッドクロスの売り・株価指数",
+   "filter": {
+    "signal": "ma_dead",
+    "group": "index",
+    "fired_from": "2026-06-26"
+   },
+   "k": 18,
+   "n": 35
+  },
+  {
+   "label": "FWD：デッドクロスの売り・円クロス為替",
+   "filter": {
+    "signal": "ma_dead",
+    "group": "jpy_fx",
+    "fired_from": "2026-06-26"
+   },
+   "k": 12,
+   "n": 26
+  },
+  {
+   "label": "FWD：デッドクロスの売り・円がからまない為替",
+   "filter": {
+    "signal": "ma_dead",
+    "group": "other_fx",
+    "fired_from": "2026-06-26"
+   },
+   "k": 15,
+   "n": 41
+  },
+  {
+   "label": "FWD：デッドクロスの売り・金と銀",
+   "filter": {
+    "signal": "ma_dead",
+    "group": "metal",
+    "fired_from": "2026-06-26"
+   },
+   "k": 8,
+   "n": 18
+  },
+  {
+   "label": "FWD：デッドクロスの売り・原油",
+   "filter": {
+    "signal": "ma_dead",
+    "group": "oil",
+    "fired_from": "2026-06-26"
+   },
+   "k": 4,
+   "n": 7
+  },
+  {
+   "label": "FWD：デッドクロスの売り・ビットコイン",
+   "filter": {
+    "signal": "ma_dead",
+    "group": "btc",
+    "fired_from": "2026-06-26"
+   },
+   "k": 1,
+   "n": 10
+  },
+  {
+   "label": "FWD：デッドクロスの売り・前半（〜8月31日）",
+   "filter": {
+    "signal": "ma_dead",
+    "fired_from": "2026-06-26",
+    "fired_before": "2026-09-01"
+   },
+   "k": 36,
+   "n": 92
+  },
+  {
+   "label": "FWD：デッドクロスの売り・後半（9月1日〜）",
+   "filter": {
+    "signal": "ma_dead",
+    "fired_from": "2026-09-01"
+   },
+   "k": 22,
+   "n": 46
+  }
+ ]
+}
