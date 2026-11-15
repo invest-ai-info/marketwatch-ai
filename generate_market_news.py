@@ -6451,6 +6451,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-16", "line": '・<b>2026-11-16</b>: 🧪 解説「<a href="guide-signal-lab-151.html" style="color:#0969da"><b>デッドクロスの売りは勝ちやすい？【研究日誌 #151】</b></a>」公開'},
         {"date": "2026-11-15", "line": '・<b>2026-11-15</b>: 📰 解説「<a href="guide-news-2026-11-15-nikkei-weekly-recovery.html" style="color:#0969da"><b>日経平均5ヶ月ぶり最大週間上昇（+6.46%）──半導体・AI株主導の反発3要因</b></a>」公開'},
         {"date": "2026-11-15", "line": '・<b>2026-11-15</b>: 🔬 解説「<a href="guide-company-8136-sanrio.html" style="color:#0969da"><b>サンリオ</b></a>」公開'},
         {"date": "2026-11-15", "line": '・<b>2026-11-15</b>: 🧪 解説「<a href="guide-signal-lab-150.html" style="color:#0969da"><b>MACDゴールデンクロスの買い、出口の組み合わせで変わる？【研究日誌 #150】</b></a>」公開'},
