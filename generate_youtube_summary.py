@@ -17,6 +17,7 @@ from email.utils import parsedate_to_datetime
 from apply_site_frame import FRAME_STYLE_TAG, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 from apply_site_frame import finish_page  # 🆕 2026-11-15 トップと同じ見た目（新しいヘッダー・ナビ・共通の見た目）
 from inject_ads import add_page_ad  # 🆕 2026-11-05 ページ下の広告1つ（inject_ads.PAGE_ADS）
+import gemini_youtube  # 🆕 2026-11-15 生配信の見分け・長い動画を画質を下げて読み直す（標準ライブラリだけ）
 
 # Windows コンソール (cp932) でも絵文字を出せるようにする
 if hasattr(sys.stdout, "reconfigure"):
@@ -75,19 +76,6 @@ def _youtube_api_get(endpoint, params, api_key):
         return json.loads(r.read().decode("utf-8"))
 
 
-def _parse_iso_duration(s):
-    """ISO 8601 duration (PT5M30S) → 秒"""
-    if not s:
-        return 0
-    m = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", s)
-    if not m:
-        return 0
-    h = int(m.group(1) or 0)
-    mn = int(m.group(2) or 0)
-    sec = int(m.group(3) or 0)
-    return h * 3600 + mn * 60 + sec
-
-
 def fetch_channel_videos_api(channel_id, channel_name, api_key, max_results=10):
     """YouTube Data API v3 で channel の最新動画を取得（推奨）"""
     if not api_key:
@@ -113,25 +101,28 @@ def fetch_channel_videos_api(channel_id, channel_name, api_key, max_results=10):
         if not video_ids:
             return []
 
-        # ③ 動画詳細取得（snippet + contentDetails、duration 含む）（1 unit）
+        # ③ 動画詳細取得（snippet + contentDetails + liveStreamingDetails、duration 含む）（1 unit）
+        #   🆕 2026-11-15 liveStreamingDetails も取る＝生配信の「配信前・配信中」を見分け、公開の時刻は
+        #   予約した時刻ではなく実際に始まった時刻にする（予約が2日前だと、録画ができる前に72時間の窓を出てしまう）
         vid_data = _youtube_api_get("videos", {
-            "part": "snippet,contentDetails",
+            "part": "snippet,contentDetails,liveStreamingDetails",
             "id": ",".join(video_ids),
         }, api_key)
 
         results = []
         for v in vid_data.get("items", []):
             snippet = v.get("snippet", {})
-            duration_sec = _parse_iso_duration(v.get("contentDetails", {}).get("duration", ""))
+            info = gemini_youtube.video_info_from_item(v)
             results.append({
                 "video_id": v.get("id", ""),
                 "title": snippet.get("title", ""),
                 "url": f"https://www.youtube.com/watch?v={v.get('id', '')}",
-                "published": snippet.get("publishedAt", ""),
+                "published": info["published"],
                 "channel_name": channel_name,
                 "channel_id": channel_id,
                 "description": (snippet.get("description", "") or "")[:500],
-                "duration_sec": duration_sec,
+                "duration_sec": info["duration_sec"],
+                "live_status": info["live_status"],
             })
         return results
     except urllib.error.HTTPError as e:
@@ -330,6 +321,20 @@ def is_youtube_short(video_id, title="", description="", duration_sec=0):
     return False
 
 
+def not_ready_for_summary(v):
+    """🆕 2026-11-15 まだ中身の無い動画（配信前・配信中・長さ0）か。YouTube Data API から来た候補だけを見る
+    （長さの欄が無い候補＝TEST_MODE 等は対象外）。要約すると、中身を見ずに題名から推測した文章になる
+    （11/15 に4件・及川さんの生配信は 1.05〜1.06 という実際と合わない値段まで書いていた）"""
+    if "duration_sec" not in v:
+        return False
+    return v.get("live_status", "none") in ("upcoming", "live") or (v.get("duration_sec") or 0) <= 0
+
+
+def summarized_before_ready(v):
+    """既存の要約のうち、まだ中身の無いときに作ったもの（長さ0で記録されている）。外せば次の回で作り直す"""
+    return "duration_sec" in v and (v.get("duration_sec") or 0) <= 0
+
+
 def hours_since(published_str):
     """発行時刻から経過時間（時間単位）。パース失敗時は -1"""
     if not published_str:
@@ -466,7 +471,16 @@ def summarize_with_gemini_video(video_url, title, channel_name, api_key):
         except Exception as e:
             last_err = f"{model_name}: {type(e).__name__}: {str(e)[:80]}"
             continue
-    print(f"    ⚠️ video 要約失敗（全モデル）: {last_err}")
+    # 🆕 2026-11-15 長い動画（生配信の録画など1時間超）は、ふつうの画質だと読み込む量の上限を超えて失敗し、
+    #   題名と説明文だけの要約（text）に落ちていた。画質を下げて（読み込む量が約3分の1）もう一度読む
+    print(f"    ↩️ video 要約失敗（{last_err}）→ 画質を下げて読み直します")
+    try:
+        text, model, _usage = gemini_youtube.generate_from_youtube(video_url, prompt, api_key, max_output_tokens=8192,
+                                                                   log=lambda m: print(m))
+        print(f"    ✅ 画質を下げて読めました（{model}）")
+        return text
+    except Exception as e:  # noqa: BLE001
+        print(f"    ⚠️ video 要約失敗（全モデル・画質を下げても）: {last_err} / {str(e)[:160]}")
     return None
 
 
@@ -920,6 +934,10 @@ def main():
         title = v.get("title", "")
         desc = v.get("description", "")
         dur = v.get("duration_sec", 0)
+        if summarized_before_ready(v):
+            removed += 1
+            print(f"  🧹 既存から除外 (配信前・配信中に要約していた＝録画ができてから作り直す): {title[:50]}")
+            continue
         if is_youtube_short(v.get("video_id", ""), title, desc, dur):
             removed += 1
             print(f"  🧹 既存から除外 (Shorts): {title[:50]}")
@@ -970,12 +988,17 @@ def main():
     targets = []
     shorts_skipped = 0
     nonfinance_skipped = 0
+    not_ready_skipped = 0
     for v in new_candidates:
         if len(targets) >= MAX_VIDEOS:
             break
         title = v.get("title", "")
         desc = v.get("description", "")
         dur = v.get("duration_sec", 0)
+        if not_ready_for_summary(v):
+            not_ready_skipped += 1
+            print(f"  ⏸️  配信前・配信中スキップ（{v.get('live_status', '?')}・{dur}秒＝録画ができてから要約）: {title[:50]}")
+            continue
         if is_youtube_short(v.get("video_id", ""), title, desc, dur):
             shorts_skipped += 1
             print(f"  ⏭️  Shorts スキップ ({dur}秒): {title[:50]}")
@@ -989,6 +1012,8 @@ def main():
         print(f"  📐 Shorts {shorts_skipped} 本を除外")
     if nonfinance_skipped:
         print(f"  💼 投資非関連 {nonfinance_skipped} 本を除外")
+    if not_ready_skipped:
+        print(f"  ⏸️ 配信前・配信中 {not_ready_skipped} 本は次の回へ")
     print(f"\n🎯 通常動画 {len(targets)} 本を要約します\n")
 
     new_summaries = []
