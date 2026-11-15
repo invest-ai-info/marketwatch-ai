@@ -4,7 +4,7 @@
 
 ## 🎬 2026-11-15 夕（クラウド）: YouTube の動画1本を Gemini で分析する手動ワークフロー＋生配信の推測要約を止めた（オーナー「この動画の内容の分析も」→「お願いします」）
 - **動画の分析**＝`youtube-analyze.yml`（手動・URL と質問を入れる）→ `analyze_youtube_video.py`。GitHub の Secrets の Gemini のキーで動画を読み、時刻つきの分析をジョブのまとめと成果物に出す（サイトに載せない）。クラウドのセッションからは YouTube が確認画面へ回すので読めない＝この道を使う
-- **YouTube 要約の不具合**：配信前・配信中（長さ0）の動画を要約していた＝題名からの推測（4件）→ 録画ができてから要約・前の4件は外して作り直す・長い動画は画質を下げて読み直す（`gemini_youtube.py`）。🙋 手元の `sync_to_github.py` の `SYNC_FILES` に `gemini_youtube.py`・`analyze_youtube_video.py`・`.github/workflows/youtube-analyze.yml`・`tests/test_youtube_live_and_analyze.py` を足す（手元で直すとき用）
+- **YouTube 要約の不具合**：配信前・配信中（長さ0）の動画を要約していた＝題名からの推測（4件）→ 録画ができてから要約・前の4件は外して作り直す・要約は画質を下げて読む道を先に使う（ふつうの画質の道は1時間超で中身と合わない要約＝「ドル円のロングで利益」と書いた）・前の道の長い動画の要約は1回だけ作り直す（`gemini_youtube.py`・invest-ai-info/marketwatch-ai#396 と続きの PR）。🙋 手元の `sync_to_github.py` の `SYNC_FILES` に `gemini_youtube.py`・`analyze_youtube_video.py`・`.github/workflows/youtube-analyze.yml`・`tests/test_youtube_live_and_analyze.py` を足す（手元で直すとき用）
 
 ## 🎨 2026-11-15（クラウド）: すべてのページをトップの見た目にそろえた（オーナー「すべてのホームページのデザインをトップページのデザインに合わせて」）
 - **何をしたか**：`apply_site_frame.py` の段階3＝記事以外の15ページ（`V2_PAGES`＝カレンダー・チャート・VIX・市場健康度・出来高急増・指標プレビュー・シグナル研究・検証中リスト・YouTube要約・政治発言＋解説記事の一覧・運営者情報・お問い合わせ・プライバシー・大量保有）に、トップと同じヘッダー（ロゴとサイト名の1行）・ナビ（6項目＋もっと見る）・共通の見た目（字・色・幅 1048px・フッター・メルマガの箱）。h1 の無い6ページは前のヘッダーのページ名と最終更新をナビの下の水色の帯（トップと同じ飾りの線）へ。記事は標準のひな形の663本だけ共通の見た目（独自の色の仕組みの38本は枠だけ）。生成スクリプト5本は書く前に `finish_page`。テスト `tests/test_site_pages_v2.py`
