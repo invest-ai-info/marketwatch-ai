@@ -53,6 +53,7 @@ MARKET_DIP_FWD = "market-dip-forward.json"   # 🆕 2026-10-07 J25F 相場全体
 AUCTION_FWD = "auction-forward.json"         # 🆕 2026-10-08 J31F 空売りの前向き（寄り成行→引け成行）
 LUNCH_FWD = "lunch-gap-forward.json"         # 🆕 2026-10-08 R10F 昼休みの窓と同じ向きに後場を持つ前向き
 MOMENTUM_FWD = "momentum-forward.json"       # 🆕 2026-10-08 夜 J42F 過去12か月で一番上げた10銘柄の前向き（月1）
+EYE_FWD = "eye-shape-progress.json"            # 🆕 2026-11-15 ME 目で選んだ三角・フラッグ（手元のデモ口座の回数だけ・手元で作って送る）
 F1G_FWD = "f1g-forward.json"                 # 🆕 2026-10-18 F1GF グレアムの守りの前向き（手元で月1回数えて送る）
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 J46_RSS = "j46-rss.json"                   # 🆕 2026-10-22 J46R 寄り前の売買代金（RSS で約400銘柄・手元で作って送る）
@@ -697,6 +698,15 @@ def collect_studies(root, m):
                                "実際の約定の値・費用・届くまでの遅れで、記録上の成績とどれだけずれるかを確かめています",
                        "since": dates[0] if dates else "",
                        "progress": f"{n}回（{when}）"})
+
+    ep = _load(p(EYE_FWD))          # 🆕 2026-11-15 ME（回数だけ・損益は持たない）
+    if ep and not ep.get("verdict"):
+        verify.append({"cat": "all", "name": "人が目で選んだ三角持ち合い・フラッグを、練習用の口座で記録する",
+                       "what": "機械が見つけた三角持ち合いとフラッグは、でたらめに入るのと変わりませんでした。"
+                               "そこで、人が目で選んだ形だけを練習用の口座（デモ口座）で注文して記録し、費用を引いてもプラスになるか、"
+                               "同じ時刻のでたらめな足より良いかを、登録した日より後の取引だけで確かめています（記録だけで、取引の決まりではありません）",
+                       "since": ep.get("since") or "",
+                       "progress": f"{int(ep.get('n') or 0)}回（{int(ep.get('interim_at') or 100)}回で途中の確かめ・{int(ep.get('goal') or 200)}回で判定）"})
 
     cf = _load(p(CAL_FWD))
     cal_start = (cf or {}).get("fwd_start") or _const(root, "calendar_forward.py", "FWD_START") \
