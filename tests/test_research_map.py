@@ -332,12 +332,16 @@ def test_nav_label_for_track_record_is_the_same_everywhere():
     import glob
     import re
     import apply_site_frame as F
+    # 2026-11-15〜 静的ページはトップと同じ新しいナビ（apply_site_frame.NAV_V2）になる＝その名前と比べる
     label = dict(F.NAV_BUTTONS)["track-record.html"]
+    label_v2 = dict(F.NAV_V2)["track-record.html"]
     bad = []
     for p in glob.glob("*.py") + ["guides.html", "about.html", "contact.html", "privacy.html", "holdings.html"]:
-        for m in re.finditer(r'<a class="nav-btn(?: current)?" href="track-record\.html">([^<]*)</a>',
-                             open(p, encoding="utf-8").read()):
-            if m.group(1) != label:
+        text = open(p, encoding="utf-8").read()
+        want = label_v2 if (p.endswith(".html") and "nav-bar mwf-nav mwf-v2" in text) else label
+        for m in re.finditer(r'<a class="nav-btn(?: current)?" href="track-record\.html"(?: aria-current="page")?>([^<]*)</a>',
+                             text):
+            if m.group(1) != want:
                 bad.append((p, m.group(1)))
     assert not bad, bad
 

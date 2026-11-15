@@ -15,6 +15,7 @@ import urllib.parse
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from apply_site_frame import FRAME_STYLE_TAG, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
+from apply_site_frame import finish_page  # 🆕 2026-11-15 トップと同じ見た目（新しいヘッダー・ナビ・共通の見た目）
 from inject_ads import add_page_ad  # 🆕 2026-11-05 ページ下の広告1つ（inject_ads.PAGE_ADS）
 
 # Windows コンソール (cp932) でも絵文字を出せるようにする
@@ -1036,7 +1037,7 @@ def main():
 
     # HTML 生成（公開日順、新しい順）
     combined.sort(key=lambda v: v.get("published", ""), reverse=True)
-    html = add_page_ad(build_html(combined), "youtube-summary.html")
+    html = finish_page(add_page_ad(build_html(combined), "youtube-summary.html"), "youtube-summary.html")
     with open("youtube-summary.html", "w", encoding="utf-8") as f:
         f.write(html)
     print(f"\n✅ youtube-summary.html を生成しました（合計 {len(combined)} 本、新規 {len(new_summaries)} 本）")

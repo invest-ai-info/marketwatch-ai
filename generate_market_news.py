@@ -15,6 +15,7 @@ from build_health_history import ZONES, classify_zone  # 判定閾値の単一�
 from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
 from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML, SITE_NAME  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
 from apply_site_frame import LOGO_V2_SVG, NAV_V2, NAV_V2_MORE  # 新しいトップと記事の新しい枠（FRAME_V2）で共通のロゴとナビの並び
+from apply_site_frame import finish_page  # 🆕 2026-11-15 トップ以外のページもトップの見た目に（apply_site_frame.V2_PAGES だけ・トップは変えない）
 from inject_ads import build_block as _ad_block, add_page_ad  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
@@ -4960,6 +4961,10 @@ def safe_write(path, content):
     # 0.5) ↑上に戻るボタンを全 .html の </body> 直前に一括注入（冪等・2026-07-20 UX改善）
     if path.endswith(".html") and "mw-back-to-top" not in content and "</body>" in content:
         content = content.replace("</body>", BACK_TO_TOP + "</body>", 1)
+    # 0.6) 🆕 2026-11-15 カレンダー・チャート等をトップと同じ見た目に（新しいヘッダー・ナビ・ページ名の帯・共通の見た目）。
+    #      単一の真実は apply_site_frame（V2_PAGES に無いトップ等はそのまま）。冪等
+    if path.endswith(".html"):
+        content = finish_page(content, os.path.basename(path))
     content_len = len(content)
     if content_len < 1000:
         print(f"❌ 書き込み拒否 ({path}): コンテンツが短すぎる ({content_len}文字)")

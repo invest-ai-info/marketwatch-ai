@@ -38,7 +38,7 @@
 ```
 
 - ⚠️ **vix.html はナビバー対象外**（charts / market-health / guide-vix.html 経由で到達）
-- 🆕 **2026-09-23〜 枠の単一の真実＝`apply_site_frame.py`**（サイト名 `SITE_NAME`・11ボタンの並び `NAV_BUTTONS`・パソコン幅6+5の2段・解説記事ヘッダーの標準形・広告の上下40px）。**update-market-news が毎回 `--all`**＝クラウドの記事レーンが崩したヘッダー/ナビも次の実行で戻る。生成スクリプト8本は `FRAME_STYLE_TAG` を import。テスト＝`_test_site_frame.py`
+- 🆕 **枠の単一の真実＝`apply_site_frame.py`**（サイト名 `SITE_NAME`・ナビ `NAV_V2`＝トップと同じ・広告の上下40px）。**11/15〜 全ページがトップの見た目**（`V2_PAGES`・戻す＝`PAGES_V2_ON`・生成スクリプトは書く前に `finish_page`）。**update-market-news が毎回 `--all`**＝記事レーンが崩した枠も次で戻る。テスト＝`tests/test_site_pages_v2.py`
 - ナビバー変更時は **決定論ツールで一括更新**：
   - **guide-*.html（約75本）＝ `python unify_navbar.py --apply`**（10ボタン標準を内蔵。投資本ページのみ自身を current、他は guides.html を current）
   - **生成スクリプト8本＋guides.html＋about/contact/privacy ＝ `python apply_books_nav_scripts.py --apply`**（各 `guides.html` の nav 行直後に挿入・冪等）。対象スクリプト＝`generate_market_news.py`（nav 7ブロック）／`generate_youtube_summary.py`／`generate_track_record_page.py`／`build_political_feed_page.py`／`auto_weekly_strategy.py`／`auto_weekly_review.py`／`generate_monthly_report.py`／`auto_indicator_preview.py`

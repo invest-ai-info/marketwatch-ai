@@ -15,6 +15,7 @@ import html
 from datetime import datetime, timedelta, timezone
 from collections import Counter
 from apply_site_frame import FRAME_STYLE_TAG, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
+from apply_site_frame import finish_page  # 🆕 2026-11-15 トップと同じ見た目（新しいヘッダー・ナビ・共通の見た目）
 from inject_ads import add_page_ad  # 🆕 2026-11-05 ページ下の広告1つ（inject_ads.PAGE_ADS）
 
 JST = timezone(timedelta(hours=9))
@@ -351,7 +352,7 @@ def main():
             items = []
     print(f"  📥 {len(items)} 件読込")
 
-    html_str = add_page_ad(build_html(items), os.path.basename(OUTPUT_FILE))
+    html_str = finish_page(add_page_ad(build_html(items), os.path.basename(OUTPUT_FILE)), os.path.basename(OUTPUT_FILE))
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(html_str)
     print(f"  ✅ {OUTPUT_FILE} 生成 ({os.path.getsize(OUTPUT_FILE) / 1024:.1f} KB)")
