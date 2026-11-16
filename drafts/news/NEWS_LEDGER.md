@@ -21,6 +21,7 @@
 - 整合性チェック（check_site_consistency.py）: EXIT=0（警告71件は既存他ファイルの既知問題）✅
 - publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
 - 公開ファイル: guide-news-2026-11-16-japan-gdp.html
+- commit: a604274（main へ push 済み）
 
 ---
 
