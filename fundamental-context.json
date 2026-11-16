@@ -1,29 +1,43 @@
 {
-  "generated_at": "2026-11-16T15:05:00+09:00",
+  "generated_at": "2026-11-17T06:10:00+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
-    "confidence": "LOW",
-    "rationale": "エヌビディアCEO辞任でAI株が不安定になり、米10年債利回りは5.1%台、12月の米利上げはほぼ確実視されています。ただし13日の米生産者物価は予想より弱く、S&P500は週間で約2.5%上昇しました。（16日15時時点。週明けの新しい材料は検索で取れず、13日終値までの内容を引き継いでおり、判断は限定的です）",
+    "confidence": "MID",
+    "rationale": "16日の米株はS&P500が1.92%安、ナスダックが2.49%安と3日続落し、VIXは23.7へ急騰。エヌビディアの経営不安と対中輸出規制、米10年債5.1%台が重しです。17日のエヌビディア決算が焦点で、反発の余地もあります。（16日の米国市場の終値ベース）",
     "key_drivers": [
-      "エヌビディアCEO辞任とAI・半導体株の動揺",
-      "米10年債利回り5.1%台と12月の米利上げ観測（0.5%幅の議論も）",
-      "ドル指数が2025年4月以来の高値",
-      "ビットコインが8月以来の7万ドル割れ"
+      "エヌビディアのCEO問題と対中輸出規制でAI・半導体株が下落",
+      "米10年債利回り5.1%台と12月の米利上げ観測",
+      "VIXが23.7へ急騰",
+      "ビットコインが約6.5万ドルと7月以来の安値圏"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "円安と半導体の買い戻しで反発したが、米ハイテク安が週明けの重しになりうる。",
+      "rationale": "米ハイテク安とVIX急騰が週明けの重し。ただし円安が下支えになりうる。",
       "catalysts": [
         "エヌビディア決算（来週）",
         "ドル円と介入警戒",
         "米長期金利"
       ],
       "top_news": [
+        {
+          "headline": "米株が大幅安、S&P500は1.92%安の7,416、ナスダックは2.49%安、VIXは23.7に急騰",
+          "published": "2026-11-16",
+          "comment": "AI株の売りが広がり、恐怖指数も急上昇",
+          "source": "Yahoo!ファイナンス",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "CNBC"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-16-dow-sp-500-nasdaq-nvidia-oil-091631084.html"
+        },
         {
           "headline": "日経平均は反発し6万1,142円（+323円）、一時1,000円超高",
           "published": "2026-11-13",
@@ -38,18 +52,6 @@
           "materiality": "high",
           "direction": "bullish",
           "url": "https://www.nikkei.com/article/DGXZQOFL136400T11C26A1000000/"
-        },
-        {
-          "headline": "エヌビディアのCEO辞任でAI・半導体株が不安定、AMDは約10%安",
-          "published": "2026-11-13",
-          "comment": "AI株の柱が揺れ、ハイテク全般の売りが出やすい",
-          "source": "Yahoo!ファイナンス/Motley Fool",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.fool.com/coverage/stock-market-today/2026/11/13/stock-market-midday-nov-13-nasdaq-plunges-as-nvidia-turmoil-deepens-and-treasury-yields-hit-5/"
         }
       ]
     },
@@ -57,8 +59,8 @@
       "name": "S&P500",
       "ticker": "ES=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "13日はS&P500が7,561.67(-0.40%)と続落、ダウは小幅高。AI株の動揺と金利5%台が重いが、週間では約2.5%上昇。",
+      "conviction": "MID",
+      "rationale": "16日は7,416（-1.92%）と大幅安。AI株の動揺と金利5%台が重く、17日のエヌビディア決算待ち。",
       "catalysts": [
         "エヌビディア決算",
         "12月FOMC観測",
@@ -66,6 +68,20 @@
       ],
       "top_news": [
         {
+          "headline": "米株が大幅安、S&P500は1.92%安の7,416、ナスダックは2.49%安、VIXは23.7に急騰",
+          "published": "2026-11-16",
+          "comment": "AI株の売りが広がり、恐怖指数も急上昇",
+          "source": "Yahoo!ファイナンス",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "CNBC"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-16-dow-sp-500-nasdaq-nvidia-oil-091631084.html"
+        },
+        {
           "headline": "エヌビディアのCEO辞任でAI・半導体株が不安定、AMDは約10%安",
           "published": "2026-11-13",
           "comment": "AI株の柱が揺れ、ハイテク全般の売りが出やすい",
@@ -76,18 +92,6 @@
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.fool.com/coverage/stock-market-today/2026/11/13/stock-market-midday-nov-13-nasdaq-plunges-as-nvidia-turmoil-deepens-and-treasury-yields-hit-5/"
-        },
-        {
-          "headline": "米10年債利回りが5.10%まで上昇、12月の米利上げ観測が強まる",
-          "published": "2026-11-12",
-          "comment": "金利上昇は株の重しだが、ドルには追い風",
-          "source": "Reuters",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.investing.com/news/economy-news/stocks-recover-from-nvidia-whiplash-dollar-climbs-with-us-yields-5023929"
         }
       ]
     },
@@ -95,14 +99,28 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "13日のナスダックは-0.91%の25,136。エヌビディアCEO辞任で半導体株の売りが続き、金利上昇も逆風。",
+      "conviction": "HIGH",
+      "rationale": "16日は24,510（-2.49%）と3日続落。エヌビディア不安と輸出規制で半導体株が主導して下落。",
       "catalysts": [
         "エヌビディア決算",
         "アンソロピック上場",
         "米長期金利"
       ],
       "top_news": [
+        {
+          "headline": "エヌビディア下落、CEO復帰は検討されずとの報道と対中輸出規制の強化で半導体株が軟調",
+          "published": "2026-11-16",
+          "comment": "決算（17日）を前に不安が先行",
+          "source": "Yahoo!ファイナンス",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "CNBC"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-16-dow-sp-500-nasdaq-nvidia-oil-091631084.html"
+        },
         {
           "headline": "エヌビディアのCEO辞任でAI・半導体株が不安定、AMDは約10%安",
           "published": "2026-11-13",
@@ -114,18 +132,6 @@
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.fool.com/coverage/stock-market-today/2026/11/13/stock-market-midday-nov-13-nasdaq-plunges-as-nvidia-turmoil-deepens-and-treasury-yields-hit-5/"
-        },
-        {
-          "headline": "米10年債利回りが5.10%まで上昇、12月の米利上げ観測が強まる",
-          "published": "2026-11-12",
-          "comment": "金利上昇は株の重しだが、ドルには追い風",
-          "source": "Reuters",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.investing.com/news/economy-news/stocks-recover-from-nvidia-whiplash-dollar-climbs-with-us-yields-5023929"
         }
       ]
     },
@@ -134,13 +140,27 @@
       "ticker": "GC=F",
       "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "米金利高とドル高で13カ月ぶり安値圏、反発は限られる。",
+      "rationale": "16日は3,855ドル（-0.81%）と一段安。米金利高とドル高が重しで、13カ月ぶり安値圏。",
       "catalysts": [
         "米実質金利",
         "ドル動向",
         "FRBの姿勢"
       ],
       "top_news": [
+        {
+          "headline": "金は3,855ドルへ続落、米金利高が重し",
+          "published": "2026-11-16",
+          "comment": "金利のつかない金は金利高で売られやすい",
+          "source": "Yahoo!ファイナンス",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "CNBC"
+          ],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-16-dow-sp-500-nasdaq-nvidia-oil-091631084.html"
+        },
         {
           "headline": "金は3,900ドル前後、13カ月ぶりの安値圏から小幅反発にとどまる",
           "published": "2026-11-13",
@@ -152,35 +172,34 @@
           "materiality": "mid",
           "direction": "bearish",
           "url": "https://www.energyconnects.com/news/oil/2026/november/gold-extends-rebound-above-4-100-as-dollar-and-yields-decline/"
-        },
-        {
-          "headline": "米10月PPIは前月比+0.3%で予想を下回る、前年比は+6.5%",
-          "published": "2026-11-13",
-          "comment": "伸びは予想より鈍く利上げ観測がやや後退、物価水準は高い",
-          "source": "Bloomberg",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [
-            "OANDA証券",
-            "フィスコ"
-          ],
-          "materiality": "high",
-          "direction": "neutral",
-          "url": "https://www.oanda.jp/lab-education/market_news/usppi-oct-2026-review/"
         }
       ]
     },
     {
       "name": "原油",
       "ticker": "CL=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "中東の緊張緩和期待で急落後、89ドル台で小幅高にとどまる。",
+      "rationale": "16日のWTIは85.53ドル（-3.42%）と急落。株安による需要不安と中東の緊張緩和期待が重い。",
       "catalysts": [
         "中東情勢",
         "OPEC動向"
       ],
       "top_news": [
+        {
+          "headline": "WTI原油が85.53ドルへ3.4%下落（ブレントは92ドル前後）",
+          "published": "2026-11-16",
+          "comment": "株安で需要減速が意識された",
+          "source": "Yahoo!ファイナンス",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "CNBC"
+          ],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-16-dow-sp-500-nasdaq-nvidia-oil-091631084.html"
+        },
         {
           "headline": "原油は中東の緊張緩和期待で10日に急落、13日は89ドル台で小幅高",
           "published": "2026-11-13",
@@ -278,13 +297,27 @@
       "ticker": "BTC-USD",
       "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "金利上昇とAI株安のリスク回避で、ビットコインは8月以来の7万ドル割れ。週末の薄商いで振れやすい。",
+      "rationale": "約6.5万ドルと7月以来の安値圏。金利高とAI株安のリスク回避が続く。",
       "catalysts": [
         "米長期金利5%台",
         "AI株の動揺",
         "来週のFOMC議事要旨"
       ],
       "top_news": [
+        {
+          "headline": "ビットコインが約6.5万ドルへ下落、7月以来の安値圏",
+          "published": "2026-11-16",
+          "comment": "リスク資産全体の売りに連動",
+          "source": "Yahoo!ファイナンス",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "CNBC"
+          ],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-16-dow-sp-500-nasdaq-nvidia-oil-091631084.html"
+        },
         {
           "headline": "ビットコインが8月以来初めて7万ドルを割り込む",
           "published": "2026-11-13",
@@ -302,8 +335,8 @@
   ],
   "discarded": [
     {
-      "headline": "ビットコインの当日価格に関する断片的な記事",
-      "reason": "日付が特定できず古い情報の可能性が高いため除外"
+      "headline": "エヌビディアの週間下落率（13％安）の報道",
+      "reason": "他の報道（当日約4％安）と数字が食い違い、確認が取れないため除外"
     }
   ],
   "currencies": [
@@ -329,7 +362,7 @@
       "code": "JPY",
       "lean": "WEAK",
       "conviction": "MID",
-      "reason": "ドル円は160円付近。ただし介入警戒で一段安は限られる。"
+      "reason": "ドル円は160円付近。介入警戒で円安は限られるが、米金利高が円を押し下げる。"
     },
     {
       "code": "AUD",
@@ -368,7 +401,7 @@
       "url": "https://www.gaitame.com/media/entry/2026/11/07/060000"
     },
     {
-      "headline": "来週はRBA議事要旨(17日)・賃金指数(18日)・雇用統計(19日)が続く",
+      "headline": "本日以降、RBA議事要旨(17日)・賃金指数(18日)・雇用統計(19日)が続く",
       "published": "2026-11-14",
       "region": "AU",
       "why": "追加利上げ期待が再燃しなければ豪ドルは上値が重くなりうる",
