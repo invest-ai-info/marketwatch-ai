@@ -50,6 +50,7 @@ pre=re.sub(r'(<meta property="og:title" content=")[^"]*',r'\g<1>'+TITLE,pre)
 pre=re.sub(r'(<meta property="og:description" content=")[^"]*',r'\g<1>'+DESC,pre)
 pre=re.sub(r'("headline": ")[^"]*',r'\g<1>'+TITLE,pre)
 pre=re.sub(r'("description": ")[^"]*',r'\g<1>'+DESC,pre)
+pre=pre.replace('guide-signal-lab-151.html','guide-signal-lab-152.html')
 pre=pre.replace('"datePublished": "2026-11-16"','"datePublished": "2026-11-17"').replace('"dateModified": "2026-11-16"','"dateModified": "2026-11-17"')
 pre=re.sub(r'<h1>.*?</h1>',f'<h1>{TITLE}</h1>',pre)
 pre=re.sub(r'<p class="meta-line">公開：[^<]*</p>','<p class="meta-line">公開：2026年11月17日　前向き期間：2026年6月17日〜　仮説登録日：2026年6月16日</p>',pre)
@@ -70,7 +71,7 @@ bars=(bar(100,R['all']['p'],A,.5,'全シグナル',f"{R['all']['n']:,}回")
 ticks=''.join(f'        <line x1="70" y1="{265-K*t:.0f}" x2="610" y2="{265-K*t:.0f}" stroke="var(--c-border,#e2e6ed)" stroke-width="0.5" stroke-dasharray="3,3"/>\n        <text x="65" y="{265-K*t+4:.0f}" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">{t}%</text>\n' for t in (20,30,40,50,60))
 svg1=f'''      <svg viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="売られすぎからの反発の買いシグナルの勝率比較棒グラフ" style="width:100%;max-width:640px;display:block;margin:0 auto">
         <rect width="640" height="310" fill="var(--c-surface,#fff)" rx="6"/>
-        <text x="320" y="22" font-size="13" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">前向き（2026年6月26日以降）と登録前の勝率比較</text>
+        <text x="320" y="22" font-size="13" font-family="sans-serif" text-anchor="middle" fill="var(--c-muted,#5a6072)">前向き（2026年6月17日以降）と登録前の勝率比較</text>
         <line x1="70" y1="40" x2="70" y2="265" stroke="var(--c-border,#e2e6ed)" stroke-width="1"/>
         <line x1="70" y1="265" x2="610" y2="265" stroke="var(--c-border,#e2e6ed)" stroke-width="1"/>
         <text x="65" y="269" font-size="10" font-family="sans-serif" fill="var(--c-muted,#999)" text-anchor="end">0%</text>
