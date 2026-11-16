@@ -459,4 +459,5 @@ SYNC_FILES = [
     "guide-signal-lab-151.html",
     "guide-company-9697-capcom.html",
     "guide-news-2026-11-16-japan-gdp.html",
+    "guide-signal-lab-152.html",
 ]
