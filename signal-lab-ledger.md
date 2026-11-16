@@ -1333,7 +1333,7 @@
 
 **テーマ**: 売られすぎからの反発の買いは勝ちやすい？ 前向き471回、判定まであと少し（定点観測・rsi_oversold_edge・#138の続き）
 **仮説ID**: rsi_oversold_edge
-**ファイル**: guide-signal-lab-152.html（下書き中）
+**ファイル**: guide-signal-lab-152.html（公開済み）
 **claims**: drafts/labnotes/lab-152-claims.json
 **分析メモ**: drafts/labnotes/lab-152-analysis.md
 
