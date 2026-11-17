@@ -89,6 +89,21 @@ def check_link_gate(filename, html, allow_missing=False):
     return internal_link_check(html, os.path.join(SCRIPT_DIR, filename))
 
 
+def check_svg_gate(html, allow=False):
+    """🔒 2026-11-17 図の重なりゲート。図（SVG）の文字が線・ローソク足・図形に重なっていれば説明の一覧を返す。
+    背景＝研究日誌 #152 の図で文字がローソク足と RSI の線に重なったまま公開された。固定の検査
+    （check_guide_draft・signal_lab_verify）は文字どうしと「あとから描いた箱に隠れる」しか見ておらず、
+    Opus のコンプラ・品質レーンは図の見た目を見ない＝誰も止められなかった。判定は svg_layout_check.py。"""
+    if allow:
+        return []
+    try:
+        import svg_layout_check as slc
+    except Exception as e:
+        print(f"⚠️ 図の重なりゲートを実行できません（{type(e).__name__}: {str(e)[:60]}）")
+        return []
+    return slc.layout_check(html)
+
+
 # 🔒 2026-09-26 カテゴリゲート（🧮 計算ツール欄への紛れ込み47枚の恒久対策）。
 #   旧 add_to_guides は同じバッジのカードが1枚も無いと、記事一覧の最初のカード（＝計算ツール欄）の
 #   前へ黙って入れていた（出力は ℹ️ の1行だけ＝公開は成功扱い）。新シリーズの1本目がそこに入り、
@@ -440,6 +455,8 @@ def main():
                     help="公開済み記事を別内容で上書きすることを明示的に許可（既定は中止）")
     ap.add_argument("--allow-missing-links", action="store_true", dest="allow_missing_links",
                     help="リンクゲート免除（実在しない参照先があっても公開する。同時公開記事の相互リンク等）")
+    ap.add_argument("--allow-svg-overlap", action="store_true", dest="allow_svg_overlap",
+                    help="図の重なりゲート免除（過去記事の再公開など。新しい記事には使わない）")
     ap.add_argument("--dry-run", action="store_true", dest="dry", help="書き込まず変更内容のみ表示")
     ap.add_argument("--no-reconcile", action="store_true", dest="no_reconcile",
                     help="公開前の main 自動取り込みを無効化（非常時のみ・巻き戻し事故の危険）")
@@ -475,6 +492,14 @@ def main():
             print(f"     ❌ {e}")
         print("   → 参照先を実在する記事に直すか、リンクを外してください"
               "（意図的なら --allow-missing-links）")
+        sys.exit(1)
+    _svg_errs = check_svg_gate(html, allow=a.allow_svg_overlap)
+    if _svg_errs:
+        print(f"🚫 図の重なりゲート: 図の文字が線・図形に重なっている {len(_svg_errs)}件（読めない図のまま公開しない）")
+        for e in _svg_errs:
+            print(f"     ❌ {e}")
+        import svg_layout_check as _slc
+        print("   → " + _slc.HOWTO)
         sys.exit(1)
 
     print(f"📝 記事公開の準備: {a.file}")

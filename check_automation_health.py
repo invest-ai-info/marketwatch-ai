@@ -187,6 +187,8 @@ GATE_FILES = [
     "publish_article.py",
     # 🆕 2026-09-24: 研究日誌「出口の相性」回の数字の照合（exit-lab.json と突き合わせる固定オラクル）
     "exit_lab_verify.py",
+    # 🆕 2026-11-17: 図の文字と線・図形の重なり（finalize_signal_lab・publish_article・mw check が呼ぶ）
+    "svg_layout_check.py",
 ]
 GATE_WINDOW_H = 26  # 毎日09:30実行＋cron滑りをカバー（>24h。稀に同じ違反を2日連続報告するのは許容）
 

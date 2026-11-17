@@ -8,7 +8,7 @@ routine `autodraft-publish`（毎日 08:40 JST）が読む手順書。**autodraf
 - 公開は **本レーン（autodraft topicキュー）1日1本まで**。判定は「当日の `drafts/REVIEW.md` に本ルーティン（autopublish）の公開記録があるか」で行う。
   **⚠️ signal-lab／ニュース／格言／新刊など他レーンの当日公開はカウントしない**（各レーンは独立。2026-07-08 に signal-lab の朝公開を「当日公開済み」と誤判定して無言スキップした実例あり）。
 - **スキップ・対象なしで終了する場合も、`drafts/REVIEW.md` 先頭に「YYYY-MM-DD autopublish: スキップ（理由）」を1行追記してコミットする（沈黙禁止）**。無言終了は失敗と区別できないため禁止。
-- **編集禁止ファイル（固定ゲート4本＝固定オラクル）**: `check_guide_draft.py`／`check_site_consistency.py`／`signal_lab_verify.py`／`publish_article.py`。実行前に `git checkout origin/main -- <4本>` で確定版に戻し、**実行のみ**（signal-lab の固定オラクル方式と同じ）。ほかに 6コアHTML・political・track-record 等の SYNC禁忌（CLAUDE.md参照）。
+- **編集禁止ファイル（固定ゲート5本＝固定オラクル）**: `check_guide_draft.py`／`check_site_consistency.py`／`signal_lab_verify.py`／`publish_article.py`／`svg_layout_check.py`（🆕 2026-11-17 図の文字と線・図形の重なり。`publish_article.py` が公開の前に呼ぶ＝赤なら文字を空いている場所へ動かして再実行）。実行前に `git checkout origin/main -- <5本>` で確定版に戻し、**実行のみ**（signal-lab の固定オラクル方式と同じ）。ほかに 6コアHTML・political・track-record 等の SYNC禁忌（CLAUDE.md参照）。
 - **🚫 ゲート/リンターが赤でも、ゲート自体を編集・commitして通すのは自己承認＝完全禁止（オーナー決定 2026-07-09。等価な書き換え・バグ修正のつもりでも禁止）**。実例: 2026-07-09 朝に本 routine が `check_site_consistency.py` のクラウドスタブ分岐を独自実装へ書き換えて公開を通過（内容は等価だったが方式として不可）。ゲートの不具合を疑う場合も公開せず `drafts/REVIEW.md` に「🚩ゲート赤／ゲート不具合疑い」でエスカレ＝ゲートの修正は人間のローカルセッション専任。違反は automation-health が commit author 照合で自動検知して Issue 化する。
 - 迷ったら公開せず `drafts/REVIEW.md` に「🚩要人間レビュー」でエスカレ（理由と対象を明記）。
 

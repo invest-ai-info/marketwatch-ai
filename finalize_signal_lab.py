@@ -11,6 +11,7 @@ finalize_signal_lab.py — drafts/draft-signal-lab-NNN.html(簡素head・noindex
   - noindex,nofollow を除去（検索許可）
   - meta-line「公開：YYYY年M月（下書き中）」→「公開：YYYY年M月D日」
   - <style> 以降（CSS+本文）は下書きのまま保持
+  - 🆕 2026-11-17 図（SVG）の文字が線・図形に重なっていたら止める（svg_layout_check.py・[直せる]）
 出力: guide-signal-lab-NNN.html
 """
 import json
@@ -55,6 +56,26 @@ def _tracker_gate(date):
         sys.exit(1)
 
 
+def _svg_layout_gate(html):
+    """2026-11-17 新設: 図（SVG）の文字が線・ローソク足・図形に重なっていたら公開しない。
+    背景＝#152 の図で「ここで買いのシグナル」がローソク足に、「RSIの30の線」が RSI の折れ線に重なったまま
+    すべての検査を通って公開された（固定の検査は文字どうしの重なりしか見ていなかった）。
+    赤はすべて [直せる]＝文字を空いている場所へ動かして、もう一度実行する（最大3回・SIGNAL_LAB_SOP「直せる赤」）。"""
+    try:
+        import svg_layout_check as slc
+        warns = slc.layout_check(html)
+    except Exception as e:
+        # 検査できないこと自体では止めない（公開の経路を壊さない）が、必ず見える形で出す
+        print(f"⚠️ 図の重なり検査を実行できない（{type(e).__name__}: {str(e)[:60]}）")
+        return
+    if warns:
+        print(f"❌ 図の文字の重なり {len(warns)}件（公開しない）:")
+        for w in warns:
+            print(f"   - {w}")
+        print("→ " + slc.HOWTO)
+        sys.exit(1)
+
+
 def _meta(html, name, prop=False):
     attr = "property" if prop else "name"
     m = re.search(rf'<meta {attr}="{re.escape(name)}" content="(.*?)">', html, re.S)
@@ -81,6 +102,7 @@ def main():
     with open(src, encoding="utf-8-sig") as f:
         c = f.read()
     orig = c
+    _svg_layout_gate(c)
 
     title = re.search(r'<title>(.*?)</title>', c, re.S)
     title = title.group(1).strip() if title else f"AIシグナル研究日誌 #{int(nnn)} - 時短投資ラボ"

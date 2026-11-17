@@ -636,6 +636,44 @@ def check_guides_sections(guides_html):
                 errors.append(f"🚨 guides.html: 「{badge}」のカード {href} が {where} に紛れ込んでいる → {to}")
 
 
+# 🆕 2026-11-17 図（SVG）の文字の重なり・研究日誌の表の枠（オーナー「図解の文字が重なってて見づらい」
+#   「このリストの文字がごちゃごちゃしていて見づらい…確認する担当者がいたのにどうして」）。
+#   #152 の図の文字がローソク足と RSI の線に重なったまま、固定の検査（文字どうしの重なりしか見ない）と
+#   Opus のコンプラ・品質レーン（図の見た目は見ない）を全部通って公開された。判定は svg_layout_check.py。
+#   この日より後に公開した記事は error（公開の経路＝finalize_signal_lab・publish_article も同じ検査で止める）。
+#   前の記事は直すのは任意＝件数を1行の warning にまとめる（鳴りっぱなしで他の警告を見なくなるのを防ぐ）。
+SVG_LAYOUT_SINCE = "2026-11-18"
+
+
+def check_svg_layout(guide_files):
+    try:
+        import svg_layout_check as slc
+    except Exception as e:
+        warnings.append(f"図の重なり検査を実行できない（{type(e).__name__}: {str(e)[:60]}）")
+        return
+    old_files = old_warns = 0
+    for gf in guide_files:
+        html = _read(gf)
+        if "<svg" in html:
+            ws = slc.layout_check(html)
+            if ws:
+                m = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})', html)
+                if m and m.group(1) >= SVG_LAYOUT_SINCE:
+                    errors.append(f"{gf}: 図の文字が線・図形に重なっている {len(ws)}件（{ws[0][:70]}…）"
+                                  f" → `python svg_layout_check.py {gf}` で一覧・文字を空いている場所へ動かす")
+                else:
+                    old_files += 1
+                    old_warns += len(ws)
+        # 研究日誌の前向きトラッカー表は枠つき（signal_lab_tracker.wrap_table）で出す＝素の表に戻っていないか
+        if gf.startswith("guide-signal-lab-") and re.search(
+                r"<table>(?:(?!</table>).)*?前向き現在値\(平均R\)", html, re.S) and 'class="mw-tracker"' not in html:
+            warnings.append(f"{gf}: 前向きトラッカー表に枠（mw-tracker）が無い＝余白・区切り線の無い素の表"
+                            f" → `python apply_tracker_table_style.py --apply`")
+    if old_files:
+        warnings.append(f"図の文字の重なり（{SVG_LAYOUT_SINCE} より前の記事）: {old_files}本・{old_warns}件"
+                        f"＝直すのは任意。一覧＝`python svg_layout_check.py --all`")
+
+
 def main():
     quiet = "--quiet" in sys.argv
     sync_files = get_sync_files()
@@ -815,6 +853,9 @@ def main():
 
     # 11. 旧サイト名の残り（2026-11-05 新設・サイト名の変更）
     check_site_name(sync_files)
+
+    # 12. 図の文字の重なり・研究日誌の表の枠（2026-11-17 新設・#152 の図と表の再発防止）
+    check_svg_layout(guide_files)
 
     # 出力
     print("🔍 サイト整合性チェック（check_site_consistency.py）")
