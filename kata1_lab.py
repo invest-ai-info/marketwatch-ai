@@ -63,6 +63,8 @@ EV_EXPECT = {"USDJPY": 1631, "EURJPY": 1971, "GBPJPY": 2094}    # FLH の一覧�
 PREREG = "PILLAR_PREREG.md"
 SECTION = "## KT1 オーナーの型1"
 OUT_JSON = "kata1-lab.json"
+TAG = "KT1"                                # 腕の名前（KT2 は kata2_lab.py が写しの中で差し替える）
+HEADING = "KT1 オーナーの型1：クロス円3つがそろって東京時間の最安値（最高値）を割ったら、戻りの 50% と線で分けて入る"
 OUT_MD = os.path.join("research", "oikawa", "kata1-result.md")
 OUT_CSV = os.path.join("research", "oikawa", "kata1-{}.csv")
 TITLES = {"KT1-A": "オーナーの型1（決めたとおり）：クロス円3つがそろって東京時間の最安値（最高値）を割ったら、線と新安値の50%で1/3・線で2/3。"
@@ -695,7 +697,7 @@ def judge(seen, p, old_period):
 
 def verdicts_of(arms, today):
     out = {}
-    for arm, key in (("A", "KT1-A"), ("B", "KT1-B")):
+    for arm, key in (("A", f"{TAG}-A"), ("B", f"{TAG}-B")):
         a = arms.get(arm) or {}
         v = a.get("verdict")
         s = a.get("seen") or {}
@@ -793,12 +795,12 @@ def check(folder, duka_root, events_path):
 
 def render_md(rec):
     f = lambda v: "—" if v is None else f"{v:+.2f}"
-    L = ["# KT1 オーナーの型1：クロス円3つがそろって東京時間の最安値（最高値）を割ったら、戻りの 50% と線で分けて入る", "",
-         f"更新: {rec.get('generated_jst')}（事前登録＝`PILLAR_PREREG.md`「KT1」・節の指紋 `{(rec.get('prereg_sha256') or '')[:12]}`）・"
+    L = [f"# {HEADING}", "",
+         f"更新: {rec.get('generated_jst')}（事前登録＝`PILLAR_PREREG.md`「{TAG}」・節の指紋 `{(rec.get('prereg_sha256') or '')[:12]}`）・"
          f"見た期間 {rec['data']['seen']}・昔の期間 {rec['data']['old']}・数字は pips（満玉1つ分・費用後）", "",
          "| 腕 | 判定 | 回数 | 平均 | 97.5%の幅 | 偽薬 p | 前半／後半 | 昔の期間 | 手数料後（見た／昔） | 勝率 | 入れなかった合図 |",
          "|---|---|---:|---:|---|---:|---|---|---|---:|---:|"]
-    for arm, key in (("A", "KT1-A"), ("B", "KT1-B")):
+    for arm, key in (("A", f"{TAG}-A"), ("B", f"{TAG}-B")):
         a = rec["arms"].get(arm) or {}
         s, o = a.get("seen") or {}, a.get("old") or {}
         if not s.get("n"):
@@ -812,7 +814,7 @@ def render_md(rec):
     names = (("買い売り", "by_side"), ("冬夏", "by_season"), ("合図の時刻（30分ごと）", "by_time"), ("ペア（1ペア満玉あたり）", "by_pair"),
              ("ペア × 時間（通貨×時間帯）", "by_pair_hour"), ("出口", "by_exit"), ("線から新安値までの幅", "by_dist"), ("50%に届くまで", "by_wait"),
              ("ユーロポンド", "by_eg"), ("ADX(14)・1時間足", "by_adx"), ("1発目だけ／満玉", "by_fill"))
-    for arm, key in (("A", "KT1-A"), ("B", "KT1-B")):
+    for arm, key in (("A", f"{TAG}-A"), ("B", f"{TAG}-B")):
         for per in ("seen", "old"):
             s = (rec["arms"].get(arm) or {}).get(per) or {}
             if not s.get("n"):
