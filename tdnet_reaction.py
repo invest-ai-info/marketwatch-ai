@@ -280,7 +280,7 @@ def stock_line(i, g):
     return [head + nums + " " + tags, f"     「{short(main_title(g))}」{more}"]
 
 
-def build_mail(day, groups, n_docs, trend=None, redo=False):
+def build_mail(day, groups, n_docs, trend=None, redo=False, notes=None):
     """→ (件名, 本文)。groups は measure 済み・trend＝build_trend の結果（あれば「これまでの傾向」を足す）"""
     react_days = sorted({g["react_on"] for g in groups if g["react_on"]})
     nxt = [d for d in react_days if d > day]
@@ -328,6 +328,8 @@ def build_mail(day, groups, n_docs, trend=None, redo=False):
             L += stock_line(i, g)
     if trend:
         L += trend_lines(trend)
+    if notes:                                             # 🆕 11/17 J52F（入るタイミングの前向き）の件数だけ
+        L += ["", "【入るタイミングの前向き（J52F・業績予想の修正のあと・件数だけ）】"] + list(notes)
     L += ["", "━" * 24,
           "※ 読むだけの記録（試験・PILLAR_PREREG.md「J51」）。1日だけの数字で、売買の決まりではない（決まりにするなら別に事前登録して確かめる）",
           "※ 測り方：開示の直前の値段（引け後＝その日の終値・場中＝開示の時刻までの最後の5分足・寄り前＝前の日の終値）→ 開示のあとの最初の丸1日の引け。"
@@ -725,6 +727,16 @@ def run_day(day, trading_days, events, getter=fetch_chart, fetcher=T.fetch_day, 
     return measure_all(groups, trading_days, getter, log=log), len(rows)
 
 
+def j52f_notes():
+    """J52F の件数の行（disclosure-timing-forward.json が無ければ空）。循環しないよう、ここで読み込む"""
+    try:
+        import disclosure_timing_forward as DTF
+        js = read_json(DTF.OUT_JSON, {})
+        return DTF.status_lines(js) if js else []
+    except Exception:  # noqa: BLE001
+        return []
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="TDnet の開示 → 次の丸1日・1週間・1か月の値動き（読むだけ・試験）")
     ap.add_argument("--day", help="開示の日を決めて測る（YYYY-MM-DD）")
@@ -772,7 +784,8 @@ def main(argv=None):
                 r.update({k: o.get(k, "") for k in COLS[16:] if o.get(k)})
         ledger = [r for r in ledger if r["date"] != day] + new
         trend = build_trend(ledger, prev_trend, today)
-        subject, body = build_mail(day, groups, n_docs, trend, redo=bool((state["days"].get(day) or {}).get("mailed")))
+        subject, body = build_mail(day, groups, n_docs, trend, redo=bool((state["days"].get(day) or {}).get("mailed")),
+                                   notes=j52f_notes())
         if a.html_out:
             import mail_html
             with open(a.html_out, "w", encoding="utf-8") as fh:

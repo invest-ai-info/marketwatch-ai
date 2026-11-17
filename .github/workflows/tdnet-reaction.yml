@@ -46,11 +46,15 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           ALERT_RECIPIENT: ${{ secrets.ALERT_RECIPIENT }}
         run: python tdnet_reaction.py
+      # 🆕 2026-11-17 J52F：業績予想の修正のあと、どのタイミングで入ると勝ちやすいか（前向き・PILLAR_PREREG.md「J52」）。
+      #    J51 の台帳から上方修正・下方修正を拾い、R の寄り・10:00・後場寄り・R〜R+30 の引けを比で記録。失敗しても J51 は止めない
+      - name: J52F entry-timing forward record
+        run: python tests/test_disclosure_timing_forward.py && python disclosure_timing_forward.py || echo "J52F failed (non-fatal)"
       - name: Commit results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add tdnet-reaction.csv tdnet-reaction-days.json tdnet-reaction-trend.json 2>/dev/null || true
+          git add tdnet-reaction.csv tdnet-reaction-days.json tdnet-reaction-trend.json disclosure-timing-forward.csv disclosure-timing-forward.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes."
           else
