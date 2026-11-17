@@ -997,6 +997,52 @@ def state_cell(text):
 #   ただし終わってから RECENT_END_DAYS 日以内の仮説は残す（その日の記事の主役＝「⛔反証が出た」回を表から消さないため）。
 RECENT_END_DAYS = 7
 TABLE_MARK = "<!-- MW:TRACKER_TABLE -->"      # --into で表を差し込む目印（無ければ前の表を置き換える）
+TABLE_END = "<!-- /MW:TRACKER_TABLE -->"      # 🆕 2026-11-17 表の終わりの目印（枠の </div> まで置き換えるため）
+
+# 🆕 2026-11-17 表の見た目を表の中に持たせる（オーナー「このリストの文字がごちゃごちゃしていて見づらい」）。
+#   原因＝10/17 に表を道具で差し込む形（--into）にしたとき、手で書いていた枠 <div class="tracker-wrap"> が
+#   出力に無く、#128〜#152 の表は飾りの無い素の <table> になった（余白・区切り線・見出しの色が無く、
+#   列どうしの文字がくっついて見えた）。記事のひな形の CSS に頼ると、ひな形が変わるたびに同じことが起きる
+#   → 表の枠と CSS を出力に含める（どの記事に差し込んでも同じ見た目）。
+#   ⚠️ 素の <table> と見出し「前向き現在値(平均R)」は変えない（check_plain_japanese.py がこの2つで表を見分ける）。
+TRACKER_CSS = (
+    ".mw-tracker{overflow-x:auto;margin:12px 0 22px;border:1px solid var(--c-border,#e2e6ed);border-radius:8px;"
+    "background:var(--c-surface,#fff)}"
+    ".mw-tracker table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.55;margin:0}"
+    ".mw-tracker th{background:var(--c-tag,#eff6ff);color:var(--c-tag-text,#1d4ed8);font-weight:700;text-align:left;"
+    "padding:9px 12px;white-space:nowrap;border-bottom:2px solid var(--c-border,#e2e6ed)}"
+    ".mw-tracker td{padding:10px 12px;border-bottom:1px solid var(--c-border,#e2e6ed);vertical-align:top;"
+    "white-space:nowrap}"
+    ".mw-tracker tr:nth-child(odd) td{background:rgba(127,127,127,.045)}"
+    ".mw-tracker tr:last-child td{border-bottom:none}"
+    ".mw-tracker td:first-child{white-space:normal;min-width:12em;font-weight:600}"
+    ".mw-tracker small{display:inline-block;margin-top:3px;font-size:11.5px;font-weight:400;"
+    "color:var(--c-muted,#5a6072);opacity:1!important}"
+    ".mw-tracker td:nth-child(3){font-size:12.5px;color:var(--c-muted,#5a6072)}"
+    ".mw-tracker td:nth-child(4)>span:first-child{font-weight:700;font-size:14px}"
+    ".mw-tracker td:nth-child(4)>span:nth-of-type(2){font-size:12.5px;color:var(--c-muted,#5a6072)}"
+    ".mw-st>span:first-child{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12.5px;"
+    "font-weight:700}"
+    ".mw-st-promoted>span:first-child{background:#dcfce7;color:#166534}"
+    ".mw-st-tracking>span:first-child{background:#fef3c7;color:#854d0e}"
+    ".mw-st-rejected>span:first-child{background:#fee2e2;color:#991b1b}"
+    ".mw-st-retired>span:first-child{background:#e2e8f0;color:#334155}"
+    "@media(max-width:600px){.mw-tracker table{font-size:.8rem}.mw-tracker td:first-child{min-width:10em}"
+    ".mw-tracker th,.mw-tracker td{padding:8px 8px}}"
+)
+STATE_CLASS = {"✅昇格": "promoted", "🟡蓄積中": "tracking", "⛔反証": "rejected", "⏹見込みなし": "retired"}
+
+
+def wrap_table(table):
+    """素の <table>…</table> を、見た目つきの枠で包む（新しい表・過去の記事の両方で使う＝単一ソース）。"""
+    return (f'<div class="mw-tracker"><style data-mw-tracker-style>{TRACKER_CSS}</style>\n'
+            f'{table}\n</div>\n{TABLE_END}')
+
+
+def state_td(cell):
+    """「状態」セルの <td> に色分けの class を付ける（先頭の状態の言葉で決める）。"""
+    hits = [(cell.find(w), c) for w, c in STATE_CLASS.items() if w in cell]
+    return f'<td class="mw-st mw-st-{min(hits)[1]}">' if hits else "<td>"
 
 
 def _ended_on(h):
@@ -1048,10 +1094,12 @@ def table_html(t, today):
         crit = crit_cell(h["kind"], mn, bool(ho))
         val = value_cell(f"{fwd.get('avgR',0):+.2f}", f"{fwd.get('rci_lo',0):+.2f}", f"{fwd.get('rci_hi',0):+.2f}",
                          fwd["k"], fwd["n"], f"勝率{fwd['pct']:.0f}%")
+        st = state_cell(icon[h.get("status", "tracking")])
         out.append(f'<tr><td>{plain_cell(h["filter"], h["label"])}</td><td>{plain_kind_cell(h["kind"])}</td>'
-                   f'<td>{crit}</td><td>{val}</td><td>{state_cell(icon[h.get("status","tracking")])}</td></tr>')
+                   f'<td>{crit}</td><td>{val}</td>{state_td(st)}{st}</td></tr>')
     out.append("</table>")
-    return "\n".join(out)
+    head, table = out[:3], "\n".join(out[3:])
+    return "\n".join(head + [wrap_table(table)])
 
 
 def insert_table(path, block):
@@ -1067,7 +1115,11 @@ def insert_table(path, block):
         j = doc.find("</table>", i) if i >= 0 else -1
         if j < 0:
             raise ValueError(f"{path} に {TABLE_MARK} も前の表（<h2 id=\"tracker\">）も無い")
-        doc, how = doc[:i] + block + doc[j + len("</table>"):], "replaced"
+        k = doc.find(TABLE_END, j)
+        nxt = doc.find('<h2', j)
+        # 枠つきの表（2026-11-17〜）は終わりの目印まで＝枠の </div> を残さない
+        end = k + len(TABLE_END) if k >= 0 and (nxt < 0 or k < nxt) else j + len("</table>")
+        doc, how = doc[:i] + block + doc[end:], "replaced"
     with open(path, "w", encoding="utf-8", newline="") as fh:
         fh.write(doc)
     return how
@@ -1089,6 +1141,7 @@ def cmd_table(args, data, today):
             print(block)
     else:
         print(f"# 前向きトラッカー（基準日 {t.get('updated_at', today)}）")
+        rows, _hidden = table_rows(t["hypotheses"], today)
         for h in rows:
             fwd = h.get("forward", {"k": 0, "n": 0, "avgR": 0})
             print(f"- [{h.get('status','tracking')}] {h['label']}（{h['kind']}）: 前向き 平均R {fwd.get('avgR',0):+.3f} / N={fwd['n']}")

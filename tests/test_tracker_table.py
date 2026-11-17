@@ -6,6 +6,7 @@
 確かめること＝①表に載るのは昇格・蓄積中と、終わって7日以内の仮説だけ・省いた件数とエッジ番付へのリンク
 ②固定の検査（exit_lab_verify・check_plain_japanese）が新しい表を前と同じく「表」として扱う
 ③--into の目印の置き換え・前の表の置き換え（何度でも）・どちらも無いときは止まる ④手順書に書いてある。
+🆕 2026-11-17 ⑤表は枠と CSS ごと出る（素の表で公開されて「ごちゃごちゃして見づらい」とオーナー）・過去の記事も揃っている。
 
 実行:  python tests/test_tracker_table.py     （pytest 不要。pytest でも動く）
 """
@@ -85,6 +86,55 @@ def test_insert_into_draft():
     except ValueError:
         pass
     assert open(bad, encoding="utf-8").read() == "<p>x</p>"                    # 黙って足さない
+
+
+def test_table_carries_its_own_frame():
+    """2026-11-17 オーナー「このリストの文字がごちゃごちゃしていて見づらい」＝素の表（余白・区切り線なし）に戻さない。"""
+    block = T.table_html(_tracker(), "2026-10-17")
+    i, j = block.index('<div class="mw-tracker">'), block.index("<table>")
+    assert i < j and "data-mw-tracker-style" in block[i:j]                    # 枠と CSS が表の直前にある
+    assert block.rstrip().endswith("</table>\n</div>\n" + T.TABLE_END)
+    assert '<td class="mw-st mw-st-promoted">' in block and '<td class="mw-st mw-st-rejected">' in block
+    assert block.count('class="mw-st ') == 5                                  # 状態の列だけ＝行の数と同じ
+
+
+def test_insert_replaces_framed_table_without_leftovers():
+    d = tempfile.mkdtemp()
+    path = os.path.join(d, "draft.html")
+    block = T.table_html(_tracker(), "2026-10-17")
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("<p>前</p>\n" + block + "\n<h2>次の節</h2>\n<p>後</p>\n")
+    assert T.insert_table(path, block) == "replaced"
+    doc = open(path, encoding="utf-8").read()
+    assert doc.count('<div class="mw-tracker">') == 1 and doc.count(T.TABLE_END) == 1
+    assert doc.count("<div") == doc.count("</div>")                          # 枠の </div> が残らない
+    assert "<h2>次の節</h2>" in doc
+
+
+def test_restyle_past_articles_keeps_the_words():
+    import apply_tracker_table_style as A
+    old_block = T.table_html(_tracker(), "2026-10-17")
+    bare = old_block[old_block.index("<table>"):old_block.index("</table>") + len("</table>")]
+    bare = bare.replace('<td class="mw-st mw-st-promoted">', "<td>").replace('<td class="mw-st mw-st-tracking">', "<td>")
+    bare = bare.replace('<td class="mw-st mw-st-rejected">', "<td>").replace('<td class="mw-st mw-st-retired">', "<td>")
+    doc = "<p>本文</p>\n" + bare + "\n<p>後</p>"
+    new, n = A.restyle(doc)
+    assert n == 1 and 'class="mw-tracker"' in new and A._text(new) != "" 
+    strip = lambda h: A._text(h[h.index("<table>"):h.index("</table>")])
+    assert strip(new) == strip(doc)                                          # 表の文字は1文字も変わらない
+    assert '<td class="mw-st mw-st-tracking">' in new
+    assert A.restyle(new) == (new, 0)                                        # 2回目は何もしない
+    doc2 = "<html>" + new + "</html>"
+    assert "前向き現在値" not in C._strip_machine_parts(doc2)                 # やさしい日本語の検査は今までどおり表を飛ばす
+
+
+def test_published_signal_lab_tables_are_framed():
+    import glob
+    import re
+    bare = [p for p in glob.glob("guide-signal-lab-*.html")
+            if re.search(r"<table>(?:(?!</table>).)*?前向き現在値\(平均R\)", open(p, encoding="utf-8").read(), re.S)
+            and 'class="mw-tracker"' not in open(p, encoding="utf-8").read()]
+    assert bare == [], bare
 
 
 def test_sop_says_so():

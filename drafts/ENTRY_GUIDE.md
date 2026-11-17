@@ -72,6 +72,7 @@
 8. **公開判定と公開**：初期=白 もしくは（グレー→opus軽微修正→最終=白）かつ ルーブリック合格 のときだけ。さらに別の fresh な **model=opus** サブエージェント（Readのみ・同ペルソナ）で「そのまま公開して白か」を独立確認。白でなければ手順9。
    - 決定論チェック（全て満たす）：① `git checkout -- check_guide_draft.py && python check_guide_draft.py guide-entry-<slug>.html` が GREEN ② `python check_plain_japanese.py guide-entry-<slug>.html` が指摘0件 ③禁止語なし（必ず/絶対/確実/100%/儲かる/一択/今すぐ買い）④特定銘柄・証券会社の推奨なし ⑤出典一覧のリンクがある。
    - a. `python publish_article.py --file guide-entry-<slug>.html --category "エントリー方法の研究" --emoji <キューの絵文字> --card-title "<短い題>" --desc "<1行説明>"`
+        - 🆕 2026-11-17 **図の重なりゲート**：`publish_article.py` が「🚫 図の重なりゲート」で止まったら、出た文字の x/y（と `text-anchor`）だけを線・ローソク足・棒と重ならない空いた所へ動かして同じコマンドを再実行（最大3回・数字と図形は変えない・`python svg_layout_check.py <file>` で先に確かめられる）。3回で通らなければ公開せず `drafts/REVIEW.md` へ。
    - b. `python check_site_consistency.py; echo EXIT=$?`（赤なら中止しエスカレ）
    - c. `git add guide-entry-<slug>.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit -m "feat: エントリー方法の研究 auto-publish <slug>"` → push（下の PUSH 手順）
    - d. `drafts/entry/ENTRY_LEDGER.md` に「✅公開済み・#NN・題材・slug・コンプラ判定（初期/適用修正/独立確認）・確かめた出典のURL」を追記しコミット＆push。

@@ -77,6 +77,7 @@
    【公開前の決定論チェック（全て満たす／欠けたら手順9）】① `kinsho-v1` 免責が 冒頭＋本文末＋フッター ②禁止語なし（必ず/絶対/確実/100%/儲かる/一択/今すぐ買い 等）③特定銘柄の買い/売り推奨なし ④SVGに「概念図」明示・数値に「仮の例」明示 ⑤**制度の数値に一次情報のURLと確認日が添えてある**。
 8. **公開**：
    - a. `python publish_article.py --file guide-tse-<slug>.html --category "東証のしくみ" --emoji <絵文字> --card-title "<題>" --desc "<1行説明>"`
+        - 🆕 2026-11-17 **図の重なりゲート**：`publish_article.py` が「🚫 図の重なりゲート」で止まったら、出た文字の x/y（と `text-anchor`）だけを線・ローソク足・棒と重ならない空いた所へ動かして同じコマンドを再実行（最大3回・数字と図形は変えない・`python svg_layout_check.py <file>` で先に確かめられる）。3回で通らなければ公開せず `drafts/REVIEW.md` へ。
    - b. `python check_site_consistency.py; echo EXIT=$?`（赤なら中止しエスカレ）
    - c. `git add guide-tse-<slug>.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit -m "feat: 東証のしくみ auto-publish <slug>" && git push origin main`
    - d. `drafts/tse/TSE_LEDGER.md` に「✅公開済み・題材・slug・コンプラ判定・**一次情報URLと確認日**」を追記しコミット＆push。

@@ -33,6 +33,7 @@
    【公開前の決定論チェック（全て満たす／欠けたら手順8）】① `kinsho-v1` 免責が 冒頭＋本文末＋フッター ②禁止語なし（必ず/絶対/確実/100%/儲かる/一択/今すぐ買い 等の断定・利益保証）③特定銘柄の買い/売り推奨なし ④SVGに「概念図」明示・数値に「仮の例」明示。
 7. **公開**：
    a. `python publish_article.py --file guide-proverb-<slug>.html --category "投資格言から学ぶ" --emoji <絵文字> --card-title "<格言>" --desc "<1行説明>"`
+        - 🆕 2026-11-17 **図の重なりゲート**：`publish_article.py` が「🚫 図の重なりゲート」で止まったら、出た文字の x/y（と `text-anchor`）だけを線・ローソク足・棒と重ならない空いた所へ動かして同じコマンドを再実行（最大3回・数字と図形は変えない・`python svg_layout_check.py <file>` で先に確かめられる）。3回で通らなければ公開せず `drafts/REVIEW.md` へ。
    b. `python check_site_consistency.py; echo EXIT=$?`（赤なら中止しエスカレ）
    c. `git add guide-proverb-<slug>.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit -m "feat: 投資格言 auto-publish <slug>" && git push origin main`
    d. `drafts/proverb/PROVERB_LEDGER.md` に「✅公開済み・格言・slug・コンプラ判定・出典」を追記しコミット＆push。

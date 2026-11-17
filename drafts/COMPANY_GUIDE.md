@@ -338,6 +338,7 @@
    【決定論チェック（全部／欠けたら手順9）】① `kinsho-v1` が冒頭＋本文末＋フッター ②禁止語なし（必ず/絶対/確実/100%/儲かる/一択/今すぐ買い/割安/割高/外せない/好機）③**目標株価が本文に無い** ④買い・売り・保有の推奨が無い ⑤**数字すべてに一次情報のURLと確認日** ⑥SVG「概念図」明示。
 8. **公開**：
    - a. `python publish_article.py --file guide-company-<code>-<name>.html --category "数字で見る企業" --emoji 🔬 --card-title "<社名>" --desc "<1行説明>"`
+        - 🆕 2026-11-17 **図の重なりゲート**：`publish_article.py` が「🚫 図の重なりゲート」で止まったら、出た文字の x/y（と `text-anchor`）だけを線・ローソク足・棒と重ならない空いた所へ動かして同じコマンドを再実行（最大3回・数字と図形は変えない・`python svg_layout_check.py <file>` で先に確かめられる）。3回で通らなければ公開せず `drafts/REVIEW.md` へ。
    - b. `python check_site_consistency.py; echo EXIT=$?`（赤なら中止しエスカレ）
    - c. `git add guide-company-*.html guides.html generate_market_news.py sync_to_github.py drafts/ && git commit -m "feat: 数字で見る企業 auto-publish <code>" && git push origin main`
    - d. `drafts/company/COMPANY_LEDGER.md` に「✅公開済み・社名・証券コード・**選定の根拠（ランキング登場日）**・一次情報URLと確認日・コンプラ判定」を追記しコミット＆push。
