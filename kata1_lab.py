@@ -165,7 +165,8 @@ def read_events(path):
     if tcol is None:
         raise SystemExit(f"🚨 {path}：時刻の列が見つからない（列＝{list(df.columns)}）")
     t = pd.to_datetime(df[tcol], errors="coerce", utc=True)
-    ccol = next((low[k] for k in ("currency", "ccy", "cur", "country") if k in low), None)
+    # 11/17 手元で直した：FLH の一覧の通貨の列は「scope」（ALL・EUR・GBP・AUD）。候補に無く、ユーロ・ポンドだけの発表が落ちていた
+    ccol = next((low[k] for k in ("scope", "currency", "ccy", "cur", "country") if k in low), None)
     allp = {"USDJPY", "EURJPY", "GBPJPY", "AUDJPY"}
     cmap = {"USD": allp, "US": allp, "JPY": allp, "JP": allp, "EUR": {"EURJPY"}, "EU": {"EURJPY"},
             "GBP": {"GBPJPY"}, "GB": {"GBPJPY"}, "UK": {"GBPJPY"}, "AUD": {"AUDJPY"}, "AU": {"AUDJPY"}, "CNY": {"AUDJPY"}, "CN": {"AUDJPY"}}
