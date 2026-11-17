@@ -330,7 +330,7 @@ window.addEventListener('resize',mark);
         <!-- バー（各ゾーンの勝率） -->
         <!-- news=0 (47.3%): y_top = 30+190*(1-47.3/65)≈ 30+190*0.272=81.7≈82; h=220-82=138 -->
         <rect x="130" y="82" width="90" height="138" fill="#0969da" opacity="0.75" rx="3"/>
-        <text x="175" y="78" text-anchor="middle" font-weight="700" font-size="13" fill="#0969da" font-family="'Noto Sans JP',sans-serif">47.3%</text>
+        <text x="224" y="88" text-anchor="start" font-weight="700" font-size="13" fill="#0969da" font-family="'Noto Sans JP',sans-serif">47.3%</text>
         <text x="175" y="175" text-anchor="middle" font-size="10" fill="#ffffff" font-family="'Noto Sans JP',sans-serif">208/440</text>
 
         <!-- news=1-2 (38.5%): y_top = 30+190*(1-38.5/65)≈ 30+190*0.408=107.5≈108; h=220-108=112 -->
@@ -423,32 +423,32 @@ window.addEventListener('resize',mark);
         <!-- metal 34.5%: x=140, w=34.5*9.5=327.75≈328; y=[35,55] -->
         <rect x="140" y="35" width="328" height="22" fill="#cf222e" opacity="0.65" rx="2"/>
         <text x="135" y="50" text-anchor="end" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">金属(metal)</text>
-        <text x="474" y="50" font-size="11" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">34.5% (115/333)</text>
+        <text text-anchor="end" x="752" y="50" font-size="11" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">34.5% (115/333)</text>
 
         <!-- btc 37.4%: w=37.4*9.5=355.3≈355; y=[78,98] -->
         <rect x="140" y="78" width="355" height="22" fill="#cf222e" opacity="0.55" rx="2"/>
         <text x="135" y="93" text-anchor="end" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">BTC</text>
-        <text x="501" y="93" font-size="11" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">37.4% (70/187)</text>
+        <text text-anchor="end" x="752" y="93" font-size="11" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">37.4% (70/187)</text>
 
         <!-- index 41.5%: w=41.5*9.5=394.25≈394; y=[121,141] -->
         <rect x="140" y="121" width="394" height="22" fill="#9a6700" opacity="0.65" rx="2"/>
         <text x="135" y="136" text-anchor="end" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">指数(index)</text>
-        <text x="540" y="136" font-size="11" font-weight="700" fill="#9a6700" font-family="'Noto Sans JP',sans-serif">41.5% (194/467)</text>
+        <text text-anchor="end" x="752" y="136" font-size="11" font-weight="700" fill="#9a6700" font-family="'Noto Sans JP',sans-serif">41.5% (194/467)</text>
 
         <!-- other_fx 43.1%: w=43.1*9.5=409.45≈409; y=[164,184] -->
         <rect x="140" y="164" width="409" height="22" fill="#1a7f37" opacity="0.55" rx="2"/>
         <text x="135" y="179" text-anchor="end" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">ドルクロスFX</text>
-        <text x="555" y="179" font-size="11" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">43.1% (180/418)</text>
+        <text text-anchor="end" x="752" y="179" font-size="11" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">43.1% (180/418)</text>
 
         <!-- jpy_fx 46.3%: w=46.3*9.5=439.9≈440; y=[207,227] -->
         <rect x="140" y="207" width="445" height="22" fill="#1a7f37" opacity="0.70" rx="2"/>
         <text x="135" y="222" text-anchor="end" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">円クロスFX</text>
-        <text x="591" y="222" font-size="11" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">46.3% (88/190)</text>
+        <text text-anchor="end" x="752" y="222" font-size="11" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">46.3% (88/190)</text>
 
         <!-- oil 48.0%: w=48.0*9.5=456; y=[240-261] - 実はもう1行欲しい -->
         <rect x="140" y="237" width="456" height="22" fill="#1a7f37" opacity="0.75" rx="2"/>
         <text x="135" y="252" text-anchor="end" font-size="11" fill="#424a53" font-family="'Noto Sans JP',sans-serif">原油(oil)</text>
-        <text x="602" y="252" font-size="11" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">48.0% (61/127)</text>
+        <text text-anchor="end" x="752" y="252" font-size="11" font-weight="700" fill="#1a7f37" font-family="'Noto Sans JP',sans-serif">48.0% (61/127)</text>
       </svg>
       <p class="chart-caption">図2. グループ別 news=3+（高注目度）勝率。赤破線は損益分岐43%。metal・BTC・indexは43%割れ、other_fx・jpy_fx・oilは43%超。グループ間の分散が大きい。</p>
     </div>
@@ -515,9 +515,9 @@ window.addEventListener('resize',mark);
         <line x1="235" y1="60" x2="235" y2="104" stroke="#cf222e" stroke-width="1.5"/>
         <text x="187" y="54" text-anchor="middle" font-size="12" font-weight="700" fill="#cf222e" font-family="'Noto Sans JP',sans-serif">▼ 12.6pp</text>
 
-        <text x="140" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#0969da" font-family="'Noto Sans JP',sans-serif">54.1%</text>
+        <text x="136" y="63" text-anchor="end" font-size="11" font-weight="700" fill="#0969da" font-family="'Noto Sans JP',sans-serif">54.1%</text>
         <text x="140" y="107" text-anchor="middle" font-size="10" fill="#ffffff" font-family="'Noto Sans JP',sans-serif">79/146</text>
-        <text x="235" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#57606a" font-family="'Noto Sans JP',sans-serif">41.5%</text>
+        <text x="240" y="95" text-anchor="start" font-size="11" font-weight="700" fill="#57606a" font-family="'Noto Sans JP',sans-serif">41.5%</text>
         <text x="235" y="148" text-anchor="middle" font-size="10" fill="#0969da" font-family="'Noto Sans JP',sans-serif">194/467</text>
 
         <!-- グループラベル（指数） -->
@@ -538,7 +538,7 @@ window.addEventListener('resize',mark);
 
         <text x="478" y="76" text-anchor="middle" font-size="11" font-weight="700" fill="#7c5cbf" font-family="'Noto Sans JP',sans-serif">43.7%</text>
         <text x="480" y="136" text-anchor="middle" font-size="10" fill="#ffffff" font-family="'Noto Sans JP',sans-serif">129/295</text>
-        <text x="575" y="94" text-anchor="middle" font-size="11" font-weight="700" fill="#57606a" font-family="'Noto Sans JP',sans-serif">43.1%</text>
+        <text x="579" y="95" text-anchor="start" font-size="11" font-weight="700" fill="#57606a" font-family="'Noto Sans JP',sans-serif">43.1%</text>
         <text x="575" y="132" text-anchor="middle" font-size="10" fill="#7c5cbf" font-family="'Noto Sans JP',sans-serif">180/418</text>
 
         <!-- グループラベル（ドルクロスFX） -->

@@ -466,11 +466,11 @@ window.addEventListener('resize',mark);
         <polyline points="40,210 80,190 120,165 160,145 200,120 240,100 280,82" class="s-curve-g" stroke-width="2.5"/>
         <!-- S/R ゾーン（レジスタンス） -->
         <rect x="30" y="132" width="290" height="12" class="s-fill-y" rx="2"/>
-        <text x="170" y="128" text-anchor="middle" class="s-label-y" style="font-size:11px">S/R 壁（TP1の前にある）</text>
+        <text x="36" y="128" text-anchor="start" class="s-label-y" style="font-size:11px">S/R 壁（TP1の前にある）</text>
         <!-- 矢印：突破 -->
         <line x1="200" y1="145" x2="200" y2="108" stroke="#1a7f37" stroke-width="2.5"/>
         <polygon points="194,112 206,112 200,98" fill="#1a7f37"/>
-        <text x="225" y="102" class="s-label-g" style="font-size:11px">突破→TP1</text>
+        <text text-anchor="middle" x="200" y="92" class="s-label-g" style="font-size:11px">突破→TP1</text>
         <text x="170" y="238" text-anchor="middle" class="s-label-sm">モメンタムが強く壁を突き抜ける</text>
         <text x="170" y="252" text-anchor="middle" class="s-label-g" style="font-size:12px;font-weight:700">→ blocked=True 65%</text>
         <!-- 右パネル: もみあい相場 -->
@@ -480,12 +480,12 @@ window.addEventListener('resize',mark);
         <polyline points="400,165 440,130 480,155 520,125 560,148 600,120 640,145" class="s-curve-r" stroke-width="2.5"/>
         <!-- S/R ゾーン -->
         <rect x="390" y="112" width="290" height="12" class="s-fill-y" rx="2"/>
-        <text x="530" y="108" text-anchor="middle" class="s-label-y" style="font-size:11px">S/R 壁（TP1の前にある）</text>
+        <text x="676" y="108" text-anchor="end" class="s-label-y" style="font-size:11px">S/R 壁（TP1の前にある）</text>
         <!-- 矢印：跳ね返り -->
         <line x1="520" y1="125" x2="520" y2="105" stroke="#cf222e" stroke-width="2" stroke-dasharray="4 3"/>
         <line x1="520" y1="105" x2="520" y2="130" stroke="#cf222e" stroke-width="2.5"/>
         <polygon points="514,126 526,126 520,140" fill="#cf222e"/>
-        <text x="555" y="100" class="s-label-r" style="font-size:11px">跳ね返り→SL</text>
+        <text text-anchor="end" x="514" y="106" class="s-label-r" style="font-size:11px">跳ね返り→SL</text>
         <text x="530" y="238" text-anchor="middle" class="s-label-sm">壁が本物の障壁として機能する</text>
         <text x="530" y="252" text-anchor="middle" class="s-label-r" style="font-size:12px;font-weight:700">→ blocked=True 20%</text>
       </svg>
