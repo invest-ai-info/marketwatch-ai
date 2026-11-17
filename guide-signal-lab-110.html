@@ -367,7 +367,7 @@ td strong,td b,th strong{white-space:nowrap}
 
         <!-- 発火バーへの引出線＋ラベル -->
         <line x1="271" y1="163" x2="271" y2="120" stroke="#E8A317" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <rect x="200" y="100" width="148" height="22" fill="#fff8c5" rx="4"/>
+        <rect x="190" y="100" width="168" height="22" fill="#fff8c5" rx="4"/>
         <text x="274" y="115" class="s-label-y" font-size="11" text-anchor="middle">MACDゴールデンクロス発生</text>
 
         <!-- 価格が両MAの下にあることを示す矢印 -->
@@ -424,8 +424,8 @@ td strong,td b,th strong{white-space:nowrap}
 
     <!-- 図2: IS vs FWD 棒グラフ -->
     <div class="chart-figure">
-      <svg viewBox="0 0 580 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="過去（IS）と前向き（FWD）の勝率比較棒グラフ">
-        <rect x="0" y="0" width="580" height="280" fill="#ffffff" rx="8"/>
+      <svg viewBox="0 0 646 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="過去（IS）と前向き（FWD）の勝率比較棒グラフ">
+        <rect x="0" y="0" width="646" height="280" fill="#ffffff" rx="8"/>
         <!-- タイトル -->
         <text x="290" y="28" class="s-label-b" font-size="13" text-anchor="middle">過去（登録前）と前向き（登録後）の勝率比較</text>
 
@@ -436,7 +436,7 @@ td strong,td b,th strong{white-space:nowrap}
         <!-- ガイドライン(43%損益分岐) -->
         <!-- 43% => 215 - (43/100)*(215-45) = 215 - 73.1 = 141.9 -->
         <line x1="80" y1="142" x2="520" y2="142" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
-        <text x="522" y="151" class="s-label-y" font-size="10" text-anchor="end">← 43%（とんとん）</text>
+        <text x="524" y="146.5" class="s-label-y" font-size="10" text-anchor="start">← 43%（とんとん）</text>
 
         <!-- Y軸目盛り -->
         <!-- 0% = 215, 100% = 45, per % = 1.7px -->
@@ -463,7 +463,7 @@ td strong,td b,th strong{white-space:nowrap}
 
         <!-- FWD棒: 48.6% => 215 - 48.6*1.7 = 215 - 82.62 = 132.4 => height=82.6 -->
         <rect x="310" y="133" width="90" height="82" fill="#0969da" opacity=".85"/>
-        <text x="355" y="128" class="s-label-b" font-size="12" text-anchor="middle">48.6%</text>
+        <text x="355" y="114" class="s-label-b" font-size="12" text-anchor="middle">48.6%</text>
         <text x="355" y="237" class="s-label" font-size="12" text-anchor="middle">前向き（登録後）</text>
         <text x="355" y="250" class="s-label-sm" font-size="10" text-anchor="middle">146回</text>
 
@@ -473,9 +473,9 @@ td strong,td b,th strong{white-space:nowrap}
         <line x1="355" y1="119" x2="355" y2="146" stroke="#0969da" stroke-width="3"/>
         <line x1="345" y1="119" x2="365" y2="119" stroke="#0969da" stroke-width="2"/>
         <line x1="345" y1="146" x2="365" y2="146" stroke="#0969da" stroke-width="2"/>
-        <text x="410" y="123" class="s-label-sm" font-size="10">56.7%</text>
-        <text x="410" y="150" class="s-label-sm" font-size="10">40.7%</text>
-        <text x="390" y="136" class="s-label-sm" font-size="9.5">（ぶれの幅）</text>
+        <text x="410" y="120" class="s-label-sm" font-size="10">56.7%</text>
+        <text x="410" y="156" class="s-label-sm" font-size="10">40.7%</text>
+        <text x="404" y="136" class="s-label-sm" font-size="9.5">（ぶれの幅）</text>
 
         <text x="290" y="270" class="s-label-sm" font-size="10" text-anchor="middle">※ 概念を示すイメージ図です（実際の値動きではありません）</text>
       </svg>
@@ -565,22 +565,22 @@ td strong,td b,th strong{white-space:nowrap}
         <!-- 株価指数: 55.1% => 209.4 -->
         <text x="145" y="139" class="s-label-sm" font-size="11" text-anchor="end">株価指数</text>
         <rect x="150" y="125" width="209" height="22" fill="#0969da" opacity=".75" rx="2"/>
-        <text x="365" y="140" class="s-label-b" font-size="12">55.1%</text>
+        <text x="452" y="140" class="s-label-b" font-size="12">55.1%</text>
 
         <!-- 円FX: 42.9% => 163 -->
         <text x="145" y="175" class="s-label-sm" font-size="11" text-anchor="end">円FX</text>
         <rect x="150" y="161" width="163" height="22" fill="#8b949e" opacity=".75" rx="2"/>
-        <text x="319" y="176" class="s-label" font-size="12">42.9%</text>
+        <text x="452" y="176" class="s-label" font-size="12">42.9%</text>
 
         <!-- その他FX: 35.4% => 134.5 -->
         <text x="145" y="211" class="s-label-sm" font-size="11" text-anchor="end">その他FX</text>
         <rect x="150" y="197" width="135" height="22" fill="#cf222e" opacity=".75" rx="2"/>
-        <text x="291" y="212" class="s-label-r" font-size="12">35.4%</text>
+        <text x="452" y="212" class="s-label-r" font-size="12">35.4%</text>
 
         <!-- ビットコイン: 44.4% => 168.7 -->
         <text x="145" y="247" class="s-label-sm" font-size="11" text-anchor="end">ビットコイン</text>
         <rect x="150" y="233" width="169" height="22" fill="#8b949e" opacity=".65" rx="2"/>
-        <text x="325" y="248" class="s-label" font-size="12">44.4%</text>
+        <text x="452" y="248" class="s-label" font-size="12">44.4%</text>
 
         <!-- 43%とんとんライン: 150 + 43/100*380 = 150+163.4 = 313.4 -->
         <line x1="313" y1="45" x2="313" y2="263" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>

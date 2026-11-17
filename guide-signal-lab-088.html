@@ -365,7 +365,7 @@ window.addEventListener('resize',mark);
 
         <!-- エントリーポイント -->
         <circle cx="543" cy="226" r="6" fill="#1a7f37" stroke="#fff" stroke-width="2"/>
-        <text x="560" y="230" class="s-label-g" style="font-size:11px">エントリー</text>
+        <text text-anchor="end" x="536" y="215" class="s-label-g" style="font-size:11px">エントリー</text>
 
         <!-- TP1 / SL ライン -->
         <line x1="543" y1="216" x2="620" y2="216" style="stroke:#1a7f37;stroke-width:1.3;stroke-dasharray:3 3"/>
@@ -419,8 +419,8 @@ window.addEventListener('resize',mark);
 
     <!-- SVG: 勝率比較バーチャート -->
     <div class="chart-figure">
-      <svg viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="540" height="200" fill="#ffffff" rx="8"/>
+      <svg viewBox="0 0 556 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="556" height="200" fill="#ffffff" rx="8"/>
         <text x="270" y="20" text-anchor="middle" class="s-label" style="font-size:13px;font-weight:700;fill:#1E3A6E">FWD勝率の時間足比較（N=276）</text>
 
         <!-- 損益分岐ライン (43%) -->
@@ -461,11 +461,11 @@ window.addEventListener('resize',mark);
         <!-- バー: FWD 1H 46.4% → y=170-(0.464-0.35)/0.45*140=170-35.5=135 -->
         <rect x="350" y="135" width="60" height="35" class="s-fill-r" opacity="0.9" rx="3"/>
         <rect x="350" y="135" width="60" height="35" fill="none" stroke="#cf222e" stroke-width="1.5" rx="3"/>
-        <text x="380" y="130" text-anchor="middle" class="s-label-r" style="font-size:12px">46.4%</text>
+        <text x="380" y="116" text-anchor="middle" class="s-label-r" style="font-size:12px">46.4%</text>
         <text x="380" y="188" text-anchor="middle" class="s-label-sm">FWD 1H</text>
         <text x="380" y="198" text-anchor="middle" class="s-label-sm">N=183</text>
         <!-- 損益分岐ラベル（バーより後に描画してzオーダーを上位に） -->
-        <text x="86" y="141" class="s-label-r" style="font-size:11px">43%損益分岐</text>
+        <text text-anchor="start" x="484" y="149" class="s-label-r" style="font-size:11px">43%損益分岐</text>
       </svg>
       <p class="chart-caption">図2: rsi_oversold_bounce の FWD 勝率比較（IS期間除外）。赤破線=損益分岐43%。4H足（緑）はCIが43%を大きく上回り、1H足（赤）は43%付近で不安定。</p>
     </div>
