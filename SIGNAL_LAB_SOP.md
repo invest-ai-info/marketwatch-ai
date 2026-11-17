@@ -79,10 +79,18 @@ python method_lab_verify.py drafts/draft-signal-lab-NNN.html drafts/labnotes/lab
   6. 今日外した方法＝目印 `<!-- MW:CULL_BOX -->`（外したもの全部が入る。無い日は道具が「なし」と書く）
   7. 研究中の方法＝目印 `<!-- MW:RESEARCH_LIST -->`。前向きトラッカー表（`<!-- MW:TRACKER_TABLE -->`）は**この回では入れない**（新しい方法だけを出す・オーナー決定）
   8. 関連カード（`guide-signal-anatomy.html` を含める）・免責
+- 🆕 **登録が0件の日も必ず公開する**（オーナー 11/17 夜「その過程を研究日誌として公開」）。主役＝いちばん惜しかった方法。8つの確かめのどこで落ちたか・そこから何がわかったかを書く
+- 🆕 **図（今まで通り画像付き・オーナー 11/17 夜）**：①「試した方法が確かめを通って残った数」の横棒（`<!-- MW:METHOD_BATCH -->` に道具が入れる）②主役の「年ごとの平均」の縦棒（`<!-- MW:METHOD_RESULT -->` に道具が入れる）＝この2枚は手で描かない・数字を書き写さない。③**チャート風の図解を1枚は自分で描く**（入る瞬間・損切り・手じまいの位置。手本＝`guide-signal-anatomy.html` の図1・図2・「※ 概念を示すイメージ図です」の注記・実在の値段や日付は描かない）。③は `python svg_layout_check.py drafts/draft-signal-lab-NNN.html` を通す（文字を線や棒に重ねない）
+- 🆕 **書き方を日々よくする（オーナー 11/17 夜「わかりやすく、日々進化するように書き方を工夫」）**：
+  1. 下書きを書く前に `drafts/method-writing-notes.md` を Read し、「いまの書き方の決まり」を全部守る
+  2. 下書きを書き終えたら（ゲートの前に）、Agent ツールで**初心者の読者役**を1人呼ぶ（model=sonnet・ツールは Read だけ）。指示＝「あなたは投資を始めて半年の会社員です。drafts/draft-signal-lab-NNN.html を読み、わかりにくい所を多くても5つ、その文をそのまま引用して『何がわからないか』を書いてください。数字の正しさは見なくてよい」
+  3. 指摘を見て**言葉だけ**直す（数字・claims・差し込んだ表と図は変えない）。直したら `check_plain_japanese.py` を通し直す
+  4. 公開のあと（8-4 e のあと）、`drafts/method-writing-notes.md` の「日々の気づき」の先頭に1行足す＝`- YYYY-MM-DD #NNN：（読者役がつまずいた所）→（どう直したか）`。同じ種類の気づきが3回たまったら「いまの書き方の決まり」に1行で入れ、気づきからはその3行を消す（決まりは多くても15個・古くなったものは入れ替える）。気づきは30件まで（古いものから消す）。8-1 と同じ形でコミットして PUSH-MAIN
+  5. 記事の終わりに「昨日との違い」を1〜2文（ためした数・残った数・研究中の本数がどう変わったか。数字は claim に入れる。差し込んだ箱の「これまでの歩み」を見る）
 - **claims**：`drafts/labnotes/lab-NNN-method-claims.json`（形は `method_lab_verify.py` の冒頭）。本文と図に出る R・%・回数は全部ここに入れる（表と箱の中の数字は入れなくてよい）。`drafts/labnotes/lab-NNN-claims.json` は `{"article_id":"NNN","asof":"<生成時刻>","claims":[]}` でよい（signals-log の数字を使った日だけ足す）
 - **数字の書き方（やさしい日本語）**：「R」と「×」は書かない。1回あたりの損益は「損切り幅の0.20倍のもうけ」「損切り幅の0.05倍の損」（`method_lab_verify.py` はこの形を R の値として照合する）。claims の value は小数のまま（例 0.20・−0.05）。ATR・RSI は初めて出たところでカッコの説明を付ける（差し込む表は「ATR（ふだんの1日の値動きの幅）」と書いてある）
 - **言い方**：過去の成績は「過去ではこうだった」まで。「効く」「勝てる」「おすすめ」は書かない。合格は「前向きで確かめる候補に入った」の意味
-- **コミット**：8-1 の `git add` に `method-lab-registry.json signal-lab-tracker.json`（入れ替えで書き換わる）と、手順2で自分で作ったときは `method-lab.json method-lab.md` を足す
+- **コミット**：8-1 の `git add` に `method-lab-registry.json signal-lab-tracker.json drafts/method-writing-notes.md`（入れ替えで書き換わる）と、手順2で自分で作ったときは `method-lab.json method-lab.md` を足す
 - **台帳の行**：`方法-<chosen.id>`（惜しかった日は `方法-<id>-惜`）・登録した数・外したものの ID を書く
 - **エスカレ（8-5）に足す条件**：`method_lab_verify.py` が [直せる] でない赤／3回直しても緑にならない
 

@@ -360,6 +360,31 @@ def test_snippets_are_plain_japanese():
     assert all(ja and "×" not in ja for ja in M.EXIT_JA.values())
 
 
+def test_charts_pass_the_fixed_svg_checks():
+    """道具が作る2枚の図（残った数の横棒・年ごとの縦棒）は、研究日誌の固定の図の検査とやさしい日本語の検査を必ず通る。"""
+    import check_plain_japanese as P
+    import signal_lab_verify as SV
+    import svg_layout_check as SL
+    counts = {"tried": 200, "pass_explore": 17, "pass_eras": 17, "pass_instruments": 16, "pass_neighbors": 12,
+              "pass_markets": 9, "pass_confirm": 1, "pass_cost": 1, "pass_frequency": 0}
+    years = [{str(y): [40, ((y * 37) % 17 - 8) / 10] for y in range(1996, 2027)},          # 長い・目盛りの外に出る年あり
+             {str(y): [30, (-1) ** y * 0.12] for y in range(2015, 2027)},                  # 短い（毎年書く）
+             {"2017": [5, 0.2], "2018": [5, -0.9], "2019": [5, 1.4]}]                      # 2017年の直後で切れる
+    html = "<html><head><title>t</title></head><body><main><p>ATR（ふだんの値動きの幅）</p>"
+    html += RR._chart(RR.funnel_svg(counts), "図")
+    html += RR._chart(RR.funnel_svg({**counts, "tried": 0}), "図")
+    for y in years:
+        html += RR._chart(RR.years_svg(y), "図")
+    html += "</main></body></html>"
+    assert html.count("<svg") == 5
+    for fn in (SV.svg_bounds_check, SV.text_overlap_check, SV.text_occlusion_check, SV.svg_scale_check):
+        assert fn(html) == [], (fn.__name__, fn(html)[:3])
+    assert P.check_html(html) == []
+    found = SL.layout_check(html)
+    assert not found, found[:3]
+    assert ">2019<" in RR.years_svg(years[2]) and ">2000<" in RR.years_svg(years[0]) and ">2001<" not in RR.years_svg(years[0])
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
