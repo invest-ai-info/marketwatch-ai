@@ -519,7 +519,7 @@ window.addEventListener('resize',mark);
     <p>つまり、<strong>先物で為替を固定するコスト（ヘッジコスト）は、おおよそ2国の金利差に近似する</strong>ということです。低金利の円で高金利の外貨に投資し、為替を固定してしまうと、その金利差が「ヘッジコスト」として控除されます。</p>
 
     <figure class="chart-figure">
-      <svg viewBox="0 0 640 280" role="img" aria-labelledby="hedgecost-title">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="hedgecost-title">
         <title id="hedgecost-title">ヘッジコストと金利差の関係の概念図</title>
         <text class="s-panel-label" x="40" y="24">ヘッジコスト ≈ 外国金利 − 国内金利（金利差の概念図）</text>
         <!-- 左：高金利国（A国） -->
@@ -536,9 +536,9 @@ window.addEventListener('resize',mark);
         <line x1="380" y1="150" x2="264" y2="150" stroke="#9a6700" stroke-width="2" marker-end="url(#arrowhead)"/>
         <text class="s-note-o" x="320" y="144" text-anchor="middle">B国民がA国へ投資</text>
         <!-- ヘッジコスト表示 -->
-        <rect x="220" y="198" width="200" height="36" rx="6" fill="#fff8c5" stroke="#9a6700" stroke-width="1"/>
-        <text class="s-note-o" x="320" y="220" text-anchor="middle">ヘッジコスト ≈ 5% − 0.25% ＝ 約4.75%/年</text>
-        <text class="s-text-sm" x="320" y="250" text-anchor="middle">※あくまで概念的な近似値・実際は市場のスプレッドも加わる</text>
+        <rect x="196" y="238" width="248" height="32" rx="6" fill="#fff8c5" stroke="#9a6700" stroke-width="1"/>
+        <text class="s-note-o" x="320" y="259" text-anchor="middle">ヘッジコスト ≈ 5% − 0.25% ＝ 約4.75%/年</text>
+        <text class="s-text-sm" x="320" y="290" text-anchor="middle">※あくまで概念的な近似値・実際は市場のスプレッドも加わる</text>
       </svg>
       <figcaption class="chart-caption">▲ 低金利国（B国）から高金利国（A国）へ投資し、為替を先物でヘッジする場合、ヘッジコストはおおよそ「A国金利 − B国金利」に近似する。金利差が大きいほどヘッジコストは高くなる（カバー付き金利平価説）。数値は概念説明のための例であり、実際の金利や市場レートを指すものではありません。※ 概念を示すイメージ図です。</figcaption>
     </figure>

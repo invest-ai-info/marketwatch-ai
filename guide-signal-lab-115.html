@@ -446,9 +446,9 @@ td strong,td b,th strong{white-space:nowrap}
 
     <!-- SVG 2: 勝率比較バーチャート -->
     <div class="chart-figure">
-      <svg viewBox="0 0 700 260" role="img" aria-label="ゴールデンクロス・デッドクロス・全体ベースラインの勝率比較">
-        <rect x="0" y="0" width="700" height="260" fill="#ffffff" rx="8"/>
-        <text x="350" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">勝率の比較（棒の幅は偶然のぶれを考えた幅）</text>
+      <svg viewBox="0 0 800 260" role="img" aria-label="ゴールデンクロス・デッドクロス・全体ベースラインの勝率比較">
+        <rect x="0" y="0" width="800" height="260" fill="#ffffff" rx="8"/>
+        <text x="400" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">勝率の比較（棒の幅は偶然のぶれを考えた幅）</text>
 
         <!-- 目盛り線 -->
         <!-- X軸: 0% = x:160, 60% = x:640 -->
@@ -488,7 +488,7 @@ td strong,td b,th strong{white-space:nowrap}
         <rect x="160" y="70" width="342" height="22" class="s-fill-gray" rx="3"/>
         <rect x="492" y="79" width="22" height="4" fill="#8b949e" rx="1"/>
         <circle cx="502" cy="81" r="5" fill="#8b949e"/>
-        <text x="507" y="94" class="s-label-sm" font-size="11">42.8%</text>
+        <text text-anchor="end" x="792" y="85" class="s-label-sm" font-size="11">42.8%</text>
 
         <!-- ゴールデンクロス（買い）: 40.1% -->
         <!-- 点推定: 160 + 40.1*8 = 481, CI下限: 160+33.2*8=426, 上限: 160+47.5*8=540 -->
@@ -497,7 +497,7 @@ td strong,td b,th strong{white-space:nowrap}
         <line x1="426" y1="131" x2="426" y2="143" stroke="#cf222e" stroke-width="2"/>
         <line x1="540" y1="131" x2="540" y2="143" stroke="#cf222e" stroke-width="2"/>
         <circle cx="481" cy="137" r="5" fill="#cf222e"/>
-        <text x="486" y="150" class="s-label-sm" font-size="11">40.1%（幅33.2%〜47.5%）</text>
+        <text text-anchor="end" x="792" y="141" class="s-label-sm" font-size="11">40.1%（幅33.2%〜47.5%）</text>
 
         <!-- デッドクロス（売り）: 46.3% -->
         <!-- 点推定: 160 + 46.3*8 = 530, CI下限: 160+38.5*8=468, 上限: 160+54.3*8=594 -->
@@ -506,7 +506,7 @@ td strong,td b,th strong{white-space:nowrap}
         <line x1="468" y1="186" x2="468" y2="198" stroke="#1a7f37" stroke-width="2"/>
         <line x1="594" y1="186" x2="594" y2="198" stroke="#1a7f37" stroke-width="2"/>
         <circle cx="530" cy="192" r="5" fill="#1a7f37"/>
-        <text x="535" y="205" class="s-label-sm" font-size="11">46.3%（幅38.5%〜54.3%）</text>
+        <text text-anchor="end" x="792" y="196" class="s-label-sm" font-size="11">46.3%（幅38.5%〜54.3%）</text>
       </svg>
       <div class="chart-caption">ベースライン（灰）・ゴールデンクロス買い（赤）・デッドクロス売り（緑）の勝率と偶然のぶれを考えた幅の比較。横棒の長さが勝率で、横線がぶれの範囲です。</div>
     </div>
@@ -564,9 +564,9 @@ td strong,td b,th strong{white-space:nowrap}
 
     <!-- SVG 3: グループ別 ma_golden -->
     <div class="chart-figure">
-      <svg viewBox="0 0 700 280" role="img" aria-label="カテゴリ別のゴールデンクロス勝率">
-        <rect x="0" y="0" width="700" height="280" fill="#ffffff" rx="8"/>
-        <text x="350" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">カテゴリ別 ゴールデンクロス（買い）の勝率</text>
+      <svg viewBox="0 0 800 280" role="img" aria-label="カテゴリ別のゴールデンクロス勝率">
+        <rect x="0" y="0" width="800" height="280" fill="#ffffff" rx="8"/>
+        <text x="400" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E" font-family="'Noto Sans JP',sans-serif">カテゴリ別 ゴールデンクロス（買い）の勝率</text>
 
         <!-- 軸 -->
         <line x1="190" y1="40" x2="190" y2="240" class="s-axis"/>
@@ -601,7 +601,7 @@ td strong,td b,th strong{white-space:nowrap}
         <line x1="437" y1="65" x2="437" y2="77" stroke="#1a7f37" stroke-width="2"/>
         <line x1="660" y1="65" x2="660" y2="77" stroke="#1a7f37" stroke-width="2"/>
         <circle cx="552" cy="71" r="5" fill="#1a7f37"/>
-        <text x="556" y="90" class="s-label-sm" font-size="11">46.2%（39回）</text>
+        <text text-anchor="end" x="792" y="75" class="s-label-sm" font-size="11">46.2%（39回）</text>
 
         <!-- 円の通貨ペア: 11/32 = 34.4%, CI 20.4%〜51.7% -->
         <!-- 34.4% = 190+269.3 = 459, 20.4%=190+159.7=350, 51.7%=190+404.8=595 -->
@@ -610,7 +610,7 @@ td strong,td b,th strong{white-space:nowrap}
         <line x1="350" y1="120" x2="350" y2="132" stroke="#cf222e" stroke-width="2"/>
         <line x1="595" y1="120" x2="595" y2="132" stroke="#cf222e" stroke-width="2"/>
         <circle cx="459" cy="126" r="5" fill="#cf222e"/>
-        <text x="421" y="150" class="s-label-sm" font-size="11">34.4%（32回）</text>
+        <text text-anchor="end" x="792" y="130" class="s-label-sm" font-size="11">34.4%（32回）</text>
 
         <!-- 円以外の通貨ペア: 20/58 = 34.5%, CI 23.6%〜47.3% -->
         <!-- 34.5% = 190+270 = 460, 23.6%=190+184.8=375, 47.3%=190+370.4=560 -->
@@ -619,7 +619,7 @@ td strong,td b,th strong{white-space:nowrap}
         <line x1="375" y1="175" x2="375" y2="187" stroke="#cf222e" stroke-width="2"/>
         <line x1="560" y1="175" x2="560" y2="187" stroke="#cf222e" stroke-width="2"/>
         <circle cx="460" cy="181" r="5" fill="#cf222e"/>
-        <text x="420" y="205" class="s-label-sm" font-size="11">34.5%（58回）</text>
+        <text text-anchor="end" x="792" y="185" class="s-label-sm" font-size="11">34.5%（58回）</text>
 
         <!-- 金・銀: 6/20 = 30.0%, CI 14.5%〜51.9% -->
         <!-- 30.0% = 190+234.9 = 425, 14.5%=190+113.5=304, 51.9%=190+406.4=596 -->
@@ -628,7 +628,7 @@ td strong,td b,th strong{white-space:nowrap}
         <line x1="304" y1="217" x2="304" y2="229" stroke="#cf222e" stroke-width="2"/>
         <line x1="596" y1="217" x2="596" y2="229" stroke="#cf222e" stroke-width="2"/>
         <circle cx="425" cy="223" r="5" fill="#cf222e"/>
-        <text x="429" y="235" class="s-label-sm" font-size="11">30.0%（20回）</text>
+        <text text-anchor="end" x="792" y="227" class="s-label-sm" font-size="11">30.0%（20回）</text>
       </svg>
       <div class="chart-caption">カテゴリ別のゴールデンクロス（買い）の勝率。横線がぶれの範囲。点線が全体ベースライン（42.8%）。株価指数は比較的高め、為替（FX）では低め。</div>
     </div>

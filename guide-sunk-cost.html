@@ -427,7 +427,7 @@ window.addEventListener('resize',mark);
     <p>この問いが有効な理由は、<strong>過去の取得価格（建値）という参照点を、判断の外に追い出せる</strong>からです。買値を基準にした「戻ったら売る」という思考の代わりに、「現在の市場価格から見た将来の見通し」という本来考えるべき視点に強制的に切り替わります。</p>
 
     <figure class="chart-figure">
-      <svg viewBox="0 0 640 310" role="img" aria-labelledby="reframe-title">
+      <svg viewBox="0 0 764 310" role="img" aria-labelledby="reframe-title">
         <title id="reframe-title">建値への固執と「今この価格で買うか？」の問い直しの対比図</title>
         <text class="s-panel-label" x="30" y="24">建値への固執 vs「今この価格で買うか？」の問い直し</text>
         <!-- 縦分割線 -->
@@ -441,7 +441,7 @@ window.addEventListener('resize',mark);
         <text class="s-note-r" x="45" y="103">建値（購入価格）</text>
         <!-- 現在価格マーカー -->
         <circle fill="#cf222e" cx="290" cy="240" r="6"/>
-        <text class="s-label-sm" x="296" y="245">現在価格（含み損）</text>
+        <text text-anchor="end" class="s-label-sm" x="264" y="245">現在価格（含み損）</text>
         <!-- 思考ふきだし -->
         <rect class="s-fill-r" x="44" y="252" width="266" height="30" rx="6"/>
         <text class="s-note-r" x="177" y="268" text-anchor="middle" font-size="11">「建値まで戻ったら売ろう」（建値を基準に判断）</text>
@@ -454,7 +454,7 @@ window.addEventListener('resize',mark);
         <text class="s-label-sm" x="340" y="103">（建値は判断から外す）</text>
         <!-- 現在価格 -->
         <circle fill="#1a7f37" cx="586" cy="240" r="6"/>
-        <text class="s-label-sm" x="634" y="245" text-anchor="end">← 今の価格を基準に判断する</text>
+        <text class="s-label-sm" x="598" y="244" text-anchor="start">← 今の価格を基準に判断する</text>
         <!-- 問い直しふきだし -->
         <rect class="s-fill-g" x="336" y="252" width="266" height="30" rx="6"/>
         <text class="s-note-g" x="470" y="268" text-anchor="middle" font-size="11">「今のこの価格で新たに買うか？」</text>
@@ -489,10 +489,10 @@ window.addEventListener('resize',mark);
         <polygon fill="#8b949e" points="165,165 160,155 170,155"/>
         <!-- 逃した機会ボックス -->
         <rect x="44" y="165" width="242" height="56" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
-        <text class="s-label-sm" x="165" y="189" text-anchor="middle">別の投資機会（銘柄B・別資産）</text>
-        <text class="s-label-sm" x="165" y="207" text-anchor="middle">→ 資金が縛られ活用できない</text>
-        <!-- 打消し線 -->
+        <!-- 打消し線（文字の後ろを通す＝文字は縁取りで読める） -->
         <line stroke="#cf222e" stroke-width="2" stroke-dasharray="6 4" x1="50" y1="170" x2="280" y2="215"/>
+        <text class="s-label-sm" x="165" y="189" text-anchor="middle" stroke="#f6f8fa" stroke-width="3" paint-order="stroke">別の投資機会（銘柄B・別資産）</text>
+        <text class="s-label-sm" x="165" y="207" text-anchor="middle" stroke="#f6f8fa" stroke-width="3" paint-order="stroke">→ 資金が縛られ活用できない</text>
         <!-- 右側：損切り後 -->
         <text class="s-note-g" x="482" y="48" text-anchor="middle">✅ 損切り後の資金解放</text>
         <!-- 元銘柄（小） -->
