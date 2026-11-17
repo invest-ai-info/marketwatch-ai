@@ -10,6 +10,11 @@ name: TDnet Reaction Mail (weekdays, trial)
 # ⚠️ cron は遅れる（CLAUDE.md）＝3本置いて、最初に当たった回が送る。止めるときはこのファイルを消すか、schedule を外す。
 
 on:
+  # 🆕 2026-11-17 cron は実測で8〜9時間遅れ（17:07 の予定が翌1〜8時）＝夜中はいちばん新しい日の日足が空で返り、メールが1日ずつ遅れた。
+  #    夕方（JST 17〜19時）にも動く「Update Market News」の完了に相乗りする（送る日が無ければ約20秒で終わる）。cron は保険に残す
+  workflow_run:
+    workflows: ["Update Market News"]   # ⚠️ update-market-news.yml の `name:` と一字一句合わせる
+    types: [completed]
   schedule:
     - cron: '7 8 * * 1-5'     # 17:07 JST
     - cron: '43 10 * * 1-5'   # 19:43 JST

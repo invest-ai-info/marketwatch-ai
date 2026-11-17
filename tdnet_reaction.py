@@ -56,6 +56,9 @@ JST = dt.timezone(dt.timedelta(hours=9))
 START = "2026-11-09"            # この開示日から（11/10 に登録。11/9 の開示 → 11/10 の値動きが最初の1通）
 LOOK_DAYS = 7                   # さかのぼって「まだ送っていない日」を探す暦日
 MAX_MAIL = 3                    # 1回に送る通数の上限（止まっていた日がたまったとき）
+MIN_SHARE = 0.8                 # 🆕 11/17 測れた会社がこの割合より少ない日は送らずに次の回で測り直す（11/13 は 992社中11社だった）
+MAX_RETRY = 3                   # 測り直しは3回まで（それでも少なければ、そのまま送る）
+FILL_V = 2                      # 🆕 11/17 1週間・1か月の埋め方の版（版が上がったら、埋めた値を一度消して埋め直す）
 READY = (16, 30)                # 反応の日のこの時刻より後に測る（引け 15:30・Yahoo の日足が落ち着くまで）
 OPEN_MIN, CLOSE_MIN = 9 * 60, 15 * 60 + 30
 BAR_MIN = 5
@@ -197,7 +200,7 @@ def measure(g, daily, bars5, days, tx_daily, tx_bars5):
         return res
     res["base_on"] = bday
     p = prev_day(days, r)
-    if p in daily:
+    if p in daily and daily[r][0]:                         # meta で足した日は始値が無い＝窓は出さない
         res["gap"] = daily[r][0] / daily[p][1] - 1
     if g["slot"] == "場中" and g["date"] in daily and bday == g["date"]:
         res["rest"] = daily[g["date"]][1] / base - 1
@@ -277,7 +280,7 @@ def stock_line(i, g):
     return [head + nums + " " + tags, f"     「{short(main_title(g))}」{more}"]
 
 
-def build_mail(day, groups, n_docs, trend=None):
+def build_mail(day, groups, n_docs, trend=None, redo=False):
     """→ (件名, 本文)。groups は measure 済み・trend＝build_trend の結果（あれば「これまでの傾向」を足す）"""
     react_days = sorted({g["react_on"] for g in groups if g["react_on"]})
     nxt = [d for d in react_days if d > day]
@@ -286,8 +289,9 @@ def build_mail(day, groups, n_docs, trend=None):
     tagged = [g for g in groups if g["tags"] not in (["その他"], ["訂正"])]
     tx = [g["topix"] for g in ok if g["slot"] == "引け後"]
     up = sum(1 for g in ok if g["ex"] > 0)
-    subj = f"📰 開示→次の日の値動き（試験）{wd(day)}の開示 {len(groups)}社 → {wd(rd)}"
+    subj = ("【測り直し】" if redo else "") + f"📰 開示→次の日の値動き（試験）{wd(day)}の開示 {len(groups)}社 → {wd(rd)}"
     L = ["━" * 24, f"📰 開示→次の日の値動き（試験）{wd(day)}の開示 → {wd(rd)}", "━" * 24, "", "【要点】",
+         *(["・🔁 前に送った同じ日のメールは、値段を取れた会社が少なかったので測り直しました（こちらが正しい数字）"] if redo else []),
          f"・開示 {n_docs}件 → 同じ会社・同じ日をまとめて {len(groups)}社（種類あり {len(tagged)}社・種類なし {len(groups) - len(tagged)}社）",
          f"・測れた {len(ok)}社" + (f"（引け後の開示と同じ時間の TOPIX {pct(statistics.median(tx))}）" if tx else "")]
     if ok:
@@ -392,6 +396,8 @@ def fill_row(r, days, ohlc, tx, now):
         t = horizon_day(days, R, k)
         if not t or not matured(t, now):
             continue
+        if t == days[-1] and (t not in ohlc or t not in tx):
+            continue                                      # 🆕 11/17 いちばん新しい日の値が無い＝前の値で埋めず、次の回を待つ
         base = ohlc[R][3] / (1 + float(r["react"]))
         tbase = tx[R][3] / (1 + float(r["topix"]))
         c, tc = close_upto(ohlc, R, t), close_upto(tx, R, t)
@@ -550,19 +556,36 @@ def trend_lines(tr, min_n=MIN_N):
 
 # ════════════════════ 取る（Yahoo） ════════════════════
 
+def parse_chart(d, interval):
+    """Yahoo の chart の結果 → [(JST の時刻, 始, 高, 安, 終, 出来高)]（値の欠けた足は除く）。純関数。
+    🆕 11/17 夜中（JST 1〜8時）は、いちばん新しい日の日足が空（null）で返ることがあった（11/13 の開示は 992社中11社しか測れず、
+    11/9 の開示の「1週間」は1日前の終値で埋まった）＝日足で、引けのあと（15:30 以降）の meta にその日の終値・高値・安値があり、
+    その日の足が無いときだけ、meta から足を足す（始値は無い＝None）"""
+    q = d["indicators"]["quote"][0]
+    out = []
+    for t, o, h, l, c, v in zip(d.get("timestamp") or [], q["open"], q["high"], q["low"], q["close"], q["volume"]):
+        if None in (o, h, l, c):
+            continue
+        out.append((dt.datetime.fromtimestamp(t, JST), float(o), float(h), float(l), float(c), float(v or 0)))
+    m = d.get("meta") or {}
+    mt, px = m.get("regularMarketTime"), m.get("regularMarketPrice")
+    if interval == "1d" and mt and px:
+        when = dt.datetime.fromtimestamp(mt, JST)
+        if when.hour * 60 + when.minute >= CLOSE_MIN and when.date() not in {x[0].date() for x in out}:
+            hi, lo = m.get("regularMarketDayHigh") or px, m.get("regularMarketDayLow") or px
+            out.append((when.replace(hour=9, minute=0, second=0, microsecond=0), None, float(hi), float(lo), float(px),
+                        float(m.get("regularMarketVolume") or 0)))
+            out.sort(key=lambda x: x[0])
+    return out
+
+
 def fetch_chart(code, interval, rng, tries=3):
-    """Yahoo の足 → [(JST の時刻, 始, 高, 安, 終, 出来高)]（値の欠けた足は除く）。取れなければ None"""
+    """Yahoo の足 → parse_chart の形。取れなければ None"""
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}"
     for k in range(tries):
         try:
             d = json.load(urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30))["chart"]["result"][0]
-            q = d["indicators"]["quote"][0]
-            out = []
-            for t, o, h, l, c, v in zip(d.get("timestamp") or [], q["open"], q["high"], q["low"], q["close"], q["volume"]):
-                if None in (o, h, l, c):
-                    continue
-                out.append((dt.datetime.fromtimestamp(t, JST), float(o), float(h), float(l), float(c), float(v or 0)))
-            return out
+            return parse_chart(d, interval)
         except Exception:  # noqa: BLE001
             time.sleep(1 + 2 * k)
     return None
@@ -639,6 +662,23 @@ def read_days(path=DAYS):
         return {"start": START, "days": {}}
 
 
+def needs_redo(v):
+    """送った日のうち、測れた会社が少なすぎた日（測り直す）"""
+    g = v.get("groups") or 0
+    return bool(v.get("mailed")) and g > 0 and (v.get("measured") or 0) / g < MIN_SHARE and (v.get("retry") or 0) < MAX_RETRY
+
+
+def clear_fill(rows):
+    """1週間・1か月の埋めた値を消す（埋め方の版が上がったとき）→ 消した行の数"""
+    n = 0
+    for r in rows:
+        if any(r.get(k) for k in COLS[16:]):
+            for k in COLS[16:]:
+                r[k] = ""
+            n += 1
+    return n
+
+
 def pending_days(now, done, trading_days, start=START, look=LOOK_DAYS):
     """まだ送っていない開示の日のうち、反応の日の引けが済んだもの（古い順）"""
     out = []
@@ -703,9 +743,13 @@ def main(argv=None):
         return 1
     ledger = read_ledger()
     prev_trend = read_json(TREND, {})
+    if state.get("fill_v") != FILL_V:                     # 埋め方の版が上がった＝一度消して埋め直す（11/17 夜中の値の取りこぼし）
+        print(f"  1週間・1か月の埋め方の版 {state.get('fill_v')} → {FILL_V}：{clear_fill(ledger)}行を消して埋め直す")
+        state["fill_v"] = FILL_V
     if not a.no_fill:
         fill_all(ledger, trading_days, now)               # ① 引けが確定した 1週間・1か月を埋める（毎回）
-    todo = [a.day] if a.day else pending_days(now, {d for d, v in state["days"].items() if v.get("mailed")}, trading_days)
+    done = {d for d, v in state["days"].items() if v.get("mailed") and not needs_redo(v)}
+    todo = [a.day] if a.day else pending_days(now, done, trading_days)
     if not todo:
         print("  まだ送っていない日で、反応の日の引けが済んだものは無い")
     events = T.read_events() if todo else []
@@ -728,7 +772,7 @@ def main(argv=None):
                 r.update({k: o.get(k, "") for k in COLS[16:] if o.get(k)})
         ledger = [r for r in ledger if r["date"] != day] + new
         trend = build_trend(ledger, prev_trend, today)
-        subject, body = build_mail(day, groups, n_docs, trend)
+        subject, body = build_mail(day, groups, n_docs, trend, redo=bool((state["days"].get(day) or {}).get("mailed")))
         if a.html_out:
             import mail_html
             with open(a.html_out, "w", encoding="utf-8") as fh:
@@ -737,10 +781,17 @@ def main(argv=None):
             print(f"Subject: {subject}\n\n{body}")
             continue
         save_ledger(ledger)                               # 送る前に台帳を書く（送ったあとに落ちても数字は残る）
+        prev = state["days"].get(day) or {}
+        measured = sum(1 for g in groups if g.get("ok"))
+        retry = (prev.get("retry") or 0) + (1 if prev else 0)
+        base = {"docs": n_docs, "groups": len(groups), "measured": measured,
+                "react_on": next((x for x in trading_days if x > day), ""), "retry": retry}
+        if measured / len(groups) < MIN_SHARE and retry < MAX_RETRY:
+            print(f"  ⚠️ {day}: 測れたのは {measured}/{len(groups)}社だけ＝送らずに次の回で測り直す（{retry + 1}回目）")
+            state["days"][day] = dict(base, mailed=prev.get("mailed", ""), retry=retry + 1)
+            continue
         ok = send(subject, body)
-        state["days"][day] = {"docs": n_docs, "groups": len(groups), "measured": sum(1 for g in groups if g.get("ok")),
-                              "react_on": next((x for x in trading_days if x > day), ""),
-                              "mailed": dt.datetime.now(JST).isoformat(timespec="minutes") if ok else ""}
+        state["days"][day] = dict(base, mailed=dt.datetime.now(JST).isoformat(timespec="minutes") if ok else prev.get("mailed", ""))
         sent += 1 if ok else 0
     trend = build_trend(ledger, prev_trend, today)        # ③ 傾向（累積と1回だけの判定）を毎回まとめ直す
     if a.dry_run:
