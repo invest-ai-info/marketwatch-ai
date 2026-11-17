@@ -6451,6 +6451,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-17", "line": '・<b>2026-11-17</b>: 🚗 解説「<a href="guide-company-7269-suzuki.html" style="color:#0969da"><b>スズキ</b></a>」公開'},
         {"date": "2026-11-17", "line": '・<b>2026-11-17</b>: 🧪 解説「<a href="guide-signal-lab-152.html" style="color:#0969da"><b>売られすぎからの反発の買いは勝ちやすい？【#152】</b></a>」公開'},
         {"date": "2026-11-16", "line": '・<b>2026-11-16</b>: 📰 解説「<a href="guide-news-2026-11-16-japan-gdp.html" style="color:#0969da"><b>日本GDP 7-9月期 年率0.1%減・4四半期ぶりマイナス</b></a>」公開'},
         {"date": "2026-11-16", "line": '・<b>2026-11-16</b>: 🔬 解説「<a href="guide-company-9697-capcom.html" style="color:#0969da"><b>カプコン</b></a>」公開'},
