@@ -350,15 +350,15 @@ window.addEventListener('resize',mark);
 
         <!-- 緑ゾーン：底打ち確認後（安全な拾い場）-->
         <rect class="s-zone-g" x="410" y="155" width="185" height="40" rx="6"/>
-        <text class="s-note-g" x="503" y="170" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="12">✅ 底打ち確認後（安全ゾーン）</text>
-        <text class="s-note-g" x="503" y="184" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="11">揉み合い確認・出来高低下を見てから</text>
+        <text class="s-note-g" x="503" y="192" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="12">✅ 底打ち確認後（安全ゾーン）</text>
+        <text class="s-note-g" x="503" y="206" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="11">揉み合い確認・出来高低下を見てから</text>
 
         <!-- 価格カーブ（急落→底打ち→回復） -->
         <polyline class="s-curve-b" points="65,40 100,52 135,72 165,96 195,120 225,140 255,155 290,167 330,175 365,178 400,177 430,173 460,168 490,160 525,150 570,140"/>
 
         <!-- 底（ナイフが床に落ちた点） -->
         <circle class="s-dot-b" cx="365" cy="178" r="5"/>
-        <text class="s-label-sm" x="370" y="196" font-family="'Noto Sans JP',sans-serif">底（ナイフが床に落ちた）</text>
+        <text text-anchor="end" class="s-label-sm" x="364" y="196" font-family="'Noto Sans JP',sans-serif">底（ナイフが床に落ちた）</text>
 
         <!-- 危険な買いポイント（急落途中） -->
         <circle class="s-dot-r" cx="195" cy="120" r="5"/>
@@ -366,11 +366,11 @@ window.addEventListener('resize',mark);
 
         <!-- もう一つの危険な買いポイント -->
         <circle class="s-dot-r" cx="290" cy="167" r="5"/>
-        <text class="s-note-r" x="295" y="160" font-size="10.5" font-family="'Noto Sans JP',sans-serif">「底だ」と思ってまた買い→続落</text>
+        <text text-anchor="end" class="s-note-r" x="262" y="172" font-size="10.5" font-family="'Noto Sans JP',sans-serif">「底だ」と思ってまた買い→続落</text>
 
         <!-- 安全な買いポイント（底打ち確認後） -->
         <circle class="s-dot-g" cx="460" cy="168" r="5"/>
-        <text class="s-note-g" x="465" y="160" font-size="10.5" font-family="'Noto Sans JP',sans-serif">揉み合い後に買い→回復</text>
+        <text text-anchor="end" class="s-note-g" x="472" y="158" font-size="10.5" font-family="'Noto Sans JP',sans-serif">揉み合い後に買い→回復</text>
 
         <!-- 横線（ベース・床） -->
         <line class="s-guide" x1="60" y1="178" x2="600" y2="178"/>

@@ -402,15 +402,15 @@ window.addEventListener('resize',mark);
         <!-- Price curve: starts at 160, rises to 70 at x=260 (4 months), then drops to 220 at x=540 (8 months) -->
         <!-- Irrational zone (overvalued period) -->
         <rect x="60" y="30" width="340" height="130" class="s-zone-r"/>
-        <text x="230" y="50" class="s-note-r" text-anchor="middle">市場が不合理に高止まりしている期間</text>
-        <text x="230" y="65" class="s-note-r" text-anchor="middle">（合理的水準より上）</text>
+        <text x="230" y="46" class="s-note-r" text-anchor="middle">市場が不合理に高止まりしている期間</text>
+        <text x="230" y="61" class="s-note-r" text-anchor="middle">（合理的水準より上）</text>
         <!-- Recovery zone -->
         <rect x="400" y="160" width="210" height="90" class="s-zone-g"/>
         <text x="505" y="195" class="s-note-g" text-anchor="middle">価格が修正される</text>
         <!-- Price line (conceptual) -->
         <polyline points="60,160 120,130 200,70 270,75 330,85 400,160 480,210 540,220 610,215" class="s-curve-b"/>
         <!-- Margin call point for A -->
-        <line x1="260" y1="30" x2="260" y2="250" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <line x1="260" y1="66" x2="260" y2="250" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3"/>
         <text x="263" y="112" class="s-note-r" text-anchor="start">Aさん追証発生</text>
         <text x="263" y="126" class="s-note-r" text-anchor="start">→強制退場</text>
         <circle cx="260" cy="76" r="6" class="s-dot-r"/>

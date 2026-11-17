@@ -360,7 +360,7 @@ window.addEventListener('resize',mark);
         <!-- ゼロライン -->
         <line class="s-zero" x1="20" y1="210" x2="225" y2="210"/>
         <text class="s-label-sm" x="20" y="225">勝（+小）</text>
-        <text class="s-label-sm" x="68" y="105" text-anchor="middle">負（−大）</text>
+        <text class="s-label-sm" x="112" y="104" text-anchor="start">負（−大）</text>
         <text class="s-note-r" x="125" y="270" text-anchor="middle" font-size="12.5">合計：勝ちが多くても負け額が大きい</text>
         <text class="s-note-r" x="125" y="288" text-anchor="middle" font-size="12.5">→ トータルはマイナスになりやすい</text>
 
@@ -412,7 +412,7 @@ window.addEventListener('resize',mark);
 
     <!-- SVG図2：試行回数と結果のばらつき -->
     <figure class="chart-figure">
-      <svg viewBox="0 0 620 260" role="img" aria-labelledby="sample-size-title">
+      <svg viewBox="0 0 620 290" role="img" aria-labelledby="sample-size-title">
         <title id="sample-size-title">試行回数が少ないほど結果がばらつく概念図（大数の法則）</title>
         <text class="s-panel-label" x="20" y="22">試行回数と結果のばらつき（概念図）</text>
 
@@ -430,8 +430,8 @@ window.addEventListener('resize',mark);
         <text class="s-note-r" x="48" y="92" font-size="10.5">外れる範囲も広い</text>
         <text class="s-note-g" x="214" y="78" font-size="10.5">プラス側も</text>
         <text class="s-note-g" x="214" y="92" font-size="10.5">大きくばらつく</text>
-        <text class="s-label-sm" x="155" y="160" text-anchor="middle">結果が広範囲に散らばる</text>
-        <text class="s-label-sm" x="155" y="175" text-anchor="middle">「運」が結果を左右しやすい</text>
+        <text class="s-label-sm" x="155" y="264" text-anchor="middle">結果が広範囲に散らばる</text>
+        <text class="s-label-sm" x="155" y="279" text-anchor="middle">「運」が結果を左右しやすい</text>
 
         <!-- 区切り線 -->
         <line x1="310" y1="35" x2="310" y2="250" stroke="#d0d7de" stroke-width="1.5" stroke-dasharray="5 4"/>
@@ -446,8 +446,8 @@ window.addEventListener('resize',mark);
         <line stroke="#cf222e" stroke-width="2.5" stroke-dasharray="6 3" x1="465" y1="55" x2="465" y2="225"/>
         <text class="s-note-r" x="465" y="240" text-anchor="middle" font-size="11">期待値</text>
         <!-- ラベル -->
-        <text class="s-label-sm" x="465" y="160" text-anchor="middle">結果が期待値付近に収束</text>
-        <text class="s-label-sm" x="465" y="175" text-anchor="middle">「実力（エッジ）」が現れやすい</text>
+        <text class="s-label-sm" x="465" y="264" text-anchor="middle">結果が期待値付近に収束</text>
+        <text class="s-label-sm" x="465" y="279" text-anchor="middle">「実力（エッジ）」が現れやすい</text>
       </svg>
       <p class="chart-caption">※概念を示すイメージ図です。青・緑の帯＝結果が落ちやすい範囲（確率分布）、赤破線＝期待値の位置を概念的に示しています。実際の分布は手法や市場環境によって異なります。</p>
     </figure>

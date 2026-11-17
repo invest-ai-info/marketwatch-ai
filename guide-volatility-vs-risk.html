@@ -333,14 +333,14 @@ window.addEventListener('resize',mark);
         <!-- スタートとゴール共通 -->
         <circle class="s-hl" cx="60" cy="210" r="5"/>
         <circle class="s-hl" cx="590" cy="120" r="5"/>
-        <text class="s-label-sm" x="66" y="215">スタート（同じ）</text>
+        <text class="s-label-sm" x="44" y="250">スタート（同じ）</text>
         <text class="s-label-sm" x="552" y="113">ゴール（同じ）</text>
         <!-- 穏やかな線（緑） -->
         <polyline class="s-curve-g" points="60,210 120,196 180,186 240,175 300,164 360,152 420,142 480,132 540,124 590,120"/>
-        <text class="s-note-g" x="280" y="144">穏やかな道のり（低ボラティリティ）</text>
+        <text text-anchor="end" class="s-note-g" x="600" y="190">穏やかな道のり（低ボラティリティ）</text>
         <!-- 荒い線（赤） -->
         <polyline class="s-curve-l" points="60,210 100,168 140,238 180,148 220,250 260,130 300,210 340,100 380,190 420,86 460,170 510,110 550,138 590,120"/>
-        <text class="s-note-r" x="44" y="259">荒い道のり（高ボラティリティ）</text>
+        <text class="s-note-r" x="44" y="273">荒い道のり（高ボラティリティ）</text>
         <!-- 一時的な大底の目印 -->
         <line class="s-guide" x1="220" y1="250" x2="220" y2="280"/>
         <text class="s-label-sm" x="178" y="295">←この底で耐えられるか？</text>
@@ -431,7 +431,7 @@ window.addEventListener('resize',mark);
         <!-- 基準線（ベースライン） -->
         <line class="s-axis" x1="40" y1="255" x2="612" y2="255"/>
         <!-- 垂直ガイドライン -->
-        <line class="s-guide" x1="320" y1="60" x2="320" y2="255"/>
+        <line class="s-guide" x1="320" y1="60" x2="320" y2="196"/>
         <line class="s-guide" x1="237" y1="137" x2="237" y2="255"/>
         <line class="s-guide" x1="403" y1="137" x2="403" y2="255"/>
         <line class="s-guide" x1="154" y1="229" x2="154" y2="255"/>

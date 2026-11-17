@@ -438,14 +438,14 @@ window.addEventListener('resize',mark);
         <!-- 左：損切りできない -->
         <text class="s-note-r" x="60" y="30">❌ 損切りできない（抱え込む）</text>
         <line class="s-brk" x1="50" y1="118" x2="288" y2="118"/>
-        <text class="s-label-sm" x="54" y="110">損切りライン（SL）</text>
+        <text text-anchor="end" class="s-label-sm" x="288" y="113">損切りライン（SL）</text>
         <polyline class="s-price" points="70,82 110,100 150,116 192,152 232,202 272,252"/>
         <circle class="s-hl" cx="70" cy="82" r="5"/>
         <text class="s-note-r" x="150" y="278" text-anchor="middle">SLを無視→含み損が拡大</text>
         <!-- 右：ルールで淡々と切る -->
         <text class="s-note-g" x="356" y="30">✅ ルールで淡々と切る</text>
         <line class="s-brk" x1="352" y1="118" x2="600" y2="118"/>
-        <text class="s-label-sm" x="356" y="110">損切りライン（SL）</text>
+        <text text-anchor="end" class="s-label-sm" x="600" y="113">損切りライン（SL）</text>
         <polyline class="s-price" points="372,82 412,100 448,117"/>
         <circle class="s-hl" cx="372" cy="82" r="5"/>
         <circle class="s-rev" cx="452" cy="118" r="8"/>
