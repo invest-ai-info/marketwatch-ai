@@ -324,7 +324,102 @@ def result_table(ch):
             "<th>でたらめに入った場合の平均</th><th>でたらめとの差</th></tr></thead><tbody>" + "".join(rows) +
             "</tbody></table><p class=\"s-chart-note\">損益の数字は、損切りまでの幅（ATR（ふだんの1日の値動きの幅）の1.5倍）を1としたとき、"
             "1回あたり何倍のもうけ（プラス）か損（マイナス）か。費用（スプレッド）を引いたあと。"
-            "「でたらめに入った場合」は、同じ銘柄・同じ期間・同じ向き・同じ手じまいで、入る日だけを2,000回でたらめに選んだときの平均。</p></div>")
+            "「でたらめに入った場合」は、同じ銘柄・同じ期間・同じ向き・同じ手じまいで、入る日だけを2,000回でたらめに選んだときの平均。</p>"
+            + _chart(years_svg(ch.get("by_year")), "緑の棒はその年がもうけ、赤の棒は損。点線より左は方法を探すのに使った年、"
+                     "右は探すのに使っていない年（確かめる期間）です。") + "</div>")
+
+
+# ─────────────── 図（道具が毎日同じ形で作る＝固定の図の検査を必ず通る形） ───────────────
+# 2026-11-17 夜 オーナー「今まで通り画像付きで」。検査＝signal_lab_verify（はみ出し・文字の重なり・後から描いた図形）と
+# svg_layout_check（線が文字を横切る・塗った図形と文字が一部重なる）とやさしい日本語（R・×・矢印を書かない）。
+# 描く順番＝背景 → 補助線（太さ0.8） → 棒 → 文字（文字はいつも最後・棒や線と重ならない場所に置く）。
+_BG = 'fill="var(--c-surface,#fff)"'
+_MUTED = 'fill="var(--c-muted,#5a6072)"'
+_FONT = 'font-family="sans-serif"'
+
+
+def _svg_open(w, h, label):
+    return (f'<svg viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{E(label)}" '
+            f'style="width:100%;max-width:{w}px;display:block;margin:0 auto">'
+            f'<rect width="{w}" height="{h}" {_BG} rx="6"/>')
+
+
+def funnel_svg(c):
+    """200通りが、確かめを前から順に通ってどれだけ残ったか（横棒）。"""
+    steps = [("試した数", c.get("tried", 0))] + [(name, c.get(key, 0)) for name, key in (
+        ("探す期間（多重検定）", "pass_explore"), ("時代", "pass_eras"), ("銘柄の広がり", "pass_instruments"),
+        ("隣の値", "pass_neighbors"), ("別の市場", "pass_markets"), ("確かめる期間", "pass_confirm"),
+        ("費用2倍", "pass_cost"), ("回数", "pass_frequency"))]
+    tried = max([n for _name, n in steps] + [1])            # 0通りの日や数が食い違う日でも棒が枠からはみ出さない
+    W, top, row = 640, 44, 26
+    H = top + row * len(steps) + 16
+    x0, wmax = 200, 360
+    out = [_svg_open(W, H, "試した方法が8つの確かめでどれだけ残ったか")]
+    bars, texts = [], [f'<text x="{W / 2:g}" y="24" font-size="13" {_FONT} text-anchor="middle" {_MUTED}>'
+                       '試した方法が、確かめを前から順に通って残った数</text>']
+    for i, (name, n) in enumerate(steps):
+        y = top + i * row
+        w = 0 if n <= 0 else min(wmax, max(3.0, wmax * n / tried))
+        color = "var(--c-accent,#2563eb)" if i == 0 else ("var(--c-green,#16a34a)" if n > 0 else "var(--c-red,#dc2626)")
+        if w:
+            bars.append(f'<rect x="{x0}" y="{y}" width="{w:.1f}" height="16" fill="{color}" opacity=".8" rx="2"/>')
+        texts.append(f'<text x="{x0 - 10}" y="{y + 13}" font-size="12" {_FONT} text-anchor="end" {_MUTED}>{E(name)}</text>')
+        texts.append(f'<text x="{x0 + w + 8:.1f}" y="{y + 13}" font-size="12" {_FONT} font-weight="bold" '
+                     f'fill="{color}">{n}通り</text>')
+    return "".join(out + bars + texts) + "</svg>"
+
+
+def years_svg(by_year, title="年ごとの1回あたりの損益の平均（損切り幅を1としたときの倍率・費用を引いたあと）"):
+    """主役の方法の年ごとの平均（縦棒）。2017年までが探す期間・2018年からが確かめる期間。"""
+    ys = sorted((int(y), v[1]) for y, v in (by_year or {}).items() if v and v[1] is not None)
+    if not ys:
+        return ""
+    W, H = 640, 280
+    L, Rr, T, B = 64, 624, 56, 236            # 棒を描く枠（左・右・上・下）
+    mx = max(abs(v) for _y, v in ys)
+    scale = 0.25 if mx <= 0.25 else 0.5 if mx <= 0.5 else 1.0
+    zero = (T + B) / 2
+    k = (B - T) / 2 / scale
+
+    def yy(v):
+        return zero - max(-scale, min(scale, v)) * k
+    n = len(ys)
+    step = (Rr - L) / n
+    bw = max(3.0, step * 0.62)
+    lines, bars, texts = [], [], []
+    for v in (scale, scale / 2, 0, -scale / 2, -scale):
+        lines.append(f'<line x1="{L}" y1="{yy(v):.1f}" x2="{Rr}" y2="{yy(v):.1f}" stroke="var(--c-muted,#bbb)" '
+                     f'stroke-width="{0.8 if v else 0.9}"{"" if v == 0 else " stroke-dasharray=\"3,3\""}/>')
+        lab = "0" if v == 0 else f"{v:+.2f}".replace("-", "−")
+        texts.append(f'<text x="{L - 6}" y="{yy(v) + 4:.1f}" font-size="10" {_FONT} text-anchor="end" {_MUTED}>{lab}</text>')
+    split = next((i for i, (y, _v) in enumerate(ys) if y >= 2018), None)
+    if split is not None and split > 0:
+        xs = L + step * split
+        lines.append(f'<line x1="{xs:.1f}" y1="{T}" x2="{xs:.1f}" y2="{B}" stroke="var(--c-muted,#888)" '
+                     f'stroke-width="0.8" stroke-dasharray="5,4"/>')
+        from signal_lab_verify import _est_text_width as _tw
+        left = "探す期間（2017年まで）" if xs - 8 - _tw("探す期間（2017年まで）", 11) > 6 else "探す期間"
+        right = "確かめる期間（2018年から）" if xs + 8 + _tw("確かめる期間（2018年から）", 11) < W - 6 else "確かめる期間"
+        if xs - 8 - _tw(left, 11) > 6:
+            texts.append(f'<text x="{xs - 8:.1f}" y="{T - 8}" font-size="11" {_FONT} text-anchor="end" {_MUTED}>{left}</text>')
+        texts.append(f'<text x="{xs + 8:.1f}" y="{T - 8}" font-size="11" {_FONT} {_MUTED}>{right}</text>')
+    for i, (y, v) in enumerate(ys):
+        x = L + step * i + (step - bw) / 2
+        y1, y2 = sorted((yy(v), zero))
+        if y2 - y1 >= 0.5:
+            color = "var(--c-green,#16a34a)" if v > 0 else "var(--c-red,#dc2626)"
+            bars.append(f'<rect x="{x:.1f}" y="{y1:.1f}" width="{bw:.1f}" height="{y2 - y1:.1f}" fill="{color}" opacity=".8" rx="1"/>')
+        if (n <= 12 or y % 5 == 0):
+            texts.append(f'<text x="{L + step * i + step / 2:.1f}" y="{B + 18}" font-size="10" {_FONT} '
+                         f'text-anchor="middle" {_MUTED}>{y}</text>')
+    head = f'<text x="{W / 2:g}" y="22" font-size="12" {_FONT} text-anchor="middle" {_MUTED}>{E(title)}</text>'
+    clip = (f'<text x="{W / 2:g}" y="{H - 8}" font-size="10" {_FONT} text-anchor="middle" {_MUTED}>'
+            f'目盛りの外に出る年は端で止めて描いています</text>') if mx > scale else ""
+    return _svg_open(W, H, "年ごとの1回あたりの損益の平均") + "".join(lines + bars + [head] + texts) + clip + "</svg>"
+
+
+def _chart(svg, note):
+    return f'<div class="s-chart">{svg}<p class="s-chart-note">{note}</p></div>' if svg else ""
 
 
 CHECK_ROWS = [("explore", "探す期間（2017年まで）", "その日に試したもの全部をまとめて見ても、でたらめに入った場合より良いと言える"),
@@ -368,7 +463,7 @@ def checks_table(ch):
             "8つ全部を通ったものだけを登録します。</p></div>")
 
 
-def batch_box(b):
+def batch_box(b, totals=None):
     c = b.get("counts") or {}
     src = c.get("by_source") or {}
     steps = [("探す期間", "pass_explore"), ("時代", "pass_eras"), ("銘柄の広がり", "pass_instruments"), ("隣の値", "pass_neighbors"),
@@ -380,8 +475,11 @@ def batch_box(b):
     return ("<div class=\"s-note\" data-mw-method-snippet=\"batch\"><p><b>今日ためした数</b>："
             f"{c.get('tried', 0)}通り（考え方の一覧から{src.get('idea', 0)}・研究中の方法などを1か所変えた形から{src.get('mutation', 0)}・"
             f"部品の組み合わせから{src.get('random', 0)}）</p>"
+            + _chart(funnel_svg(c), "上から順に確かめを通ったものだけが下へ進みます。1つでも落ちたら、その先には進みません。") +
             f"<p>確かめを前から順に通って残った数：{funnel}。8つ全部を通ったもの {c.get('pass_all', 0)}"
             f"（そのうち、すでにある方法とほぼ同じもの {c.get('duplicates', 0)}）</p>" + reg_html +
+            ((f"<p><b>これまでの歩み</b>：試した形 {totals['tried']}通り・登録 {totals['registered']}本・"
+              f"外したもの {totals['culled']}本・研究中の新しい方法 {totals['live']}本</p>") if totals else "") +
             "<p class=\"s-chart-note\">たくさん試すほど、偶然よく見えるものが混じります。だから8つの確かめを全部通っても、"
             "登録した日より後のシグナル（前向き）だけで、もう一度確かめます。</p></div>")
 
@@ -440,7 +538,11 @@ def cmd_report(args):
     ch = b.get("chosen") or {}
     blocks = {"result": result_table(ch) if ch else "<p>今日は数えられた候補がありませんでした。</p>",
               "checks": checks_table(ch) if ch else "",
-              "batch": batch_box(b), "cull": cull_box(day, reg, today), "list": research_list(tracker, reg)}
+              "batch": batch_box(b, {"tried": len(lab.get("tested_ids") or []),
+                                     "registered": sum(1 for m in reg.get("methods", [])),
+                                     "culled": len(reg.get("culls") or []),
+                                     "live": sum(1 for m in reg.get("methods", []) if m.get("status") in ("tracking", "promoted"))}),
+              "cull": cull_box(day, reg, today), "list": research_list(tracker, reg)}
     if not args.into:
         for k, v in blocks.items():
             print(f"<!-- {k} -->\n{v}\n")

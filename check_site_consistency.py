@@ -75,6 +75,7 @@ SYNC_FORBIDDEN = {
     # 🆕 2026-11-17 毎日の新しい方法（method-lab.yml が毎晩作る／routine が毎朝 research_rotation.py で書く。
     #   試した形の一覧・前向き・入れ替えの履歴を持つ＝古い版で上書きすると同じ形を二度試し、外した記録が消える）
     "method-lab.json", "method-lab.md", "method-lab-registry.json",
+    "method-writing-notes.md",   # drafts/ の書き方の改善メモ（routine が毎朝書き足す・照合は basename）
     "exit-wall-lab.json", "exit-wall-lab.md",  # 出口の壁ラボ（exit-research.yml・日曜）
     "stop-lab.json", "stop-lab.md",            # 損切りラボ（exit-research.yml・日曜）
     "regime-lab.json", "regime-lab.md",        # 環境の相性ラボ（regime-lab.yml・手動）
