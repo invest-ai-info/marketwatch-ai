@@ -24,9 +24,11 @@
 | hot-assets.html | 出来高急増ランキング | update-market-news.yml |
 | guides.html | 解説記事一覧 | 手動更新 |
 | **track-record.html** ⭐ | 🧪 シグナル研究（旧名「シグナル成績」＝2026-09-26 にナビ・記事内のリンク文とも改名。10 タブ。🗺️ いま検証中のこと＝`research_map.py` が毎回データから組み立てる・`#map` で直リンク） | technical-alerts.yml |
-| **research-list.html** 🆕 | 📋 検証中リスト（2026-10-07 オーナー）＝研究の地図と同じデータを市場ごと（🇯🇵 日本株／💱 FX／📈 株価指数・先物／🪙 金・銀・原油・BTC／🧭 共通）に並べる。`research_map.build_list_page`。**新しい前向きを足したら `collect_studies` に `cat` 付きで1件足す**。**見込みなしで止める決まり**（PREREG 同名節）＝仮説はトラッカーが毎日自動で ⏹（`status=retired`）・前向きの腕は `verified_list.RETIRED` に1行 → 検証済みリストへ。SYNC禁忌。全文は OPERATIONS.md「CLAUDE.md から移した詳しい説明」 | technical-alerts.yml（`generate_track_record_page.py`） |
+| **research-list.html** 🆕 | 📋 検証中リスト（2026-10-07 オーナー）＝研究の地図と同じデータを市場ごと（🇯🇵 日本株／💱 FX／📈 株価指数・先物／🪙 金・銀・原油・BTC／🧭 共通）に並べる。`research_map.build_list_page`。**新しい前向きを足したら `collect_studies` に `cat` 付きで1件足す**。見込みなしで止める決まり・全文は OPERATIONS.md「CLAUDE.md から移した詳しい説明」。SYNC禁忌 | technical-alerts.yml（`generate_track_record_page.py`） |
 | youtube-summary.html | 投資系 YouTube 要約 | update-youtube-summary.yml |
 | **political-feed.html** 🆕 | 政治発言ライブフィード | political-alerts.yml |
+
+🔄 **研究日誌（routine signal-lab-daily）は 2026-11-18 から毎朝「今日の新しい方法」だけを題材にし、研究中からいちばん悪いものを1つ外す**（オーナー 11/17・routine の指示の題材選び①〜④より優先）。手順＝`SIGNAL_LAB_SOP.md`「毎日の新しい方法の回」
 
 解説記事は `guide-*.html` として個別公開（25+ 件、最新は guides.html 最上段）。
 
