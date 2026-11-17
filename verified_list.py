@@ -324,9 +324,51 @@ def collect_tracker(path=TRACKER):
         else:
             why = "期待と逆向きにはっきり出た" + (f"（逆向きで登録し直した：{fl['id']}）" if fl.get("id") else "")
         out.append({"id": h.get("id"), "name": T.plain_name(h.get("filter") or {}), "kind": h.get("kind"), "status": st,
+                    "reason": h.get("retire_reason"),
                     "registered": (h.get("registered_at") or "")[:10], "on": on, "n": f.get("n") or 0,
                     "mean": f.get("avgR"), "lo": f.get("rci_lo"), "hi": f.get("rci_hi"), "why": why})
     return sorted(out, key=lambda r: (r["on"], r["id"] or ""), reverse=True)
+
+
+METHOD_REG = "method-lab-registry.json"   # 🆕 2026-11-17 毎日の新しい方法（research_rotation.py）で終わったもの
+
+
+def collect_methods(path=METHOD_REG):
+    """毎日の新しい方法のうち、前向きで終わったもの（⛔却下・⏹見込みなし・🔄入れ替えで外した）→ 行の一覧（新しい順）。"""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            ms = json.load(fh).get("methods") or []
+    except (OSError, ValueError):
+        return []
+    import signal_lab_tracker as T
+    out = []
+    for m in ms:
+        st = m.get("status")
+        if st not in ("rejected", "retired"):
+            continue
+        f = m.get("forward") or {}
+        why = (T.RETIRE_WORDS.get(m.get("retire_reason"), "見込みなし") if st == "retired"
+               else "前向きで平均がはっきりマイナスに出た")
+        out.append({"id": m.get("id"), "name": m.get("name") or "", "status": st, "reason": m.get("retire_reason"),
+                    "registered": (m.get("registered_at") or "")[:10], "on": m.get("retired_at") or m.get("rejected_at") or "",
+                    "n": f.get("n") or 0, "mean": f.get("avgR"), "lo": f.get("rci_lo"), "hi": f.get("rci_hi"), "why": why})
+    return sorted(out, key=lambda r: (r["on"], r["id"] or ""), reverse=True)
+
+
+def render_methods(rows):
+    """毎日の新しい方法で終わったものの節"""
+    L = ["## 🆕 毎日の新しい方法で終わったもの", "",
+         "2026-11-18 から毎日1つ、過去の日足で条件を満たした新しい売買の決まりを登録し、登録した日より後のシグナルだけで採点している。"
+         "そのうち、前向きで平均がはっきりマイナスに出た（⛔）・見込みなしで止めた（⏹）・毎日の入れ替えで外した（🔄）もの。"
+         "数字は費用を引いた1回あたりの損益（R）。決まりは `PILLAR_PREREG.md`「毎日の新しい方法と入れ替え（2026-11-17）」。", ""]
+    if not rows:
+        return L + ["- まだ無い", ""]
+    L += ["| 方法 | 結果 | 止めた日 | 登録 | 前向きの回数 | 平均 | 95％の幅 | 理由 |", "|---|---|---|---|---:|---:|---|---|"]
+    for r in rows:
+        res = ("🔄 入れ替えで外した" if r.get("reason") == "culled" else "⏹ 見込みなし") if r["status"] == "retired" else "⛔ 却下"
+        L.append(f"| {r['id']} {r['name']} | {res} | {r['on'] or '—'} | {r['registered']} | {r['n']} | {_r(r['mean'])} | "
+                 f"{_r(r['lo'])}〜{_r(r['hi'])} | {r['why']} |")
+    return L + [""]
 
 
 def render_tracker(rows):
@@ -340,7 +382,7 @@ def render_tracker(rows):
     L += ["| 仮説 | 問い | 結果 | 止めた日 | 前向きの回数 | 平均 | 95％の幅 | 理由 |", "|---|---|---|---|---:|---:|---|---|"]
     for r in rows:
         q = "負けやすいか" if r["kind"] == "gate" else "勝ちやすいか"
-        res = "⏹ 見込みなし" if r["status"] == "retired" else "⛔ 反証"
+        res = ("🔄 入れ替えで外した" if r.get("reason") == "culled" else "⏹ 見込みなし") if r["status"] == "retired" else "⛔ 反証"
         L.append(f"| {r['id']} {r['name']} | {q} | {res} | {r['on'] or '—'} | {r['n']} | {_r(r['mean'])} | "
                  f"{_r(r['lo'])}〜{_r(r['hi'])} | {r['why']} |")
     return L + [""]
@@ -414,7 +456,7 @@ def render_screens(screens):
     return L
 
 
-def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), observe=()):
+def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), observe=(), methods=()):
     now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(timespec="minutes")
     L = ["# 検証済みリスト", "",
          f"更新: {now}（GitHub Actions が記録から組み立てる。手で書かない）。",
@@ -445,6 +487,7 @@ def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), o
     L += [""] + render_markers(list(markers))
     L += render_observe(list(observe))
     L += render_tracker(list(tracker))
+    L += render_methods(list(methods))
     L += render_screens(screens)
     L += ["詳しい決まりは `PILLAR_PREREG.md` の各節。", "", "---", "",
           "※ 研究の記録です。投資助言ではありません。将来の成績を約束するものではありません。"]
@@ -453,7 +496,7 @@ def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), o
 
 def main():
     md = render(*collect(), screens=collect_screens(), markers=collect_markers(), tracker=collect_tracker(),
-                observe=collect_observe())
+                observe=collect_observe(), methods=collect_methods())
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
     print(md)

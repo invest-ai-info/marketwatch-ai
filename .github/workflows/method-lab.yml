@@ -1,0 +1,80 @@
+name: Method Lab (daily new method)
+
+# 毎日の新しい方法（2026-11-17 オーナー決定「新しい方法を毎日探して…成績の悪いものは一つ消す」）。
+# 事前登録＝PILLAR_PREREG.md「毎日の新しい方法と入れ替え（2026-11-17）」。物差しは method_lab.py の冒頭に固定。
+# ・次の朝の研究日誌（routine signal-lab-daily・06:10 JST）の候補を 48 通り数えて method-lab.json に置く（同じ日には作り直さない）
+# ・研究中の新しい方法の前向きの成績を毎回数え直す（登録・判定・入れ替えは routine が research_rotation.py で行う）
+# 起動：routine の push（研究日誌の台帳＝毎朝 06:2x JST ごろ）に相乗り＋cron の保険4本（cron は1〜3時間遅れる＝半端な分）＋手動。
+# ⚠️ 出力（method-lab.json / method-lab.md）は GitHub 側で生成＝ローカルから push しない（SYNC禁忌）。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - signal-lab-ledger.md
+  schedule:
+    - cron: "17 10 * * *"   # 19:17 JST
+    - cron: "47 13 * * *"   # 22:47 JST
+    - cron: "13 16 * * *"   # 01:13 JST
+    - cron: "43 18 * * *"   # 03:43 JST
+  workflow_dispatch:
+    inputs:
+      for_date:
+        description: "候補を作る日（空＝次の朝の研究日誌の日）"
+        required: false
+        default: ""
+      force:
+        description: "その日の候補を作り直す（ふだんは false。作り直すと前の候補は『試した』扱いで二度と出ない）"
+        required: false
+        default: "false"
+        type: choice
+        options: ["false", "true"]
+
+concurrency:
+  group: method-lab
+  cancel-in-progress: false
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas yfinance
+      - name: Test with made-up prices
+        run: python tests/test_method_lab.py
+      - name: Count today's candidates and the forward records
+        env:
+          FOR_DATE: ${{ github.event.inputs.for_date }}
+          FORCE: ${{ github.event.inputs.force }}
+        run: |
+          args="daily"
+          [ -n "$FOR_DATE" ] && args="$args --for-date $FOR_DATE"
+          [ "$FORCE" = "true" ] && args="$args --force"
+          python -u method_lab.py $args
+          [ -f method-lab.md ] && head -60 method-lab.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add method-lab.json method-lab.md 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: method lab $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST')"
+            ok=0
+            for i in 1 2 3 4 5; do
+              if git pull --rebase -X theirs origin main && git push origin HEAD:main; then ok=1; break; fi
+              git rebase --abort 2>/dev/null || true
+              sleep $((i * 10))
+            done
+            [ "$ok" = 1 ] || exit 1
+          fi

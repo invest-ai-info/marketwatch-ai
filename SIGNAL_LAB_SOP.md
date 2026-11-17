@@ -43,6 +43,47 @@ python signal_lab_tracker.py table --html --date <YYYY-MM-DD> --into drafts/draf
 > 10/16・10/17 の朝の回が下書きを書く途中で止まった（どちらも1つもコミットが残らなかった）。本文が長いときは、
 > 先に骨組みと前半を Write で書き、残りの節を Edit で足していく。表の HTML は手で直さない（`--into` で何度でも作り直せる）。
 
+## 🆕 毎日の新しい方法の回（2026-11-18〜・オーナー決定＝この節が下の「朝1記事の選び方」より優先）
+
+オーナー（2026-11-17）：「新しい方法を毎日探して新しい方法だけをシグナル研究で発表してください。…研究中の方法の中で最も成績の悪いものから削除していきましょう。1日1回新しい方法を見つけ出して研究として発表して成績の悪いものは一つ消す」。決まり＝`PILLAR_PREREG.md`「毎日の新しい方法と入れ替え（2026-11-17）」。
+
+**毎朝の題材はいつも「今日の新しい方法」**（合格して登録した方法／合格が無い日は「いちばん惜しかった方法」）。登録済みの仮説の途中経過だけの回は書かない。✅昇格・⛔反証・読者の質問・出口の相性は、その日の記事の終わりに短い節（数行）で触れるだけにする（独立の回にしない）。
+
+```bash
+# 固定の道具を元に戻す（誰も編集しない）
+git checkout -- signal_lab_verify.py signal_lab_sweep.py signal_lab_tracker.py method_lab.py method_lab_verify.py research_rotation.py check_plain_japanese.py
+# 1) 前向きトラッカー（いままでどおり）
+python signal_lab_tracker.py update --date <D>
+python signal_lab_sweep.py --json drafts/labnotes/sweep-<D>.json
+python signal_lab_tracker.py register --from drafts/labnotes/sweep-<D>.json --date <D>
+# 2) 今日の新しい方法の候補があるか（Actions の method-lab.yml が前の晩に作る）
+python -c "import json;b=json.load(open('method-lab.json'))['batches'];print('<D>' in b)"
+#    False のときだけ自分で作る（Yahoo に届けば1分ほど）: pip install yfinance && python method_lab.py daily --for-date <D>
+#    それも失敗したら REVIEW.md に「method-lab の候補が無い」と1行書き、この日だけ下の「朝1記事の選び方」に戻る
+# 3) 1つ入れて1つ外す（同じ日に2回動かしても2回目は何もしない）
+python research_rotation.py daily --date <D>
+# 4) 下書きを書いたあとで、表と箱を差し込む（何度動かしてもよい）
+python research_rotation.py report --date <D> --into drafts/draft-signal-lab-NNN.html
+# 5) 数字の検査（signal_lab_verify に加えて）
+python method_lab_verify.py drafts/draft-signal-lab-NNN.html drafts/labnotes/lab-NNN-method-claims.json; echo EXIT=$?
+```
+
+- **材料**：`method-lab.json` の `batches["<D>"]`（`chosen`＝今日の方法・`counts`＝今日ためした数・`rows`＝全部の候補）と、`method-lab-registry.json` の `days["<D>"]`・`culls`（今日外した方法）。値段は取りにいかない（数字は全部ここにある）
+- **下書きの形**（手本 `guide-signal-lab-015.html` の構造・やさしい日本語・kinsho-v1）：
+  1. 題名＝問いの形＋回数＋`#NNN`（例「株価指数が上げ相場で2日だけ急に下げたら買う方法は通じる？ 過去723回で確かめた【研究日誌 #153】」）
+  2. 30秒まとめ＝今日の方法（言葉で）／過去の2つの期間の1回あたりの平均（R・小数2桁）とでたらめとの差／合格して前向きに登録したか（惜しかった日は「登録しない」）／今日ためした数／今日外した方法。**30秒まとめに % は書かない**（signal_lab_verify が % を claims.json と照合するため・勝ちの割合は本文で）
+  3. 今日の新しい方法＝決まりをやさしく（条件・入る時・手じまい・損切り）。「なぜ効くかもしれないか」＝`chosen.why`（考え方の一覧から来たとき）。部品の組み合わせ・1か所変えた形から来たときは、自分で考えた理由を「〜という考えもできる（確かめていない）」と書く。チャート風の図解1枚（入る瞬間・損切り・手じまい）
+  4. 過去の成績＝目印 `<!-- MW:METHOD_RESULT -->` を1行（表は道具が差し込む）＋本文の説明＋年ごとの平均の棒グラフ（`chosen.by_year`・図の数字は claim に入れる）。確かめる期間の差が小さい・p が大きいなど**弱いところを必ず書く**
+  5. 今日ためした数＝目印 `<!-- MW:METHOD_BATCH -->`。「たくさん試すほど偶然よく見えるものが混じる」「だから登録した日より後のシグナル（前向き）で確かめる」を本文でも書く
+  6. 今日外した方法＝目印 `<!-- MW:CULL_BOX -->`（無い日は道具が「なし」と書く）
+  7. 研究中の方法＝目印 `<!-- MW:RESEARCH_LIST -->`。前向きトラッカー表（`<!-- MW:TRACKER_TABLE -->`）は**この回では入れない**（新しい方法だけを出す・オーナー決定）
+  8. 関連カード（`guide-signal-anatomy.html` を含める）・免責
+- **claims**：`drafts/labnotes/lab-NNN-method-claims.json`（形は `method_lab_verify.py` の冒頭）。本文と図に出る R・%・回数は全部ここに入れる（表と箱の中の数字は入れなくてよい）。`drafts/labnotes/lab-NNN-claims.json` は `{"article_id":"NNN","asof":"<生成時刻>","claims":[]}` でよい（signals-log の数字を使った日だけ足す）
+- **言い方**：過去の成績は「過去ではこうだった」まで。「効く」「勝てる」「おすすめ」は書かない。合格は「前向きで確かめる候補に入った」の意味
+- **コミット**：8-1 の `git add` に `method-lab-registry.json signal-lab-tracker.json`（入れ替えで書き換わる）と、手順2で自分で作ったときは `method-lab.json method-lab.md` を足す
+- **台帳の行**：`方法-<chosen.id>`（惜しかった日は `方法-<id>-惜`）と、外したものの ID を書く
+- **エスカレ（8-5）に足す条件**：`method_lab_verify.py` が [直せる] でない赤／3回直しても緑にならない
+
 ## 朝1記事の選び方（その日いちばんのニュースを1本）
 優先度: **①新たに🟢昇格 or ⛔反証が出た** ＞ ②前向きで大きく動いた仮説 ＞ ③スイープでFDR通過した新候補 ＞ ④動きが薄い日は「定点観測のみ（30秒まとめ＋トラッカー表）」で軽く。
 - 🆕 **読者の質問（2026-09-23〜「それ、本当？」検証室・受付ページ `guide-sore-honto.html`）**：`drafts/READER_QUESTIONS.md` の「受付中」に、台帳（signal-lab-ledger.md）にまだ `読者Q-NNN` が出ていない質問があれば、**①（昇格/反証）の次に優先**して1本選ぶ（表の上＝先に届いたものから）。

@@ -601,7 +601,9 @@ RETIRE_EFFECT_R = 0.10
 RETIRE_MIN_DAYS = 60
 RETIRE_MAX_DAYS = 730
 RETIRE_WORDS = {"small": "効きが小さすぎる（件数が十分なのに、良い側の端でも 0.10R に届かない）",
-                "slow": "時間がかかりすぎる（いまの速さでは最初の判定まで2年を超える）"}
+                "slow": "時間がかかりすぎる（いまの速さでは最初の判定まで2年を超える）",
+                # 🆕 2026-11-17 毎日の入れ替え（research_rotation.py・オーナー決定「成績の悪いものは一つ消す」）
+                "culled": "毎日の入れ替えで外れた（研究中の中で、良く見積もった見込みがいちばん低かった）"}
 
 
 def futility(h, fwd, today):
