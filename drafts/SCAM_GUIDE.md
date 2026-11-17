@@ -42,6 +42,7 @@
 5. 決定論チェック＝kinsho-v1 三層／禁止語なし／特定銘柄・特定業者の断定なし／SVG「概念図」明示／仮の例明示。
 6. 公開：`python publish_article.py --file guide-scam-<slug>.html --category "投資詐欺から身を守る" --emoji <絵文字>
    --card-title "<タイトル>" --desc "<1行>"` → `check_site_consistency.py` → push。
+   - 🆕 2026-11-17 **図の重なりゲート**：`publish_article.py` が「🚫 図の重なりゲート」で止まったら、出た文字の x/y（と `text-anchor`）だけを線・ローソク足・棒と重ならない空いた所へ動かして同じコマンドを再実行（最大3回・数字と図形は変えない・`python svg_layout_check.py <file>` で先に確かめられる）。3回で通らなければ公開せず `drafts/REVIEW.md` へ。
 7. エスカレ時は `drafts/scam/` に noindex 付きで保存し `SCAM_LEDGER.md` に記録（**🔴黒の本文はコミットしない**＝
    PROVERB_GUIDE.md §2-8 の 2026-07-26 ルールと同じ。public リポは raw で誰でも読めるため）。
 
