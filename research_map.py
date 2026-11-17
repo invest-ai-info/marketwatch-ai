@@ -751,11 +751,11 @@ def collect_studies(root, m):
         ms = (reg or {}).get("methods") or []
         live = [x for x in ms if x.get("status") in ("tracking", "promoted")]
         culled = len((reg or {}).get("culls") or [])
-        tried = len((lab or {}).get("tested") or [])
+        tried = len((lab or {}).get("tested_ids") or (lab or {}).get("tested") or [])
         verify.append({"cat": "all", "name": "毎日の新しい方法（日足の売買の決まり）",
-                       "what": "毎日、監視している18銘柄の日足で新しい売買の決まりを数十通り試し、過去の2つの期間とでたらめに入った場合"
-                               "との比べで条件を満たしたものを1つ登録して、登録した日より後のシグナルだけで採点しています。"
-                               "毎日1つ、研究中の中で成績がいちばん悪いものを外します",
+                       "what": "毎日、監視している18銘柄の日足で新しい売買の決まりを200通り試し、過去の確かめ8つ（時代・銘柄・"
+                               "似た別の市場・2018年からの年など）を全部通ったものを全部登録して、登録した日より後のシグナルだけで"
+                               "採点しています。登録した数だけ（少なくとも1つ）、研究中の中で成績がいちばん悪いものから外します",
                        "since": "2026-11-18",
                        "progress": f"{len(live)}本を前向きで採点中・これまでに試した形 {tried}通り・入れ替えで外したもの {culled}本"
                                    "（それぞれ前向き80回ごとに判定）"})

@@ -5,20 +5,19 @@ research_rotation.py — 毎日の「1つ入れて、1つ外す」（2026-11-17 
 オーナー:「1日1回新しい方法を見つけ出して研究として発表して成績の悪いものは一つ消すという形にしていきましょう」。
 事前登録＝PILLAR_PREREG.md「毎日の新しい方法と入れ替え（2026-11-17）」。ここの決まりは結果を見る前にコミットした。
 
-■ daily --date D（1日1回・同じ日に2回動かしても2回目は何もしない）
+■ daily --date D（1日1回・同じ日に2回動かしても2回目は何もしない）＝第2版（PILLAR_PREREG「毎日の新しい方法と入れ替え・第2版」）
   ① 研究中の新しい方法（method-lab-registry.json）の前向きの成績を method-lab.json から写し、
      signal_lab_tracker と同じ決まりで判定する（80回ごとの区切りでだけ判定・昇格は2回続けて＋偽薬との差がプラス・
      却下は1回で決まる・昇格のあと基準割れが2回続いたら戻す・見込みなし〔futility〕も同じ）。
-  ② その日の新しい方法を登録する＝method-lab.json の batches[D].chosen が「合格」のときだけ（惜しかった方法は登録しない）。
-     前向きは D の日足から数える（記事が出たあとに決まるシグナルだけ）。
-  ③ 研究中の中で、いちばん成績の悪いものを1つ外す（status=retired・retire_reason=culled・戻さない）。
-       対象＝signal-lab-tracker.json の採点中（tracking）の仮説 と 研究中（tracking）の新しい方法。
-       外せる条件＝前向き30回以上・昇格の途中（1回目の合格のあと）でない・比べる相手と対で登録したもの（pair）でない。
-       成績の物差し＝「うまくいった場合の見込み」＝前向きの平均Rの95%の幅の良い側の端
-         （勝ちやすいはずの仮説・方法＝上の端／避けるはずの仮説＝下の端の符号を変えたもの）。いちばん低いものを外す
-         ＝「回数が十分たまっていて、良く見積もっても良くない」ものから順に外れる（回数が少ないものは幅が広いので外れにくい）。
-       同じ点なら回数の多いほう、それも同じなら登録の古いほう。
-       採点中が合わせて20本以下のときは外さない（研究が空にならないように）。
+  ② その日に合格した方法を**全部**登録する（method-lab.json の batches[D].registered。過去の確かめ8つを全部通り、
+     すでにある方法と売買が7割以上重ならないもの）。前向きは D の日足から数える。
+  ③ **登録した数だけ（少なくとも1つ）**、研究中の中で成績のいちばん悪いものから外す（status=retired・retire_reason=culled・戻さない）。
+       対象＝signal-lab-tracker.json の採点中（tracking）の仮説 と、その日より前に登録した研究中の新しい方法。
+       物差し＝1回あたりの損益の平均（大きいほど良い）:
+         新しい方法＝2018年からいままでの平均（登録前の確かめる期間＋登録後の前向き・費用後）
+         シグナルの仮説＝登録後の平均（前向き30回以上だけ・避けるはずの仮説は符号を変える）
+       外さないもの＝前向き30回未満の仮説・昇格の途中（1回目の合格のあと）・比べる相手と対の登録（pair）・その日に登録したもの。
+       同じ点なら回数の多いほう、それも同じなら登録の古いほう。採点中が合わせて20本以下になったら止める。
        避けるはずの仮説（gate）が、前向きでは逆に平均プラスのまま外れたときは、逆向き（勝ちやすいはず）として登録し直す
          ＝9/26 の決まり①（拾い損ね防止）と同じ・外した日の次の日のシグナルから数える。
   ④ 記録＝method-lab-registry.json の days[D]・culls（記事の数字は method_lab_verify.py がここと突き合わせる）。
@@ -123,91 +122,109 @@ def judge_methods(reg, lab, today):
 
 # ─────────────────────────── ② 登録 ───────────────────────────
 def register_today(reg, lab, today):
+    """その日に合格した方法を全部登録する。→ (登録した ID の並び, 説明)"""
     b = ((lab or {}).get("batches") or {}).get(today)
     if not b:
-        return None, "method-lab.json に今日の候補が無い（method-lab.yml がまだ動いていない）"
-    ch = b.get("chosen")
-    if not ch:
-        return None, "今日の候補が1つも数えられなかった"
-    if ch.get("status") != "passed":
-        return None, "今日の候補はどれも合格しなかった（いちばん惜しかったものは記事で紹介するが、前向きには進めない）"
-    if any(m["id"] == ch["id"] for m in reg.get("methods", [])):
-        return ch["id"], "登録済み"
-    reg.setdefault("methods", []).append({
-        "id": ch["id"], "name": ch["name"], "spec": ch["spec"], "exit_ja": ch.get("exit_ja"),
-        "universe_ja": ch.get("universe_ja"), "conds_ja": ch.get("conds_ja"), "direction": ch["spec"]["direction"],
-        "kind": "edge", "source": ch.get("source"), "why": ch.get("why"), "parent": ch.get("parent"),
-        "registered_at": today, "status": "tracking",
-        "past": {"explore": ch.get("explore"), "confirm": ch.get("confirm")},
-        "forward": {"n": 0, "avgR": None, "rci_lo": None, "rci_hi": None},
-    })
-    return ch["id"], "登録した"
+        return [], "method-lab.json に今日の候補が無い（method-lab.yml がまだ動いていない）"
+    regs = b.get("registered") or []
+    if not regs:
+        return [], "今日の候補はどれも過去の確かめ8つを全部は通らなかった（いちばん惜しかったものは記事で紹介するが、登録しない）"
+    have = {m["id"] for m in reg.get("methods", [])}
+    out = []
+    for ch in regs:
+        if ch["id"] in have:
+            continue
+        reg.setdefault("methods", []).append({
+            "id": ch["id"], "name": ch["name"], "spec": ch["spec"], "exit_ja": ch.get("exit_ja"),
+            "universe_ja": ch.get("universe_ja"), "conds_ja": ch.get("conds_ja"), "direction": ch["spec"]["direction"],
+            "kind": "edge", "source": ch.get("source"), "why": ch.get("why"), "parent": ch.get("parent"),
+            "registered_at": today, "status": "tracking",
+            "past": {"explore": ch.get("explore"), "confirm": ch.get("confirm")},
+            "forward": {"n": 0, "avgR": None, "rci_lo": None, "rci_hi": None},
+        })
+        out.append(ch["id"])
+    return out, f"{len(out)}件を登録した" if out else "登録済み"
 
 
 # ─────────────────────────── ③ 入れ替え ───────────────────────────
-def score_of(kind, fwd):
-    """うまくいった場合の見込み（大きいほど良い）。"""
-    if kind == "gate":
-        return None if fwd.get("rci_lo") is None else -fwd["rci_lo"]
-    return fwd.get("rci_hi")
+def method_score(m):
+    """新しい方法の物差し＝2018年からいままでの1回あたりの平均（登録前の確かめる期間＋登録後の前向き・回数で重みづけ）。"""
+    c = ((m.get("past") or {}).get("confirm") or {})
+    f = m.get("forward") or {}
+    nc, mc = c.get("n") or 0, c.get("mean")
+    nf, mf = f.get("n") or 0, f.get("avgR")
+    tot = (nc if mc is not None else 0) + (nf if mf is not None else 0)
+    if not tot:
+        return None, 0
+    val = ((nc * mc) if mc is not None else 0) + ((nf * mf) if mf is not None else 0)
+    return val / tot, tot
 
 
-def cull_pool(tracker, reg):
+def cull_pool(tracker, reg, today=None):
     pool, active = [], 0
     for h in tracker.get("hypotheses", []):
         if h.get("status") != "tracking":
             continue
         active += 1
         f = h.get("forward") or {}
-        if (f.get("n") or 0) < CULL_MIN_N or h.get("promote_strikes") or h.get("pair"):
+        if (f.get("n") or 0) < CULL_MIN_N or h.get("promote_strikes") or h.get("pair") or f.get("avgR") is None:
             continue
-        s = score_of(h.get("kind"), f)
-        if s is None:
-            continue
+        sc = f["avgR"] if h.get("kind") != "gate" else -f["avgR"]
         pool.append({"source": "signal", "id": h["id"], "kind": h.get("kind"), "name": T.plain_name(h.get("filter") or {})
                      or h.get("label"), "label": h.get("label"), "registered_at": h.get("registered_at"),
-                     "n": f.get("n"), "avgR": f.get("avgR"), "lo": f.get("rci_lo"), "hi": f.get("rci_hi"), "score": round(s, 4)})
+                     "n": f.get("n"), "avgR": f.get("avgR"), "lo": f.get("rci_lo"), "hi": f.get("rci_hi"),
+                     "basis": "登録後", "score": round(sc, 4)})
     for m in reg.get("methods", []):
         if m.get("status") != "tracking":
             continue
         active += 1
+        if m.get("promote_strikes") or (today and m.get("registered_at") == today):
+            continue
+        sc, tot = method_score(m)
+        if sc is None:
+            continue
         f = m.get("forward") or {}
-        if (f.get("n") or 0) < CULL_MIN_N or m.get("promote_strikes"):
-            continue
-        s = score_of("edge", f)
-        if s is None:
-            continue
         pool.append({"source": "method", "id": m["id"], "kind": "edge", "name": m["name"], "label": m["name"],
-                     "registered_at": m["registered_at"], "n": f.get("n"), "avgR": f.get("avgR"),
-                     "lo": f.get("rci_lo"), "hi": f.get("rci_hi"), "score": round(s, 4)})
+                     "registered_at": m["registered_at"], "n": tot, "avgR": round(sc, 4),
+                     "fwd_n": f.get("n") or 0, "fwd_avgR": f.get("avgR"), "basis": "2018年から", "score": round(sc, 4)})
     pool.sort(key=lambda r: (r["score"], -(r["n"] or 0), r["registered_at"] or ""))
     return pool, active
 
 
-def cull_one(tracker, reg, today):
-    pool, active = cull_pool(tracker, reg)
+def cull_some(tracker, reg, today, k):
+    """成績の悪いものから k 個外す（採点中が20本以下になったら止める）。→ (外した記録の並び, 説明, 外す前の本数)"""
+    pool, active = cull_pool(tracker, reg, today)
     if active <= POOL_FLOOR:
-        return None, f"採点中が {active} 本（{POOL_FLOOR} 本以下）なので外さない", active
+        return [], f"採点中が {active} 本（{POOL_FLOOR} 本以下）なので外さない", active
     if not pool:
-        return None, f"外せる条件（前向き{CULL_MIN_N}回以上など）を満たすものが無い", active
-    w = dict(pool[0])
-    w.update({"date": today, "pool_size": len(pool), "active_before": active})
-    if w["source"] == "signal":
-        h = next(x for x in tracker["hypotheses"] if x["id"] == w["id"])
-        h["status"], h["retired_at"], h["retire_reason"] = "retired", today, "culled"
-        if h.get("kind") == "gate" and (w.get("avgR") or 0) > 0:
-            fl = T.make_flip(h, h.get("forward") or {}, today)
-            if fl["id"] not in {x["id"] for x in tracker["hypotheses"]}:
-                empty = T.stats([], fl["filter"])            # 次の朝の update で数え直される（それまでの表示用）
-                fl.update({"status": "tracking", "forward": empty, "alltime": dict(empty), "history": [],
-                           "baseline": {"filter": {}, "n": 0, "avgR": 0.0, "excess": None}})
-                tracker["hypotheses"].append(fl)
-                w["flip_id"] = fl["id"]
-    else:
-        m = next(x for x in reg["methods"] if x["id"] == w["id"])
-        m["status"], m["retired_at"], m["retire_reason"] = "retired", today, "culled"
-    reg.setdefault("culls", []).append(w)
-    return w, "外した", active
+        return [], "外せる条件を満たすものが無い", active
+    out = []
+    left = active
+    for w0 in pool:
+        if len(out) >= k or left <= POOL_FLOOR:
+            break
+        w = dict(w0)
+        w.update({"date": today, "pool_size": len(pool), "active_before": active})
+        if w["source"] == "signal":
+            h = next(x for x in tracker["hypotheses"] if x["id"] == w["id"])
+            h["status"], h["retired_at"], h["retire_reason"] = "retired", today, "culled"
+            if h.get("kind") == "gate" and (w.get("avgR") or 0) > 0:
+                fl = T.make_flip(h, h.get("forward") or {}, today)
+                if fl["id"] not in {x["id"] for x in tracker["hypotheses"]}:
+                    empty = T.stats([], fl["filter"])            # 次の朝の update で数え直される（それまでの表示用）
+                    fl.update({"status": "tracking", "forward": empty, "alltime": dict(empty), "history": [],
+                               "baseline": {"filter": {}, "n": 0, "avgR": 0.0, "excess": None}})
+                    tracker["hypotheses"].append(fl)
+                    w["flip_id"] = fl["id"]
+                    left += 1
+        else:
+            m = next(x for x in reg["methods"] if x["id"] == w["id"])
+            m["status"], m["retired_at"], m["retire_reason"] = "retired", today, "culled"
+        reg.setdefault("culls", []).append(w)
+        out.append(w)
+        left -= 1
+    msg = f"{len(out)}件を外した" + ("" if len(out) >= k else f"（{k}件の予定のうち・採点中が{POOL_FLOOR}本に届いたので止めた）")
+    return out, msg, active
 
 
 def cmd_daily(args):
@@ -224,13 +241,14 @@ def cmd_daily(args):
         print("❌ signal-lab-tracker.json が読めない")
         sys.exit(1)
     events = judge_methods(reg, lab, today)
-    new_id, reg_msg = register_today(reg, lab, today)
-    cull, cull_msg, active = cull_one(tracker, reg, today)
+    new_ids, reg_msg = register_today(reg, lab, today)
+    k = max(1, len(new_ids))
+    culls, cull_msg, active = cull_some(tracker, reg, today, k)
     b = ((lab or {}).get("batches") or {}).get(today) or {}
-    day = {"lab_asof": lab.get("asof"), "forward_asof": lab.get("forward_asof"),
+    day = {"lab_asof": lab.get("asof"), "forward_asof": lab.get("forward_asof"), "rules_version": b.get("rules_version"),
            "chosen_id": (b.get("chosen") or {}).get("id"), "chosen_status": (b.get("chosen") or {}).get("status"),
-           "registered": new_id if reg_msg == "登録した" else None, "register_note": reg_msg,
-           "cull_id": cull["id"] if cull else None, "cull_note": cull_msg,
+           "registered": new_ids, "register_note": reg_msg,
+           "cull_ids": [c["id"] for c in culls], "cull_target": k, "cull_note": cull_msg,
            "events": [{"event": e, "id": m["id"], "name": m["name"]} for e, m in events],
            "active_before": active}
     reg["days"][today] = day
@@ -242,15 +260,14 @@ def cmd_daily(args):
         T.save_tracker(tracker)
     print(f"=== {today} の入れ替え ===")
     ch = b.get("chosen")
-    if ch:
-        print(f"今日の新しい方法: {ch['name']}（{ch.get('exit_ja')}）→ {reg_msg}")
-    else:
-        print(f"今日の新しい方法: なし → {reg_msg}")
-    if cull:
-        print(f"外したもの: [{cull['source']}] {cull['name']}（前向き {cull['n']}回・平均 {cull['avgR']:+.3f}R・"
-              f"良い側の端 {cull['score']:+.3f}）" + (f" → 逆向きで登録し直した {cull['flip_id']}" if cull.get("flip_id") else ""))
-    else:
-        print(f"外したもの: なし（{cull_msg}）")
+    print(f"今日の主役: {ch['name']}（{ch.get('exit_ja')}・{'合格' if ch.get('status') == 'passed' else '惜しかった方法'}）" if ch
+          else "今日の主役: なし")
+    print(f"登録: {reg_msg}")
+    for c in culls:
+        print(f"外した: [{c['source']}] {c['name']}（{c['basis']} {c['n']}回・1回あたり平均 {c['avgR']:+.3f}R）"
+              + (f" → 逆向きで登録し直した {c['flip_id']}" if c.get("flip_id") else ""))
+    if not culls:
+        print(f"外した: なし（{cull_msg}）")
     for e, m in events:
         print(f"判定: {m['name']} → {e}")
 
@@ -261,7 +278,7 @@ def cmd_status(args):
     pool, active = cull_pool(tracker, reg)
     print(f"採点中 {active} 本・外せる候補 {len(pool)} 本（悪い順の5つ）")
     for r in pool[:5]:
-        print(f"  {r['score']:+.3f} [{r['source']}] {r['name']}（n={r['n']}・平均 {r['avgR']:+.3f}R）")
+        print(f"  {r['score']:+.3f} [{r['source']}] {r['name']}（{r['basis']} {r['n']}回）")
     for m in reg.get("methods", []):
         f = m.get("forward") or {}
         print(f"  [{m['status']}] {m['id']} {m['name']} 登録 {m['registered_at']} 前向き n={f.get('n')} 平均 {f.get('avgR')}")
@@ -310,31 +327,80 @@ def result_table(ch):
             "「でたらめに入った場合」は、同じ銘柄・同じ期間・同じ向き・同じ手じまいで、入る日だけを2,000回でたらめに選んだときの平均。</p></div>")
 
 
+CHECK_ROWS = [("explore", "探す期間（2017年まで）", "その日に試したもの全部をまとめて見ても、でたらめに入った場合より良いと言える"),
+              ("eras", "時代", "2007年まで・2008〜2012年・2013〜2017年に分けても、でたらめより悪い時代は1つまで"),
+              ("instruments", "銘柄の広がり", "銘柄ごとに見ても、半分以上の銘柄ででたらめより良い"),
+              ("neighbors", "隣の値", "数を1つずつとなりの値に変えても、3分の2以上ででたらめより良い"),
+              ("markets", "別の市場", "監視している18銘柄に入っていない似た市場でも、でたらめより良い"),
+              ("confirm", "確かめる期間（2018年から）", "探す期間に使っていない年でも、偶然とは言いにくいほど良く、前半と後半の両方で良い"),
+              ("cost", "費用2倍", "売り買いの費用を2倍にしても、確かめる期間の平均がもうけ"),
+              ("frequency", "回数", "シグナルが1年に40回以上出る（これからの確かめが2年以内に進む）")]
+
+
+def checks_table(ch):
+    """過去の確かめ8つの結果（通った・落ちた）と、その中身の数字。"""
+    g = ch.get("gates") or {}
+    eras = ch.get("eras") or []
+    inst = ch.get("instruments") or {}
+    nb = ch.get("neighbors") or {}
+    ot = ch.get("others") or {}
+    co = ch.get("confirm") or {}
+    hv = co.get("halves") or []
+    ex = ch.get("explore") or {}
+    detail = {
+        "explore": f"{ex.get('n', 0)}回・でたらめとの差 {_r((ex.get('placebo') or {}).get('excess'))}",
+        "eras": "・".join(f"{e['from'][:4] if e['from'] > '1901' else ''}{'〜' if e['from'] > '1901' else '〜'}{e['to'][:4]}年 "
+                         f"{e['n']}回 {_r(e.get('excess'))}" for e in eras),
+        "instruments": f"{inst.get('counted', 0)}銘柄のうち{inst.get('positive', 0)}銘柄",
+        "neighbors": f"{nb.get('counted', 0)}通りのうち{nb.get('positive', 0)}通り" if nb.get("counted") else "変えられる数なし",
+        "markets": (f"{ot.get('markets', 0)}市場で{ot.get('n', 0)}回・でたらめとの差 {_r(ot.get('excess'))}"
+                    if (ot.get("n") or 0) >= 30 else f"{ot.get('n', 0)}回（30回未満なので判定なし）"),
+        "confirm": (f"{co.get('n', 0)}回・でたらめとの差 {_r((co.get('placebo') or {}).get('excess'))}・"
+                    + "・".join(f"{h['from'][:4]}〜{h['to'][:4]}年 {_r(h.get('excess'))}" for h in hv)) if co else "—",
+        "cost": f"平均 {_r(co.get('cost2_mean'))}" if co else "—",
+        "frequency": f"1年に{co.get('per_year')}回" if co else "—",
+    }
+    rows = "".join(f"<tr><td>{E(name)}</td><td>{'通った' if g.get(key) else '落ちた' if key in g else '数えていない'}</td>"
+                   f"<td>{E(detail[key])}</td><td>{E(why)}</td></tr>" for key, name, why in CHECK_ROWS)
+    return ("<div class=\"s-table-wrap\" data-mw-method-snippet=\"checks\"><table class=\"s-table\"><thead><tr><th>確かめ</th>"
+            "<th>結果</th><th>数字</th><th>何を見るか</th></tr></thead><tbody>" + rows + "</tbody></table>"
+            "<p class=\"s-chart-note\">数字は、損切りまでの幅を1としたときの1回あたりの損益の、でたらめに入った場合との差。"
+            "8つ全部を通ったものだけを登録します。</p></div>")
+
+
 def batch_box(b):
     c = b.get("counts") or {}
     src = c.get("by_source") or {}
+    steps = [("探す期間", "pass_explore"), ("時代", "pass_eras"), ("銘柄の広がり", "pass_instruments"), ("隣の値", "pass_neighbors"),
+             ("別の市場", "pass_markets"), ("確かめる期間", "pass_confirm"), ("費用2倍", "pass_cost"), ("回数", "pass_frequency")]
+    funnel = "、".join(f"{name} {c.get(key, 0)}" for name, key in steps)
+    regs = b.get("registered") or []
+    reg_html = ("<p><b>今日登録した方法</b>：" + "／".join(E(r["name"]) for r in regs) + "</p>") if regs else \
+        "<p><b>今日登録した方法</b>：なし（8つ全部を通ったものが無かった）</p>"
     return ("<div class=\"s-note\" data-mw-method-snippet=\"batch\"><p><b>今日ためした数</b>："
-            f"{c.get('tried', 0)}通り（考え方の一覧から{src.get('idea', 0)}・研究中の方法を1か所変えた形から{src.get('mutation', 0)}・"
+            f"{c.get('tried', 0)}通り（考え方の一覧から{src.get('idea', 0)}・研究中の方法などを1か所変えた形から{src.get('mutation', 0)}・"
             f"部品の組み合わせから{src.get('random', 0)}）</p>"
-            f"<p>探す期間の条件を満たした {c.get('pass_explore', 0)} ／ 確かめる期間の条件を満たした {c.get('pass_confirm', 0)} ／ "
-            f"回数の条件を満たした {c.get('pass_frequency', 0)} ／ <b>すべて満たした {c.get('pass_all', 0)}</b></p>"
-            "<p class=\"s-chart-note\">たくさん試すほど、偶然よく見えるものが混じります。だから合格しても、登録した日より後のシグナル（前向き）"
-            "だけで、もう一度確かめます。</p></div>")
+            f"<p>確かめを前から順に通って残った数：{funnel}。8つ全部を通ったもの {c.get('pass_all', 0)}"
+            f"（そのうち、すでにある方法とほぼ同じもの {c.get('duplicates', 0)}）</p>" + reg_html +
+            "<p class=\"s-chart-note\">たくさん試すほど、偶然よく見えるものが混じります。だから8つの確かめを全部通っても、"
+            "登録した日より後のシグナル（前向き）だけで、もう一度確かめます。</p></div>")
 
 
 def cull_box(day, reg, today):
-    cid = day.get("cull_id")
-    if not cid:
+    ids = day.get("cull_ids") or ([day["cull_id"]] if day.get("cull_id") else [])
+    if not ids:
         return (f"<div class=\"s-note\" data-mw-method-snippet=\"cull\"><p><b>今日外した方法</b>：なし"
                 f"（{E(day.get('cull_note') or '')}）</p></div>")
-    w = next((c for c in reversed(reg.get("culls", [])) if c["id"] == cid and c["date"] == today), None) or {}
-    kind = "避けるはずの条件" if w.get("kind") == "gate" else "勝ちやすいはずの条件" if w.get("source") == "signal" else "新しい方法"
-    flip = (f"<p>前向きでは逆に平均がプラスだったので、逆向き（勝ちやすいはず）として登録し直しました。</p>" if w.get("flip_id") else "")
-    return ("<div class=\"s-note\" data-mw-method-snippet=\"cull\"><p><b>今日外した方法</b>："
-            f"{E(w.get('name') or '')}（{kind}・{E((w.get('registered_at') or '')[:10])} 登録）</p>"
-            f"<p>登録した日より後のシグナル {w.get('n')}回で、1回あたり平均 {_rw(w.get('avgR'))}"
-            f"（95%の幅は {_r(w.get('lo'))}から{_r(w.get('hi'))}）。外せる {w.get('pool_size')}本の中で、"
-            "良く見積もった場合の見込みがいちばん低いものでした。</p>" + flip + "</div>")
+    items = []
+    for cid in ids:
+        w = next((c for c in reversed(reg.get("culls", [])) if c["id"] == cid and c["date"] == today), None) or {}
+        kind = "避けるはずの条件" if w.get("kind") == "gate" else "勝ちやすいはずの条件" if w.get("source") == "signal" else "新しい方法"
+        basis = ("2018年からの" if w.get("source") == "method" else "登録した日より後のシグナル")
+        flip = "前向きでは逆に平均がプラスだったので、逆向き（勝ちやすいはず）として登録し直しました。" if w.get("flip_id") else ""
+        items.append(f"<li>{E(w.get('name') or '')}（{kind}・{E((w.get('registered_at') or '')[:10])} 登録）："
+                     f"{basis}{w.get('n')}回で、1回あたり平均 {_rw(w.get('avgR'))}。{flip}</li>")
+    return ("<div class=\"s-note\" data-mw-method-snippet=\"cull\"><p><b>今日外した方法</b>"
+            f"（今日登録した数だけ・少なくとも1つ。研究中の中で、1回あたりの損益の平均が低い順）</p><ol>" + "".join(items) + "</ol></div>")
 
 
 def research_list(tracker, reg, limit=10):
@@ -343,18 +409,22 @@ def research_list(tracker, reg, limit=10):
     for m in reg.get("methods", []):
         if m.get("status") in ("tracking", "promoted"):
             f = m.get("forward") or {}
-            rows.append(("✅昇格" if m["status"] == "promoted" else "🟡採点中", m["name"], m["registered_at"], f))
+            sc, tot = method_score(m)
+            rows.append(("昇格" if m["status"] == "promoted" else "採点中", m["name"], m["registered_at"], f, sc, tot))
+    rows.sort(key=lambda r: -(r[4] if r[4] is not None else -9))
     head = ("<div class=\"s-table-wrap\" data-mw-method-snippet=\"list\"><table class=\"s-table\"><thead><tr><th>状態</th>"
-            "<th>研究中の新しい方法</th><th>登録</th><th>前向きの回数</th><th>1回あたりの損益の平均</th></tr></thead><tbody>")
-    body = "".join(f"<tr><td>{s}</td><td>{E(n)}</td><td>{E(d)}</td><td>{f.get('n') or 0}回</td><td>{_r(f.get('avgR'))}</td></tr>"
-                   for s, n, d, f in rows) or "<tr><td colspan=\"5\">まだありません</td></tr>"
-    worst = "".join(f"<li>{E(r['name'])}（前向き {r['n']}回・1回あたり平均 {_rw(r['avgR'])}）</li>" for r in pool[:3])
+            "<th>研究中の新しい方法</th><th>登録</th><th>2018年からの1回あたりの損益の平均</th><th>登録後の回数</th></tr></thead><tbody>")
+    body = "".join(f"<tr><td>{s2}</td><td>{E(n)}</td><td>{E(d)}</td><td>{_r(sc)}（{tot}回）</td><td>{f.get('n') or 0}回</td></tr>"
+                   for s2, n, d, f, sc, tot in rows[:limit]) or "<tr><td colspan=\"5\">まだありません</td></tr>"
+    more = f"（ほかに {len(rows) - limit} 本）" if len(rows) > limit else ""
+    worst = "".join(f"<li>{E(r['name'])}（{r['basis']} {r['n']}回・1回あたり平均 {_rw(r['avgR'])}）</li>" for r in pool[:3])
     return (head + body + "</tbody></table>"
-            f"<p class=\"s-chart-note\">ほかに、シグナルが出た場面の条件（仮説）を含めて合わせて {active} 本を採点中。"
-            "損益の数字は損切りまでの幅を1としたときの1回あたりの倍率。次に外れる候補（良く見積もった見込みが低い順）：</p><ol>" + worst + "</ol></div>")
+            f"<p class=\"s-chart-note\">{more}シグナルが出た場面の条件（仮説）を含めて合わせて {active} 本を採点中。"
+            "損益の数字は損切りまでの幅を1としたときの1回あたりの倍率。次に外れる候補（1回あたりの損益の平均が低い順）：</p><ol>" + worst + "</ol></div>")
 
 
-MARKERS = {"METHOD_RESULT": "result", "METHOD_BATCH": "batch", "CULL_BOX": "cull", "RESEARCH_LIST": "list"}
+MARKERS = {"METHOD_RESULT": "result", "METHOD_CHECKS": "checks", "METHOD_BATCH": "batch", "CULL_BOX": "cull",
+           "RESEARCH_LIST": "list"}
 
 
 def cmd_report(args):
@@ -369,6 +439,7 @@ def cmd_report(args):
         sys.exit(1)
     ch = b.get("chosen") or {}
     blocks = {"result": result_table(ch) if ch else "<p>今日は数えられた候補がありませんでした。</p>",
+              "checks": checks_table(ch) if ch else "",
               "batch": batch_box(b), "cull": cull_box(day, reg, today), "list": research_list(tracker, reg)}
     if not args.into:
         for k, v in blocks.items():
@@ -376,6 +447,12 @@ def cmd_report(args):
         return
     path = args.into
     txt = open(path, encoding="utf-8").read()
+    if "<!-- MW:METHOD_CHECKS -->" not in txt and "<!-- MW:METHOD_RESULT -->" in txt:
+        # 第2版で足した目印。予約の指示（第1版の4つ）どおりに書かれた下書きでも、過去の成績の表のすぐ後ろに置く
+        i = txt.index("<!-- MW:METHOD_RESULT -->")
+        j = txt.find("<!-- /MW:METHOD_RESULT -->", i)
+        at = (j + len("<!-- /MW:METHOD_RESULT -->")) if j >= 0 else (i + len("<!-- MW:METHOD_RESULT -->"))
+        txt = txt[:at] + "\n<!-- MW:METHOD_CHECKS -->" + txt[at:]
     for mk, key in MARKERS.items():
         start, end = f"<!-- MW:{mk} -->", f"<!-- /MW:{mk} -->"
         new = f"{start}\n{blocks[key]}\n{end}"

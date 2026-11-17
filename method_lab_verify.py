@@ -21,12 +21,16 @@ method-claims.json の形:
     {"label": "外した方法の平均",   "what": "cull",   "field": "avgR",     "value": -0.18}
   ]
 }
-what と field:
-  method（その日の新しい方法＝合格しなかった日は惜しかった方法）× period=explore／confirm:
-      n・mean・lo・hi（R）・win（%・小数1桁）・placebo_mean・excess（R）・p（小数3桁）・z・per_year
+what と field（第2版・2026-11-17 夜）:
+  method（その日の主役＝登録したもののうち探す期間の z がいちばん大きいもの／登録が無い日は惜しかった方法。
+          "id" を書けば、その日に登録したほかの方法も指せる）× period=explore／confirm:
+      n・mean・lo・hi（R）・win（%・小数1桁）・placebo_mean・excess（R）・p・z・per_year・cost2_mean（R・confirm だけ）
+  era（"era": 0〜2＝〜2007／2008〜2012／2013〜2017）・half（"half": 0〜1＝2018〜2021／2022〜）: n・mean・excess
+  others（別の市場）: n・mean・excess・markets ／ instruments: counted・positive ／ neighbors: counted・positive
   year（年ごと・図に使う）: n・mean
-  batch: tried・pass_explore・pass_confirm・pass_frequency・pass_all・idea・mutation・random
-  cull（その日に外した方法）: n・avgR・lo・hi・score（R）・pool_size
+  batch: tried・pass_explore・pass_eras・pass_instruments・pass_neighbors・pass_markets・pass_confirm・pass_cost・
+         pass_frequency・pass_all・duplicates・registered・idea・mutation・random
+  cull（その日に外したもの・"id" で選ぶ。1つだけの日は省略可）: n・avgR・score・pool_size
 R の値は小数2桁（例 0.20・−0.05）。本文では「損切り幅の0.20倍のもうけ」「損切り幅の0.05倍の損」と書く
 （やさしい日本語の検査 check_plain_japanese が「R」と「×」を止めるため）。この形も R の値として照合する。
 
@@ -54,15 +58,18 @@ LAB_PATH = os.path.join(ROOT, "method-lab.json")
 REG_PATH = os.path.join(ROOT, "method-lab-registry.json")
 FIXABLE = "[直せる]"
 
-METHOD_FIELDS = {"n", "mean", "lo", "hi", "win", "placebo_mean", "excess", "p", "z", "per_year"}
-R_FIELDS = {"mean", "lo", "hi", "placebo_mean", "excess", "avgR", "score"}
-BATCH_FIELDS = {"tried", "pass_explore", "pass_confirm", "pass_frequency", "pass_all", "idea", "mutation", "random"}
+METHOD_FIELDS = {"n", "mean", "lo", "hi", "win", "placebo_mean", "excess", "p", "z", "per_year", "cost2_mean"}
+R_FIELDS = {"mean", "lo", "hi", "placebo_mean", "excess", "avgR", "score", "cost2_mean"}
+BATCH_FIELDS = {"tried", "pass_explore", "pass_eras", "pass_instruments", "pass_neighbors", "pass_markets", "pass_confirm",
+                "pass_cost", "pass_frequency", "pass_all", "duplicates", "registered", "idea", "mutation", "random"}
 CULL_FIELDS = {"n", "avgR", "lo", "hi", "score", "pool_size"}
 YEAR_FIELDS = {"n", "mean"}
+PART_FIELDS = {"n", "mean", "excess"}
+COUNT_FIELDS = {"n", "counted", "positive", "markets", "pool_size"}
 CONST_R = {0.1, 0.15, 0.5, 1.0, 1.3, 1.33, 1.5, 2.0, 3.0}
 CONST_PCT = {0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 50.0, 95.0, 100.0}
 CONST_COUNT = {0, 1, 2, 3, 5, 10, 20, 30, 40, 48, 50, 80, 100, 2000, 2017, 2018}
-MARKERS = ("METHOD_RESULT", "METHOD_BATCH", "CULL_BOX", "RESEARCH_LIST")
+MARKERS = ("METHOD_RESULT", "METHOD_CHECKS", "METHOD_BATCH", "CULL_BOX", "RESEARCH_LIST")
 BANNED = [
     (r"おすすめ|オススメ|お勧め|推奨|最適|ベスト|一択|使うべき|選ぶべき|べきです|べきだ", "推奨・断定の言い方"),
     (r"必ず(?:勝|儲|利益|上が|下が)|儲か|確実に|保証|勝てる方法|負けない", "利益を約束する言い方"),
@@ -98,22 +105,28 @@ def load_batch(date):
     return None, None
 
 
-def load_cull(date):
+def load_culls(date):
+    """その日に外したものの並び（いまの版 → git の履歴）。"""
     if os.path.exists(REG_PATH):
         cur = json.load(open(REG_PATH, encoding="utf-8"))
         hit = [c for c in cur.get("culls", []) if c.get("date") == date]
         if hit:
-            return hit[-1], "いまの版"
+            return hit, "いまの版"
     for d, where in _git_versions(REG_PATH):
         hit = [c for c in d.get("culls", []) if c.get("date") == date]
         if hit:
-            return hit[-1], where
-    return None, None
+            return hit, where
+    return [], None
 
 
-def actual_value(cl, batch, cull):
+def actual_value(cl, batch, culls):
     what, field = cl.get("what"), cl.get("field")
     ch = (batch or {}).get("chosen") or {}
+    if cl.get("id") and what not in ("cull", "batch"):
+        ch = next((r for r in (batch or {}).get("registered") or [] if r.get("id") == cl["id"]),
+                  ch if ch.get("id") == cl["id"] else None)
+        if ch is None:
+            return "bad"
     if what == "method":
         if field not in METHOD_FIELDS:
             return "bad"
@@ -121,7 +134,20 @@ def actual_value(cl, batch, cull):
         pl = s.get("placebo") or {}
         return {"n": s.get("n"), "mean": s.get("mean"), "lo": s.get("lo"), "hi": s.get("hi"),
                 "win": None if s.get("win") is None else 100 * s["win"], "placebo_mean": pl.get("mean"),
-                "excess": pl.get("excess"), "p": pl.get("p"), "z": pl.get("z"), "per_year": s.get("per_year")}[field]
+                "excess": pl.get("excess"), "p": pl.get("p_norm", pl.get("p")), "z": pl.get("z"),
+                "per_year": s.get("per_year"), "cost2_mean": s.get("cost2_mean")}[field]
+    if what in ("era", "half"):
+        if field not in PART_FIELDS:
+            return "bad"
+        parts = ch.get("eras") if what == "era" else (ch.get("confirm") or {}).get("halves")
+        i = cl.get(what)
+        if not isinstance(i, int) or not parts or not 0 <= i < len(parts):
+            return "bad"
+        return parts[i].get(field)
+    if what == "others":
+        return (ch.get("others") or {}).get(field) if field in {"n", "mean", "excess", "markets"} else "bad"
+    if what in ("instruments", "neighbors"):
+        return (ch.get(what) or {}).get(field) if field in {"counted", "positive"} else "bad"
     if what == "year":
         if field not in YEAR_FIELDS:
             return "bad"
@@ -135,7 +161,8 @@ def actual_value(cl, batch, cull):
     if what == "cull":
         if field not in CULL_FIELDS:
             return "bad"
-        return None if cull is None else cull.get(field)
+        hit = [c for c in culls if c.get("id") == cl.get("id")] if cl.get("id") else (culls if len(culls) == 1 else [])
+        return hit[0].get(field) if hit else None
     return "bad"
 
 
@@ -146,7 +173,7 @@ def same(field, actual, claimed):
         claimed = float(claimed)
     except Exception:
         return False
-    if field in ("n", "pool_size") or field in BATCH_FIELDS:
+    if field in COUNT_FIELDS or field in BATCH_FIELDS:
         return int(round(claimed)) == int(actual)
     if field == "win":
         return abs(round(actual, 1) - claimed) < 0.051
@@ -218,8 +245,8 @@ def main():
         print("RED（要人間レビュー）")
         sys.exit(1)
     print(f"  method-lab.json: {where}（{(batch.get('counts') or {}).get('tried')}通り）")
-    cull, cwhere = load_cull(date)
-    if any(cl.get("what") == "cull" for cl in claims.get("claims", [])) and cull is None:
+    culls, cwhere = load_culls(date)
+    if any(cl.get("what") == "cull" for cl in claims.get("claims", [])) and not culls:
         fails.append(f"{FIXABLE} cull の claim があるのに、{date} に外した記録が method-lab-registry.json に無い"
                      "（research_rotation.py daily を先に動かす／外さなかった日は cull の claim を消す）")
 
@@ -227,7 +254,7 @@ def main():
     ok = 0
     for cl in claims.get("claims", []):
         label, field = cl.get("label", "?"), cl.get("field")
-        act = actual_value(cl, batch, cull)
+        act = actual_value(cl, batch, culls)
         if act == "bad":
             fails.append(f"{FIXABLE} [{label}] what={cl.get('what')!r} field={field!r} は使えない")
             continue
@@ -236,7 +263,7 @@ def main():
             continue
         ok += 1
         v = float(cl["value"])
-        if field in R_FIELDS or (cl.get("what") == "year" and field == "mean"):
+        if field in R_FIELDS or (cl.get("what") in ("year", "era", "half", "others") and field in ("mean", "excess")):
             allowed["R"].append(v)
         elif field == "win":
             allowed["%"].append(v)
