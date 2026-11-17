@@ -371,12 +371,14 @@ def funnel_svg(c):
 
 def years_svg(by_year, title="年ごとの1回あたりの損益の平均（損切り幅を1としたときの倍率・費用を引いたあと）"):
     """主役の方法の年ごとの平均（縦棒）。2017年までが探す期間・2018年からが確かめる期間。"""
-    ys = sorted((int(y), v[1]) for y, v in (by_year or {}).items() if v and v[1] is not None)
-    if not ys:
+    have = {int(y): v[1] for y, v in (by_year or {}).items() if v and v[1] is not None}
+    if not have:
         return ""
+    # 売買の無かった年も空けて並べる（詰めると目盛りの年の間隔がずれる）
+    ys = [(y, have.get(y)) for y in range(min(have), max(have) + 1)]
     W, H = 640, 280
     L, Rr, T, B = 64, 624, 56, 236            # 棒を描く枠（左・右・上・下）
-    mx = max(abs(v) for _y, v in ys)
+    mx = max(abs(v) for _y, v in ys if v is not None)
     scale = 0.25 if mx <= 0.25 else 0.5 if mx <= 0.5 else 1.0
     zero = (T + B) / 2
     k = (B - T) / 2 / scale
@@ -405,8 +407,8 @@ def years_svg(by_year, title="年ごとの1回あたりの損益の平均（損�
         texts.append(f'<text x="{xs + 8:.1f}" y="{T - 8}" font-size="11" {_FONT} {_MUTED}>{right}</text>')
     for i, (y, v) in enumerate(ys):
         x = L + step * i + (step - bw) / 2
-        y1, y2 = sorted((yy(v), zero))
-        if y2 - y1 >= 0.5:
+        y1, y2 = sorted((yy(v if v is not None else 0), zero))
+        if v is not None and y2 - y1 >= 0.5:
             color = "var(--c-green,#16a34a)" if v > 0 else "var(--c-red,#dc2626)"
             bars.append(f'<rect x="{x:.1f}" y="{y1:.1f}" width="{bw:.1f}" height="{y2 - y1:.1f}" fill="{color}" opacity=".8" rx="1"/>')
         if (n <= 12 or y % 5 == 0):
