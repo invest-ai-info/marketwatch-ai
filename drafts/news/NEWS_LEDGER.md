@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-11-17
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均2日続落・58,860円（−1.34%）、エヌビディア本日Q3 FY2027決算発表前にAI・半導体株安継続。東京エレクトロン・アドバンテスト主導の下落、米国半導体輸出規制・日銀利上げ観測が重なった背景と3シナリオを中立整理。（カテゴリ: 日本株・半導体・AI・エヌビディア・マクロ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - News on Japan「Japan Stocks Extend Sharp Selloff as Nikkei Falls Below 59,000」2026-11-17
+  - JapanNews24「Japan Stocks Extend Sharp Selloff As Nikkei Falls Below 59,000」2026-11-17
+  - Business Recorder「Japan's Nikkei slips as investors shun risk ahead of Nvidia earnings」2026-11-17
+  - Seeking Alpha「Nvidia Earnings Preview: Q3 2027」2026-11-12
+  - FourWeekMBA「Nvidia Earnings Nov. 17: $108B Guide」2026-11-17
+  - Blofin「Nvidia Q3 FY2027 Earnings Preview」2026-11-17
+  - S&P Global Market Intelligence「Nvidia Earnings Preview: Q3 2027」2026-11-12
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（修正なし）→ 最終判定 🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典8系統 ✅）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典8系統 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告72件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-17-nvidia-earnings-nikkei.html
+- commit: d4b444c（main へ push 済み）
+
+---
+
 ## 2026-11-16
 - 判定: ✅ 公開済み
 - 選定トピック: 日本GDP2026年7-9月期速報値 年率0.1%減・4四半期ぶりのマイナス成長。個人消費2期連続減・原油輸入急増が要因。日銀12月18日会合への影響と3シナリオを中立整理。（カテゴリ: マクロ・GDP・日銀・日本株・為替）
