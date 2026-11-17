@@ -268,11 +268,25 @@ def cmd_status(args):
 
 
 # ─────────────────────────── report（下書きへの差し込み） ───────────────────────────
-E = html.escape
+def E(s):
+    """表と箱に出す文字。やさしい日本語の検査（固定）で止まる英字はここで言い換える（routine は直せないため）。"""
+    for a, b in (("ADX", "トレンドの強さの指標"),):
+        s = str(s).replace(a, b)
+    return html.escape(s)
 
 
 def _r(v, d=2):
-    return "—" if v is None else f"{v:+.{d}f}R".replace("-", "−")
+    """表の中の損益（損切り幅の何倍か）。やさしい日本語の決まりで「R」は書かない。"""
+    return "—" if v is None else f"{v:+.{d}f}".replace("-", "−")
+
+
+def _rw(v):
+    """文の中の損益：「損切り幅の0.17倍の損」「損切り幅の0.20倍のもうけ」。"""
+    if v is None:
+        return "—"
+    if round(v, 2) == 0:
+        return "ほぼ0（もうけも損もない）"
+    return f"損切り幅の{abs(v):.2f}倍の{'もうけ' if v > 0 else '損'}"
 
 
 def _p(v):
@@ -289,10 +303,11 @@ def result_table(ch):
                     f"<td>{_r(s.get('lo'))}〜{_r(s.get('hi'))}</td><td>{_p(s.get('win'))}</td>"
                     f"<td>{_r(pl.get('mean'))}</td><td>{_r(pl.get('excess'))}</td></tr>")
     return ("<div class=\"s-table-wrap\" data-mw-method-snippet=\"result\"><table class=\"s-table\">"
-            "<thead><tr><th>期間</th><th>回数</th><th>1回あたりの平均</th><th>95%の幅</th><th>勝ち（プラスで終わった）の割合</th>"
+            "<thead><tr><th>期間</th><th>回数</th><th>1回あたりの損益の平均</th><th>95%の幅</th><th>もうけで終わった割合</th>"
             "<th>でたらめに入った場合の平均</th><th>でたらめとの差</th></tr></thead><tbody>" + "".join(rows) +
-            "</tbody></table><p class=\"s-chart-note\">R＝損切りまでの幅（ATR×1.5）を1とした損益。費用（スプレッド）を引いたあと。"
-            "「でたらめに入った場合」＝同じ銘柄・同じ期間・同じ向き・同じ手じまいで、入る日だけを2,000回でたらめに選んだ平均。</p></div>")
+            "</tbody></table><p class=\"s-chart-note\">損益の数字は、損切りまでの幅（ATR（ふだんの1日の値動きの幅）の1.5倍）を1としたとき、"
+            "1回あたり何倍のもうけ（プラス）か損（マイナス）か。費用（スプレッド）を引いたあと。"
+            "「でたらめに入った場合」は、同じ銘柄・同じ期間・同じ向き・同じ手じまいで、入る日だけを2,000回でたらめに選んだときの平均。</p></div>")
 
 
 def batch_box(b):
@@ -317,8 +332,8 @@ def cull_box(day, reg, today):
     flip = (f"<p>前向きでは逆に平均がプラスだったので、逆向き（勝ちやすいはず）として登録し直しました。</p>" if w.get("flip_id") else "")
     return ("<div class=\"s-note\" data-mw-method-snippet=\"cull\"><p><b>今日外した方法</b>："
             f"{E(w.get('name') or '')}（{kind}・{E((w.get('registered_at') or '')[:10])} 登録）</p>"
-            f"<p>登録した日より後のシグナル {w.get('n')}回で、1回あたりの平均 {_r(w.get('avgR'))}・"
-            f"95%の幅 {_r(w.get('lo'))}〜{_r(w.get('hi'))}。外せる {w.get('pool_size')}本の中で、"
+            f"<p>登録した日より後のシグナル {w.get('n')}回で、1回あたり平均 {_rw(w.get('avgR'))}"
+            f"（95%の幅は {_r(w.get('lo'))}から{_r(w.get('hi'))}）。外せる {w.get('pool_size')}本の中で、"
             "良く見積もった場合の見込みがいちばん低いものでした。</p>" + flip + "</div>")
 
 
@@ -330,13 +345,13 @@ def research_list(tracker, reg, limit=10):
             f = m.get("forward") or {}
             rows.append(("✅昇格" if m["status"] == "promoted" else "🟡採点中", m["name"], m["registered_at"], f))
     head = ("<div class=\"s-table-wrap\" data-mw-method-snippet=\"list\"><table class=\"s-table\"><thead><tr><th>状態</th>"
-            "<th>研究中の新しい方法</th><th>登録</th><th>前向きの回数</th><th>1回あたりの平均</th></tr></thead><tbody>")
+            "<th>研究中の新しい方法</th><th>登録</th><th>前向きの回数</th><th>1回あたりの損益の平均</th></tr></thead><tbody>")
     body = "".join(f"<tr><td>{s}</td><td>{E(n)}</td><td>{E(d)}</td><td>{f.get('n') or 0}回</td><td>{_r(f.get('avgR'))}</td></tr>"
                    for s, n, d, f in rows) or "<tr><td colspan=\"5\">まだありません</td></tr>"
-    worst = "".join(f"<li>{E(r['name'])}（前向き {r['n']}回・平均 {_r(r['avgR'])}）</li>" for r in pool[:3])
+    worst = "".join(f"<li>{E(r['name'])}（前向き {r['n']}回・1回あたり平均 {_rw(r['avgR'])}）</li>" for r in pool[:3])
     return (head + body + "</tbody></table>"
             f"<p class=\"s-chart-note\">ほかに、シグナルが出た場面の条件（仮説）を含めて合わせて {active} 本を採点中。"
-            "次に外れる候補（良く見積もった見込みが低い順）：</p><ol>" + worst + "</ol></div>")
+            "損益の数字は損切りまでの幅を1としたときの1回あたりの倍率。次に外れる候補（良く見積もった見込みが低い順）：</p><ol>" + worst + "</ol></div>")
 
 
 MARKERS = {"METHOD_RESULT": "result", "METHOD_BATCH": "batch", "CULL_BOX": "cull", "RESEARCH_LIST": "list"}

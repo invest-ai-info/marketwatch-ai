@@ -239,9 +239,10 @@ CLAIMS = {"article_id": "153", "method_date": "2026-11-18", "claims": [
     {"what": "batch", "field": "tried", "value": 48},
     {"what": "cull", "field": "avgR", "value": -0.17},
     {"what": "year", "year": "2024", "field": "mean", "value": 0.38}]}
-GOOD = ("<html><body><p>今日は48通りを試しました。過去の探す期間では723回で平均 +0.20R、確かめる期間ではでたらめとの差 +0.02R。"
-        "2024年は +0.38R。たくさん試すと偶然よく見えるものが混じるので、前向きで確かめるために登録しました。"
-        "外した方法は平均 −0.17R でした。</p>" + MARKS + "</body></html>")
+GOOD = ("<html><body><p>今日は48通りを試しました。過去の探す期間では723回で1回あたり平均 損切り幅の0.20倍のもうけ、"
+        "確かめる期間ではでたらめとの差 +0.02。2024年は損切り幅の0.38倍のもうけ。"
+        "たくさん試すと偶然よく見えるものが混じるので、前向きで確かめるために登録しました。"
+        "外した方法は1回あたり平均 損切り幅の0.17倍の損でした。</p>" + MARKS + "</body></html>")
 
 
 def test_verify_green():
@@ -254,7 +255,11 @@ def test_verify_catches_wrong_and_unbacked_numbers():
     bad["claims"][1]["value"] = 0.25
     code, out = run_verify(GOOD, bad)
     assert code == 1 and "主張 0.25" in out
-    code, out = run_verify(GOOD.replace("+0.38R", "+0.45R"), CLAIMS)
+    code, out = run_verify(GOOD.replace("0.38倍", "0.45倍"), CLAIMS)
+    assert code == 1 and "出どころの無い数字" in out
+    code, out = run_verify(GOOD.replace("0.17倍の損", "0.17倍のもうけ"), CLAIMS)    # もうけと損の取り違え
+    assert code == 1 and "出どころの無い数字" in out
+    code, out = run_verify(GOOD.replace("+0.02。", "+0.03。"), CLAIMS)
     assert code == 1 and "出どころの無い数字" in out
 
 
@@ -269,6 +274,23 @@ def test_verify_wording_and_requirements():
     assert code == 1 and "ためした数" in out
     code, out = run_verify(GOOD.replace("<!-- MW:CULL_BOX -->", ""), CLAIMS)
     assert code == 1 and "CULL_BOX" in out
+
+
+def test_snippets_are_plain_japanese():
+    """差し込む表と箱は routine が直せない＝やさしい日本語の検査（固定）をそのまま通る形で出す。"""
+    import check_plain_japanese as P
+    tracker = {"hypotheses": [hyp(f"z{i}", hi=0.5) for i in range(3)]}
+    reg = {"methods": [{"id": "ml-1", "name": "株価指数の5つで、「RSI（2日）が10より下」のときに買う", "status": "tracking",
+                        "registered_at": "2026-11-18", "forward": {"n": 0, "avgR": None}}],
+           "culls": [{"date": "2026-11-18", "id": "x", "name": "逆張り買い全般（4時間足のみ）", "kind": "edge", "source": "signal",
+                      "registered_at": "2026-09-27", "n": 182, "avgR": -0.179, "lo": -0.398, "hi": 0.039, "pool_size": 36}]}
+    day = {"cull_id": "x"}
+    html = ("<html><head><title>t</title></head><body><main><p>ATR（ふだんの1日の値動きの幅）とRSI（相対力指数：上げ下げの勢い）。</p>"
+            + RR.result_table(BATCH["chosen"]) + RR.batch_box(BATCH) + RR.cull_box(day, reg, "2026-11-18")
+            + RR.research_list(tracker, reg) + "</main></body></html>")
+    found = P.check_html(html)
+    assert not found, found[:5]
+    assert all(ja and "×" not in ja for ja in M.EXIT_JA.values())
 
 
 if __name__ == "__main__":

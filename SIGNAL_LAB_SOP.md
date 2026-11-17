@@ -71,7 +71,7 @@ python method_lab_verify.py drafts/draft-signal-lab-NNN.html drafts/labnotes/lab
 - **材料**：`method-lab.json` の `batches["<D>"]`（`chosen`＝今日の方法・`counts`＝今日ためした数・`rows`＝全部の候補）と、`method-lab-registry.json` の `days["<D>"]`・`culls`（今日外した方法）。値段は取りにいかない（数字は全部ここにある）
 - **下書きの形**（手本 `guide-signal-lab-015.html` の構造・やさしい日本語・kinsho-v1）：
   1. 題名＝問いの形＋回数＋`#NNN`（例「株価指数が上げ相場で2日だけ急に下げたら買う方法は通じる？ 過去723回で確かめた【研究日誌 #153】」）
-  2. 30秒まとめ＝今日の方法（言葉で）／過去の2つの期間の1回あたりの平均（R・小数2桁）とでたらめとの差／合格して前向きに登録したか（惜しかった日は「登録しない」）／今日ためした数／今日外した方法。**30秒まとめに % は書かない**（signal_lab_verify が % を claims.json と照合するため・勝ちの割合は本文で）
+  2. 30秒まとめ＝今日の方法（言葉で）／過去の2つの期間の1回あたりの平均（「損切り幅の0.20倍のもうけ」の形・小数2桁）とでたらめとの差／合格して前向きに登録したか（惜しかった日は「登録しない」）／今日ためした数／今日外した方法。**30秒まとめに % は書かない**（signal_lab_verify が % を claims.json と照合するため・勝ちの割合は本文で）
   3. 今日の新しい方法＝決まりをやさしく（条件・入る時・手じまい・損切り）。「なぜ効くかもしれないか」＝`chosen.why`（考え方の一覧から来たとき）。部品の組み合わせ・1か所変えた形から来たときは、自分で考えた理由を「〜という考えもできる（確かめていない）」と書く。チャート風の図解1枚（入る瞬間・損切り・手じまい）
   4. 過去の成績＝目印 `<!-- MW:METHOD_RESULT -->` を1行（表は道具が差し込む）＋本文の説明＋年ごとの平均の棒グラフ（`chosen.by_year`・図の数字は claim に入れる）。確かめる期間の差が小さい・p が大きいなど**弱いところを必ず書く**
   5. 今日ためした数＝目印 `<!-- MW:METHOD_BATCH -->`。「たくさん試すほど偶然よく見えるものが混じる」「だから登録した日より後のシグナル（前向き）で確かめる」を本文でも書く
@@ -79,6 +79,7 @@ python method_lab_verify.py drafts/draft-signal-lab-NNN.html drafts/labnotes/lab
   7. 研究中の方法＝目印 `<!-- MW:RESEARCH_LIST -->`。前向きトラッカー表（`<!-- MW:TRACKER_TABLE -->`）は**この回では入れない**（新しい方法だけを出す・オーナー決定）
   8. 関連カード（`guide-signal-anatomy.html` を含める）・免責
 - **claims**：`drafts/labnotes/lab-NNN-method-claims.json`（形は `method_lab_verify.py` の冒頭）。本文と図に出る R・%・回数は全部ここに入れる（表と箱の中の数字は入れなくてよい）。`drafts/labnotes/lab-NNN-claims.json` は `{"article_id":"NNN","asof":"<生成時刻>","claims":[]}` でよい（signals-log の数字を使った日だけ足す）
+- **数字の書き方（やさしい日本語）**：「R」と「×」は書かない。1回あたりの損益は「損切り幅の0.20倍のもうけ」「損切り幅の0.05倍の損」（`method_lab_verify.py` はこの形を R の値として照合する）。claims の value は小数のまま（例 0.20・−0.05）。ATR・RSI は初めて出たところでカッコの説明を付ける（差し込む表は「ATR（ふだんの1日の値動きの幅）」と書いてある）
 - **言い方**：過去の成績は「過去ではこうだった」まで。「効く」「勝てる」「おすすめ」は書かない。合格は「前向きで確かめる候補に入った」の意味
 - **コミット**：8-1 の `git add` に `method-lab-registry.json signal-lab-tracker.json`（入れ替えで書き換わる）と、手順2で自分で作ったときは `method-lab.json method-lab.md` を足す
 - **台帳の行**：`方法-<chosen.id>`（惜しかった日は `方法-<id>-惜`）と、外したものの ID を書く

@@ -27,7 +27,8 @@ what と field:
   year（年ごと・図に使う）: n・mean
   batch: tried・pass_explore・pass_confirm・pass_frequency・pass_all・idea・mutation・random
   cull（その日に外した方法）: n・avgR・lo・hi・score（R）・pool_size
-R の値は小数2桁（例 0.20・−0.05）。
+R の値は小数2桁（例 0.20・−0.05）。本文では「損切り幅の0.20倍のもうけ」「損切り幅の0.05倍の損」と書く
+（やさしい日本語の検査 check_plain_japanese が「R」と「×」を止めるため）。この形も R の値として照合する。
 
 検査（どれも赤＝公開しない）:
  ① method_date の候補が method-lab.json（いまの版 → 無ければ git の履歴）にある。cull の claim があれば、その日の
@@ -175,8 +176,18 @@ def body_text(html):
     return norm(clean(text)), norm(clean(" ".join(svg_parts)))
 
 
+RW = re.compile(r"損切り(?:まで)?の?幅の\s*(\d+(?:\.\d+)?)\s*倍(?:の(もうけ|利益|損失|損))?")
+
+
 def numbers_in(text):
+    """(種類, 値, 小数の桁数, 符号が決まっているか, 前後の文字)。やさしい日本語の「損切り幅の0.20倍のもうけ／の損」は
+    R の値として読む（もうけ＝プラス・損＝マイナス・どちらも無ければ大きさだけを比べる）。"""
     out = []
+    for m in RW.finditer(text):
+        num, word = m.group(1), m.group(2)
+        dec = len(num.split(".")[1]) if "." in num else 0
+        v = float(num) * (-1 if word in ("損失", "損") else 1)
+        out.append(("R", v, dec, bool(word), text[max(0, m.start() - 12):m.end() + 8]))
     for m in re.finditer(r"(?<![\d.])([+\-]?)(\d[\d,]*(?:\.\d+)?)\s*(R(?![A-Za-z])|%|回(?!目))?", text):
         sign, num, unit = m.group(1), m.group(2), m.group(3) or ""
         dec = len(num.split(".")[1]) if "." in num else 0
@@ -248,6 +259,8 @@ def main():
         pool = allowed["%"] if kind == "%" else allowed["R"] + allowed["±"]
         if any(abs(round(p, dec) - v) < 0.5 * 10 ** -dec + 1e-9 for p in pool):
             return True
+        if kind == "R" and not signed and any(abs(round(abs(p), dec) - abs(v)) < 0.5 * 10 ** -dec + 1e-9 for p in pool):
+            return True       # 「損切り幅の0.20倍」（もうけ／損が書かれていない）は大きさだけを比べる
         return not signed and ((kind in ("R", "±") and abs(v) in CONST_R) or (kind == "%" and v in CONST_PCT))
 
     unbacked = []
