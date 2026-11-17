@@ -336,9 +336,9 @@ window.addEventListener('resize',mark);
         <!-- 東証: 9:00-11:30 前場 + 12:30-15:30 後場 -->
         <!-- 9h = 22+9*27=265, 11.5h=22+11.5*27=333, 12.5h=22+12.5*27=359.5, 15.5h=22+15.5*27=440.5 -->
         <rect class="s-bar-blue" x="265" y="60" width="68" height="28" rx="4"/>
-        <text class="s-note" x="269" y="78" font-size="10.5">前場 9:00-11:30</text>
+        <text text-anchor="end" class="s-note" x="333" y="54" font-size="10.5">前場 9:00-11:30</text>
         <rect class="s-bar-blue" x="359" y="60" width="81" height="28" rx="4"/>
-        <text class="s-note" x="363" y="78" font-size="10.5">後場 12:30-15:30</text>
+        <text class="s-note" x="359" y="54" font-size="10.5">後場 12:30-15:30</text>
         <text class="s-legend" x="22" y="80" font-size="11.5" font-weight="700" fill="#0969da">東証</text>
         <!-- ロンドン（冬）: 17:00-翌1:30 JST -->
         <!-- 17h=22+17*27=481, 25.5h→24時で折り返し=22+24*27=670 あるいは翌1:30=1.5h=22+1.5*27=62.5 -->
@@ -466,7 +466,7 @@ window.addEventListener('resize',mark);
         <text class="s-note-g" x="120" y="55" font-size="10.5">ロンドン開場（17時）</text>
         <!-- NY開場シェード -->
         <rect fill="rgba(207,34,46,.08)" stroke="none" x="368" y="40" width="240" height="180"/>
-        <text class="s-note-r" x="370" y="55" font-size="10.5">NY開場（23:30）</text>
+        <text class="s-note-r" x="450" y="55" font-size="10.5">NY開場（23:30）</text>
         <!-- 重複帯シェード -->
         <rect fill="rgba(9,105,218,.16)" stroke="#0969da" stroke-width="1" stroke-dasharray="4 3" x="368" y="40" width="77" height="180"/>
         <text class="s-note" x="369" y="70" font-size="10">▼ 重複帯</text>
@@ -475,8 +475,8 @@ window.addEventListener('resize',mark);
         <polyline class="s-curve-g" points="40,200 80,198 117,190 150,170 200,158 264,150 302,145 340,140 368,118 400,90 445,85 454,100 492,130 540,165 590,185 630,195"/>
         <!-- 指標発表マーカー（21:30 = 40+(21.5-15)*38.7 = 40+6.5*38.7 = 291.6 ≈ 292） -->
         <line x1="264" y1="40" x2="264" y2="220" stroke="#9a6700" stroke-width="1.5" stroke-dasharray="5 3"/>
-        <text class="s-note-o" x="238" y="36" font-size="10">指標発表</text>
-        <text class="s-note-o" x="238" y="47" font-size="10">21:30頃（夏）</text>
+        <text text-anchor="end" class="s-note-o" x="260" y="72" font-size="10">指標発表</text>
+        <text text-anchor="end" class="s-note-o" x="260" y="86" font-size="10">21:30頃（夏）</text>
       </svg>
       <figcaption class="chart-caption">▲ FXボラティリティのイメージ（JST・冬時間）。緑シェードはロンドン開場、赤シェードはNY開場、青シェードはロンドン×NYの重複帯（23:30〜翌1:30）。橙の縦線は米国主要指標（NFP・CPI等）発表時刻の目安。図では夏時間（21:30）の位置に示しており、冬時間では22:30へずれます。重複帯でボラティリティがピークを迎えるのは、世界最大の流動性を持つロンドンと米国のトレーダーが同時に活動するため。※ 概念を示すイメージ図です。</figcaption>
     </figure>
@@ -549,8 +549,8 @@ window.addEventListener('resize',mark);
         <text class="s-label-sm" x="624" y="210">24時</text>
         <!-- デッドゾーン塗り（5〜9時）: x=50+5*24.6=173 → 50+9*24.6=271 -->
         <rect fill="rgba(207,34,46,.10)" x="173" y="35" width="98" height="160"/>
-        <text class="s-note-r" x="177" y="50" font-size="10">デッドゾーン</text>
-        <text class="s-note-r" x="177" y="62" font-size="10">5〜9時</text>
+        <text class="s-note-r" x="173" y="85" font-size="10">デッドゾーン</text>
+        <text class="s-note-r" x="173" y="97" font-size="10">5〜9時</text>
         <!-- 東京開場ライン（9時）: x=271 -->
         <line x1="271" y1="35" x2="271" y2="195" stroke="#0969da" stroke-width="1.2" stroke-dasharray="4 3"/>
         <text class="s-note" x="274" y="50" font-size="10">東証開場</text>
@@ -577,8 +577,8 @@ window.addEventListener('resize',mark);
         <polyline class="s-curve-l" points="50,115 99,100 173,65 222,55 271,95 345,110 419,105 468,120 542,130 617,158 640,115"/>
         <!-- 最小スプレッド帯ラベル（23:30前後） -->
         <rect fill="rgba(9,105,218,.12)" stroke="#0969da" stroke-width="1" stroke-dasharray="3 2" x="560" y="130" width="70" height="65" rx="3"/>
-        <text class="s-note" x="563" y="148" font-size="10">最低スプレッド</text>
-        <text class="s-note" x="563" y="160" font-size="10">帯(重複)</text>
+        <text text-anchor="end" class="s-note" x="556" y="172" font-size="10">最低スプレッド</text>
+        <text text-anchor="end" class="s-note" x="556" y="186" font-size="10">帯(重複)</text>
         <!-- Y軸補助ライン -->
         <line class="s-guide" x1="50" y1="115" x2="640" y2="115"/>
         <text class="s-label-sm" x="2" y="119" font-size="10">標準</text>

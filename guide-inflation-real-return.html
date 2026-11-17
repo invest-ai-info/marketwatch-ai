@@ -330,7 +330,7 @@ window.addEventListener('resize',mark);
         <rect x="40" y="60" width="140" height="160" rx="10" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
         <text class="s-note" x="110" y="90" text-anchor="middle">名目リターン</text>
         <text x="110" y="120" text-anchor="middle" fill="#0969da" font-size="28" font-weight="700" font-family="'Noto Sans JP',sans-serif">＋2.0%</text>
-        <text class="s-label-sm" x="110" y="148" text-anchor="middle">（例：株式の年間利回り）</text>
+        <text class="s-label-sm" x="110" y="238" text-anchor="middle">（例：株式の年間利回り）</text>
 
         <!-- マイナス記号 -->
         <text x="208" y="148" text-anchor="middle" fill="#cf222e" font-size="30" font-weight="700" font-family="'Noto Sans JP',sans-serif">−</text>
@@ -339,7 +339,7 @@ window.addEventListener('resize',mark);
         <rect x="236" y="60" width="140" height="160" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
         <text class="s-note-r" x="306" y="90" text-anchor="middle">インフレ率</text>
         <text x="306" y="120" text-anchor="middle" fill="#cf222e" font-size="28" font-weight="700" font-family="'Noto Sans JP',sans-serif">２.0%</text>
-        <text class="s-label-sm" x="306" y="148" text-anchor="middle">（例：消費者物価上昇率）</text>
+        <text class="s-label-sm" x="306" y="238" text-anchor="middle">（例：消費者物価上昇率）</text>
 
         <!-- イコール記号 -->
         <text x="404" y="148" text-anchor="middle" fill="#57606a" font-size="30" font-weight="700" font-family="'Noto Sans JP',sans-serif">＝</text>
@@ -353,7 +353,7 @@ window.addEventListener('resize',mark);
         <text class="s-label-sm" x="516" y="184" text-anchor="middle">実質ゼロ＝買えるモノは不変</text>
 
         <!-- 注釈 -->
-        <text class="s-label-sm" x="320" y="260" text-anchor="middle">名目0.1%でインフレ2%なら → 実質 ≈ −1.9%（買えるモノが約1.9%分減る）</text>
+        <text class="s-label-sm" x="320" y="266" text-anchor="middle">名目0.1%でインフレ2%なら → 実質 ≈ −1.9%（買えるモノが約1.9%分減る）</text>
       </svg>
       <figcaption class="chart-caption">▲ 名目リターンから物価上昇分（インフレ率）を引いたものが実質リターン。名目で増えていても、インフレがそれを超えれば購買力は減る。<strong>数字上のプラスが実質マイナスになりうる</strong>のが最大のポイント。※ 概念を示すイメージ図です。</figcaption>
     </figure>
@@ -545,48 +545,48 @@ window.addEventListener('resize',mark);
         <text class="s-note" x="140" y="67" text-anchor="middle">資産クラス</text>
         <rect x="240" y="44" width="180" height="36" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-note" x="330" y="67" text-anchor="middle">インフレへの一般傾向</text>
-        <rect x="420" y="44" width="180" height="36" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
-        <text class="s-note" x="510" y="67" text-anchor="middle">主な理由（概念）</text>
+        <rect x="420" y="44" width="200" height="36" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-note" x="520" y="67" text-anchor="middle">主な理由（概念）</text>
 
         <!-- 行1: 現金・預金 -->
         <rect x="40" y="80" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-label-sm" x="140" y="104" text-anchor="middle">現金・預金</text>
         <rect x="240" y="80" width="180" height="40" fill="#ffebe9" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-note-r" x="330" y="104" text-anchor="middle">❌ 実質価値が目減り</text>
-        <rect x="420" y="80" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
-        <text class="s-label-sm" x="510" y="104" text-anchor="middle">金利＜インフレ率なら実質マイナス</text>
+        <rect x="420" y="80" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="520" y="104" text-anchor="middle">金利＜インフレ率なら実質マイナス</text>
 
         <!-- 行2: 債券（固定利付） -->
         <rect x="40" y="120" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-label-sm" x="140" y="144" text-anchor="middle">債券（固定利付）</text>
         <rect x="240" y="120" width="180" height="40" fill="#ffebe9" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-note-r" x="330" y="144" text-anchor="middle">❌ 実質価値が目減りしやすい</text>
-        <rect x="420" y="120" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
-        <text class="s-label-sm" x="510" y="144" text-anchor="middle">固定利率がインフレを下回ると損</text>
+        <rect x="420" y="120" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="520" y="144" text-anchor="middle">固定利率がインフレを下回ると損</text>
 
         <!-- 行3: 株式 -->
         <rect x="40" y="160" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-label-sm" x="140" y="184" text-anchor="middle">株式</text>
         <rect x="240" y="160" width="180" height="40" fill="#e6ffed" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-note-g" x="330" y="184" text-anchor="middle">△ 企業が値上げ転嫁できれば</text>
-        <rect x="420" y="160" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
-        <text class="s-label-sm" x="510" y="184" text-anchor="middle">利益・配当が増える企業もある</text>
+        <rect x="420" y="160" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="520" y="184" text-anchor="middle">利益・配当が増える企業もある</text>
 
         <!-- 行4: 不動産・実物資産 -->
         <rect x="40" y="200" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-label-sm" x="140" y="224" text-anchor="middle">不動産・実物資産</text>
         <rect x="240" y="200" width="180" height="40" fill="#e6ffed" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-note-g" x="330" y="224" text-anchor="middle">△ 資産価値が追随する傾向</text>
-        <rect x="420" y="200" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
-        <text class="s-label-sm" x="510" y="224" text-anchor="middle">物価に連動する資産としての性格</text>
+        <rect x="420" y="200" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="520" y="224" text-anchor="middle">物価に連動する資産としての性格</text>
 
         <!-- 行5: 金 -->
         <rect x="40" y="240" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
         <text class="s-label-sm" x="140" y="264" text-anchor="middle">金（ゴールド）</text>
         <rect x="240" y="240" width="180" height="40" fill="#fff8c5" stroke="#d0d7de" stroke-width="1"/>
         <text x="330" y="264" text-anchor="middle" fill="#9a6700" font-size="11.5" font-weight="700" font-family="'Noto Sans JP',sans-serif">△ インフレヘッジとして言及多い</text>
-        <rect x="420" y="240" width="180" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
-        <text class="s-label-sm" x="510" y="264" text-anchor="middle">相関は時期により変動する</text>
+        <rect x="420" y="240" width="200" height="40" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+        <text class="s-label-sm" x="520" y="264" text-anchor="middle">相関は時期により変動する</text>
       </svg>
       <figcaption class="chart-caption">▲ 各資産クラスとインフレの一般的な関係を教科書的に整理したもの。<strong>実際のパフォーマンスは経済状況・金利環境・個別要因によって大きく異なります</strong>。これは特定の商品を推奨するものではなく、概念的な整理です。※ 概念を示すイメージ図です。</figcaption>
     </figure>

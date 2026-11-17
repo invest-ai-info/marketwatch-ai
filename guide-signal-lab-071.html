@@ -334,7 +334,7 @@ window.addEventListener('resize',mark);
 
     <!-- Arrow showing deterioration -->
     <line x1="95" y1="135" x2="108" y2="145" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-red)"/>
-    <text x="102" y="128" font-size="9" fill="#dc2626" font-family="sans-serif" font-weight="bold">▼25pp</text>
+    <text x="113" y="133" font-size="9" fill="#dc2626" font-family="sans-serif" font-weight="bold">▼25pp</text>
     <defs>
       <marker id="arr-red" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
         <path d="M0,0 L0,6 L6,3 z" fill="#dc2626"/>
@@ -361,12 +361,12 @@ window.addEventListener('resize',mark);
 
     <!-- Short entry arrow (going down) -->
     <line x1="345" y1="78" x2="345" y2="95" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arr-red)"/>
-    <text x="350" y="73" font-size="9" fill="#dc2626" font-family="sans-serif" font-weight="bold">売り↓</text>
+    <text x="350" y="80" font-size="9" fill="#dc2626" font-family="sans-serif" font-weight="bold">売り↓</text>
 
     <!-- Bounce arrow (going up, blocked by wall → reversal) -->
     <line x1="408" y1="135" x2="408" y2="115" stroke="#16a34a" stroke-width="2" marker-end="url(#arr-up)"/>
-    <text x="415" y="150" font-size="9" fill="#16a34a" font-family="sans-serif" font-weight="bold">壁反発↑</text>
-    <text x="415" y="162" font-size="8" fill="#16a34a" font-family="sans-serif">→SLヒット</text>
+    <text x="415" y="170" font-size="9" fill="#16a34a" font-family="sans-serif" font-weight="bold">壁反発↑</text>
+    <text x="415" y="182" font-size="8" fill="#16a34a" font-family="sans-serif">→SLヒット</text>
 
     <!-- TP label (far down) -->
     <line x1="280" y1="195" x2="580" y2="195" stroke="#dc2626" stroke-width="0.8" stroke-dasharray="4,3"/>
@@ -374,7 +374,7 @@ window.addEventListener('resize',mark);
 
     <!-- SL label (above entry) -->
     <line x1="280" y1="68" x2="580" y2="68" stroke="#b91c1c" stroke-width="0.8" stroke-dasharray="4,3"/>
-    <text x="285" y="63" font-size="8" fill="#b91c1c" font-family="sans-serif">SL（ここで確定）</text>
+    <text x="285" y="58" font-size="8" fill="#b91c1c" font-family="sans-serif">SL（ここで確定）</text>
   </svg>
   <figcaption>左：IS期（58.5%）とFWD期（33.8%）の勝率比較。橙破線=ブレイクイーブン閾値43%　右：S/R壁があるショートは壁で価格が反発しやすく、TP1到達前にSLをヒットするケースが多い</figcaption>
   <p class="note">数値は 2026-08-16 基準の signals-log.json から算出。投資助言ではありません</p>
@@ -620,20 +620,20 @@ IS期の58.5%（31/53）は一見すると良い成績に見える。
 
     <!-- Status labels -->
     <rect x="40" y="110" width="110" height="32" fill="#fee2e2" rx="6" stroke="#dc2626" stroke-width="1.2"/>
-    <text x="95" y="128" font-size="10" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">⛔反証接近</text>
-    <text x="95" y="142" font-size="8" text-anchor="middle" fill="#b91c1c" font-family="sans-serif">CI上限＜43%確認済</text>
+    <text x="95" y="127" font-size="10" text-anchor="middle" fill="#b91c1c" font-family="sans-serif" font-weight="bold">⛔反証接近</text>
+    <text x="95" y="141" font-size="8" text-anchor="middle" fill="#b91c1c" font-family="sans-serif">CI上限＜43%確認済</text>
 
     <rect x="170" y="110" width="110" height="32" fill="#fef9c3" rx="6" stroke="#d97706" stroke-width="1.2"/>
-    <text x="225" y="128" font-size="10" text-anchor="middle" fill="#92400e" font-family="sans-serif" font-weight="bold">🟡蓄積→悪化</text>
-    <text x="225" y="142" font-size="8" text-anchor="middle" fill="#92400e" font-family="sans-serif">後半22%・Aug12.5%急落</text>
+    <text x="225" y="127" font-size="10" text-anchor="middle" fill="#92400e" font-family="sans-serif" font-weight="bold">🟡蓄積→悪化</text>
+    <text x="225" y="141" font-size="8" text-anchor="middle" fill="#92400e" font-family="sans-serif">後半22%・Aug12.5%急落</text>
 
     <rect x="300" y="110" width="130" height="32" fill="#dcfce7" rx="6" stroke="#16a34a" stroke-width="1.2"/>
-    <text x="365" y="128" font-size="10" text-anchor="middle" fill="#15803d" font-family="sans-serif" font-weight="bold">✅壁あり×ロング</text>
-    <text x="365" y="142" font-size="8" text-anchor="middle" fill="#15803d" font-family="sans-serif">FWD 46.6%（継続観察）</text>
+    <text x="365" y="127" font-size="10" text-anchor="middle" fill="#15803d" font-family="sans-serif" font-weight="bold">✅壁あり×ロング</text>
+    <text x="365" y="141" font-size="8" text-anchor="middle" fill="#15803d" font-family="sans-serif">FWD 46.6%（継続観察）</text>
 
     <rect x="450" y="110" width="110" height="32" fill="#e0f2fe" rx="6" stroke="#2563eb" stroke-width="1.2"/>
-    <text x="505" y="128" font-size="10" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">📡次の確認点</text>
-    <text x="505" y="142" font-size="8" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif">⛔確定 or Q4改善?</text>
+    <text x="505" y="127" font-size="10" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif" font-weight="bold">📡次の確認点</text>
+    <text x="505" y="141" font-size="8" text-anchor="middle" fill="#1d4ed8" font-family="sans-serif">⛔確定 or Q4改善?</text>
   </svg>
   <figcaption>前向き勝率33.8%のWilson CI上限（41.9%）がすでに43%閾値を下回り、ブレイクイーブン未満を統計的に確認。後半22.0%・Aug12.5%の時系列崩落が継続中</figcaption>
   <p class="note">トラッカー更新は毎朝 signal_lab_tracker.py で自動実行。投資助言ではありません</p>

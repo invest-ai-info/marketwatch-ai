@@ -355,8 +355,8 @@ window.addEventListener('resize',mark);
         <!-- 矢印で差を示す -->
         <line x1="305" y1="140" x2="305" y2="205" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arr-r)"/>
         <defs><marker id="arr-r" markerWidth="7" markerHeight="7" refX="3" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#cf222e"/></marker></defs>
-        <text class="s-note-r" x="310" y="175" font-size="11">ギャップ</text>
-        <text class="s-note-r" x="310" y="202" font-size="11">（空白）</text>
+        <text text-anchor="end" class="s-note-r" x="298" y="175" font-size="11">ギャップ</text>
+        <text text-anchor="end" class="s-note-r" x="298" y="202" font-size="11">（空白）</text>
       </svg>
       <figcaption class="chart-caption">▲ ザラ場中は価格が連続して動く（左）。市場クローズ中に悪いニュースが出ると、翌朝の始値が前日終値より大きく下で始まる（右＝ギャップダウン）。この「前日終値〜翌朝始値の間に誰も取引できなかった価格帯の空白」が「窓（ギャップ）」。上方向に開く場合はギャップアップ。※ 概念を示すイメージ図です。</figcaption>
     </figure>
@@ -406,7 +406,7 @@ window.addEventListener('resize',mark);
         <polyline class="s-price" points="60,90 110,100 160,110 210,122 248,135"/>
         <!-- SLライン -->
         <line class="s-brk" x1="50" y1="135" x2="295" y2="135"/>
-        <text class="s-label-sm" x="54" y="128">損切りライン（SL）= 1,000円</text>
+        <text class="s-label-sm" x="36" y="132">損切りライン（SL）= 1,000円</text>
         <!-- SLヒット -->
         <circle class="s-rev" cx="250" cy="135" r="7"/>
         <polyline class="s-price" points="250,135 270,133 295,131" style="opacity:.3"/>
@@ -421,7 +421,7 @@ window.addEventListener('resize',mark);
 
         <!-- SLライン（1,000円） -->
         <line class="s-brk" x1="330" y1="135" x2="610" y2="135"/>
-        <text class="s-label-sm" x="334" y="128">損切りライン（SL）= 1,000円</text>
+        <text class="s-label-sm" x="322" y="147">損切りライン（SL）= 1,000円</text>
 
         <!-- ギャップ（空白エリア） -->
         <rect class="s-gap-fill" x="490" y="135" width="30" height="80"/>
@@ -433,8 +433,8 @@ window.addEventListener('resize',mark);
 
         <!-- 矢印 -->
         <line x1="495" y1="134" x2="495" y2="210" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <text class="s-note-r" x="500" y="176">1,000円〜920円の</text>
-        <text class="s-note-r" x="500" y="190">価格帯は空白</text>
+        <text class="s-note-r" x="524" y="176">1,000円〜920円の</text>
+        <text class="s-note-r" x="524" y="190">価格帯は空白</text>
         <text class="s-note-r" x="334" y="240">❌ SL=1,000円のつもりが</text>
         <text class="s-note-r" x="334" y="256">920円（差80円！）で約定</text>
       </svg>
@@ -488,7 +488,7 @@ window.addEventListener('resize',mark);
         <!-- NY 22:30〜翌5:00 -->
         <rect class="s-market-open" x="40" y="88" width="65" height="24" rx="3"/>
         <rect class="s-market-open" x="562" y="88" width="38" height="24" rx="3"/>
-        <text class="s-label-sm" x="576" y="104" text-anchor="middle">NYSEオープン</text>
+        <text class="s-label-sm" x="522" y="104" text-anchor="middle">NYSEオープン</text>
         <text class="s-label-sm" x="50" y="104">NYSE</text>
 
         <!-- ロンドン 16:00〜翌1:00 -->

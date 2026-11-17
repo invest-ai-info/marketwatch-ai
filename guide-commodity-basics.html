@@ -363,10 +363,10 @@ window.addEventListener('resize',mark);
         <text class="s-label-sm" x="56" y="44">価格・利回り ↑</text>
         <!-- 実質金利ライン（上昇→下落、青） -->
         <polyline class="s-curve-b" points="50,220 140,160 220,120 290,140 380,200 450,240 540,190 600,160"/>
-        <text class="s-text-b" x="52" y="212">TIPS実質金利</text>
+        <text class="s-text-b" x="60" y="227">TIPS実質金利</text>
         <!-- 金価格ライン（下落→上昇、緑） -->
         <polyline class="s-curve-g" points="50,100 140,150 220,190 290,170 380,110 450,75 540,115 600,140"/>
-        <text class="s-text-g" x="432" y="68">金価格</text>
+        <text class="s-text-g" x="432" y="59">金価格</text>
         <!-- 逆相関を示す矢印メモ -->
         <line class="s-guide" x1="200" y1="60" x2="200" y2="290"/>
         <text class="s-note-r" x="206" y="76">実質金利 ↑</text>
@@ -413,7 +413,7 @@ window.addEventListener('resize',mark);
         <text class="s-label-sm" x="56" y="48">価格 ↑</text>
         <!-- 需給トレンドライン（なだらか・青） -->
         <polyline class="s-curve-b" points="60,220 160,210 260,200 360,185 440,195 540,180 600,170"/>
-        <text class="s-text-b" x="380" y="200">需給トレンド（長期の底流）</text>
+        <text class="s-text-b" x="350" y="209">需給トレンド（長期の底流）</text>
         <!-- 地政学スパイク（赤ピーク） -->
         <polyline class="s-curve-l" points="60,220 160,210 260,200 310,185 340,110 360,185 440,195 490,180 510,100 530,180 540,180 600,170"/>
         <text class="s-note-r" x="298" y="102">地政学スパイク①</text>
@@ -474,11 +474,11 @@ window.addEventListener('resize',mark);
         <circle r="5" cx="260" cy="152" fill="#1a7f37"/>
         <circle r="5" cx="390" cy="170" fill="#1a7f37"/>
         <circle r="5" cx="530" cy="190" fill="#1a7f37"/>
-        <text class="s-text-g" x="630" y="188" text-anchor="end">バックワーデーション</text>
-        <text class="s-label-sm" x="630" y="202" text-anchor="end">（先物安＜現物）</text>
+        <text class="s-text-g" x="630" y="208" text-anchor="end">バックワーデーション</text>
+        <text class="s-label-sm" x="630" y="222" text-anchor="end">（先物安＜現物）</text>
         <!-- スポット水平線（点線） -->
         <line class="s-guide" x1="60" y1="190" x2="580" y2="190"/>
-        <text class="s-note" x="64" y="188">現物価格（スポット）ライン</text>
+        <text class="s-note" x="64" y="171">現物価格（スポット）ライン</text>
       </svg>
       <figcaption class="chart-caption">▲ コンタンゴ（赤）は限月が遠いほど先物価格が高い「右肩上がり」の先物カーブ。バックワーデーション（緑）は反対に「右肩下がり」。コンタンゴ下でロールオーバーするたびに「安く売り・高く買い直す」が繰り返されロールコストが発生する。バックワーデーションでは逆に「高く売り・安く買い直す」というロール益が得られる。※ 概念を示すイメージ図です。</figcaption>
     </figure>

@@ -323,7 +323,7 @@ window.addEventListener('resize',mark);
     <p>会社の利益が変わらないとすると、<strong>1株あたりの利益（EPS＝Earnings Per Share）も同じ割合で下がります</strong>。ピザ全体の大きさは変わっていないのに、切り数が増えた分だけ1切れが小さくなる——これが希薄化の直感です。</p>
 
     <figure class="chart-figure">
-      <svg viewBox="0 0 640 300" role="img" aria-labelledby="dilution-title">
+      <svg viewBox="0 0 660 300" role="img" aria-labelledby="dilution-title">
         <title id="dilution-title">増資前後の発行済株式数と1株価値の変化（希薄化）の概念図</title>
         <text class="s-panel-label" x="40" y="26">増資前後の「1株の取り分」の変化</text>
 
@@ -334,9 +334,9 @@ window.addEventListener('resize',mark);
         <circle cx="150" cy="150" r="88" fill="none" stroke="#0969da" stroke-width="2"/>
         <!-- あなたの取り分ハイライト（10%） -->
         <path d="M150,150 L238,150 A88,88 0 0,0 221.2,98.3 Z" class="s-fill-b" opacity=".7"/>
-        <text class="s-note" x="218" y="118" text-anchor="middle">あなたの</text>
-        <text class="s-note" x="218" y="133" text-anchor="middle">取り分</text>
-        <text class="s-note" x="218" y="148" text-anchor="middle">10%</text>
+        <text class="s-note" x="244" y="118" text-anchor="start">あなたの</text>
+        <text class="s-note" x="244" y="133" text-anchor="start">取り分</text>
+        <text class="s-note" x="244" y="148" text-anchor="start">10%</text>
         <text class="s-label-sm" x="150" y="165" text-anchor="middle">発行済: 1,000株</text>
         <text class="s-label-sm" x="150" y="180" text-anchor="middle">保有: 100株</text>
 
@@ -354,11 +354,11 @@ window.addEventListener('resize',mark);
         <path d="M500,150 L588,150 A88,88 0 0,0 544.0,73.8 Z" class="s-fill-r" opacity=".5"/>
         <!-- あなたの取り分（8.3%）はさらに小さく -->
         <path d="M500,150 L544.0,73.8 A88,88 0 0,0 500,62 Z" class="s-fill-b" opacity=".7"/>
-        <text class="s-note-r" x="570" y="100" text-anchor="middle">新規株主</text>
-        <text class="s-note-r" x="570" y="115" text-anchor="middle">分（新株）</text>
+        <text class="s-note-r" x="593" y="100" text-anchor="start">新規株主</text>
+        <text class="s-note-r" x="593" y="115" text-anchor="start">分（新株）</text>
         <text class="s-label-sm" x="500" y="165" text-anchor="middle">発行済: 1,200株</text>
         <text class="s-label-sm" x="500" y="180" text-anchor="middle">保有: 100株</text>
-        <text class="s-note-r" x="500" y="242" text-anchor="middle">取り分: 8.3%（↓）</text>
+        <text class="s-note-r" x="500" y="254" text-anchor="middle">取り分: 8.3%（↓）</text>
       </svg>
       <figcaption class="chart-caption">▲ 増資前は100株÷1,000株＝10%だった取り分が、200株追加発行後は100株÷1,200株＝8.3%に下がる（赤枠＝新規発行分）。保有株数は変わっていないのに、全体の"薄まり"で相対的な取り分が下がる——これが<strong>希薄化（dilution）</strong>。※ 概念を示すイメージ図です。</figcaption>
     </figure>
@@ -406,13 +406,13 @@ window.addEventListener('resize',mark);
 
         <!-- パターンA: 成長投資 → 一時下落後回復 -->
         <polyline class="s-curve-g" points="60,160 100,158 160,154 220,150 260,190 290,185 340,170 400,155 460,138 520,120 570,108"/>
-        <text class="s-note-g" x="410" y="126" text-anchor="middle">A: 成長投資目的</text>
-        <text class="s-note-g" x="410" y="141" text-anchor="middle">→ 一時調整後に回復傾向</text>
+        <text class="s-note-g" x="410" y="114" text-anchor="middle">A: 成長投資目的</text>
+        <text class="s-note-g" x="410" y="129" text-anchor="middle">→ 一時調整後に回復傾向</text>
 
         <!-- パターンB: 財務改善 → 下落が続く -->
         <polyline class="s-curve-l" points="60,160 100,158 160,154 220,150 260,195 300,210 360,226 420,238 480,248 560,255"/>
-        <text class="s-note-r" x="430" y="240" text-anchor="middle">B: 財務改善（借金返済）目的</text>
-        <text class="s-note-r" x="430" y="255" text-anchor="middle">→ 下落が続く傾向</text>
+        <text class="s-note-r" x="430" y="211" text-anchor="middle">B: 財務改善（借金返済）目的</text>
+        <text class="s-note-r" x="430" y="226" text-anchor="middle">→ 下落が続く傾向</text>
 
         <!-- 共通の「発表前水準」 -->
         <line class="s-guide" x1="60" y1="155" x2="260" y2="155"/>

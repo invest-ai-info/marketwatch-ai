@@ -359,9 +359,9 @@ window.addEventListener('resize',mark);
         <!-- 分割線 -->
         <line class="s-divv" x1="320" y1="40" x2="320" y2="280"/>
         <!-- 左：勝ちトレード -->
-        <text class="s-note-g" x="180" y="58" text-anchor="middle">✅ 勝ちトレード</text>
+        <text class="s-note-g" x="170" y="60" text-anchor="end">✅ 勝ちトレード</text>
         <!-- 勝ちの円 -->
-        <circle cx="180" cy="130" r="48" class="s-box-g" style="fill:#e6ffed;stroke:#1a7f37;stroke-width:1.5"/>
+        <circle cx="180" cy="130" r="52" class="s-box-g" style="fill:#e6ffed;stroke:#1a7f37;stroke-width:1.5"/>
         <text class="s-txt-g" x="180" y="125" style="font-size:11px">「あの分析が</text>
         <text class="s-txt-g" x="180" y="141" style="font-size:11px">ズバリ当たった」</text>
         <!-- 矢印 上向き（実力） -->
@@ -373,9 +373,9 @@ window.addEventListener('resize',mark);
         <text x="180" y="226" text-anchor="middle" class="s-label-sm">運・外部要因</text>
         <text x="180" y="241" text-anchor="middle" class="s-label-sm">（小さく見えがち）</text>
         <!-- 右：負けトレード -->
-        <text class="s-note-r" x="460" y="58" text-anchor="middle">❌ 負けトレード</text>
+        <text class="s-note-r" x="450" y="60" text-anchor="end">❌ 負けトレード</text>
         <!-- 負けの円 -->
-        <circle cx="460" cy="130" r="48" class="s-box-r" style="fill:#ffebe9;stroke:#cf222e;stroke-width:1.5"/>
+        <circle cx="460" cy="130" r="52" class="s-box-r" style="fill:#ffebe9;stroke:#cf222e;stroke-width:1.5"/>
         <text class="s-txt-r" x="460" y="125" style="font-size:11px">「あんなニュースが</text>
         <text class="s-txt-r" x="460" y="141" style="font-size:11px">なければ…」</text>
         <!-- 矢印 上向き（運）大きい -->
@@ -387,7 +387,7 @@ window.addEventListener('resize',mark);
         <text x="460" y="226" text-anchor="middle" class="s-label-sm">自分の判断ミス</text>
         <text x="460" y="241" text-anchor="middle" class="s-label-sm">（小さく見えがち）</text>
         <!-- 下部注記 -->
-        <text class="s-label-sm" x="320" y="278" text-anchor="middle">記録がなければ、この「原因の帰着先のズレ」に気づくことができない</text>
+        <text class="s-label-sm" x="320" y="294" text-anchor="middle">記録がなければ、この「原因の帰着先のズレ」に気づくことができない</text>
       </svg>
       <figcaption class="chart-caption">▲ 自己帰属バイアスの概念図。勝ちトレードでは「自分の実力」への帰属が強く（緑矢印が上向きに大きい）、負けトレードでは「運・外部要因」への帰属が強くなる（赤矢印が上向きに大きい）。記憶の中では両方ともそれが「正しい説明」に見えるため、記録なしには気づけない。※ 概念を示すイメージ図です。</figcaption>
     </figure>
@@ -472,19 +472,19 @@ window.addEventListener('resize',mark);
         <rect x="50" y="170" width="160" height="56" rx="7" class="s-box-g"/>
         <text class="s-txt-g" x="130" y="194" style="font-size:12px">① 入った理由</text>
         <text class="s-txt-d" x="130" y="212" text-anchor="middle" style="font-size:10.5px">「なぜここでエントリーするか」</text>
-        <text class="s-label-sm" x="130" y="225" text-anchor="middle">← エントリー直後までに記録</text>
+        <text class="s-label-sm" x="130" y="242" text-anchor="middle">← エントリー直後までに記録</text>
         <line x1="130" y1="168" x2="175" y2="151" stroke="#1a7f37" stroke-width="1.5" marker-end="url(#arr-g)" stroke-dasharray="3 2"/>
         <!-- ②想定シナリオ -->
         <rect x="240" y="170" width="162" height="56" rx="7" class="s-box-b"/>
         <text class="s-txt-b" x="321" y="194" style="font-size:12px">② 想定シナリオ</text>
         <text class="s-txt-d" x="321" y="212" text-anchor="middle" style="font-size:10.5px">「どうなれば保有・どこで撤退」</text>
-        <text class="s-label-sm" x="321" y="225" text-anchor="middle">← エントリー前に書く（最重要）</text>
+        <text class="s-label-sm" x="321" y="242" text-anchor="middle">← エントリー前に書く（最重要）</text>
         <line x1="321" y1="168" x2="280" y2="151" stroke="#0969da" stroke-width="1.5" marker-end="url(#arr-b)" stroke-dasharray="3 2"/>
         <!-- ③出た理由 -->
         <rect x="430" y="170" width="160" height="56" rx="7" class="s-box-r"/>
-        <text class="s-txt-r" x="510" y="194" style="font-size:12px">③ 出た理由</text>
-        <text class="s-txt-d" x="510" y="212" text-anchor="middle" style="font-size:10.5px">「計画通り？感情的決済？」</text>
-        <text class="s-label-sm" x="510" y="225" text-anchor="middle">← エグジット直後に記録</text>
+        <text class="s-txt-r" x="516" y="193" style="font-size:12px">③ 出た理由</text>
+        <text class="s-txt-d" x="516" y="211" text-anchor="middle" style="font-size:10.5px">「計画通り？感情的決済？」</text>
+        <text class="s-label-sm" x="516" y="242" text-anchor="middle">← エグジット直後に記録</text>
         <line x1="510" y1="168" x2="485" y2="151" stroke="#cf222e" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="3 2"/>
         <!-- 上部ラベル -->
         <text class="s-label-sm" x="320" y="38" text-anchor="middle">◀ エントリー前に①②を書いておくことで「結果後の記憶の書き換え」を防ぐ ▶</text>

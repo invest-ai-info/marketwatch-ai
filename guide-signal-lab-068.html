@@ -337,7 +337,7 @@ window.addEventListener('resize',mark);
 
         <!-- RSI=30ライン -->
         <line x1="50" y1="195" x2="680" y2="195" stroke="#d0d7de" stroke-width="1" stroke-dasharray="3,3"/>
-        <text x="50" y="193" font-size="10" fill="#cf222e" font-weight="600">RSI=30</text>
+        <text x="50" y="208" font-size="10" fill="#cf222e" font-weight="600">RSI=30</text>
 
         <!-- RSI指標（y=195~260） -->
         <text x="8" y="215" font-size="10" fill="#57606a">RSI</text>
@@ -357,7 +357,7 @@ window.addEventListener('resize',mark);
 
         <line x1="487" y1="148" x2="487" y2="130" stroke="#e36209" stroke-width="1.5" stroke-dasharray="3,2"/>
         <text x="487" y="124" text-anchor="middle" font-size="11" fill="#e36209" font-weight="700">RSI≤30</text>
-        <text x="487" y="113" text-anchor="middle" font-size="10" fill="#e36209">発火 ②</text>
+        <text x="487" y="102" text-anchor="middle" font-size="10" fill="#e36209">発火 ②</text>
 
         <!-- 区切り線 -->
         <line x1="50" y1="188" x2="680" y2="188" stroke="#e1e4e8" stroke-width="1"/>
@@ -368,10 +368,10 @@ window.addEventListener('resize',mark);
         </text>
 
         <!-- 凡例 -->
-        <rect x="530" y="165" width="12" height="10" fill="#1a7f37" stroke="#e36209" stroke-width="2"/>
-        <text x="546" y="175" font-size="10" fill="#57606a">発火バー（RSI≤30）</text>
-        <circle cx="536" cy="186" r="4" fill="#e36209"/>
-        <text x="546" y="189" font-size="10" fill="#57606a">RSI発火点</text>
+        <rect x="530" y="157" width="12" height="10" fill="#1a7f37" stroke="#e36209" stroke-width="2"/>
+        <text x="546" y="167" font-size="10" fill="#57606a">発火バー（RSI≤30）</text>
+        <circle cx="536" cy="178" r="4" fill="#e36209"/>
+        <text x="546" y="181" font-size="10" fill="#57606a">RSI発火点</text>
       </svg>
       <p class="chart-note">上昇トレンドの「押し目」でRSIが売られすぎ水準（≤30）に入ったとき、シグナルが発火する。オレンジ枠が発火バー。※ 概念を示すイメージ図です（実際の値動きではありません）</p>
     </div>
@@ -398,22 +398,22 @@ window.addEventListener('resize',mark);
         <!-- ロング棒: 76.9% → height = 170*0.769 = 130.7 -->
         <!-- bar from y=215-130.7=84.3 to 215 -->
         <rect x="150" y="84" width="80" height="131" fill="#1a7f37" opacity=".85" rx="4"/>
-        <text x="190" y="78" text-anchor="middle" font-size="14" font-weight="700" fill="#1a7f37">76.9%</text>
-        <text x="190" y="92" text-anchor="middle" font-size="10" fill="#1a7f37">(40/52)</text>
+        <text x="190" y="79" text-anchor="middle" font-size="14" font-weight="700" fill="#1a7f37">76.9%</text>
+        <text x="190" y="93" text-anchor="middle" font-size="10" fill="#1a7f37">(40/52)</text>
         <text x="190" y="230" text-anchor="middle" font-size="12" fill="#1f2328" font-weight="600">ロング（買い）</text>
         <text x="190" y="244" text-anchor="middle" font-size="10" fill="#57606a">N=52</text>
 
         <!-- 全方向棒: 60.8% → height = 170*0.608 = 103.4 -->
         <rect x="280" y="111" width="80" height="104" fill="#0969da" opacity=".75" rx="4"/>
-        <text x="320" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#0969da">60.8%</text>
-        <text x="320" y="119" text-anchor="middle" font-size="10" fill="#0969da">(45/74)</text>
+        <text x="320" y="106" text-anchor="middle" font-size="14" font-weight="700" fill="#0969da">60.8%</text>
+        <text x="320" y="120" text-anchor="middle" font-size="10" fill="#0969da">(45/74)</text>
         <text x="320" y="230" text-anchor="middle" font-size="12" fill="#1f2328" font-weight="600">全方向</text>
         <text x="320" y="244" text-anchor="middle" font-size="10" fill="#57606a">N=74</text>
 
         <!-- ショート棒: 22.7% → height = 170*0.227 = 38.6 -->
         <rect x="410" y="176" width="80" height="39" fill="#cf222e" opacity=".85" rx="4"/>
-        <text x="450" y="170" text-anchor="middle" font-size="14" font-weight="700" fill="#cf222e">22.7%</text>
-        <text x="450" y="184" text-anchor="middle" font-size="10" fill="#cf222e">(5/22)</text>
+        <text x="450" y="171" text-anchor="middle" font-size="14" font-weight="700" fill="#cf222e">22.7%</text>
+        <text x="450" y="185" text-anchor="middle" font-size="10" fill="#cf222e">(5/22)</text>
         <text x="450" y="230" text-anchor="middle" font-size="12" fill="#1f2328" font-weight="600">ショート（空売り）</text>
         <text x="450" y="244" text-anchor="middle" font-size="10" fill="#57606a">N=22</text>
 

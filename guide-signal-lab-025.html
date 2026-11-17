@@ -367,7 +367,7 @@ window.addEventListener('resize',mark);
 
         <!-- 43%ガイドライン: y=210-43*3.167=210-136.2=73.8→74 -->
         <line x1="80" y1="74" x2="430" y2="74" class="s-guide"/>
-        <text x="82" y="70" class="s-label-y" text-anchor="start">43% 損益分岐ライン</text>
+        <text x="430" y="69" class="s-label-y" text-anchor="end">43% 損益分岐ライン</text>
 
         <!-- ロングバー: 52.7%→height=52.7*3.167=166.9→167, y_top=210-167=43 -->
         <rect x="100" y="43" width="140" height="167" class="s-fill-g" rx="4"/>
@@ -382,7 +382,7 @@ window.addEventListener('resize',mark);
         <text x="350" y="240" class="s-label-sm" text-anchor="middle">（17/62件）</text>
 
         <!-- 方向非対称 25.3ppの注釈 -->
-        <text x="240" y="95" class="s-label-sm" text-anchor="middle">← 差25.3pp →</text>
+        <text x="246" y="95" class="s-label-sm" text-anchor="start">← 差25.3pp →</text>
       </svg>
       <p class="chart-caption">図1：指数グループのロング（52.7%）とショート（27.4%）の勝率比較。43%損益分岐ラインを基準に、方向によって明確に異なる結果が出ている。</p>
     </div>
@@ -426,17 +426,17 @@ window.addEventListener('resize',mark);
         <!-- macd_dead: 33.3%→len=33.3*4.286=142.8→143, y=20, h=25 -->
         <rect x="155" y="20" width="143" height="25" class="s-fill-gray" rx="3"/>
         <text x="147" y="37" class="s-label-sm" text-anchor="end">MACDデッド</text>
-        <text x="302" y="37" class="s-label-sm">33.3%（12/36）</text>
+        <text text-anchor="end" x="512" y="37" class="s-label-sm">33.3%（12/36）</text>
 
         <!-- low_break: 11.1%→len=47.6→48, y=65, h=25 -->
         <rect x="155" y="65" width="48" height="25" class="s-fill-r" rx="3"/>
         <text x="147" y="82" class="s-label-sm" text-anchor="end">安値ブレイク</text>
-        <text x="207" y="82" class="s-label-r">11.1%（2/18）</text>
+        <text text-anchor="end" x="512" y="82" class="s-label-r">11.1%（2/18）</text>
 
         <!-- 全体: 27.4%→len=27.4*4.286=117.4→117, y=110, h=25 -->
         <rect x="155" y="110" width="117" height="25" class="s-fill-gray" rx="3"/>
         <text x="147" y="127" class="s-label-sm" text-anchor="end">指数×S全体</text>
-        <text x="276" y="127" class="s-label">27.4%（17/62）</text>
+        <text text-anchor="end" x="512" y="127" class="s-label">27.4%（17/62）</text>
       </svg>
       <p class="chart-caption">図2：指数×ショート内のシグナル別勝率。43%損益分岐ライン（縦点線）を全シグナルが下回っている。安値ブレイクは特に低い。</p>
     </div>
@@ -498,32 +498,32 @@ window.addEventListener('resize',mark);
         <!-- 指数 27.4%→len=125, y=15, h=22, fill RED -->
         <rect x="140" y="15" width="125" height="22" class="s-fill-r" rx="3"/>
         <text x="134" y="30" class="s-label-sm" text-anchor="end">指数</text>
-        <text x="269" y="30" class="s-label-r">27.4%（62件）</text>
+        <text text-anchor="end" x="552" y="30" class="s-label-r">27.4%（62件）</text>
 
         <!-- 円クロスFX 36.1%→len=165, y=50, h=22 -->
         <rect x="140" y="50" width="165" height="22" class="s-fill-gray" rx="3"/>
         <text x="134" y="65" class="s-label-sm" text-anchor="end">円クロスFX</text>
-        <text x="309" y="65" class="s-label">36.1%（61件）</text>
+        <text text-anchor="end" x="552" y="65" class="s-label">36.1%（61件）</text>
 
         <!-- 金属 42.6%→len=195, y=85, h=22 -->
         <rect x="140" y="85" width="195" height="22" class="s-fill-gray" rx="3"/>
         <text x="134" y="100" class="s-label-sm" text-anchor="end">金属</text>
-        <text x="339" y="100" class="s-label">42.6%（61件）</text>
+        <text text-anchor="end" x="552" y="100" class="s-label">42.6%（61件）</text>
 
         <!-- ドルFX 50.0%→len=229, y=120, h=22, fill GREEN -->
         <rect x="140" y="120" width="229" height="22" class="s-fill-g" rx="3"/>
         <text x="134" y="135" class="s-label-sm" text-anchor="end">ドル建てFX</text>
-        <text x="373" y="135" class="s-label-g">50.0%（98件）</text>
+        <text text-anchor="end" x="552" y="135" class="s-label-g">50.0%（98件）</text>
 
         <!-- 原油 52.4%→len=239, y=155, h=22 -->
         <rect x="140" y="155" width="239" height="22" class="s-fill-gray" rx="3"/>
         <text x="134" y="170" class="s-label-sm" text-anchor="end">原油</text>
-        <text x="383" y="170" class="s-label">52.4%（21件）</text>
+        <text text-anchor="end" x="552" y="170" class="s-label">52.4%（21件）</text>
 
         <!-- BTC 56.5%→len=258, y=190, h=22, fill GREEN -->
         <rect x="140" y="190" width="258" height="22" class="s-fill-g" rx="3"/>
         <text x="134" y="205" class="s-label-sm" text-anchor="end">BTC</text>
-        <text x="402" y="205" class="s-label-g">56.5%（23件）</text>
+        <text text-anchor="end" x="552" y="205" class="s-label-g">56.5%（23件）</text>
       </svg>
       <p class="chart-caption">図3：グループ別×ショートの勝率比較。43%損益分岐ライン（縦点線）を超えるのは金属・ドル建てFX・原油・BTCの4グループ。指数が最低（27.4%）、円クロスFX（36.1%）も損益分岐を下回る。</p>
     </div>

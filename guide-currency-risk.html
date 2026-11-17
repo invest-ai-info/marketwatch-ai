@@ -388,10 +388,10 @@ window.addEventListener('resize',mark);
         <line class="s-axis" x1="320" y1="44" x2="320" y2="320"/>
         <line class="s-axis" x1="40" y1="182" x2="620" y2="182"/>
         <!-- 軸ラベル -->
-        <text class="s-label-sm" x="620" y="178" text-anchor="end">株価：上昇 →</text>
-        <text class="s-label-sm" x="50" y="178">← 株価：下落</text>
+        <text class="s-label-sm" x="616" y="333" text-anchor="end">株価：上昇 →</text>
+        <text class="s-label-sm" x="44" y="333">← 株価：下落</text>
         <text class="s-label-sm" x="322" y="44">円安（外貨高）↑</text>
-        <text class="s-label-sm" x="322" y="316">↓ 円高（外貨安）</text>
+        <text class="s-label-sm" x="322" y="333">↓ 円高（外貨安）</text>
         <!-- A象限（右上）：両方プラス＝大きな利益 -->
         <rect class="s-fill-g" x="324" y="48" width="292" height="130" rx="6"/>
         <text class="s-note-g" x="470" y="110" text-anchor="middle">A：株高＋円安</text>
@@ -472,7 +472,7 @@ window.addEventListener('resize',mark);
     <p>代表的な手法は<strong>通貨の先物取引や為替予約</strong>を使う方法です。仕組みを簡単に言うと、「<strong>今の為替レートで、将来の一定時点に外貨を円に換える契約をあらかじめ結んでおく</strong>」ことです。たとえば、1ドル＝150円の時点で「3ヶ月後に保有ドルを150円で円に換える」と約束しておけば、実際の為替がどう動いても、その資産については150円で換えられます。</p>
 
     <figure class="chart-figure">
-      <svg viewBox="0 0 640 300" role="img" aria-labelledby="hedge-title">
+      <svg viewBox="0 0 752 300" role="img" aria-labelledby="hedge-title">
         <title id="hedge-title">為替ヘッジなし vs ヘッジありの概念図</title>
         <text class="s-panel-label" x="40" y="24">為替ヘッジなし vs ヘッジあり（概念図）</text>
         <!-- 左側：ヘッジなし -->
@@ -483,10 +483,10 @@ window.addEventListener('resize',mark);
         <text class="s-note-g" x="240" y="160">外貨価格 ↗</text>
         <!-- 円高で押し下げ -->
         <polyline class="s-curve-l" points="50,210 110,220 170,230 230,248"/>
-        <text class="s-note-r" x="240" y="253">円高による押下げ ↘</text>
+        <text class="s-note-r" x="212" y="264">円高による押下げ ↘</text>
         <!-- 合計（微増） -->
         <polyline points="50,205 110,205 170,200 230,200" fill="none" stroke="#9a6700" stroke-width="2.5" stroke-dasharray="4 3"/>
-        <text class="s-note-o" x="80" y="192">円建て評価（ほぼ横ばい）</text>
+        <text class="s-note-o" x="170" y="194">円建て評価（ほぼ横ばい）</text>
 
         <!-- 右側：ヘッジあり -->
         <text class="s-note-g" x="490" y="52" text-anchor="middle">✅ ヘッジあり（為替変動を「固定」）</text>
@@ -495,10 +495,10 @@ window.addEventListener('resize',mark);
         <text class="s-note-g" x="548" y="160">外貨価格 ↗</text>
         <!-- ヘッジにより為替変動を相殺 -->
         <line x1="360" y1="210" x2="540" y2="210" stroke="#0969da" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <text class="s-note" x="450" y="226" text-anchor="middle">為替は先物で固定済（コスト控除後）</text>
+        <text class="s-note" x="548" y="214" text-anchor="start">為替は先物で固定済（コスト控除後）</text>
         <!-- 合計（外貨上昇分だけ増加） -->
         <polyline points="360,205 420,196 480,184 540,172" fill="none" stroke="#1a7f37" stroke-width="2.5"/>
-        <text class="s-note-g" x="390" y="174">円建て評価＝外貨価格変化に近い</text>
+        <text class="s-note-g" x="548" y="178">円建て評価＝外貨価格変化に近い</text>
         <!-- ヘッジコストの矢印 -->
         <line x1="450" y1="210" x2="450" y2="228" stroke="#9a6700" stroke-width="1.5" marker-end="url(#arr)"/>
         <text class="s-note-o" x="452" y="242">ヘッジコスト（年率）</text>
@@ -519,7 +519,7 @@ window.addEventListener('resize',mark);
     <p>つまり、<strong>先物で為替を固定するコスト（ヘッジコスト）は、おおよそ2国の金利差に近似する</strong>ということです。低金利の円で高金利の外貨に投資し、為替を固定してしまうと、その金利差が「ヘッジコスト」として控除されます。</p>
 
     <figure class="chart-figure">
-      <svg viewBox="0 0 640 280" role="img" aria-labelledby="hedgecost-title">
+      <svg viewBox="0 0 640 300" role="img" aria-labelledby="hedgecost-title">
         <title id="hedgecost-title">ヘッジコストと金利差の関係の概念図</title>
         <text class="s-panel-label" x="40" y="24">ヘッジコスト ≈ 外国金利 − 国内金利（金利差の概念図）</text>
         <!-- 左：高金利国（A国） -->
@@ -536,9 +536,9 @@ window.addEventListener('resize',mark);
         <line x1="380" y1="150" x2="264" y2="150" stroke="#9a6700" stroke-width="2" marker-end="url(#arrowhead)"/>
         <text class="s-note-o" x="320" y="144" text-anchor="middle">B国民がA国へ投資</text>
         <!-- ヘッジコスト表示 -->
-        <rect x="220" y="198" width="200" height="36" rx="6" fill="#fff8c5" stroke="#9a6700" stroke-width="1"/>
-        <text class="s-note-o" x="320" y="220" text-anchor="middle">ヘッジコスト ≈ 5% − 0.25% ＝ 約4.75%/年</text>
-        <text class="s-text-sm" x="320" y="240" text-anchor="middle">※あくまで概念的な近似値・実際は市場のスプレッドも加わる</text>
+        <rect x="196" y="238" width="248" height="32" rx="6" fill="#fff8c5" stroke="#9a6700" stroke-width="1"/>
+        <text class="s-note-o" x="320" y="259" text-anchor="middle">ヘッジコスト ≈ 5% − 0.25% ＝ 約4.75%/年</text>
+        <text class="s-text-sm" x="320" y="290" text-anchor="middle">※あくまで概念的な近似値・実際は市場のスプレッドも加わる</text>
       </svg>
       <figcaption class="chart-caption">▲ 低金利国（B国）から高金利国（A国）へ投資し、為替を先物でヘッジする場合、ヘッジコストはおおよそ「A国金利 − B国金利」に近似する。金利差が大きいほどヘッジコストは高くなる（カバー付き金利平価説）。数値は概念説明のための例であり、実際の金利や市場レートを指すものではありません。※ 概念を示すイメージ図です。</figcaption>
     </figure>

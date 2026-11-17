@@ -372,9 +372,9 @@ window.addEventListener('scroll',function(){
         <line x1="282" y1="115" x2="282" y2="215" stroke="#cf222e" stroke-width="1.5"/>
         <rect x="276" y="145" width="12" height="58" fill="#cf222e" opacity="0.9"/>
         <!-- RSI用の小さい印 -->
-        <text x="282" y="240" class="s-label-o" font-size="10" text-anchor="middle">発火</text>
-        <text x="282" y="252" class="s-label-o" font-size="9.5" text-anchor="middle">bb_lower</text>
-        <text x="282" y="263" class="s-label-o" font-size="9.5" text-anchor="middle">_touch</text>
+        <text x="308" y="240" class="s-label-o" font-size="10" text-anchor="start">発火</text>
+        <text x="308" y="252" class="s-label-o" font-size="9.5" text-anchor="start">bb_lower</text>
+        <text x="308" y="263" class="s-label-o" font-size="9.5" text-anchor="start">_touch</text>
 
         <!-- その後の回復バー -->
         <!-- 棒6 -->
@@ -394,7 +394,7 @@ window.addEventListener('scroll',function(){
         <!-- RSIパネル（下部に小さく） -->
         <rect x="40" y="268" width="480" height="4" fill="#f0f3f6" rx="2"/>
         <rect x="40" y="268" width="100" height="4" fill="#cf222e" opacity="0.4" rx="2"/>
-        <text x="40" y="278" class="s-label-sm" font-size="9">RSI: 過売り域（30以下）→発火後に回復</text>
+        <text x="40" y="263" class="s-label-sm" font-size="9">RSI: 過売り域（30以下）→発火後に回復</text>
 
         <defs>
           <marker id="arrowG" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto">
@@ -440,8 +440,8 @@ window.addEventListener('scroll',function(){
 
     <!-- SVG図2: 時間足別勝率棒グラフ -->
     <div class="chart-figure">
-      <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="0" width="500" height="240" fill="#f6f8fa" rx="8"/>
+      <svg viewBox="0 0 548 240" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="548" height="240" fill="#f6f8fa" rx="8"/>
         <text x="250" y="22" class="s-label" text-anchor="middle" font-size="13" font-weight="700" fill="#1E3A6E">時間足別 逆張り買い勝率の比較</text>
 
         <!-- Y軸 -->
@@ -451,7 +451,7 @@ window.addEventListener('scroll',function(){
 
         <!-- 損益分岐ライン43% -->
         <line x1="70" y1="133" x2="460" y2="133" stroke="#9a6700" stroke-width="1.4" stroke-dasharray="5 4"/>
-        <text x="95" y="138" class="s-label-y" text-anchor="end" font-size="11">損益分岐43%</text>
+        <text x="465" y="137" class="s-label-y" text-anchor="start" font-size="11">損益分岐43%</text>
 
         <!-- Y軸目盛り -->
         <text x="60" y="189" class="s-label-sm" text-anchor="end" font-size="11">0%</text>

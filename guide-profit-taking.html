@@ -420,7 +420,7 @@ window.addEventListener('resize',mark);
 
         <!-- 含み益ロック帯（エントリーとSL決済の間） -->
         <rect class="s-zone-g" x="60" y="98" width="430" height="45" rx="4" opacity="0.4"/>
-        <text class="s-note-g" x="275" y="118" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">含み益ロック帯（エントリーとSL決済水準の差）</text>
+        <text class="s-note-g" x="331" y="117" text-anchor="middle" font-size="11" font-family="'Noto Sans JP',sans-serif">含み益ロック帯（エントリーとSL決済水準の差）</text>
 
         <!-- 価格ライン（上昇→天井→反落） -->
         <polyline class="s-curve-b" points="60,170 120,145 180,118 250,85 320,55 380,45 420,60 460,98 490,130"/>
@@ -442,14 +442,14 @@ window.addEventListener('resize',mark);
 
         <!-- キーポイント -->
         <circle class="s-dot-b" cx="60" cy="170" r="5"/>
-        <text class="s-note" x="62" y="165" font-size="10" font-family="'Noto Sans JP',sans-serif">エントリー</text>
+        <text class="s-note" x="56" y="143" font-size="10" font-family="'Noto Sans JP',sans-serif">エントリー</text>
         <circle class="s-dot-g" cx="380" cy="45" r="5"/>
         <text class="s-note-g" x="320" y="40" font-size="10" font-family="'Noto Sans JP',sans-serif">最高値（SLもここで最高位）</text>
         <circle class="s-dot-r" cx="490" cy="130" r="5"/>
         <text class="s-note-r" x="400" y="145" font-size="10" font-family="'Noto Sans JP',sans-serif">SL発動（利益を確保して自動決済）</text>
 
         <!-- 矢印ラベル -->
-        <text class="s-label-sm" x="155" y="185">SLが追い上がる →</text>
+        <text class="s-label-sm" x="151" y="158">SLが追い上がる →</text>
       </svg>
       <figcaption class="chart-caption">▲ 価格が上昇するにつれてトレーリングSLも上昇（点線）。価格が反転してSLに触れた時点で自動決済。<strong>感情に関係なく含み益の一部をロックしながら、上昇トレンドに乗り続けられる</strong>のが最大のメリット。※ 概念を示すイメージ図です。</figcaption>
     </figure>
