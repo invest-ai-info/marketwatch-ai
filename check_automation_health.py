@@ -941,6 +941,8 @@ CHAIN_WATCH = [
     ("高値・安値→罠の目印の前向き（一覧を写す）", "highs-trap-forward.yml", 3, dt.date(2026, 10, 9), "workflow_run"),
     # 🆕 2026-10-27：高値・安値の完了で TDnet の開示をため、台帳のケースに付ける
     ("高値・安値→TDnet の開示を台帳に付ける", "tdnet-events.yml", 3, dt.date(2026, 10, 30), "workflow_run"),
+    # 🆕 2026-11-17 J51：cron が8〜9時間遅れたので「Update Market News」の完了に相乗り（夕方に送るため）
+    ("市況ニュースの更新→開示の値動きメール（J51）", "tdnet-reaction.yml", 3, dt.date(2026, 11, 19), "workflow_run"),
     # 🆕 2026-10-04: 発表前アラートを頻繁なワークフローの完了に相乗りさせた（cron だけでは1日4〜5回しか動かず、
     #    10/2 の米雇用統計の「まもなく」が届かなかった）。1日数十回起動するはずなので1日空いたら異常
     ("他のワークフローの完了→発表前アラート", "indicator-alert.yml", 1, dt.date(2026, 10, 5), "workflow_run"),

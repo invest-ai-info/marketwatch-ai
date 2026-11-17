@@ -258,6 +258,63 @@ def test_trend_build_and_fix():
     assert "【これまでの傾向" in body
 
 
+def _chart(days_vals, meta_day=None, meta_hhmm="15:30", price=110.0):
+    ts = [int(dt.datetime.fromisoformat(f"{d}T09:00").replace(tzinfo=JST).timestamp()) for d, _ in days_vals]
+    q = {k: [] for k in ("open", "high", "low", "close", "volume")}
+    for _, v in days_vals:
+        for k in ("open", "high", "low", "close"):
+            q[k].append(v)
+        q["volume"].append(1 if v is not None else None)
+    meta = {}
+    if meta_day:
+        meta = {"regularMarketTime": int(dt.datetime.fromisoformat(f"{meta_day}T{meta_hhmm}").replace(tzinfo=JST).timestamp()),
+                "regularMarketPrice": price, "regularMarketDayHigh": price + 2, "regularMarketDayLow": price - 3}
+    return {"timestamp": ts, "indicators": {"quote": [q]}, "meta": meta}
+
+
+def test_parse_chart_night_null():
+    # 夜中：いちばん新しい日（11/16）の日足が空 → meta の終値・高値・安値で足す（始値は None）
+    d = _chart([("2026-11-13", 100.0), ("2026-11-16", None)], meta_day="2026-11-16")
+    bars = R.parse_chart(d, "1d")
+    assert [b[0].date().isoformat() for b in bars] == ["2026-11-13", "2026-11-16"]
+    assert bars[-1][1] is None and bars[-1][4] == 110.0 and bars[-1][2] == 112.0 and bars[-1][3] == 107.0
+    # 足があれば足さない・場中の meta（15:30 より前）は足さない・5分足には足さない
+    assert len(R.parse_chart(_chart([("2026-11-16", 100.0)], meta_day="2026-11-16"), "1d")) == 1
+    assert len(R.parse_chart(_chart([("2026-11-13", 100.0), ("2026-11-16", None)], "2026-11-16", "11:00"), "1d")) == 1
+    assert len(R.parse_chart(d, "5m")) == 1
+    # 始値の無い日＝窓は出さないが、反応は測る
+    daily = R.daily_map(bars)
+    tx = {"2026-11-13": (400, 400), "2026-11-16": (None, 404)}
+    g = {"date": "2026-11-13", "time": "16:00", "slot": "引け後", "react_on": "2026-11-16"}
+    m = R.measure(g, daily, None, ["2026-11-13", "2026-11-16"], tx, None)
+    assert m["ok"] == 1 and m["gap"] is None and abs(m["react"] - 0.1) < 1e-12
+
+
+def test_fill_waits_for_latest_day():
+    days = _days("2026-11-09", 6)                       # 11/9〜11/16（いちばん新しい日＝11/16）
+    R_ = days[1]
+    ohlc = {d: (100.0, 101.0, 99.0, 100.0 + i) for i, d in enumerate(days) if d != days[-1]}   # 11/16 が空
+    tx = {d: (400.0, 400.0, 400.0, 400.0) for d in days}
+    r = {"ok": "1", "react_on": R_, "react": "0", "topix": "0"}
+    now = dt.datetime.fromisoformat(f"{days[-1]}T23:00").replace(tzinfo=JST)
+    assert R.horizon_day(days, R_, 5) == days[-1]
+    assert not R.fill_row(r, days, ohlc, tx, now) and not r.get("d5")   # 前の日の値で埋めない
+    days2 = days + _days("2026-11-17", 1)                # 次の日になれば（11/16 が古くなれば）取引の無い日として前の値
+    assert R.fill_row(r, days2, ohlc, tx, now + dt.timedelta(days=1)) and abs(float(r["d5"]) - (104 / 101 - 1)) < 1e-6
+
+
+def test_redo_and_clear():
+    assert R.needs_redo({"mailed": "x", "groups": 992, "measured": 11})
+    assert not R.needs_redo({"mailed": "x", "groups": 548, "measured": 526})
+    assert not R.needs_redo({"mailed": "", "groups": 992, "measured": 11})          # 送っていない日はふつうに待つ
+    assert not R.needs_redo({"mailed": "x", "groups": 992, "measured": 11, "retry": R.MAX_RETRY})
+    rows = [{"d5": "0.1", "hi5": "0.2", "ex5": "0.1"}, {"d5": ""}]
+    assert R.clear_fill(rows) == 1 and all(not rows[0][k] for k in R.COLS[16:])
+    gs = _measured_groups()
+    subj, body = R.build_mail("2026-11-10", gs, 3, None, redo=True)
+    assert subj.startswith("【測り直し】") and "測り直しました" in body
+
+
 def test_wiring():
     wf = open(".github/workflows/tdnet-reaction.yml", encoding="utf-8").read()
     for w in ("python tests/test_tdnet_reaction.py", "python tdnet_reaction.py", "GMAIL_APP_PASSWORD",
@@ -266,7 +323,10 @@ def test_wiring():
     import check_site_consistency as C
     for f in ("tdnet-reaction.csv", "tdnet-reaction-days.json", "tdnet-reaction-trend.json"):
         assert f in C.SYNC_FORBIDDEN, f
-    assert "tdnet-reaction.yml" in open("check_automation_health.py", encoding="utf-8").read()
+    hl = open("check_automation_health.py", encoding="utf-8").read()
+    assert "tdnet-reaction.yml" in hl and '"tdnet-reaction.yml", 3' in hl            # 鮮度と相乗りの繋ぎの見張り
+    assert 'workflows: ["Update Market News"]' in wf
+    assert "name: Update Market News" in open(".github/workflows/update-market-news.yml", encoding="utf-8").read()
     pre = open("PILLAR_PREREG.md", encoding="utf-8").read()
     assert "## J51 " in pre and "tdnet_reaction.py" in pre and "2027-02-15" in pre and "0.05/69" in pre
     assert "tdnet-reaction.yml" in open("RESEARCH_LABS.md", encoding="utf-8").read()
