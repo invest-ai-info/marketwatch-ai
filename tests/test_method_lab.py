@@ -383,6 +383,14 @@ def test_charts_pass_the_fixed_svg_checks():
     found = SL.layout_check(html)
     assert not found, found[:3]
     assert ">2019<" in RR.years_svg(years[2]) and ">2000<" in RR.years_svg(years[0]) and ">2001<" not in RR.years_svg(years[0])
+    gap = {"1999": [5, 0.1], "2000": [5, -0.2], "2003": [5, 0.3], "2004": [5, 0.2], "2005": [5, 0.1]}   # 2001・2002 は売買なし
+    svg = RR.years_svg(gap)
+    assert svg.count("<rect") == 1 + 5                                                       # 背景＋売買のあった5年だけ
+    import re as _re
+    x2000 = float(_re.search(r'x="([\d.]+)"[^>]*>2000<', svg).group(1))
+    x2005 = float(_re.search(r'x="([\d.]+)"[^>]*>2005<', svg).group(1))
+    x1999 = float(_re.search(r'x="([\d.]+)"[^>]*>1999<', svg).group(1))
+    assert abs((x2005 - x2000) - 5 * (x2000 - x1999)) < 0.2                                # 年の間隔は一定（空いた年も数える）
 
 
 if __name__ == "__main__":
