@@ -110,6 +110,8 @@ WORKFLOW_CHECKS = [
     # 🆕 2026-09-24: 出口の相性ラボ（週1・日曜早朝）。研究日誌が exit-lab.json を読むので、
     #    止まると日誌が古い表を読み続ける。⚠️ 新設直後は「実行履歴なし」になる＝マージ後に1回手動実行する。
     ("出口の相性ラボ",          "exit-lab.yml",            24 * 8,  "warn"),
+    # 🆕 2026-11-17 毎日の新しい方法（毎晩＋routine の push のあと）。止まると次の朝の研究日誌に新しい方法が無い
+    ("毎日の新しい方法（method-lab）", "method-lab.yml",     30,      "warn"),
     ("出口の研究（壁・損切り・出し直し）", "exit-research.yml", 24 * 8, "warn"),   # 🆕 2026-09-26 週1・前向きを積み上げる
     ("シグナルの環境の統計（月1）", "env-profile.yml", 24 * 35, "warn"),   # 🆕 2026-09-26 月1・同じ物差しで数え直す
     ("組み合わせの前向きの観察（月1）", "combo-forward.yml", 24 * 35, "warn"),   # 🆕 2026-09-27 月1・登録後のデータだけで数える
@@ -189,6 +191,9 @@ GATE_FILES = [
     "exit_lab_verify.py",
     # 🆕 2026-11-17: 図の文字と線・図形の重なり（finalize_signal_lab・publish_article・mw check が呼ぶ）
     "svg_layout_check.py",
+    # 🆕 2026-11-17: 毎日の新しい方法の数字の照合と、1つ入れて1つ外す決まり（routine は編集しない）
+    "method_lab_verify.py",
+    "research_rotation.py",
 ]
 GATE_WINDOW_H = 26  # 毎日09:30実行＋cron滑りをカバー（>24h。稀に同じ違反を2日連続報告するのは許容）
 
