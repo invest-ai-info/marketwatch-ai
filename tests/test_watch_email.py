@@ -92,19 +92,87 @@ def test_header_says_unconfirmed_with_evidence():
     assert "+0.19R・349件" in head and "2026-06-25〜2026-09-26" in head and "登録後（2026-09-27〜）: 3件" in head
 
 
-def test_real_tracker_after_morning_update_has_exactly_two_watch_candidates():
-    """本物の tracker に毎朝の更新（登録＋集計）をかけると、観察中の候補は押し目買いの2本だけ"""
+# 2026-11-18 本物の tracker（signal-lab-tracker.json）を読むテストをやめ、小さな見本の tracker に置き換えた。
+#   本物は GitHub 側で毎朝書き換わる（SYNC禁忌）。11/17 からの毎日の入れ替えで rsi_oversold_4h が
+#   status="retired"（watch=True のまま）になり、「観察中はこの2本」と決め打ちしたテストが壊れていた。
+#   中身の変化で落ちるのはテストの欠陥なので、見るのは「更新のあとも、選ばれる条件が正しく効くか」に絞る。
+
+def _sig(day, signal="bb_lower_touch", trend="下降", long=True, tf="4h", outcome="tp1"):
+    """signals-log の決済済み1件の形（固定オラクル signal_lab_verify.match が読む項目だけ）"""
+    return {"fired_at": f"{day}T10:00:00+09:00", "ticker": "GC=F", "primary_signal": signal, "signal_types": [signal],
+            "direction": "ロング（買い）" if long else "ショート（売り）", "timeframe": tf, "outcome": outcome,
+            "trend_alignment": {"higher_tf_trend": trend}}
+
+
+def _morning_update(hyps, data, today, path):
+    """一時ファイルの tracker で毎朝の更新（cmd_update）を1回まわす。既定の登録は足さない（見本の中身だけで確かめる）"""
+    if hyps is not None:
+        json.dump({"updated_at": None, "hypotheses": hyps}, open(path, "w", encoding="utf-8"), ensure_ascii=False)
+    orig_path, orig_boot = T.TRACKER, T.apply_holdout_bootstrap
+    T.TRACKER = path
+    if hyps is not None:
+        T.apply_holdout_bootstrap = lambda t: 0
+    try:
+        T.cmd_update(None, data, today)
+    finally:
+        T.TRACKER, T.apply_holdout_bootstrap = orig_path, orig_boot
+
+
+def _edge(id_, filt, **kw):
+    return dict({"id": id_, "label": id_, "kind": "edge", "status": "tracking", "registered_at": "2026-09-27",
+                 "filter": filt}, **kw)
+
+
+def test_morning_update_keeps_watch_only_on_tracking_edges():
+    """毎朝の更新をかけたあと、観察中の候補に選ばれるのは「蓄積中（tracking）の勝ち筋（edge）で watch=True」だけ。
+    止まった候補（2026-11 の本物の rsi_oversold_4h と同じ retired＋watch=True）は更新で戻らず、対象から外れる。"""
+    hyps = [
+        FLIP,                                                                                       # 期間の条件つき → 選ぶ
+        _edge("bb_lower_4h", {"signal": "bb_lower_touch", "tf": "4h"}, watch=True),                # 期間の条件なし → 選ぶ
+        _edge("rsi_oversold_4h", {"signal": "rsi_oversold_bounce", "tf": "4h"}, watch=True,
+              status="retired", retired_at="2026-11-17", retire_reason="culled"),                 # 見込みなし → 外す
+        _edge("rej", {"signal": "macd_golden_cross", "tf": "4h"}, watch=True,
+              status="rejected", rejected_at="2026-10-01"),                                         # 反証 → 外す
+        _edge("gate", {"signal": "ma_dead_cross", "tf": "4h"}, watch=True, kind="gate"),           # 回避(gate) → 外す
+        _edge("plain", {"signal": "bb_lower_touch", "tf": "1d"}),                                   # watch なし → 外す
+    ]
+    days = [f"2026-09-{d:02d}" for d in range(20, 31)] + [f"2026-10-{d:02d}" for d in range(1, 9)]
+    data = [_sig(d) for d in days]                     # 下降中の BB 下限タッチ買い（4時間足）を毎日1件
+    after = sum(1 for d in days if d >= "2026-09-27")   # 登録の日（期間の始まり）以降の件数
     tmp = tempfile.mkdtemp()
     path = os.path.join(tmp, "signal-lab-tracker.json")
-    shutil.copy(os.path.join(ROOT, "signal-lab-tracker.json"), path)
-    orig = T.TRACKER
-    T.TRACKER = path
     try:
-        data = T.freeze_universe(T.load_log(os.path.join(ROOT, "signals-log.json")))
-        T.cmd_update(None, data, "2026-09-26")
+        _morning_update(hyps, data, "2026-10-10", path)
+        by = {h["id"]: h for h in json.load(open(path, encoding="utf-8"))["hypotheses"]}
         w = G.load_watch_hypotheses(path)
     finally:
-        T.TRACKER = orig
+        shutil.rmtree(tmp, ignore_errors=True)
+    # 更新は状態の「戻し」も watch の「消し」もしない
+    assert [by[i]["status"] for i in ("dip__flip", "bb_lower_4h", "rsi_oversold_4h", "rej", "gate", "plain")] == \
+        ["tracking", "tracking", "retired", "rejected", "tracking", "tracking"]
+    assert all(by[i]["watch"] is True for i in ("dip__flip", "bb_lower_4h", "rsi_oversold_4h", "rej", "gate"))
+    # 選ばれるのは蓄積中の勝ち筋で watch=True のものだけ
+    assert sorted(h["id"] for h in w) == ["bb_lower_4h", "dip__flip"], [h["id"] for h in w]
+    for h in w:
+        assert h["watch"] is True and h["status"] == "tracking" and h["kind"] == "edge"
+        assert "fired_from" not in h["filter"] and "fired_before" not in h["filter"]   # 照合用は期間の条件を外す（live_filter）
+    assert by["dip__flip"]["filter"]["fired_from"] == "2026-09-27"   # tracker の側は期間の条件を持ったまま（数え方は変えない）
+    # 外したあとでも今のシグナルに当たる＝メールの本文は更新後の前向きの件数を出す
+    flip = next(h for h in w if h["id"] == "dip__flip")
+    assert G.match_promoted_hypothesis([flip], _probe(signal="bb_lower_touch"))["id"] == "dip__flip"
+    assert flip["forward"]["n"] == after == 12
+    assert f"登録後（2026-09-27〜）: {after}件" in G.watch_email_header(flip)
+
+
+def test_default_registration_marks_only_the_two_dip_buy_candidates():
+    """watch=True を付けて登録するのは押し目買いの2本だけ（2026-09-26 のオーナー決定＝約2.1通/日。
+    環境ランク good には付けない）。本物の tracker ではなく、空の状態からコードの登録だけで確かめる。"""
+    tmp = tempfile.mkdtemp()
+    path = os.path.join(tmp, "signal-lab-tracker.json")   # まだ無い＝初期の仮説＋既定の登録から始まる
+    try:
+        _morning_update(None, [], "2026-09-26", path)
+        w = G.load_watch_hypotheses(path)
+    finally:
         shutil.rmtree(tmp, ignore_errors=True)
     assert sorted(h["id"] for h in w) == ["auto_reversal_long-True_trend-下降__flip", "rsi_oversold_4h"], [h["id"] for h in w]
     assert all("fired_from" not in h["filter"] for h in w)
