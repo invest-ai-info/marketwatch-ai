@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-11-18
+- 判定: ✅ 公開済み
+- 選定トピック: エヌビディアQ3 FY2027決算発表（売上高1,158億ドル・前年比+103%・過去最高更新）と翌日の日経平均反応（+163.85円・+0.28%・「高揚感乏しく」）。CEO交代・中国向け除外・マージン圧縮の3要因を中立整理。（カテゴリ: AI・半導体・マクロ・個別銘柄・日本株）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - NVIDIA Corporation「NVIDIA Announces Financial Results for Third Quarter Fiscal 2027」nvidianews.nvidia.com 2026-11-17
+  - SEC Form 8-K「NVIDIA announces CEO Transition」nvidianews.nvidia.com 2026-11-12
+  - GuruFocus「NVIDIA Corp Reports Q3 Fiscal 2027 Earnings: EPS of $2.70 and Revenue of $115.8 Billion」2026-11-17
+  - StockTitan「NVIDIA Q3 FY27 revenue up 103% year over year to $115.8B」2026-11-17
+  - TradingKey「Nvidia Q3 Revenue Surges 103%, Next-Quarter Revenue Guidance Reaches $130 Billion」2026-11-17
+  - TechCrunch「Nvidia says it doesn't plan to reappoint Jensen Huang as CEO」2026-11-17
+  - CNBC「Nvidia CEO Jensen Huang resigns: Live updates」2026-11-12
+  - 日本経済新聞「日経平均株価163円高の5万9024円、NVIDIA好決算でも高揚感乏しく」2026-11-18
+  - Yahoo Finance Japan「日経平均は３日ぶり反発、エヌビディア決算受け半導体株に買い」2026-11-18
+  - ダイヤモンドZAI「エヌビディア好決算も買い一巡後に失速」2026-11-18
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（軽微）→ 修正5か所（表現軟化・誤記訂正・未確認のSEC調査表現を留保付きに変更）→ 最終判定 🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典10系統以上 ✅）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告73件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-18-nvidia-q3-fy2027-results.html
+- commit: bd1a43a（main へ push 済み）
+
+---
+
 ## 2026-11-17
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均2日続落・58,860円（−1.34%）、エヌビディア本日Q3 FY2027決算発表前にAI・半導体株安継続。東京エレクトロン・アドバンテスト主導の下落、米国半導体輸出規制・日銀利上げ観測が重なった背景と3シナリオを中立整理。（カテゴリ: 日本株・半導体・AI・エヌビディア・マクロ）
