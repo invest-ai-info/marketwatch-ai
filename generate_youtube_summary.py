@@ -45,7 +45,7 @@ CHANNELS = [
     ("@FXismOIKAWA",         "UCA2McdYJLbD4IAQo0wLWOUQ", "FXism 及川圭哉"),  # FXデイトレ(fxism.jp)・2026-07-02追加
 ]
 
-MAX_VIDEOS = 5        # 1日に新規要約する本数（既要約はスキップ、これに含まない）
+MAX_VIDEOS = 3        # 1回に新規要約する本数（既要約はスキップ、これに含まない）。🆕 2026-11-19 5→3＝Gemini の費用を抑える（動画を読む料金が費用の約8割）
 MAX_AGE_HOURS = 72    # 候補とする動画の最大経過時間（過去 3 日、KEEP_DAYS と整合）
 TRANSCRIPT_MAX_CHARS = 12000  # Gemini に渡す字幕の最大文字数
 RSS_RETRY = 3         # RSS 取得のリトライ回数
@@ -459,20 +459,38 @@ VIDEO_MODEL_CANDIDATES = ("gemini-2.5-flash",)
 #   作った長い動画の要約は、72時間の窓の中なら1回だけ外して作り直す（needs_resummary）
 SUMMARY_ENGINE = "lowres"
 LONG_VIDEO_SEC = 3300   # これより長い動画は、ふつうの画質だと読み込む量の上限（約100万）を超える（約300/秒）
+# 🆕 2026-11-19 動画は最初の20分だけ読む（Gemini の費用対策）。11/15 から長い生配信を最後まで読むようになり、
+#   1日の費用が約2倍（約¥32→約¥73）になった。費用は読んだ長さに比例する。AIの使い方の動画まとめ（最初の30分）と同じ考え方
+VIDEO_READ_SEC = 1200
 
 
-def summarize_with_gemini_video(video_url, title, channel_name, api_key):
+def video_read_limit(duration_sec):
+    """読む長さの上限（秒）。VIDEO_READ_SEC より長い動画だけ区切る。短い動画・長さ不明（0）は None＝全部読む"""
+    return VIDEO_READ_SEC if (duration_sec or 0) > VIDEO_READ_SEC else None
+
+
+def summarize_with_gemini_video(video_url, title, channel_name, api_key, duration_sec=0):
     """Gemini で YouTube 動画を直接要約する。返り値＝(文章, 使った道)。読めなければ (None, None)。
     🆕 2026-11-15 画質を下げて読む道（gemini_youtube・新しいモデルから）を先に使う。ふつうの画質の道（SDK）は
     1時間を超える動画で読み込む量の上限を超え、中身と合わない要約を書いていた（及川さんの生配信 1:22:19 で
-    「ドル円のロングで利益」＝動画では「ドル円は手を出さない方がよい」と話していた）。SDK の道は予備"""
+    「ドル円のロングで利益」＝動画では「ドル円は手を出さない方がよい」と話していた）。SDK の道は予備
+    🆕 2026-11-19 長い動画は最初の VIDEO_READ_SEC 秒だけ読む（video_read_limit）。区切った動画は SDK の道を使わない
+    （SDK の道は区切れない＝ふつうの画質で最後まで読むので、費用対策が抜け道になる）"""
     prompt = SUMMARY_PROMPT_VIDEO.format(channel_name=channel_name, title=title)
+    end_sec = video_read_limit(duration_sec)
+    if end_sec:
+        minutes = end_sec // 60
+        prompt += (f"\n- 見せているのは動画の最初の{minutes}分だけです。後半の内容は推測せず、"
+                   f"最初の{minutes}分で話されたことだけを要約する")
     try:
-        text, model, _usage = gemini_youtube.generate_from_youtube(video_url, prompt, api_key, max_output_tokens=8192,
-                                                                   log=lambda m: print(m))
-        print(f"    🎬 画質を下げて読みました（{model}）")
+        text, model, _usage = gemini_youtube.generate_from_youtube(video_url, prompt, api_key, end_sec=end_sec,
+                                                                   max_output_tokens=8192, log=lambda m: print(m))
+        print(f"    🎬 画質を下げて読みました（{model}{f'・最初の{end_sec // 60}分' if end_sec else ''}）")
         return text, SUMMARY_ENGINE
     except Exception as e:  # noqa: BLE001 — 予備の道へ
+        if end_sec:
+            print(f"    ↩️ 画質を下げて読めませんでした（{str(e)[:160]}）→ 長い動画は題名と説明文の要約へ")
+            return None, None
         print(f"    ↩️ 画質を下げて読めませんでした（{str(e)[:160]}）→ ふつうの画質で読み直します")
     try:
         import google.generativeai as genai
@@ -632,6 +650,8 @@ def build_video_card(v):
     three_html = "".join(f"<li>{l}</li>" for l in three_lines)
     topics_html = "".join(f"<li>{t}</li>" for t in topics)
     pub = fmt_pub_jst(v.get("published", ""))
+    read_sec = v.get("summary_read_sec") if v.get("summary_method") == "video" else None
+    read_note = f"・最初の{read_sec // 60}分を要約" if read_sec else ""
     thumb = f"https://img.youtube.com/vi/{v['video_id']}/mqdefault.jpg"
 
     return f"""<article class="video-card">
@@ -644,7 +664,7 @@ def build_video_card(v):
   <div class="video-body">
     <div class="video-channel">📺 {v['channel_name']}</div>
     <h3 class="video-title"><a href="{v['url']}" target="_blank" rel="noopener">{v['title']}</a></h3>
-    <div class="video-pub">公開: {pub}</div>
+    <div class="video-pub">公開: {pub}{read_note}</div>
 
     <div class="summary-section summary-3lines">
       <div class="summary-section-title">⚡ 3行サマリー</div>
@@ -1042,9 +1062,13 @@ def main():
         method_used = None
         if video_url_works is not False:
             print(f"    🎬 動画 URL 方式 (Gemini video) で要約中...")
-            summary_text, engine = summarize_with_gemini_video(v["url"], v["title"], v["channel_name"], api_key)
+            summary_text, engine = summarize_with_gemini_video(v["url"], v["title"], v["channel_name"], api_key,
+                                                               duration_sec=v.get("duration_sec", 0))
             if summary_text:
                 v["summary_engine"] = engine
+                read_sec = video_read_limit(v.get("duration_sec", 0))
+                if read_sec:
+                    v["summary_read_sec"] = read_sec   # 🆕 2026-11-19 最初の何秒だけ読んだか（カードに出す）
                 video_url_works = True
                 method_used = "video"
             elif video_url_works is None:
