@@ -390,8 +390,9 @@ def years_svg(by_year, title="年ごとの1回あたりの損益の平均（損�
     bw = max(3.0, step * 0.62)
     lines, bars, texts = [], [], []
     for v in (scale, scale / 2, 0, -scale / 2, -scale):
+        dash = "" if v == 0 else ' stroke-dasharray="3,3"'
         lines.append(f'<line x1="{L}" y1="{yy(v):.1f}" x2="{Rr}" y2="{yy(v):.1f}" stroke="var(--c-muted,#bbb)" '
-                     f'stroke-width="{0.8 if v else 0.9}"{"" if v == 0 else " stroke-dasharray=\"3,3\""}/>')
+                     f'stroke-width="{0.8 if v else 0.9}"{dash}/>')
         lab = "0" if v == 0 else f"{v:+.2f}".replace("-", "−")
         texts.append(f'<text x="{L - 6}" y="{yy(v) + 4:.1f}" font-size="10" {_FONT} text-anchor="end" {_MUTED}>{lab}</text>')
     split = next((i for i, (y, _v) in enumerate(ys) if y >= 2018), None)
