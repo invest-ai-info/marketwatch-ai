@@ -6451,6 +6451,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-19", "line": '・<b>2026-11-19</b>: 🧪 解説「<a href="guide-signal-lab-154.html" style="color:#0969da"><b>半年前より高い株価指数の急な下げ買いは通じる？【#154】</b></a>」公開'},
         {"date": "2026-11-18", "line": '・<b>2026-11-18</b>: 📰 解説「<a href="guide-news-2026-11-18-nvidia-q3-fy2027-results.html" style="color:#0969da"><b>エヌビディアQ3 FY2027決算：売上高+103%でも日経+163円と「高揚感乏しく」</b></a>」公開'},
         {"date": "2026-11-18", "line": '・<b>2026-11-18</b>: 🚗 解説「<a href="guide-company-7270-subaru.html" style="color:#0969da"><b>SUBARU</b></a>」公開'},
         {"date": "2026-11-18", "line": '・<b>2026-11-18</b>: 🧪 解説「<a href="guide-signal-lab-153.html" style="color:#0969da"><b>株価指数が上げ相場で2日だけ急に下げたら買う方法は通じる？【研究日誌 #153】</b></a>」公開'},
