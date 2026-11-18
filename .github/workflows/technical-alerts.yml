@@ -33,9 +33,11 @@ jobs:
       ALERT_RECIPIENT:    ${{ secrets.ALERT_RECIPIENT }}
       GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
       MY_TRADES_CSV_URL:  ${{ secrets.MY_TRADES_CSV_URL }}
-      # 🆕 2026-09-26 観察中の候補のメール（👀観察中・未確定）の停止スイッチ。GitHub の Settings → Variables で
-      #    EMAIL_WATCH=0 にすると止まる（変数が無ければ '1'＝オン）。
-      EMAIL_WATCH:        ${{ vars.EMAIL_WATCH || '1' }}
+      # 🆕 2026-09-26 観察中の候補のメール（👀観察中・未確定）の停止スイッチ。
+      # ⏸️ 2026-11-18 オーナー「シグナルメールをちょっと止めてほしい。効果のあるものだけ、昇格したものだけにしてください」で停止。
+      #    メールは昇格した仮説（🏅・4時間足で前向きの期待値がプラス）だけ。記録（signals-log）と前向きの検証は全シグナルで続く。
+      #    再開するときは '0' を '1' に戻す（変数の上書きで勝手に戻らないよう、ここに直接書く）。
+      EMAIL_WATCH:        '0'
 
     steps:
       - name: Checkout repository
