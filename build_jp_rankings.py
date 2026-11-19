@@ -10,6 +10,11 @@
 人気急上昇は売買代金 HOT_MIN_TURNOVER 億円以上のみ（薄商い銘柄の見かけ倍率と操作されやすい軽い銘柄を公開面から除外）。
 銘柄名/業種/赤字黒字フラグは静的 jp-stock-info.json から join（J-Quants由来＝事前計算済み・キー不要）。
 
+🆕 2026-11-19 株式分割の補正（jp_splits.py）: キーエンス（6861）の 1→5 の分割の日（11/18）に、Yahoo の日足が最後の1本だけ
+分割後の値で、値下がり1位に −79.7%（本当は +1.5%）・人気急上昇に出来高 3.9倍（本当は売買代金ほぼ同じ）が出た。
+→ `&events=split` で分割を取り、Yahoo がまだ直していない切れ目より前の足を分割後の単位に直してから前日比と相対出来高を出す。
+  分割の日付の前後で、直せなかった極端な前日比（1.5倍超・1/1.5未満）の銘柄は一覧に入れない（split_suspect）。
+
 出力: jp-rankings.json（公開サイト hot-assets.html の最上段が読む）。
 ⚠️ これは『事実の市場データ』であり、買い/売り推奨ではない（描画側に教育注記＋免責を付す）。
 ⚠️ 罠フラグ（仕手的形状の判定）はここに入れない＝公開しない方針（オーナー決定 2026-07-21）。
@@ -21,6 +26,8 @@ import json
 import time
 import datetime
 import urllib.request
+
+import jp_splits   # 🆕 2026-11-19 株式分割の補正（Yahoo が一部の足しか直していない日の前日比・相対出来高の狂い）
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 try:
@@ -97,26 +104,73 @@ def sector_summary(rows):
     return breadth, sectors
 
 
-def fetch_2day(code):
-    """直近約3ヶ月の (closes[], vols[], 最終営業日ISO) を Yahoo から取得。失敗時 None。
-    （関数名は互換のまま。2026-07-21 に range=7d→3mo へ拡張＝相対出来高の基準20日分を確保）"""
-    u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range=3mo&interval=1d"
-    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
-    d = json.load(urllib.request.urlopen(req, timeout=20))["chart"]["result"][0]
+def parse_chart(d):
+    """Yahoo chart の result → (closes[], vols[], 最終営業日ISO, splits, 直した切れ目[])。終値が2本未満なら None。純関数。
+
+    🆕 2026-11-19 株式分割の補正: Yahoo がまだ直していない切れ目より前の足を分割後の単位に直す
+    （値段 ÷倍率・出来高 ×倍率）。直していない切れ目が無ければ（ふつうの形）値はそのまま。
+    """
     q = d["indicators"]["quote"][0]
-    ts, closes, vols = d.get("timestamp", []), q.get("close", []), q.get("volume", [])
+    ts, closes, vols = d.get("timestamp") or [], q.get("close") or [], q.get("volume") or []
     rows = [(t, c, v) for t, c, v in zip(ts, closes, vols) if c is not None]
     if len(rows) < 2:
         return None
-    import datetime as _dt
-    last_date = _dt.datetime.fromtimestamp(rows[-1][0], _dt.timezone.utc).strftime("%Y-%m-%d")
-    return [r[1] for r in rows], [r[2] for r in rows], last_date
+    last_date = datetime.datetime.fromtimestamp(rows[-1][0], datetime.timezone.utc).strftime("%Y-%m-%d")
+    dates = [datetime.datetime.fromtimestamp(t, JST).date().isoformat() for t, _, _ in rows]
+    splits = jp_splits.parse_splits(d)
+    breaks = jp_splits.find_breaks(dates, [float(c) for _, c, _ in rows], splits)
+    fs = [jp_splits.factor(x, breaks) for x in dates]
+    return ([float(c) * f for (_, c, _), f in zip(rows, fs)],
+            [None if v is None else float(v) / f for (_, _, v), f in zip(rows, fs)],
+            last_date, splits, breaks)
+
+
+def fetch_2day(code):
+    """直近約3ヶ月の (closes[], vols[], 最終営業日ISO, splits, 直した切れ目[]) を Yahoo から取得。失敗時 None。
+    （関数名は互換のまま。2026-07-21 に range=7d→3mo へ拡張＝相対出来高の基準20日分を確保。
+      2026-11-19 に &events=split を付けて株式分割を補正＝parse_chart）"""
+    u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range=3mo&interval=1d&events=split"
+    req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+    return parse_chart(json.load(urllib.request.urlopen(req, timeout=20))["chart"]["result"][0])
+
+
+def split_suspect(closes, last_date, splits):
+    """分割の日付の前後なのに、直したあとも前日比が極端（1.5倍超・1/1.5未満）＝Yahoo の値か倍率が合っていない。純関数。
+
+    そういう銘柄は一覧に入れない（分割と重ならない極端な値動きは本物でありうるので入れる）。
+    """
+    c1, c0 = float(closes[-1]), float(closes[-2])
+    if c0 <= 0 or not jp_splits.near(last_date, splits):
+        return False
+    return not (1 / jp_splits.MAX_MOVE <= c1 / c0 <= jp_splits.MAX_MOVE)
+
+
+def stock_row(code, meta, closes, vols, last_date):
+    """1銘柄の行（前日比・売買代金・相対出来高）。closes/vols は分割の補正済み（parse_chart）。前の終値が0以下なら None。純関数。"""
+    c1, c0 = float(closes[-1]), float(closes[-2])      # 直近 / その前
+    if c0 <= 0:
+        return None
+    pct = c1 / c0 - 1.0
+    v1 = float(vols[-1]) if vols[-1] is not None else 0.0
+    v0 = float(vols[-2]) if vols[-2] is not None else 0.0
+    # 🆕 相対出来高＝当日出来高 ÷ 直前20営業日の平均出来高（当日を含まない・0/欠損日は除外）
+    base = [float(v) for v in vols[-(HOT_BASE_DAYS + 1):-1] if v]
+    relvol = round(v1 / (sum(base) / len(base)), 1) if (len(base) >= HOT_MIN_BASE and v1 > 0) else None
+    return {
+        "_last_date": last_date,
+        "code": code, "name": meta.get("name", ""), "sector": meta.get("sector", ""),
+        "akaji": meta.get("akaji"), "price": round(c1, 1), "pct": round(pct, 4),
+        "turnover_d1": round(c1 * v1 / 1e8, 1),   # 直近営業日の売買代金（億円）
+        "turnover_d2": round(c0 * v0 / 1e8, 1),   # その前日の売買代金（億円）
+        "relvol": relvol,                          # 相対出来高（倍・基準不足はNone）
+    }
 
 
 def main():
     info = json.load(open(INFO, encoding="utf-8"))
     stocks = info["stocks"]
     rows, fail, asof = [], 0, ""
+    fixed, suspect = [], []   # 🆕 2026-11-19 株式分割を直した銘柄／直せず一覧から外した銘柄（ログ用）
     codes = list(stocks.keys())
     for i, code in enumerate(codes):
         try:
@@ -126,28 +180,24 @@ def main():
         if not res:
             fail += 1
             continue
-        closes, vols, last_date = res
-        c1, c0 = float(closes[-1]), float(closes[-2])      # 直近 / その前
-        if c0 <= 0:
-            continue
-        pct = c1 / c0 - 1.0
-        v1 = float(vols[-1]) if vols[-1] is not None else 0.0
-        v0 = float(vols[-2]) if vols[-2] is not None else 0.0
-        # 🆕 相対出来高＝当日出来高 ÷ 直前20営業日の平均出来高（当日を含まない・0/欠損日は除外）
-        base = [float(v) for v in vols[-(HOT_BASE_DAYS + 1):-1] if v]
-        relvol = round(v1 / (sum(base) / len(base)), 1) if (len(base) >= HOT_MIN_BASE and v1 > 0) else None
-        meta = stocks[code]
-        rows.append({
-            "_last_date": last_date,
-            "code": code, "name": meta.get("name", ""), "sector": meta.get("sector", ""),
-            "akaji": meta.get("akaji"), "price": round(c1, 1), "pct": round(pct, 4),
-            "turnover_d1": round(c1 * v1 / 1e8, 1),   # 直近営業日の売買代金（億円）
-            "turnover_d2": round(c0 * v0 / 1e8, 1),   # その前日の売買代金（億円）
-            "relvol": relvol,                          # 相対出来高（倍・基準不足はNone）
-        })
+        closes, vols, last_date, splits, breaks = res
+        if breaks:
+            fixed.append(f"{code}（" + "・".join(f"{d} から ×{r:g}" for d, r in breaks) + "）")
+        if split_suspect(closes, last_date, splits):
+            suspect.append(code)
+        else:
+            row = stock_row(code, stocks[code], closes, vols, last_date)
+            if row is not None:
+                rows.append(row)
         if (i + 1) % 100 == 0:
             print(f"  ...{i+1}/{len(codes)} fail={fail}", flush=True)
         time.sleep(0.07)
+
+    if fixed:
+        print(f"🔧 株式分割の補正（Yahoo がまだ直していない足を分割後の単位に）{len(fixed)}銘柄: " + ", ".join(fixed[:10])
+              + (" ほか" if len(fixed) > 10 else ""))
+    if suspect:
+        print(f"⚠️ 分割の日付の前後で前日比が極端なまま（直せず）＝一覧から外した {len(suspect)}銘柄: " + ", ".join(suspect[:10]))
 
     # 🆕 2026-08-29 日付の混在ガード＋巻き戻しガード。
     #   実害: 8/29 04:34 JST の回（cron が 17時台→早朝へずれた回）は Yahoo がまだ 8/28 を

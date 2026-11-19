@@ -177,6 +177,15 @@ def test_parse_opens_uses_jst_dates():
     assert L.parse_opens(res) == {"2026-10-09": 100.0}
 
 
+def test_parse_opens_adjusts_unadjusted_split_bars():
+    # 🆕 2026-11-19 日足（build_jp_highs）は株式分割を直す＝始値も同じ単位にそろえる（キーエンス 1→5・11/18 だけ分割後）
+    ts = [int(dt.datetime(2026, 11, d, 9, 0, tzinfo=L.JST).timestamp()) for d in (16, 17, 18)]
+    sd = int(dt.datetime(2026, 11, 19, 9, 0, tzinfo=L.JST).timestamp())
+    res = {"timestamp": ts, "events": {"splits": {str(sd): {"date": sd, "numerator": 5.0, "denominator": 1.0}}},
+           "indicators": {"quote": [{"open": [75300.0, 72000.0, 14640.0], "close": [73450.0, 72510.0, 14722.0]}]}}
+    assert L.parse_opens(res) == {"2026-11-16": 15060.0, "2026-11-17": 14400.0, "2026-11-18": 14640.0}
+
+
 def _day_bars(days, closes, highs=None):
     highs = highs or [c + 1 for c in closes]
     return [(d, h, c - 1, c, 1e5) for d, c, h in zip(days, closes, highs)]

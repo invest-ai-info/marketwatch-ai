@@ -12,6 +12,9 @@
    赤字・黒字（akaji）は約400銘柄にしか無いので、表からは決算の列を外して市場区分を出す。
 
 判定（数字はすべて Yahoo chart API の日足・月足＝キー不要・株式分割は調整済み）:
+  🆕 2026-11-19 「調整済み」は当てにならなかった＝キーエンス（6861）の 1→5 の分割の日（11/18）は最後の1本だけ分割後の値。
+     その日は「データの誤り」（sane_today）で落ちたが、次の日からは前の足が分割前の単位のまま＝分割後の安値が
+     「年初来安値」に見える。→ `&events=split` で分割を取り、まだ直していない足を分割後の単位に直す（jp_splits.py・parse_bars）。
   ・年初来高値＝その日の高値（ザラ場の高値）が、期間の始まり〜前の営業日までの高値をすべて上回った。
     年初来安値＝その日の安値（ザラ場の安値）が、同じ期間の安値をすべて下回った。同じ値は更新に数えない。
       期間の始まりは日本の新聞・証券会社の慣例どおり **4〜12月＝その年の1月1日／1〜3月＝前の年の1月1日**
@@ -58,6 +61,7 @@ import urllib.request
 from build_jp_rankings import INFO, JST, modal_date, is_regression, is_unsettled, SETTLE_JST
 import jp_markers   # 🆕 2026-10-08 朝の準備用「寄りで買わない」目印（同じ日足に相乗り・jp-highs.json の "markers"）
 import jp_taishaku  # 🆕 2026-10-08 夕方 目印の一覧に〔貸借〕の印（日本取引所グループの一覧・取れなければ印なしで続ける）
+import jp_splits    # 🆕 2026-11-19 株式分割の補正（Yahoo が一部の足しか直していない日）
 import jp_momentum  # 🆕 2026-10-08 夜 朝のメール用「上がりすぎた株（今月は新しく買わない）」（過去12か月で一番上げた10銘柄・研究 J42／J42F）
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -68,7 +72,7 @@ MAX_JUMP = 1.5            # その日の高値 ÷ 前の日の終値 がこれ�
 JPX_FROM = "2022-01-01"         # JPX の新規上場の一覧がある年（これ以降に始まる記録は JPX の上場日で確かめる）
 MID_MONTH_FROM = "2017-06-01"   # 新規上場の記録が「月の途中」から始まる形が出始めた頃（全銘柄の監査で最初は 2017-06-12）
 NEAR_DAYS = 10                  # 記録の始まりと JPX の上場日のずれの許し（月足の日付は上場の週の月曜などになる）
-RULE_VERSION = 6          # 判定の決まりを変えたら上げる（4＝安値 2026-10-06 夕・5＝全銘柄 同日夜・6＝JPX の上場日で確かめる 同日夜）＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
+RULE_VERSION = 7          # 判定の決まりを変えたら上げる（4＝安値 2026-10-06 夕・5＝全銘柄 同日夜・6＝JPX の上場日で確かめる 同日夜・7＝株式分割の補正 2026-11-19）＝同じ営業日でも作り直す（main の「取りに行かない」を素通りさせる）
 HISTORY_KEEP = 250        # 毎日の件数の記録（約1年分）
 MIN_COVERAGE = 0.8
 SCOPE = "all"             # 対象の範囲（履歴の件数は同じ範囲どうしでしか比べない＝400銘柄の日と混ぜない）
@@ -78,6 +82,7 @@ JPX_NEW_PAGES = ["https://www.jpx.co.jp/listing/stocks/new/index.html"] + [
 MARKETS = ("プライム", "スタンダード", "グロース")
 UA = {"User-Agent": "Mozilla/5.0"}
 THROTTLED = {"n": 0}      # Yahoo に「混んでいる」（429・5xx）と言われた回数（ログ用）
+SPLIT_FIXED = []          # 🆕 2026-11-19 株式分割を直した (コード, 足の種類, 切れ目[])（ログ用）
 
 
 def window_start(asof):
@@ -91,8 +96,12 @@ def window_start(asof):
     return f"{y}-01-01", "年初来"
 
 
-def parse_bars(result):
-    """Yahoo chart の result から [(日付JST, 高値, 安値, 終値, 出来高)] を返す（高値・安値・終値の欠けたバーは落とす）。純関数。"""
+def parse_bars(result, fixed=None):
+    """Yahoo chart の result から [(日付JST, 高値, 安値, 終値, 出来高)] を返す（高値・安値・終値の欠けたバーは落とす）。純関数。
+
+    🆕 2026-11-19 株式分割の補正: result に分割（events.splits）があり、Yahoo がまだ直していない切れ目があれば、
+    それより前の足を分割後の単位に直す（jp_splits.adjust_hlcv）。fixed にリストを渡すと直した切れ目を足す（ログ用）。
+    """
     q = result["indicators"]["quote"][0]
     ts = result.get("timestamp") or []
     highs, lows = q.get("high") or [], q.get("low") or []
@@ -103,6 +112,9 @@ def parse_bars(result):
             continue
         d = datetime.datetime.fromtimestamp(t, JST).date().isoformat()
         out.append((d, float(h), float(lo), float(c), float(v or 0)))
+    out, breaks = jp_splits.adjust_hlcv(out, jp_splits.parse_splits(result))
+    if breaks and fixed is not None:
+        fixed.extend(breaks)
     return out
 
 
@@ -112,12 +124,16 @@ def fetch_bars(code, rng, interval, tries=3):
     全銘柄で約3,700回取りに行くので、「混んでいる」（429・5xx）や通信の途切れは間を空けて2回までやり直す。
     404（Yahoo に無い銘柄）はやり直さない。
     """
-    u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}"
+    u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}&events=split"
     for k in range(tries):
         try:
             req = urllib.request.Request(u, headers=UA)
             d = json.load(urllib.request.urlopen(req, timeout=25))["chart"]["result"][0]
-            return parse_bars(d)
+            fixed = []
+            bars = parse_bars(d, fixed)
+            if fixed:
+                SPLIT_FIXED.append((code, interval, fixed))
+            return bars
         except urllib.error.HTTPError as e:
             if e.code == 429 or e.code >= 500:
                 THROTTLED["n"] += 1
@@ -480,6 +496,10 @@ def main(force=False, dry_run=False):
           f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
           f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"
           f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
+    if SPLIT_FIXED:
+        print(f"   🔧 株式分割の補正（Yahoo がまだ直していない足を分割後の単位に）{len(SPLIT_FIXED)}件: "
+              + ", ".join(f"{c}[{iv}]（" + "・".join(f"{d} から ×{r:g}" for d, r in br) + "）" for c, iv, br in SPLIT_FIXED[:10])
+              + (" ほか" if len(SPLIT_FIXED) > 10 else ""))
     mo = payload["momentum"]
     for key in ("asof", "month_end"):
         x = (mo.get("lists") or {}).get(key) or {}
