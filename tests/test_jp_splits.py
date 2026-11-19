@@ -160,15 +160,24 @@ def test_adjust_hlcv_keeps_turnover():
     assert out[2] == bars[2]
 
 
-def test_adjust_hlcv_monthly_mixed_bar():
-    # 月足：分割のあった月の足は高値が分割前の単位のまま（キーエンス 2026年11月＝高値 77,630・安値 14,410・終値 14,722）
+def test_monthly_bars_are_not_searched_for_splits():
+    # 月足では分割の切れ目を探さない（1か月の本物の動きは大きい＝メイコー 2026年10月の −30% が 1→2 に見えた）。
+    # 月足は reconcile_monthly で日足と突き合わせて直す
     bars = [("2026-09-01", 83490.0, 73510.0, 80480.0, 11095700.0),
             ("2026-10-01", 82940.0, 76360.0, 78000.0, 13482900.0),
             ("2026-11-01", 77630.0, 14410.0, 14722.0, 11117000.0)]
-    out, br = S.adjust_hlcv(bars, [("2026-11-19", 5.0)])
-    assert br == [("2026-11-01", 5.0)]
-    assert round(out[1][1], 1) == 16588.0 and round(out[1][3], 1) == 15600.0
-    assert round(out[2][1], 1) == 15526.0 and out[2][2] == 14410.0 and out[2][3] == 14722.0
+    assert S.adjust_hlcv(bars, [("2026-11-19", 5.0)]) == (bars, [])
+    meiko = [("2026-09-01", 12500.0, 11000.0, 12170.0, 1.0), ("2026-10-01", 12200.0, 8250.0, 8550.0, 1.0)]
+    assert S.adjust_hlcv(meiko, [("2026-10-29", 2.0)]) == (meiko, [])
+
+
+def test_big_split_needs_a_move_beyond_the_price_limit():
+    # 2倍以上の分割：直していない切れ目は必ず値幅制限の外に出る。¥150 の株の −30%（¥150→¥104・制限 ¥50 の中）は本物の動き＝
+    # 「1→2 の切れ目」にも見える形（比 0.69）だが直さない。制限の外（¥150→¥80）なら直していない切れ目
+    dates = _dates("2026-10-19", 10)
+    assert S.find_breaks(dates, [150.0] * 9 + [104.0], [("2026-11-02", 2.0)]) == []
+    assert S.find_breaks(dates, [150.0] * 9 + [80.0], [("2026-11-02", 2.0)]) == [(dates[9], 2.0)]
+    assert S.beyond_limit(72510.0, 14722.0) and not S.beyond_limit(400.0, 330.0) and S.beyond_limit(400.0, 300.0)
 
 
 def test_adjust_hlcv_without_splits_returns_same_list():
@@ -319,6 +328,107 @@ def test_unit_ignores_long_gaps_between_bars():
     assert S.index_factors(dates, [400.0, 401.0, 402.0, 4030.0, 4040.0], [])[1] == []
     dates = ["2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04", "2026-09-07"]
     assert S.index_factors(dates, [400.0, 401.0, 402.0, 4030.0, 4040.0], [])[1] == [("2026-09-04", 0.1)]
+
+
+
+# ── 直せるところを全部（2026-11-19 夜・2回目） ──────────────────────
+
+def test_flip_glitch_on_split_date_is_repaired():
+    # 三菱ケミカル（4188）：分割の日付 2005-09-30（倍率 0.5）の足だけ 376（前後は 752・815）＝その足だけ直す
+    dates = ["2005-09-28", "2005-09-29", "2005-09-30", "2005-10-03", "2005-10-04"]
+    closes = [752.0, 752.0, 376.0, 815.0, 813.0]
+    f, fixes = S.index_factors(dates, closes, [("2005-09-30", 0.5)])
+    assert [c * k for c, k in zip(closes, f)] == [752.0, 752.0, 752.0, 815.0, 813.0]
+    # ローツェ（6323）：分割の日付 2000-08-25（倍率 2）の足だけ 230（前後は 112.75・128）
+    dates = ["2000-08-23", "2000-08-24", "2000-08-25", "2000-08-28", "2000-08-29"]
+    closes = [113.75, 112.75, 230.0, 128.0, 125.0]
+    f, _ = S.index_factors(dates, closes, [("2000-08-25", 2.0)])
+    assert [c * k for c, k in zip(closes, f)] == [113.75, 112.75, 115.0, 128.0, 125.0]
+
+
+def test_real_round_trip_away_from_split_date_is_left_alone():
+    # 分割の日付から離れた本物の −50%・+100%（¥100 未満の株のストップ安・ストップ高）は直さない
+    dates = _dates("2026-06-01", 10)
+    closes = [60.0, 60.0, 30.0, 60.0, 61.0, 62.0, 61.0, 60.0, 60.0, 61.0]
+    assert S.index_factors(dates, closes, [("2026-10-01", 2.0)])[1] == []
+    assert S.index_factors(dates, closes, [])[1] == []
+
+
+def test_unit_uses_product_of_two_split_ratios():
+    # 1793 の形：2000-01-05 に 3755 → 637.5（5.9倍）・Yahoo の分割の倍率は 0.2・3・2 ＝ 3×2＝6 がいちばん近い
+    dates = ["1999-12-29", "1999-12-30", "2000-01-04", "2000-01-05", "2000-01-06"]
+    closes = [3700.0, 3720.0, 3755.0, 637.5, 640.0]
+    f, fixes = S.index_factors(dates, closes, [("2000-03-01", 0.2), ("2001-05-01", 3.0), ("2003-05-01", 2.0)])
+    assert fixes == [("2000-01-05", 6.0)] and round(closes[2] * f[2], 2) == 625.83
+
+
+def test_monthly_unit_glitch_is_not_fixed_from_monthly_alone():
+    # 月足だけでは「1日ではありえない」が使えない（1か月にはストップ高・安が何度も入る）＝単位のずれとしては直さない
+    bars = [("2026-02-01", 420.0, 395.0, 413.1, 1.0e8), ("2026-03-01", 413.0, 36.74, 37.14, 5.0e8),
+            ("2026-04-01", 395.0, 370.0, 394.1, 1.0e8)]
+    assert S.adjust_hlcv(bars, []) == (bars, [])
+
+
+def test_reconcile_monthly_with_daily():
+    # キーエンスの形：月足は 2025-12 以前が分割前（5倍）・2026-01 から直し済み。日足（直し済み）は 2024-11-19 から
+    import datetime as _dt
+    daily, d = [], _dt.date(2024, 11, 19)
+    while d <= _dt.date(2026, 11, 18):
+        if d.weekday() < 5:
+            p = 14000.0 if d.year < 2026 else 15000.0
+            daily.append((d.isoformat(), p * 1.01, p * 0.99, p, 1000.0))
+        d += _dt.timedelta(days=1)
+    monthly = [("2020-01-01", 80000.0, 60000.0, 70000.0, 100.0)]
+    m = _dt.date(2024, 11, 1)
+    while m <= _dt.date(2026, 11, 1):
+        p = 70000.0 if m.year < 2026 else 15000.0
+        monthly.append((m.isoformat(), p * 1.02, p * 0.98, p, 100.0))
+        m = (m.replace(day=28) + _dt.timedelta(days=4)).replace(day=1)
+    out, rho = S.reconcile_monthly(monthly, daily)
+    assert rho == 5.0
+    assert out[0] == ("2020-01-01", 16000.0, 12000.0, 14000.0, 500.0)          # 日足より前＝÷5
+    dec = next(x for x in out if x[0] == "2025-12-01")
+    assert dec[3] == 14000.0 and round(dec[1], 1) == 14140.0                     # 覆う月＝日足から作り直し
+    assert out[-1] == monthly[-1]                                                 # いまの月（日足の最後の月）はそのまま
+    # そろっていれば何もしない
+    good = [(x[0], x[1] / 5, x[2] / 5, x[3] / 5, x[4]) if x[0] < "2026-01" else x for x in monthly]
+    out2, rho2 = S.reconcile_monthly(good, daily)
+    assert rho2 == 1.0 and out2[0] == good[0]
+
+
+
+def test_stock_chart_tool_fixes_jp_closes():
+    # 🆕 2026-11-19 generate_stock_chart（記事のチャート用・いまは使われていない）も日本株は直す・日本株以外はそのまま
+    import importlib.util as _u
+    sp = _u.spec_from_file_location("generate_stock_chart", os.path.join(ROOT, "generate_stock_chart.py"))
+    G = _u.module_from_spec(sp)
+    sp.loader.exec_module(G)
+    data = [{"date": d, "close": c} for d, c in zip(["2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01"],
+                                                     [382.6, 382.7, 37.64, 37.14, 389.2])]
+    assert [x["close"] for x in G._jp_fix("1306.T", data, [])] == [382.6, 382.7, 376.4, 371.4, 389.2]
+    assert G._jp_fix("SPY", data, []) is data
+
+
+
+def test_weekly_bars_allow_several_limit_days():
+    # 霞ヶ関キャピタル（3498）：Yahoo の「月足」の古い分は週足。2019-10-07 → 10-14 の 816 → 1,592 はストップ高4日の本物の動き＝
+    # 分割の倍率 2 に近くても直さない（1日の幅で見ると「ありえない」に見えた）
+    dates = ["2019-09-30", "2019-10-07", "2019-10-14", "2019-10-21"]
+    assert S.index_factors(dates, [820.0, 816.25, 1592.5, 1482.5], [("2019-08-29", 2.0)])[1] == []
+    assert S.weekdays_between("2019-10-07", "2019-10-14") == 5 and S.weekdays_between("2026-03-27", "2026-03-30") == 1
+    assert S.impossible(382.7, 37.64, 1) and not S.impossible(816.25, 1592.5, 5)
+
+
+
+def test_small_ratio_split_does_not_flag_ordinary_days():
+    # 日清製粉（2002）2013-09 の形：1→1.1 の分割の日付の前後のふつうの ±1% の動きを「行って戻る誤り」と見ない
+    dates = _dates("2013-09-16", 8)
+    closes = [894.21, 900.83, 912.4, 906.61, 908.26, 915.0, 910.0, 912.0]
+    assert S.index_factors(dates, closes, [("2013-09-20", 1.1)])[1] == []
+    # ラストワンマイル（9252）2025-08 の形：1→1.2 の分割の日付の前後の +5%・−7% も見ない
+    dates = _dates("2025-07-28", 10)
+    closes = [3700.0, 3720.0, 3730.0, 3744.0, 3924.0, 4000.0, 4100.0, 4200.0, 4295.0, 4000.0]
+    assert S.index_factors(dates, closes, [("2025-08-01", 1.2)])[1] == []
 
 
 if __name__ == "__main__":

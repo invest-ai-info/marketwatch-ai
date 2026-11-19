@@ -291,7 +291,8 @@ def j1_stats(rows, sims=None):
 
 
 def fetch_many(tickers, start, batch=80):
-    """Yahoo の日足の終値をまとめて取る → {ticker: Series}"""
+    """Yahoo の日足の終値をまとめて取る → {ticker: Series}
+    🆕 2026-11-19 日本株（.T）は生の値段で取り、株式分割の直しもれ・単位のずれを直してから配当の調整をかける（P.jp_fix_frame）"""
     import yfinance as yf
     out = {}
     tickers = sorted(set(tickers))
@@ -299,8 +300,8 @@ def fetch_many(tickers, start, batch=80):
         part = tickers[k:k + batch]
         for attempt in range(3):
             try:
-                df = yf.download(part, start=start, interval="1d", progress=False, auto_adjust=True,
-                                 group_by="ticker", threads=True)
+                df = yf.download(part, start=start, interval="1d", progress=False, auto_adjust=False,
+                                 actions=True, group_by="ticker", threads=True)
                 break
             except Exception as e:  # noqa: BLE001
                 print(f"  ⚠️ 取得失敗 {k}: {type(e).__name__}", file=sys.stderr)
@@ -310,7 +311,12 @@ def fetch_many(tickers, start, batch=80):
             continue
         for tk in part:
             try:
-                s = (df[tk]["Close"] if isinstance(df.columns, pd.MultiIndex) else df["Close"]).dropna()
+                sub = (df[tk] if isinstance(df.columns, pd.MultiIndex) else df).dropna(subset=["Close"])
+                if str(tk).endswith(".T") and len(sub):
+                    sub, _ = P.jp_fix_frame(sub)
+                elif "Adj Close" in sub.columns:
+                    sub = sub.assign(Close=sub["Adj Close"])
+                s = sub["Close"].dropna()
             except KeyError:
                 continue
             if len(s) > 30:

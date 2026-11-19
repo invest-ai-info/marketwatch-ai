@@ -298,6 +298,26 @@ def test_render_md_runs_on_partial_results():
     assert "投資助言ではありません" in md and "B4" in md and "計算できず" in md and "003-20250925=404" in md
 
 
+
+def test_jp_fix_frame_repairs_raw_then_applies_dividend_adjustment():
+    # 🆕 2026-11-19 日本株（.T）：生の終値で単位のずれ（1321.T の 10-05・06 だけ 1/100）を直し、yfinance の auto_adjust と同じ配当の調整
+    idx = pd.DatetimeIndex(["2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07"]).tz_localize("Asia/Tokyo")
+    raw = [718.1, 710.4, 7.279, 7.351, 729.7]
+    df = pd.DataFrame({"Open": raw, "High": raw, "Low": raw, "Close": raw,
+                       "Adj Close": [x * 0.99 for x in raw[:2]] + raw[2:],          # 10-02 までに配当（×0.99）
+                       "Volume": [50302200, 22979300, 3202535000, 2147485000, 13663350],
+                       "Dividends": [0.0] * 5, "Stock Splits": [0.0, 0.0, 100.0, 0.0, 0.0]}, index=idx)
+    out, fixes = P.jp_fix_frame(df)
+    assert list(out.columns) == ["Open", "High", "Low", "Close", "Volume"]
+    assert [round(x, 2) for x in out["Close"]] == [710.92, 703.3, 727.9, 735.1, 729.7]
+    assert round(out["Open"].iloc[0], 2) == 710.92 and round(out["Volume"].iloc[2]) == 32025350
+    assert fixes == [("2026-10-05", 100.0), ("2026-10-07", 0.01)]
+    # 直すところが無ければ auto_adjust=True と同じ
+    ok = df.iloc[:2]
+    out2, fixes2 = P.jp_fix_frame(ok)
+    assert fixes2 == [] and [round(x, 2) for x in out2["Close"]] == [710.92, 703.3]
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
