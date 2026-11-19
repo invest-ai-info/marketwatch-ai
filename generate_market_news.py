@@ -6480,6 +6480,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-20", "line": '・<b>2026-11-20</b>: 🧪 解説「<a href="guide-signal-lab-155.html" style="color:#0969da"><b>移動平均を100日にしても、上げ相場の2日だけの急な下げ買いは通じる？【研究日誌 #155】</b></a>」公開'},
         {"date": "2026-11-19", "line": '・<b>2026-11-19</b>: 📰 解説「<a href="guide-news-2026-11-19-anthropic-ant-ipo.html" style="color:#0969da"><b>Anthropic ANT IPO確定：3・調達1.3B史上最大、Nasdaqデビュー</b></a>」公開'},
         {"date": "2026-11-19", "line": '・<b>2026-11-19</b>: 🎮 解説「<a href="guide-company-2432-dena.html" style="color:#0969da"><b>ディー・エヌ・エー</b></a>」公開'},
         {"date": "2026-11-19", "line": '・<b>2026-11-19</b>: 🧪 解説「<a href="guide-signal-lab-154.html" style="color:#0969da"><b>半年前より高い株価指数の急な下げ買いは通じる？【#154】</b></a>」公開'},
