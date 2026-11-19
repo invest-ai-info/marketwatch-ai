@@ -312,6 +312,15 @@ def test_unit_prefers_yahoo_split_ratio_when_closer():
     assert fixes == [(dates[6], 10.0)]                               # 分割の情報が無ければ単位（10）
 
 
+
+def test_unit_ignores_long_gaps_between_bars():
+    # 売買の無い日が続いて足が飛んだところ（8暦日以上）の大きな動きは、単位のずれと見ない
+    dates = ["2026-09-01", "2026-09-02", "2026-09-03", "2026-09-14", "2026-09-15"]
+    assert S.index_factors(dates, [400.0, 401.0, 402.0, 4030.0, 4040.0], [])[1] == []
+    dates = ["2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04", "2026-09-07"]
+    assert S.index_factors(dates, [400.0, 401.0, 402.0, 4030.0, 4040.0], [])[1] == [("2026-09-04", 0.1)]
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):
