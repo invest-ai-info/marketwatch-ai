@@ -419,6 +419,18 @@ def test_weekly_bars_allow_several_limit_days():
     assert S.impossible(382.7, 37.64, 1) and not S.impossible(816.25, 1592.5, 5)
 
 
+
+def test_small_ratio_split_does_not_flag_ordinary_days():
+    # 日清製粉（2002）2013-09 の形：1→1.1 の分割の日付の前後のふつうの ±1% の動きを「行って戻る誤り」と見ない
+    dates = _dates("2013-09-16", 8)
+    closes = [894.21, 900.83, 912.4, 906.61, 908.26, 915.0, 910.0, 912.0]
+    assert S.index_factors(dates, closes, [("2013-09-20", 1.1)])[1] == []
+    # ラストワンマイル（9252）2025-08 の形：1→1.2 の分割の日付の前後の +5%・−7% も見ない
+    dates = _dates("2025-07-28", 10)
+    closes = [3700.0, 3720.0, 3730.0, 3744.0, 3924.0, 4000.0, 4100.0, 4200.0, 4295.0, 4000.0]
+    assert S.index_factors(dates, closes, [("2025-08-01", 1.2)])[1] == []
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

@@ -39,8 +39,10 @@ Yahoo は `&events=split` を付けると分割の日付と倍率（chart.result
      いちばん新しい足から REVERT_DAYS 暦日のうちのずれがまだ戻っていない＝単位がどちらか決められない＝unit_pending が True
      （サイトの一覧はその銘柄を出さない）。Yahoo の分割の倍率が2つ以上あるときは、2つを掛け合わせた倍率（3×2＝6 など）も候補
      （2026-11-19 夜の点検：1793 の 2000-01-05 は 3755→637.5＝5.9倍・分割の倍率は 5・3・2）
-  ⑧ **分割の日付の前後の、行って戻る数日だけの誤り**（値幅制限の中の動きでも）：分割の日付の前後で、となりの足との比が
-     分割の倍率（またはその逆数）の ±15% に入り、REVERT_DAYS 暦日のうちに逆向きの同じ倍率で戻るなら、その間の足だけ直す
+  ⑧ **分割の日付の前後の、行って戻る数日だけの誤り**：2倍以上の分割の日付の前後で、となりの足との動きが値幅制限（ふつうの幅）の
+     外で比が分割の倍率（またはその逆数）の ±15% に入り、REVERT_DAYS 暦日のうちに逆向きの同じ倍率（これも制限の外）で戻るなら、
+     その間の足だけ直す（1.1倍などの小さい倍率は ±1% のふつうの動きが幅に入る＝見ない・2026-11-19 夜の全上場の点検で日清製粉
+     2013・野村総合研究所 2015 などを誤って直しかけた）
      （三菱ケミカル 4188：分割の日付 2005-09-30 だけ 376〔前後は 752・815〕・出来高0／ローツェ 6323：分割の日付 2000-08-25 だけ 230
       〔前後は 112.75・128〕）
   ⑨ 直したところの足（月足など1本に直す前と後が混ざる足）は、倍率で割った単位から外れた高値（安値）を倍率で直す（adjust_hlcv）
@@ -80,6 +82,7 @@ LIMITS = ((100, 30), (200, 50), (500, 80), (700, 100), (1000, 150), (1500, 300),
           (700000, 100000), (1000000, 150000), (1500000, 300000), (2000000, 400000), (3000000, 500000),
           (5000000, 700000), (7000000, 1000000), (10000000, 1500000))
 LIMIT_WIDEN = 4      # 制限値幅の拡大（ストップ高・安が続いたとき）を見込んで4倍まで広げる
+RATIO_TOL = 1.3      # ありえない切れ目を Yahoo の分割の倍率に当てるときの幅（±30%＝その日の本物の動きは値幅制限の中）
 UNIT_MAX_GAP = 7     # 単位のずれと見るのは、となりの足との間がこの暦日以内のときだけ（売買の無い日が続いた本物の動きを直さない）
 
 
@@ -268,7 +271,7 @@ def _unit(prev, cur, ratios=(), days=1):
     q = cur / prev
     singles, prods = _ratio_candidates(ratios)
     best = None
-    for G, tol in ([(F, UNIT_TOL) for F in UNITS] + [(g, MAX_MOVE) for g in singles]
+    for G, tol in ([(F, UNIT_TOL) for F in UNITS] + [(g, RATIO_TOL) for g in singles]
                    + [(g, UNIT_TOL) for g in prods]):
         for u in (G, 1 / G):
             e = abs(math.log(q / u))
@@ -297,14 +300,16 @@ def _flip_glitches(dates, adj, splits):
         except ValueError:
             continue
         G = r if r > 1 else 1 / r
+        if G < 2:
+            continue          # 倍率の小さい分割は、ふつうの値動きと見分けられない（1.1倍は ±1% の動きが ±15% の幅に入る）
         for j in range(1, len(adj)):
             if j in used or not (lo <= dates[j] <= hi) or not _gap_ok(dates, j):
                 continue
             q = _q(adj, j)
-            if q is None:
+            if q is None or not beyond_limit(adj[j - 1], adj[j], 1, weekdays_between(dates[j - 1], dates[j])):
                 continue
             for u in (G, 1 / G):
-                if abs(math.log(q / u)) > tol:
+                if abs(math.log(q / u)) > tol or abs(math.log(q / u)) >= abs(math.log(q)):
                     continue
                 until = (dt.date.fromisoformat(dates[j]) + dt.timedelta(days=REVERT_DAYS)).isoformat()
                 for m in range(j + 1, len(adj)):
@@ -313,7 +318,8 @@ def _flip_glitches(dates, adj, splits):
                     if m in used or not _gap_ok(dates, m):
                         continue
                     qm = _q(adj, m)
-                    if qm and abs(math.log(qm * u)) <= tol:
+                    if (qm and abs(math.log(qm * u)) <= tol and abs(math.log(qm * u)) < abs(math.log(qm))
+                            and beyond_limit(adj[m - 1], adj[m], 1, weekdays_between(dates[m - 1], dates[m]))):
                         out += [(j, 1 / u), (m, u)]
                         used.update((j, m))
                         break
