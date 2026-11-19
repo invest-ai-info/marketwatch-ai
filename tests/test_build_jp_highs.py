@@ -290,6 +290,50 @@ def test_parse_bars_drops_missing_and_uses_jst_date():
     assert H.parse_bars(res) == [("2026-10-05", 101.0, 97.0, 100.0, 5.0)]
 
 
+
+# ── 株式分割（2026-11-19 新設） ─────────────────────────────
+# キーエンス（6861）の 1→5 の分割の日（11/18）、Yahoo の日足は最後の1本だけ分割後の値だった。その日は sane_today が
+# 「データの誤り」として落としたが、次の日からは前の足が分割前の単位のまま＝分割後の安値が「年初来安値」に見える。
+
+def _ts_jst(d):
+    return int(datetime.datetime.fromisoformat(d + "T09:00:00+09:00").timestamp())
+
+
+def _split_result(rows, split_date="2026-11-19", ratio=5.0):
+    """rows＝[(日付, 高値, 安値, 終値, 出来高)] → Yahoo の result（分割の情報つき）"""
+    sd = _ts_jst(split_date)
+    return {"timestamp": [_ts_jst(r[0]) for r in rows],
+            "events": {"splits": {str(sd): {"date": sd, "numerator": ratio, "denominator": 1.0}}},
+            "indicators": {"quote": [{"high": [r[1] for r in rows], "low": [r[2] for r in rows],
+                                      "close": [r[3] for r in rows], "volume": [r[4] for r in rows]}]}}
+
+
+def _keyence_rows():
+    pre = [(d, 76000.0, 70000.0, 73000.0, 600000.0) for d in
+           (x[0] for x in _days("2026-09-01", 90) if datetime.date.fromisoformat(x[0]).weekday() < 5)]
+    pre = [r for r in pre if r[0] <= "2026-11-17"]
+    return pre + [("2026-11-18", 14736.0, 14410.0, 14722.0, 3050000.0),
+                  ("2026-11-19", 14730.0, 14300.0, 14675.0, 1500000.0)]
+
+
+def test_parse_bars_fixes_unadjusted_split_bars():
+    fixed = []
+    bars = H.parse_bars(_split_result(_keyence_rows()[:-1]), fixed)
+    assert fixed == [("2026-11-18", 5.0)]
+    assert bars[-2] == ("2026-11-17", 15200.0, 14000.0, 14600.0, 3000000.0)
+    assert H.sane_today(bars)                                     # 直したので分割の日も「データの誤り」にならない
+    assert H.make_row("6861", {}, bars, {"side": "low", "prev": 0, "prev_date": ""}, False, None, "")["pct"] \
+        == round(14722.0 / 14600.0 - 1, 4)
+
+
+def test_day_after_split_is_not_a_false_ytd_low():
+    rows = _keyence_rows()
+    bars = H.parse_bars(_split_result(rows))
+    assert H.ytd_extreme(bars, "2026-01-01", "low") is None       # 直した前の足の安値 14,000 のほうが低い
+    raw = H.parse_bars(_split_result(rows, ratio=1.0))            # 倍率1＝分割の情報なし（直さない）と同じ
+    assert H.ytd_extreme(raw, "2026-01-01", "low") is not None    # 直さないと 11/18 の 14,410 を下回った「年初来安値」に見える
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

@@ -28,6 +28,7 @@ import urllib.error
 import urllib.request
 
 import jp_markers
+import jp_splits   # 🆕 2026-11-19 株式分割の補正（日足は build_jp_highs が直す＝始値・1306 の終値も同じ単位にそろえる）
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_CSV = os.path.join(HERE, "highs-ledger.csv")
@@ -208,12 +209,15 @@ def needs_open(case, today):
 # ════════════════════ 次の日の始値（Yahoo の日足） ════════════════════
 
 def _parse_field(result, field):
+    """🆕 2026-11-19 Yahoo がまだ直していない株式分割の切れ目より前の値は分割後の単位に直す（build_jp_highs の日足と同じ）"""
     q = result["indicators"]["quote"][0]
+    breaks = jp_splits.breaks_of(result)
     out = {}
     for t, v in zip(result.get("timestamp") or [], q.get(field) or []):
         if v is None:
             continue
-        out[dt.datetime.fromtimestamp(t, JST).date().isoformat()] = float(v)
+        d = dt.datetime.fromtimestamp(t, JST).date().isoformat()
+        out[d] = float(v) * jp_splits.factor(d, breaks)
     return out
 
 
@@ -233,7 +237,7 @@ def fetch_index_closes(code=INDEX_CODE, rng="2y", tries=2):
 
 
 def fetch_opens(code, rng="3mo", tries=2, parse=parse_opens):
-    u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval=1d"
+    u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval=1d&events=split"
     for k in range(tries):
         try:
             req = urllib.request.Request(u, headers=UA)
