@@ -82,7 +82,8 @@ JPX_NEW_PAGES = ["https://www.jpx.co.jp/listing/stocks/new/index.html"] + [
 MARKETS = ("プライム", "スタンダード", "グロース")
 UA = {"User-Agent": "Mozilla/5.0"}
 THROTTLED = {"n": 0}      # Yahoo に「混んでいる」（429・5xx）と言われた回数（ログ用）
-SPLIT_FIXED = []          # 🆕 2026-11-19 株式分割を直した (コード, 足の種類, 切れ目[])（ログ用）
+SPLIT_FIXED = []          # 🆕 2026-11-19 株式分割・単位のずれを直した (コード, 足の種類, 直したところ[])（ログ用）
+UNIT_PENDING = set()      # 🆕 2026-11-19 日足の最後の10暦日に単位のずれ（10倍・100倍）が戻っていない銘柄＝その日は数えない
 
 
 def window_start(asof):
@@ -96,11 +97,13 @@ def window_start(asof):
     return f"{y}-01-01", "年初来"
 
 
-def parse_bars(result, fixed=None):
+def parse_bars(result, fixed=None, pending=None):
     """Yahoo chart の result から [(日付JST, 高値, 安値, 終値, 出来高)] を返す（高値・安値・終値の欠けたバーは落とす）。純関数。
 
     🆕 2026-11-19 株式分割の補正: result に分割（events.splits）があり、Yahoo がまだ直していない切れ目があれば、
     それより前の足を分割後の単位に直す（jp_splits.adjust_hlcv）。fixed にリストを渡すと直した切れ目を足す（ログ用）。
+    単位のずれ（10倍・100倍など＝値幅制限でありえない）も、いちばん新しい足の単位にそろえる。pending にリストを渡すと、
+    最後の10暦日のずれがまだ戻っていないとき True を足す（単位が決められない）。
     """
     q = result["indicators"]["quote"][0]
     ts = result.get("timestamp") or []
@@ -112,7 +115,10 @@ def parse_bars(result, fixed=None):
             continue
         d = datetime.datetime.fromtimestamp(t, JST).date().isoformat()
         out.append((d, float(h), float(lo), float(c), float(v or 0)))
-    out, breaks = jp_splits.adjust_hlcv(out, jp_splits.parse_splits(result))
+    splits = jp_splits.parse_splits(result)
+    if pending is not None and jp_splits.unit_pending([b[0] for b in out], [b[3] for b in out], splits):
+        pending.append(True)
+    out, breaks = jp_splits.adjust_hlcv(out, splits)
     if breaks and fixed is not None:
         fixed.extend(breaks)
     return out
@@ -129,10 +135,12 @@ def fetch_bars(code, rng, interval, tries=3):
         try:
             req = urllib.request.Request(u, headers=UA)
             d = json.load(urllib.request.urlopen(req, timeout=25))["chart"]["result"][0]
-            fixed = []
-            bars = parse_bars(d, fixed)
+            fixed, pending = [], []
+            bars = parse_bars(d, fixed, pending)
             if fixed:
                 SPLIT_FIXED.append((code, interval, fixed))
+            if pending and interval == "1d":
+                UNIT_PENDING.add(code)
             return bars
         except urllib.error.HTTPError as e:
             if e.code == 429 or e.code >= 500:
@@ -418,6 +426,12 @@ def main(force=False, dry_run=False):
             print(f"  ...{i+1}/{len(codes)} 取得失敗={fail} 混雑={THROTTLED['n']} 経過{(time.time()-t0)/60:.1f}分", flush=True)
         time.sleep(0.07)
     fetched = len(daily)
+    held = sorted(c for c in UNIT_PENDING if c in daily)
+    if held:
+        # 🆕 2026-11-19 単位のずれ（10倍・100倍）が戻っていない＝いまの値段の単位が決められない＝その日は数えない（目印・台帳も）
+        print(f"⚠️ 日足の最後の10暦日に単位のずれが戻っていない {len(held)}銘柄＝きょうは数えない: {', '.join(held[:10])}")
+        for c in held:
+            daily.pop(c)
 
     asof = modal_date([b[-1][0] for b in daily.values()])
     mixed = [c for c, b in daily.items() if b[-1][0] != asof]
@@ -497,8 +511,8 @@ def main(force=False, dry_run=False):
           f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"
           f"・{period}＝{start}〜・所要 {(time.time()-t0)/60:.1f}分")
     if SPLIT_FIXED:
-        print(f"   🔧 株式分割の補正（Yahoo がまだ直していない足を分割後の単位に）{len(SPLIT_FIXED)}件: "
-              + ", ".join(f"{c}[{iv}]（" + "・".join(f"{d} から ×{r:g}" for d, r in br) + "）" for c, iv, br in SPLIT_FIXED[:10])
+        print(f"   🔧 株式分割・単位のずれの補正（いちばん新しい足の単位にそろえた）{len(SPLIT_FIXED)}件: "
+              + ", ".join(f"{c}[{iv}]（" + "・".join(f"{d} より前 ÷{r:g}" for d, r in br) + "）" for c, iv, br in SPLIT_FIXED[:10])
               + (" ほか" if len(SPLIT_FIXED) > 10 else ""))
     mo = payload["momentum"]
     for key in ("asof", "month_end"):

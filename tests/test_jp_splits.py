@@ -237,6 +237,81 @@ def test_adjust_close_volume():
     assert br == [] and c == [14502.0, 14722.0] and v == [1.0, 2.0]
 
 
+
+# ── 単位のずれ・倍率の小さい分割の日（2026-11-19 夜） ──────────────────
+
+def test_unit_glitch_without_split_event_is_repaired():
+    # 1306.T（TOPIX 連動の上場投信）：2026-03-30・31 の2日だけ 1/10（出来高は10倍）・分割の情報は無い
+    dates = ["2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01"]
+    closes = [382.6, 382.7, 37.64, 37.14, 389.2]
+    f, fixes = S.index_factors(dates, closes, [])
+    assert [round(c * k, 2) for c, k in zip(closes, f)] == [382.6, 382.7, 376.4, 371.4, 389.2]
+    assert fixes == [("2026-03-30", 10.0), ("2026-03-31", 0.1)] or fixes == [("2026-03-30", 10.0), ("2026-04-01", 0.1)]
+    assert not S.unit_pending(dates, closes)          # 戻っている＝決められる
+
+
+def test_unit_glitch_with_bogus_split_event_is_repaired():
+    # 1321.T：Yahoo に偽の「100:1 の分割」・値は 10-05・06 の2日だけ 1/100（出来高は100倍）＝分割としては直さず、単位のずれとして直す
+    import datetime as _dt
+    days = ["2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07"]
+    rows = [(_dt.datetime.fromisoformat(d + "T09:00:00").replace(tzinfo=JST), c, c, c, c, v)
+            for d, c, v in zip(days, [718.1, 710.4, 7.279, 7.351, 729.7], [50302200, 22979300, 3202535000, 2147485000, 13663350])]
+    out, fixes = S.adjust_ohlcv(rows, [("2026-10-05", 100.0)])
+    assert [round(r[4], 1) for r in out] == [718.1, 710.4, 727.9, 735.1, 729.7]
+    assert round(out[2][5]) == 32025350 and out[0] == rows[0] and out[4] == rows[4]
+
+
+def test_permanent_unit_shift_takes_the_latest_units():
+    # 戻らないずれ（1306.T の 2015-01 のように、その日から 1/10 のまま）＝いちばん新しい足の単位にそろえる
+    dates = _dates("2014-12-01", 30)
+    closes = [1442.0] * 15 + [144.7] * 15
+    f, fixes = S.index_factors(dates, closes, [])
+    assert [round(c * k, 1) for c, k in zip(closes, f)] == [144.2] * 15 + [144.7] * 15
+    assert not S.unit_pending(dates, closes)
+
+
+def test_unit_shift_in_the_last_days_is_pending():
+    # いちばん新しい足が 1/10（まだ戻っていない）＝どちらの単位が正しいか決められない
+    dates = _dates("2026-11-02", 14)
+    assert S.unit_pending(dates, [380.0] * 13 + [38.1])
+    assert S.unit_pending(dates, [380.0] * 12 + [38.1, 38.3])
+    assert not S.unit_pending(dates, [380.0] * 11 + [38.1, 38.3, 381.0])      # 戻った
+    assert not S.unit_pending(dates, [380.0] * 14)
+    # 分割の情報があり分割として直る 1→10 は「ずれ」ではない
+    assert not S.unit_pending(dates, [3800.0] * 13 + [381.0], [("2026-11-20", 10.0)])
+
+
+def test_small_split_only_looks_two_trading_days_before():
+    # 倍率の小さい分割（1→1.05）：生の値段のまま・本当の切れ目は 3/30（分割の日付の取引日）で、その日の本物の値動きは −8%。
+    # 3/31 の本物の −7% のほうが「1.05 の切れ目」に近く見えるが、見るのは日付の2取引日前〜その日だけ＝3/30 を選ぶ
+    dates = ["2026-03-19", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27",
+             "2026-03-30", "2026-03-31", "2026-04-01"]
+    raw = [1428.0, 1424.0, 1423.0, 1435.0, 1437.0, 1447.0, 1264.0, 1176.0, 1197.0]
+    assert S.find_breaks(dates, raw, [("2026-03-30", 1.05)]) == [("2026-03-30", 1.05)]
+    # 大きい分割は今までどおり（日付の 8暦日前〜3暦日後）
+    assert S.find_breaks(dates, raw[:6] + [x / 5 for x in raw[6:]], [("2026-04-01", 5.0)]) == [("2026-03-30", 5.0)]
+
+
+
+def test_unit_needs_a_move_impossible_under_price_limits():
+    # ¥100 未満の制限値幅は ¥30 の定額＝¥3→¥33 のストップ高・¥33→¥3 のストップ安は本物でありうる＝単位のずれにしない
+    dates = _dates("2026-10-01", 20)
+    assert S.index_factors(dates, [3.0] * 19 + [33.0], [])[1] == []
+    assert S.index_factors(dates, [33.0] * 19 + [3.0], [])[1] == []
+    assert S.price_limit(72510.0) == 15000 and S.price_limit(37.6) == 30 and S.price_limit(2.0e7) == 6.0e6
+    assert S.impossible(382.7, 37.64) and S.impossible(37.14, 389.2) and not S.impossible(33.0, 3.0)
+
+
+def test_unit_prefers_yahoo_split_ratio_when_closer():
+    # ブルドックソース 2005 の形：5,950 ↔ 661.11（ちょうど9倍）を何度も行き来＝分割の倍率 9 が近ければ 9 で直す（10 だと11%ずれる）
+    dates = _dates("2005-09-20", 12)
+    closes = [5950.0] * 6 + [661.11] * 6
+    f, fixes = S.index_factors(dates, closes, [("2005-12-31", 9.0)])
+    assert fixes == [(dates[6], 9.0)] and round(closes[0] * f[0], 2) == 661.11
+    f, fixes = S.index_factors(dates, closes, [])
+    assert fixes == [(dates[6], 10.0)]                               # 分割の情報が無ければ単位（10）
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

@@ -105,7 +105,7 @@ def sector_summary(rows):
 
 
 def parse_chart(d):
-    """Yahoo chart の result → (closes[], vols[], 最終営業日ISO, splits, 直した切れ目[])。終値が2本未満なら None。純関数。
+    """Yahoo chart の result → (closes[], vols[], 最終営業日ISO, splits, 直した切れ目[], 単位のずれが未確定か)。終値が2本未満なら None。純関数。
 
     🆕 2026-11-19 株式分割の補正: Yahoo がまだ直していない切れ目より前の足を分割後の単位に直す
     （値段 ÷倍率・出来高 ×倍率）。直していない切れ目が無ければ（ふつうの形）値はそのまま。
@@ -118,13 +118,14 @@ def parse_chart(d):
     last_date = datetime.datetime.fromtimestamp(rows[-1][0], datetime.timezone.utc).strftime("%Y-%m-%d")
     dates = [datetime.datetime.fromtimestamp(t, JST).date().isoformat() for t, _, _ in rows]
     splits = jp_splits.parse_splits(d)
+    raw = [float(c) for _, c, _ in rows]
     closes, vols, breaks = jp_splits.adjust_close_volume(
-        dates, [float(c) for _, c, _ in rows], [None if v is None else float(v) for _, _, v in rows], splits)
-    return closes, vols, last_date, splits, breaks
+        dates, raw, [None if v is None else float(v) for _, _, v in rows], splits)
+    return closes, vols, last_date, splits, breaks, jp_splits.unit_pending(dates, raw, splits)
 
 
 def fetch_2day(code):
-    """直近約3ヶ月の (closes[], vols[], 最終営業日ISO, splits, 直した切れ目[]) を Yahoo から取得。失敗時 None。
+    """直近約3ヶ月の parse_chart の形（終値・出来高・最終営業日・分割・直したところ・単位のずれが未確定か）を Yahoo から取得。失敗時 None。
     （関数名は互換のまま。2026-07-21 に range=7d→3mo へ拡張＝相対出来高の基準20日分を確保。
       2026-11-19 に &events=split を付けて株式分割を補正＝parse_chart）"""
     u = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range=3mo&interval=1d&events=split"
@@ -178,10 +179,10 @@ def main():
         if not res:
             fail += 1
             continue
-        closes, vols, last_date, splits, breaks = res
+        closes, vols, last_date, splits, breaks, pending = res
         if breaks:
-            fixed.append(f"{code}（" + "・".join(f"{d} から ×{r:g}" for d, r in breaks) + "）")
-        if split_suspect(closes, last_date, splits):
+            fixed.append(f"{code}（" + "・".join(f"{d} より前 ÷{r:g}" for d, r in breaks) + "）")
+        if pending or split_suspect(closes, last_date, splits):
             suspect.append(code)
         else:
             row = stock_row(code, stocks[code], closes, vols, last_date)
@@ -195,7 +196,8 @@ def main():
         print(f"🔧 株式分割の補正（Yahoo がまだ直していない足を分割後の単位に）{len(fixed)}銘柄: " + ", ".join(fixed[:10])
               + (" ほか" if len(fixed) > 10 else ""))
     if suspect:
-        print(f"⚠️ 分割の日付の前後で前日比が極端なまま（直せず）＝一覧から外した {len(suspect)}銘柄: " + ", ".join(suspect[:10]))
+        print(f"⚠️ 分割の日付の前後で前日比が極端なまま・または単位のずれ（10倍・100倍）が戻っていない＝一覧から外した {len(suspect)}銘柄: "
+              + ", ".join(suspect[:10]))
 
     # 🆕 2026-08-29 日付の混在ガード＋巻き戻しガード。
     #   実害: 8/29 04:34 JST の回（cron が 17時台→早朝へずれた回）は Yahoo がまだ 8/28 を
