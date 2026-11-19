@@ -477,6 +477,10 @@ def main(force=False, dry_run=False):
             continue
         monthly = fetch_bars(code, "max", "1mo")    # 年初来を更新した銘柄だけ全期間を取る（1日に数十銘柄）
         time.sleep(0.07)
+        # 🆕 2026-11-19 月足を直した日足と突き合わせる（キーエンスの月足は 2025-12 以前が分割前の5倍のままだった）
+        monthly, rho = jp_splits.reconcile_monthly(monthly, bars)
+        if rho != 1.0:
+            SPLIT_FIXED.append((code, "1mo↔1d", [("日足より前の月足", rho)]))
         for side, hit in hits.items():
             record, record_prev, first = all_time_extreme(monthly, bars, side)
             out[side].append(make_row(code, stocks[code], bars, hit, record, record_prev, first, jpx))

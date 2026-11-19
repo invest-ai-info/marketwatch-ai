@@ -50,6 +50,18 @@ def _ticker_to_stooq(ticker):
     return t.lower() + ".us"
 
 
+def _jp_fix(ticker, data, splits):
+    """🆕 2026-11-19 日本株（.T）の終値の列 [{"date","close"}] の株式分割の直しもれ・単位のずれ（10倍・100倍）を直す（jp_splits）。
+    Stooq は分割の情報が無い＝単位のずれだけ。日本株以外はそのまま。"""
+    if not ticker.endswith(".T") or not data:
+        return data
+    import jp_splits
+    f, fixes = jp_splits.index_factors([x["date"] for x in data], [x["close"] for x in data], splits)
+    if fixes:
+        print(f"  🔧 株式分割・単位のずれの補正 {fixes}")
+    return [dict(x, close=round(x["close"] * k, 4)) for x, k in zip(data, f)]
+
+
 def fetch_chart_data(ticker, years=3):
     """Stooq の無料 CSV API で過去 N 年の日足データを取得（SSL 問題少ない、登録不要）
 
@@ -88,7 +100,7 @@ def fetch_chart_data(ticker, years=3):
                 continue
         if len(data) >= 30:
             print(f"  ✅ Stooq から {len(data)} 件取得 ({ticker} → {stooq_symbol})")
-            return data
+            return _jp_fix(ticker, data, [])
         else:
             print(f"  ⚠️ Stooq データ少なすぎ ({len(data)} 件) → yfinance フォールバック")
     except Exception as e:
@@ -104,8 +116,10 @@ def fetch_chart_data(ticker, years=3):
 
     end = datetime.now(JST).replace(tzinfo=None)
     start = end - timedelta(days=int(365 * years) + 30)
+    jp = ticker.endswith(".T")
     try:
-        df = yf.download(ticker, start=start, end=end, interval="1d", progress=False, auto_adjust=True)
+        # 🆕 2026-11-19 日本株は生の値段で取り、株式分割の直しもれ・単位のずれを直す（jp_splits・下の _jp_fix）
+        df = yf.download(ticker, start=start, end=end, interval="1d", progress=False, auto_adjust=not jp, actions=jp)
     except Exception as e:
         print(f"  ⚠️ yfinance 取得失敗: {type(e).__name__}: {str(e)[:80]}")
         return None
@@ -115,9 +129,12 @@ def fetch_chart_data(ticker, years=3):
         df.columns = df.columns.get_level_values(0)
 
     data = []
+    splits = []
     for date, row in df.iterrows():
         try:
             close = float(row["Close"])
+            if jp and float(row.get("Stock Splits", 0) or 0) > 0:
+                splits.append((date.strftime("%Y-%m-%d"), float(row["Stock Splits"])))
             if close > 0:
                 data.append({
                     "date": date.strftime("%Y-%m-%d"),
@@ -125,7 +142,7 @@ def fetch_chart_data(ticker, years=3):
                 })
         except (ValueError, TypeError):
             continue
-    return data
+    return _jp_fix(ticker, data, splits)
 
 
 def build_tradingview_section_html(symbol, asset_name, range_label="36M"):

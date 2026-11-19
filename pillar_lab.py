@@ -193,19 +193,53 @@ def http_get(url, tries=3):
     raise err
 
 
+def jp_fix_frame(df):
+    """日本株（.T）の yfinance の足（auto_adjust=False・actions=True で取ったもの）→ (直した足, 直したところ[])。
+
+    🆕 2026-11-19 Yahoo の株式分割の直しもれ・単位のずれ（10倍・100倍）・分割の日付の前後の行って戻る誤りを、**生の終値**で探して
+    直し（jp_splits・PILLAR_PREREG.md 末尾「データの直し」）、そのうえで yfinance の auto_adjust=True と同じ配当の調整
+    （始値・高値・安値に Adj Close÷Close を掛け、終値＝Adj Close）をかける。配当で直した値段は呼値に乗らず、
+    「Yahoo が直し済み」と見分けられなくなるので、生の終値で探す。Adj Close・Dividends・Stock Splits の列は落とす。
+    """
+    import jp_splits
+    df = df.copy()
+    dates = [ts.date().isoformat() for ts in pd.to_datetime(df.index)]
+    sp = df["Stock Splits"] if "Stock Splits" in df.columns else [0.0] * len(df)
+    splits = [(d, float(r)) for d, r in zip(dates, sp) if r and float(r) > 0 and abs(float(r) - 1) > 1e-9]
+    f, fixes = jp_splits.index_factors(dates, [float(x) for x in df["Close"]], splits)
+    if "Adj Close" in df.columns:
+        ratio = (df["Adj Close"] / df["Close"]).fillna(1.0)
+        for c in ("Open", "High", "Low"):
+            df[c] = df[c] * ratio
+        df["Close"] = df["Adj Close"]
+    if fixes:
+        for c in ("Open", "High", "Low", "Close"):
+            df[c] = df[c] * f
+        if "Volume" in df.columns:
+            df["Volume"] = df["Volume"] / f
+    return df.drop(columns=[c for c in ("Adj Close", "Dividends", "Stock Splits", "Capital Gains") if c in df.columns]), fixes
+
+
 def fetch(ticker, interval, tries=3, start=None):
-    """Yahoo の足。1時間足＝過去730日（添字は UTC）／日足＝過去2年か start から（添字は日付・時刻なし）"""
+    """Yahoo の足。1時間足＝過去730日（添字は UTC）／日足＝過去2年か start から（添字は日付・時刻なし）
+    🆕 2026-11-19 日本株（.T）は生の値段で取り、株式分割の直しもれ・単位のずれを直してから配当の調整をかける（jp_fix_frame）"""
     import yfinance as yf
+    jp = str(ticker).endswith(".T")
+    adj = {"auto_adjust": False, "actions": True} if jp else {"auto_adjust": True}
     for k in range(tries):
         try:
             if interval == "1h":
-                df = yf.download(ticker, period="730d", interval="1h", progress=False, auto_adjust=True)
+                df = yf.download(ticker, period="730d", interval="1h", progress=False, **adj)
             else:
                 kw = {"start": start} if start else {"period": "2y"}
-                df = yf.download(ticker, interval="1d", progress=False, auto_adjust=True, **kw)
+                df = yf.download(ticker, interval="1d", progress=False, **adj, **kw)
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = df.columns.get_level_values(0)
             df = df.dropna(subset=["Open", "Close"])
+            if jp and len(df):
+                df, fixes = jp_fix_frame(df)
+                if fixes:
+                    print(f"  🔧 {ticker} {interval} 株式分割・単位のずれの補正 {fixes}", file=sys.stderr)
             if len(df) > 50:
                 ix = pd.to_datetime(df.index)
                 if interval == "1h":
