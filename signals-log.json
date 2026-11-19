@@ -1407369,7 +1407369,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 2.27,
-    "max_adverse_excursion_pct": -1.217,
+    "max_adverse_excursion_pct": -1.201,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": true,
@@ -1414508,12 +1414508,14 @@
     },
     "after_tp1": {
       "v": 1,
-      "tp2_at": null,
+      "tp2_at": "2026-11-19T02:00:00+00:00",
       "entry_at": null,
       "sl_at": null,
-      "order": [],
-      "ended_by": null,
-      "ended_at": null,
+      "order": [
+        "tp2"
+      ],
+      "ended_by": "tp2",
+      "ended_at": "2026-11-19T02:00:00+00:00",
       "last_close": null,
       "tp1_bar": "ok",
       "tp1_bar_entry": false,
@@ -1419079,7 +1419081,7 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.24,
+    "max_favorable_excursion_pct": 0.259,
     "max_adverse_excursion_pct": -0.05,
     "email_sent": false,
     "whipsaw_check": {
@@ -1420167,7 +1420169,7 @@
     "hit_tp2_at": null,
     "hit_sl_at": null,
     "max_favorable_excursion_pct": 0.163,
-    "max_adverse_excursion_pct": -0.127,
+    "max_adverse_excursion_pct": -0.146,
     "email_sent": true,
     "watch_hit": "auto_reversal_long-True_trend-下降__flip",
     "whipsaw_check": {
@@ -1420762,8 +1420764,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": 0.071,
-    "max_adverse_excursion_pct": -1.313,
+    "max_favorable_excursion_pct": 0.08,
+    "max_adverse_excursion_pct": -1.842,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1422416,8 +1422418,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.027,
+    "max_adverse_excursion_pct": -0.191,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1422771,8 +1422773,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.006,
+    "max_adverse_excursion_pct": -0.057,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1422966,8 +1422968,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.251,
+    "max_adverse_excursion_pct": 0.003,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1423526,8 +1423528,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.194,
+    "max_adverse_excursion_pct": 0.001,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1423726,8 +1423728,8 @@
     "hit_tp1_at": null,
     "hit_tp2_at": null,
     "hit_sl_at": null,
-    "max_favorable_excursion_pct": null,
-    "max_adverse_excursion_pct": null,
+    "max_favorable_excursion_pct": 0.172,
+    "max_adverse_excursion_pct": 0.002,
     "email_sent": false,
     "whipsaw_check": {
       "is_reversal": false,
@@ -1423850,6 +1423852,396 @@
         "current_atr": 0.0055,
         "avg_atr_30d": 0.0054,
         "ratio": 1.01,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "yellow",
+      "score": 0,
+      "reasons": []
+    }
+  },
+  {
+    "id": "GBPUSD=X_4h_20261119_1112",
+    "fired_at": "2026-11-19T11:12:22+09:00",
+    "timeframe": "4h",
+    "ticker": "GBPUSD=X",
+    "asset_name": "ポンドドル",
+    "signal_types": [
+      "low_break"
+    ],
+    "primary_signal": "low_break",
+    "primary_signal_label": "🔴 直近 20 本安値割れ（損切りライン）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 1.3135771751403809,
+    "stop_loss": 1.3169789706758224,
+    "take_profit_1": 1.309041447759792,
+    "take_profit_2": 1.3067735840694976,
+    "atr": 0.002267863690294393,
+    "sl_pct": 0.2589718822632589,
+    "tp1_pct": -0.34529584301767857,
+    "tp2_pct": -0.5179437645265178,
+    "indicators_at_signal": {
+      "rsi": 24.29,
+      "macd": -0.003,
+      "macd_sig": -0.0029,
+      "ma25": 1.3195,
+      "ma75": 1.3324,
+      "bb_low": 1.3144,
+      "bb_up": 1.3229,
+      "recent_high": 1.3246,
+      "recent_low": 1.3137,
+      "adx": 45.0,
+      "chop": 45.08,
+      "ma_dev_pct": 0.9668,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 4.849
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "米ドル価格予測：DXY、19ヶ月高値近辺の103.74を試す一方、EUR/USD、GBP/USDは下落",
+      "米ドル価格予測：DXY、19ヶ月高値から小幅低下。EUR/USDは1.1000、GBP/USDは1.3174を維持できるか？",
+      "米ドル価格予測：DXY、103.23を維持。EUR/USDは1.1010へ、GBP/USDは1.3201を試す",
+      "米ドル価格予測：DXY、102.88を維持。EUR/USDは1.1056を試す一方、GBP/USDは1.3200に注目",
+      "米ドル価格予測：DXY、19ヶ月高値の103.15を視野に。EUR/USD、GBP/USDは下落"
+    ],
+    "ai_narrative": "ポンドドルは、直近20本安値割れ、RSI24.3、MACDのデッドクロスなど、明確な下落シグナルを発しています。75MA、25MAも下向きであり、下降トレンドが優勢です。通貨強弱でもポンド弱、ドル強が確認でき、複合順張りとしてショートが妥当です。ファンダメンタルズでは、米ドル高を示唆するニュースが複数見られ、この下落シナリオを補強しています。シナリオが崩れるとすれば、1.32を明確に上抜けた場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.375,
+      "EUR": 0.043,
+      "GBP": -0.221,
+      "JPY": 0.333,
+      "AUD": -0.575
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 24.56 高 (-1)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +2.8pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-11-19T06:10:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ GBP 弱（-0.22%）× USD 強（+0.38%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": -0.596,
+      "base_strength": -0.221,
+      "quote_strength": 0.375
+    },
+    "china_context": null,
+    "confidence": {
+      "score": 6,
+      "label": "HIGH",
+      "stars": "⭐⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "FX 強弱順張り (+1)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "昇格エッジ非該当（promoted 0 件に不一致）",
+      "score": 1.935,
+      "entry_vs_ma25_signed": 0.452,
+      "range_pos": -0.016,
+      "ma_ratio_pct": -0.967
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 0,
+      "watch_matched": null,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 24.56,
+        "avg_30d": 19.15,
+        "change_24h_pct": -3.53
+      },
+      "atr_regime": {
+        "current_atr": 0.0023,
+        "avg_atr_30d": 0.0026,
+        "ratio": 0.88,
+        "regime": "normal",
+        "label": "🟢 平常"
+      },
+      "crisis_news": {
+        "hit_count": 0,
+        "matched_keywords": [],
+        "matched_titles": []
+      }
+    },
+    "discipline_filter": {
+      "verdict": "green",
+      "score": 1,
+      "reasons": [
+        "売られすぎ/逆張り系の勝ち筋"
+      ]
+    }
+  },
+  {
+    "id": "AUDUSD=X_4h_20261119_1112",
+    "fired_at": "2026-11-19T11:12:22+09:00",
+    "timeframe": "4h",
+    "ticker": "AUDUSD=X",
+    "asset_name": "豪ドル米ドル（オージードル）",
+    "signal_types": [
+      "macd_dead"
+    ],
+    "primary_signal": "macd_dead",
+    "primary_signal_label": "🔴 MACD デッドクロス（短期下降転換）",
+    "signal_count": 1,
+    "direction": "ショート（売り）",
+    "entry": 0.6672894954681396,
+    "stop_loss": 0.6700321206406521,
+    "take_profit_1": 0.6636326619047898,
+    "take_profit_2": 0.6618042451231148,
+    "atr": 0.0018284167816749668,
+    "sl_pct": 0.4110097927719288,
+    "tp1_pct": -0.5480130570292384,
+    "tp2_pct": -0.8220195855438576,
+    "indicators_at_signal": {
+      "rsi": 15.91,
+      "macd": -0.003,
+      "macd_sig": -0.003,
+      "ma25": 0.6749,
+      "ma75": 0.6864,
+      "bb_low": 0.6694,
+      "bb_up": 0.678,
+      "recent_high": 0.6792,
+      "recent_low": 0.6709,
+      "adx": 55.54,
+      "chop": 41.21,
+      "ma_dev_pct": 1.6693,
+      "ma_dir": "down",
+      "regime": "trend_down"
+    },
+    "sr_runway": {
+      "blocked": false,
+      "block_frac": null,
+      "aligned": false,
+      "d_sup_atr": null,
+      "d_res_atr": 6.519
+    },
+    "selection": {
+      "tier": "neutral",
+      "veto_chasing": false,
+      "veto_ma_golden_long": false,
+      "veto_runway_blocked": false,
+      "aligned": false,
+      "regime": "trend_down"
+    },
+    "news_count": 5,
+    "news_titles": [
+      "オーストラリアの住宅不況と金利上昇：豪ドルへの影響は？",
+      "AUD/USD、NZD/USD、USD/JPY 2026年7月9日短期予測",
+      "米国債利回り上昇がドルを支え、USD/JPYはブレイクアウトを狙う",
+      "EUR/USD、EUR/JPY、AUD/USD：ジャクソンホール会議の変動に備える",
+      "GBP/USD、AUD/USDが勢いを失う中、USD/CADは強気に転じる"
+    ],
+    "ai_narrative": "豪ドル米ドルは、MACDのデッドクロスが短期的な下降転換を示唆しており、RSIも低水準にあることから、ショート方向でのエントリーが妥当と考えられます。直近24時間の通貨強弱でも、豪ドルの弱さと米ドルの強さが確認され、シグナルの方向性と一致しています。中国市場の軟調な動向は豪ドルの上値抑制要因となり、ショートシナリオを後押ししています。このシナリオが崩れるのは、0.67を明確に上抜ける展開となった場合です。",
+    "outcome": null,
+    "outcome_resolved_at": null,
+    "hit_tp1_at": null,
+    "hit_tp2_at": null,
+    "hit_sl_at": null,
+    "max_favorable_excursion_pct": null,
+    "max_adverse_excursion_pct": null,
+    "email_sent": false,
+    "whipsaw_check": {
+      "is_reversal": false,
+      "hours_since_prev": null,
+      "prev_direction": null,
+      "prev_signal_id": null
+    },
+    "trend_alignment": {
+      "aligned": true,
+      "higher_tf": "日足",
+      "higher_tf_trend": "下降",
+      "explanation": "✅ 日足 下降トレンド継続中、シグナル方向と一致（順張り）"
+    },
+    "currency_strength": {
+      "USD": 0.375,
+      "EUR": 0.043,
+      "GBP": -0.221,
+      "JPY": 0.333,
+      "AUD": -0.575
+    },
+    "risk_regime": {
+      "regime": "NEUTRAL",
+      "score": -1,
+      "factors": [
+        "VIX 24.56 高 (-1)",
+        "円・ドル優位 (-1)",
+        "株>金 5d +2.8pt (+1)"
+      ]
+    },
+    "directional_bias": {
+      "asset_class": "fx",
+      "regime": "NEUTRAL",
+      "allowed": null,
+      "signal_direction": "short",
+      "aligned": null
+    },
+    "fundamental_context": {
+      "available": true,
+      "source": "briefing",
+      "briefing_generated_at": "2026-11-19T06:10:00+09:00",
+      "regime": "RISK_OFF",
+      "regime_confidence": "MID",
+      "asset_bias": null,
+      "asset_conviction": null,
+      "signal_direction": "short",
+      "bias_aligned": null
+    },
+    "fx_alignment": {
+      "aligned": true,
+      "explanation": "✅ AUD 弱（-0.57%）× USD 強（+0.38%） → 通貨強弱もシグナル方向と一致（複合順張り）",
+      "strength_diff": -0.95,
+      "base_strength": -0.575,
+      "quote_strength": 0.375
+    },
+    "china_context": {
+      "market": {
+        "000001.SS": {
+          "name": "上海総合指数",
+          "current": 3564.27,
+          "change_pct": -0.57
+        },
+        "^HSI": {
+          "name": "香港ハンセン指数",
+          "current": 22928.62,
+          "change_pct": -2.47
+        }
+      },
+      "news": [
+        "JD.com株、第3四半期決算発表後、6.8%下落し4週間ぶりの安値圏へ",
+        "Baidu株、AI成長を広告低迷が上回り、5年超ぶりの安値を記録",
+        "New World株、32億ドルのライツイシューで47%急落、過去最低水準に",
+        "SMIC株、第3四半期決算が市場予想を上回り約5%上昇",
+        "WuXi AppTec株、米国が軍事リストから除外後、株価上昇"
+      ]
+    },
+    "confidence": {
+      "score": 6,
+      "label": "HIGH",
+      "stars": "⭐⭐⭐",
+      "factors": [
+        "シグナル 1 種併発 (+1)",
+        "環境 A (+2)",
+        "上位足トレンド順張り (+2)",
+        "FX 強弱順張り (+1)"
+      ],
+      "edge_tier": "neutral",
+      "chasing_downgrade": false,
+      "index_long_bonus": false
+    },
+    "momentum_filter": {
+      "passed": false,
+      "reason": "昇格エッジ非該当（promoted 0 件に不一致）",
+      "score": 3.736,
+      "entry_vs_ma25_signed": 1.129,
+      "range_pos": -0.437,
+      "ma_ratio_pct": -1.669
+    },
+    "promoted_gate": {
+      "enabled": true,
+      "matched": null,
+      "n_promoted": 0,
+      "watch_matched": null,
+      "avoid_matched": null
+    },
+    "environment": {
+      "env_score": "A",
+      "score_label": "🟢 平常",
+      "size_factor": 1.0,
+      "size_label": "通常運用",
+      "warnings": [],
+      "danger_count": 0,
+      "upcoming_events": [],
+      "vix": {
+        "current": 24.56,
+        "avg_30d": 19.15,
+        "change_24h_pct": -3.53
+      },
+      "atr_regime": {
+        "current_atr": 0.0018,
+        "avg_atr_30d": 0.0019,
+        "ratio": 0.94,
         "regime": "normal",
         "label": "🟢 平常"
       },
