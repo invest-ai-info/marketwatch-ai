@@ -247,6 +247,16 @@ def test_hot_asset_jp_split_fix():
     assert c == [74580.0, 72510.0, 14722.0]
 
 
+
+def test_hot_asset_jp_unit_pending_is_skipped():
+    # 🆕 2026-11-19 いちばん新しい足だけ 1/10（単位のずれが戻っていない）＝表に出さない
+    import pandas as pd
+    idx = pd.DatetimeIndex(["2026-11-14", "2026-11-17", "2026-11-18"]).tz_localize("Asia/Tokyo")
+    hist = pd.DataFrame({"Close": [3800.0, 3810.0, 381.0], "Volume": [1.0e6, 1.0e6, 1.0e7],
+                         "Stock Splits": [0.0, 0.0, 0.0]}, index=idx)
+    assert M.jp_hist_split_fixed(hist, list(hist["Close"]), list(hist["Volume"])) == (None, None)
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

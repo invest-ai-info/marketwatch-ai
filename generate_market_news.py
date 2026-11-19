@@ -2927,14 +2927,18 @@ HOT_ASSETS = {
 
 
 def jp_hist_split_fixed(hist, closes, vols):
-    """yfinance の日足（日本株）の終値・出来高から、Yahoo がまだ直していない株式分割の切れ目を直す（jp_splits）。
-    分割は hist の "Stock Splits" 列（0 でない日＝倍率）。"""
+    """yfinance の日足（日本株）の終値・出来高から、Yahoo がまだ直していない株式分割の切れ目と単位のずれ（10倍・100倍）を直す
+    （jp_splits）。分割は hist の "Stock Splits" 列（0 でない日＝倍率）。
+    最後の10暦日の単位のずれがまだ戻っていない（単位が決められない）ときは (None, None)＝その銘柄は表に出さない。"""
     dates = [ts.date().isoformat() for ts in hist.index]
     sp = hist["Stock Splits"] if "Stock Splits" in hist.columns else []
     splits = [(d, float(r)) for d, r in zip(dates, sp) if r and float(r) > 0 and abs(float(r) - 1) > 1e-9]
+    if jp_splits.unit_pending(dates, closes, splits):
+        print("  ⚠️ 単位のずれ（10倍・100倍）が戻っていない＝この銘柄は出さない")
+        return None, None
     closes, vols, breaks = jp_splits.adjust_close_volume(dates, closes, vols, splits)
     if breaks:
-        print(f"  🔧 株式分割の補正 {breaks}")
+        print(f"  🔧 株式分割・単位のずれの補正 {breaks}")
     return closes, vols
 
 
@@ -2963,6 +2967,8 @@ def fetch_hot_asset(sym, name):
         vols = [float(x) for x in hist["Volume"]]
         if jp:
             closes, vols = jp_hist_split_fixed(hist, closes, vols)
+            if closes is None:
+                return None
 
         today_vol = vols[-1]
         base = [v for v in vols[:-1] if v == v]          # 欠け（NaN）は除く＝これまでの pandas の mean と同じ

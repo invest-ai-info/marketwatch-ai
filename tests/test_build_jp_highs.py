@@ -334,6 +334,21 @@ def test_day_after_split_is_not_a_false_ytd_low():
     assert H.ytd_extreme(raw, "2026-01-01", "low") is not None    # 直さないと 11/18 の 14,410 を下回った「年初来安値」に見える
 
 
+
+def test_parse_bars_unit_glitch_repaired_and_pending_flagged():
+    # 🆕 2026-11-19 単位のずれ（分割の情報なし）：2日で戻った誤りは直す・まだ戻っていなければ pending
+    rows = [("2026-03-26", 386.0, 379.0, 382.6, 1.0e7), ("2026-03-27", 385.0, 378.0, 382.7, 1.0e7),
+            ("2026-03-30", 37.64, 36.74, 37.64, 8.0e7), ("2026-03-31", 37.93, 36.91, 37.14, 2.5e8),
+            ("2026-04-01", 389.2, 381.3, 389.2, 2.0e7)]
+    res = _split_result(rows, ratio=1.0)
+    pending = []
+    bars = H.parse_bars(res, None, pending)
+    assert [round(b[3], 1) for b in bars] == [382.6, 382.7, 376.4, 371.4, 389.2] and pending == []
+    pending = []
+    H.parse_bars(_split_result(rows[:4], ratio=1.0), None, pending)
+    assert pending == [True]
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):
