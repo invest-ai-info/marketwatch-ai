@@ -229,6 +229,24 @@ def test_band_shows_dash_when_prev_unknown():
     assert "数字は前日終値比" in html
 
 
+
+def test_hot_asset_jp_split_fix():
+    # 🆕 2026-11-19 hot-assets の日本株 主要銘柄：キーエンス（6861）の分割の日に 1位で −79.70% と出た形を直す
+    import pandas as pd
+    idx = pd.DatetimeIndex(["2026-11-14", "2026-11-17", "2026-11-18"]).tz_localize("Asia/Tokyo")
+    hist = pd.DataFrame({"Close": [74580.0, 72510.0, 14722.0], "Volume": [483800.0, 614800.0, 3050000.0],
+                         "Stock Splits": [0.0, 0.0, 0.0]}, index=idx)
+    # yfinance は分割を Yahoo の日付（11/19）の行の "Stock Splits" に入れる。値が変わったのは 11/18 の足
+    idx3 = idx.append(pd.DatetimeIndex(["2026-11-19"]).tz_localize("Asia/Tokyo"))
+    hist3 = pd.DataFrame({"Close": [74580.0, 72510.0, 14722.0, 14495.0], "Volume": [483800.0, 614800.0, 3050000.0, 585100.0],
+                          "Stock Splits": [0.0, 0.0, 0.0, 5.0]}, index=idx3)
+    c, v = M.jp_hist_split_fixed(hist3, list(hist3["Close"]), list(hist3["Volume"]))
+    assert c[:2] == [14916.0, 14502.0] and v[1] == 3074000.0 and c[2:] == [14722.0, 14495.0]
+    # 分割の無い表はそのまま
+    c, v = M.jp_hist_split_fixed(hist, list(hist["Close"]), list(hist["Volume"]))
+    assert c == [74580.0, 72510.0, 14722.0]
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

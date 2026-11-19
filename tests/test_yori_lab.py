@@ -213,6 +213,29 @@ def test_raw_shape_tells_empty_900_from_shift():
     assert out["09:05"]["出来高の比"]["中央値"] == 0.3 and out["09:00"]["出来高の比"]["中央値"] == 1.0
     assert out["09:05"]["最初の足の始値÷日足の始値"]["中央値"] == 1.02
 
+
+def test_fetch_chart_asks_for_splits_and_fixes_unadjusted_bars():
+    # 🆕 2026-11-19 研究ラボと前向きの記録の共通の取り方：Yahoo の株式分割の直しもれを直す（キーエンス 1→5 の形）
+    import io
+    import json as _json
+    assert "events=split" in Y.chart_url("6861", "1d", "3mo") and "events=split" in Y.chart_url("6861", "1d", "from:2000")
+    ts = [int(dt.datetime(2026, 11, d, 9, 0, tzinfo=Y.P.JST).timestamp()) for d in (16, 17, 18)]
+    sd = int(dt.datetime(2026, 11, 19, 9, 0, tzinfo=Y.P.JST).timestamp())
+    body = {"chart": {"result": [{"timestamp": ts,
+             "events": {"splits": {str(sd): {"date": sd, "numerator": 5.0, "denominator": 1.0}}},
+             "indicators": {"quote": [{"open": [73500.0, 73000.0, 14640.0], "high": [73700.0, 73350.0, 14736.0],
+                                       "low": [73200.0, 71930.0, 14410.0], "close": [73450.0, 72510.0, 14722.0],
+                                       "volume": [566400, 614800, 3050000]}]}}]}}
+    real = Y.urllib.request.urlopen
+    Y.urllib.request.urlopen = lambda req, timeout=0: io.BytesIO(_json.dumps(body).encode())
+    try:
+        rows = Y.fetch_chart("6861", "1d", "1mo")
+    finally:
+        Y.urllib.request.urlopen = real
+    assert [r[4] for r in rows] == [14690.0, 14502.0, 14722.0]
+    assert rows[1][5] == 3074000.0 and rows[2][5] == 3050000.0
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
