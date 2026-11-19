@@ -17,6 +17,7 @@ from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML, SIT
 from apply_site_frame import LOGO_V2_SVG, NAV_V2, NAV_V2_MORE  # 新しいトップと記事の新しい枠（FRAME_V2）で共通のロゴとナビの並び
 from apply_site_frame import finish_page  # 🆕 2026-11-15 トップ以外のページもトップの見た目に（apply_site_frame.V2_PAGES だけ・トップは変えない）
 from inject_ads import build_block as _ad_block, add_page_ad  # A8 広告の部品（素材の定義は inject_ads.CREATIVES）
+import jp_splits  # 🆕 2026-11-19 日本株の株式分割の直しもれ（hot-assets の日本株 主要銘柄）
 
 # 翻訳関数（複数バックエンド + 既に日本語ならスキップ + 失敗時ログ）
 import re as _re_for_ja
@@ -2925,6 +2926,18 @@ HOT_ASSETS = {
 }
 
 
+def jp_hist_split_fixed(hist, closes, vols):
+    """yfinance の日足（日本株）の終値・出来高から、Yahoo がまだ直していない株式分割の切れ目を直す（jp_splits）。
+    分割は hist の "Stock Splits" 列（0 でない日＝倍率）。"""
+    dates = [ts.date().isoformat() for ts in hist.index]
+    sp = hist["Stock Splits"] if "Stock Splits" in hist.columns else []
+    splits = [(d, float(r)) for d, r in zip(dates, sp) if r and float(r) > 0 and abs(float(r) - 1) > 1e-9]
+    closes, vols, breaks = jp_splits.adjust_close_volume(dates, closes, vols, splits)
+    if breaks:
+        print(f"  🔧 株式分割の補正 {breaks}")
+    return closes, vols
+
+
 def fetch_hot_asset(sym, name):
     """yfinanceから30日分の履歴を取得し、出来高急増率と価格変動を計算
 
@@ -2938,16 +2951,26 @@ def fetch_hot_asset(sym, name):
     """
     try:
         t = yf.Ticker(sym)
-        hist = t.history(period="30d")
+        jp = sym.endswith(".T")
+        # 🆕 2026-11-19 日本株は生の終値（配当で直さない）を取り、株式分割の直しもれを jp_splits で直す。
+        #   キーエンス（6861）の 1→5 の分割の日（11/18）、Yahoo は最後の1本だけ分割後の値＝この表の1位に −79.70% が出た
+        #   （配当で直した値段は呼値に乗らず「直し済み」と見分けられなくなるので auto_adjust=False）
+        hist = t.history(period="30d", auto_adjust=not jp)
         if hist.empty or len(hist) < 2:
             return None
 
-        today_vol = float(hist["Volume"].iloc[-1])
-        avg_vol = float(hist["Volume"].iloc[:-1].mean()) if len(hist) > 1 else 0.0
+        closes = [float(x) for x in hist["Close"]]
+        vols = [float(x) for x in hist["Volume"]]
+        if jp:
+            closes, vols = jp_hist_split_fixed(hist, closes, vols)
+
+        today_vol = vols[-1]
+        base = [v for v in vols[:-1] if v == v]          # 欠け（NaN）は除く＝これまでの pandas の mean と同じ
+        avg_vol = (sum(base) / len(base)) if base else 0.0
         surge_ratio = (today_vol / avg_vol) if avg_vol > 0 else 0.0
 
-        today_close = float(hist["Close"].iloc[-1])
-        prev_close = float(hist["Close"].iloc[-2])
+        today_close = closes[-1]
+        prev_close = closes[-2]
         change_pct = ((today_close - prev_close) / prev_close * 100) if prev_close > 0 else 0.0
 
         return {

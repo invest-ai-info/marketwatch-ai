@@ -332,6 +332,22 @@ def test_wiring():
     assert "tdnet-reaction.yml" in open("RESEARCH_LABS.md", encoding="utf-8").read()
 
 
+
+def test_parse_chart_fixes_unadjusted_split_bars():
+    # 🆕 2026-11-19 開示の直前の値段と反応の日の引けが、株式分割の直しもれで別の単位にならない（キーエンス 1→5 の形）
+    d = _chart([("2026-11-16", 73450.0), ("2026-11-17", 72510.0), ("2026-11-18", 14722.0)])
+    sd = int(dt.datetime.fromisoformat("2026-11-19T09:00").replace(tzinfo=JST).timestamp())
+    d["events"] = {"splits": {str(sd): {"date": sd, "numerator": 5.0, "denominator": 1.0}}}
+    bars = R.parse_chart(d, "1d")
+    assert [b[4] for b in bars] == [14690.0, 14502.0, 14722.0]
+    assert "events=split" in inspect_source_fetch()
+
+
+def inspect_source_fetch():
+    import inspect
+    return inspect.getsource(R.fetch_chart)
+
+
 if __name__ == "__main__":
     n = 0
     for k, f in list(globals().items()):

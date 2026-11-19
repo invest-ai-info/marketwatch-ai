@@ -16,6 +16,7 @@ import urllib.request
 
 import numpy as np
 
+import jp_splits  # 🆕 2026-11-19 Yahoo の株式分割の直しもれ（PILLAR_PREREG.md 末尾「データの直し」）
 import pillar_lab as P
 
 UNIVERSE = "jp-stock-info.json"
@@ -38,8 +39,8 @@ def chart_url(code, interval, rng):
     base = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T"
     if str(rng).startswith("from:"):
         p1 = int(dt.datetime(int(str(rng)[5:]), 1, 1, tzinfo=dt.timezone.utc).timestamp())
-        return f"{base}?period1={p1}&period2={int(time.time())}&interval={interval}"
-    return f"{base}?range={rng}&interval={interval}"
+        return f"{base}?period1={p1}&period2={int(time.time())}&interval={interval}&events=split"
+    return f"{base}?range={rng}&interval={interval}&events=split"
 
 
 def fetch_chart(code, interval, rng, tries=3):
@@ -55,7 +56,8 @@ def fetch_chart(code, interval, rng, tries=3):
                 if None in (o, h, l, c):
                     continue
                 out.append((dt.datetime.fromtimestamp(t, P.JST), float(o), float(h), float(l), float(c), float(v or 0)))
-            return out
+            # 🆕 2026-11-19 Yahoo がまだ直していない株式分割の切れ目より前の足を分割後の単位に直す（直し済みなら何もしない）
+            return jp_splits.adjust_ohlcv(out, jp_splits.parse_splits(d))[0]
         except Exception as e:  # noqa: BLE001
             print(f"  ⚠️ {code} {interval} 取得失敗 {k + 1}/{tries}: {type(e).__name__}", file=sys.stderr)
             time.sleep(2 * (k + 1))

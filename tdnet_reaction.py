@@ -50,6 +50,7 @@ import time
 import unicodedata
 import urllib.request
 
+import jp_splits  # 🆕 2026-11-19 Yahoo の株式分割の直しもれ（PILLAR_PREREG.md 末尾「データの直し」）
 import tdnet_events as T
 
 JST = dt.timezone(dt.timedelta(hours=9))
@@ -578,12 +579,13 @@ def parse_chart(d, interval):
             out.append((when.replace(hour=9, minute=0, second=0, microsecond=0), None, float(hi), float(lo), float(px),
                         float(m.get("regularMarketVolume") or 0)))
             out.sort(key=lambda x: x[0])
-    return out
+    # 🆕 2026-11-19 Yahoo がまだ直していない株式分割の切れ目より前の足を分割後の単位に直す（直し済みなら何もしない）
+    return jp_splits.adjust_ohlcv(out, jp_splits.parse_splits(d))[0]
 
 
 def fetch_chart(code, interval, rng, tries=3):
     """Yahoo の足 → parse_chart の形。取れなければ None"""
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}"
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range={rng}&interval={interval}&events=split"
     for k in range(tries):
         try:
             d = json.load(urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30))["chart"]["result"][0]

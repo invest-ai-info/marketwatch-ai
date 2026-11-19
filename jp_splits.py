@@ -19,12 +19,18 @@ Yahoo は `&events=split` を付けると分割の日付と倍率（chart.result
   切れ目が見つからない＝もう直してある（ふつうの形）＝何もしない。
   🔍 2026-11-19 の全上場の点検で③を足した：コタ（4923）の 1→1.05 の分割（2026-03）は Yahoo が直し済み（前の足が 1357.14 など
      ＝1425÷1.05）なのに、03-31 の本物の −7% が 1.05 の切れ目に見えた。
+  ⑤ 切れ目の前後 REVERT_DAYS 暦日のうちに、逆向きに同じ倍率の切れ目があれば、分割ではなく数日だけの値の誤り＝何もしない
+     （2026-11-19 同日夕：日経225連動型上場投信 1321.T に Yahoo の「100:1 の分割」があるが、値は 2026-10-05・06 の2日だけ
+      1/100 で 10-07 に戻っていた＝それより前を 1/100 に直すと、かえって全部が狂う。1990年からの日足の点検では
+      三菱ケミカル 2005-09-30・ローツェ 2000-08-25 の「1日だけ半分／2倍」が、その次の足で分割の切れ目に見えた）
 
 ⚠️ 倍率の小さい分割（1→1.1 など）は、直してある足のふつうの下げと見分けにくい。取り違えても誤差は倍率の分まで
    （大きい分割＝2倍以上は、直したあとの値動きと直す前の値動きの差が大きく取り違えない）。
 ⚠️ 月足では分割のあった月の足が分割の前と後の値を混ぜている（分割なら高値・併合なら安値が分割前の単位のまま）。
    その値が終値の1.5倍を超えて離れていれば倍率で割る（adjust_hlcv）。同じ月の分割後の値は日足（約2年）が補う。
-⚠️ 標準ライブラリだけ（build_jp_rankings.py・build_jp_highs.py・highs_ledger.py が読む）。
+⚠️ 標準ライブラリだけ。読むところ＝build_jp_rankings.py・build_jp_highs.py・highs_ledger.py（サイト・朝のメール）／
+   generate_market_news.py（hot-assets の日本株 主要銘柄）／yori_lab.fetch_chart（研究ラボと前向きの記録の共通の取り方・
+   jp_bars の置き場）／tdnet_reaction.py（開示のあとの値動き J51）。
 """
 import datetime as dt
 import math
@@ -34,6 +40,7 @@ SPLIT_BEFORE = 8     # 分割の日付の何暦日前の足から見るか（権
 SPLIT_AFTER = 3      # 分割の日付の何暦日後の足まで見るか
 MAX_MOVE = 1.5       # 直したあとの1本の値動きの上限（build_jp_highs.MAX_JUMP と同じ＝値幅制限の外には出ない）
 TICK_LOOK = 10       # 「もう直してあるか」を見る、切れ目の前の足の本数
+REVERT_DAYS = 10     # 切れ目のあと、この暦日のうちに逆向きに戻れば値の誤り（分割ではない）
 
 
 def on_tick(x):
@@ -83,11 +90,43 @@ def near(date, splits):
     return False
 
 
-def find_breaks(dates, closes, splits):
-    """Yahoo がまだ直していない切れ目 → [(切れ目の日付, 倍率)]。純関数。
+def _q(closes, k):
+    a, b = closes[k - 1], closes[k]
+    if not a or not b or a <= 0 or b <= 0:
+        return None
+    return b / a
 
-    切れ目の日付＝分割後の単位になった最初の足の日付（それより前の足は分割前の単位のまま）。
-    dates は足の日付（ISO・古い順）、closes は同じ長さの終値。
+
+def _reverts(dates, closes, k, r):
+    """切れ目 k の前後 REVERT_DAYS 暦日のうちに、逆向きに同じ倍率の切れ目があるか（数日だけの値の誤り）。純関数。
+
+    後ろ＝1321.T（2026-10-05・06 だけ 1/100 → 10-07 に戻る）。前＝三菱ケミカル（4188・2005-09-30 だけ 1/2）・
+    ローツェ（6323・2000-08-25 だけ 2倍）＝誤りの足の次の足が「分割で落ちた」切れ目に見える。
+    """
+    try:
+        d0 = dt.date.fromisoformat(dates[k])
+        lo = (d0 - dt.timedelta(days=REVERT_DAYS)).isoformat()
+        hi = (d0 + dt.timedelta(days=REVERT_DAYS)).isoformat()
+    except ValueError:
+        return False
+    for j in range(1, len(closes)):
+        if j == k or dates[j] < lo:
+            continue
+        if dates[j] > hi:
+            break
+        q = _q(closes, j)
+        if q is None:
+            continue
+        e_back, e_none = abs(math.log(q / r)), abs(math.log(q))
+        if e_back < e_none and e_back <= math.log(MAX_MOVE):
+            return True
+    return False
+
+
+def find_break_indices(dates, closes, splits):
+    """Yahoo がまだ直していない切れ目 → [(足の番号 k, 倍率)]（k より前の足が分割前の単位のまま）。純関数。
+
+    dates は足の日付（ISO・古い順・日中足なら同じ日付が続く）、closes は同じ長さの終値。
     """
     used, out = set(), []
     for d, r in splits or ():
@@ -102,17 +141,35 @@ def find_breaks(dates, closes, splits):
             # 足 k が覆う期間 [dates[k], dates[k+1]) が分割の日付の前後にかかるか（月足は1本が1か月を覆う）
             if dates[k] > hi or (k + 1 < len(dates) and dates[k + 1] <= lo):
                 continue
-            a, b = closes[k - 1], closes[k]
-            if not a or not b or a <= 0 or b <= 0:
+            q = _q(closes, k)
+            if q is None:
                 continue
-            q = b / a
             e_split, e_none = abs(math.log(q * r)), abs(math.log(q))
             if e_split < e_none and e_split <= math.log(MAX_MOVE) and (best is None or e_split < best[0]):
                 best = (e_split, k)
-        if best and not already_adjusted(closes[max(0, best[1] - TICK_LOOK):best[1]]):
+        if (best and not already_adjusted(closes[max(0, best[1] - TICK_LOOK):best[1]])
+                and not _reverts(dates, closes, best[1], r)):
             used.add(best[1])
-            out.append((dates[best[1]], r))
-    return out
+            out.append((best[1], r))
+    return sorted(out)
+
+
+def find_breaks(dates, closes, splits):
+    """Yahoo がまだ直していない切れ目 → [(切れ目の日付, 倍率)]。純関数。
+
+    切れ目の日付＝分割後の単位になった最初の足の日付（それより前の足は分割前の単位のまま）。日足・月足用（1日1本）。
+    """
+    return [(dates[k], r) for k, r in find_break_indices(dates, closes, splits)]
+
+
+def index_factors(dates, closes, splits):
+    """足ごとの値段に掛ける数（出来高はこれで割る）と切れ目［(日付, 倍率)］。日中足でも使える（切れ目は足の番号で持つ）。純関数。"""
+    br = find_break_indices(dates, closes, splits)
+    f = [1.0] * len(closes)
+    for k, r in br:
+        for i in range(k):
+            f[i] /= r
+    return f, [(dates[k], r) for k, r in br]
 
 
 def factor(date, breaks):
@@ -155,3 +212,24 @@ def breaks_of(result):
     pairs = [(dt.datetime.fromtimestamp(t, JST).date().isoformat(), float(c))
              for t, c in zip(result.get("timestamp") or [], q.get("close") or []) if c is not None]
     return find_breaks([p[0] for p in pairs], [p[1] for p in pairs], splits)
+
+
+def adjust_ohlcv(rows, splits):
+    """[(JST の時刻, 始, 高, 安, 終, 出来高)]（yori_lab.fetch_chart・tdnet_reaction.parse_chart の形・日足でも日中足でも）
+    → (直した rows, 切れ目[])。始値が None の足は None のまま。純関数。"""
+    if not splits or not rows:
+        return rows, []
+    f, breaks = index_factors([r[0].date().isoformat() for r in rows], [r[4] for r in rows], splits)
+    if not breaks:
+        return rows, []
+    return [(t, None if o is None else o * k, h * k, lo * k, c * k, v / k)
+            for (t, o, h, lo, c, v), k in zip(rows, f)], breaks
+
+
+def adjust_close_volume(dates, closes, vols, splits):
+    """終値と出来高の列（日足）→ (直した終値, 直した出来高〔None は None のまま〕, 切れ目[])。純関数。"""
+    f, breaks = index_factors(dates, closes, splits)
+    if not breaks:
+        return list(closes), list(vols), []
+    return ([c * k for c, k in zip(closes, f)],
+            [None if v is None else v / k for v, k in zip(vols, f)], breaks)

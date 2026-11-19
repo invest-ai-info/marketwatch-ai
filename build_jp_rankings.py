@@ -118,11 +118,9 @@ def parse_chart(d):
     last_date = datetime.datetime.fromtimestamp(rows[-1][0], datetime.timezone.utc).strftime("%Y-%m-%d")
     dates = [datetime.datetime.fromtimestamp(t, JST).date().isoformat() for t, _, _ in rows]
     splits = jp_splits.parse_splits(d)
-    breaks = jp_splits.find_breaks(dates, [float(c) for _, c, _ in rows], splits)
-    fs = [jp_splits.factor(x, breaks) for x in dates]
-    return ([float(c) * f for (_, c, _), f in zip(rows, fs)],
-            [None if v is None else float(v) / f for (_, _, v), f in zip(rows, fs)],
-            last_date, splits, breaks)
+    closes, vols, breaks = jp_splits.adjust_close_volume(
+        dates, [float(c) for _, c, _ in rows], [None if v is None else float(v) for _, _, v in rows], splits)
+    return closes, vols, last_date, splits, breaks
 
 
 def fetch_2day(code):

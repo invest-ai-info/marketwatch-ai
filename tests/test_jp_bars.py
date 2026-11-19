@@ -82,7 +82,7 @@ def test_daily_uses_max_and_falls_back_when_bars_are_not_daily():
     assert J.daily_ok(_fake("1301", "1d", "max")) and not J.daily_ok([(dt.datetime(2006, 1, 1) + dt.timedelta(days=30 * k),) for k in range(5)])
     import yori_lab as Y
     u = Y.chart_url("7203", "1d", "from:1990")
-    assert "period1=631152000&" in u and "period2=" in u and "range=" not in u and Y.chart_url("7203", "5m", "60d").endswith("range=60d&interval=5m")
+    assert "period1=631152000&" in u and "period2=" in u and "range=" not in u and Y.chart_url("7203", "5m", "60d").endswith("range=60d&interval=5m&events=split")
 
 
 def test_fetcher_and_universe_use_the_store_when_present():
