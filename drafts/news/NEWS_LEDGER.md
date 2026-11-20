@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-11-20
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均-3,007.56円（-5.06%）・歴代5位の下げ幅。背景3要因（米BIS新AIチップ輸出規制・AMD空売りレポート・AI採算性懸念）と3連休前の需給を中立整理。（カテゴリ: 日本株・マクロ・AIセルオフ・半導体）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - Fisco/Investing.com「日経平均大引け：前日比3007.56円安の56436.65円」2026-11-20
+  - 株探「東京株式（大引け）＝3007円安、ハイテク株中心に全面安で歴代5位の下げ幅」2026-11-20
+  - 共同通信「東証終値、3007円安」2026-11-20
+  - ANN（テレビ朝日）「日経平均終値は3007円安 AI懸念でほぼ全面安」2026-11-20
+  - 財経新聞「日経平均は大幅に3日ぶり反落、アドバンテストやソフトバンクGが2銘柄で約1016円分押し下げ」2026-11-20
+  - SCMP「US tightens AI chip export curbs to close China's overseas data centre loophole」2026-11-20
+  - AA.com.tr「Global markets slide amid tech selloff, US restrictions on AI chips」2026-11-20
+  - Yahoo Finance「AMD, Intel and Nvidia Fall as AI Chip Selloff Continues」2026-11-20
+  - InvestingLive「Asia-Pacific market news: Red Friday as Asia's AI trade unravels」2026-11-20
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟢白（問題なし・修正なし）→ 最終判定 🟢白
+  - 特記：事実2点を本セッションで修正（①「4日間」→「3日間」②2,883円安の表現を精緻化）・「短売り業者」→「空売り業者」に統一
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告75件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-20-nikkei-3000-ai-selloff.html
+- commit: 97fea45（main へ push 済み）
+
+---
+
 ## 2026-11-19
 - 判定: ✅ 公開済み
 - 選定トピック: Anthropic（ANT）IPO価格$83確定・調達約$81.3B（報道ベース）で史上最大、本日Nasdaqデビュー。日経平均+419円（+0.71%）・AI半導体株主導の続伸との関連を中立整理。（カテゴリ: AI・IPO・米国株・日本株・マクロ）
