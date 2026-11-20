@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-11-20T15:10:00+09:00",
+  "generated_at": "2026-11-21T06:10:00+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
     "confidence": "HIGH",
-    "rationale": "19日の米株は大幅続落し、ダウは1,101ドル安の49,097ドルで約5カ月ぶりに5万ドルを割り込み、ナスダックは550ポイント安の23,879。AI投資の採算懸念・借入コスト上昇・地政学リスク、アンソロピック上場に伴う換金売りが背景。FOMC議事要旨で12月利上げ観測が強く、米10年債は5.06%前後と高水準。金も1.5%安と逃避先にならず、シカゴ日経先物は5万8,050円で日経平均(19日終値5万9,444円)の下振れを示唆。",
+    "rationale": "20日の米株は急落が加速し、ダウは約1,000ドル安の48,147ドル(-1.9%)、S&P500は6,910(-3.7%)、ナスダックは22,618(-5.3%)で年初来の上昇分を消した。エヌビディアなど半導体の大幅安とAI株の総崩れが主因で、12月利上げ観測も重し。VIXは今年最高の40近辺まで上昇。ダウとS&P500は直近高値から10%超下げ調整局面入り。ただし終値は主に1媒体の数字で、他社での確認は未了。",
     "key_drivers": [
-      "FOMC議事要旨を受けた12月利上げ観測、米10年債5.06%前後",
-      "19日の米株急落（ダウ1,101ドル安で5万ドル割れ・ナスダック2.3%安）",
-      "エヌビディア決算後もAI株の上値が重い",
-      "金は3,685ドルへ続落、ドル高・金利高が重し",
-      "ドル円は159円台後半で介入警戒"
+      "AI・半導体株の急落（エヌビディア約14%安と報じられた）",
+      "12月利上げ観測（FRB高官が早期利上げを主張）",
+      "VIXが今年最高の40近辺",
+      "金・ビットコインも急落し逃避先にならず",
+      "日経先物の続落と円相場の介入警戒"
     ]
   },
   "assets": [
@@ -17,14 +17,27 @@
       "name": "日経225",
       "ticker": "NKD=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "19日の日経平均は419円高の5万9,444円で大引けも、米株急落を受けシカゴ日経先物は5万8,050円（20日朝）。20日は下振れ警戒。",
+      "conviction": "HIGH",
+      "rationale": "20日の米株急落（ナスダック5.3%安・VIX40近辺）を受け、21日の東京は大幅安の警戒が強い。日経平均は20日に3,000円超安と報じられた（個人ブログ情報で未確認）。",
       "catalysts": [
-        "米株急落の波及",
+        "米AI株の急落",
+        "VIX急上昇",
         "日銀の追加利上げ観測",
         "為替の介入警戒"
       ],
       "top_news": [
+        {
+          "headline": "20日の米株は急落、ダウ1.9%安・S&P500 3.7%安・ナスダック5.3%安",
+          "published": "2026-11-20",
+          "comment": "AI・半導体株の総崩れでリスク回避が一段と強まった",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html"
+        },
         {
           "headline": "19日の米株は大幅続落、ダウ1,101ドル安の49,097ドルで5万ドル割れ、ナスダックも550ポイント安",
           "published": "2026-11-19",
@@ -111,14 +124,26 @@
       "name": "S&P500",
       "ticker": "ES=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "S&P500は18日に0.23%安で5日続落。19日はダウ・ナスダックが大きく下げ、続落の公算（終値は未確認）。",
+      "conviction": "HIGH",
+      "rationale": "20日のS&P500は3.7%安の6,910で直近高値から10%超下げ調整局面入り。半導体株が主導し、利上げ観測とVIX40近辺の不安が重なる。",
       "catalysts": [
         "FOMC議事要旨と12月利上げ観測",
         "AI株の売り",
         "米10年債5.0%台"
       ],
       "top_news": [
+        {
+          "headline": "S&P500は3.7%安の6,910、直近高値から10%超下落し調整局面入り",
+          "published": "2026-11-20",
+          "comment": "高値から1割超の下落は市場心理の悪化を示す",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html"
+        },
         {
           "headline": "19日の米株は大幅続落、ダウ1,101ドル安の49,097ドルで5万ドル割れ、ナスダックも550ポイント安",
           "published": "2026-11-19",
@@ -195,14 +220,26 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "18日は+0.4%と下げ渋ったが、19日は1.6%安と急反落（20日朝時点・終値は未確認）。",
+      "conviction": "HIGH",
+      "rationale": "20日のナスダックは5.3%安の22,618で年初来の上昇分を消した。エヌビディアなど半導体の2桁安が主導。短期は反発余地もあるが方向は下向き。",
       "catalysts": [
         "AI株の売り",
         "利上げ観測",
         "半導体規制"
       ],
       "top_news": [
+        {
+          "headline": "ナスダックは5.3%安の22,618、年初来でマイナスに転落",
+          "published": "2026-11-20",
+          "comment": "半導体の大幅安がハイテク全体に波及した",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html"
+        },
         {
           "headline": "19日の米株は大幅続落、ダウ1,101ドル安の49,097ドルで5万ドル割れ、ナスダックも550ポイント安",
           "published": "2026-11-19",
@@ -280,13 +317,25 @@
       "ticker": "GC=F",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "NY金(12月限)は19日に1.51%安の3,685.5ドルへ続落（18日は3.16%安）。52週安値圏で、利上げ観測とドル高が重い。",
+      "rationale": "NY金は20日に4.6%安の約3,517ドルへ急落。株安でも逃避先にならず、利上げ観測と換金売りが重い。10年債利回りは4.91%へ低下。",
       "catalysts": [
         "米10年債利回り",
         "ドル指数",
         "12月利上げ観測"
       ],
       "top_news": [
+        {
+          "headline": "NY金は4.6%安の約3,517ドルへ急落",
+          "published": "2026-11-20",
+          "comment": "株の下落で金も換金売りの対象になった",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html"
+        },
         {
           "headline": "NY金は1.51%安の3,685.5ドルで続落、株安・ドル高が圧迫",
           "published": "2026-11-19",
@@ -356,13 +405,25 @@
       "ticker": "CL=F",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "WTI(12月限)は19日0.06%安の83.21ドルとほぼ横ばい。18日は2.75ドル安で、株安による需要不安と中東情勢の綱引き。",
+      "rationale": "WTI(12月限)は20日に約1.7%高の83.85ドル。対イラン攻撃再開の思惑が下支えする一方、株安による需要不安が重く綱引き。",
       "catalysts": [
         "中東情勢",
         "世界の需要不安",
         "株安"
       ],
       "top_news": [
+        {
+          "headline": "NY原油は約1.7%高の83.85ドル",
+          "published": "2026-11-20",
+          "comment": "中東情勢の緊張が株安の需要不安を上回った",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html"
+        },
         {
           "headline": "NY原油は0.06%安の83.21ドル、小動き",
           "published": "2026-11-19",
@@ -396,7 +457,7 @@
       "ticker": "USDJPY",
       "bias": "NEUTRAL",
       "conviction": "MID",
-      "rationale": "19日のNY円は159円台後半で一時159.97円。米金利高が下支えだが、160円手前は介入警戒で上値が重い。",
+      "rationale": "19日のNY円は159円台後半で一時159.97円。20日は米10年債利回りが4.91%へ低下しドル買いは一服したとみられるが、リスク回避の円買いと160円手前の介入警戒で上値は重い（20日終値の確認は未了）。",
       "catalysts": [
         "財務省の介入姿勢",
         "米10年債",
@@ -533,14 +594,26 @@
       "name": "ビットコイン",
       "ticker": "BTC-USD",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "ビットコインは20日4時台で約6.27万ドル（+0.7%）と横ばい圏。7月以来の安値圏で、金利高とAI株安が重い。",
+      "conviction": "MID",
+      "rationale": "ビットコインは20日に5.3%安の約5.82万ドルと6万ドルを割り込み、2022年以来の月間下落率の勢い。AI株安とリスク回避が重い。",
       "catalysts": [
         "米金利",
         "AI株の動き",
         "レバレッジ解消"
       ],
       "top_news": [
+        {
+          "headline": "ビットコインは5.3%安の約5.82万ドル、6万ドル割れ",
+          "published": "2026-11-20",
+          "comment": "株安に連れて換金売りが強まった",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html"
+        },
         {
           "headline": "ビットコインは約6.27万ドルで推移、20日4時台",
           "published": "2026-11-20",
@@ -584,8 +657,12 @@
   ],
   "discarded": [
     {
-      "headline": "19日の米株の終値",
-      "reason": "20日朝時点の場中値しか確認できず、終値は未確認として扱った"
+      "headline": "日経平均が20日に3,007円安の56,436円",
+      "reason": "個人ブログのみの情報で独立した確認が取れず本文には採用せず"
+    },
+    {
+      "headline": "エヌビディアCEOの退任報道",
+      "reason": "単一ソースの伝聞で確認できず、材料としては除外"
     }
   ],
   "currencies": [
@@ -593,7 +670,7 @@
       "code": "USD",
       "lean": "STRONG",
       "conviction": "HIGH",
-      "reason": "米10年債5.06%前後と12月利上げ観測でドル高基調。ドル円は160円目前。"
+      "reason": "12月利上げ観測で堅調だが、米10年債は4.91%へ低下し一服感。"
     },
     {
       "code": "EUR",
@@ -611,7 +688,7 @@
       "code": "JPY",
       "lean": "WEAK",
       "conviction": "MID",
-      "reason": "ドル円は159円台後半。介入警戒で円安は抑えられるが米金利高が重しになる。"
+      "reason": "159円台後半で介入警戒。リスク回避の円買い圧力が出やすい局面。"
     },
     {
       "code": "AUD",
@@ -648,17 +725,6 @@
       "tier": 2,
       "credibility": "MID",
       "url": "https://fx.minkabu.jp/news/384902"
-    },
-    {
-      "headline": "鉄鉱石は92ドル前後、中国の鉄鋼需要は今年2%減の見通し",
-      "published": "2026-11-11",
-      "region": "CN",
-      "why": "鉄鉱石安は豪ドルの重しになりやすい",
-      "materiality": "mid",
-      "source": "FXStreet",
-      "tier": 2,
-      "credibility": "MID",
-      "url": "https://www.fxstreet.com/analysis/the-australian-dollar-is-losing-the-one-thing-that-was-holding-it-up-202611111906"
     },
     {
       "headline": "豪雇用統計（19日）・月次CPI（25日）が続く、RBA次回は12月8日",
