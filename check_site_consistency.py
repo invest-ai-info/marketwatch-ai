@@ -590,6 +590,36 @@ def check_tools_strip(guides_html, gen_py="generate_market_news.py"):
                           f"（{gen_py} の <div id=\"tools\">）に無い → ボタンを1つ足す")
 
 
+JQUANTS_KEY_OK_WORKFLOWS = {"security-watch.yml"}   # 鍵の値が紛れていないかを照合するだけ（J-Quants は呼ばない）
+
+
+def check_jquants_public(sync_files):
+    """🆕 2026-11-20 J-Quants から来た数字や判定をサイトに出さない（弁護士の相談メモ⑪・オーナー「A と B から直す」）。
+    J-Quants の案内（https://jpx-jquants.com/ja/help/usage）では、データや分析結果をサイトで第三者に見せること・
+    続けて配信することが ×。旧版は騰落レシオ（健康度ページ・出典 J-Quants）と赤字・黒字の印（値上がり率ランキング）を
+    毎日出していた。手元の研究（_ 始まり・research/）で使うのは本人の分析なので見ない。"""
+    # ① GitHub 側（Actions）で J-Quants の鍵を渡さない＝公開物を作る場所で J-Quants を呼ばない
+    for p in sorted(glob.glob(os.path.join(SD, ".github", "workflows", "*.yml"))):
+        name = os.path.basename(p)
+        if name in JQUANTS_KEY_OK_WORKFLOWS:
+            continue
+        if "secrets.JQUANTS_API_KEY" in _read(os.path.join(".github", "workflows", name)):
+            errors.append(f"🚨 .github/workflows/{name} が J-Quants の鍵（JQUANTS_API_KEY）を渡している"
+                          "（GitHub 側で J-Quants を呼ぶとサイトに出る＝J-Quants の案内で ×。手元の研究だけで使う）")
+    # ② GitHub に送る .py が J-Quants の API を呼ばない（_ 始まりと research/ は手元専用＝送られない）
+    if sync_files is None:
+        sync_files = sorted(os.path.basename(p) for p in glob.glob(os.path.join(SD, "*.py")))
+    for f in sync_files:
+        base = os.path.basename(f)
+        if (f.endswith(".py") and not base.startswith("_") and not f.startswith(("tests/", "research/"))
+                and base != "check_site_consistency.py" and _exists(f) and "api.jquants.com" in _read(f)):
+            errors.append(f"🚨 {f} が J-Quants の API を呼んでいる（GitHub に送るコードは公開物を作る＝J-Quants の案内で ×）")
+    # ③ 公開の jp-stock-info.json に赤字・黒字の印（J-Quants の財務から決めた印）を戻さない
+    if _exists("jp-stock-info.json") and '"akaji"' in _read("jp-stock-info.json"):
+        errors.append("🚨 jp-stock-info.json に赤字・黒字の印（akaji）がある（J-Quants 由来＝公開しない。"
+                      "手元専用の research/jp-akaji.json に置く＝make_jp_stock_info.py）")
+
+
 def check_site_name(sync_files):
     """サイト名の変更の取りこぼし（2026-11-05）。記事と静的ページは apply_site_frame が毎回直すが、
     生成スクリプトに旧名が残るとコアページが旧名で作られ続ける＝スクリプト側だけ error にする。"""
@@ -858,6 +888,7 @@ def main():
 
     # 11. 旧サイト名の残り（2026-11-05 新設・サイト名の変更）
     check_site_name(sync_files)
+    check_jquants_public(sync_files)   # 🆕 2026-11-20 J-Quants から来た数字や判定をサイトに出さない
 
     # 12. 図の文字の重なり・研究日誌の表の枠（2026-11-17 新設・#152 の図と表の再発防止）
     check_svg_layout(guide_files)

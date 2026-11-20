@@ -12,7 +12,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime, timezone, timedelta
 from build_health_history import ZONES, classify_zone  # 判定閾値の単一の真実
-from build_touraku_history import ratio25 as _touraku_ratio25  # 25日騰落レシオの計算式の単一の真実
+from build_touraku_history import ratio25 as _touraku_ratio25, load_points as _touraku_load_points  # 25日騰落レシオの計算式と読み方の単一の真実
 from apply_site_frame import FRAME_STYLE_TAG, SITE_SUFFIX_RE, SUBBRAND_HTML, SITE_NAME  # サイト共通の枠（ナビ2段・広告の余白・2段目のサブ名）の単一の真実
 from apply_site_frame import LOGO_V2_SVG, NAV_V2, NAV_V2_MORE  # 新しいトップと記事の新しい枠（FRAME_V2）で共通のロゴとナビの並び
 from apply_site_frame import finish_page  # 🆕 2026-11-15 トップ以外のページもトップの見た目に（apply_site_frame.V2_PAGES だけ・トップは変えない）
@@ -761,10 +761,11 @@ def get_touraku_ratio():
         指標としての種類が違う（単一銘柄の時系列自己相関 ≠ 全市場の値上がり/値下がり銘柄数の断面比）。
         実測でも別物と分かった：同日の真値（116.8%＝適正）に対し、この近似は177.8%（過熱）を出し、
         投資判断の色（🟢適正→🔴過熱）ごと反転させていた＝削除済み。
-      - 新フォールバック: J-Quants（東証プライム全銘柄の終値・既存の非公開研究パイプラインが使う
-        正規契約の有償API）で独立に25日騰落レシオを算出する `build_touraku_history.py` を
-        update-market-news.yml の生成前ステップとして新設し、その集計結果 touraku-history.json を読む。
-        実測で公式値とほぼ一致（2026-08-21: 自前884勝622敗=116.76% ／ サイト公表883勝622敗=116.81%）。
+      - 🔁 2026-11-20 フォールバックを J-Quants から Yahoo の日足に替えた（J-Quants の案内で、データや分析結果を
+        サイトで第三者に見せること・続けて配信することは ×＝弁護士の相談メモ⑪ の A）。touraku-history.json は
+        jp-highs.yml（build_jp_highs.py）が東証の全銘柄の日足のうちプライムの銘柄で上げ下げを数えて書く。
+        読むのは build_touraku_history.load_points だけ＝旧版の J-Quants の数のファイルは空として扱う
+        （置き換わるまでは「取得不可」になり、J-Quants から来た値は出ない）。
     """
     try:
         url = "https://nikkei225jp.com/data/touraku.php"
@@ -780,21 +781,18 @@ def get_touraku_ratio():
             print(f"  騰落レシオ(Web): {val}")
             return val
     except Exception as e:
-        print(f"  騰落レシオWeb取得失敗（想定内・下でJ-Quants集計にフォールバック）: {e}")
+        print(f"  騰落レシオWeb取得失敗（想定内・下でYahooの日足の集計にフォールバック）: {e}")
 
-    # J-Quantsベースの日次履歴（build_touraku_history.py が生成前ステップで更新）から算出
+    # Yahoo の日足で数えた日次履歴（jp-highs.yml の build_jp_highs.py が書く）から算出
     try:
         hist_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "touraku-history.json")
-        with open(hist_path, encoding="utf-8") as f:
-            hist = json.load(f)
-        val = _touraku_ratio25(hist.get("points") or [])
+        points = _touraku_load_points(hist_path)
+        val = _touraku_ratio25(points)
         if val is not None:
-            print(f"  騰落レシオ(J-Quants集計): {val}")
+            print(f"  騰落レシオ(Yahooの日足の集計): {val}")
             return val
-        print(f"  騰落レシオ: touraku-history.json の点数が窓(25日)に未達 "
-              f"({len(hist.get('points') or [])}点)")
-    except FileNotFoundError:
-        print("  騰落レシオ: touraku-history.json が無い（build_touraku_history.py 未実行）")
+        print(f"  騰落レシオ: touraku-history.json の点数が窓(25日)に未達・または旧版（J-Quants）の数で読まない "
+              f"({len(points)}点)")
     except Exception as e:
         print(f"  騰落レシオ: touraku-history.json 読み込み失敗: {e}")
 
@@ -3123,12 +3121,9 @@ def build_jp_rankings_section(now_jst):
     except Exception:
         return ""
 
-    def _fin(a):
-        if a is True:
-            return '<span title="直近開示の決算が赤字" aria-label="赤字">🔴</span>'
-        if a is False:
-            return '<span title="直近開示の決算が黒字" aria-label="黒字">🟢</span>'
-        return '<span title="決算情報なし" style="color:#8b949e">—</span>'
+    # 🔁 2026-11-20 「決算」の列（🔴赤字／🟢黒字）を外した＝J-Quants の財務から決めた印で、J-Quants の案内では
+    #    サイトで第三者に見せるのは ×（弁護士の相談メモ⑪ の B）。高値・安値の表は 10/06 から出していない。
+    #    入れ直すなら決算短信・EDINET から自分で決める（使ってよい条件を確かめてから・オーナーの OK のあと）
 
     news = _load_rank_news()
     asof = d.get("asof", "")
@@ -3145,14 +3140,12 @@ def build_jp_rankings_section(now_jst):
             out += _with_news(f'<tr><td class="jpr-rk">{r.get("rank","")}</td>'
                               f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
                               f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
-                              f'<td class="jpr-to">{t1:,.0f}<br><span class="jpr-to2">{t2:,.0f}</span></td>'
-                              f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>',
-                              _rank_news_row(news, r.get("code", ""), asof, 5))
-        return out or '<tr><td colspan="5" style="text-align:center;color:#6e7781;padding:16px">データ取得中…</td></tr>'
+                              f'<td class="jpr-to">{t1:,.0f}<br><span class="jpr-to2">{t2:,.0f}</span></td></tr>',
+                              _rank_news_row(news, r.get("code", ""), asof, 4))
+        return out or '<tr><td colspan="4" style="text-align:center;color:#6e7781;padding:16px">データ取得中…</td></tr>'
 
     head = ('<tr><th>#</th><th>銘柄</th><th style="text-align:right">騰落率</th>'
-            '<th style="text-align:right">代金億<br><span style="font-weight:400;font-size:.62rem">前/前々</span></th>'
-            '<th style="text-align:center">決算</th></tr>')
+            '<th style="text-align:right">代金億<br><span style="font-weight:400;font-size:.62rem">前/前々</span></th></tr>')
     asof = d.get("asof", "")
     up = _rows(d.get("gainers", []), "up")
     down = _rows(d.get("losers", []), "down")
@@ -3171,9 +3164,8 @@ def build_jp_rankings_section(now_jst):
                               f'<td><div class="jpr-nm">{nm}</div><div class="jpr-meta">{r.get("code","")}・{sec}</div></td>'
                               f'<td class="jpr-pct" style="text-align:right">×{r.get("relvol","")}</td>'
                               f'<td class="jpr-pct {ud}">{sign}{pct:.1f}%</td>'
-                              f'<td class="jpr-to">{(r.get("turnover_d1") or 0):,.0f}</td>'
-                              f'<td class="jpr-fin">{_fin(r.get("akaji"))}</td></tr>',
-                              _rank_news_row(news, r.get("code", ""), asof, 6))
+                              f'<td class="jpr-to">{(r.get("turnover_d1") or 0):,.0f}</td></tr>',
+                              _rank_news_row(news, r.get("code", ""), asof, 5))
         return out
 
     hot_items = d.get("hot", [])
@@ -3181,8 +3173,7 @@ def build_jp_rankings_section(now_jst):
     if hot_items:
         hot_head = ('<tr><th>#</th><th>銘柄</th><th style="text-align:right">出来高<br>'
                     '<span style="font-weight:400;font-size:.62rem">平常比(倍)</span></th>'
-                    '<th style="text-align:right">騰落率</th><th style="text-align:right">代金億</th>'
-                    '<th style="text-align:center">決算</th></tr>')
+                    '<th style="text-align:right">騰落率</th><th style="text-align:right">代金億</th></tr>')
         hot_block = f"""
     <div class="jprank-col" style="margin-top:18px"><h3>🔥 人気急上昇 TOP20（お金の集まり方が平常時の何倍か）</h3>
       <div class="table-wrap"><table class="jprank-table"><thead>{hot_head}</thead><tbody>{_hot_rows(hot_items)}</tbody></table></div>
@@ -3194,7 +3185,7 @@ def build_jp_rankings_section(now_jst):
     return f"""
   <section class="jprank">
     <div class="jprank-h">💹 日本株 値上がり率・値下がり率 ランキング</div>
-    <div class="jprank-sub">流動性上位 約400銘柄 ／ 前日比（{asof} 終値・自動集計／無保証）。<b>売買代金＝終値×出来高の概算（億円・上＝前日／下＝前々日）</b>。決算アイコン＝直近開示が🟢黒字／🔴赤字。
+    <div class="jprank-sub">流動性上位 約400銘柄 ／ 前日比（{asof} 終値・自動集計／無保証）。<b>売買代金＝終値×出来高の概算（億円・上＝前日／下＝前々日）</b>。
     <b>⚠️ 大きく動いた銘柄＝良い投資対象ではありません</b>（素の値上がり率上位は飛びつき高値づかみ・落ちるナイフになりやすい）。これは事実の市場データで、特定銘柄の売買推奨や投資助言ではありません。<br>{RANK_NEWS_NOTE}</div>
     <div class="jprank-grid">
       <div class="jprank-col up"><h3>📈 値上がり率 TOP20</h3>
@@ -3501,7 +3492,6 @@ def build_hot_assets_html(hot_data, now_jst):
     .jpr-pct.down{{color:#cf222e}}
     .jpr-to{{font-variant-numeric:tabular-nums;text-align:right;font-size:.74rem;color:#1f2328;white-space:nowrap;line-height:1.2}}
     .jpr-to2{{color:#8b949e;font-size:.68rem}}
-    .jpr-fin{{text-align:center}}
     .jprank-table tr.jpr-hasnews td{{border-bottom:0;padding-bottom:2px}}
     .jprank-table tr.jpr-news-row td{{padding-top:0}}
     .jpr-news{{font-size:.66rem;line-height:1.45;color:#6e7781;word-break:break-all}}

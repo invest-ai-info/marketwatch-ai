@@ -261,7 +261,7 @@ def analyze(recs):
              ("前の日の上げ下げ", lambda r: prev_band(r["prev_ret"]), ["−5％以下", "−5〜+5％", "+5％以上"]),
              ("前の日の出来高の倍率", lambda r: relvol_band(r["relvol"]), ["3倍未満", "3〜5倍", "5倍以上"]),
              ("株価の水準", lambda r: price_band(r["price"]), ["500円未満", "500〜3,000円", "3,000円以上"]),
-             ("赤字か", lambda r: "赤字" if r.get("akaji") else "黒字", ["赤字", "黒字"]),
+             # 🔁 2026-11-20 「赤字か」を外した（印は J-Quants 由来で jp-stock-info.json から抜いた・相談メモ⑪ の B）
              ("曜日", lambda r: WEEK[dt.date.fromisoformat(r["date"]).weekday()], list("月火水木金"))]
     for name, kf, labs in conds:
         share[name] = {"急騰になる割合": bins_table(hot, kf, labs, lambda r: 1.0 if r["cls"] == "up" else 0.0),

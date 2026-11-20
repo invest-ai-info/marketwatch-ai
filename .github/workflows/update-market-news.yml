@@ -70,9 +70,9 @@ jobs:
       NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
       # Gemini API キー（auto_weekly_strategy.py が週末動向 AI 生成に使用）
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      # 🆕 2026-08-22 J-Quants APIキー（build_touraku_history.py が騰落レシオの日次集計に使用。
-      # 要: リポジトリ設定 > Secrets > JQUANTS_API_KEY を登録）
-      JQUANTS_API_KEY: ${{ secrets.JQUANTS_API_KEY }}
+      # 🔁 2026-11-20 J-Quants の鍵（JQUANTS_API_KEY）を外した＝騰落レシオは jp-highs.yml が Yahoo の日足で数える
+      #    （J-Quants の案内で、データや分析結果をサイトで第三者に見せるのは ×）。GitHub 側で J-Quants を呼び戻さない
+      #    （check_site_consistency.py が見張る）
       # 強制再生成フラグ（workflow_dispatch input から）
       FORCE_WEEKLY: ${{ github.event.inputs.force_weekly || 'false' }}
       # 🆕 2026-11-05 オーナー決定：新しいトップページ（build_home_v2）を使う。元に戻すときはこの行を消すか "0" にする
@@ -94,15 +94,9 @@ jobs:
       - name: Install dependencies
         run: pip install yfinance requests deep_translator feedparser google-generativeai
 
-      - name: Collect touraku ratio history
-        # 🆕 2026-08-22。build_health_history.py より**先**に走らせる。
-        # ⚠️2026-08-22 訂正: 元は build_health_history → build_touraku_history の順だったが、
-        # build_health_history.py の touraku_ratio 系列は touraku-history.json を読むだけの
-        # ローカル計算＝先に更新しておかないと当日ぶんが反映されず1日遅れてしまう。
-        # continue-on-error＝JQUANTS_API_KEY 未登録なら equities/master 呼び出しで失敗するが、
-        # スクリプト側で例外を握り潰して前回JSONのまま終了する（6コアページの更新は巻き添えにしない）。
-        run: python build_touraku_history.py
-        continue-on-error: true
+      # 🔁 2026-11-20 「Collect touraku ratio history」（J-Quants で騰落の数を集める手順）を外した。
+      #    touraku-history.json は jp-highs.yml（build_jp_highs.py）が平日の夕方に Yahoo の日足で数えて書く。
+      #    ここ（build_health_history.py・generate_market_news.py）は読むだけ。
 
       - name: Collect market health history
         # 生成の「前」に走らせる＝カードに出る数字と履歴の最新点が必ず一致する。
@@ -148,12 +142,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html calendar.html charts.html vix.html market-health.html hot-assets.html preview.html sitemap.xml robots.txt market-health-history.json
-          # 🆕 2026-08-22 修正: touraku-history.json は JQUANTS_API_KEY 未登録の間 build_touraku_history.py が
-          # 例外を握り潰して保存せず終了するため、ファイル自体が存在しない（新規リポジトリには元から無い）。
-          # `git add` に存在しないパスを混ぜると **他のファイルも道連れで pathspec エラー→コミット全体が失敗**
-          # する（2026-08-22 に実測: 生成は成功したのに毎回このステップだけ exit 128 で6コアページが更新されない
-          # 事故になっていた）。存在するときだけ足す
-          if [ -f touraku-history.json ]; then git add touraku-history.json; fi
+          # 🔁 2026-11-20 touraku-history.json はここでは書かない（jp-highs.yml がコミットする）＝足さない。
+          # ⚠️ `git add` に存在しないパスを混ぜると他のファイルも道連れで pathspec エラー→コミット全体が失敗する（2026-08-22 の実害）
           # 自動生成記事（auto_weekly_strategy / auto_indicator_preview の出力）も含める
           git add guide-weekly-*.html guide-auto-*.html 2>/dev/null || true
           # apply_series_nav.py が触る連続シリーズ。上の pathspec 事故を繰り返さないよう1つずつ足す

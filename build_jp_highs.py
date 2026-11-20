@@ -9,7 +9,10 @@
 「東証上場銘柄一覧」（data_j.xlsx・月1回更新）を毎回取る（load_universe）。ETF・REIT・PRO Market は入れない。
 🔁 2026-10-06 夜 オーナー依頼「全銘柄に広げて」で、流動性上位の約400銘柄（jp-stock-info.json）から広げた。
    Yahoo に約3,700回取りに行く＝1回13〜15分かかるので、日本株ランキングのジョブから分けて jp-highs.yml で動かす。
-   赤字・黒字（akaji）は約400銘柄にしか無いので、表からは決算の列を外して市場区分を出す。
+   表には決算の列を出さず、市場区分を出す。
+🔁 2026-11-20 赤字・黒字の印（akaji＝J-Quants の財務から決めた印）を一覧から外した（J-Quants の案内で第三者への表示は ×・
+   弁護士の相談メモ⑪ の B）。🆕 同日、取った日足のうちプライムの銘柄で値上がり・値下がりを数え、騰落レシオの元の
+   touraku-history.json も書く（J-Quants から替えた＝同 A。数え方は build_touraku_history.py）。
 
 判定（数字はすべて Yahoo chart API の日足・月足＝キー不要・株式分割は調整済み）:
   🆕 2026-11-19 「調整済み」は当てにならなかった＝キーエンス（6861）の 1→5 の分割の日（11/18）は最後の1本だけ分割後の値。
@@ -58,10 +61,11 @@ import re
 import urllib.error
 import urllib.request
 
-from build_jp_rankings import INFO, JST, modal_date, is_regression, is_unsettled, SETTLE_JST
+from build_jp_rankings import JST, modal_date, is_regression, is_unsettled, SETTLE_JST
 import jp_markers   # 🆕 2026-10-08 朝の準備用「寄りで買わない」目印（同じ日足に相乗り・jp-highs.json の "markers"）
 import jp_taishaku  # 🆕 2026-10-08 夕方 目印の一覧に〔貸借〕の印（日本取引所グループの一覧・取れなければ印なしで続ける）
 import jp_splits    # 🆕 2026-11-19 株式分割の補正（Yahoo が一部の足しか直していない日）
+import build_touraku_history as touraku   # 🆕 2026-11-20 騰落レシオの元（プライムの上げ下げの数）
 import jp_momentum  # 🆕 2026-10-08 夜 朝のメール用「上がりすぎた株（今月は新しく買わない）」（過去12か月で一番上げた10銘柄・研究 J42／J42F）
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -162,13 +166,11 @@ def find_list_link(html):
     return href if href.startswith("http") else "https://www.jpx.co.jp" + href
 
 
-def parse_universe(records, info_stocks=None):
-    """JPX の一覧の行（dict）から {コード: {name, sector, market, akaji}} と一覧の日付を返す。純関数。
+def parse_universe(records):
+    """JPX の一覧の行（dict）から {コード: {name, sector, market}} と一覧の日付を返す。純関数。
 
     プライム・スタンダード・グロース（内国株式・外国株式）だけ。ETF・REIT・PRO Market・出資証券は入れない。
-    赤字・黒字は jp-stock-info.json にある約400銘柄だけ（無ければ None）。
     """
-    info_stocks = info_stocks or {}
     out, list_date = {}, ""
     for r in records:
         market = str(r.get("市場・商品区分") or "")
@@ -178,8 +180,7 @@ def parse_universe(records, info_stocks=None):
         sector = str(r.get("33業種区分") or "").strip()
         out[code] = {"name": str(r.get("銘柄名") or "").strip(),
                      "sector": "" if sector in ("-", "nan") else sector,
-                     "market": market.split("（")[0],
-                     "akaji": (info_stocks.get(code) or {}).get("akaji")}
+                     "market": market.split("（")[0]}
         d = str(r.get("日付") or "").strip()
         if len(d) == 8 and d.isdigit():
             list_date = max(list_date, f"{d[:4]}-{d[4:6]}-{d[6:]}")
@@ -196,11 +197,7 @@ def load_universe():
         raise RuntimeError("東証上場銘柄一覧のページに data_j.xls(x) のリンクが無い（JPX のページの形が変わった？）")
     raw = urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60).read()
     df = pd.read_excel(io.BytesIO(raw), dtype=str)
-    try:
-        info = json.load(open(INFO, encoding="utf-8"))["stocks"]
-    except Exception:
-        info = {}
-    stocks, list_date = parse_universe(df.to_dict("records"), info)
+    stocks, list_date = parse_universe(df.to_dict("records"))
     if len(stocks) < 3000:
         raise RuntimeError(f"東証上場銘柄一覧から取れた銘柄が {len(stocks)} しかない（約3,700のはず）＝列名か区分の名前が変わった？")
     return stocks, list_date
@@ -349,7 +346,7 @@ def make_row(code, meta, bars, hit, record, record_prev, first, jpx=None):
     prev_c = bars[-2][3]
     return {
         "code": code, "name": meta.get("name", ""), "sector": meta.get("sector", ""),
-        "market": meta.get("market", ""), "akaji": meta.get("akaji"),
+        "market": meta.get("market", ""),
         "price": round(c, 1), "pct": round(c / prev_c - 1.0, 4),
         "ext": round(h if hit["side"] == "high" else lo, 1),
         "prev": hit["prev"], "prev_date": hit["prev_date"],   # 期間内のそれまでの一番高い（安い）値と日付
@@ -403,7 +400,10 @@ def main(force=False, dry_run=False):
     prev = read_json(OUT)
     prev_asof = prev.get("asof") or ""
     rank_asof = read_json(RANKINGS).get("asof") or ""
-    if not force and not dry_run and already_done(prev, rank_asof) and "momentum" in prev:   # 🆕 2026-10-08 夜 上がりすぎた株の欄が無ければ作り直す
+    # 🆕 2026-11-20 騰落レシオの元（touraku-history.json）が Yahoo の数でその日まで入っていなければ作り直す
+    #    （J-Quants から替えた最初の回は、同じ日の一覧がもうあっても取りに行く）
+    if (not force and not dry_run and already_done(prev, rank_asof) and "momentum" in prev   # 🆕 2026-10-08 夜 上がりすぎた株の欄が無ければ作り直す
+            and touraku.is_current(touraku.HISTORY_PATH, prev_asof)):
         print(f"⏭ jp-highs.json はもう {prev_asof}（jp-rankings.json と同じ営業日・同じ決まり）＝取りに行かずに終了")
         return
 
@@ -433,6 +433,8 @@ def main(force=False, dry_run=False):
         for c in held:
             daily.pop(c)
 
+    # 🆕 2026-11-20 騰落レシオの元＝プライムの銘柄の日足（その日に売買の無かった銘柄も前の日までの足は使える＝下で落とす前に取っておく）
+    prime_bars = {c: b for c, b in daily.items() if stocks[c].get("market") == "プライム"}
     asof = modal_date([b[-1][0] for b in daily.values()])
     mixed = [c for c, b in daily.items() if b[-1][0] != asof]
     if mixed:
@@ -510,6 +512,14 @@ def main(force=False, dry_run=False):
             print(f"   高値更新の台帳：{highs_ledger.update(daily, payload, prev)}")
         except Exception as e:  # noqa: BLE001
             print(f"⚠️ 高値更新の台帳を更新できず（jp-highs.json は書けている）：{type(e).__name__}: {str(e)[:200]}")
+        # 🆕 2026-11-20 騰落レシオの元（J-Quants から替えた）＝失敗しても jp-highs.json は書けている＝止めない
+        try:
+            print(f"   騰落レシオの元（touraku-history.json）：{touraku.update_from_bars(prime_bars, asof)}")
+        except Exception as e:  # noqa: BLE001
+            print(f"⚠️ 騰落レシオの元を書けず（jp-highs.json は書けている）：{type(e).__name__}: {str(e)[:200]}")
+    else:
+        pts = touraku.points_from_bars(prime_bars, asof)
+        print(f"   🧪 騰落レシオの元（書かない）：{len(pts)}日・最後 {pts[-1] if pts else '-'}・25日 {touraku.ratio25(pts)}")
     print(f"{'🧪 試し（書かない）' if dry_run else '✅ ' + OUT}: as of {asof} / 一覧 {len(stocks)}銘柄 → 取れた {fetched}"
           f"（取得失敗{fail}・混雑{THROTTLED['n']}回）→ その日に値がある {len(daily)}（データの誤りで除外{skipped_bad}・"
           f"期間の途中から記録が始まり上場も確かめられず除外{len(skipped_gap)}{'：' + ','.join(skipped_gap[:8]) if skipped_gap else ''}）"

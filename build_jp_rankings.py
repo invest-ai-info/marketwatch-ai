@@ -8,7 +8,9 @@
   ・相対出来高（直近営業日の出来高 ÷ 直前20営業日の平均出来高）🆕 2026-07-21 人気急上昇ランキング用
 を計算 → 前日比で上位20（値上がり）と下位20（値下がり）、相対出来高で上位20（人気急上昇）を抽出。
 人気急上昇は売買代金 HOT_MIN_TURNOVER 億円以上のみ（薄商い銘柄の見かけ倍率と操作されやすい軽い銘柄を公開面から除外）。
-銘柄名/業種/赤字黒字フラグは静的 jp-stock-info.json から join（J-Quants由来＝事前計算済み・キー不要）。
+銘柄名/業種は静的 jp-stock-info.json から join（JPX の一覧・キー不要）。
+🔁 2026-11-20 赤字・黒字の印（akaji＝J-Quants の財務から決めた印）は出さない（J-Quants の案内で第三者への表示は ×・
+   弁護士の相談メモ⑪ の B）。jp-stock-info.json からも外した。
 
 🆕 2026-11-19 株式分割の補正（jp_splits.py）: キーエンス（6861）の 1→5 の分割の日（11/18）に、Yahoo の日足が最後の1本だけ
 分割後の値で、値下がり1位に −79.7%（本当は +1.5%）・人気急上昇に出来高 3.9倍（本当は売買代金ほぼ同じ）が出た。
@@ -158,7 +160,7 @@ def stock_row(code, meta, closes, vols, last_date):
     return {
         "_last_date": last_date,
         "code": code, "name": meta.get("name", ""), "sector": meta.get("sector", ""),
-        "akaji": meta.get("akaji"), "price": round(c1, 1), "pct": round(pct, 4),
+        "price": round(c1, 1), "pct": round(pct, 4),
         "turnover_d1": round(c1 * v1 / 1e8, 1),   # 直近営業日の売買代金（億円）
         "turnover_d2": round(c0 * v0 / 1e8, 1),   # その前日の売買代金（億円）
         "relvol": relvol,                          # 相対出来高（倍・基準不足はNone）

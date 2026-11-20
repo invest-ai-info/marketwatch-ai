@@ -134,7 +134,7 @@ def test_features_from_the_row_and_the_day():
     bars = _bars(40, last={39: (120.0, 104.0, 112.0, 1e6)})           # 最後の日：高値120・安値104・終値112・出来高10倍
     day = bars[39][0]
     f = L.features(_row(day=day, prev=110.0, ext=120.0, prev_date="2026-09-01", hist_from="2025-12-01"), day, bars, "年初来")
-    assert f["date"] == day and f["code"] == "9999" and f["record"] == 1 and f["listed"] == 1 and f["akaji"] == ""
+    assert f["date"] == day and f["code"] == "9999" and f["record"] == 1 and f["listed"] == 1 and "akaji" not in f   # 🔁 2026-11-20 赤字の列は外した（J-Quants 由来）
     assert f["kind"] == L.KIND_LISTED
     assert abs(f["breakout"] - (120 / 110 - 1)) < 1e-9 and abs(f["close_vs_prev"] - (112 / 110 - 1)) < 1e-9
     assert abs(f["wick"] - 0.5) < 1e-9 and f["hi_close"] == 0                         # (120−112)/(120−104)
@@ -142,7 +142,8 @@ def test_features_from_the_row_and_the_day():
     assert f["age_days"] == L._days("2025-12-01", day) and f["days_since_prev"] == L._days("2026-09-01", day)
     assert L.features(_row(), "2030-01-01", bars) is None                              # その日の足が無い
     f2 = L.features(_row(prev=None, listed=None, akaji=True), day, bars)
-    assert f2["breakout"] is None and f2["listed"] == "" and f2["akaji"] == 1 and f2["kind"] == L.KIND_RECORD
+    assert f2["breakout"] is None and f2["listed"] == "" and "akaji" not in f2 and f2["kind"] == L.KIND_RECORD
+    assert "akaji" not in L.COLS and all(col != "akaji" for _, col, _ in L.BUCKETS)   # 行に印が残っていても台帳には出さない
     assert L.features(_row(record=False, listed=None), day, bars)["kind"] == L.KIND_YTD
 
 

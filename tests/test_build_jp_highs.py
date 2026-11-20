@@ -205,6 +205,7 @@ def test_make_row_uses_high_or_low_by_side():
     hit = dict(H.ytd_extreme(bars, "2026-01-01", "low"), side="low")
     r = H.make_row("7203", {"name": "テスト", "sector": "輸送用機器", "market": "プライム", "akaji": False},
                    bars, hit, True, 88.0, "2018-06-18")
+    assert "akaji" not in r     # 🔁 2026-11-20 赤字・黒字の印（J-Quants 由来）は一覧に出さない
     assert r["ext"] == 85.0 and r["prev"] == 90.0 and r["record"] is True and r["listed"] is True
     assert r["market"] == "プライム" and r["sector"] == "輸送用機器"
     assert r["price"] == 86.0 and round(r["pct"], 4) == round(86.0 / 95.0 - 1, 4)
@@ -235,10 +236,9 @@ def test_parse_universe_keeps_only_three_markets():
         # 5桁＝社債型種類株式（普通株ではない）は入れない
         {"日付": "20260930", "コード": "94345", "銘柄名": "ソフトバンク第１回社債型種類株式", "市場・商品区分": "プライム（内国株式）", "33業種区分": "-"},
     ]
-    st, d = H.parse_universe(recs, {"285A": {"akaji": False}})
+    st, d = H.parse_universe(recs)
     assert sorted(st) == ["1301", "2222", "285A", "9999"] and d == "2026-09-30"
-    assert st["285A"] == {"name": "キオクシアＨＤ", "sector": "電気機器", "market": "プライム", "akaji": False}
-    assert st["1301"]["akaji"] is None              # 約400銘柄の外＝赤字・黒字は分からない
+    assert st["285A"] == {"name": "キオクシアＨＤ", "sector": "電気機器", "market": "プライム"}   # 赤字・黒字の印は持たない（2026-11-20）
     assert st["9999"]["market"] == "グロース" and st["9999"]["sector"] == ""
 
 
@@ -361,3 +361,16 @@ if __name__ == "__main__":
                 print(f"FAIL {name}: {e}")
     print(f"{'全件緑' if not fails else f'{fails}件失敗'}")
     sys.exit(1 if fails else 0)
+
+
+# ── 騰落レシオの元（2026-11-20 J-Quants から替えた） ─────────────────────────
+
+def test_main_writes_touraku_from_prime_bars_only():
+    """main() はプライムの銘柄の日足だけを build_touraku_history に渡し、一覧が済んでいても
+    騰落の元が Yahoo の数でその日まで無ければ取りに行く（J-Quants の数のまま止まらない）。"""
+    src = open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "build_jp_highs.py"),
+               encoding="utf-8").read()
+    assert 'stocks[c].get("market") == "プライム"' in src
+    assert "touraku.update_from_bars(prime_bars, asof)" in src
+    assert "touraku.is_current(touraku.HISTORY_PATH, prev_asof)" in src
+    assert "akaji" not in src.split('"""', 2)[2].replace("赤字・黒字の印（akaji", "")   # 説明の1か所のほかに印を使わない

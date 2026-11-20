@@ -47,13 +47,16 @@ JST = dt.timezone(dt.timedelta(hours=9))
 UA = {"User-Agent": "Mozilla/5.0"}
 LABEL_UP, LABEL_FLAT, LABEL_DOWN = "続伸", "横ばい", "だまし"
 
-FEATURES = ("date", "code", "name", "market", "sector", "period", "kind", "record", "listed", "age_days", "akaji",
+# 🔁 2026-11-20 赤字・黒字の列（akaji）と「赤字」で分けた表を外した＝J-Quants の財務から決めた印で、公開の台帳に
+#    出せない（J-Quants の案内で第三者への表示は ×・弁護士の相談メモ⑪ の B）。列ごと消すので、次に台帳を書き直した
+#    ときに過去の行からも消える（read_ledger は COLS の列だけ読む）。財務で分ける数えは手元で（J47）。
+FEATURES = ("date", "code", "name", "market", "sector", "period", "kind", "record", "listed", "age_days",
             "close", "pct", "high", "prev_high", "prev_date", "breakout", "close_vs_prev", "wick", "hi_close",
             "turnover", "tv_ratio", "dev25", "streak", "days_since_prev")
 LONG_COLS = tuple(f"{k}{n}" for n, _ in LONG for k in ("d", "cc", "ex", "min", "label"))
 AFTER_COLS = ("d1", "gap1", "oc1", "cc1", "hi1", "below_prev1", "label1", "d5", "cc5", "max5", "min5", "label5") + LONG_COLS
 COLS = FEATURES + AFTER_COLS
-NUMERIC = {"record", "listed", "age_days", "akaji", "close", "pct", "high", "prev_high", "breakout", "close_vs_prev",
+NUMERIC = {"record", "listed", "age_days", "close", "pct", "high", "prev_high", "breakout", "close_vs_prev",
            "wick", "hi_close", "turnover", "tv_ratio", "dev25", "streak", "days_since_prev",
            "gap1", "oc1", "cc1", "hi1", "below_prev1", "cc5", "max5", "min5"} | \
     {f"{k}{n}" for n, _ in LONG for k in ("cc", "ex", "min")}
@@ -71,7 +74,6 @@ BUCKETS = (
     ("連騰（続けて上がった日数）", "streak", [("2日以下", 0, 3), ("3日", 3, 4), ("4日以上", 4, INF)]),
     ("それまでの高値からの日数", "days_since_prev", [("5日未満", 0, 5), ("5〜20日", 5, 20), ("20日以上", 20, INF)]),
     ("市場", "market", None),
-    ("赤字", "akaji", {1: "赤字", 0: "黒字"}),
     ("その日の売買代金", "turnover", [("1億円未満", 0, 1), ("1〜10億円", 1, 10), ("10億円以上", 10, INF)]),
     ("次の日の窓（寄りでわかる）", "gap1", [("−1％以下", -INF, -0.01), ("±1％未満", -0.01, 0.01), ("+1％以上", 0.01, INF)]),
 )
@@ -124,7 +126,6 @@ def features(row, day, bars, period=""):
     prev_high = _num(row.get("prev"))
     tv = jp_markers.stock_values(b)
     dev, streak = jp_markers.landmine_values(b) if b else (None, None)
-    akaji = row.get("akaji")
     record = bool(row.get("record"))
     kind = KIND_LISTED if record and row.get("listed") else KIND_RECORD if record else KIND_YTD
     return {
@@ -133,7 +134,6 @@ def features(row, day, bars, period=""):
         "record": int(bool(row.get("record"))),
         "listed": "" if row.get("listed") is None else int(bool(row.get("listed"))),
         "age_days": _days(row.get("hist_from"), day),
-        "akaji": "" if akaji is None else int(bool(akaji)),
         "close": c, "pct": _num(row.get("pct")), "high": _num(row.get("ext")) or h, "prev_high": prev_high,
         "prev_date": row.get("prev_date") or "",
         "breakout": (h / prev_high - 1) if prev_high else None,
@@ -257,7 +257,7 @@ def fetch_opens(code, rng="3mo", tries=2, parse=parse_opens):
 def _fmt(k, v):
     if v is None:
         return ""
-    if k in ("record", "listed", "akaji", "hi_close", "below_prev1", "streak", "age_days", "days_since_prev") and v != "":
+    if k in ("record", "listed", "hi_close", "below_prev1", "streak", "age_days", "days_since_prev") and v != "":
         return str(int(v))
     if isinstance(v, float):
         return f"{v:.6g}" if k in ("close", "high", "prev_high", "turnover", "tv_ratio") else f"{v:.5f}"

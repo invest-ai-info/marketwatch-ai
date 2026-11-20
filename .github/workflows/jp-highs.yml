@@ -1,6 +1,8 @@
 name: JP Highs Lows
 
 # 日本株の「年初来・上場来の高値と安値を更新した銘柄」（build_jp_highs.py → jp-highs.json → hot-assets）を作る。
+# 🆕 2026-11-20 同じ日足で東証プライムの値上がり・値下がりを数えて touraku-history.json も書く（健康度ページの
+#    騰落レシオの元。J-Quants から替えた）。書けたら下の再描画で健康度ページにも出る。
 # 2026-10-06 オーナー依頼で新設（高値 → 同日夕に安値 → 同日夜「全銘柄に広げて」で東証の全上場 約3,700銘柄に）。
 #
 # なぜ jp-rankings.yml から分けたか:
@@ -55,6 +57,7 @@ jobs:
           git add jp-highs.json
           git add highs-ledger.csv highs-ledger.md 2>/dev/null || true   # 🆕 2026-10-09 高値更新の台帳（J44・highs_ledger.py）
           git add jp-rank-news.json 2>/dev/null || true   # 🆕 2026-11-10 ランキングの銘柄の下のニュース
+          git add touraku-history.json 2>/dev/null || true   # 🆕 2026-11-20 騰落レシオの元（プライムの上げ下げの数・J-Quants から替えた）
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0

@@ -308,7 +308,8 @@ def analyze(ev, ctl):
         groups += [(name + "：あり", flag), (name + "：なし", lambda r, flag=flag: not flag(r))]
     groups += [("窓 " + b, lambda r, b=b: Y.gap_band(r["gap"]) == b) for b in ("−1％未満", "−1〜+1％", "+1〜+3％", "+3％以上")]
     groups += [("前の日 " + b, lambda r, b=b: Y.prev_band(r["prev_ret"]) == b) for b in ("−5％以下", "−5〜+5％", "+5％以上")]
-    groups += [("赤字", lambda r: bool(r.get("akaji"))), ("黒字", lambda r: not r.get("akaji"))]
+    # 🔁 2026-11-20 「赤字／黒字」の群を外した＝印は J-Quants の財務から決めたもので jp-stock-info.json から抜いた（相談メモ⑪ の B）。
+    #    残すと次に数えたとき「赤字」が空・「黒字」が全部になって読み違える
     res["trap_share"] = [{"label": lab, "2y_1000": _share([r for r in e2 if g(r)], "r1000"),
                           "60d_930": _share([r for r in e60 if g(r)], "r930")} for lab, g in groups]
     res["trap_share_ctl"] = {"2y_1000": _share(ctl, "r1000"), "60d_930": _share(ctl, "r930")}

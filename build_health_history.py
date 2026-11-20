@@ -20,6 +20,8 @@ from build_touraku_history import (
     ratio25 as _touraku_ratio25,
     RATIO_WINDOW as _TOURAKU_WINDOW,
     HISTORY_PATH as _TOURAKU_HISTORY_PATH,
+    SOURCE_LABEL as _TOURAKU_SOURCE_LABEL,
+    load_points as _touraku_load_points,
 )
 
 JST = dt.timezone(dt.timedelta(hours=9))
@@ -237,12 +239,11 @@ def fetch_touraku_ratio_series(path=None):
     計算式（ratio25・RATIO_WINDOW）は build_touraku_history.py を単一の真実として import する
     （generate_market_news.py の get_touraku_ratio() と同じ流用元）。
 
-    ⚠️ ステップ順が前提: update-market-news.yml は
-       build_touraku_history.py → build_health_history.py の順で回す
-       （逆だと当日ぶんの touraku-history.json 更新前を読んでしまい、この系列だけ1日遅れる）。
+    🔁 2026-11-20 touraku-history.json は jp-highs.yml（build_jp_highs.py）が Yahoo の日足で数えて書く
+       （J-Quants から替えた）。読むのは build_touraku_history.load_points だけ＝旧版の J-Quants の数のファイルは
+       空として扱う＝この系列にも J-Quants から来た値は入らない（collect で置き換える＝REPLACE_SERIES）。
     """
-    hist = _load_touraku_history(path)
-    points = hist.get("points") or []
+    points = _touraku_load_points(path or _TOURAKU_HISTORY_PATH)
     out = []
     for i in range(_TOURAKU_WINDOW - 1, len(points)):
         window = points[i - _TOURAKU_WINDOW + 1 : i + 1]
@@ -252,13 +253,6 @@ def fetch_touraku_ratio_series(path=None):
     return out
 
 
-def _load_touraku_history(path=None):
-    p = path or _TOURAKU_HISTORY_PATH
-    try:
-        with open(p, encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return {"points": []}
 
 
 SERIES_META = {
@@ -284,12 +278,12 @@ SERIES_META = {
     #    他の系列のように「実測の最大間隔+1日」まで詰めるのは、年末年始を跨いだ1年ぶんの
     #    データが溜まってから（目安2027年初）に見直す。
     "touraku_ratio": {"label": "騰落レシオ(25日)", "unit": "%", "stale_days": 10,
-                      "since": "2026-08-22",
-                      "pending_hint": "リポジトリ Secrets に JQUANTS_API_KEY が未登録だと"
-                                      "build_touraku_history.py が毎回失敗し（continue-on-error で"
-                                      "握り潰される）、touraku-history.json がリモートに生成されない",
-                      "source": "J-Quants (東証プライム全銘柄の終値集計) の25日騰落レシオ",
-                      "note": "元データ touraku-history.json は2026-08-22開始のため、休場日数の"
+                      "since": "2026-11-20",   # 🔁 J-Quants から Yahoo の日足に替えた日（旧 2026-08-22）
+                      "pending_hint": "touraku-history.json は jp-highs.yml（build_jp_highs.py）が平日の夕方に"
+                                      "Yahoo の日足で数えて書く。jp-highs.yml が止まっている・プライムの日足が"
+                                      "取れていない（build_touraku_history.update_from_bars が「書かない」）と増えない",
+                      "source": _TOURAKU_SOURCE_LABEL,
+                      "note": "プライムかどうかは今の東証の一覧で決めています（過去の日も同じ）。休場日数の"
                               "扱いはまだ1年分の実測に基づいていません（暫定の閾値）。"},
 }
 
@@ -331,6 +325,9 @@ def load_history(path=HISTORY_PATH):
     return base
 
 
+REPLACE_SERIES = {"touraku_ratio"}
+
+
 def collect(doc, fetchers, now_jst_date):
     """系列ごとに独立して取得し doc を更新して返す。1系列の失敗が他に波及しない。"""
     for key, fn in fetchers.items():
@@ -339,7 +336,9 @@ def collect(doc, fetchers, now_jst_date):
         except Exception as e:
             print("  NG %s: %s: %s" % (key, type(e).__name__, str(e)[:80]))
             continue
-        merged = merge_points(doc["series"][key]["points"], pts)
+        # 🆕 2026-11-20 REPLACE_SERIES は毎回全期間を数え直す系列＝前の点と混ぜずに置き換える
+        #    （touraku_ratio は J-Quants の数の点を残さないため）
+        merged = sorted(([d, v] for d, v in pts if v is not None)) if key in REPLACE_SERIES             else merge_points(doc["series"][key]["points"], pts)
         doc["series"][key]["points"] = merged
         doc["health"][key]["points"] = len(merged)
         if merged:
