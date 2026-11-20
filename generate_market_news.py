@@ -6470,6 +6470,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-21", "line": '・<b>2026-11-21</b>: 🧪 解説「<a href="guide-signal-lab-156.html" style="color:#0969da"><b>上げ相場の株価指数が安値近くで引けて急に売られたら買う方法は通じる？【研究日誌 #156】</b></a>」公開'},
         {"date": "2026-11-20", "line": '・<b>2026-11-20</b>: 📰 解説「<a href="guide-news-2026-11-20-nikkei-3000-ai-selloff.html" style="color:#0969da"><b>日経-3,007円・AIセルオフ全面安（11/20）</b></a>」公開'},
         {"date": "2026-11-20", "line": '・<b>2026-11-20</b>: 🍶 解説「<a href="guide-company-2801-kikkoman.html" style="color:#0969da"><b>キッコーマン</b></a>」公開'},
         {"date": "2026-11-20", "line": '・<b>2026-11-20</b>: 🧪 解説「<a href="guide-signal-lab-155.html" style="color:#0969da"><b>移動平均を100日にしても、上げ相場の2日だけの急な下げ買いは通じる？【研究日誌 #155】</b></a>」公開'},
