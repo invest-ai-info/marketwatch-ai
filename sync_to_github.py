@@ -470,4 +470,5 @@ SYNC_FILES = [
     "guide-news-2026-11-19-anthropic-ant-ipo.html",
     "guide-signal-lab-155.html",
     "guide-company-2801-kikkoman.html",
+    "guide-news-2026-11-20-nikkei-3000-ai-selloff.html",
 ]
