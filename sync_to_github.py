@@ -469,4 +469,5 @@ SYNC_FILES = [
     "guide-company-2432-dena.html",
     "guide-news-2026-11-19-anthropic-ant-ipo.html",
     "guide-signal-lab-155.html",
+    "guide-company-2801-kikkoman.html",
 ]
