@@ -51,9 +51,41 @@ def test_own_words_without_jquants_is_quiet():
 def test_real_articles_have_no_error():
     csc.errors.clear()
     csc.check_jquants_public(None)
-    errs = [e for e in csc.errors if "自社の集計の言葉" in e]
+    errs = [e for e in csc.errors if "自社の集計の言葉" in e or "数えた件数の言葉" in e]
     csc.errors.clear()
     assert errs == [], errs
+
+
+# ⑥ 🆕 2026-11-21（相談メモ⑪ の G）7月の記事の件数の言葉（「J-Quants」と書いていなくても止める）
+def _run6(files):
+    saved = csc.SD
+    with tempfile.TemporaryDirectory() as d:
+        for name, body in files.items():
+            with open(os.path.join(d, name), "w", encoding="utf-8") as f:
+                f.write(body)
+        csc.SD = d
+        csc.errors.clear()
+        try:
+            csc.check_jquants_public([])
+            return [e for e in csc.errors if "数えた件数の言葉" in e]
+        finally:
+            csc.SD = saved
+            csc.errors.clear()
+
+
+def test_old_july_counts_in_article_is_error():
+    errs = _run6({"guide-x.html": "<p>日本株 約506万行・4,987銘柄で検証した</p>"})
+    assert len(errs) == 1 and "guide-x.html" in errs[0] and "506万行" in errs[0]
+
+
+def test_old_july_counts_in_card_and_history_is_error():
+    errs = _run6({"guides.html": "<div>4.5万件の観測で再現</div>",
+                  "generate_market_news.py": '_h = "1,285回のクライマックス"'})
+    assert len(errs) == 2
+
+
+def test_paper_based_text_is_quiet():
+    assert _run6({"guide-x.html": "<p>Fama と French（1992）はアメリカの株を調べました。</p>"}) == []
 
 
 if __name__ == "__main__":

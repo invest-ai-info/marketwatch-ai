@@ -3372,7 +3372,7 @@ def build_jp_highs_section(now_jst):
     <div class="jprank-foot" style="margin-top:8px">🏆／🔻＝記録のある期間の最高値／最安値も更新。「それまでの高値（安値）」＝{sy}年1月〜前の営業日までの一番高い（安い）値（下はその日付）。同じ値は更新に数えません。上場から20営業日未満の銘柄・値が明らかにおかしい日・その日に売買の無かった銘柄・記録が期間の途中から始まり上場も確かめられない銘柄（期間の前半の値が無い）は数えていません。売買代金の小さい銘柄は少しの売買で高値・安値が動きやすいので、代金も合わせて見てください。</div>
     <div class="jprank-foot">💡 高値の更新は「その期間に買った人がみな含み益になり、戻り売りが出にくい」、安値の更新は「その期間に買った人がみな含み損になり、戻ったところで売りが出やすい」と言われます。一方、どちらも短期の行き過ぎのあとで反対に動くことがあり（安値更新の銘柄への逆張りは「落ちるナイフ」になりやすいとも言われます）、この表だけでは区別できません。高値更新と安値更新の銘柄数の差は、相場全体の勢いを見る目安としても使われます。
     「新高値を付けた強い株を買う」という教えを当サイトのデータで確かめた結果は、期間によって答えが割れました（前半は確認できず・後半だけプラス）＝相場の地合いしだいで、いつでも通用する決まりとは言えません。
-    ▶ <a href="guide-masters-002-trend.html">順張りの教えをデータで検証</a> ／ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
+    ▶ <a href="guide-masters-002-trend.html">順張りの教えを論文で確かめる</a> ／ <a href="guide-volume.html">出来高の見方</a> ／ <a href="guide-loss-cut.html">飛びつきを防ぐ損切り</a></div>
   </section>"""
 
 
@@ -6895,7 +6895,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         {"date": "2026-07-24", "line": '・<b>2026-07-24</b>: 📰 解説「<a href="guide-news-2026-07-24-brent-100-houthi-red-sea.html" style="color:#0969da"><b>ブレント100ドル突破──フーシ派サウジタンカー攻撃・3週間+49%急騰と円安の二重苦</b></a>」公開'},
         {"date": "2026-07-24", "line": '・<b>2026-07-24</b>: 🛑 解説「<a href="guide-proverb-inochigane-ni-te-wo-tsukeru-na.html" style="color:#0969da"><b>命金には手をつけるな</b></a>」公開'},
         {"date": "2026-07-24", "line": '・<b>2026-07-24</b>: 🧪 解説「<a href="guide-signal-lab-049.html" style="color:#0969da"><b>上昇トレンド×逆張り買い：RSI売られすぎ vs BB下限タッチ、シグナルで明暗が分かれるか</b></a>」公開'},
-        {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🧪 解説「<a href="guide-selling-climax.html" style="color:#0969da"><b>投げ売りの翌日に買っていいのか——日本株1,285回の急落で検証</b></a>」公開'},
+        {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🧪 解説「<a href="guide-selling-climax.html" style="color:#0969da"><b>投げ売りの翌日は買い場か｜論文でわかる、急落後に戻りやすい株と続落しやすい株の違い</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 📰 解説「<a href="guide-news-2026-07-23-alphabet-q2-cloud-capex-nikkei.html" style="color:#0969da"><b>Alphabet Q2 Cloud+82%・capex 2,050億ドルでGOOGL急落、日経+307円の逆説を整理</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🎢 解説「<a href="guide-proverb-ikisugi-mo-soba.html" style="color:#0969da"><b>行き過ぎもまた相場</b></a>」公開'},
         {"date": "2026-07-23", "line": '・<b>2026-07-23</b>: 🧪 解説「<a href="guide-signal-lab-048.html" style="color:#0969da"><b>指数×ロング 降格確定——CI下限マイナス2回連続・tracking（再昇格待ち）</b></a>」公開'},
@@ -6947,7 +6947,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         {"date": "2026-07-09", "line": '・<b>2026-07-09</b>: ⏳ 解説「<a href="guide-proverb-matsu-mo-soba.html" style="color:#0969da"><b>待つも相場</b></a>」公開'},
         {"date": "2026-07-09", "line": '・<b>2026-07-09</b>: 💰 解説「<a href="guide-economic-indicators-basics.html" style="color:#0969da"><b>経済指標の読み方入門（NFP・CPI・FOMC）</b></a>」公開'},
         {"date": "2026-07-09", "line": '・<b>2026-07-09</b>: 🧪 解説「<a href="guide-signal-lab-034.html" style="color:#0969da"><b>指数×ロング 昇格後フォローアップ——後半54件でE(R)急落</b></a>」公開'},
-        {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 🎓 解説「<a href="guide-masters-005-pattern-audit.html" style="color:#0969da"><b>巨匠検証#5｜パターン5手法の一斉検証と『検証の検証』</b></a>」公開'},
+        {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 🎓 解説「<a href="guide-masters-005-pattern-audit.html" style="color:#0969da"><b>巨匠の教えを論文で確かめる #5｜ダーバス・酒田五法・グランビルの「形」は使えるのか</b></a>」公開'},
         {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 💰 解説「<a href="guide-inflation-real-return.html" style="color:#0969da"><b>インフレと実質リターン｜現金はなぜ目減りするのか</b></a>」公開'},
         {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 📰 解説「<a href="guide-news-2026-07-08-fomc-minutes-warsh.html" style="color:#0969da"><b>6月FOMC議事録7/8公開 ウォーシュ「ドットなし」×タカ派9対8を整理</b></a>」公開'},
         {"date": "2026-07-08", "line": '・<b>2026-07-08</b>: 👂 解説「<a href="guide-proverb-soba-ni-kike.html" style="color:#0969da"><b>相場は相場に聞け</b></a>」公開'},
@@ -6955,7 +6955,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         {"date": "2026-07-07", "line": '・<b>2026-07-07</b>: 📰 解説「<a href="guide-news-2026-07-07-samsung-nikkei-selloff.html" style="color:#0969da"><b>サムスン最高益なのに急落 日経-1480円「好決算の逆説」を整理</b></a>」公開'},
         {"date": "2026-07-07", "line": '・<b>2026-07-07</b>: 🔄 解説「<a href="guide-proverb-mou-mada.html" style="color:#0969da"><b>もうはまだなり、まだはもうなり</b></a>」公開'},
         {"date": "2026-07-07", "line": '・<b>2026-07-07</b>: 🧪 解説「<a href="guide-signal-lab-032.html" style="color:#0969da"><b>逆張り買いgateが前向きで覆る——N=81「全域プラス」</b></a>」公開'},
-        {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: 🎓 解説「<a href="guide-masters-004-world.html" style="color:#0969da"><b>巨匠検証#4 一目均衡表・タートルズ・BNF——世界の手法12仮説を一斉検証</b></a>」公開'},
+        {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: 🎓 解説「<a href="guide-masters-004-world.html" style="color:#0969da"><b>巨匠の教えを論文で確かめる #4｜一目均衡表・タートルズ・BNF——「順張り」と「逆張り」を研究はどう見ているか</b></a>」公開'},
         {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: ✂️ 解説「<a href="guide-proverb-mikiri-senryo.html" style="color:#0969da"><b>見切り千両、損切り万両</b></a>」公開'},
         {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: 💰 解説「<a href="guide-simple-vs-compound.html" style="color:#0969da"><b>単利と複利の違い｜72の法則と複利が効く3条件</b></a>」公開'},
         {"date": "2026-07-06", "line": '・<b>2026-07-06</b>: 🧪 解説「<a href="guide-signal-lab-031.html" style="color:#0969da"><b>選択ティア4段階の損益序列——neutral(35.9%)の損益分岐割れ確定</b></a>」公開'},
@@ -6968,14 +6968,14 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🧾 解説「<a href="guide-fee-impact.html" style="color:#0969da"><b>手数料インパクト計算機（信託報酬の差を長期複利で比較）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: ⚖️ 解説「<a href="guide-breakeven-calc.html" style="color:#0969da"><b>損益分岐勝率計算機（その勝率と利幅でトントンを超えられるか）</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 💰 解説「<a href="guide-compound-sim.html" style="color:#0969da"><b>複利シミュレーター（積立×複利を自分の数字で計算）</b></a>」公開'},
-        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎓 解説「<a href="guide-masters-003-quality.html" style="color:#0969da"><b>巨匠検証#3 バフェットの「質」は日本株で報われたか</b></a>」公開'},
-        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎓 解説「<a href="guide-masters-002-trend.html" style="color:#0969da"><b>巨匠の教え検証 #2｜「順張りの教科書」は日本株で通用するか</b></a>」公開'},
+        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎓 解説「<a href="guide-masters-003-quality.html" style="color:#0969da"><b>巨匠の教えを論文で確かめる #3｜質の高い会社は報われてきたのか</b></a>」公開'},
+        {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🎓 解説「<a href="guide-masters-002-trend.html" style="color:#0969da"><b>巨匠の教えを論文で確かめる #2｜勢いに乗る順張りは日本株でも通用するのか</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 📰 解説「<a href="guide-proverb-uwasa-jijitsu.html" style="color:#0969da"><b>噂で買って事実で売る</b></a>」公開'},
         {"date": "2026-07-04", "line": '・<b>2026-07-04</b>: 🧪 解説「<a href="guide-signal-lab-029.html" style="color:#0969da"><b>もみあい×ショート 前向き54件で31.5%崩落——low_breakはCI全域マイナス確認</b></a>」公開'},
         {"date": "2026-07-03", "line": '・<b>2026-07-03</b>: 📰 解説「<a href="guide-news-2026-07-03-nfp-june-2026.html" style="color:#0969da"><b>米6月雇用統計が予想の半分 7月FOMC利上げ観測が急後退</b></a>」公開'},
         {"date": "2026-07-03", "line": '・<b>2026-07-03</b>: 🧺 解説「<a href="guide-proverb-tamago-kago.html" style="color:#0969da"><b>卵は一つの籠に盛るな</b></a>」公開'},
         {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🧪 解説「<a href="guide-signal-lab-028.html" style="color:#0969da"><b>blocked=True×ショート 前向き反証（p=0.003）</b></a>」公開'},
-        {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🎓 解説「<a href="guide-graham-001.html" style="color:#0969da"><b>グレアムの安全域は日本株で生きているか</b></a>」公開'},
+        {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🎓 解説「<a href="guide-graham-001.html" style="color:#0969da"><b>巨匠の教えを論文で確かめる #1｜グレアムの「割安＋財務の強さ」は報われてきたか</b></a>」公開'},
         {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🔪 解説「<a href="guide-proverb-ochiru-knife.html" style="color:#0969da"><b>落ちてくるナイフはつかむな</b></a>」公開'},
         {"date": "2026-07-02", "line": '・<b>2026-07-02</b>: 🧪 解説「<a href="guide-signal-lab-027.html" style="color:#0969da"><b>研究日誌 #27 逆張り買いグループ別成績マップ——指数57%・メタル25%・BTC25%の三峰構造</b></a>」公開'},
         {"date": "2026-07-01", "line": '・<b>2026-07-01</b>: 📰 解説「<a href="guide-news-2026-07-01-tankan-q2-2026.html" style="color:#0969da"><b>【7/1】日銀短観6月 非製造業DI+37・35年ぶり最高水準</b></a>」公開'},

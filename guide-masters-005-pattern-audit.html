@@ -6,13 +6,13 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>巨匠の教えをデータで検証 #5｜ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、前回の「唯一の生き残り」も消えた - 時短投資ラボ</title>
-  <meta name="description" content="ダーバス・ボックス、ワインスタインのステージ分析、酒田五法、グランビルの法則、デュアルモメンタム——教科書の売買パターン5手法を日本株4,987銘柄・5年・約506万行（生存バイアスフリー）で検証。同日対照とブロック・ブートストラップで検定を厳格化した結果、基準を満たした手法はゼロ。さらに前回「唯一残った」タートルズ改の判定を取り下げる訂正報告も掲載。">
-  <meta name="keywords" content="ダーバスボックス,酒田五法,三空叩き込み,赤三兵,グランビルの法則,ステージ分析,ワインスタイン,デュアルモメンタム,ブロックブートストラップ,同日対照,バックテスト,日本株,データ検証">
+  <title>巨匠の教えを論文で確かめる #5｜ダーバス・酒田五法・グランビルの「形」は使えるのか——研究でわかる読み方と落とし穴 - 時短投資ラボ</title>
+  <meta name="description" content="ダーバス・ボックス、ワインスタインのステージ分析、酒田五法、グランビルの法則、デュアルモメンタム。値動きの「形」で売買する手法を、公開されている学術論文はどう調べてきたのか。結果の読み方と、バックテストの落とし穴（比べる相手・期間・試した数）をやさしく整理します（情報提供・投資助言ではありません）。">
+  <meta name="keywords" content="ダーバスボックス,酒田五法,ローソク足,グランビルの法則,ステージ分析,ワインスタイン,デュアルモメンタム,テクニカル分析,論文,バックテスト,データスヌーピング,多重検定">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-masters-005-pattern-audit.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="巨匠の教えをデータで検証 #5｜ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、前回の「唯一の生き残り」も消えた">
-  <meta property="og:description" content="教科書の売買パターン5手法を日本株5年・約506万行で検証したら、基準を満たした手法はゼロ。しかも検定方法そのものを監査した結果、前回「唯一残った」タートルズ改も統計的に有意とは言えなかった——訂正報告を含む検証の記録。">
+  <meta property="og:title" content="巨匠の教えを論文で確かめる #5｜ダーバス・酒田五法・グランビルの「形」は使えるのか——研究でわかる読み方と落とし穴">
+  <meta property="og:description" content="チャートの「形」で売買する手法は使えるのか。移動平均・ローソク足・データの掘りすぎ・多重検定について、よく知られた論文の内容をもとに整理します。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-masters-005-pattern-audit.html">
   <meta property="og:site_name" content="時短投資ラボ">
   <meta property="og:locale" content="ja_JP">
@@ -23,12 +23,12 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "巨匠の教えをデータで検証 #5｜ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、前回の「唯一の生き残り」も消えた",
-    "description": "教科書の売買パターン5手法を日本株5年・約506万行で検証したら、基準を満たした手法はゼロ。しかも検定方法そのものを監査した結果、前回「唯一残った」タートルズ改も統計的に有意とは言えなかった——訂正報告を含む検証の記録。",
+    "headline": "巨匠の教えを論文で確かめる #5｜ダーバス・酒田五法・グランビルの「形」は使えるのか——研究でわかる読み方と落とし穴",
+    "description": "チャートの「形」で売買する手法は使えるのか。移動平均・ローソク足・データの掘りすぎ・多重検定について、よく知られた論文の内容をもとに整理します。",
     "author": {"@type": "Organization", "name": "時短投資ラボ"},
     "publisher": {"@type": "Organization", "name": "時短投資ラボ"},
     "datePublished": "2026-07-08",
-    "dateModified": "2026-07-08",
+    "dateModified": "2026-11-21",
     "mainEntityOfPage": "https://marketwatch-jp.com/guide-masters-005-pattern-audit.html"
   }
   </script>
@@ -262,7 +262,7 @@ window.addEventListener('resize',mark);
 <main>
 
   <div class="breadcrumb">
-    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えをデータで検証 #5
+    <a href="index.html">トップ</a> ＞ <a href="guides.html">解説記事</a> ＞ 巨匠の教えを論文で確かめる #5
   </div>
 
   <div class="article">
@@ -272,340 +272,190 @@ window.addEventListener('resize',mark);
       ⚠️ 本記事は情報提供を目的としており、投資助言ではありません。当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。投資判断はご自身の責任で行ってください。
     </div>
 
-    <h1>🎓 巨匠の教えをデータで検証 #5<br><small style="font-size:.65em;color:#57606a;font-weight:400">ダーバス・酒田五法・グランビル——教科書の売買パターン5手法は全滅、そして前回の「唯一の生き残り」も消えた</small></h1>
+    <h1>🎓 巨匠の教えを論文で確かめる #5<br><small style="font-size:.65em;color:#57606a;font-weight:400">ダーバス・酒田五法・グランビルの「形」は使えるのか——研究でわかる読み方と落とし穴</small></h1>
     <div class="meta-line">
-      カテゴリ：🎓 巨匠の教えをデータで検証 &nbsp;|&nbsp; 公開：2026年7月8日 &nbsp;|&nbsp; 読了：約14分
+      カテゴリ：🎓 巨匠の教えを論文で確かめる &nbsp;|&nbsp; 公開：2026年7月8日 &nbsp;|&nbsp; 最終更新：2026年11月21日 &nbsp;|&nbsp; 読了：約9分
     </div>
 
-    <p>このシリーズは、投資の有名な教えを「読んで感心する」のではなく、<strong>検証できる形のルールに翻訳して、データで確かめる</strong>連載です。<a href="guide-graham-001.html">第1回</a>はグレアムの安全域（防御が再現）、<a href="guide-masters-002-trend.html">第2回</a>は順張りの教科書（8仮説すべて基準を満たさず）、<a href="guide-masters-003-quality.html">第3回</a>はバフェットの「質」（報われたのは安さだけ）、<a href="guide-masters-004-world.html">前回・第4回</a>は世界の有名手法12仮説（残ったのは1本だけ）を見てきました。</p>
-    <p>第5回の前半は、チャートの教科書でおなじみの<strong>売買パターン5手法</strong>——ダンサーから投資家になった<strong>ダーバスの「ボックス」</strong>、<strong>ワインスタインの「ステージ分析」</strong>、江戸時代から伝わる<strong>「酒田五法」</strong>、移動平均線売買の原点<strong>「グランビルの法則」</strong>、そして学術寄りの<strong>「デュアルモメンタム」</strong>の検証です。そして後半は、この検証の途中で見つかった<strong>「自分たちの検証の穴」</strong>の話。前回「唯一、両期間で差が残った」と紹介したタートルズ改は、検定方法そのものを監査した結果、<strong>統計的に有意とは言えない</strong>ことが分かりました。本記事はその訂正報告を含みます。</p>
+    <div class="info-box">📝 2026 年 11 月 21 日に書き直しました。以前の版にあった当サイト独自の集計の話は外し、公開されている学術研究の結果にもとづく内容にしています。</div>
 
-    <!-- 30秒まとめ -->
+    <p>このシリーズは、投資の有名な教えを「読んで感心する」のではなく、<strong>公開されている学術研究（論文）が何を報告しているか</strong>をたどって確かめる連載です。第5回は、チャートの教科書でおなじみの<strong>「値動きの形」で売買する5つの手法</strong>を取り上げます。</p>
+
     <div class="info-box">
       <strong>⏱️ 30秒でわかる今回のまとめ</strong><br><br>
-      ① 教科書の売買パターン5手法を日本株4,987銘柄・5年・約506万行で検証——<strong>両期間で基準を満たした手法はゼロ（全滅）</strong>だった<br>
-      ② 今回から検定を2段階厳しくした（「同じ日の他銘柄」との比較＋評価期間の重なりの補正）。<strong>「暴落した日に買えば何でも戻る」型の見せかけの上乗せ</strong>が次々に消えた<br>
-      ③ グランビルの押し目買いは前半+0.6〜0.7%→後半-2.64%/-2.44%と<strong>符号が反転</strong>——「前半だけ見て採用したら後半に裏切られた」教科書例<br>
-      ④ <strong>訂正：</strong>前回#4で「唯一残った」と紹介したタートルズ改も、新しい検定に掛け直すと有意とは言えなかった（p値0.005→0.59）。本記事の④で正直に報告する<br>
-      ⑤ 繰り返し再現したのは今回も<strong>「守り」だけ</strong>（ダーバス系の暴落率4.5〜5.8% vs 対照17〜18%）。なお本記事の数字はすべて<strong>過去データの観察（コスト控除前）であり、将来の成果を保証するものではない</strong>
+      ① 5手法はどれも、<strong>財務を見ず「値動きの形」だけ</strong>で買い場・売り場を決める考え方<br>
+      ② 学術研究の結論は<strong>割れている</strong>。移動平均やチャートの形に情報があったとする研究もあれば、ローソク足には価値が見つからなかったとする研究もある<br>
+      ③ 割れる大きな理由は<strong>「あとから探せば何かは見つかる」</strong>から。多くの型を試して当たりだけを報告すると、偶然が混ざる<br>
+      ④ バックテスト（過去データでの試算）を読むときは、<strong>比べる相手・期間の分け方・試した数</strong>の3点を確かめる<br>
+      ⑤ 紹介する研究は、それぞれが調べた国・時期・方法の結果。<strong>将来の成果を保証するものではありません</strong>
     </div>
 
     <div class="toc">
       <div class="toc-title">📋 目次</div>
       <ol>
         <li><a href="#masters">今回の5手法——「値動きの形」の教科書と、その作者たち</a></li>
-        <li><a href="#method">検証の土俵——共通ルールと、今回厳しくした2つの検定</a></li>
-        <li><a href="#results">結果——5手法すべてが基準を満たさなかった</a></li>
-        <li><a href="#correction">検証の検証——前回の「唯一の生き残り」について訂正します</a></li>
-        <li><a href="#lessons">学び——「形」だけの買いルールと、バックテストの3点チェック</a></li>
-        <li><a href="#limits">この検証の限界</a></li>
-        <li><a href="#site">当サイトでの活かし方</a></li>
+        <li><a href="#papers">論文は「チャートの形」をどう調べてきたか</a></li>
+        <li><a href="#snooping">「あとから探せば見つかる」問題——データの掘りすぎ</a></li>
+        <li><a href="#checks">バックテストを読む3つの問い</a></li>
+        <li><a href="#usage">5手法との付き合い方</a></li>
+        <li><a href="#limits">この解説の限界</a></li>
       </ol>
     </div>
 
     <!-- =============================== -->
     <h2 id="masters">① 今回の5手法——「値動きの形」の教科書と、その作者たち</h2>
 
-    <p>今回の5手法に共通するのは、<strong>財務や業績を見ず、「値動きの形」だけから買い場・売り場を決める</strong>ことです。まずはそれぞれがなぜ有名なのか、簡単に紹介します。</p>
+    <p>5手法に共通するのは、<strong>財務や業績を見ず、「値動きの形」だけから買い場・売り場を決める</strong>ことです。まずはそれぞれの背景を簡単に紹介します。</p>
 
     <h3>ダーバス・ボックス——踊りながら200万ドル</h3>
-    <p><strong>ニコラス・ダーバス（1920-1977）</strong>はハンガリー生まれのプロダンサー。世界を巡業しながら電報と週刊誌だけで株を売買し、1950年代後半の強気相場で<strong>約200万ドル</strong>を築いたとされます。1960年の著書『How I Made $2,000,000 in the Stock Market』で紹介した手法が「ボックス理論」——株価が高値圏で狭い箱（ボックス）の中に収まって揉み合い、その<strong>上限を抜けた瞬間に買う</strong>、というものです。今回は「52週高値圏で狭い箱を作り、上抜けたら買う」を4つの変種（箱の狭さ・期間の定義違い）に翻訳して検証しました。</p>
+    <p><strong>ニコラス・ダーバス（1920-1977）</strong>はハンガリー生まれのプロダンサー。世界を巡業しながら電報と週刊誌だけで株を売買し、1950年代後半の強気相場で<strong>約200万ドル</strong>を築いたとされます。1960年の著書『How I Made $2,000,000 in the Stock Market』で紹介した「ボックス理論」は、株価が高値圏で狭い箱（ボックス）の中に収まって揉み合い、その<strong>上限を抜けたら買う</strong>という考え方です。</p>
 
-    <h3>ワインスタインのステージ分析——「ステージ2」だけを買え</h3>
-    <p><strong>スタン・ワインスタイン</strong>は米国の株式アナリストで、1988年の著書『Secrets for Profiting in Bull and Bear Markets』が今もテクニカル分析の定番教科書です。株価サイクルを底固め（ステージ1）→上昇（ステージ2）→天井圏（ステージ3）→下落（ステージ4）の4段階に分け、<strong>30週移動平均線（日足ではおよそ150日線）を上抜け、かつ線が上向きのとき＝ステージ2入りだけを買う</strong>と説きました。今回は「150日移動平均線の上抜け×線の上向き」を2変種で検証しました。</p>
+    <h3>ワインスタインのステージ分析——「ステージ2」に絞って狙う教え</h3>
+    <p><strong>スタン・ワインスタイン</strong>は米国の株式アナリストで、1988年の著書『Secrets for Profiting in Bull and Bear Markets』が今もテクニカル分析の定番教科書です。株価サイクルを底固め（ステージ1）→上昇（ステージ2）→天井圏（ステージ3）→下落（ステージ4）の4段階に分け、<strong>30週移動平均線を株価が上抜け、かつ線が上向きになった「ステージ2」入りを狙う</strong>と説きました。</p>
 
     <div class="info-box">
-      💡 <strong>移動平均線</strong>とは、過去N日分の終値の平均をつないだ線のこと。日々の細かい値動きをならして、大きな流れ（トレンド）を見るための道具です。この後もMA150（150日移動平均線）のように略記します。
+      <strong>移動平均線</strong>とは、過去N日分の終値の平均をつないだ線のこと。日々の細かい値動きをならして、大きな流れ（トレンド）を見るための道具です。
     </div>
 
     <h3>酒田五法——江戸時代から伝わるローソク足の型</h3>
-    <p><strong>本間宗久（1724-1803）</strong>は出羽国・酒田（現在の山形県酒田市）の米商人で、江戸時代の米相場で莫大な富を築き「相場の神様」とも呼ばれた人物です。ローソク足や酒田五法の考案者と伝えられますが、本人が考案したことを示す確かな記録は残っておらず、後世の仮託とする説もあります。いずれにせよ「酒田五法」の名で伝わるローソク足の組み合わせパターンは、いまも日本のチャート教科書の定番です。今回はそのうち4つを検証しました——<strong>三空叩き込み</strong>（下落中に窓＝前日と値が重ならない隙間を3回連続で空けたら売られすぎとして買い）、<strong>赤三兵</strong>（陽線3本連続の切り上がりで上昇開始として買い）、<strong>三川明けの明星</strong>（大陰線→小さな足→大陽線の底打ち反転。今回は近似定義）、<strong>上放れ三空</strong>（上昇中に窓を3回空けたら過熱として売り警戒）です。</p>
+    <p><strong>本間宗久（1724-1803）</strong>は出羽国・酒田（現在の山形県酒田市）の米商人で、江戸時代の米相場で富を築き「相場の神様」とも呼ばれた人物です。酒田五法の考案者と伝えられますが、本人が考案したことを示す確かな記録は残っておらず、後世の仮託とする説もあります。ローソク足の組み合わせパターンとして、<strong>三空叩き込み</strong>（窓＝前日と値が重ならない隙間を下に3回空けたら売られすぎ）、<strong>赤三兵</strong>（陽線3本連続の切り上がり）、<strong>三川明けの明星</strong>（大陰線→小さな足→大陽線の底打ち反転）などが、いまも日本のチャート教科書の定番です。</p>
 
     <h3>グランビルの法則——移動平均線売買の原点</h3>
-    <p><strong>ジョセフ・グランビル（1923-2013）</strong>は米国の金融ライターで、出来高指標OBV（オン・バランス・ボリューム）の考案者として知られ、1963年から続けた相場ニュースレターの強気・弱気の宣言が市場を動かしたと言われるほどの影響力を持ちました。彼の名を冠した「グランビルの法則」は、<strong>株価と移動平均線（本場の米国では伝統的に200日線）の位置関係から買い4パターン・売り4パターンの計8つの売買タイミングを判断する</strong>もので、日本の証券会社の入門講座にもほぼ例外なく登場します。今回は買い4パターンをMA200基準で検証しました——<strong>G1</strong>（横ばい〜上向きの線を株価が新規に上抜け）、<strong>G2</strong>（上昇中の線への押し目タッチ）、<strong>G3</strong>（線の上で線に接近して反発＝買い増し）、<strong>G4</strong>（線から大きく下に離れたときの逆張り。今回は-20%乖離＝株価が線より20%下にあるとき）です。</p>
+    <p><strong>ジョセフ・グランビル（1923-2013）</strong>は米国の金融ライターで、出来高指標OBV（オン・バランス・ボリューム）の考案者として知られます。「グランビルの法則」は、<strong>株価と移動平均線の位置関係から、買い4パターン・売り4パターンの計8つのタイミングを判断する</strong>もので、日本の証券会社の入門講座にもよく登場します。たとえば「上向きの線を株価が下から上へ抜けたら買い」「上昇中の線まで下げて反発したら買い（押し目買い）」といった形です。</p>
 
-    <h3>デュアルモメンタム——学術研究発の「二段構えの順張り」</h3>
-    <p><strong>ゲイリー・アントナッチ</strong>は米国の投資研究家で、2014年の著書『Dual Momentum Investing』（邦題『ウォール街のモメンタムウォーカー』）で知られます。<strong>相対モメンタム</strong>（他と比べて直近リターンが強いものを買う）と<strong>「絶対モメンタム」</strong>（その資産自身の過去12ヶ月リターンがプラスであることを条件にする）を組み合わせる二段構えで、原典は株価指数や債券など資産クラスの乗り換え戦略です。今回はこれを個別株に翻訳し、「<strong>12ヶ月リターンが上位20%、かつ12ヶ月リターンがプラスの銘柄を毎月初に買う</strong>」として検証しました（原典と土俵が違う点は当方の翻訳責任です）。</p>
+    <h3>デュアルモメンタム——二段構えの順張り</h3>
+    <p><strong>ゲイリー・アントナッチ</strong>は米国の投資研究家で、2014年の著書『Dual Momentum Investing』で知られます。<strong>相対モメンタム</strong>（他と比べて直近の値上がりが強いものを選ぶ）と<strong>絶対モメンタム</strong>（その資産自身の過去12か月の値動きがプラスであることを条件にする）を組み合わせる二段構えで、原典は株価指数や債券など<strong>資産クラスの乗り換え戦略</strong>です。個別株にそのまま当てはめた研究は、この記事では紹介していません。</p>
 
     <!-- =============================== -->
-    <h2 id="method">② 検証の土俵——共通ルールと、今回厳しくした2つの検定</h2>
+    <h2 id="papers">② 論文は「チャートの形」をどう調べてきたか</h2>
 
-    <p>5手法はすべて同じ土俵・同じ判定基準で検証しています。</p>
+    <p>テクニカル分析（値動きから売買を考える方法）は、学術研究の世界で長く議論されてきました。代表的な研究の向きを整理します。</p>
 
-    <table>
-      <tr><th>項目</th><th>内容</th></tr>
-      <tr><td>データ</td><td>日本株ほぼ全銘柄（<strong>4,987銘柄</strong>・上場廃止銘柄も含む）の日足5年分（<strong>2021年7月〜2026年7月・約506万行</strong>）。上場廃止も含めるのは、生き残った銘柄だけを見ると成績が良く見えてしまう「生存バイアス」を避けるため</td></tr>
-      <tr><td>流動性フィルタ</td><td>売買代金の20日中央値が<strong>1億円/日以上</strong>の銘柄のみ（実際に売買しにくい銘柄を除外）</td></tr>
-      <tr><td>エントリー</td><td>シグナルは終値で判定し、買うのは<strong>翌営業日の寄り付き</strong>（未来の情報を使うズルを排除）</td></tr>
-      <tr><td>測定</td><td>主に<strong>60営業日後</strong>のリターン（ローソク足パターン系は短期の型なので<strong>20営業日後</strong>）を対照群と比較</td></tr>
-      <tr><td>2期間判定</td><td>前半（〜2024年末）と後半（2025年〜）に分け、<strong>両方の期間で対照群より統計的に有意に良い場合だけ「差があった」と数える</strong>。片方だけなら地合い依存</td></tr>
-      <tr><td>コスト</td><td>すべて<strong>売買コスト・税金を引く前（グロス）</strong>の数字</td></tr>
-    </table>
-
-    <div class="info-box">
-      💡 <strong>統計的に有意</strong>とは、観測された差が「偶然でもこのくらい出る」とは考えにくい、という意味です。目安に使う<strong>p値</strong>は「差がゼロでも偶然にこれ以上の差が出る確率」で、慣例では0.05未満を有意とします。本文に出てくる<strong>q値</strong>は、たくさんの仮説を同時に検定するとき偶然の当たりが混ざりやすくなる分を補正した、p値の親戚だと思ってください。
-    </div>
-
-    <p>そして今回の最大の変更点——<strong>検定そのものを2段階厳しくしました</strong>。これは後半の訂正報告（<a href="#correction">④</a>）につながる本記事の裏テーマです。</p>
-
+    <h3>移動平均や高値・安値の突破を調べた研究（グランビル・ダーバス系に近い）</h3>
     <ul>
-      <li><strong>厳格化①「同日対照」</strong>——従来は「シグナルが出た銘柄」を「全期間の平均的な銘柄・平均的な日」（プール対照）と比べていました。しかしこれだと、上昇相場に多く発火する手法は中身がなくても勝って見えます。そこで「<strong>同じ日に発火した銘柄を、同じ日の他の銘柄と比べる</strong>」比較を導入しました。買うタイミングの運と、銘柄を選ぶ力を分けて測るためです</li>
-      <li><strong>厳格化②「ブロック・ブートストラップ」</strong>——60営業日リターンを毎日評価すると、隣り合う日の観測はほとんど同じ期間を測っています（60日中59日が共通）。これを独立な証拠として数えると、証拠の数を大幅に水増ししてしまう。そこで<strong>評価期間の重なりを考慮して「実質的な証拠の数」を正しく数え直す検定</strong>（日付のかたまり＝ブロック単位でデータを引き直して差のばらつきを見積もる方法）に切り替えました</li>
+      <li><strong>Brock, Lakonishok &amp; LeBaron（1992）</strong>は、アメリカのダウ平均の1897〜1986年の日々の値を使い、<strong>移動平均線を使った売買ルール</strong>と<strong>一定期間の高値・安値の突破（トレーディング・レンジ・ブレイク）を使ったルール</strong>を調べました。結果は、これらのルールを支持するものだったと報告されています。買いの合図の後と売りの合図の後で、その後の値動きに違いがあり、いくつかの標準的なモデルでは説明しにくいという内容です。</li>
     </ul>
 
-    <div class="chart-figure">
-      <svg viewBox="0 0 700 370" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="プール対照と同日対照の違いを示す概念図">
-        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">同じ手法でも「何と比べるか」で結論が変わる</text>
-        <polyline points="60,150 140,146 220,140 300,132 380,118 460,98 540,78 620,60" fill="none" class="s-axis"/>
-        <circle cx="140" cy="146" r="4" class="bar-b"/>
-        <circle cx="300" cy="132" r="4" class="bar-b"/>
-        <circle cx="460" cy="98" r="4" class="bar-b"/>
-        <circle cx="500" cy="88" r="4" class="bar-b"/>
-        <circle cx="540" cy="78" r="4" class="bar-b"/>
-        <circle cx="580" cy="69" r="4" class="bar-b"/>
-        <circle cx="620" cy="60" r="4" class="bar-b"/>
-        <text x="150" y="172" class="s-label-sm">平時：発火はまばら</text>
-        <text x="480" y="130" class="s-label-sm">上げ相場：発火（●）が集中</text>
-        <line x1="60" y1="182" x2="660" y2="182" class="s-guide"/>
-        <text x="660" y="177" text-anchor="end" class="s-label-sm">時間 →</text>
-        <rect x="60" y="200" width="280" height="130" rx="10" class="s-fill-gray"/>
-        <text x="200" y="222" text-anchor="middle" class="s-label-b">A. プール対照（従来）</text>
-        <rect x="110" y="255" width="45" height="55" class="bar-b"/>
-        <rect x="185" y="285" width="45" height="25" class="bar-gray"/>
-        <text x="132" y="324" text-anchor="middle" class="s-label-sm">手法</text>
-        <text x="207" y="324" text-anchor="middle" class="s-label-sm">全期間平均</text>
-        <text x="200" y="350" text-anchor="middle" class="s-label-sm">上げ相場の追い風込みで「勝って見える」</text>
-        <rect x="370" y="200" width="280" height="130" rx="10" class="s-fill-gray"/>
-        <text x="510" y="222" text-anchor="middle" class="s-label-b">B. 同日対照（今回）</text>
-        <rect x="420" y="272" width="45" height="38" class="bar-b"/>
-        <rect x="495" y="270" width="45" height="40" class="bar-gray"/>
-        <text x="442" y="324" text-anchor="middle" class="s-label-sm">手法</text>
-        <text x="517" y="324" text-anchor="middle" class="s-label-sm">同じ日の他銘柄</text>
-        <text x="510" y="350" text-anchor="middle" class="s-label-sm">時期の運を除くと差がほぼ消える</text>
-      </svg>
-      <div class="chart-caption">図1：発火が上げ相場に偏る手法は、全期間の平均（プール対照）と比べると勝って見えるが、「同じ日の他銘柄」（同日対照）と比べると上乗せが消えることがある。※概念を示すイメージ図です（実データの縮尺ではありません）。</div>
-    </div>
+    <h3>チャートの形を自動で見つけて調べた研究</h3>
+    <ul>
+      <li><strong>Lo, Mamaysky &amp; Wang（2000）</strong>は、ヘッド・アンド・ショルダーズ（三尊）やダブルボトムといったチャートの形を、<strong>コンピュータで自動的に見つける方法</strong>を作り、1962〜1996年のアメリカの多数の株に当てはめました。形のあとの値動きの分布を、ふだんの値動きと比べた結果、<strong>いくつかの形には追加の情報があり、実用的な価値を持つ可能性がある</strong>と報告しています。ただし「この形が出たら必ずもうかる」という意味ではなく、あくまで平均的な分布の違いの話です。</li>
+    </ul>
 
-    <div class="chart-figure">
-      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="隣接する評価日の60日リターン窓がほぼ同じ期間を測っていることを示す概念図">
-        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">毎日評価すると、隣り合う観測は「ほぼ同じ60日」を測っている</text>
-        <rect x="90" y="56" width="380" height="26" class="s-fill-b"/>
-        <rect x="104" y="100" width="380" height="26" class="s-fill-b"/>
-        <rect x="118" y="144" width="380" height="26" class="s-fill-b"/>
-        <rect x="132" y="188" width="380" height="26" class="s-fill-b"/>
-        <rect x="146" y="232" width="380" height="26" class="s-fill-b"/>
-        <text x="84" y="74" text-anchor="end" class="s-label-sm">1日目の窓</text>
-        <text x="98" y="118" text-anchor="end" class="s-label-sm">2日目の窓</text>
-        <text x="112" y="162" text-anchor="end" class="s-label-sm">3日目の窓</text>
-        <text x="126" y="206" text-anchor="end" class="s-label-sm">4日目の窓</text>
-        <text x="140" y="250" text-anchor="end" class="s-label-sm">5日目の窓</text>
-        <rect x="146" y="50" width="324" height="214" class="s-fill-y" fill-opacity=".45"/>
-        <text x="560" y="130" class="s-label-sm">同じ値動きを</text>
-        <text x="560" y="150" class="s-label-sm">何度も数えると</text>
-        <text x="560" y="170" class="s-label-sm">偶然の差でも</text>
-        <text x="560" y="190" class="s-label-sm">「有意」に見えやすい</text>
-        <line x1="60" y1="272" x2="660" y2="272" class="s-axis"/>
-        <text x="660" y="266" text-anchor="end" class="s-label-sm">カレンダー（営業日）→</text>
-        <text x="330" y="296" text-anchor="middle" class="s-label-y" style="font-size:12px">色の帯＝5つの窓すべてに共通する期間。隣り合う窓は60日中59日が同じ</text>
-      </svg>
-      <div class="chart-caption">図2：60営業日リターンを毎日評価すると、隣接する観測の窓は59/60日が重なる＝ほとんど同じデータを繰り返し数えている。ブロック・ブートストラップはこの重なりを考慮して検定する。※概念を示すイメージ図です。</div>
-    </div>
+    <h3>ローソク足（酒田五法の仲間）を調べた研究</h3>
+    <ul>
+      <li><strong>Marshall, Young &amp; Rose（2006）</strong>はアメリカの大型株を対象に、ローソク足の売買ルールが投資家に価値をもたらすかを調べました。同じ研究にもとづく博士論文（Marshall, 2005）の要旨では、「ローソク足分析に従った投資家が市場に勝つという証拠はない」と結論づけられています。ローソク足の技法は江戸時代の日本の米相場に由来するため、<strong>のちの別の市場のデータで確かめる</strong>という設計になっているのが特徴です。</li>
+      <li><strong>Marshall, Young &amp; Cahan（2008）</strong>は、同じ問いを<strong>日本の株式市場</strong>で調べた研究です（題名は「ローソク足の売買ルールは日本の株式市場で利益になるか」）。結論は有料の論文本文で確かめる必要があるため、この記事では内容を要約しません。気になる方は原論文をご覧ください。</li>
+    </ul>
 
     <div class="warning-box">
-      繰り返しになりますが、以下の数字はすべて<strong>売買コスト控除前</strong>で、<strong>過去データの観察であり将来の成果を保証しません</strong>。また本記事は特定の手法の採用や個別銘柄の売買を推奨するものではありません。
+      研究の向きが割れていることが大切です。「形に情報がある」とする研究も、「ローソク足には価値が見つからない」とする研究もあります。<strong>調べた国・時期・形の定義・売買コストの扱い</strong>で、結論は変わりえます。
     </div>
+
+    <p>全体像を見渡した文献もあります。<strong>Park &amp; Irwin（2007）</strong>は、テクニカル分析の収益性を調べた研究を整理し、1988年以降の「現代的な」方法による研究95本のうち、<strong>56本が利益あり、20本が利益なし、19本が両方まじった結果</strong>だったと報告しています。利益が出ていたのは<strong>少なくとも1990年代初めごろまで</strong>だった、とも述べています。同時に、多くの研究に<strong>データの掘りすぎ・ルールの事後的な選択・リスクと売買コストの見積もりの難しさ</strong>といった方法上の問題があり、結論を決めるには、それらの解決が必要だと述べています。</p>
 
     <!-- =============================== -->
-    <h2 id="results">③ 結果——5手法すべてが基準を満たさなかった</h2>
+    <h2 id="snooping">③ 「あとから探せば見つかる」問題——データの掘りすぎ</h2>
 
-    <p>結論から言うと、<strong>5手法とも「両期間で対照群より有意に良い」という基準を満たしませんでした</strong>。ただし、崩れ方はそれぞれ違い、その違いにこそ学びがあります。</p>
+    <p>値動きの形やルールは、組み合わせ方が無数にあります。<strong>多くの型を試して、うまくいったものだけを報告する</strong>と、偶然の当たりが混ざります。宝くじを何百枚も買えば、どれかは当たるのと同じです。これを<strong>データスヌーピング（データの掘りすぎ）</strong>と呼びます。</p>
 
-    <h3>1. ダーバス・ボックス——攻めは反転、守りだけ残った</h3>
+    <ul>
+      <li><strong>Sullivan, Timmermann &amp; White（1999）</strong>は、Brock らの26個のルールをもとに、検討するルールの全体を広げ、<strong>100年分のダウ平均の日々のデータ</strong>に当てはめました。データの掘りすぎの影響を数え上げて、統計的に補正する方法（White のリアリティ・チェック）を使った研究です。「たくさん試した中の最良」をそのまま信じない、という姿勢の代表例です。</li>
+      <li><strong>Bajgrowicz &amp; Scaillet（2012）</strong>は、1897〜2011年のダウ平均で、偽の発見の割合を抑える方法（誤発見率）を使って技術的な売買ルールを調べ直しました。結果は、<strong>過去に良かったルールを、将来の成績が続くかを確かめるテストで事前に見分けることはできなかった</strong>こと、そして<strong>低い水準の売買コストでも、過去の見かけの利益が消える</strong>ことでした。初期の時代に報告された利益の経済的な価値に、強い疑問を投げかけています。</li>
+      <li><strong>Harvey, Liu &amp; Zhu（2016）</strong>は、株式の期待リターンを説明するとされる数百の要因（ファクター）について、多重検定（たくさん検定するほど偶然の当たりが増えること）の枠組みで見直しました。新しい要因の有意性の基準は、ふつうの目安（t値2.0）より<strong>高い3.0超</strong>にすべきだと主張し、<strong>金融経済学で主張されてきた研究結果の多くは誤りである可能性が高い</strong>とも述べています。</li>
+    </ul>
 
-    <table>
-      <tr><th>項目</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th></tr>
-      <tr><td>対照との差（60日後）</td><td style="color:#1a7f37">プラス（4変種とも）</td><td style="color:#cf222e"><strong>全変種マイナス（代表変種 -1.22%）</strong></td></tr>
-      <tr><td>-20%暴落率</td><td colspan="2"><strong>4.5〜5.8%</strong> vs 対照17〜18%——両期間で大幅に低い</td></tr>
-      <tr><td>判定</td><td colspan="2" style="color:#cf222e"><strong>方向反転＝基準を満たさず</strong>（守りのみ再現）</td></tr>
-    </table>
+    <div class="negative-box"><strong>ポイント：</strong>「過去にこの形で勝てた」という話は、<strong>試した数</strong>を抜きにすると評価できません。本に載っている形も、書かれる前に大量の候補から選ばれている可能性があります。</div>
 
-    <p>52週高値圏の狭い箱の上抜け買いは、前半は対照比プラスだったのに、<strong>後半は4変種すべてマイナス</strong>（代表変種で-1.22%）——方向が反転しました。前半だけ見て「使える」と判断していたら、後半に裏切られていた形です。一方で興味深いのは<strong>「守り」</strong>——買った後60営業日以内に20%超下落する確率は<strong>4.5〜5.8%と、対照の17〜18%より大幅に低く、これは両期間で再現</strong>しました。52週高値圏で値動きが締まっている銘柄は、少なくとも「いきなり2割落ちる」ことは少なかった、という観察です。</p>
+    <!-- =============================== -->
+    <h2 id="checks">④ バックテストを読む3つの問い</h2>
 
-    <h3>2. ワインスタイン ステージ2——前半の+2%が消滅</h3>
-
-    <table>
-      <tr><th>項目</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th></tr>
-      <tr><td>対照との差（60日後）</td><td style="color:#1a7f37"><strong>+2.05%</strong></td><td><strong>-0.05%</strong></td></tr>
-      <tr><td>-20%暴落率</td><td colspan="2">対照並み（守りの効果も確認できず）</td></tr>
-      <tr><td>判定</td><td colspan="2" style="color:#cf222e"><strong>後半に差が消滅＝基準を満たさず</strong></td></tr>
-    </table>
-
-    <p>150日移動平均線の上抜け×線の上向き（ステージ2入り）は、前半こそ<strong>+2.05%</strong>と目を引く差でしたが、後半は<strong>-0.05%</strong>——きれいに消えました。しかもダーバスと違って<strong>暴落率も対照並み</strong>で、守りの取り柄も確認できませんでした。「前半の数字だけ見せられたら誰でも欲しくなる。でも後半が本番だった」——2期間判定の意義を象徴する結果です。</p>
-
-    <h3>3. 酒田五法——「三空で買えば戻る」はタイミングの錯覚だった</h3>
-
-    <p>ローソク足パターンは短期の型なので、評価だけ20営業日後で行いました。</p>
-
-    <table>
-      <tr><th>パターン</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th><th>読み</th></tr>
-      <tr><td>三空叩き込み（買い）</td><td>単純比較 +1.44%</td><td>単純比較 +8.88%（ただし有意でない）<br><strong style="color:#cf222e">同日対照では -3.27%（有意にマイナス）</strong></td><td>タイミング効果の錯覚</td></tr>
-      <tr><td>赤三兵（買い）</td><td style="color:#cf222e"><strong>対照比 -0.70%（有意に逆行）</strong>・同日対照でも -0.42%</td><td>有意差なし</td><td>3日連騰後はむしろ劣る</td></tr>
-      <tr><td>三川明けの明星（近似）</td><td colspan="2">差がほぼゼロ</td><td>上乗せなし</td></tr>
-      <tr><td>上放れ三空（売り警戒）</td><td colspan="2">符号は警戒方向に一貫するが有意でない</td><td>判定保留</td></tr>
-    </table>
-
-    <p>いちばんの見どころは<strong>三空叩き込み</strong>です。単純比較では前半+1.44%・後半+8.88%と「さすが江戸時代からの知恵」に見えます。しかし後半の+8.88%は統計的に有意でなく、さらに<strong>同日対照——同じ日に買えた他の銘柄と比べる——に切り替えると、後半は-3.27%の有意なマイナス</strong>でした。つまり三空叩き込みが出るような日は市場全体が暴落しており、<strong>その日に買えば何を買っても戻りやすかった</strong>。三空が出た銘柄自体は、同じ日の他の銘柄より<strong>劣って</strong>いたのです。「型が銘柄を選んでいた」のではなく「暴落日というタイミングが戻りを作っていた」——図1で示した錯覚の実例です。</p>
-
-    <p><strong>赤三兵</strong>は逆方向の発見でした。陽線3本の切り上がりは上昇開始のサインとされますが、前半は対照比<strong>-0.70%と有意に逆行</strong>（同日対照でも-0.42%）。3日続けて上げた直後の銘柄は、むしろ同じ日の他の銘柄より劣っていました。第2回・第4回で繰り返し見た「上がったものへの飛びつき買いは逆風」という構図と整合します。</p>
-
-    <h3>4. グランビルの法則 買い4パターン——押し目買いの符号反転</h3>
-
-    <table>
-      <tr><th>パターン</th><th>前半（同日対照）</th><th>後半（同日対照）</th><th>結果</th></tr>
-      <tr><td>G1 新規上抜け</td><td>—</td><td>有意差なし</td><td style="color:#cf222e">基準を満たさず</td></tr>
-      <tr><td>G2 押し目タッチ</td><td style="color:#1a7f37"><strong>+0.6〜0.7%（有意）</strong></td><td style="color:#cf222e"><strong>-2.64%（有意にマイナス・q=0.001）</strong></td><td style="color:#cf222e">符号反転</td></tr>
-      <tr><td>G3 MA上の反発</td><td style="color:#1a7f37"><strong>+0.6〜0.7%（有意）</strong></td><td style="color:#cf222e"><strong>-2.44%（有意にマイナス・q=0.001）</strong></td><td style="color:#cf222e">符号反転</td></tr>
-      <tr><td>G4 -20%乖離の逆張り</td><td style="color:#cf222e">マイナス</td><td style="color:#cf222e">マイナス（暴落率22〜28%）</td><td style="color:#cf222e">両期間マイナス</td></tr>
-    </table>
-
-    <p>今回もっとも「教科書的な罠」を体現したのがグランビルでした。<strong>G2（上昇中のMA200への押し目タッチ）とG3（MAの上での反発）は、前半は同日対照で+0.6〜0.7%の有意なプラス</strong>——つまり同じ日の他銘柄より本当に良かった。ところが<strong>後半は-2.64%/-2.44%と有意なマイナスに符号が反転</strong>しました（多重比較を補正したq値でも0.001）。前半のデータだけ見て「押し目買いは統計的にも正しい」と採用していた人は、後半にそのまま裏切られた計算です。どちらの期間も単体では「統計的に確か」に見えるのに、符号が逆——<strong>レジーム（相場の体質）依存の教科書例</strong>と言えます。</p>
-
-    <p><strong>G4（MAから-20%下への乖離での逆張り）は両期間マイナス</strong>で、しかも買った後の暴落率が<strong>22〜28%</strong>。移動平均線から大きく離れて落ちている銘柄を拾うのは、この5年の日本株では「落ちるナイフ」を素手でつかむ行為に近い結果でした。G1（新規上抜け）は後半に有意差がなく、これも基準を満たしませんでした。</p>
-
-    <h3>5. デュアルモメンタム——リターンは増えず、リスクだけ2倍</h3>
-
-    <table>
-      <tr><th>項目</th><th>前半（〜2024年末）</th><th>後半（2025年〜）</th></tr>
-      <tr><td>対照との差（60日後）</td><td>有意差なし</td><td>有意差なし</td></tr>
-      <tr><td>-20%暴落率</td><td colspan="2"><strong style="color:#cf222e">28%</strong> vs 対照14%——約2倍</td></tr>
-      <tr><td>判定</td><td colspan="2" style="color:#cf222e"><strong>基準を満たさず（リスクだけ増えた）</strong></td></tr>
-    </table>
-
-    <p>12ヶ月リターン上位20%×12ヶ月リターンがプラス、を毎月初に買う戦略は、リターンでは両期間とも対照と有意差なし。一方で<strong>-20%暴落率は28%と対照（14%）の約2倍</strong>——上乗せがないままリスクだけ増えました。第4回のモメンタム検証（暴落率22〜27%）とも整合する、「勢いのある銘柄は買った瞬間から荒れやすい」という結果です。</p>
-
-    <div class="info-box">
-      <strong>副産物の発見</strong>——検証の過程で、月次リバランス時点の「12ヶ月リターン上位20%」に入る銘柄は、<strong>12ヶ月リターンが常にプラス</strong>であることが分かりました。つまり「絶対モメンタム」（リターンがプラスであること）という第2の条件は、<strong>個別株ユニバースでは一度も絞り込みとして働かなかった</strong>のです。原典が資産クラス（指数）の乗り換えを想定した設計であることを考えると、個別株の上位20%への翻訳では、二段構えのうち一段が最初から空回りしていた——翻訳の限界も含めての記録です。
-    </div>
+    <p>上の研究から、バックテストや「検証してみた」という結果を読むときに使える3つの問いが見えてきます。</p>
 
     <div class="chart-figure">
-      <svg viewBox="0 0 700 410" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="5手法と訂正1件の前半・後半の結果マップ">
-        <text x="350" y="26" text-anchor="middle" class="s-label-b" font-size="15">5手法×前半／後半の見取り図——「攻め」で両期間そろってプラスはゼロ</text>
-        <text x="45" y="54" class="s-label">手法</text>
-        <text x="352" y="54" text-anchor="middle" class="s-label">前半（〜2024年末）</text>
-        <text x="557" y="54" text-anchor="middle" class="s-label">後半（2025年〜）</text>
-        <!-- row 1 -->
-        <text x="45" y="90" class="s-label">ダーバス・ボックス</text>
-        <rect x="255" y="66" width="195" height="38" rx="6" class="s-fill-g"/>
-        <text x="352" y="90" text-anchor="middle" class="s-label-g" style="font-size:12px">対照比プラス</text>
-        <rect x="460" y="66" width="195" height="38" rx="6" class="s-fill-r"/>
-        <text x="557" y="90" text-anchor="middle" class="s-label-r" style="font-size:12px">全変種マイナス（-1.22%）</text>
-        <!-- row 2 -->
-        <text x="45" y="142" class="s-label">ワインスタイン ステージ2</text>
-        <rect x="255" y="118" width="195" height="38" rx="6" class="s-fill-g"/>
-        <text x="352" y="142" text-anchor="middle" class="s-label-g" style="font-size:12px">+2.05%</text>
-        <rect x="460" y="118" width="195" height="38" rx="6" class="s-fill-gray"/>
-        <text x="557" y="142" text-anchor="middle" class="s-label-sm" style="font-size:12px">-0.05%（差が消滅）</text>
-        <!-- row 3 -->
-        <text x="45" y="194" class="s-label">酒田五法（4パターン）</text>
-        <rect x="255" y="170" width="195" height="38" rx="6" class="s-fill-gray"/>
-        <text x="352" y="194" text-anchor="middle" class="s-label-sm" style="font-size:12px">上乗せなし（赤三兵は逆行）</text>
-        <rect x="460" y="170" width="195" height="38" rx="6" class="s-fill-r"/>
-        <text x="557" y="194" text-anchor="middle" class="s-label-r" style="font-size:12px">三空は同日対照 -3.27%</text>
-        <!-- row 4 -->
-        <text x="45" y="246" class="s-label">グランビル G2・G3</text>
-        <rect x="255" y="222" width="195" height="38" rx="6" class="s-fill-g"/>
-        <text x="352" y="246" text-anchor="middle" class="s-label-g" style="font-size:12px">+0.6〜0.7%（有意）</text>
-        <rect x="460" y="222" width="195" height="38" rx="6" class="s-fill-r"/>
-        <text x="557" y="246" text-anchor="middle" class="s-label-r" style="font-size:12px">-2.64%／-2.44%（反転）</text>
-        <!-- row 5 -->
-        <text x="45" y="298" class="s-label">デュアルモメンタム</text>
-        <rect x="255" y="274" width="195" height="38" rx="6" class="s-fill-gray"/>
-        <text x="352" y="298" text-anchor="middle" class="s-label-sm" style="font-size:12px">有意差なし</text>
-        <rect x="460" y="274" width="195" height="38" rx="6" class="s-fill-gray"/>
-        <text x="557" y="298" text-anchor="middle" class="s-label-sm" style="font-size:12px">有意差なし（暴落率は約2倍）</text>
-        <!-- row 6 -->
-        <text x="45" y="350" class="s-label">タートルズ改（④で訂正）</text>
-        <rect x="255" y="326" width="195" height="38" rx="6" class="s-fill-r"/>
-        <text x="352" y="350" text-anchor="middle" class="s-label-r" style="font-size:12px">同日対照 -0.54%</text>
-        <rect x="460" y="326" width="195" height="38" rx="6" class="s-fill-gray"/>
-        <text x="557" y="350" text-anchor="middle" class="s-label-sm" style="font-size:12px">+0.56%（有意でない）</text>
-        <text x="350" y="394" text-anchor="middle" class="s-label-sm">両期間で再現したのは「守り」だけ（ダーバス系の暴落率 4.5〜5.8% vs 対照 17〜18%）</text>
+      <svg viewBox="0 0 720 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="バックテストを読む3つの問い。何と比べたか、期間を分けたか、いくつ試したか。">
+        <text x="360" y="28" text-anchor="middle" class="s-label-b" font-size="15">バックテストを読む3つの問い</text>
+        <rect x="10" y="48" width="220" height="190" rx="10" class="s-fill-b"/>
+        <text x="120" y="82" text-anchor="middle" class="s-label-b" font-size="15">① 何と比べた？</text>
+        <text x="120" y="122" text-anchor="middle" class="s-label">ただ持ち続けた場合や</text>
+        <text x="120" y="148" text-anchor="middle" class="s-label">同じ地合いの他の株と</text>
+        <text x="120" y="174" text-anchor="middle" class="s-label">比べているか</text>
+        <text x="120" y="212" text-anchor="middle" class="s-label-sm">上げ相場の追い風は誰でも受ける</text>
+        <rect x="250" y="48" width="220" height="190" rx="10" class="s-fill-g"/>
+        <text x="360" y="82" text-anchor="middle" class="s-label-g" font-size="15">② 期間を分けた？</text>
+        <text x="360" y="122" text-anchor="middle" class="s-label">見つけた期間と</text>
+        <text x="360" y="148" text-anchor="middle" class="s-label">確かめる期間が</text>
+        <text x="360" y="174" text-anchor="middle" class="s-label">別になっているか</text>
+        <text x="360" y="212" text-anchor="middle" class="s-label-sm">未知のデータで通じるかが本番</text>
+        <rect x="490" y="48" width="220" height="190" rx="10" class="s-fill-y"/>
+        <text x="600" y="82" text-anchor="middle" class="s-label-y" font-size="15">③ いくつ試した？</text>
+        <text x="600" y="122" text-anchor="middle" class="s-label">試した型が多いほど</text>
+        <text x="600" y="148" text-anchor="middle" class="s-label">偶然の当たりが</text>
+        <text x="600" y="174" text-anchor="middle" class="s-label">混ざりやすい</text>
+        <text x="600" y="212" text-anchor="middle" class="s-label-sm">基準の補正が必要になる</text>
+        <text x="360" y="272" text-anchor="middle" class="s-label-sm">どれかに答えがないときは、結果を割り引いて読む</text>
       </svg>
-      <div class="chart-caption">図3：5手法＋訂正1件の前半／後半の結果見取り図。緑＝対照よりプラス、赤＝マイナスまたは逆行、灰＝有意な差なし。詳細な数値は本文の各表を参照。※概念を示すイメージ図です（セルの色は判定の向きを示すもので、大きさは縮尺ではありません）。</div>
+      <div class="chart-caption">Sullivan ほか（1999）、Bajgrowicz &amp; Scaillet（2012）、Harvey ほか（2016）などが指摘する論点を、やさしく図にしたもの。当サイトが数えた集計ではありません。</div>
     </div>
-
-    <!-- =============================== -->
-    <h2 id="correction">④ 検証の検証——前回の「唯一の生き残り」について訂正します</h2>
-
-    <p>ここからが本記事でいちばん大事なセクションです。<a href="guide-masters-004-world.html">前回#4</a>で私たちは、12仮説のうち<strong>タートルズ改（20日高値ブレイク×MA50＞MA200）だけが両期間で差を残した</strong>と書きました。今回、5手法の検証に先立って<strong>検定方法そのものを監査</strong>した結果——<strong>この判定は取り下げます。タートルズ改の差は、統計的に有意とは言えませんでした</strong>。前回の記事の統計処理が甘かった、ということです。言い訳をせず、何がどう甘かったかを具体的に報告します。</p>
-
-    <h3>罠①：評価期間の重なりを、独立な証拠として数えていた</h3>
-    <p>前回の検定は、60営業日リターンの観測を毎日積み上げていました。しかし図2で見たとおり、<strong>隣り合う日の観測は60日中59日が同じ期間</strong>——ほとんど同じ値動きを、何万回も「別々の証拠」として数えていたのです。日付のかたまり単位で重なりを考慮するブロック・ブートストラップに掛け直すと、タートルズ改のp値は<strong>前半0.005→0.59、後半0.003→0.30</strong>に跳ね上がりました。0.05を大きく超える——つまり<strong>偶然と区別できない</strong>水準です。</p>
-
-    <h3>罠②：「いつ買うか」の運と「何を買うか」の力を混同していた</h3>
-    <p>前回の比較は「全期間の平均的な日」との比較（プール対照）でした。図1で見たとおり、上昇相場に多く発火する手法は、中身がなくても勝って見えます。<strong>「同じ日の他銘柄」と比べる同日対照に切り替えると、タートルズ改は前半むしろ-0.54%、後半+0.56%でどちらも有意差なし</strong>。つまりこの手法は<strong>強い相場に乗っていただけで、同じ日の他の銘柄より良いものを選ぶ力は確認できませんでした</strong>。</p>
-
-    <div class="negative-box">
-      <strong>訂正のまとめ</strong>——#4で「唯一、両期間で差が残った」としたタートルズ改の判定は、①評価期間の重なりの無視、②タイミングと銘柄選択の混同、という2つの統計処理の甘さによる見せかけでした。厳格化した検定のもとでは<strong>統計的に有意とは言えません</strong>。#4の該当箇所の結論は、本記事の内容で上書きしてお読みください。
-    </div>
-
-    <p>この失敗から一般化できる教訓は3つあります。</p>
-    <ol>
-      <li><strong>「いつ買うか」の運と「何を買うか」の実力は分けて測る</strong>——上げ相場に発火が偏る手法は、プール対照ではほぼ自動的に勝って見える</li>
-      <li><strong>重なったデータを独立に数えると、どんな手法でも有意に見えやすい</strong>——p値が小さいこと自体は、検定の設計が正しいことを何も裏付けない</li>
-      <li><strong>自分の検証こそ疑う</strong>——当サイトは他人の手法だけでなく、自分たちの検証手法も監査の対象にする。間違いが見つかれば、今回のように訂正する</li>
-    </ol>
-
-    <p>なお、タートルズ改の<strong>前向き観察</strong>（判定を確定した後に入ってくる新しいデータでの追試）は#4の方針どおり継続しています。今回の訂正は「過去データ上の有意性は主張できない」というものであり、この手法の将来については、将来のデータが結論を出します。</p>
-
-    <!-- =============================== -->
-    <h2 id="lessons">⑤ 学び——「形」だけの買いルールと、バックテストの3点チェック</h2>
-
-    <p>5手法＋訂正1件を貫く構造は、一言でまとめられます——<strong>「値動きの形」だけから作った買いルールは、この5年の日本株では、「いつの相場か」の影響を取り除くと生き残らなかった</strong>。ダーバスの箱も、ステージ2も、江戸時代の三空も、グランビルの押し目も、モメンタムも、前半か後半のどちらかで消えるか、そもそも同じ日の他銘柄に負けていました。</p>
-
-    <p>そして、繰り返し再現したのは今回も<strong>「守り」</strong>です。ダーバス系の暴落率4.5〜5.8%（対照17〜18%）は両期間で再現しました。<a href="guide-graham-001.html">第1回</a>のグレアムの安全域、<a href="guide-masters-004-world.html">第4回</a>の低ボラティリティに続き、「稼ぐ力より守る力のほうがデータは素直」という構図がまた1つ積み上がりました。</p>
-
-    <p>個人投資家への示唆を、一般論として（特定の行動の推奨ではなく）まとめます。世の中のバックテスト——書籍でも、SNSでも、当サイトの記事でも——を見るときの<strong>3点チェック</strong>です。</p>
-
-    <div class="positive-box">
-      <strong>バックテストを見るときの3点チェック</strong><br>
-      ① <strong>対照群は何か</strong>——「全期間の平均」との比較なら、上げ相場に乗っただけの可能性がある。「同じ日の他銘柄」と比べているか<br>
-      ② <strong>期間を分けても再現するか</strong>——前半だけ・後半だけの好成績は地合い依存の疑いが濃い。グランビルG2/G3のように符号ごと反転する例さえある<br>
-      ③ <strong>観測は独立か</strong>——長期リターンを毎日評価した「N=数万」は、実質的な証拠の数がずっと少ないことがある。重なりを考慮した検定か
-    </div>
-
-    <p>この3点は、まさに今回私たち自身が①と③でつまずいた項目です。他人の検証に向ける疑いの目は、自分の検証にも向ける必要がある——それが第5回のいちばんの学びでした。</p>
-
-    <!-- =============================== -->
-    <h2 id="limits">⑥ この検証の限界</h2>
 
     <ul>
-      <li><strong>コスト・税金を引く前の数字</strong>。実際に得られる差は、掲載の数字より小さくなる</li>
-      <li><strong>約5年・単一の市場</strong>。2021〜2026年の日本株という特殊な地合いを含む。他の期間・他の市場では別の結果になり得る</li>
-      <li><strong>ルールへの翻訳は当方の責任</strong>。ダーバスの箱の定義、三川明けの明星の近似、デュアルモメンタムの個別株への移植など、原典の意図を完全には再現できていない。「この翻訳では差が確認できなかった」以上のことは言えない</li>
-      <li><strong>裁量・資金管理は再現できない</strong>。ダーバスの損切り規律、タートルズのピラミッディングなど、執行の技術は日足の固定保有では近似しきれない</li>
-      <li><strong>ストップ高・ストップ安</strong>で実際には約定できない日も「翌日の寄りで買えた」ことにしている（楽観側の近似）</li>
-      <li><strong>検定の厳格化にも終わりはない</strong>。今回の同日対照＋ブロック・ブートストラップも完全ではなく、今後さらに穴が見つかれば、また訂正する</li>
+      <li><strong>① 比べる相手</strong>——ただ持ち続けた場合（買って持つだけ）や、同じ時期の他の株と比べずに「平均で+◯%」と言われても、上げ相場の追い風を受けただけかもしれません。</li>
+      <li><strong>② 期間の分け方</strong>——ルールを見つけた期間と同じ期間で成績を測ると、過去にぴったり合わせただけ（過剰適合）になりがちです。見つけた期間とは別の期間（検証用のデータ）で確かめて初めて、参考になります。Bajgrowicz &amp; Scaillet（2012）が「成績が続くか」を確かめたのも同じ発想です。</li>
+      <li><strong>③ 試した数</strong>——多くの型を試した結果の「最良のもの」は、偶然で良く見える確率が高くなります。Harvey ほか（2016）が基準を厳しくすべきだとしたのは、このためです。</li>
     </ul>
 
-    <p>本記事の数値はすべて過去データの検証であり、<strong>将来の成果を保証するものではありません</strong>。</p>
+    <p>さらに<strong>売買コスト</strong>も大切です。Bajgrowicz &amp; Scaillet（2012）が報告したように、見かけの利益は、手数料やスプレッド（買値と売値の差）を引くと小さくなりえます。</p>
 
     <!-- =============================== -->
-    <h2 id="site">⑦ 当サイトでの活かし方</h2>
+    <h2 id="usage">⑤ 5手法との付き合い方</h2>
 
-    <p>今回の「検証を検証する」姿勢は、この記事だけの一回きりではなく、当サイトの他のコンテンツにも同じ流儀で適用しています。</p>
+    <p>5手法と、この記事で紹介した研究との関係を整理します。「直接調べた論文をこの記事では紹介していない」手法は、そう書いています。</p>
 
+    <table>
+      <tr><th>手法</th><th>関係する研究</th><th>読むときの注意</th></tr>
+      <tr><td>ダーバス・ボックス</td><td>高値の突破を調べた Brock ほか（1992）が近い</td><td>箱の定義は人によって違う。この手法そのものを調べた研究は紹介していません</td></tr>
+      <tr><td>ワインスタイン</td><td>移動平均を調べた Brock ほか（1992）が近い</td><td>ステージの判定は裁量の部分が大きい。直接調べた研究は紹介していません</td></tr>
+      <tr><td>酒田五法</td><td>Marshall ほか（2006、2008）</td><td>価値が見つからないとする報告がある。日本市場の研究は原論文を確認</td></tr>
+      <tr><td>グランビルの法則</td><td>移動平均を調べた Brock ほか（1992）が近い</td><td>8つの型のどれを使うかで結果は変わる。試した数に注意</td></tr>
+      <tr><td>デュアルモメンタム</td><td>原典は Antonacci（2014）</td><td>原典は資産クラスの乗り換え。個別株への当てはめは別問題</td></tr>
+    </table>
+
+    <p>実際に参考にするなら、次のような見方が考えられます。</p>
     <ul>
-      <li><strong><a href="track-record.html">シグナル研究のページ</a></strong>——当サイトが実際に配信しているテクニカルシグナルの成績を、勝ち負け含めて全件公開しています。今回の3点チェック（対照群・期間分割・独立性）を意識しながら眺めると、数字の読み方が変わるはずです</li>
-      <li><strong><a href="guide-signal-lab-001.html">AIシグナル研究日誌</a></strong>——毎朝1本、実際のシグナルデータで仮説を検証する連載。検定手法の見直し（今回のようなクラスタ補正やチェックポイント検定）はこちらの研究にも同時に適用しています</li>
-      <li><strong><a href="guide-masters-004-world.html">前回#4の記事</a></strong>——今回訂正したタートルズ改の初出です。訂正の経緯を本記事の④と読み比べると、「同じデータでも検定の設計で結論が変わる」ことを追体験できます</li>
+      <li><strong>「形」は単独の根拠にしない。</strong>研究の向きは割れており、形だけで売買を決めるのは危うい面があります。</li>
+      <li><strong>売買コストを引いた数字で見る。</strong>頻繁に売買する手法ほど、コストの影響が大きくなります。</li>
+      <li><strong>本や講座の成功例は「選ばれた例」かもしれない。</strong>試した数や、うまくいかなかった例が書かれているかを確かめます。</li>
+      <li><strong>損失を限定する決まりとセットで考える。</strong>手法の当たり外れよりも、外れたときの損失を小さくする決まりのほうが、続けやすさに効くと考えられます。</li>
     </ul>
 
-    <p>シリーズ第6回以降も、世界の手法カタログの残り（未検証の型はまだあります）を同じ土俵——今回の厳格化した検定——で確かめていく予定です。</p>
+    <!-- =============================== -->
+    <h2 id="limits">⑥ この解説の限界</h2>
+
+    <ul>
+      <li><strong>論文ごとに調べた国・時期・方法が違う。</strong>アメリカの株やダウ平均の研究が多く、日本の個別株にそのまま当てはまるとは限りません。</li>
+      <li><strong>要旨にもとづく紹介。</strong>一部の論文（Marshall ほか、2006・2008）は本文が有料で、結論を書かずに留めているところがあります。詳しくは原論文をご確認ください。</li>
+      <li><strong>「形」の定義は人によって違う。</strong>5手法は原典の説明を簡略にしたもので、実際のルールの細部は本や研究ごとに異なります。</li>
+      <li><strong>研究結果は更新される。</strong>新しい論文や追試で、評価が変わることがあります。</li>
+    </ul>
+
+    <p>紹介した研究はすべて過去のデータの分析であり、<strong>将来の成果を保証するものではありません</strong>。</p>
+
+    <h2 id="refs">📖 参考にした研究</h2>
+    <ul style="font-size:.85rem;color:#424a53">
+      <li>Brock, W., J. Lakonishok and B. LeBaron (1992) "Simple Technical Trading Rules and the Stochastic Properties of Stock Returns," <i>Journal of Finance</i> 47(5). <a href="https://econpapers.repec.org/RePEc:bla:jfinan:v:47:y:1992:i:5:p:1731-64">書誌</a></li>
+      <li>Lo, A. W., H. Mamaysky and J. Wang (2000) "Foundations of Technical Analysis: Computational Algorithms, Statistical Inference, and Empirical Implementation," <i>Journal of Finance</i> 55(4). <a href="https://www.nber.org/papers/w7613">NBER 版</a></li>
+      <li>Sullivan, R., A. Timmermann and H. White (1999) "Data-Snooping, Technical Trading Rule Performance, and the Bootstrap," <i>Journal of Finance</i> 54(5). <a href="https://econpapers.repec.org/RePEc:bla:jfinan:v:54:y:1999:i:5:p:1647-1691">書誌</a></li>
+      <li>Marshall, B. R., M. R. Young and L. C. Rose (2006) "Candlestick Technical Trading Strategies: Can They Create Value for Investors?" <i>Journal of Banking &amp; Finance</i> 30(8). <a href="https://ideas.repec.org/a/eee/jbfina/v30y2006i8p2303-2323.html">書誌</a></li>
+      <li>Marshall, B. R., M. R. Young and R. Cahan (2008) "Are Candlestick Technical Trading Strategies Profitable in the Japanese Equity Market?" <i>Review of Quantitative Finance and Accounting</i> 31(2). <a href="https://ideas.repec.org/a/kap/rqfnac/v31y2008i2p191-207.html">書誌</a></li>
+      <li>Park, C.-H. and S. H. Irwin (2007) "What Do We Know About the Profitability of Technical Analysis?" <i>Journal of Economic Surveys</i> 21(4). <a href="https://ideas.repec.org/a/bla/jecsur/v21y2007i4p786-826.html">書誌</a></li>
+      <li>Bajgrowicz, P. and O. Scaillet (2012) "Technical Trading Revisited: False Discoveries, Persistence Tests, and Transaction Costs," <i>Journal of Financial Economics</i> 106(3). <a href="https://econpapers.repec.org/RePEc:eee:jfinec:v:106:y:2012:i:3:p:473-491">書誌</a></li>
+      <li>Harvey, C. R., Y. Liu and H. Zhu (2016) "... and the Cross-Section of Expected Returns," <i>Review of Financial Studies</i> 29(1). <a href="https://www.nber.org/papers/w20592">NBER 版</a></li>
+      <li>Marshall, B. R. (2005) "Candlestick Technical Trading Strategies: Can They Create Value for Investors?" Massey University 博士論文（Marshall ほか 2006 のもとになった研究）。<a href="https://mro.massey.ac.nz/items/edc6c1cf-63d9-4c94-a13d-92ffe1a53481/full">要旨</a></li>
+    </ul>
+    <p style="font-size:.85rem;color:#57606a">本：ニコラス・ダーバス『How I Made $2,000,000 in the Stock Market』（1960）／スタン・ワインスタイン『Secrets for Profiting in Bull and Bear Markets』（1988）／ゲイリー・アントナッチ『Dual Momentum Investing』（2014）</p>
 
     <!-- CTA -->
     <div class="cta-box">
-      <div class="cta-box-title">📖 ダーバスやタートルズの原典に触れたい方へ</div>
+      <div class="cta-box-title">📖 ダーバスなど原典に触れたい方へ</div>
       <div class="cta-box-desc">投資の名著・古典の紹介は投資本ページにまとめています</div>
       <a href="guide-investment-books.html" style="display:inline-block;padding:10px 24px;background:#0969da;color:#fff;border-radius:8px;font-size:.92rem;font-weight:600">投資本ページを見る →</a>
     </div>
@@ -613,27 +463,28 @@ window.addEventListener('resize',mark);
     <!-- 関連記事 -->
     <div class="cta-box">
       <div class="cta-box-title">📚 あわせて読みたい</div>
-      <div class="cta-box-desc">データで確かめる系の記事・学習コンテンツはこちら</div>
+      <div class="cta-box-desc">巨匠の教えを論文で確かめるシリーズ</div>
       <div class="related-grid">
         <a href="guide-masters-004-world.html" class="related-card">
-          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #4</div>
-          <div class="related-card-desc">一目均衡表・タートルズ・BNFの12仮説を一斉検証。本記事で訂正したタートルズ改の初出回。</div>
+          <div class="related-card-title">🎓 巨匠の教えを論文で確かめる #4</div>
+          <div class="related-card-desc">一目均衡表・タートルズ・BNFなど、世界の有名な手法を論文の視点で整理。</div>
         </a>
         <a href="guide-masters-003-quality.html" class="related-card">
-          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #3</div>
-          <div class="related-card-desc">バフェットの「質×適正価格」5基準。質の高い会社は有意に劣後し、報われたのは安さだけ。</div>
+          <div class="related-card-title">🎓 巨匠の教えを論文で確かめる #3</div>
+          <div class="related-card-desc">バフェットの「質×適正価格」の考え方を、公開されている研究から読み解く。</div>
         </a>
         <a href="guide-graham-001.html" class="related-card">
-          <div class="related-card-title">🎓 巨匠の教えをデータで検証 #1</div>
-          <div class="related-card-desc">グレアムの「安全域」を4.5万件で検証。暴落確率が約5分の1になる防御が両期間で再現。</div>
+          <div class="related-card-title">🎓 巨匠の教えを論文で確かめる #1</div>
+          <div class="related-card-desc">グレアムの「安全域」の考え方を、公開されている研究から読み解く。</div>
         </a>
       </div>
     </div>
 
     <!-- ② 本文末尾（kinsho-v1） -->
     <p class="disclaimer" data-disclaimer="kinsho-v1">
-      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。掲載されている統計・数値は過去データの集計結果であり、将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
+      ⚠️ 本記事は情報提供を目的としており、投資助言・投資勧誘ではありません。本記事は、公開されている学術研究の内容から整理した一般的な解説です。紹介した研究の結果は、それぞれの論文が調べた国・時期・方法にもとづくもので、当サイトが独自に集計したものではありません。過去の傾向は将来の相場を予測または保証するものではありません。当サイトは金融商品取引業者ではなく、金融商品取引法に基づく投資助言業・代理業の登録を行っていません。記載内容はいかなる意味においても投資の推奨・勧誘を目的としたものではありません。投資判断はご自身の責任と判断のもとで行ってください。
     </p>
+
 
   </div><!-- /article -->
 </main>

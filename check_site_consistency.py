@@ -595,6 +595,8 @@ JQUANTS_KEY_OK_WORKFLOWS = {"security-watch.yml"}   # 鍵の値が紛れてい�
 JQ_PRIVATE_RESULTS = {"f1-early-lab.json", "f1g-forward.json", "highs-fund-lab.json", "highs-value-lab.json",
                       "j52-timing-lab.json", "j52-history.json", "j9-yutai-lab.json"}
 JQ_OWN_AGGREGATE_WORDS = ("自社集計", "当サイトが集計", "当サイトの集計", "当サイトが数え", "独自に集計", "独自集計")
+# 🆕 2026-11-21 7月の記事が J-Quants の日足・財務で数えた件数（⑥・相談メモ⑪ の G）
+JQ_OLD_AGGREGATE_MARKERS = ("506万行", "4,987銘柄", "4.5万件", "4.5万観測", "1,285回")
 
 
 def check_jquants_public(sync_files):
@@ -642,6 +644,16 @@ def check_jquants_public(sync_files):
         if "J-Quants" in html and any(w in html for w in JQ_OWN_AGGREGATE_WORDS):
             errors.append(f"🚨 {name} に J-Quants と自社の集計の言葉が一緒にある（J-Quants のデータで数えた結果を"
                           "記事に載せない＝J-Quants の案内で ×。公開の論文や公的な資料の話にする）")
+    # ⑥ 🆕 2026-11-21（オーナー「E と同じく書き直す」＝相談メモ⑪ の G）7月の記事（巨匠シリーズ #1〜#5・セリングクライマックス）は
+    #    J-Quants の日足・財務で数えた件数を題名・本文・一覧のカードに書いていた（「J-Quants」と書いていない＝⑤では見つからない）。
+    #    論文の話に書き直したので、その件数の言葉が記事・一覧・更新履歴（generate_market_news.py）に戻らないようにする
+    for name in sorted(os.path.basename(p) for p in glob.glob(os.path.join(SD, "guide-*.html"))) + ["guides.html", "generate_market_news.py"]:
+        if not _exists(name):
+            continue
+        hits = [w for w in JQ_OLD_AGGREGATE_MARKERS if w in _read(name)]
+        if hits:
+            errors.append(f"🚨 {name} に J-Quants で数えた件数の言葉がある（{'・'.join(hits)}）＝7月の記事の自社集計"
+                          "（J-Quants の案内で ×。論文の結果の話にする・見本＝guide-graham-001.html）")
 
 
 def check_site_name(sync_files):
