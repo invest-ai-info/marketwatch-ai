@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-11-21
+- 判定: ✅ 公開済み
+- 選定トピック: 米S&P500が修正局面入り・ナスダック2026年マイナス転落。AIセルオフ最悪週（11/17〜20）の全経過と3連休明け（11/24火）への3シナリオを中立整理。（カテゴリ: 米国株・マクロ・AIセルオフ・週次サマリ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - AP電 via The Washington Post「How major US stock indexes fared Friday 11/20/2026」2026-11-20
+  - AP電 via Yakima Herald「How major US stock indexes fared Friday 11/20/2026」2026-11-20
+  - CNBC「S&P 500 and Dow close in correction; Nasdaq erases 2026 gain as AI rout picks up steam」2026-11-20
+  - Stock Rover「Rover's Weekly Market Brief 11/20/2026」2026-11-20
+  - La Nación/AP電「How major US stock indexes fared Thursday 11/19/2026」2026-11-19
+  - La Nación/AP電「How major US stock indexes fared Wednesday 11/18/2026」2026-11-18
+  - SCMP「US tightens AI chip export curbs to close China's overseas data centre loophole」2026-11-20
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（表現4か所やや断定的）→ 軽微修正適用（表現軟化のみ）→ 最終判定 🟢白
+  - 事実誤りも指摘（①11/23曜日「日」→「月」②日経急落日付「前日11/19」→「同日11/20」）→ 本セッションで修正
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / noindexなし ✅ / 出典5系統以上 ✅）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅ / 銘柄推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告76件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-21-us-sp500-correction-ai-selloff.html
+- commit: c11ab17（main へ push 済み）
+
+---
+
 ## 2026-11-20
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均-3,007.56円（-5.06%）・歴代5位の下げ幅。背景3要因（米BIS新AIチップ輸出規制・AMD空売りレポート・AI採算性懸念）と3連休前の需給を中立整理。（カテゴリ: 日本株・マクロ・AIセルオフ・半導体）
