@@ -130,16 +130,22 @@ def gate_shas(lines):
 
 # ── 集める（ネットワーク）──────────────────────────────────────────
 def fetch_failed_runs(since):
+    """直近の実行をすべて取って、失敗だけを残す。
+
+    2026-11-21 に発覚: `status=failure`（などFAIL_STATUSES）を GitHub 側で絞る
+    クエリは、実行数の多いこのリポジトリ（26時間で500件超）だと**索引が追いつかず、
+    直近の失敗を何時間も（確認時点で8時間以上）取り逃す**（status 無しの一覧には出る）。
+    `created=>=` だけで絞って、失敗かどうかはこちら側で判定する。
+    """
     runs = []
-    for st in FAIL_STATUSES:
-        page = 1
-        while page <= 5:
-            d = api(f"/actions/runs?status={st}&created=>={since:%Y-%m-%dT%H:%M:%SZ}&per_page=100&page={page}")
-            batch = d.get("workflow_runs", [])
-            runs += batch
-            if len(batch) < 100:
-                break
-            page += 1
+    page = 1
+    while page <= 30:
+        d = api(f"/actions/runs?created=>={since:%Y-%m-%dT%H:%M:%SZ}&per_page=100&page={page}")
+        batch = d.get("workflow_runs", [])
+        runs += [r for r in batch if r.get("conclusion") in FAIL_STATUSES]
+        if len(batch) < 100:
+            break
+        page += 1
     return runs
 
 
