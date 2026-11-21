@@ -41,6 +41,8 @@ import os
 import re
 import sys
 
+import page_palette
+
 LOGO_SVG = ('<svg viewBox="0 0 96 96" style="width:27px;height:27px;vertical-align:-4px;margin-right:2px" '
             'aria-hidden="true"><rect x="2" y="2" width="92" height="92" rx="21" fill="#1E3A6E"/>'
             '<polyline points="16,72 34,50 50,58 70,32" fill="none" stroke="#ffffff" stroke-width="7" '
@@ -422,9 +424,16 @@ def has_own_dark(text):
     return n >= _OWN_DARK_MIN
 
 
-def skin_tag_for(text):
-    """そのページに置く共通の見た目の <style>（暗い表示を持つページは暗い色つき・持たないページは明るいまま）"""
-    return SKIN_V2_STYLE_TAG if has_own_dark(text) else SKIN_V2_LIGHT_STYLE_TAG
+def skin_tag_for(text, palette=False):
+    """そのページに置く共通の見た目の <style>（暗い表示を持つページは暗い色つき・持たないページは明るいまま）。
+    🆕 2026-11-21 palette=True（page_palette が暗い表示を足すページ）なら暗い色つき"""
+    return SKIN_V2_STYLE_TAG if (palette or has_own_dark(text)) else SKIN_V2_LIGHT_STYLE_TAG
+
+
+def palette_for(text, name, want):
+    """🆕 2026-11-21 page_palette をかけるか＝記事以外のページ（V2_PAGES）で新しい形がオン・スイッチがオン・
+    自分の暗い表示を持たない（暗い表示を持つページは今のまま）"""
+    return bool(want and name in V2_PAGES and page_palette.enabled() and not has_own_dark(text))
 
 
 # 記事の標準のひな形（h1 の色が前のブランドの紺）。これに当たる記事だけ ③ をかける
@@ -752,7 +761,8 @@ def process(text, name, v2=None, pages_v2=None):
         skin = skin_tag_for(out) if v2 and _SKIN_STD_RE.search(out) else ""
     else:
         want = page and pages_v2
-        skin = skin_tag_for(out) if want else ""
+        pal = palette_for(out, name, want)
+        skin = skin_tag_for(out, pal) if want else ""
     st = apply_style_v2(out, want, skin)
     if st != out:
         notes.append(("style:v2+skin" if skin else "style:v2") if want else "style:v2-removed")
@@ -775,6 +785,11 @@ def process(text, name, v2=None, pages_v2=None):
     elif page:
         out, pn = (apply_page_v2 if pages_v2 else revert_page_v2)(out, name)
         notes += pn
+        # 🆕 2026-11-21 部品の色をトップの色に・暗い表示を足す（page_palette・</body> の直前に1つ・冪等）
+        po = page_palette.apply(out, pal)
+        if po != out:
+            notes.append("palette" if pal else "palette-removed")
+            out = po
     return out, notes
 
 

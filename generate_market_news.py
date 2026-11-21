@@ -4633,7 +4633,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     # 2026-07-04 6月会合結果を反映: 日銀6/16利上げ0.75→1.00 ／ FRB6/17据え置き3.5-3.75 ／
     #   ECB6/11利上げ(預金2.25=refi2.40・反映済) ／ BOE6/17据え置き ／ RBA6/16据え置き。次回=FOMC7/28-29・日銀7/30-31
     POLICY = {"updated": "2026-07-04", "USD": 3.75, "EUR": 2.40, "GBP": 3.75, "AUD": 4.35, "JPY": 1.00}
-    _swtd = "padding:10px 12px;border-bottom:1px solid #d0d7de;color:#24292f!important"
+    _swtd = "padding:10px 12px;border-bottom:1px solid #d0d7de;color:#24292f"   # 🆕 2026-11-21 色の !important を外した（HTML に直接書いた !important はどの CSS より強く、暗い表示の上書き＝page_palette が効かなかった。明るい表示の見た目は同じ）
     swap_rows = ""
     for _name, _cur in [("米ドル/円", "USD"), ("ユーロ/円", "EUR"), ("ポンド/円", "GBP"), ("豪ドル/円", "AUD")]:
         _d = round(POLICY[_cur] - POLICY["JPY"], 2)
@@ -4646,16 +4646,16 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
         _dc = "#57606a"   # 損益を連想させない中立色（コンプラ: 利益示唆の回避）
         swap_rows += (f'<tr><td style="{_swtd};font-size:1rem">{_name}</td>'
                       f'<td style="{_swtd};text-align:right;font-weight:700;font-size:1.05rem">{_sg}{_d:.2f}%</td>'
-                      f'<td style="{_swtd};font-weight:600;color:{_dc}!important;font-size:.92rem">{_dir}</td></tr>')
+                      f'<td style="{_swtd};font-weight:600;color:{_dc};font-size:.92rem">{_dir}</td></tr>')
 
     bond_card = ""
     if _rp:
         bond_card = f'''      <article class="card" style="grid-column:1 / -1">
         <div class="card-header"><div class="card-title">🏦 日米10年国債 利回り比較</div><div class="card-sub">為替（ドル円）を動かす最大の要因</div></div>
         <table style="width:100%;border-collapse:collapse;margin:8px 0 4px">
-          <tr><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;font-size:1rem;color:#24292f!important">🇺🇸 米10年国債</td><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:right;font-weight:700;font-size:1.1rem;color:#24292f!important">{_rp['us10']:.2f}%</td></tr>
-          <tr><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;font-size:1rem;color:#24292f!important">🇯🇵 日本10年国債</td><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:right;font-weight:700;font-size:1.1rem;color:#24292f!important">{_rp['jp10']:.2f}%</td></tr>
-          <tr><td style="padding:13px 12px;font-weight:700;color:#0969da!important;font-size:1.05rem">📊 日米金利差</td><td style="padding:13px 12px;text-align:right;font-weight:800;color:#0969da!important;font-size:1.5rem">{_rp['diff']:.2f}%</td></tr>
+          <tr><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;font-size:1rem;color:#24292f">🇺🇸 米10年国債</td><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:right;font-weight:700;font-size:1.1rem;color:#24292f">{_rp['us10']:.2f}%</td></tr>
+          <tr><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;font-size:1rem;color:#24292f">🇯🇵 日本10年国債</td><td style="padding:11px 12px;border-bottom:1px solid #d0d7de;text-align:right;font-weight:700;font-size:1.1rem;color:#24292f">{_rp['jp10']:.2f}%</td></tr>
+          <tr><td style="padding:13px 12px;font-weight:700;color:#0969da;font-size:1.05rem">📊 日米金利差</td><td style="padding:13px 12px;text-align:right;font-weight:800;color:#0969da;font-size:1.5rem">{_rp['diff']:.2f}%</td></tr>
         </table>
         <p class="comment">一般に <b>金利差が開く＝円安</b>、<b>縮む＝円高</b> に傾きやすい（金利の高いドルを持つほど利息を多く得られるため）。ただし日銀・FRBの政策や市場心理でも為替は動きます。</p>
         <div class="beginner">出典: 米＝Yahoo Finance（米10年債利回り ^TNX・当日）／ 日＝財務省「国債金利情報」（{_rp['jp_date']} 基準）。差 ＝ 米 − 日。これは情報提供であり投資助言ではありません。</div>
@@ -4664,7 +4664,7 @@ def build_market_health_html(data, vix_val, touraku, now_jst):
     swap_card = f'''      <article class="card" style="grid-column:1 / -1">
         <div class="card-header"><div class="card-title">💱 主要通貨ペアの金利差（スワップの向き）</div><div class="card-sub">各国の政策金利の差 ＝ FXのスワップに効く短期金利</div></div>
         <table style="width:100%;border-collapse:collapse;margin:8px 0 4px">
-          <tr><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a!important;font-size:.84rem;font-weight:600">通貨ペア</td><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;text-align:right;color:#57606a!important;font-size:.84rem;font-weight:600">政策金利差</td><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a!important;font-size:.84rem;font-weight:600">スワップの向き</td></tr>
+          <tr><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a;font-size:.84rem;font-weight:600">通貨ペア</td><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;text-align:right;color:#57606a;font-size:.84rem;font-weight:600">政策金利差</td><td style="padding:8px 12px;border-bottom:2px solid #d0d7de;color:#57606a;font-size:.84rem;font-weight:600">スワップの向き</td></tr>
           {swap_rows}
         </table>
         <div style="font-size:.8rem;color:#57606a;margin:8px 2px 0">参考・各国政策金利（{POLICY['updated']}時点）：米 {POLICY['USD']:.2f}％／欧 {POLICY['EUR']:.2f}％／英 {POLICY['GBP']:.2f}％／豪 {POLICY['AUD']:.2f}％／日 {POLICY['JPY']:.2f}％</div>

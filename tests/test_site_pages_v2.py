@@ -201,9 +201,18 @@ def test_skin_colors_are_the_home_colors():
 
 
 def test_dark_follows_the_page():
-    """暗い表示を持つページは暗い色つき、持たないページはヘッダーとナビも明るいまま"""
+    """暗い表示を持つページは暗い色つき、持たないページは page_palette が暗い表示を足す（2026-11-21〜）。
+    page_palette のスイッチがオフなら前のとおりヘッダーとナビも明るいまま"""
+    import page_palette
     plain = _on(_cal_page())
-    assert not F.has_own_dark(plain) and F.SKIN_V2_LIGHT_STYLE_TAG in plain and F.LIGHT_LOCK_CSS in plain
+    assert not F.has_own_dark(plain) and F.SKIN_V2_STYLE_TAG in plain and "<style data-mw-palette>" in plain
+    old = page_palette.ON
+    try:
+        page_palette.ON = False
+        plain = _on(_cal_page())
+        assert F.SKIN_V2_LIGHT_STYLE_TAG in plain and F.LIGHT_LOCK_CSS in plain and "data-mw-palette" not in plain
+    finally:
+        page_palette.ON = old
     rules = "".join(f"body.dark .c{i}{{color:#fff}}" for i in range(F._OWN_DARK_MIN))
     dark = _on(_cal_page().replace("h2{color:#2C4F8F}", "h2{color:#2C4F8F}" + rules, 1))
     assert F.has_own_dark(dark) and F.SKIN_V2_STYLE_TAG in dark and F.LIGHT_LOCK_CSS not in dark
