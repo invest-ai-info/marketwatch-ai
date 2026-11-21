@@ -149,6 +149,16 @@ def test_wiring():
     assert "disclosure_timing_forward.py" in open("RESEARCH_LABS.md", encoding="utf-8").read()
 
 
+def test_z_need_is_the_stricter_reading():
+    """2026-11-21 オーナー決定：登録の文「0.05/34（両側・約3.4）」の食い違いは、きびしい方の「約3.4」＝z 3.376"""
+    assert abs(F.Z_NEED - 3.376) < 0.001
+    days = _days("2026-11-18", 45)
+    rows = [_row("U", [1.0] + [1.0 + 0.01 + 0.002 * ((i + j) % 3)] * 30, date=d) for i, d in enumerate(days) for j in range(7)]
+    assert F.judge(rows, "2027-03-01")["U|E1|X5"]["z_need"] == round(F.Z_NEED, 3)
+    sec = open("PILLAR_PREREG.md", encoding="utf-8").read().split("## J52 ", 1)[1].split("\n## ", 1)[0]
+    assert "z 3.376" in sec and "2026-11-21・オーナー決定" in sec
+
+
 if __name__ == "__main__":
     n = 0
     for k, f in list(globals().items()):

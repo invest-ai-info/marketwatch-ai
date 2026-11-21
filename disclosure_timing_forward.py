@@ -42,6 +42,10 @@ CELLS = (("E1", "X0"), ("E1", "X5"), ("E1", "X20"), ("E2", "X5"), ("E2", "X20"),
          ("E4", "X5"), ("E4", "X20"), ("E5", "X5"), ("E5", "X20"), ("E6", "X5"), ("E6", "X20"),
          ("E7", "X0"), ("E7", "X5"), ("E8", "X0"), ("E8", "X5"))
 KINDS = {"U": "上方修正", "D": "下方修正"}
+# 🆕 2026-11-21 オーナー決定（記録はどの升も1件以下＝結果を見る前）：登録の文「0.05/34（両側・約3.4）」は
+#    式どおりなら z 3.18・括弧の「約3.4」なら 3.38 で食い違っていた → **きびしい方の「約3.4」をとる**
+#    ＝升34で両側 0.05/68 → z 3.376（J52 の過去で文の「約3.3」をとったのと同じ考え方）。`PILLAR_PREREG.md`「J52」の補足
+Z_NEED = statistics.NormalDist().inv_cdf(1 - 0.05 / (4 * len(CELLS) * len(KINDS)))
 
 
 # ════════════════════ 出来事・値段の道（純関数） ════════════════════
@@ -162,7 +166,7 @@ def cell_return(row, e, x):
 def judge(rows, today, hist=None):
     """→ {"U|E1|X0": {"n", "days", (判定)}}。升ごとに 300件・開示の日40日で1回だけ（前の判定は変えない）"""
     hist = hist or {}
-    zc = statistics.NormalDist().inv_cdf(1 - 0.05 / (2 * len(CELLS) * len(KINDS)))
+    zc = Z_NEED
     out = {}
     for kind in KINDS:
         rs = [r for r in rows if r.get("kind") == kind and str(r.get("ok")) == "1"]
