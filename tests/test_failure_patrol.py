@@ -64,6 +64,20 @@ def test_alarm_lines_and_gate_shas():
     assert F.gate_shas(lines) == ["eb9d9fc", "aa18574"]                      # 重複は1回・順番は保つ
 
 
+def test_guide_lists_every_gate_file():
+    """手順書の「ゲートのファイルを書き換えない」が、見張り番の GATE_FILES を全部含むか（2026-11-21 追加）。
+    11/17 に固定の検査が3本増えたのに手順書は6本のままで、11/18 に見回りが research_rotation.py を直した。"""
+    import ast
+    src = open(os.path.join(ROOT, "check_automation_health.py"), encoding="utf-8").read()
+    node = next(n for n in ast.walk(ast.parse(src))
+                if isinstance(n, ast.Assign) and any(getattr(t, "id", "") == "GATE_FILES" for t in n.targets))
+    gates = ast.literal_eval(node.value)
+    guide = open(os.path.join(ROOT, "drafts", "FAILURE_PATROL_GUIDE.md"), encoding="utf-8").read()
+    line = next(ln for ln in guide.splitlines() if ln.startswith("- ゲートのファイルを書き換えない"))
+    missing = [g for g in gates + ["check_plain_japanese.py"] if f"`{g}`" not in line]
+    assert len(gates) >= 8 and not missing, f"手順書に無いゲート: {missing}"
+
+
 if __name__ == "__main__":
     fails = 0
     tests = [(k, v) for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
