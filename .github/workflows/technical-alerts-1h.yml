@@ -61,7 +61,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add technical-alerts-history-1h.json signals-log.json signals-log.csv my-trades.json my-trades.csv track-record.html 2>/dev/null || true
+          # 🆕 2026-11-21 research-list.html も足す（generate_track_record_page.py が同じ回で書く。足さないと「unstaged changes」で
+          #    pull --rebase が止まり、3回とも push に失敗しても成功に見えていた＝4時間足・retry-ai-analysis と同じ形にした）
+          git add technical-alerts-history-1h.json signals-log.json signals-log.csv my-trades.json my-trades.csv track-record.html research-list.html 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
