@@ -6,13 +6,13 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <title>「2倍株を当てる」より「ゼロ化を避ける」— 上昇率と下落率で見る日本株 - 時短投資ラボ</title>
-  <meta name="description" content="日本株を過去データで検証すると『2倍になりやすい株』は『半値になりやすい株』でもありました。赤字・低財務は宝くじ型、割安(PBR1倍割れ)・高配当は“安いのに下がりにくい”非対称。上昇率と下落率を両方並べて、ファンダで下落リスクを仕分ける考え方を整理します（情報提供・投資助言ではありません）。">
-  <meta name="keywords" content="2倍株,ダブルバガー,PBR,割安株,高配当,バリュー株,日本株,リスク管理,生存者バイアス,期待値,下落リスク,投資の基礎">
+  <title>「2倍株を当てる」より「ゼロ化を避ける」— 有名な論文で見る、危ない株の外し方 - 時短投資ラボ</title>
+  <meta name="description" content="「2倍になりそうな株」を当てるのは難しい——宝くじのような株は平均では成績がさえず、割安な株も財務の強さで差が出た、というよく知られた学術研究をもとに、上がる側と下がる側の両方を見て「ゼロになりやすい株を外す」考え方を整理します（情報提供・投資助言ではありません）。">
+  <meta name="keywords" content="2倍株,ダブルバガー,PBR,割安株,バリュー株,配当利回り,日本株,リスク管理,生存者バイアス,宝くじ株,財務の点検,下落リスク,投資の基礎">
   <link rel="canonical" href="https://marketwatch-jp.com/guide-jp-value-vs-zombie.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="「2倍株を当てる」より「ゼロ化を避ける」— 上昇率と下落率で見る日本株 | 時短投資ラボ">
-  <meta property="og:description" content="『2倍になりやすい株』は『半値になりやすい株』でもあった。割安・高配当が“安いのに下がりにくい”非対称になる理由を、上昇率と下落率の両方で整理。">
+  <meta property="og:title" content="「2倍株を当てる」より「ゼロ化を避ける」— 有名な論文で見る、危ない株の外し方 | 時短投資ラボ">
+  <meta property="og:description" content="宝くじのような株は平均ではさえない。割安な株も財務の強さで差が出る。よく知られた論文をもとに「当てるより外す」考え方を整理。">
   <meta property="og:url" content="https://marketwatch-jp.com/guide-jp-value-vs-zombie.html">
   <meta property="og:site_name" content="時短投資ラボ">
   <meta property="og:locale" content="ja_JP">
@@ -25,12 +25,12 @@
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "「2倍株を当てる」より「ゼロ化を避ける」— 上昇率と下落率で見る日本株",
-    "description": "日本株の全銘柄を過去データで検証。『2倍になりやすい株』は『半値になりやすい株』でもあった。割安・高配当が“安いのに下がりにくい”非対称になる理由を、上昇率と下落率の両方で整理。",
+    "headline": "「2倍株を当てる」より「ゼロ化を避ける」— 有名な論文で見る、危ない株の外し方",
+    "description": "宝くじのような株は平均ではさえない。割安な株も財務の強さで差が出る。よく知られた学術論文をもとに、上がる側と下がる側の両方を見て「当てるより外す」考え方を整理。",
     "author": {"@type": "Organization", "name": "時短投資ラボ"},
     "publisher": {"@type": "Organization", "name": "時短投資ラボ"},
     "datePublished": "2026-06-20",
-    "dateModified": "2026-06-20",
+    "dateModified": "2026-11-21",
     "mainEntityOfPage": "https://marketwatch-jp.com/guide-jp-value-vs-zombie.html"
   }
   </script>
@@ -195,72 +195,124 @@ window.addEventListener('resize',mark);
 
 
 <div class="disclaimer-banner">
-  ⚠️ 本記事は、株式投資のリスクを過去データから考えるための<strong>情報提供・教育目的</strong>の解説であり、特定の銘柄の売買推奨や投資助言ではありません（個別の銘柄名は登場しません）。過去の傾向は将来を保証しません。投資判断はご自身の責任でお願いします。
+  ⚠️ 本記事は、株式投資のリスクを<strong>公開されている学術研究（論文）</strong>をもとに考えるための<strong>情報提供・教育目的</strong>の解説であり、特定の銘柄の売買推奨や投資助言ではありません（個別の銘柄名は登場しません）。紹介する研究の結果は、それぞれが調べた国と時期のものです。過去の傾向は将来を保証しません。投資判断はご自身の責任でお願いします。
 </div>
 
-<h1>「2倍株を当てる」より「ゼロ化を避ける」— 上昇率と下落率で見る日本株</h1>
-<div class="meta-line">公開日：2026 年 6 月 20 日 ／ 読了時間：約 9 分 ／ カテゴリ：投資の基礎知識</div>
+<h1>「2倍株を当てる」より「ゼロ化を避ける」— 有名な論文で見る、危ない株の外し方</h1>
+<div class="meta-line">公開日：2026 年 6 月 20 日 ／ 最終更新：2026 年 11 月 21 日 ／ 読了時間：約 9 分 ／ カテゴリ：投資の基礎知識</div>
+
+<div class="info-box">📝 2026 年 11 月 21 日に書き直しました。以前の版にあった当サイト独自の集計の話は外し、公開されている学術論文の結果にもとづく内容にしています。</div>
 
 <div class="breaking-box">
-  「2 倍になる株を見つけたい」——多くの個人投資家の願いです。ところが日本株の全銘柄を過去データで調べると、ちょっと困った事実が出てきます。<strong>「2 倍になりやすい株」は、同時に「半値になりやすい株」でもあった</strong>のです。この記事では、よく使われる<strong>ファンダメンタルズ（決算の中身）</strong>ごとに、その後 24 ヶ月で「2 倍になった割合」と「半値になった割合」を<strong>両方</strong>並べて、何が見えるかを整理します。
+  「2 倍になる株を見つけたい」——多くの個人投資家の願いです。ところが、世界の研究者が長い年月の株価を調べた論文を読むと、少し困った話が出てきます。<strong>大きく跳ねそうに見える株ほど、その後の成績は平均でさえないことが多い</strong>のです。この記事では、よく知られた論文を手がかりに、<strong>「上がる側」だけでなく「下がる側」もセットで見る</strong>考え方を整理します。
 </div>
 
 <h2>📌 この記事の結論（3 行サマリ）</h2>
 <ul>
-  <li><strong>上昇しやすい特徴は、下落もしやすい。</strong>「2 倍になった割合」が一番高いのは赤字・財務の弱い会社だが、「半値になった割合」も一番高い＝<strong>宝くじ型</strong>。</li>
-  <li><strong>割安（PBR1 倍割れ）・高配当は“安いのに下がりにくい”。</strong>2 倍率は平均並みなのに、半値になる割合がとても小さい＝<strong>非対称</strong>（下を抑えつつ上に参加）。</li>
-  <li>だから現実的なのは「<strong>2 倍株を当てる</strong>」より「<strong>ゼロ化しやすい株を避け、下がりにくい割安株に寄せて待つ</strong>」こと。ファンダは“当てる道具”でなく<strong>“下落リスクを仕分ける道具”</strong>。</li>
+  <li><strong>跳ねそうな株は、沈みやすくもある。</strong>値動きが荒い株・最近急に跳ねた株・倒産の心配がある株は、平均するとその後の成績がさえなかった、と多くの研究が伝えています＝<strong>宝くじ型</strong>。</li>
+  <li><strong>割安な株は、長い目では平均で報われてきた——ただし条件つき。</strong>日本の株でも「純資産や稼ぐお金にくらべて株価が安い株」の成績が平均で良かったという研究があります。一方で、安い株の中でも<strong>財務が強い会社と弱い会社で差が出た</strong>という研究もあります。</li>
+  <li>だから現実的なのは「<strong>2 倍株を当てる</strong>」より「<strong>ゼロになりやすい株を外す</strong>」こと。決算の数字は“当てる道具”ではなく<strong>“危ない株を仕分ける道具”</strong>として使います。</li>
 </ul>
 
-<h2>🔬 1. 調べ方（なぜ“割合”で見るのか）</h2>
-<p>勝った銘柄だけを後から眺めると「2 倍株にはこういう特徴があった」と何でも言えてしまいます（<strong>生存者バイアス</strong>）。それを避けるため、ここでは<strong>過去のさまざまな時点で全銘柄をファンダで分類し、その後 24 ヶ月で 2 倍／半値になった割合を数える</strong>方法をとります。さらに、</p>
+<h2>🔬 1. なぜ「上がる側」と「下がる側」を両方見るのか</h2>
+<p>勝った株だけを後から眺めると、「2 倍株にはこういう特徴があった」と何でも言えてしまいます。しかも、つぶれて上場をやめた会社は株価の一覧から消えるので、残った会社だけを見ると実際より良く見えます（<strong>生存者バイアス</strong>）。</p>
+<p>そこで研究者は、次のような方法で調べてきました。</p>
 <ul>
-  <li>その時点で<strong>“すでに開示されていた”決算だけ</strong>を使う（未来の数字をのぞき見しない）。</li>
-  <li>上昇（2 倍）だけでなく<strong>下落（半値）も必ずセットで見る</strong>——これが今回の肝です。</li>
+  <li>過去のある時点で、<strong>その時点で分かっていた数字だけ</strong>を使って株をグループに分ける（未来の数字をのぞき見しない）。</li>
+  <li>その後の値動きを<strong>グループ全体で</strong>追いかける。上がった株だけでなく、下がった株・消えた株も数に入れる。</li>
 </ul>
-<div class="warning-box">データの窓は数年ぶんで、<strong>単一の相場局面（1 レジーム）に偏り</strong>、株価が上がりやすい地合いを多く含みます。だから「○％が 2 倍」という<strong>絶対値そのものより、特徴どうしの“差”と“上下のバランス”</strong>を読むのが正しい使い方です。</div>
+<div class="warning-box">論文の結果は、<strong>調べた国と時期のもの</strong>です。将来も同じになるとは限りません。また<strong>平均の話</strong>なので、一つひとつの株にそのまま当てはまるわけではありません。</div>
 
-<h2>📉 2. 上昇しやすい特徴は、下落もしやすい</h2>
-<p>「2 倍になった割合」が一番高かったのは、意外にも<strong>赤字（最終赤字）や財務の弱い（自己資本比率が低い）会社</strong>でした。ところが——その同じグループは、<strong>「半値になった割合」も飛び抜けて高い</strong>。つまり大きく跳ねることもあるが、同じくらい大きく沈む。<strong>宝くじ型</strong>です。しかも、ここには<strong>上場廃止でゼロになった銘柄はそもそもデータに残っていない</strong>ため、本当の下落リスクは数字よりさらに悪いと考えるべきです。</p>
-<div class="negative-box"><strong>ポイント：</strong>「2 倍になりやすい」に釣られて飛びつくと、同じ確率でゼロへ向かう側を引き受けることになる。<strong>上昇率だけを見るのは危険</strong>です。</div>
+<h2>🎰 2. 宝くじのような株は、平均ではさえない</h2>
+<p>まれに大きく当たるかもしれない株を、研究者は<strong>「宝くじのような株」</strong>と呼びます。代表的な研究を 3 つ紹介します（いずれもアメリカの株を調べたものです）。</p>
+<ul>
+  <li><strong>個人投資家は宝くじのような株を好む</strong>：アメリカの個人投資家の売買記録を調べた研究（Kumar, 2009）では、<strong>1 株の値段が低く</strong>（割安という意味ではありません）、値動きが荒く、まれに大きく跳ねる株を個人が好んで買う傾向があり、そうした株は平均で成績が悪かったと報告されています。</li>
+  <li><strong>最近急に跳ねた株は、その後さえない</strong>：前の月に 1 日で大きく値上がりした株は、その後の成績が平均で低かったという研究があります（Bali ほか, 2011）。</li>
+  <li><strong>倒産の心配が大きい株は、危ないのにもうからない</strong>：倒産しそうな度合いを決算や株価から計算した研究（Campbell ほか, 2008）では、心配の大きい会社の株は値動きが荒いのに、平均の成績はむしろ低かったと報告されています。「危ない分だけもうかる」とはなっていませんでした。</li>
+</ul>
+<div class="negative-box"><strong>ポイント：</strong>「大きく跳ねるかも」に引かれて買うと、<strong>平均では割に合わない側</strong>を引き受けやすくなります。上がる側だけを見るのは危険です。</div>
 
-<h2>📈 3. 割安・高配当は“安いのに下がりにくい”</h2>
-<p>逆に、<strong>株価が資産価値より安い（PBR が 1 倍割れ）・配当利回りが高い・利益に対して株価が割安（低 PER）</strong>といった「割安系」の特徴は、<strong>2 倍になる割合は平均並み</strong>でした。派手ではありません。ところが<strong>半値になる割合がとても小さい</strong>。資産価値や配当という“床”が下値を支えるからです。上にはそこそこ伸び、下には沈みにくい——これが<strong>非対称</strong>（あくまで過去の集計上、下落より上昇に振れやすい形）ということです。</p>
+<h2>📈 3. 割安な株は、長い目では報われてきた——ただし条件つき</h2>
+<p>反対に、<strong>会社の持ち物（純資産）や利益・稼ぐお金にくらべて株価が安い株</strong>（割安な株）については、平均で成績が良かったという研究が積み重なっています。株価純資産倍率（PBR）が 1 倍より低いのは、株価が純資産より安いという意味です。</p>
+<ul>
+  <li>アメリカの株を調べた有名な研究（Fama と French, 1992）では、純資産にくらべて株価が安い株ほど、平均の成績が高い傾向がありました。</li>
+  <li><strong>日本の株</strong>でも、1970〜80 年代の東証の株を調べた研究（Chan ほか, 1991）で、純資産や稼ぐお金（キャッシュフロー）にくらべて株価が安い株ほど、平均の成績が高い傾向が報告されています。</li>
+</ul>
+<p>ただし、これは「割安な株なら必ず上がる」という意味ではありません。</p>
+<div class="warning-box"><strong>注意：</strong>割安な株が、成長が期待される株より<strong>何年も出遅れた時期</strong>もあります（たとえば 2010 年代の後半から 2020 年ごろ、世界の多くの市場で）。割安な株に寄せるなら、<strong>長く待てる資金で</strong>考えることが大切です。</div>
+
+<h2>🔪 4. 安い株こそ、財務で仕分ける</h2>
+<p>「高値から大きく下げて安くなった株」は、立ち直ることもあれば、そのまま消えることもあります。古くから知られる<strong>“落ちるナイフ”</strong>の問題です。安い株の中には、<strong>理由があって安い会社</strong>がまじっているからです。</p>
+<p>日本では 1990 年代、本来なら倒れていたはずの会社が、銀行に貸し出しの条件をゆるめてもらって生き延びる<strong>「ゾンビ企業」</strong>が問題になりました（Caballero ほか, 2008）。この研究は株価を調べたものではありませんが、こうした会社は株価だけを見ると「安い」ように見えることがあります。</p>
+<p>では、安い株の中から危ない会社をどう外すか。手がかりになるのがアメリカの研究（Piotroski, 2000）です。純資産にくらべて株価が安い株だけを集め、その中を<strong>決算の 9 つの点検</strong>で点数をつけて分けたところ、<strong>点数の高い（財務が強い）グループは、点数の低いグループより、その後の成績が平均でかなり良かった</strong>と報告されています。</p>
 
 <div class="chart-figure">
-<svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="横軸が下落リスク、縦軸が上昇期待の散布イメージ。割安・高配当は左上(下がりにくく上にも伸びる)、赤字・低財務は右上(上も下も大きい宝くじ)、黒字・高自己資本は左下(守り)。">
-<line x1="90" y1="40" x2="90" y2="320" stroke="#d0d7de" stroke-width="1.5"/>
-<line x1="90" y1="320" x2="660" y2="320" stroke="#d0d7de" stroke-width="1.5"/>
-<text x="40" y="36" fill="#57606a" font-size="12">上昇</text>
-<text x="40" y="50" fill="#57606a" font-size="12">期待</text>
-<text x="556" y="345" fill="#57606a" font-size="12">下落リスク →</text>
-<line x1="375" y1="40" x2="375" y2="320" stroke="#d0d7de" stroke-dasharray="4 4"/>
-<line x1="90" y1="180" x2="660" y2="180" stroke="#d0d7de" stroke-dasharray="4 4"/>
-<circle cx="175" cy="108" r="10" fill="#1a7f37"/><text x="192" y="106" fill="#1f2328" font-size="13">割安（PBR1 倍割れ）</text><text x="192" y="123" fill="#57606a" font-size="11">下がりにくく上にも伸びる傾向</text>
-<circle cx="205" cy="140" r="10" fill="#1a7f37"/><text x="222" y="144" fill="#1f2328" font-size="13">高配当</text>
-<circle cx="560" cy="96" r="10" fill="#cf222e"/><text x="404" y="102" fill="#1f2328" font-size="13">赤字・低財務＝宝くじ</text><text x="404" y="119" fill="#57606a" font-size="11">上も下も大きい（ゼロ化注意）</text>
-<circle cx="205" cy="250" r="10" fill="#0969da"/><text x="222" y="254" fill="#1f2328" font-size="13">黒字・高自己資本＝守り</text>
+<svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="株価が安い株を決算の点検で仕分ける図。財務が強い側は研究では平均で成績が良く、財務が弱い側は平均でさえなかった。">
+<rect x="110" y="16" width="300" height="62" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+<text x="260" y="44" text-anchor="middle" fill="#1f2328" font-size="18" font-weight="700">株価が安い株</text>
+<text x="260" y="66" text-anchor="middle" fill="#57606a" font-size="14">（会社の持ち物や利益にくらべて）</text>
+<line x1="260" y1="78" x2="260" y2="96" stroke="#8c959f" stroke-width="2"/>
+<polygon points="254,96 266,96 260,104" fill="#8c959f"/>
+<rect x="130" y="104" width="260" height="44" rx="8" fill="#ddf4ff" stroke="#0969da" stroke-width="1.5"/>
+<text x="260" y="132" text-anchor="middle" fill="#0969da" font-size="16" font-weight="700">決算の点検で仕分ける</text>
+<line x1="260" y1="148" x2="260" y2="166" stroke="#8c959f" stroke-width="2"/>
+<line x1="130" y1="166" x2="390" y2="166" stroke="#8c959f" stroke-width="2"/>
+<line x1="130" y1="166" x2="130" y2="182" stroke="#8c959f" stroke-width="2"/>
+<line x1="390" y1="166" x2="390" y2="182" stroke="#8c959f" stroke-width="2"/>
+<polygon points="124,182 136,182 130,190" fill="#8c959f"/>
+<polygon points="384,182 396,182 390,190" fill="#8c959f"/>
+<rect x="10" y="190" width="240" height="136" rx="10" fill="#dafbe1" stroke="#1a7f37" stroke-width="1.5"/>
+<text x="130" y="220" text-anchor="middle" fill="#1a7f37" font-size="18" font-weight="700">財務が強い</text>
+<text x="130" y="248" text-anchor="middle" fill="#1f2328" font-size="15">黒字・借金が減った など</text>
+<text x="130" y="280" text-anchor="middle" fill="#57606a" font-size="14">研究では、その後の</text>
+<text x="130" y="304" text-anchor="middle" fill="#1a7f37" font-size="15" font-weight="700">成績が平均で良かった</text>
+<rect x="270" y="190" width="240" height="136" rx="10" fill="#ffebe9" stroke="#cf222e" stroke-width="1.5"/>
+<text x="390" y="220" text-anchor="middle" fill="#cf222e" font-size="18" font-weight="700">財務が弱い</text>
+<text x="390" y="248" text-anchor="middle" fill="#1f2328" font-size="15">赤字・借金が増えた など</text>
+<text x="390" y="280" text-anchor="middle" fill="#57606a" font-size="14">研究では、その後の</text>
+<text x="390" y="304" text-anchor="middle" fill="#cf222e" font-size="15" font-weight="700">成績が平均でさえなかった</text>
 </svg>
-<div class="chart-cap">イメージ図：縦＝2 倍になりやすさ、横＝半値になりやすさ。割安・高配当は左上の“非対称”ゾーンに位置した（過去集計上の傾向）。</div>
+<div class="chart-cap">Piotroski（2000）の結果を、やさしく図にしたもの（アメリカの株の研究）。「財務が弱い側はさえない」という向きは、すべての株を調べた Campbell ほか（2008）とも同じです。当サイトが数えた集計ではありません。平均の話で、一つひとつの株に当てはまるわけではありません。</div>
 </div>
 
-<h2>🔪 4. 叩き売られた株こそ、ファンダで仕分ける</h2>
-<p>「高値から大きく下げた株」は、反発して 2 倍になることもあれば、そのまま消えることもある——古くから知られる“落ちるナイフ”問題です。ここにファンダを重ねると、はっきり分かれました。<strong>同じ「大きく下げた株」でも、割安（資産より安い）グループは半値になる割合がぐっと低く、赤字・低財務グループは半値になる割合が何倍も高い</strong>。2 倍になる割合自体は両者で大きく変わらないのに、<strong>下落リスクだけが天と地</strong>だったのです。</p>
-<table>
-<tr><th>大きく下げた株のうち</th><th>2 倍になった割合</th><th>半値になった割合</th></tr>
-<tr><td>割安（資産より安い）グループ</td><td>高め</td><td style="color:#1a7f37;font-weight:700">とても低い</td></tr>
-<tr><td>赤字・財務が弱いグループ</td><td>高め</td><td style="color:#cf222e;font-weight:700">非常に高い</td></tr>
+<p>9 つの点検を、やさしく言い直すと次のようになります。</p>
+<style>.fscore-table td{white-space:normal}</style>
+<table class="fscore-table">
+<tr><th>見るところ</th><th>良いサイン</th></tr>
+<tr><td>もうけ</td><td>利益（特別な損益を除く）が黒字</td></tr>
+<tr><td>現金</td><td>本業で現金が入っている</td></tr>
+<tr><td>もうけの伸び</td><td>資産に対する利益の割合が前の年より上がった</td></tr>
+<tr><td>利益の質</td><td>本業で入る現金が、帳簿上の利益より多い</td></tr>
+<tr><td>借金</td><td>長い借金の割合が前の年より減った</td></tr>
+<tr><td>支払いの余裕</td><td>すぐ払えるお金の余裕が前の年より増えた</td></tr>
+<tr><td>新しい株</td><td>新しい株を出してお金を集めていない</td></tr>
+<tr><td>売上の利益率</td><td>売上に対する粗い利益の割合が上がった</td></tr>
+<tr><td>効率</td><td>資産に対する売上の割合が上がった</td></tr>
 </table>
-<p style="font-size:.85rem;color:#57606a">※ 具体的な数値や銘柄は示さず、傾向の方向のみを示しています。</p>
+<p style="font-size:.85rem;color:#57606a">※ Piotroski（2000）の 9 項目を、意味が変わらない範囲でやさしい言葉にしたものです。点数が高ければ必ず上がる、という意味ではありません。</p>
 
-<h2>🧭 5. まとめ：当てるより、避ける</h2>
-<p>今回のデータが言っているのは、こういうことです。</p>
+<div class="info-box"><strong>配当利回りにも注意：</strong>配当利回りは「配当 ÷ 株価」なので、業績が悪くて株価が下がると、利回りが高く見えます。利回りの高さだけで選ばず、配当を払い続けられるだけの稼ぎがあるかを確かめましょう。</div>
+
+<h2>🧭 5. まとめ：当てるより、外す</h2>
+<p>紹介した研究から言えるのは、こういうことです。</p>
 <ul>
-  <li><strong>「これは 2 倍になる」とファンダで言い当てることは難しい</strong>。上昇しやすい特徴は下落もしやすく、両者は切り離せない。</li>
-  <li>一方で<strong>「これは下がりにくい／これはゼロ化しやすい」を仕分けることはできる</strong>。割安・高配当・黒字・財務の堅さは、上昇を約束しないが<strong>下落を抑える</strong>。</li>
-  <li>だから現実的な戦い方は、<strong>跳ねそうな株を当てにいくのではなく、致命傷（ゼロ化）になりやすい株を外し、下がりにくい割安株に寄せて、時間をかけて待つ</strong>こと。</li>
+  <li><strong>「これは 2 倍になる」を当てるのは難しい。</strong>宝くじのような株は、平均では割に合わないと多くの研究が伝えています。</li>
+  <li>一方で、<strong>「ゼロになりやすい特徴」を持つ株を外す手がかりはある。</strong>赤字・借金が増えている・新しい株を出してお金を集めている、といったサインは決算で確かめられます（研究では、こうしたサインの多い株は平均で成績がさえませんでした）。</li>
+  <li>安い株を見つけたら、<strong>「なぜ安いのか」を財務の点検で確かめてから</strong>考える。</li>
+  <li>割安な株でも何年もさえないことがあるので、<strong>長く待てる資金の量</strong>で付き合う。</li>
 </ul>
-<p>派手さはありませんが、<strong>「生き残って複利を回す」ことこそが、長期で資産を増やす王道</strong>です。2 倍株探しの前に、まず「半値・ゼロになりにくいか？」を一度問う——それだけで、避けられる失敗を減らしやすくなります。</p>
+<p>派手さはありませんが、<strong>「生き残って複利を回す」ことが、長期で資産を増やすための土台</strong>です。2 倍株探しの前に、まず「半値・ゼロになりにくいか？」を一度問う——それだけで、避けられる失敗を減らしやすくなります。</p>
+
+<h2>📖 参考にした研究</h2>
+<ul style="font-size:.85rem;color:#424a53">
+  <li>Fama, E. F. and K. R. French (1992) "The Cross-Section of Expected Stock Returns," <i>Journal of Finance</i> 47(2).</li>
+  <li>Chan, L. K. C., Y. Hamao and J. Lakonishok (1991) "Fundamentals and Stock Returns in Japan," <i>Journal of Finance</i> 46(5).</li>
+  <li>Piotroski, J. D. (2000) "Value Investing: The Use of Historical Financial Statement Information to Separate Winners from Losers," <i>Journal of Accounting Research</i> 38 (Supplement).</li>
+  <li>Campbell, J. Y., J. Hilscher and J. Szilagyi (2008) "In Search of Distress Risk," <i>Journal of Finance</i> 63(6).</li>
+  <li>Bali, T. G., N. Cakici and R. F. Whitelaw (2011) "Maxing Out: Stocks as Lotteries and the Cross-Section of Expected Returns," <i>Journal of Financial Economics</i> 99(2).</li>
+  <li>Kumar, A. (2009) "Who Gambles in the Stock Market?" <i>Journal of Finance</i> 64(4).</li>
+  <li>Caballero, R. J., T. Hoshi and A. K. Kashyap (2008) "Zombie Lending and Depressed Restructuring in Japan," <i>American Economic Review</i> 98(5).</li>
+</ul>
 
 <div class="related-section">
 <h2>📚 あわせて読みたい</h2>
@@ -277,7 +329,7 @@ window.addEventListener('resize',mark);
 </div>
 
 <p class="disclaimer" data-disclaimer="kinsho-v1">
-  ⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は、株式投資のリスクを過去データの傾向から整理した <strong>情報提供・教育目的</strong> の一般的な解説であり、特定の銘柄・セクター・資産の購入や売却を推奨するものではなく、投資助言にも該当しません（個別の銘柄名は記載していません）。記載した傾向は、東証上場銘柄の公開価格データおよび公式開示の財務情報（JPX／J-Quants）にもとづく自社集計であり、生存者バイアス・対象期間の偏り（単一の相場局面）・観測の重複などの限界があります。過去の傾向は将来の結果や利益を保証しません。投資判断はご自身の責任で行ってください。
+  ⚠️ 当サイトは金融商品取引業者ではなく、投資助言・代理業の登録もしていません。本記事は、株式投資のリスクを公開されている学術研究の内容から整理した <strong>情報提供・教育目的</strong> の一般的な解説であり、特定の銘柄・セクター・資産の購入や売却を推奨するものではなく、投資助言にも該当しません（個別の銘柄名は記載していません）。紹介した研究の結果は、それぞれの論文が調べた国・時期・方法にもとづくもので、当サイトが独自に集計したものではありません。過去の傾向は将来の結果や利益を保証しません。投資判断はご自身の責任で行ってください。
 </p>
 
 </article>

@@ -594,6 +594,7 @@ JQUANTS_KEY_OK_WORKFLOWS = {"security-watch.yml"}   # 鍵の値が紛れてい�
 # 🆕 2026-11-20 J-Quants の数で数えた研究の結果（手元の research/jq-results/ だけに置く・相談メモ⑪ の C・D）
 JQ_PRIVATE_RESULTS = {"f1-early-lab.json", "f1g-forward.json", "highs-fund-lab.json", "highs-value-lab.json",
                       "j52-timing-lab.json", "j52-history.json", "j9-yutai-lab.json"}
+JQ_OWN_AGGREGATE_WORDS = ("自社集計", "当サイトが集計", "当サイトの集計", "当サイトが数え", "独自に集計", "独自集計")
 
 
 def check_jquants_public(sync_files):
@@ -632,6 +633,15 @@ def check_jquants_public(sync_files):
                        os.path.join(".github", "workflows", "research-lists.yml")):
             if _exists(reader) and (f'"{name}"' in _read(reader) or f"'{name}'" in _read(reader)):
                 errors.append(f"🚨 {reader} が {name} を読む（J-Quants の数で数えた研究の結果をサイトに出さない）")
+    # ⑤ 🆕 2026-11-21（オーナー「E も直す」）記事に「J-Quants のデータで当サイトが数えた」結果を載せない。
+    #    旧版の guide-jp-value-vs-zombie.html は末尾に「JPX／J-Quants にもとづく自社集計」と書いていた（論文の話に書き直した）。
+    #    J-Quants という名前を出すだけの記事（データの入手先の説明など）は止めない＝自社の集計の言葉と一緒のときだけ
+    for p in sorted(glob.glob(os.path.join(SD, "guide-*.html"))):
+        name = os.path.basename(p)
+        html = _read(name)
+        if "J-Quants" in html and any(w in html for w in JQ_OWN_AGGREGATE_WORDS):
+            errors.append(f"🚨 {name} に J-Quants と自社の集計の言葉が一緒にある（J-Quants のデータで数えた結果を"
+                          "記事に載せない＝J-Quants の案内で ×。公開の論文や公的な資料の話にする）")
 
 
 def check_site_name(sync_files):
