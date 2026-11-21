@@ -106,7 +106,7 @@ curl -sS -X POST -H "Accept: application/vnd.github+json" -H "Content-Type: appl
 
 ### 絶対にしないこと
 
-- ゲートのファイルを書き換えない：`signal_lab_verify.py`／`exit_lab_verify.py`／`check_site_consistency.py`／`check_guide_draft.py`／`check_plain_japanese.py`／`publish_article.py`（実行は OK）。
+- ゲートのファイルを書き換えない：`signal_lab_verify.py`／`exit_lab_verify.py`／`check_site_consistency.py`／`check_guide_draft.py`／`check_plain_japanese.py`／`publish_article.py`／`svg_layout_check.py`／`method_lab_verify.py`／`research_rotation.py`（実行は OK）。**正しい一覧は `check_automation_health.py` の `GATE_FILES`（と `check_plain_japanese.py`）**＝そこに載っているファイルは、壊れて実行が落ちていても**直さず、原因と直し方の案（差分）を報告するだけ**にする（2026-11-18 に `research_rotation.py` の1行を直して見張り番の「固定ゲートの変更」に引っかかった件を受けて・2026-11-21 オーナー）。
 - シグナルの発火条件（`generate_technical_alerts.py` の判定部分）・固定オラクル・事前登録（`PILLAR_PREREG.md`）に触れない。
 - GitHub 側で作るファイル（CLAUDE.md「SYNC_FILES の禁忌」の一覧・`*-lab.*`・`jp-*.json`・`signals-log.json` など）を手で書き換えない・コミットしない。
 - テストを飛ばす・消す・ワークフローを止める・`continue-on-error` で隠す、をしない。「たまたま」で片付けない。
