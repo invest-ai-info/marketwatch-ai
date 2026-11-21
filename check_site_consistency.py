@@ -591,6 +591,9 @@ def check_tools_strip(guides_html, gen_py="generate_market_news.py"):
 
 
 JQUANTS_KEY_OK_WORKFLOWS = {"security-watch.yml"}   # 鍵の値が紛れていないかを照合するだけ（J-Quants は呼ばない）
+# 🆕 2026-11-20 J-Quants の数で数えた研究の結果（手元の research/jq-results/ だけに置く・相談メモ⑪ の C・D）
+JQ_PRIVATE_RESULTS = {"f1-early-lab.json", "f1g-forward.json", "highs-fund-lab.json", "highs-value-lab.json",
+                      "j52-timing-lab.json", "j52-history.json", "j9-yutai-lab.json"}
 
 
 def check_jquants_public(sync_files):
@@ -618,6 +621,17 @@ def check_jquants_public(sync_files):
     if _exists("jp-stock-info.json") and '"akaji"' in _read("jp-stock-info.json"):
         errors.append("🚨 jp-stock-info.json に赤字・黒字の印（akaji）がある（J-Quants 由来＝公開しない。"
                       "手元専用の research/jp-akaji.json に置く＝make_jp_stock_info.py）")
+    # ④ 🆕 2026-11-20（オーナー「C と D も外す」）J-Quants の数で数えた研究の結果を、リポジトリ直下に置かない・送らない・
+    #    検証済みリスト／研究の地図／組み立て直しのワークフローから読まない（置き場は手元の research/jq-results/）
+    for name in sorted(JQ_PRIVATE_RESULTS):
+        if _exists(name):
+            errors.append(f"🚨 {name} がリポジトリ直下にある（J-Quants の数で数えた研究の結果＝公開しない。research/jq-results/ へ）")
+        if sync_files and name in sync_files:
+            errors.append(f"🚨 {name} が SYNC_FILES にある（J-Quants の数で数えた研究の結果は GitHub に送らない）")
+        for reader in ("verified_list.py", "research_map.py", "promotion_list.py", "disclosure_timing_forward.py",
+                       os.path.join(".github", "workflows", "research-lists.yml")):
+            if _exists(reader) and (f'"{name}"' in _read(reader) or f"'{name}'" in _read(reader)):
+                errors.append(f"🚨 {reader} が {name} を読む（J-Quants の数で数えた研究の結果をサイトに出さない）")
 
 
 def check_site_name(sync_files):

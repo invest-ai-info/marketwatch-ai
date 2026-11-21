@@ -160,12 +160,10 @@ def test_study_lists_read_forward_records_and_drop_judged():
     _dump(d, R.AUTO_FWD, {"kind": "forward", "cut_end": "2026-10-31", "decide_on": "2026-11-08", "summary": {"n": 30},
                           "verdicts": {"AT3": {"status": "stop"}}})
     _dump(d, R.COMBO_FWD, {"result": {"now": {"n": 150}, "checkpoints": {"50": {}, "100": {}, "150": {}}}})
-    os.makedirs(os.path.join(d, R.YUTAI_DIR))
+    os.makedirs(os.path.join(d, "yutai-edinet"))
     head = R.build_pane(root=d).split("① 定期的に回している研究")[0]
     assert "寄り付き" not in head and "練習用の口座" not in head and "向きだけ残った" not in head
-    assert "株主優待のある銘柄の値動き" in head
-    _dump(d, R.J9_LAB, {"kind": "backtest", "verdicts": {"Q1": {"status": "stop"}}})   # 結果が届いたら外れる
-    assert "株主優待" not in R.build_pane(root=d).split("① 定期的に回している研究")[0]
+    assert "株主優待" not in head   # 🔁 2026-11-20 J9 は J-Quants の数で数える研究＝準備中でも出さない（相談メモ⑪ の D）
 
 
 def test_study_list_shows_progress_from_the_ea_record():

@@ -54,16 +54,15 @@ AUCTION_FWD = "auction-forward.json"         # 🆕 2026-10-08 J31F 空売りの
 LUNCH_FWD = "lunch-gap-forward.json"         # 🆕 2026-10-08 R10F 昼休みの窓と同じ向きに後場を持つ前向き
 MOMENTUM_FWD = "momentum-forward.json"       # 🆕 2026-10-08 夜 J42F 過去12か月で一番上げた10銘柄の前向き（月1）
 EYE_FWD = "eye-shape-progress.json"            # 🆕 2026-11-15 ME 目で選んだ三角・フラッグ（手元のデモ口座の回数だけ・手元で作って送る）
-F1G_FWD = "f1g-forward.json"                 # 🆕 2026-10-18 F1GF グレアムの守りの前向き（手元で月1回数えて送る）
 J10B_RECORDS = "j10b-records.json"         # 🆕 2026-10-07 寄り前の気配の記録（比率だけ・20営業日で判定）
 J46_RSS = "j46-rss.json"                   # 🆕 2026-10-22 J46R 寄り前の売買代金（RSS で約400銘柄・手元で作って送る）
-HIGHS_FUND = "highs-fund-lab.json"         # 🆕 2026-10-26 J47 上場来高値のその後×業績の裏づけ（手元で J-Quants を使って1回・要約を送る）
 HIGHS_SHAPE = "highs-shape-lab.json"       # 🆕 2026-10-27 J48 上場来高値の「形」（Actions で1回）
 HIGHS_SHAPE_FWD = "highs-shape-forward.json"   # 🆕 2026-10-27 J48F 上場来高値の急騰型の罠と下げ（前向き・週1）
 HIGHS_ENTRY = "highs-entry-lab.json"         # 🆕 2026-10-28 J49 上場来高値の罠の見分け・押し目の深さ・手じまい（Actions で1回）
-HIGHS_VALUE = "highs-value-lab.json"         # 🆕 2026-10-28 J50 押し目の割安さ（手元で J-Quants を使って1回・要約を送る）
 HIGHS_ENTRY_FWD = "highs-entry-forward.json"  # 🆕 2026-10-28 J49F 罠の目印の前向き（週1）
 LIST_PAGE = "research-list.html"           # 🆕 2026-10-07 検証中リスト（市場ごとに仕分けた公開ページ）
+# 🆕 2026-11-20 オーナー「C と D も外す」。日本株の決算の数字（J-Quants）を使う研究は、データの利用条件のため公開しない
+JP_PRIVATE_NOTE = "日本株の決算の数字（財務）を使う研究は、データの利用条件のため手元だけで行っていて、ここには載せていません。"
 
 # 🆕 2026-10-07 オーナー「検証中のものはすべて検証中リストに入れてサイトに公開…日本株・FX で分けて見やすく仕分け」
 # 市場ごとの仕分け（上から順に表示）。仮説の対象は filter の ticker／group／asset_class から決める（market_of）
@@ -94,8 +93,6 @@ def market_of(f):
     if tk and (tk.endswith("=X") or (len(tk) == 6 and tk.isalpha())):
         return "fx"
     return "all"
-YUTAI_DIR = "yutai-edinet"
-J9_LAB = "j9-yutai-lab.json"              # 🆕 2026-10-28 J9 の結果（手元で1回・要約を送る）
 
 # 仮説のまとまり（条件のキーで自動で振り分ける。上から順に最初に当たったもの）
 THEMES = [
@@ -545,33 +542,8 @@ def collect_studies(root, m):
                            "since": (mf or {}).get("fwd_start") or "2026-10",
                            "progress": f"数えた月 {n}/24（月に1回なので時間がかかります。初めて数えるのは12月上旬）"})
 
-    # 🆕 2026-10-18 F1GF＝手元で数えて送る記録なので、最初の記録が届く前（11月の初め）から「登録済み」として出す
-    fg = _load(p(F1G_FWD))
-    fgv = (fg or {}).get("verdicts") or {}
-    if not ("F1G" in fgv or V.retired(F1G_FWD, "F1G")):
-        months = (fg or {}).get("months") or {}
-        done = ((fg or {}).get("progress") or {}).get("F1G", 0)
-        verify.append({"cat": "jp", "name": "グレアムの守りの点が高い株は、1年のあいだに大きく沈みにくいか",
-                       "what": "日本株を毎月最初の営業日にグレアムの6つの基準（利益は直近10年で見る）で採点し、点の高い株（4点以上）と"
-                               "低い株（1点以下）で、1年後に30パーセント以上値下がりしている株の割合を比べています"
-                               "（過去の2つの時代では点の高い株の方が沈みにくかったが、結果を見たあとの数字のため、登録した日より後の月だけで確かめます）",
-                       "since": (fg or {}).get("fwd_start") or "2026-11-02",
-                       "progress": (f"判定日 {len(months)}本・1年後の値が出た判定日 {done}/24（月に1回なので時間がかかります）" if fg
-                                    else "登録済み・最初の判定日は 2026-11-02（手元で月1回数えて送ります・1年後の値が出た判定日が24本で判定）"),
-                       "placeholder": fg is None})   # 記録が届く前の行（記録が無くても出る＝テストは数えるときに外す）
-
-    # 🆕 2026-10-26 J47＝手元で J-Quants の10年分を1回数える研究なので、要約が届く前から「登録済み」として出す（F1GF と同じ形）
-    hf = _load(p(HIGHS_FUND))
-    if not ((hf or {}).get("verdicts") or V.retired(HIGHS_FUND, "J47")):
-        verify.append({"cat": "jp", "name": "上場来高値を更新した株のその後は、業績の裏づけで分かれるか",
-                       "what": "上場来高値（記録上の最高値）を更新した日本株の60営業日後の値動きを TOPIX と比べ、その日より前に出ていた"
-                               "業績の上方修正・増益・赤字・決算からの日数で分けて比べます（業績の裏づけのある高値は伸び続け、裏づけの無い高値は"
-                               "罠になりやすいか。過去10年を2つの時代に分け、両方で同じ向きに出るかを見ます）",
-                       "since": "2026-10-26",
-                       "progress": ("要約が届きました（判定の前）" if hf else
-                                    "登録済み・手元の株価と財務のデータ10年分（2017〜2026）で1回だけ数えます（4つの問い）"),
-                       "placeholder": hf is None})   # 要約が届く前の行（テストは数えるときに外す）
-
+    # 🔁 2026-11-20 オーナー「C と D も外す」＝J-Quants の数で数えた研究（F1GF・J47・J50・J9）を地図と検証中リストから外した
+    #    （J-Quants の案内で、分析結果の続けての公開・第三者への表示は ×・相談メモ⑪ の C・D）。結果は手元の research/ だけ。
     # 🆕 2026-10-27 J48＝Actions で過去のデータを1回数える研究。結果の前は「登録済み」、結果のあとは ✕ 以外の問いが残っている間だけ出す
     hs = _load(p(HIGHS_SHAPE))
     hq = (((hs or {}).get("result") or {}).get("questions") or {})
@@ -638,26 +610,6 @@ def collect_studies(root, m):
                                     f"それぞれ {(hef or {}).get('goal') or 100}件そろったら1回だけ判定"
                                     if hef else "登録済み・毎週土曜に台帳と日足から数えます（それぞれ目印のある株の結果が100件そろったら1回だけ判定）"),
                        "placeholder": hef is None})
-
-    # 🆕 2026-10-28 J50＝手元で J-Quants を使って1回（J47 のあと）。要約が届く前から「登録済み」として出す。
-    # 要約の verdicts は ✕ だけ（J49 と同じ）＝結果のあとは ✕ 以外の問いが残っている間だけ出す
-    hv = _load(p(HIGHS_VALUE))
-    hvq = (((hv or {}).get("result") or {}).get("questions") or {})
-    hv_left = [q for q, x in hvq.items() if not str(x.get("verdict", "")).startswith("✕")]
-    if (not hvq or hv_left) and not V.retired(HIGHS_VALUE, "J50"):
-        words = [str(x.get("verdict", "")) for x in hvq.values()]
-        verify.append({"cat": "jp", "name": "上場来高値のあとに押したとき、業績に対して割安なら戻りやすいか",
-                       "what": "上場来高値（記録上の最高値）を更新したあと、20営業日のうちに10パーセント押した日本株を、その日の予想PER・"
-                               "利益の伸びと比べた割安さ・押しのあいだの業績予想の修正・同じ業種の中での割安さで分け、"
-                               "60営業日後の値動きを TOPIX と比べます（過去10年を2つの時代に分け、両方で同じ向きに出るかを見ます。"
-                               "どのくらいの割安さで買うと良かったかの目安も表にします）",
-                       "since": "2026-10-28",
-                       "progress": ((f"過去のデータの結果：2つの時代とも同じ向き {sum(w.startswith('✅') for w in words)}・"
-                                     f"片方の時代だけ {sum(w.startswith('△') for w in words)}・見えない {sum(w.startswith('✕') for w in words)}・"
-                                     f"保留 {sum(w.startswith('保留') for w in words)}（同じ向きに出たものは、登録より後のケースで確かめる予定）")
-                                    if hvq else
-                                    "登録済み・手元の株価と財務のデータ10年分（2017〜2026）で1回だけ数えます（4つの問い・J47 のあと）"),
-                       "placeholder": hv is None})
 
     jb = _load(p(J10B_RECORDS))
     if jb and not jb.get("verdict"):
@@ -770,12 +722,7 @@ def collect_studies(root, m):
         verify.append({"cat": "all", "name": "相場の環境の統計", "what": "シグナルが効いたとき・効かなかったときの相場の環境を、毎月同じ物差しで数え直しています",
                        "since": "", "progress": "毎月2日に数え直し（くわしくは下の④）"})
 
-    if os.path.isdir(p(YUTAI_DIR)) and not os.path.exists(p(J9_LAB)):   # 🆕 2026-10-28 結果が届いたら検証済みリストへ移る
-        research.append({"cat": "jp", "name": "株主優待のある銘柄の値動き",
-                         "what": "株主優待のある銘柄は、権利の日の3か月ほど前から値動きに偏りがあるか、"
-                                 "空売りしにくい銘柄ほどその偏りが大きいかを確かめる準備をしています",
-                         "since": "2026-09-30",
-                         "progress": "有価証券報告書（会社が毎年出す報告書）から優待の中身を集めている途中。集め終わったら1回だけ数えます"})
+    # 🔁 2026-11-20 J9（株主優待）の「準備中」も外した（J-Quants の数で数える研究・相談メモ⑪ の D）
     return {"verify": verify, "research": research}
 
 
@@ -1121,6 +1068,8 @@ def build_list_page(root=".", now=None, model=None):
                         '過去のデータで確かめましたが、売り買いの費用を引くと差が見えなかったので止めています。</p>')
         if not count[key]:
             body.append('<p class="none">いまはありません。</p>')
+        if key == "jp":   # 🔁 2026-11-20 J-Quants の数で数えた研究は外した（相談メモ⑪ の D）＝あることだけ書く
+            body.append(f'<p class="none">{JP_PRIVATE_NOTE}</p>')
         if v.get("moved"):
             body.append(f'<details><summary>⏹ 検証済みリストへ移したもの：{len(v["moved"])}件（開く）</summary>'
                         f'{_moved_table(v["moved"])}</details>')

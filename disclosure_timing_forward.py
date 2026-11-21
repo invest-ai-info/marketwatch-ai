@@ -27,7 +27,8 @@ import tdnet_reaction as TR
 
 JST = TR.JST
 START = "2026-11-18"
-OUT_CSV, OUT_JSON, HISTORY = "disclosure-timing-forward.csv", "disclosure-timing-forward.json", "j52-history.json"
+OUT_CSV, OUT_JSON = "disclosure-timing-forward.csv", "disclosure-timing-forward.json"
+J52_HISTORY_CHECKED = {}   # 🔁 2026-11-20 J52 で ✅ だった升（＝基準を 1.96 に下げる升）。J52 は 26升すべて ✕ だったので空
 N_CLOSE = 31                    # R〜R+30 の引け
 MIN_TV = 1e8                    # R の前の取引日の売買代金（円）
 COST_LONG, COST_SHORT = 0.001, 0.002
@@ -306,7 +307,9 @@ def main(argv=None):
     rows = run(ledger, old, now)
     save_csv(rows)
     prev = TR.read_json(OUT_JSON, {})
-    hist = (TR.read_json(HISTORY, {}) or {}).get("cells") or {}
+    # 🔁 2026-11-20 j52-history.json（J52 を J-Quants で数えた升ごとの ✅／✕）は読まない＝公開のリポジトリに置かない（相談メモ⑪ の C）。
+    #    J52 の判定は 26升すべて ✕ だった（2026-11-17）＝基準を下げる升は1つも無い＝空にしても判定は同じ（どの升も厳しい基準 zc）
+    hist = J52_HISTORY_CHECKED
     cells = judge(rows, now.date().isoformat(), hist)
     for k, v in (prev.get("cells") or {}).items():          # 一度決めた判定は変えない
         if v.get("status"):

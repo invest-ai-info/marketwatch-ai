@@ -174,7 +174,7 @@ ROUTINE_COUNT_CHECKS = [
 #    動かし忘れた月は数えない決まり（PILLAR_PREREG.md「F1GF」）＝届かないことに早く気づく必要がある。最初の判定日 11/2 の分が
 #    届くはずの 12/5 から見る（`since` より前は鳴らさない＝LEDGER_WATCH と同じ考え方・同じ関数）
 LOCAL_FORWARD_WATCH = [
-    ("F1GF グレアムの守りの前向き（手元・月1）", "f1g-forward.json", 35, dt.date(2026, 12, 5)),
+    # 🔁 2026-11-20 F1GF（f1g-forward.json）の見張りを外した＝J-Quants の数の記録は送らない（手元の research/jq-results/ だけ・相談メモ⑪ の C）
 ]
 
 # ④ 固定ゲートの不変条件: ゲート/リンターを routine が書き換えて通過する「自己承認」を検知する。
