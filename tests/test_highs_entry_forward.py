@@ -140,6 +140,31 @@ def test_workflow_sync_and_lists_are_registered():
     assert "HIGHS_ENTRY_FWD" in open("research_map.py", encoding="utf-8").read()
 
 
+def test_mail_marks_follow_the_j49f_rules():
+    """🆕 2026-11-21 朝のメールの参考の印：ケースの決め方・T1／T3 の物差しは J49F と同じ（cases・HOT_MIN・T3_DAYS・T3_DROP）"""
+    ds = days(12)
+    rows = [row(ds[5], "1111", dev=0.25, pct=0.12, ratio=4.0, streak=5),        # 重なり4＝T1
+            row(ds[5], "2222", dev=0.25, pct=0.12, ratio=1.0, streak=1),        # 重なり2＝T1 でない
+            row(ds[5], "3333", dev=0.25, pct=0.12, ratio=4.0, record=0),        # 記録上の最高値でない＝ケースでない
+            row(ds[5], "4444", dev=0.25, pct=0.12, ratio=4.0, streak=5, tv=0.5),  # 20本の平均が1億円未満
+            row(ds[2], "5555"), row(ds[2], "6666"), row(ds[1], "7777")]
+    def bars(closes, start=0):
+        return [(ds[start + i], c * 1.01, c * 0.99, c, 1e5) for i, c in enumerate(closes)]
+    daily = {"5555": bars([100, 100, 100, 95, 89, 85]),       # 記録の日 ds[2]・ds[4] に初めて −11%・今日 ds[5] は −15%
+             "6666": bars([100, 100, 100, 99, 98, 89.5]),     # 今日はじめて −10.5%＝new
+             "7777": bars([100, 100, 95, 92, 91, 89, 85])}    # 記録の日 ds[1]・今日 ds[5] は4本目・ds[6] は窓の外
+    m = E.mail_marks(rows, daily, ds[5], {"1111": {"name": "甲"}, "5555": {"name": "乙"}})
+    assert [r["code"] for r in m["t1"]] == ["1111"] and m["t1"][0]["hot"] == 4 and m["t1"][0]["name"] == "甲"
+    t3 = {r["code"]: r for r in m["t3"]}
+    assert set(t3) == {"5555", "6666", "7777"}
+    assert t3["5555"]["n"] == 3 and abs(t3["5555"]["drop"] + 0.15) < 1e-9 and t3["5555"]["new"] is False
+    assert t3["6666"]["new"] is True and t3["7777"]["n"] == 4
+    assert [r["code"] for r in m["t3"]][0] == "5555"                              # 下げの大きい順
+    late = E.mail_marks(rows, {"7777": daily["7777"] + [(ds[7], 1, 1, 84, 1)]}, ds[7])
+    assert late["t3"] == []                                                       # 6本目＝5本の窓の外は出さない
+    assert E.mail_marks([], {}, ds[5]) == {"asof": ds[5], "n_t1": 0, "n_t3": 0, "t1": [], "t3": []}
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):

@@ -70,6 +70,40 @@ def cases(rows, start=START):
     return out
 
 
+MAIL_SHOW = 15                         # 朝のメールに出すのは T1・T3 それぞれ15銘柄まで
+
+
+def mail_marks(rows, daily, asof, stocks=None):
+    """🆕 2026-11-21 オーナー「J49 の印を朝のメールに」＝自分用の朝のメールの**参考の印**（判定ではない・サイトには出さない）。
+    ケースの決め方と T1／T3 の物差しは、この道具の cases()・hot_score()・HOT_MIN・T3_DAYS・T3_DROP をそのまま使う
+    （ここで数字を変えない）。純関数。
+    rows＝highs-ledger.csv の行（今日の分まで）・daily＝{コード: [(日付, 高, 安, 終, 出来高)]}（build_jp_highs の日足）。
+    T1＝今日（asof）のケースのうち急騰の重なり3つ以上（記録の日の引けで決まる）。
+    T3＝記録の日の次の足から5本のうちで、今日までに終値が記録の日の終値の −10% 以下になったケース
+       （5本の窓を過ぎたものは出さない・今日はじめて −10% 以下になったものは new）。"""
+    names = {c: (m or {}).get("name", "") for c, m in (stocks or {}).items()}
+    cs = cases(rows)
+    t1 = [{"code": c["code"], "name": names.get(c["code"], ""), "hot": c["hot"]}
+          for c in cs if c["date"] == asof and c["hot"] >= HOT_MIN]
+    t3 = []
+    for c in cs:
+        bars = daily.get(c["code"]) or []
+        ds = [b[0] for b in bars]
+        if c["date"] not in ds or asof not in ds:
+            continue
+        j, a = ds.index(c["date"]), ds.index(asof)
+        if not j < a <= j + T3_DAYS:
+            continue
+        c0 = bars[j][3]
+        ks = [k for k in range(j + 1, a + 1) if bars[k][3] <= c0 * (1 - T3_DROP)]
+        if ks:
+            t3.append({"code": c["code"], "name": names.get(c["code"], ""), "date": c["date"], "n": a - j,
+                       "drop": round(bars[a][3] / c0 - 1, 4), "new": ks[0] == a})
+    t1.sort(key=lambda r: (-r["hot"], r["code"]))
+    t3.sort(key=lambda r: (r["drop"], r["code"]))
+    return {"asof": asof, "n_t1": len(t1), "n_t3": len(t3), "t1": t1[:MAIL_SHOW], "t3": t3[:MAIL_SHOW]}
+
+
 def to_days(bars):
     """Yahoo の足 [(時刻, 始, 高, 安, 終, 出来高)] → [(YYYY-MM-DD, 始, 終)]（値の無い足は除く）"""
     out = []

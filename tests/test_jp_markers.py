@@ -179,6 +179,21 @@ def test_jp_taishaku_reader():
     assert JT.load_or_none(boom) is None
 
 
+def test_j49_reference_marks():
+    """🆕 2026-11-21 上場来高値の罠の目印（J49）＝参考の印・未確定と書く・数字は J49 の結果と同じ・欄が無ければ何も書かない"""
+    mk = M.compute({"1111": _bars()}, {"1111": {"name": "甲"}}, "2026-10-07")
+    assert "上場来高値の罠" not in "\n".join(M.section(mk, dt.date(2026, 10, 8)))
+    mk["j49"] = {"asof": "2026-10-07", "n_t1": 1, "n_t3": 1, "t1": [{"code": "1111", "name": "甲", "hot": 3}],
+                 "t3": [{"code": "2222", "name": "乙", "date": "2026-10-02", "n": 3, "drop": -0.123, "new": True}]}
+    s = "\n".join(M.section(mk, dt.date(2026, 10, 8)))
+    assert "参考：上場来高値の罠の目印" in s and "未確定" in s and "売りの合図ではない" in s and "点検表には入っていない" in s
+    assert "41〜50%" in s and "24〜25%" in s and "45〜47%" in s and "24〜27%" in s
+    assert "甲（1111）〔重なり3〕" in s and "乙（2222） 高値の日 10/02・3日目 -12.3%〔新〕" in s
+    lab = open(os.path.join(ROOT, "highs-entry-lab.md"), encoding="utf-8").read()
+    for a, b in (("50％", "24％"), ("41％", "25％"), ("45％", "24％"), ("47％", "27％")):
+        assert a in lab and b in lab                                               # メールの数字は J49 の結果の表から
+
+
 if __name__ == "__main__":
     fails = 0
     for name, fn in sorted(globals().items()):
