@@ -512,6 +512,18 @@ def main(force=False, dry_run=False):
             print(f"   高値更新の台帳：{highs_ledger.update(daily, payload, prev)}")
         except Exception as e:  # noqa: BLE001
             print(f"⚠️ 高値更新の台帳を更新できず（jp-highs.json は書けている）：{type(e).__name__}: {str(e)[:200]}")
+        # 🆕 2026-11-21 J49 の罠の目印（T1 急騰の重なり・T3 5本以内に −10%）＝朝の指標メールの参考の印（サイトには出さない）。
+        #    今日のケースが台帳に入ったあとに、同じ日足から作る（決まりは highs_entry_forward）。失敗しても jp-highs.json は書けている＝止めない
+        try:
+            import highs_entry_forward
+            payload["markers"]["j49"] = highs_entry_forward.mail_marks(
+                highs_entry_forward.F.read_ledger(highs_entry_forward.LEDGER), daily, asof, stocks)
+            with open(OUT, "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False)
+            j49 = payload["markers"]["j49"]
+            print(f"   J49 の罠の目印（朝のメールの参考）：T1 {j49['n_t1']}銘柄・T3 {j49['n_t3']}銘柄")
+        except Exception as e:  # noqa: BLE001
+            print(f"⚠️ J49 の罠の目印を作れず（jp-highs.json は書けている）：{type(e).__name__}: {str(e)[:200]}")
         # 🆕 2026-11-20 騰落レシオの元（J-Quants から替えた）＝失敗しても jp-highs.json は書けている＝止めない
         try:
             print(f"   騰落レシオの元（touraku-history.json）：{touraku.update_from_bars(prime_bars, asof)}")
