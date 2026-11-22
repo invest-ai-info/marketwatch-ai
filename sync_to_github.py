@@ -477,4 +477,5 @@ SYNC_FILES = [
     "guide-signal-lab-157.html",
     "guide-company-3197-skylark.html",
     "guide-news-2026-11-22-usdjpy-160-boj-december.html",
+    "guide-signal-lab-158.html",
 ]
