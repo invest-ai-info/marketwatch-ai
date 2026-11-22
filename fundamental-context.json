@@ -1,13 +1,14 @@
 {
-  "generated_at": "2026-11-22T06:20:00+09:00",
+  "generated_at": "2026-11-22T15:10:00+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
-    "confidence": "LOW",
-    "rationale": "直近の検索で一次情報を確認できた範囲が狭く、数値は情報源で食い違う。ただし利上げ観測とAI株不安によるリスク回避の流れは複数の報道で一致している。",
+    "confidence": "MID",
+    "rationale": "11/20に米株が急落（S&P500 -3.7%、ナスダック約-5%、VIX約36）。12月の米追加利上げ観測でドル高・金安も同時進行。ただし11/20の為替・商品の終値は確認できず、数値は報道ごとに差がある。",
     "key_drivers": [
-      "12月追加利上げ観測とタカ派の議事要旨",
-      "エヌビディアのSEC調査報道によるAI株安",
-      "株・金・暗号資産の同時安"
+      "エヌビディア急落とSEC調査報道によるAI株売り",
+      "12月米利上げ観測とタカ派発言（ウォラー理事ら）",
+      "ドル高・金安・ビットコイン安の同時進行",
+      "12/8-9のFOMCと週明けの米指標への警戒"
     ]
   },
   "assets": [
@@ -15,24 +16,39 @@
       "name": "日経225",
       "ticker": "NKD=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "米国のAI株安とリスク回避が重し。円相場など日本固有の材料は今回確認できず。",
+      "conviction": "MID",
+      "rationale": "米ハイテク株の急落が週明けの日本株の重しになりやすい。11/18終値は59,024円、11/13は61,126円。11/20の日本の終値は未確認。",
       "catalysts": [
-        "週明けの米株先物",
-        "エヌビディア問題の続報"
+        "週明けのナスダック先物・エヌビディア動向",
+        "ドル円160円近辺での介入警戒"
       ],
       "top_news": [
         {
-          "headline": "エヌビディアに米SEC調査報道、株価が急落とされ米株全体が下落（数値は情報源で食い違い）",
+          "headline": "エヌビディアが1日で14%安、SEC調査報道も重なりナスダック100は週間10%超下落",
           "published": "2026-11-20",
-          "comment": "AI株への不安が広がり株式全体の重しに。数値は未確認",
-          "source": "WSJ/各種報道",
+          "comment": "AI株への不安が連鎖。週明けも値動きが荒い可能性",
+          "source": "CNBC",
           "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "Yahoo Finance",
+            "Reuters"
+          ],
           "materiality": "high",
           "direction": "bearish",
-          "url": ""
+          "url": "https://www.cnbc.com/2026/11/20/nvidias-7-week-losing-streak-is-longest-since-2008-financial-crisis.html"
+        },
+        {
+          "headline": "日経平均は3日ぶり反発、AI・半導体関連に買い戻し（59,024円）",
+          "published": "2026-11-18",
+          "comment": "直近はAI株の揺り戻しで上下しやすい",
+          "source": "みんかぶ",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://minkabu.jp/news/4668300"
         }
       ]
     },
@@ -41,36 +57,37 @@
       "ticker": "ES=F",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "エヌビディアへのSEC調査報道と利上げ観測で大きく下落との報道。下落幅は情報源で食い違う。",
+      "rationale": "11/20に調整局面入りし、VIXも35台へ上昇。短期は反発も売りも大きく振れやすいが、AI株不安と利上げ観測が重なり下向き寄り。",
       "catalysts": [
-        "12月FOMC",
-        "エヌビディア続報",
-        "VIX"
+        "エヌビディア・AI関連の続報",
+        "12月FOMC前の物価・雇用指標"
       ],
       "top_news": [
         {
-          "headline": "エヌビディアに米SEC調査報道、株価が急落とされ米株全体が下落（数値は情報源で食い違い）",
+          "headline": "S&P500が3.7%安の6,910で調整局面入り、VIXは35.89",
           "published": "2026-11-20",
-          "comment": "AI株への不安が広がり株式全体の重しに。数値は未確認",
-          "source": "WSJ/各種報道",
+          "comment": "AI株の急落が指数全体に波及。変動の大きさに注意",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "The Closing Print"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-suffers-historic-losses-012826644.html"
+        },
+        {
+          "headline": "S&P500が0.2%安の7,323、ダウは1.1%安",
+          "published": "2026-11-18",
+          "comment": "11/20の急落前から上値が重くなっていた",
+          "source": "AP通信",
           "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
-          "materiality": "high",
+          "materiality": "mid",
           "direction": "bearish",
-          "url": ""
-        },
-        {
-          "headline": "FOMC議事要旨がタカ派と評価、12月の追加利上げ観測が根強い",
-          "published": "2026-11-19",
-          "comment": "利上げ観測は株やビットコインの重し。ドルは支えられやすい",
-          "source": "FXStreet",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.fxstreet.com/analysis/the-last-fed-meeting-minutes-were-very-hawkish-202611191521"
+          "url": "https://www.lanacion.com.ar/usa/how-major-us-stock-indexes-fared-wednesday-11182026-nid18112026/"
         }
       ]
     },
@@ -78,24 +95,27 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "AI関連株の売りが集中。ハイテク主導の下落が続くかが焦点。",
+      "conviction": "HIGH",
+      "rationale": "エヌビディアが1日で14%安、週間でナスダック100が約10%下落し一時弱気相場入り。今年の上昇分を消した。",
       "catalysts": [
-        "エヌビディア続報",
-        "金利動向"
+        "エヌビディアへのSEC調査の進展",
+        "AI関連の資金流出の継続"
       ],
       "top_news": [
         {
-          "headline": "エヌビディアに米SEC調査報道、株価が急落とされ米株全体が下落（数値は情報源で食い違い）",
+          "headline": "エヌビディアが1日で14%安、SEC調査報道も重なりナスダック100は週間10%超下落",
           "published": "2026-11-20",
-          "comment": "AI株への不安が広がり株式全体の重しに。数値は未確認",
-          "source": "WSJ/各種報道",
+          "comment": "AI株への不安が連鎖。週明けも値動きが荒い可能性",
+          "source": "CNBC",
           "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "Yahoo Finance",
+            "Reuters"
+          ],
           "materiality": "high",
           "direction": "bearish",
-          "url": ""
+          "url": "https://www.cnbc.com/2026/11/20/nvidias-7-week-losing-streak-is-longest-since-2008-financial-crisis.html"
         }
       ]
     },
@@ -103,24 +123,36 @@
       "name": "金",
       "ticker": "GC=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "利上げ観測と換金売りで下落との報道。ただし価格の裏付けは薄い。",
+      "conviction": "MID",
+      "rationale": "ドル高と米利上げ観測で11/18に3%超下落し、11/19は3,700ドル割れ（13カ月ぶり安値圏）。株安時に現金化の売りも出ている。",
       "catalysts": [
-        "米実質金利",
-        "ドル動向"
+        "12月米利上げ観測",
+        "ドル指数103台での推移"
       ],
       "top_news": [
         {
-          "headline": "金先物が大きく下落、約14か月ぶり安値圏との報道（要確認）",
-          "published": "2026-11-20",
-          "comment": "利上げ観測とリスク資産の換金売りで金も売られた模様",
-          "source": "各種報道",
+          "headline": "金が3,700ドルを割り込む、タカ派の中銀とドル高が重し",
+          "published": "2026-11-19",
+          "comment": "利上げ観測でドルが強く、金には逆風",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
+        },
+        {
+          "headline": "金が13カ月ぶり安値、12月の米利上げ観測でドル急伸",
+          "published": "2026-11-18",
+          "comment": "金利を生まない金は利上げ期待に弱い",
+          "source": "European Business Magazine",
           "tier": 3,
           "credibility": "LOW",
           "corroborated_by": [],
           "materiality": "mid",
           "direction": "bearish",
-          "url": ""
+          "url": "https://europeanbusinessmagazine.com/?p=146529"
         }
       ]
     },
@@ -129,23 +161,23 @@
       "ticker": "CL=F",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "高止まりの報道はあるが、直近の値動きの確認が取れなかった。",
+      "rationale": "WTIは11/19に83ドル台。米在庫増で下落した後に反発と方向感が弱い。景気後退懸念は重しだが、決め手に欠ける。",
       "catalysts": [
-        "中東情勢",
-        "在庫統計"
+        "米原油在庫統計",
+        "世界景気とAI株安の波及"
       ],
       "top_news": [
         {
-          "headline": "原油は高止まり、インフレ懸念が利上げ観測を支える",
-          "published": "2026-11-18",
-          "comment": "原油高は物価を押し上げ、金利が下がりにくい要因に",
+          "headline": "WTIは83ドル台、米在庫増で前日は約3%安のあと反発",
+          "published": "2026-11-19",
+          "comment": "在庫増と景気不安で上下どちらにも動く局面",
           "source": "FXStreet",
-          "tier": 3,
+          "tier": 2,
           "credibility": "LOW",
           "corroborated_by": [],
           "materiality": "mid",
-          "direction": "bullish",
-          "url": ""
+          "direction": "neutral",
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
         }
       ]
     },
@@ -154,48 +186,48 @@
       "ticker": "USDJPY",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "日米金利差とリスク回避の円買いが綱引きで、直近の水準を確認できず。",
+      "rationale": "11/18は159円台前半で160円の介入警戒が上値を抑える。一方、日米金利差は円安要因。リスク回避の円買いも出れば方向は割れやすい。",
       "catalysts": [
-        "日銀の発言",
-        "米金利"
+        "160円付近の為替介入警戒",
+        "日銀の12月会合観測と米利上げ観測"
       ],
       "top_news": [
         {
-          "headline": "FOMC議事要旨がタカ派と評価、12月の追加利上げ観測が根強い",
-          "published": "2026-11-19",
-          "comment": "利上げ観測は株やビットコインの重し。ドルは支えられやすい",
+          "headline": "ドル円は159円台、160円接近で介入警戒が強まる",
+          "published": "2026-11-18",
+          "comment": "介入観測が上値を抑えやすい水準",
           "source": "FXStreet",
-          "tier": 3,
-          "credibility": "MID",
+          "tier": 2,
+          "credibility": "LOW",
           "corroborated_by": [],
           "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.fxstreet.com/analysis/the-last-fed-meeting-minutes-were-very-hawkish-202611191521"
+          "direction": "neutral",
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
         }
       ]
     },
     {
       "name": "ユーロドル",
       "ticker": "EURUSD",
-      "bias": "NEUTRAL",
-      "conviction": "LOW",
-      "rationale": "米利上げ観測はドル高要因だが、ユーロ側の材料を確認できず。",
+      "bias": "BEARISH",
+      "conviction": "MID",
+      "rationale": "米利上げ観測でドル高が進み、ユーロは11/19に1.10割れ。週内に2025年4月以来の安値を付けたとの報道もある。",
       "catalysts": [
-        "米利上げ観測",
-        "ユーロ圏指標"
+        "米・欧の物価と利上げ観測の差",
+        "12月FOMC"
       ],
       "top_news": [
         {
-          "headline": "FOMC議事要旨がタカ派と評価、12月の追加利上げ観測が根強い",
-          "published": "2026-11-19",
-          "comment": "利上げ観測は株やビットコインの重し。ドルは支えられやすい",
-          "source": "FXStreet",
-          "tier": 3,
+          "headline": "ドル指数が103.8台、ウォラー理事の0.5%利上げ発言を受けた上昇",
+          "published": "2026-11-18",
+          "comment": "米利上げ観測がドルを押し上げている",
+          "source": "CNBC",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.fxstreet.com/analysis/the-last-fed-meeting-minutes-were-very-hawkish-202611191521"
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
         }
       ]
     },
@@ -204,120 +236,97 @@
       "ticker": "BTC-USD",
       "bias": "BEARISH",
       "conviction": "MID",
-      "rationale": "9万ドル割れと利上げ観測で軟調。リスク資産全体の売りに連動。",
+      "rationale": "11/18に3%超安の6.25万ドル前後、11/19は約6.3万ドル。ETF流出や強制清算が続き、株安時も安全資産として買われていない。",
       "catalysts": [
-        "米株の動向",
-        "金利動向"
+        "ETF資金の流出入",
+        "ナスダックの動向"
       ],
       "top_news": [
         {
-          "headline": "ビットコインが9万ドルを割れ、さらに下値を探る見方も",
-          "published": "2026-11-17",
-          "comment": "リスク回避と金利上昇観測が重し。反発の確証は薄い",
-          "source": "FXStreet/CryptoSlate",
-          "tier": 3,
+          "headline": "ビットコインは6.3万ドル前後、ETF流出と強制清算で下落",
+          "published": "2026-11-19",
+          "comment": "株やハイテク株と同じ方向に動きやすい",
+          "source": "FXStreet",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [],
           "materiality": "mid",
           "direction": "bearish",
-          "url": "https://fxstreet.com/analysis/bitcoins-path-to-58k-opens-wider-as-5-trillion-in-risk-assets-reprice-and-gold-loses-3-900-202611170921"
-        },
-        {
-          "headline": "11/18 利上げ観測と持ち高解消で株・商品・暗号資産が同時に売られる",
-          "published": "2026-11-18",
-          "comment": "金利上昇観測で資産が一斉に売られる動き",
-          "source": "FXStreet",
-          "tier": 3,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.fxstreet.com/cryptocurrencies/news/risk-off-sell-off-hits-bitcoin-gold-and-equities-as-fed-hike-bets-build-202611181709"
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
         }
       ]
     }
   ],
   "discarded": [
     {
-      "headline": "S&P500が3.7%下落して調整局面入りとの個別数値",
-      "reason": "情報源どうしで下落幅が食い違い、単独の裏付けしかないため見出しには採用せず"
+      "headline": "11/20の金・原油・ビットコイン終値の個別報道",
+      "reason": "確認できる一次情報がなく、日付が曖昧なため採用せず"
     },
     {
-      "headline": "各資産の具体的な終値・水準",
-      "reason": "信頼できる終値の一次情報を今回の調査で確認できなかった"
+      "headline": "12月の米利上げ確率の複数の数値（77〜95%）",
+      "reason": "発表日が不明で数値も食い違うため、具体的な確率は載せず"
     }
   ],
   "currencies": [
     {
       "code": "USD",
       "lean": "STRONG",
-      "conviction": "LOW",
-      "reason": "12月利上げ観測が根強くドルを支えるが、直近の為替水準は未確認"
+      "conviction": "MID",
+      "reason": "米利上げ観測とタカ派の発言でドル指数が103台に上昇"
     },
     {
       "code": "EUR",
-      "lean": "NEUTRAL",
+      "lean": "WEAK",
       "conviction": "LOW",
-      "reason": "材料が薄く、対ドルでは米利上げ観測が重し"
+      "reason": "ドル高に押され、11/19に1.10割れ。2025年4月以来の安値圏との報道"
     },
     {
       "code": "GBP",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "今回の調査で新しい材料を確認できなかった"
+      "reason": "確認できた新しい材料が乏しく、ドル高の影響を受ける程度"
     },
     {
       "code": "JPY",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "リスク回避の円買いと金利差の円売りが拮抗とみられる"
+      "reason": "金利差は円安要因だが、160円付近の介入警戒とリスク回避の円買いが拮抗"
     },
     {
       "code": "AUD",
-      "lean": "NEUTRAL",
+      "lean": "WEAK",
       "conviction": "LOW",
-      "reason": "11月初めのRBA利上げは支えだが、リスク回避と中国材料が重し"
+      "reason": "11月初旬の利上げ後も鉄鉱石安と株安で下落。3月以来の安値圏"
     },
     {
       "code": "CNY",
-      "lean": "WEAK",
+      "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "中国は不動産の弱さが重いが、人民銀行の外貨準備率引き上げが元安を抑える"
+      "reason": "直近の人民元の基準値や景気対策の材料は確認できず"
     }
   ],
   "asia_watch": [
     {
-      "headline": "豪準備銀行が約18年ぶりの高水準へ利上げ、豪ドルは一時下落",
-      "published": "2026-11-03",
+      "headline": "豪ドル、RBAの利上げ後も約2.5%下落し3月以来の安値圏",
+      "published": "2026-11-11",
       "region": "AU",
-      "why": "利上げは豪ドルの支えだが、発表後は売られた。以降の効き方に注意",
-      "materiality": "mid",
-      "source": "investingLive",
-      "tier": 3,
-      "credibility": "MID",
-      "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-rba-hikes-to-18-year-high/"
-    },
-    {
-      "headline": "人民銀行が外貨預金の準備率を4%から6%へ、11/15から実施",
-      "published": "2026-11-03",
-      "region": "CN",
-      "why": "ドル流動性を絞り元安を抑える策。人民元や豪ドルの材料になりうる",
-      "materiality": "mid",
-      "source": "investingLive",
-      "tier": 3,
-      "credibility": "MID",
-      "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-rba-hikes-to-18-year-high/"
-    },
-    {
-      "headline": "中国の不動産低迷が鉄鋼需要を圧迫、鉄鉱石の見通しに不透明感",
-      "published": "2026-11-04",
-      "region": "CN",
-      "why": "鉄鉱石は豪ドルの材料。需要が弱いと豪ドルの重しになりうる",
+      "why": "豪ドルの支えが弱まっており、豪ドル円の戻りが鈍い可能性",
       "materiality": "mid",
       "source": "FXStreet",
-      "tier": 3,
+      "tier": 2,
       "credibility": "MID",
-      "url": "https://www.fxstreet.com/analysis/what-could-change-the-auds-direction-in-the-coming-months-202611041256"
+      "url": "https://www.fxstreet.com/analysis/the-australian-dollar-is-losing-the-one-thing-that-was-holding-it-up-202611111906"
+    },
+    {
+      "headline": "鉄鉱石先物が90ドル前後、中国の鉄鋼需要は今年2%減の見通し",
+      "published": "2026-11-11",
+      "region": "CN",
+      "why": "豪州の輸出と豪ドルの重しになりやすい",
+      "materiality": "mid",
+      "source": "FXStreet",
+      "tier": 2,
+      "credibility": "MID",
+      "url": "https://www.fxstreet.com/analysis/the-australian-dollar-is-losing-the-one-thing-that-was-holding-it-up-202611111906"
     }
   ]
 }
