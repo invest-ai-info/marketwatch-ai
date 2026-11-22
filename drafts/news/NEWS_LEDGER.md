@@ -3,6 +3,32 @@
 
 ---
 
+## 2026-11-22
+- 判定: ✅ 公開済み
+- 選定トピック: ドル円159円台・160円の壁と日銀12月利上げ観測──介入警戒・日米金利差・CPI上振れを中立整理（カテゴリ: FX・為替・日銀政策・マクロ）
+- スコア: 話題性 4 / 影響 4 / 付加価値 4（合計 12/15）
+- 出典（確認済み）:
+  - FXStreet「Yen holds steady under 160.00 as Japan inflation data nears」2026-11-18
+  - FXStreet「Japanese Yen edges higher as CPI data reinforces December BoJ rate hike expectations」2026-11-20
+  - FXStreet「The Japanese Yen gains as Japan's inflation hits its highest since November 2025」2026-11-20
+  - FXEmpire「Japan Interest Rate Forecast: BOJ Hike Bets Rise as USD/JPY Tests 160」2026-11-20
+  - InvestingLive「Japan's Mimura warns yen moves are too rapid as USD/JPY pushes back toward 160」2026-11-20
+  - InvestingLive「A December BoJ hike may not be enough: why a fuzzy endpoint keeps yen bears circling」2026-11-21
+  - KuCoin「USD/JPY Stays Below 160 Amid Fed Hawkish Signals and Risk of Japanese Intervention」2026-11-20
+  - TradingNews「USD/JPY Price Forecast」2026-11-21
+  - OANDA Japan「為替介入 2026年経緯（2026年11月9日）」
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（表現2か所やや断定的・事実の食い違い1件）→ 軽微修正適用（表現軟化2か所）→ 事実修正（「日米金利差3%超」→「約2.5〜2.75%」に3か所統一・「財務省が公表したデータによると」→「報道によると」）→ 最終判定 🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3 ✅ / 断定語なし ✅ / 推奨なし ✅ / noindexなし ✅ / 出典5系統以上 ✅）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅（「100%」はCSS値のみ） / 推奨なし ✅ / 出典2系統以上 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0（警告77件は既存他ファイルの既知問題）✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-22-usdjpy-160-boj-december.html
+- commit: 2033a2d（main へ push 済み）
+
+---
+
 ## 2026-11-21
 - 判定: ✅ 公開済み
 - 選定トピック: 米S&P500が修正局面入り・ナスダック2026年マイナス転落。AIセルオフ最悪週（11/17〜20）の全経過と3連休明け（11/24火）への3シナリオを中立整理。（カテゴリ: 米国株・マクロ・AIセルオフ・週次サマリ）
