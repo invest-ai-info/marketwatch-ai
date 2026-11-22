@@ -475,4 +475,5 @@ SYNC_FILES = [
     "guide-company-6532-baycurrent.html",
     "guide-news-2026-11-21-us-sp500-correction-ai-selloff.html",
     "guide-signal-lab-157.html",
+    "guide-company-3197-skylark.html",
 ]
