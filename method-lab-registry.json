@@ -109,6 +109,12 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-24",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
   },
@@ -202,6 +208,12 @@
    "history": [
     {
      "date": "2026-11-23",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    },
+    {
+     "date": "2026-11-24",
      "n": 0,
      "avgR": null,
      "lo": null
@@ -299,8 +311,18 @@
     "n": 0,
     "avgR": null,
     "rci_lo": null,
-    "rci_hi": null
-   }
+    "rci_hi": null,
+    "win": null,
+    "excess": null
+   },
+   "history": [
+    {
+     "date": "2026-11-24",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    }
+   ]
   },
   {
    "id": "ml-59f5c962",
@@ -385,8 +407,18 @@
     "n": 0,
     "avgR": null,
     "rci_lo": null,
-    "rci_hi": null
-   }
+    "rci_hi": null,
+    "win": null,
+    "excess": null
+   },
+   "history": [
+    {
+     "date": "2026-11-24",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    }
+   ]
   },
   {
    "id": "ml-3e5acdf7",
@@ -464,6 +496,102 @@
       }
      ],
      "cost2_mean": 0.0148
+    }
+   },
+   "forward": {
+    "n": 0,
+    "avgR": null,
+    "rci_lo": null,
+    "rci_hi": null,
+    "win": null,
+    "excess": null
+   },
+   "history": [
+    {
+     "date": "2026-11-24",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    }
+   ]
+  },
+  {
+   "id": "ml-10dd3d89",
+   "name": "株価指数の5つで、「RSI（3日）が30より下」のときに買う",
+   "spec": {
+    "direction": "long",
+    "universe": "index",
+    "conds": [
+     [
+      "rsi_lt",
+      3,
+      30
+     ]
+    ],
+    "exit": "hold_1"
+   },
+   "exit_ja": "次の日の終値で手じまい（損切りはATRの1.5倍）",
+   "universe_ja": "株価指数の5つ",
+   "conds_ja": [
+    "RSI（3日）が30より下"
+   ],
+   "direction": "long",
+   "kind": "edge",
+   "source": "mutation",
+   "why": null,
+   "parent": "ml-59f5c962",
+   "registered_at": "2026-11-24",
+   "status": "tracking",
+   "past": {
+    "explore": {
+     "n": 4477,
+     "mean": 0.0301,
+     "lo": 0.0071,
+     "hi": 0.053,
+     "win": 0.5376,
+     "placebo": {
+      "mean": 0.0045,
+      "sd": 0.0067,
+      "p": 0.0005,
+      "excess": 0.0256,
+      "z": 3.842,
+      "p_norm": 6.112987084072457e-05
+     },
+     "from": "1996-01-02"
+    },
+    "confirm": {
+     "n": 2196,
+     "mean": 0.0228,
+     "lo": -0.0141,
+     "hi": 0.0597,
+     "win": 0.5401,
+     "placebo": {
+      "mean": 0.0044,
+      "sd": 0.0095,
+      "p": 0.026,
+      "excess": 0.0184,
+      "z": 1.932,
+      "p_norm": 0.026698871469888447
+     },
+     "per_year": 246.9,
+     "to": "2026-11-23",
+     "halves": [
+      {
+       "from": "2018-01-01",
+       "to": "2021-12-31",
+       "n": 869,
+       "mean": 0.0323,
+       "excess": 0.0259
+      },
+      {
+       "from": "2022-01-01",
+       "to": "2026-11-23",
+       "n": 1327,
+       "mean": 0.0165,
+       "excess": 0.0152
+      }
+     ],
+     "cost2_mean": 0.0134
     }
    },
    "forward": {
@@ -612,6 +740,23 @@
    "date": "2026-11-23",
    "pool_size": 33,
    "active_before": 48
+  },
+  {
+   "source": "signal",
+   "id": "auto_group-index_reversal_long-True",
+   "kind": "edge",
+   "name": "株価指数の逆張り買い",
+   "label": "group=index×reversalL",
+   "registered_at": "2026-06-22",
+   "n": 324,
+   "avgR": -0.049,
+   "lo": -0.221,
+   "hi": 0.122,
+   "basis": "登録後",
+   "score": -0.049,
+   "date": "2026-11-24",
+   "pool_size": 33,
+   "active_before": 48
   }
  ],
  "days": {
@@ -720,7 +865,25 @@
    "cull_note": "3件を外した",
    "events": [],
    "active_before": 48
+  },
+  "2026-11-24": {
+   "lab_asof": "2026-11-23 08:48 JST",
+   "forward_asof": "2026-11-23 08:48 JST",
+   "rules_version": 2,
+   "chosen_id": "ml-10dd3d89",
+   "chosen_status": "passed",
+   "registered": [
+    "ml-10dd3d89"
+   ],
+   "register_note": "1件を登録した",
+   "cull_ids": [
+    "auto_group-index_reversal_long-True"
+   ],
+   "cull_target": 1,
+   "cull_note": "1件を外した",
+   "events": [],
+   "active_before": 48
   }
  },
- "updated_at": "2026-11-23"
+ "updated_at": "2026-11-24"
 }
