@@ -3,6 +3,33 @@
 
 ---
 
+## 2026-11-23
+- 判定: 🚩要人間レビュー（エスカレ）
+- 選定トピック: NVIDIAを揺るがす3つの試練──CEO辞任・SECプローブ・DOJ審査とAI株急落を中立整理（カテゴリ: 個別銘柄・AI株・マクロ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - SEC 8-K提出書類「nvidiaannouncesceotransiti.htm」2026-11-12
+  - Axios「Nvidia posts strong earnings amid Jensen Huang exit, reported SEC probe」2026-11-17
+  - Reuters/Investing.com「Nvidia's accounting is a focus of US SEC investigation, sources say」2026-11-20
+  - Bloomberg「Wall Street Regulator Probing Nvidia Accounting, Reuters Says」2026-11-20
+  - fourweekmba.com「Nvidia Erases Its 2026 Gains, Down 29% and $1.7T From Peak」
+  - KuCoin・Bloomberg・Saxo Bank 2026-11-23（先物反発・VIX）
+- コンプライアンス監査（第1Opus・自動公開ゲート）: 🟡グレー → 最終判定 🔴黒（エスカレ）
+  - エスカレ理由:
+    1. 実在の個人（ジェンスン・ファン氏）に関わる未確認の私的疑惑・国安上の問題の記述 → 名誉毀損リスク（法務リスク：表現軟化では解消不可）
+    2. 日付の事実誤り：本文「2026-11-12（水）」→正しくは木曜日、「2026-11-17（月）」→正しくは火曜日
+    3. NVDA株「約13%下落」が週次（11/12-13）と日次（11/20）の2回記載されており数値の取り違え疑い
+    4. 一部出典が一次情報でない（fourweekmba.com・political.org・KuCoin等）
+  - Opusコメント：金商法・景表法の点では白に近い。kinsho-v1×3・断定語なし・銘柄推奨なし はOK。
+- 下書き: 保存せず（§8「🔴黒の法務リスク本文はコミットしない」に準拠。ただし本エスカレは私的疑惑の扱いが主因で純粋な金商法違反ではないため、修正後の再執筆で白化できる可能性あり）
+- 人間向けアクション案:
+  1. 私的疑惑・国安記述を削除し、SEC 8-K公式文書と決算発表の事実のみに絞る
+  2. 日付・曜日を修正（11/12=木、11/17=火）
+  3. 13%の出典を整理（週次の下落率か日次の下落率かを明確に分ける）
+  4. 再執筆後にコンプラ再審査
+
+---
+
 ## 2026-11-22
 - 判定: ✅ 公開済み
 - 選定トピック: ドル円159円台・160円の壁と日銀12月利上げ観測──介入警戒・日米金利差・CPI上振れを中立整理（カテゴリ: FX・為替・日銀政策・マクロ）
