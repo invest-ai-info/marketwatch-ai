@@ -180,6 +180,7 @@ def news_section(session, news):
         return L + ["  直近30時間になし", ""]
     for x in items:
         L.append(f"  {flags.get(x.get('r'), '・')} {str(x.get('dt'))[5:16].replace('T', ' ')} {MB._cut(x.get('t'), 70)}（{x.get('s') or '出典不明'}）")
+        L += mail_html.url_line(x.get("u"))     # 🆕 2026-11-23 オーナー「ニュースのところ、リンクに」＝HTML では見出しがリンクになる
     return L + [""]
 
 

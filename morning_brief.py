@@ -14,6 +14,8 @@ import datetime as dt
 import json
 import os
 
+import mail_html      # ニュースの見出しの次の「🔗 URL」の行（url_line）。標準ライブラリだけの部品
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 FUND = os.path.join(HERE, "fundamental-context.json")
 EARN = os.path.join(HERE, "earnings-calendar.json")
@@ -188,6 +190,7 @@ def asia_section(fc, today, news=None):
         for x in picked:
             flag = {"CN": "🇨🇳", "AU": "🇦🇺"}.get(x.get("r"), "・")
             L.append(f"   {flag} {str(x.get('dt'))[5:16].replace('T', ' ')} {_cut(x.get('t'), 70)}（{x.get('s') or '出典不明'}）")
+            L += mail_html.url_line(x.get("u"), "      ")   # 🆕 2026-11-23 オーナー「ニュースのところ、リンクに」
     elif news is None:
         L.append("  機械で拾った見出し：取れなかった（朝のワークフローの前の段が失敗）")
     else:
@@ -214,6 +217,7 @@ def _asia_ai(fc):
     for x in items[:ASIA_TOP]:
         flag = {"CN": "🇨🇳", "AU": "🇦🇺"}.get(x.get("region"), "・")
         L.append(f"  {flag} [重要度 {imp.get(x.get('materiality'), '—')}] {_cut(x['headline'], 70)}（{x.get('published') or '日付不明'}・{x.get('source') or '出典不明'}）")
+        L += mail_html.url_line(x.get("url"))
         if x.get("why"):
             L.append(f"     → {_cut(x['why'], 70)}")
     return L

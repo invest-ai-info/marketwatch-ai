@@ -146,6 +146,33 @@ def test_size_far_below_gmail_clip():
     assert len(M.to_html(body).encode("utf-8")) < 80_000                                 # Gmail は約102KB を超えると切る
 
 
+def test_news_headline_becomes_link():
+    """2026-11-23 オーナー「このニュースのところ、リンクにしてもらうことができませんか」＝見出しの次の「🔗 URL」の行で、
+    HTML では見出しの文字だけが記事へのリンクになる（🔗 の行は出さない）。国旗・時刻・出典・重要度の札はそのまま。
+    http(s) 以外は押せる形にしない。前に見出しが無い 🔗 の行は「記事を開く」のリンクだけ"""
+    u = "https://news.google.com/rss/articles/CBMiABC?oc=5&hl=ja"
+    assert M.url_line(u) == [f"     🔗 {u}"] and M.url_line(u, "  ") == [f"  🔗 {u}"]
+    for bad in ("", None, "javascript:alert(1)", "ftp://x", "https://a b", "data:text/html,x"):
+        assert M.url_line(bad) == [], bad
+    body = "\n".join(["【📰 米国のニュースの見出し（直近30時間）】", "  🇺🇸 11-23 18:28 ドル・円は小高い、159円台に定着（ザイFX！）",
+                      f"     🔗 {u}", "  🇺🇸 11-23 18:18 欧州為替：ドル・円は小高い(フィスコ)（Yahoo!ファイナンス）", "",
+                      "【🇨🇳🇦🇺 中国・オーストラリアのニュース】", "  🇨🇳 [重要度 高] 中国の景気（人民元）が減速（2026-11-22・Reuters）",
+                      "     🔗 https://example.com/a?x=1&y=<2>", "     → 鉄鉱石に効く"])
+    page = M.to_html(body)
+    a = f'<a href="{html.escape(u, quote=True)}" style="color:{M.LINK_COLOR};text-decoration:underline">'
+    assert a + "ドル・円は小高い、159円台に定着</a>" in page                      # 見出しの文字だけがリンク
+    assert "🔗" not in page and u not in text_of(page)                              # URL の行は見えない
+    assert "<b>18:28</b>" in page and "（ザイFX！）" in text_of(page) and "🇺🇸" in page
+    assert page.count("<a href=") == 2                                              # 🔗 の無い見出しはリンクにしない
+    assert '<a href="https://example.com/a?x=1&amp;y=&lt;2&gt;"' in page             # URL の特殊文字を逃がす
+    assert ">中国の景気（人民元）が減速</a>" in page and "（2026-11-22・Reuters）" in text_of(page)   # 見出しの中の（）は残す
+    assert "重要度 高" in page and "→" in page
+    orphan = M.to_html("\n".join(["【📰 ニュース】", f"  🔗 {u}", "", f"  🔗 javascript:alert(1)"]))
+    assert ">🔗 記事を開く</a>" in orphan and "javascript:" in text_of(orphan) and 'href="javascript' not in orphan
+    head = M.to_html("\n".join(["【📰 ニュース】", f"🔗 {u}"]))                    # 帯の次の 🔗 ＝帯はリンクにしない
+    assert ">🔗 記事を開く</a>" in head and "【📰 ニュース】</div>" in head
+
+
 def test_three_mails_send_through_it():
     for p in ("send_indicator_digest.py", "session_brief.py"):
         src = open(p, encoding="utf-8").read()
