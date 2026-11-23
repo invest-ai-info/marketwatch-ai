@@ -106,6 +106,20 @@ def test_build_london_sections_and_subject():
     assert "四つ目" not in body and "金曜" not in body and "⏰" not in subj
 
 
+def test_news_has_link_lines():
+    """2026-11-23 オーナー「ニュースのところ、リンクに」＝見出しの次に「🔗 URL」（HTML では見出しがリンク）。URL が無い・変な値なら行を作らない"""
+    news = {"items": [{"t": "米雇用統計が上振れ", "s": "ロイター", "dt": "2026-10-13T18:05+09:00", "r": "US", "u": "https://news.google.com/rss/articles/X?oc=5"},
+                      {"t": "ドル円160円", "s": "ブルームバーグ", "dt": "2026-10-13T17:05+09:00", "r": "US", "u": "javascript:alert(1)"},
+                      {"t": "FRB議長が講演", "s": "日経", "dt": "2026-10-13T16:05+09:00", "r": "US"}]}
+    L = S.news_section("ny", news)
+    i = L.index("  🇺🇸 10-13 18:05 米雇用統計が上振れ（ロイター）")
+    assert L[i + 1] == "     🔗 https://news.google.com/rss/articles/X?oc=5"
+    assert L[i + 2] == "  🇺🇸 10-13 17:05 ドル円160円（ブルームバーグ）" and L[i + 3] == "  🇺🇸 10-13 16:05 FRB議長が講演（日経）"
+    _, body = S.build("ny", T("2026-10-13T19:00"), FX_D, news, FC, "send", _events_path())
+    page = S.mail_html.to_html(body)
+    assert '<a href="https://news.google.com/rss/articles/X?oc=5"' in page and ">米雇用統計が上振れ</a>" in page and page.count("<a href=") == 1
+
+
 def test_build_ny_friday_late_and_missing_parts():
     subj, body = S.build("ny", T("2026-10-16T20:10"), None, None, None, "late", _events_path())
     assert subj == "⏰遅れ 【NY前の戦術メモ】10/16(金) 今夜の指標0件" and "予定（20:00）より遅れて届いた" in body

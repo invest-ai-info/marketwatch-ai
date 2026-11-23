@@ -101,6 +101,15 @@ def test_asia_section_order_and_missing():
     assert "🇦🇺 10-09 05:10 豪ドル上昇（ロイター）" in t and "重要度の判断はしていない" in t
     assert "直近30時間になし" in "\n".join(B.asia_section(FC, dt.date(2026, 10, 9), {"items": []}))
     assert B.asia_section(FC, dt.date(2026, 10, 11)) == []
+    # 🆕 2026-11-23 オーナー「ニュースのところ、リンクに」＝機械の見出し（u）と AI が選んだもの（url）の次に「🔗 URL」
+    news = {"items": [{"t": "豪ドル上昇", "s": "ロイター", "dt": "2026-10-09T05:10+09:00", "r": "AU", "u": "https://news.google.com/rss/articles/A"}]}
+    fc = dict(FC, asia_watch=[{"headline": "人民元が安い", "published": "2026-10-08", "region": "CN", "materiality": "high",
+                               "source": "Reuters", "why": "鉄鉱石", "url": "https://www.reuters.com/x"}])
+    s = B.asia_section(fc, dt.date(2026, 10, 9), news)
+    i = next(k for k, x in enumerate(s) if "人民元が安い" in x)
+    assert s[i + 1] == "     🔗 https://www.reuters.com/x" and s[i + 2] == "     → 鉄鉱石"
+    j = s.index("   🇦🇺 10-09 05:10 豪ドル上昇（ロイター）")
+    assert s[j + 1] == "      🔗 https://news.google.com/rss/articles/A"
 
 
 def test_wired_into_digest_and_workflow():

@@ -57,7 +57,14 @@ TOK = re.compile(
 # 「今日の要点」の決算の行（9983 ファーストリテイリング（…））＝コードと名前を塗る（ほかの欄では使わない＝思わぬ数字を塗らない）
 TOK_CODES = re.compile(r"(?P<code>(?<![\w.])\d{3}[0-9A-Z] [^\s（・／]+(?=（))|" + TOK.pattern)
 IMP = {"高": ("#ffebe9", DOWN), "中": ("#fff8c5", "#9a6700"), "低": ("#eaeef2", "#57606a")}
-FONT = "-apple-system,'Hiragino Sans','Hiragino Kaku Gothic ProN',Meiryo,'Noto Sans JP',sans-serif"
+# 🆕 2026-11-23 オーナー「このニュースのところ、リンクにしてもらうことができませんか」＝ニュースの見出しの次の行に「🔗 URL」を置くと、
+# HTML では見出しの文字がその記事へのリンクになる（🔗 の行は消える）。文字だけのメールでは URL の行がそのまま出る（メールソフトが押せる形にする）。
+# 押せるのは http(s) だけ（RSS に変な値が来ても javascript: などは通さない）。リンクの色はコードの青（#0b57d0）と別の色にする
+LINK = re.compile(r"^🔗 (https?://\S+)$")
+LINK_COLOR = "#1a0dab"
+# ニュースの見出しの行＝「🇺🇸 11-23 18:28 見出し（出典）」「🇨🇳 [重要度 高] 見出し（日付・出典）」→ 見出しだけをリンクにする
+NEWS_HEAD = re.compile(r"^(\S+ (?:\d{2}-\d{2} \d{2}:\d{2}|\[重要度 [^\]]+\]) )(.+)（([^（）]*)）$")
+FONT ="-apple-system,'Hiragino Sans','Hiragino Kaku Gothic ProN',Meiryo,'Noto Sans JP',sans-serif"
 
 
 def _e(s):
@@ -194,16 +201,50 @@ def line_html(s, section=""):
     return f'<div style="{pad_css}">{inline(body, pct, codes)}</div>'
 
 
+def url_line(url, indent="     "):
+    """見出しの次に置く「🔗 URL」の行（本文を作る側が使う）。http(s) で空白を含まない URL だけ＝ほかは行を作らない（[] を返す）"""
+    url = str(url or "").strip()
+    return [f"{indent}🔗 {url}"] if LINK.match(f"🔗 {url}") else []
+
+
+def _a(text, url):
+    return (f'<a href="{html.escape(url, quote=True)}" style="color:{LINK_COLOR};text-decoration:underline">'
+            f'{_e(text)}</a>')
+
+
+def link_line(s, url):
+    """見出しの行 → 見出しの文字だけを記事へのリンクにする（国旗・時刻・重要度の札・出典はそのまま）。形が違えば行の文字全体をリンクに"""
+    body = s.strip()
+    pad = _pad(s[:len(s) - len(s.lstrip())])
+    pad_css = f"padding-left:{pad}px;" if pad else ""
+    m = NEWS_HEAD.match(body)
+    if m:
+        pre, title, src = m.groups()
+        return f'<div style="{pad_css}">{inline(pre)}{_a(title, url)}<span style="color:{MUTED}">（{_e(src)}）</span></div>'
+    return f'<div style="{pad_css}">{_a(body, url)}</div>'
+
+
 def to_html(body, subject=""):
     """文字の本文 → HTML の文書（見出し＝色の帯・一番上の題＝紺の帯・最後の区切りのあと＝小さめの灰色）"""
     lines = body.split("\n")
     seps = [i for i, x in enumerate(lines) if SEP.match(x.strip())]
     title = seps[0] + 1 if len(seps) >= 2 and seps[1] == seps[0] + 2 else None
     foot = seps[-1] if seps and (title is None or seps[-1] > title + 1) else None
+    links = {}                                   # 見出しの行の番号 → URL（すぐ次の行の「🔗 URL」）
+    for i, x in enumerate(lines):
+        m = LINK.match(x.strip())
+        prev = lines[i - 1].strip() if i else ""
+        if m and prev and not LINK.match(prev) and not prev.startswith("【") and not SEP.match(prev):
+            links[i - 1] = m.group(1)
     out, section, zebra = [], "", False
     for i, s in enumerate(lines):
         body_s = s.strip()
         if i in seps and i != foot:
+            continue
+        m = LINK.match(body_s)
+        if m:
+            if i - 1 not in links:               # 前に見出しが無い 🔗 の行＝その行だけでリンクにする
+                out.append(link_line(s.replace(m.group(0), "🔗 記事を開く"), m.group(1)))
             continue
         if i == title:
             out.append(f'<div style="background:#1f2a44;color:#fff;font-size:17px;font-weight:bold;padding:10px 12px;'
@@ -224,6 +265,10 @@ def to_html(body, subject=""):
             out.append(f'<div style="background:{section_color(body_s)};color:#fff;font-weight:bold;padding:6px 10px;'
                        f'border-radius:6px;margin:14px 0 6px">{_e(body_s)}</div>')
             zebra = False
+            continue
+        if i in links:
+            zebra = False
+            out.append(link_line(s, links[i]))
             continue
         m = ROW.match(s)
         if m:
