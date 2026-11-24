@@ -115,6 +115,12 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-25",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
   },
@@ -214,6 +220,12 @@
     },
     {
      "date": "2026-11-24",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    },
+    {
+     "date": "2026-11-25",
      "n": 0,
      "avgR": null,
      "lo": null
@@ -321,6 +333,12 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-25",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
   },
@@ -414,6 +432,12 @@
    "history": [
     {
      "date": "2026-11-24",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    },
+    {
+     "date": "2026-11-25",
      "n": 0,
      "avgR": null,
      "lo": null
@@ -512,6 +536,12 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-25",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
   },
@@ -598,8 +628,18 @@
     "n": 0,
     "avgR": null,
     "rci_lo": null,
-    "rci_hi": null
-   }
+    "rci_hi": null,
+    "win": null,
+    "excess": null
+   },
+   "history": [
+    {
+     "date": "2026-11-25",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    }
+   ]
   }
  ],
  "culls": [
@@ -757,6 +797,23 @@
    "date": "2026-11-24",
    "pool_size": 33,
    "active_before": 48
+  },
+  {
+   "source": "signal",
+   "id": "long_up_above_edge",
+   "kind": "edge",
+   "name": "上昇トレンド中、値段が2本の移動平均線より上の買い",
+   "label": "ロング×上昇トレンド×MA両線の上",
+   "registered_at": "2026-07-27",
+   "n": 323,
+   "avgR": -0.046,
+   "lo": -0.236,
+   "hi": 0.143,
+   "basis": "登録後",
+   "score": -0.046,
+   "date": "2026-11-25",
+   "pool_size": 33,
+   "active_before": 47
   }
  ],
  "days": {
@@ -883,7 +940,23 @@
    "cull_note": "1件を外した",
    "events": [],
    "active_before": 48
+  },
+  "2026-11-25": {
+   "lab_asof": "2026-11-25 05:39 JST",
+   "forward_asof": "2026-11-25 05:39 JST",
+   "rules_version": 2,
+   "chosen_id": "ml-55f17211",
+   "chosen_status": "near_miss",
+   "registered": [],
+   "register_note": "今日の候補はどれも過去の確かめ8つを全部は通らなかった（いちばん惜しかったものは記事で紹介するが、登録しない）",
+   "cull_ids": [
+    "long_up_above_edge"
+   ],
+   "cull_target": 1,
+   "cull_note": "1件を外した",
+   "events": [],
+   "active_before": 47
   }
  },
- "updated_at": "2026-11-24"
+ "updated_at": "2026-11-25"
 }
