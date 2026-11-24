@@ -480,4 +480,5 @@ SYNC_FILES = [
     "guide-signal-lab-158.html",
     "guide-company-9962-misumi.html",
     "guide-signal-lab-159.html",
+    "guide-company-6465-hoshizaki.html",
 ]
