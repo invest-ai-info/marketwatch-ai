@@ -411,3 +411,104 @@ def test_cli_adds_v2(tmp_path, monkeypatch, capsys):
     t = T.load()["trades"][0]
     assert t["far_min"] == 20 and t["pairs_hit"] == 2 and t["fits_v2_entry"] is True and t["entry_time"] == "17:30:00"
     assert "決まりの紙 v2 の入口に全部当てはまった取引 1件" in capsys.readouterr().out
+
+
+# ── 決まりの紙 v3（追記⑧）＝2ペア以上が水平線か MA に当たったら、一番強い通貨に入る（2026-11-25）──
+
+def v3(**kw):
+    """割った線 209.963 → 20分で30pips → ほかの2ペアが線か MA に当たり、まだ線の手前にいる強いほう（ポンド円）を売る"""
+    base = dict(pairs_lm=2, pairs_hit=None, entry_type="series", strong_flow="GBPJPY", strong_far="GBPJPY")
+    base.update(kw)
+    return v2(**base)
+
+
+def test_v3_keeps_the_count_and_both_answers():
+    t = v3(strong_far="EURJPY")
+    assert t["pairs_lm"] == 2 and t["strong_flow"] == "GBPJPY" and t["strong_far"] == "EURJPY"
+    assert t["flags"]["pairs_lm2"] is True and t["flags"]["pick_flow"] is True and t["flags"]["pick_far"] is False
+    assert t["fits_v3_entry"] is True
+
+
+def test_v3_needs_two_pairs():
+    assert v3(pairs_lm=3)["fits_v3_entry"] is True
+    t = v3(pairs_lm=1)
+    assert t["flags"]["pairs_lm2"] is False and t["fits_v3_entry"] is False        # v2 の「できれば」と違い、条件
+    t = v3(pairs_lm=None)
+    assert t["flags"]["pairs_lm2"] is None and t["fits_v3_entry"] is None
+    assert v3(pairs_lm=0)["fits_v3_entry"] is False
+    for bad in (-1, 4):
+        with pytest.raises(ValueError):
+            v3(pairs_lm=bad)
+
+
+def test_v3_does_not_need_the_entered_pair_on_a_line():
+    for k in T.ENTRY_TYPES:
+        assert v3(entry_type=k)["fits_v3_entry"] is True                           # 入ったペアがどの線に当たっていたかは問わない
+    assert v3()["fits_v2_entry"] is False                                          # v2 は入るペア自身の当たりが要る
+
+
+def test_v3_needs_the_strongest_pair():
+    def f(x):
+        return v3(flags=T.parse_flags("tokyo_break=1,event_clear=1" + x))["fits_v3_entry"]
+    assert f(",strongest=1") is True and f(",strongest=0") is False and f("") is None
+    assert v3(strong_flow="EURJPY")["fits_v3_entry"] is True                        # 道具の答えと違っても、オーナーの見立てが優先
+
+
+def test_v3_needs_30pips_and_the_common_conditions():
+    assert v3(far_min=35)["fits_v3_entry"] is False and v3(far_min=None)["fits_v3_entry"] is None
+    for kw in (dict(sl=None, sl_line=None), dict(spread=2.6), dict(t_open=J(2026, 12, 4, 17, 30), t_close=J(2026, 12, 4, 17, 50)),
+               dict(t_open=J(2026, 12, 1, 19, 0), t_close=J(2026, 12, 1, 19, 10)), dict(flags=T.parse_flags("tokyo_break=0,strongest=1,event_clear=1")),
+               dict(flags=T.parse_flags("tokyo_break=1,strongest=1,event_clear=0"))):
+        assert v3(**kw)["fits_v3_entry"] is False
+
+
+def test_v1_and_v2_are_unchanged_by_v3():
+    assert v2()["fits_v2_entry"] is True and v2()["fits_v3_entry"] is None         # 線か MA のペア数の記録が無い＝分からない
+    assert v2(pairs_lm=0)["fits_v2_entry"] is True
+    t = gbpjpy()
+    assert t["fits_v1_entry"] is True and t["pairs_lm"] is None and t["strong_flow"] is None and t["strong_far"] is None
+    assert t["flags"]["pick_flow"] is None and t["flags"]["pick_far"] is None
+
+
+def test_reading_table_splits_v3_items():
+    def one(i, r, **kw):
+        t = v3(tid=f"w{i}", **kw)
+        t["r_net"] = r
+        return t
+    r = T.reading_table([one(1, 1.0), one(2, 3.0, strong_far="EURJPY"), one(3, -1.0, pairs_lm=1, strong_flow="EURJPY"), one(4, 9.0, pairs_lm=None, strong_flow=None)])
+    assert r["pairs_lm2=o"] == {"n": 2, "mean": 2.0} and r["pairs_lm2=x"] == {"n": 1, "mean": -1.0}
+    assert r["fits_v3_entry=o"] == {"n": 2, "mean": 2.0} and r["fits_v3_entry=x"] == {"n": 1, "mean": -1.0}
+    assert r["pick_flow=o"] == {"n": 2, "mean": 2.0} and r["pick_flow=x"] == {"n": 1, "mean": -1.0}
+    assert r["pick_far=x"] == {"n": 1, "mean": 3.0} and r["entry_type=series"]["n"] == 4
+
+
+def test_status_counts_v3_without_average():
+    st = T.empty_state()
+    t = v3(tid="z1")
+    t["r_net"] = 2.345
+    T.add(st, t)
+    s = T.status_text(st)
+    assert "決まりの紙 v3 の入口に全部当てはまった取引 1件" in s and "シリーズ" in s and "2.345" not in s
+
+
+def test_old_record_without_v3_keys_still_works():
+    st = T.empty_state()
+    t = v2()
+    for k in ("pairs_lm", "strong_flow", "strong_far", "fits_v3_entry"):
+        t.pop(k)
+    for k in ("pairs_lm2", "pick_flow", "pick_far"):
+        t["flags"].pop(k)
+    T.add(st, t)
+    assert "決まりの紙 v3 の入口に全部当てはまった取引 0件" in T.status_text(st)
+    assert T.reading_table([t])["pairs_lm2=o"]["n"] == 0
+
+
+def test_cli_adds_v3(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+    T.main(["add", "--id", "79", "--pair", "GBPJPY", "--side", "sell", "--open", "2026.12.01 10:30:00", "--entry", "209.767",
+            "--sl", "210.003", "--close", "2026.12.01 10:50:00", "--exit", "209.640", "--spread", "1.8", "--server-time",
+            "--entry-type", "series", "--break-line", "209.963", "--extreme", "209.570", "--sl-line", "209.963",
+            "--far-min", "20", "--pairs-lm", "2", "--flags", V2_FLAGS])
+    t = T.load()["trades"][0]
+    assert t["pairs_lm"] == 2 and t["fits_v3_entry"] is True and t["fits_v2_entry"] is False and t["entry_type"] == "series"
+    assert "決まりの紙 v3 の入口に全部当てはまった取引 1件" in capsys.readouterr().out

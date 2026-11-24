@@ -26,9 +26,11 @@
       … --far-min 20 --pairs-hit 2 --sl-line 割った線
       --far-min＝抜けた5分足が確定してから、ヒゲが線から30pips に届いた足が確定するまでの分（抜けた足そのものなら 0・届いていなければ付けない）
       --pairs-hit＝入ったとき、ドル円・ユーロ円・ポンド円のうち、それぞれの 50%・割った線・MA のどれかまで 3pips 以内に来ていた数（入ったペアも入れる）
+  決まりの紙 v3（「OJ」追記⑧・2026-11-25＝3つのうち2つ以上が割った線か MA に当たったときに、一番強い通貨に入る。50% は当たりに入れない・強い通貨そのものは当たっていなくてよい）は
+      … --far-min 20 --pairs-lm 2 --flags strongest=1 --sl-line 割った線（--pairs-lm＝割った線か MA まで 3pips 以内に来ていた数。入ったペアがまだ線の手前なら --entry-type series）
   🆕 **いつもの足し方**（ドル円・ユーロ円・ポンド円）＝ add に --auto を付ける：入口の種類・割った線・いちばん遠い値・30pips までの分・当たったペアの数・
-     3ペアそろいを、Yahoo の足から埋める（trade_fill.py・入る前の値だけ）。人が渡した値がいつも優先。決められないもの（境目）があれば**書かずに止まり**、聞くことを出す
-     → オーナーに聞いて値を付けてもう一度／分からないままなら --unknown line,far,type,pairs。書かずに見るだけ＝ python trade_journal.py fill --pair … --side … --open … --entry …
+     一番強い通貨か・3ペアそろいを、Yahoo の足から埋める（trade_fill.py・入る前の値だけ）。人が渡した値がいつも優先。決められないもの（境目）があれば**書かずに止まり**、聞くことを出す
+     → オーナーに聞いて値を付けてもう一度／分からないままなら --unknown line,far,type,pairs,strong。書かずに見るだけ＝ python trade_journal.py fill --pair … --side … --open … --entry …
   python trade_journal.py status
   （--server-time＝MT4 の画面の時刻（BigBoss のサーバー時刻）を日本時間に直す。冬＝+7時間・夏＝+6時間）
 """
@@ -48,10 +50,11 @@ SPREAD_MAX = 2.5              # 決まりの紙 v1：スプレッドがこれよ
 COST_MULT = 7.0               # 決まりの紙 v1：損切りの幅はスプレッドの7倍以上（費用 0.15R 以下）
 # 手で付ける項目（決まりの紙 v1 の部品）。自動で付く3つ（in_window・sl_order・spread_ok）は数字から決める
 MANUAL_FLAGS = ("tokyo_break", "strongest", "htf_aligned", "tp_before_high", "event_clear", "sl_at_line")
-AUTO_FLAGS = ("in_window", "sl_order", "spread_ok", "weekday_ok", "in_window2", "far30", "pairs2")
+AUTO_FLAGS = ("in_window", "sl_order", "spread_ok", "weekday_ok", "in_window2", "far30", "pairs2", "pairs_lm2", "pick_flow", "pick_far")
 # half50＝50%押し目（型1：クロス円がそろって東京時間の線を割る → 線と新安値の 50% の戻りで入る。2026-11-24 夜 オーナー「はい、足す」）。判定は種類で分けない＝読むための表だけ
-ENTRY_TYPES = ("ema15", "line", "half50", "other")
-TYPE_JP = {"ema15": "15分足EMAの押し", "line": "ライン", "half50": "50%押し目", "other": "ほか"}
+# series＝ほかの2ペアが線か MA に当たったとき、まだ線の手前にいる一番強いペアに入った（v3・11/25）
+ENTRY_TYPES = ("ema15", "line", "half50", "series", "other")
+TYPE_JP = {"ema15": "15分足EMAの押し", "line": "ライン", "half50": "50%押し目", "series": "シリーズの当たり（入ったペアは線の手前）", "other": "ほか"}
 # 何押しで入ったか（2026-11-24 夜 オーナー「1押し、2押しで入った場合は1押しの方の直近安値のラインで損切り」）
 PUSHES = ("break", "1", "2", "3+")
 # 入口が決まりの紙 v1 に全部当てはまるか（出口の tp_before_high と、段2で腕にする htf_aligned は入れない）
@@ -64,6 +67,10 @@ FILL_TOL = 0.5                # trade_fill.py で埋めた値の幅（pips・tra
 WINDOW2_HOURS = 2             # 終わり＝ロンドンの始まり（英国の朝8時）から2時間まで（段2の登録と同じ＝冬 19:00・夏 18:00 の前）
 V2_ENTRY = ("tokyo_break", "in_window2", "strongest", "sl_order", "event_clear", "spread_ok", "weekday_ok", "far30")
 V2_TYPES = ("ema15", "line", "half50")
+# 決まりの紙 v3（「OJ」追記⑧・2026-11-25 オーナー「入る条件はドル円、ユーロ円、ポンド円の2つ以上が水平線かMAに当たったときに、そのときに一番強い通貨にエントリーする」）
+# 2ペア以上は条件・50% は当たりに入れない・入ったペアがどの線に当たっていたかは問わない
+V3_ENTRY = ("tokyo_break", "in_window2", "strongest", "sl_order", "event_clear", "spread_ok", "weekday_ok", "far30", "pairs_lm2")
+PAPERS = ("v1", "v2", "v3")
 
 
 def empty_state():
@@ -175,7 +182,8 @@ def fits(flags, keys, type_ok):
 
 def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=None, pip=None,
                entry_type="other", flags=None, note="", used_for_rule=False, push=None, sl_line=None,
-               break_line=None, extreme=None, far_min=None, pairs_hit=None, filled=(), far_unknown=False):
+               break_line=None, extreme=None, far_min=None, pairs_hit=None, filled=(), far_unknown=False,
+               pairs_lm=None, strong_flow=None, strong_far=None):
     """MT4 の行の数字 → 記録（値段・pips・R・○×だけ）。t_open・t_close は日本時間。純関数
 
     used_for_rule＝決まりの紙を作るのに使った取引（11/24 のポンド円）。7/26 の判定には数えるが、読むための表からは外す
@@ -184,6 +192,8 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     break_line・extreme＝割った線と、そこからいちばん遠くまで行った値（型1）→ leg_pips・depth_pct を残す
     far_min＝抜けてから30pips 離れるまでの分・pairs_hit＝線の近くにいたペアの数（決まりの紙 v2）→ far30・pairs2 を残す
     filled＝trade_fill.py が埋めた項目（人が言った値と分けて残す）・far_unknown＝30pips に届いたかが境目で、人に聞いても分からなかった
+    pairs_lm＝割った線か MA に当たっていたペアの数（v3）→ pairs_lm2。strong_flow・strong_far＝道具が出した「一番強い通貨」の2つの答え（ドル円×ユーロポンドの向き／線からいちばん遠い割合）
+    → 入ったペアと同じか（pick_flow・pick_far）を読むための表に残す。決まりの○×は strongest（オーナーの見立てが優先）
     """
     side = side.lower()
     if side not in ("buy", "sell"):
@@ -192,8 +202,9 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
         raise ValueError(f"entry_type は {ENTRY_TYPES}")
     if push is not None and push not in PUSHES:
         raise ValueError(f"push は {PUSHES}")
-    if pairs_hit is not None and not 0 <= pairs_hit <= 3:
-        raise ValueError("pairs_hit は 0〜3（ドル円・ユーロ円・ポンド円）")
+    for k, v in (("pairs_hit", pairs_hit), ("pairs_lm", pairs_lm)):
+        if v is not None and not 0 <= v <= 3:
+            raise ValueError(f"{k} は 0〜3（ドル円・ユーロ円・ポンド円）")
     pip = pip or pip_size(pair)
     sgn = 1 if side == "buy" else -1
     sl = sl if sl else None             # MT4 の 0.00000＝逆指値なし
@@ -222,14 +233,16 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     f["in_window2"] = dt.time(15, 0) <= t_open.time() < dt.time(london_open(t_open.date()) + WINDOW2_HOURS, 0)
     f["far30"] = None if far_unknown else far30_of(leg_pips, far_min, FILL_TOL if {"break_line", "extreme"} & set(filled) else 0.0)
     f["pairs2"] = None if pairs_hit is None else pairs_hit >= 2
+    f["pairs_lm2"] = None if pairs_lm is None else pairs_lm >= 2
+    f["pick_flow"], f["pick_far"] = (None if x is None else x == pair.upper() for x in (strong_flow, strong_far))
     return {"id": str(tid), "date": t_open.strftime("%Y-%m-%d"), "entry_time": t_open.strftime("%H:%M:%S"),
             "exit_time": t_close.strftime("%H:%M:%S"), "hold_min": round((t_close - t_open).total_seconds() / 60, 1),
             "pair": pair.upper(), "side": side, "entry": entry, "sl": sl, "tp": tp, "exit": exit_,
             "spread_pips": spread, "risk_pips": risk, "pnl_pips": pnl, "r_net": r_net, "r_gross": r_gross,
             "cost_r": cost_r, "exit_kind": kind, "entry_type": entry_type, "push": push, "sl_line": sl_line,
             "sl_buffer_pips": buf, "break_line": break_line, "extreme": extreme, "leg_pips": leg_pips,
-            "depth_pct": depth_pct, "far_min": far_min, "pairs_hit": pairs_hit, "flags": f,
-            "fits_v1_entry": fits(f, V1_ENTRY, entry_type == "ema15"), "fits_v2_entry": fits(f, V2_ENTRY, entry_type in V2_TYPES),
+            "depth_pct": depth_pct, "far_min": far_min, "pairs_hit": pairs_hit, "pairs_lm": pairs_lm, "strong_flow": strong_flow, "strong_far": strong_far, "flags": f,
+            "fits_v1_entry": fits(f, V1_ENTRY, entry_type == "ema15"), "fits_v2_entry": fits(f, V2_ENTRY, entry_type in V2_TYPES), "fits_v3_entry": fits(f, V3_ENTRY, True),
             "filled": list(filled), "used_for_rule": bool(used_for_rule), "note": note}
 
 
@@ -239,19 +252,25 @@ def auto_fill(args, t_open, flags):
     if args.pair.upper() not in F.PAIRS:
         return [], False, "（自動で埋めるのはドル円・ユーロ円・ポンド円の取引だけ＝埋めずに足す）", []
     unknown = parse_unknown(args.unknown)
-    given = {k for k in ("entry_type", "break_line", "extreme", "far_min", "pairs_hit") if getattr(args, k) is not None}
+    given = {k for k in ("entry_type", "break_line", "extreme", "far_min", "pairs_hit", "pairs_lm") if getattr(args, k) is not None}
+    if flags.get("strongest") is not None:
+        given.add("strongest")
     b5, b1 = F.load(t_open)
     r = F.analyze(b5, b1, args.pair, args.side, t_open, args.entry, args.break_line, args.extreme)
     ask = F.questions(r, given, unknown)
-    val = {"entry_type": None, "break_line": None, "extreme": None, "far_min": None, "pairs_hit": None}
+    val = {}
     if r["line"] is not None:
-        val = {"entry_type": r["entry_types"][0] if len(r["entry_types"]) == 1 else None, "break_line": round(r["line"], 3),
-               "extreme": round(r["extreme"], 3), "far_min": r["far_min"], "pairs_hit": r["pairs_hit"]}
+        val = {"entry_type": r["type"], "break_line": round(r["line"], 3), "extreme": round(r["extreme"], 3), "far_min": r["far_min"],
+               "pairs_hit": r["pairs_hit"], "pairs_lm": r["pairs_lm"]}
+        args.strong_flow, args.strong_far = r["strong_flow"], r["strong_far"]
     done = []
     for k, v in val.items():
         if k not in given and v is not None:
             setattr(args, k, v)
             done.append(k)
+    if r["line"] is not None and r["strong_state"] and flags.get("strongest") is None:      # 道具の答えと違うときは × と決めない（オーナーはチャートの形で見る）
+        flags["strongest"] = True
+        done.append("strongest")
     if flags.get("tokyo_break") is None and r["signal"]:      # 見つからないときは × と決めない（線の見方が違うだけかもしれない）
         flags["tokyo_break"] = True
         done.append("tokyo_break")
@@ -261,9 +280,9 @@ def auto_fill(args, t_open, flags):
 
 def parse_unknown(text):
     out = {x.strip() for x in (text or "").split(",") if x.strip()}
-    bad = out - {"line", "far", "type", "pairs"}
+    bad = out - {"line", "far", "type", "pairs", "strong"}
     if bad:
-        raise SystemExit(f"🚨 --unknown に使えるのは line・far・type・pairs（{', '.join(sorted(bad))} は知らない）")
+        raise SystemExit(f"🚨 --unknown に使えるのは line・far・type・pairs・strong（{', '.join(sorted(bad))} は知らない）")
     return out
 
 
@@ -309,11 +328,11 @@ def reading_table(trades):
     """項目ごとの ○ と × ・入口の種類ごとの R の平均と件数（読むだけ・決まりの紙を作るのに使った取引は外す）"""
     trades = [t for t in trades if not t.get("used_for_rule")]
     rows = {}
-    for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line", "in_window2", "far30", "pairs2"):
+    for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line", "in_window2", "far30", "pairs2", "pairs_lm2", "pick_flow", "pick_far"):
         for v in (True, False):
             xs = [t["r_net"] for t in trades if t["flags"].get(k) is v]
             rows[f"{k}={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
-    for k in ("fits_v1_entry", "fits_v2_entry"):
+    for k in (f"fits_{v}_entry" for v in PAPERS):
         for v in (True, False):
             xs = [t["r_net"] for t in trades if t.get(k) is v]
             rows[f"{k}={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
@@ -350,7 +369,7 @@ def status_text(st):
     if no_sl:
         L.append(f"⚠️ 損切りの逆指値が無く R を出せない取引 {len(no_sl)}件（数えない）：" +
                  "・".join(f"{t['date']} {t['pair']}" for t in no_sl))
-    for v in ("v1", "v2"):
+    for v in PAPERS:
         fit = sum(1 for t in rs if t.get(f"fits_{v}_entry") is True)
         L.append(f"決まりの紙 {v} の入口に全部当てはまった取引 {fit}件（成績は判定の日にだけ出す）")
     kinds = [(k, sum(1 for t in rs if t.get("entry_type") == k)) for k in ENTRY_TYPES]
@@ -396,8 +415,9 @@ def main(argv):
     a.add_argument("--extreme", type=float, default=None, help="型1：線からいちばん遠くまで行った値（売り＝新安値・買い＝最高値）")
     a.add_argument("--far-min", type=float, default=None, help="決まりの紙 v2：抜けてから線の30pips 先に届くまでの分（抜けた足なら 0・届いていなければ付けない）")
     a.add_argument("--pairs-hit", type=int, default=None, help="決まりの紙 v2：線まで 3pips 以内に来ていたペアの数（0〜3・入ったペアも入れる）")
+    a.add_argument("--pairs-lm", type=int, default=None, help="決まりの紙 v3：割った線か MA まで 3pips 以内に来ていたペアの数（0〜3・50%% は入れない・入ったペアも入れる）")
     a.add_argument("--auto", action="store_true", help="空いている項目を Yahoo の足から埋める（境目があれば書かずに止まる）")
-    a.add_argument("--unknown", default="", help="--auto で決められず、聞いても分からなかったもの（line,far,type,pairs）")
+    a.add_argument("--unknown", default="", help="--auto で決められず、聞いても分からなかったもの（line,far,type,pairs,strong）")
     a.add_argument("--flags", default="")
     a.add_argument("--note", default="")
     a.add_argument("--used-for-rule", action="store_true", help="決まりの紙を作るのに使った取引（読むための表から外す）")
@@ -409,10 +429,11 @@ def main(argv):
     b.add_argument("--server-time", action="store_true")
     sub.add_parser("status")
     args = ap.parse_args(argv)
+    args.strong_flow = args.strong_far = None
     if args.cmd == "fill":
         t_open = parse_time(args.open)
         t_open = server_to_jst(t_open) if args.server_time else t_open
-        args.entry_type = args.far_min = args.pairs_hit = None
+        args.entry_type = args.far_min = args.pairs_hit = args.pairs_lm = None
         args.unknown = ""
         return fill_text(args, t_open, {})[0]
     st = load()
@@ -431,7 +452,7 @@ def main(argv):
         tr = make_trade(args.id, args.pair, args.side, t_open, args.entry, args.sl, args.tp, t_close, args.exit,
                         args.spread, args.pip, args.entry_type or "other", flags, args.note,
                         args.used_for_rule, args.push, args.sl_line, args.break_line, args.extreme, args.far_min, args.pairs_hit,
-                        done, far_unknown)
+                        done, far_unknown, args.pairs_lm, args.strong_flow, args.strong_far)
         add(st, tr)
         r = f"{tr['r_net']:+.2f}R" if tr["r_net"] is not None else "R なし（逆指値なし）"
         print(f"足した：{tr['date']} {tr['entry_time']} {tr['pair']} {tr['side']}・{tr['pnl_pips']:+.1f}pips・{r}")

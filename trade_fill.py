@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
-"""取引の記録（trade_journal.py）の、チャートを見ないと分からない数字を5分足から計算する（決まりの紙 v2＝PILLAR_PREREG.md「OJ」追記⑥）。
-2026-11-24 夜 オーナー「作る」（注文の行を送るだけで記録を埋める）。
+"""取引の記録（trade_journal.py）の、チャートを見ないと分からない数字を5分足から計算する（決まりの紙 v2・v3＝PILLAR_PREREG.md「OJ」追記⑥⑧）。
+2026-11-24 夜 オーナー「作る」（注文の行を送るだけで記録を埋める）。11/25 v3＝「2つ以上が水平線かMAに当たったときに、そのときに一番強い通貨にエントリー」
 
 計算するもの（ドル円・ユーロ円・ポンド円の取引だけ・入る前に見えていた足だけ）:
-  割った東京の線・抜けた足／線から30pips 離れるまでの分／いちばん遠い値／50%・割った線・MA のどれに当たっていたか／当たっていたペアの数／3ペアそろいの合図
+  割った東京の線・抜けた足／線から30pips 離れるまでの分／いちばん遠い値／50%・割った線・MA のどれに当たっていたか／当たっていたペアの数（v3＝線か MA だけ）／一番強い通貨／3ペアそろいの合図
 しないもの: 入る所を知らせる・売買する・勝ち負けを見る（決済の値は使わない）
 
 決まりの読み方（段2 の oj_lab.py と同じ）:
 - 線＝8:00 から、そのペアが初めて抜けた足の1本前までの高値の最大（売りは安値の最小）。14:55 に始まる足まで。抜け＝14:00 からの足の終値が線の外
 - 30pips＝抜けた足が確定してから、ヒゲが線から30pips に届いた足が確定するまでの分（抜けた足そのものなら 0）
 - 50%＝線と、入る前までにいちばん遠くまで行った値の真ん中／MA＝15分足 EMA10（いま動いている15分足の1本前まで）
-- 当たり＝入った分までの値動き（1つ前の5分足から）が、線の 3pips 以内に来た
+- 当たり＝入った分までの値動き（1つ前の5分足から）が、線の 3pips 以内に来た。v3 のペアの数は、割った線と MA だけ（50% は入れない）。計算した線は業者のチャートの線と数 pips ずれる（11/24 は 1.3〜3.7pips）ので、線が ±4pips ずれても同じ答えのときだけ ○× を決める
+- 一番強い通貨＝ドル円とユーロポンド（ユーロ円÷ポンド円）の、入る前に確定した最後の5分足の終値が 15分足 EMA10 の上か下か（段2 の oj_lab.pick_pair と同じ）。買い＝ドル円が上のときだけ・ユーロポンドが下→ポンド円／上→ユーロ円（売りは逆）。ドル円は選ばない
+  業者（MT4）の足と比べて、向きが逆になったのは 1,869本のうち ドル円は ±0.7pips・ユーロポンドは ±0.5pips を「境目」にすると 0本と1本（2026-11-25 に測った・9/30〜11/23 の 15:00〜18:55）。比べるための別の答え＝線からいちばん遠くまで行った割合が大きいペア
 - 値は Yahoo の1分足（30日以内）と5分足（60日以内）。業者（BigBoss の MT4・5分足）と比べると、9/30〜11/23 の3,151通りで、線のずれは9割が 1.0pips 以内・いちばん遠い値は 0.7pips 以内、
   「30分以内に30pips」の○×が逆になったのは 0・当たりの○×が逆になったのは 9,447 のうち 44（0.5%）（2026-11-24 に測った）
   → 30pips と 3pips の境目の ±0.5pips は「境目」＝決めずに人に聞く。月曜の8時台は Yahoo に足が無い（冬時間）・線が 4pips ずれると30pips の○×が変わる（104通りのうち25）＝線を人に確かめる。オーナーが言った値（線・いちばん遠い値・分・数・種類）がいつも優先
@@ -31,6 +33,8 @@ EMA_N = 10
 FAR_PIPS, FAR_MIN, NEAR_PIPS, TOL = 30.0, 30, 3.0, 0.5
 LINE_SENSE = 4.0                                                   # 線がこれだけ内・外にずれたら30pips の○×が変わるなら、線を人に確かめる（11/24 の赤い線との差 3.7pips から）
 LINE_WARN_PIPS = 5.0                                               # オーナーの線と計算した線がこれ以上離れたら知らせる
+LM = ("line", "ema15")                                             # v3 で当たりに数える線（割った線・MA）
+FLOW_TOL = {"USDJPY": 0.7, "EURGBP": 0.5}                          # 向きの境目（pips・ユーロポンドは 0.0001 が 1pip）
 JST = dt.timezone(dt.timedelta(hours=9))
 UA = {"User-Agent": "Mozilla/5.0"}
 
@@ -144,6 +148,46 @@ def gap(bars, lv):
     return round(max(0.0, lo - lv, lv - hi) / PIP, 1)
 
 
+def near_state(win, wide, lv):
+    """線 lv の 3pips 以内に来たか → True／False／None＝境目"""
+    d, dw = gap(win, lv), gap(wide, lv)
+    if d is not None and d <= NEAR_PIPS - TOL:
+        return True
+    return False if dw is not None and dw > NEAR_PIPS + TOL else None   # 入る所の足が1本も無ければ「境目」＝×とは決めない
+
+
+def type_of(state, lm_two):
+    """入ったペアの当たり → 入口の種類（1つに決まらなければ None）。v3 では 50% は当たりに入れない＝線・MA を先に見る。どれにも当たっていなくて、2ペア以上が線か MA なら series"""
+    hit = [k for k in LM if state.get(k) is True]
+    if hit:
+        return hit[0] if len(hit) == 1 else None
+    if any(k in state and state[k] is None for k in LM):
+        return None
+    if "half50" in state and state["half50"] is not False:
+        return "half50" if state["half50"] else None
+    return "series" if lm_two else None
+
+
+def flow_of(bars, pip, tol):
+    """最後の5分足の終値 − いま動いている15分足の1本前までの EMA10 → (pips, 1／−1／None＝境目か、まだ無い)"""
+    e = ema15(bars)
+    if not e or e[-1] is None:
+        return None, None
+    d = round((bars[-1][4] - e[-1]) / pip, 2)
+    return d, (None if abs(d) < tol else (1 if d > 0 else -1))
+
+
+def pick_of(s, u, g):
+    """合図の向き・ドル円の向き・ユーロポンドの向き → (入るペア か None＝決まらない, 確かか)。段2 の oj_lab.pick_pair と同じ"""
+    if u is None:
+        return None, False
+    if u != s:
+        return None, True
+    if g is None:
+        return None, False
+    return ("GBPJPY" if g == -s else "EURJPY"), True
+
+
 def pairs_of(state):
     """{ペア: True/False/None＝境目} → (数, 2ペア以上か)。境目のせいで「2以上か」が変わるときは (None, None)"""
     lo = sum(1 for v in state.values() if v is True)
@@ -182,14 +226,14 @@ def pair_state(bars, ones, s, d0, j0, m0, line, extreme, name):
     e = [E[k] for k, b in enumerate(bars) if b[0] <= j0]
     if e and e[-1] is not None:
         lv["ema15"] = e[-1]
-    x["hits"], x["state"] = {}, {}
-    for k, v in lv.items():
-        d, dw = gap(win, v), gap(wide, v)
-        x["hits"][k] = d if d is not None else dw
-        near = d is not None and d <= NEAR_PIPS - TOL
-        far = dw is not None and dw > NEAR_PIPS + TOL                   # 入る所の足が1本も無ければ「境目」＝×とは決めない
-        x["state"][k] = True if near else (False if far else None)
+    x["hits"] = {k: gap(win or wide, v) for k, v in lv.items()}
+    x["state"] = {k: near_state(win, wide, v) for k, v in lv.items()}
     x["hit"] = any_of(x["state"].values())
+    lm = [x["state"][k] for k in LM if k in x["state"]]
+    if line is None and x["line"] is not None:                          # 計算した線＝±4pips ずれても同じ答えのときだけ決める
+        near = {near_state(win, wide, x["line"] + k * LINE_SENSE * PIP) for k in (-1, 0, 1)}
+        lm[0] = near.pop() if len(near) == 1 else None
+    x["lm"] = any_of(lm)
     x["coarse"] = not one
     return x
 
@@ -218,13 +262,27 @@ def analyze(b5, b1, pair, side, t_open, entry=None, line=None, extreme=None):
         if line is None:                                                 # 線が内・外に少しずれていたら
             far_if = tuple(far_by(state(pair, me["line"] + k * s * LINE_SENSE * PIP), s, extreme)[1] for k in (-1, 1))
     n, two = pairs_of({p: st[p]["hit"] for p in PAIRS})
+    lm_state = {p: st[p]["lm"] for p in PAIRS}
+    lm_n, lm_two = pairs_of(lm_state)
+    flow = flow_pairs(b5, j0)
+    pick, sure = pick_of(s, flow["USDJPY"][1], flow["EURGBP"][1])
+    share = {p: (st[p]["ext"] - st[p]["line"]) * s / st[p]["line"] for p in PAIRS if st[p]["b"] is not None}
     return {"pair": pair, "side": side.lower(), "time": hhmm(t0), "missing": {p: st[p]["missing"] for p in PAIRS}, "line": me["line"], "line_auto": me["auto"],
             "break_bar": hhmm(me["b"]) if me["b"] is not None else None, "far_min": far_min, "far_state": far_state,
             "far_if": far_if, "far30_pips": max((x for m, x in me["path"] if m <= FAR_MIN), default=None),
             "extreme": me["ext"], "leg_pips": leg, "depth_pct": depth, "coarse": any(st[p]["coarse"] for p in PAIRS),
             "hits": {p: st[p]["hits"] for p in PAIRS}, "hit_state": {p: st[p]["hit"] for p in PAIRS},
             "entry_types": [k for k, v in me["state"].items() if v is True], "maybe_types": [k for k, v in me["state"].items() if v is None],
-            "pairs_hit": n, "pairs_state": two, "signal": signal_of(st, b5, s, d0, j0)}
+            "type": type_of(me["state"], lm_two), "pairs_hit": n, "pairs_state": two, "lm_state": lm_state, "pairs_lm": lm_n, "pairs_lm_state": lm_two,
+            "flow": flow, "strong_flow": pick, "strong_sure": sure, "strong_state": (pick == pair) if sure else None,
+            "strong_far": max(share, key=share.get) if share else None, "share": share, "signal": signal_of(st, b5, s, d0, j0)}
+
+
+def flow_pairs(b5, j0):
+    """ドル円とユーロポンド（ユーロ円÷ポンド円）の向き。入る前に確定した足だけ"""
+    g = {b[0]: b[4] for b in b5["GBPJPY"]}
+    eg = [(b[0], 0.0, 0.0, 0.0, b[4] / g[b[0]]) for b in b5["EURJPY"] if b[0] < j0 and b[0] in g]
+    return {"USDJPY": flow_of([b for b in b5["USDJPY"] if b[0] < j0], PIP, FLOW_TOL["USDJPY"]), "EURGBP": flow_of(eg, 0.0001, FLOW_TOL["EURGBP"])}
 
 
 def far_by(x, s, extreme):
@@ -271,10 +329,30 @@ def report(r):
     for p in PAIRS:
         d = "・".join(f"{TYPE_JP[k]}まで " + ("入る所の足が無い" if v is None else f"{v}pips") for k, v in r["hits"][p].items())
         L.append(f"  {PAIR_JP[p]}：{mark(r['hit_state'][p])}（{d}）")
-    n = "2以上かどうかが境目" if r["pairs_hit"] is None else f"{r['pairs_hit']}ペア"
-    L.append(f"  線の近くにいたペア：{n} → 2ペア以上 {mark(r['pairs_state'])}")
+    n = "2以上かどうかが境目" if r["pairs_lm"] is None else f"{r['pairs_lm']}ペア"
+    who = "・".join(f"{PAIR_JP[p]}＝" + lm_name(r, p) for p in PAIRS if r["lm_state"][p] is not False)
+    L.append(f"  線か MA に当たっていたペア：{n}" + (f"（{who}）" if who else "") + f" → 2ペア以上 {mark(r['pairs_lm_state'])}")
+    L.append(f"  （50% も入れた v2 の数：{'境目' if r['pairs_hit'] is None else r['pairs_hit']}）")
+    best = "" if r["strong_far"] is None else f"／線からいちばん遠いのは {PAIR_JP[r['strong_far']]}（{r['share'][r['strong_far']] * 100:.3f}%）"
+    L.append(f"  一番強い通貨：{strong_text(r)} → 入ったペアと同じ {mark(r['strong_state'])}{best}")
     L.append("  3ペアそろいの合図：" + (f"{r['signal']} の足" if r["signal"] else "見つからない（オーナーに確かめる）"))
     return "\n".join(L)
+
+
+def lm_name(r, p):
+    """当たっていた線の名前。計算した線だけの当たりで ±4pips しだいのときは「境目」"""
+    if r["lm_state"][p] is None:
+        return "境目"
+    return "と".join(TYPE_JP[k] for k in LM if r["hits"][p].get(k) is not None and r["hits"][p][k] <= NEAR_PIPS - TOL)
+
+
+def strong_text(r):
+    """一番強い通貨と、その理由（ドル円とユーロポンドの向き）"""
+    def way(k):
+        d, v = r["flow"][k]
+        return "足が無い" if d is None else f"{ {1: '上', -1: '下', None: '境目'}[v] }（MA から {d:+.1f}pips）"
+    who = PAIR_JP[r["strong_flow"]] if r["strong_flow"] else ("決まらない（ドル円が逆向き）" if r["strong_sure"] else "境目")
+    return f"{who}＝ドル円 {way('USDJPY')}・ユーロポンド {way('EURGBP')}"
 
 
 def questions(r, given, unknown):
@@ -289,9 +367,11 @@ def questions(r, given, unknown):
         q.append("・".join(why) + f"：チャートの赤い線は {r['line']:.3f} か → --break-line チャートの値（合っていれば同じ値）／分からない＝--unknown line")
     if r["far_state"] is None and "far_min" not in given and "far" not in unknown:
         q.append(f"抜けて30分以内に30pips に届いたかが境目（30分以内の最大 {r['far30_pips']}pips）：チャートの値を聞く → 届いた＝--far-min 分（30分より後でも、その分）／届かない＝--break-line と --extreme にチャートの値／分からない＝--unknown far")
-    if len(r["entry_types"]) != 1 and "entry_type" not in given and "type" not in unknown:
+    if r["type"] is None and "entry_type" not in given and "type" not in unknown:
         c = "・".join(TYPE_JP[k] for k in r["entry_types"] + r["maybe_types"]) or "当たった線が無い"
-        q.append(f"どの線で入ったか（候補：{c}）→ --entry-type half50／line／ema15／other・分からない＝--unknown type")
-    if r["pairs_hit"] is None and "pairs_hit" not in given and "pairs" not in unknown:
-        q.append("線の近くにいたペアの数が境目 → --pairs-hit 数・分からない＝--unknown pairs")
+        q.append(f"どの線で入ったか（候補：{c}）→ --entry-type half50／line／ema15／series（入ったペアはまだ線の手前）／other・分からない＝--unknown type")
+    if r["pairs_lm"] is None and "pairs_lm" not in given and "pairs" not in unknown:
+        q.append("水平線か MA に当たっていたペアが2つ以上かが境目（" + "・".join(f"{PAIR_JP[p]} {mark(r['lm_state'][p])}" for p in PAIRS) + "）→ --pairs-lm 数（0〜3）・分からない＝--unknown pairs")
+    if r["strong_state"] is not True and "strongest" not in given and "strong" not in unknown:
+        q.append(f"入った{PAIR_JP[r['pair']]}は、そのとき一番強い通貨でしたか（道具の答え：{strong_text(r)}）→ --flags strongest=1 か 0・分からない＝--unknown strong")
     return q
