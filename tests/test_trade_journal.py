@@ -140,3 +140,9 @@ def test_push_and_stop_line_buffer():
     with pytest.raises(ValueError):
         gbpjpy(push="4")
     assert gbpjpy()["sl_buffer_pips"] is None
+
+
+def test_friday_is_outside_v1():
+    t = gbpjpy(t_open=J(2026, 11, 27, 16, 4), t_close=J(2026, 11, 27, 16, 30))   # 金曜
+    assert t["flags"]["weekday_ok"] is False and t["fits_v1_entry"] is False
+    assert gbpjpy()["flags"]["weekday_ok"] is True                               # 火曜
