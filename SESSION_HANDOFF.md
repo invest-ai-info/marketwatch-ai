@@ -72,7 +72,7 @@
 
 ## 🎯 2026-11-24（クラウド）: OJ オーナーの押し目（オーナー「システムトレードで高勝率を目指したい」）
 - 決まりの紙 v1＋追記①〜③＝`PILLAR_PREREG.md`「OJ」（EMA＝15分足10本・東京8〜15時の線・14時以降の抜け・ドル円×ユーロポンドでペア・押しは谷・損切り＝1押しの安値・手じまい30分〜60分・金曜なし）。段3の記録＝`python trade_journal.py add …`（MT4 の行が届いたら足す・30件ごとに1回だけ判定・1件目 11/24 ポンド円 +0.95R）
-- ⏭ **段2＝登録済み・未実行**（「段2」の節・腕①②・判定はデータ A→B）＝手元のセッションで `research/oikawa/oj_lab.py` を書いて check → run 1回（指示文は 11/24 夜にオーナーへ渡した）
+- ⏭ **段2＝登録し直した・未実行**：`research/oikawa/oj_lab.py`（テスト50本・独立の数え直しと全件一致）の `check` で回数不足（A 93回）と分かり run せず、オーナー「run せず登録し直す」→ 時間の窓だけ「ロンドンの2時間後まで」に（`PILLAR_PREREG.md`「段2の登録し直し」・check＝A 170／154・B 126／108・損益は1つも見ていない）。次＝オーナーの OK → 手元で `python research/oikawa/oj_lab.py run --dir C:\mt5run` を1回 → `verified_list.py` の `SOURCES`・`sync_to_github.py` の `SYNC_FILES` に `oj-lab.json`・`RESEARCH_LABS.md` の行
 
 ## 🚀 モメンタム投資（10/8 夜〜）＝J42・R11 とも ✕ で**区切り済み**。残るのは J42F の前向きの記録だけ（下の一覧）。全文は `SESSION_ARCHIVE.md`【2026-10-18 退避】
 
