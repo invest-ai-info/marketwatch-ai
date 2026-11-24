@@ -3,6 +3,29 @@
 
 ---
 
+## 2026-11-24
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均2207円高・ナスダック6.5%反発の背景を中立整理──NVIDIA CEO復帰と市場センチメントの転換（カテゴリ: 株式指数・AI株・マクロ）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - 日本経済新聞「日経平均、終値2207円高 NVIDIAファン氏復帰で悲観の揺り戻し」2026-11-24
+  - 日本経済新聞「東証前引け 日経平均は反発 上げ幅一時2800円 AI半導体に買い」2026-11-24
+  - OANDA証券「エヌビディア、フアン氏がCEOに復帰｜株価31%高で米国株が急反発、日経平均も大幅高」2026-11-24
+  - CNBC「Nvidia reinstates Jensen Huang as CEO, stocks rally」2026-11-23
+  - AP通信/US News「Asian Stocks Rally After Wall Street Rebound as Jensen Huang Returns as Nvidia's CEO」2026-11-23
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー（強気の見方の表現1か所が書き手の見立てに読める）→ 軽微修正適用（表現軟化）→ 最終判定 🟢白
+  - 事実誤りも修正（曜日：月→火・11月20日（木）→（金）・価格帯3万6千→5万6千台に訂正）
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3・断定語なし・推奨なし・noindexなし・出典5系統）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅ / 推奨なし ✅ / 出典5系統 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0 ✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-24-nikkei-rally-nvidia-ceo-return.html
+- commit: d01313c（main へ push 済み）
+
+---
+
 ## 2026-11-23
 - 判定: 🚩要人間レビュー（エスカレ）
 - 選定トピック: NVIDIAを揺るがす3つの試練──CEO辞任・SECプローブ・DOJ審査とAI株急落を中立整理（カテゴリ: 個別銘柄・AI株・マクロ）
