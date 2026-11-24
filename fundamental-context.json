@@ -1,30 +1,43 @@
 {
-  "generated_at": "2026-11-24T15:06:07+09:00",
+  "generated_at": "2026-11-25T06:10:00+09:00",
   "risk_regime": {
-    "regime": "NEUTRAL",
+    "regime": "RISK_OFF",
     "confidence": "LOW",
-    "rationale": "11/20の急落（VIX一時40・S&P500が調整局面）から、11/23はエヌビディアのCEO復帰報道で米株が急反発（S&P500 +4.7%、ナスダック +6.5%）。ただし戻りの多くは売り方の買い戻し等との見方もあり、12/9の利上げ観測（9割超）や長期金利5%近辺は残る。方向感が定まらず確度は低め。（15時の回は追加検索で11/24の新しい市況が確認できず、11/23までの材料を維持。確度は低め）",
+    "rationale": "11/23のエヌビディア急騰による米株の急反発は11/24に失速。S&P500は約1%安・ナスダックは約1.5%安で、9営業日で8回目の下げに向かう展開。FRBの12月利上げ観測と米10年債利回り4.9%台が重しで、26日（水）のPCE物価が次の焦点。ただしアジア・為替・商品の11/24〜25の確かな材料は確認できず、確度は低め。",
     "key_drivers": [
-      "エヌビディアがジェンスン・フアン氏をCEOに復帰させ株価が約3割急騰",
-      "VIXは26台へ低下したが依然として高め（4月以来の水準）",
-      "12/9のFOMCで0.25%利上げの織り込みが9割超",
-      "米10年債利回りは4.9%台で高止まり",
-      "日本は11/23休場。11/20の日経平均は-5.1%の56,436円で、東京は反発前の状態"
+      "エヌビディアの反発が一日で失速し、同社株は約6%下落",
+      "S&P500は約1%安、ナスダックは約1.5%安（11/24）",
+      "Anthropicの株が上場価格を割ったと報じられAI株に売り",
+      "米10年債利回りは4.90%（前日4.92%）、12月利上げ観測は高水準",
+      "日本は11/20に急落後、11/23は休場。11/24の東京は未確認"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "11/20の日経平均は約5%安の56,436円と急落。11/23の米株急反発は東京の火曜寄りに追い風になり得るが、買い戻し主導との指摘もあり、持続性は不透明。",
+      "rationale": "11/24の米株は急反発の翌日に反落（S&P500約1%安・ナスダック約1.5%安）。利上げ観測と高金利が重く、やや弱気寄りだが材料は限定的で確度は低め。東京は11/25の寄りで米株安を受ける可能性。",
       "catalysts": [
         "米株反発の東京市場への波及",
         "半導体・AI関連株の値動き",
-        "円相場と日銀の利上げ観測"
+        "円相場と日銀の利上げ観測",
+        "26日（水）PCE物価"
       ],
       "top_news": [
+        {
+          "headline": "米株は反落、S&P500約1%安・ナスダック約1.5%安。エヌビディア反発は一日で失速",
+          "published": "2026-11-24",
+          "comment": "急反発の持続性への疑問が再燃。短期の振れは大きい",
+          "source": "24/7 Wall St.",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://247wallst.com/investing/2026/11/24/stock-market-today-jensens-return-to-nvidia-is-causing-index-indigestion/"
+        },
         {
           "headline": "日経平均が5.1%安の56,436円、世界的なAI・半導体株安で急落",
           "published": "2026-11-20",
@@ -56,15 +69,28 @@
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "11/23は+4.7%の7,237で急反発したが、直前の調整局面入りの後。利上げ観測と長期金利の高さが重しで、急反発の持続性には慎重な見方。",
+      "rationale": "11/24の米株は急反発の翌日に反落（S&P500約1%安・ナスダック約1.5%安）。利上げ観測と高金利が重く、やや弱気寄りだが材料は限定的で確度は低め。",
       "catalysts": [
         "12/9のFOMC",
         "エヌビディアの経営体制",
-        "PCE等の物価指標"
+        "PCE等の物価指標",
+        "26日（水）PCE物価"
       ],
       "top_news": [
+        {
+          "headline": "米株は反落、S&P500約1%安・ナスダック約1.5%安。エヌビディア反発は一日で失速",
+          "published": "2026-11-24",
+          "comment": "急反発の持続性への疑問が再燃。短期の振れは大きい",
+          "source": "24/7 Wall St.",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://247wallst.com/investing/2026/11/24/stock-market-today-jensens-return-to-nvidia-is-causing-index-indigestion/"
+        },
         {
           "headline": "S&P500が4.7%高の7,237、ダウ3.0%高、ナスダック6.5%高と急反発",
           "published": "2026-11-23",
@@ -96,15 +122,28 @@
     {
       "name": "ナスダック",
       "ticker": "NQ=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "11/23は+6.5%の24,090と大きく反発。エヌビディア主導の急変動で、直前の下げ幅に対する戻りの段階。AI関連の不透明感は残る。",
+      "rationale": "11/24の米株は急反発の翌日に反落（S&P500約1%安・ナスダック約1.5%安）。利上げ観測と高金利が重く、やや弱気寄りだが材料は限定的で確度は低め。",
       "catalysts": [
         "エヌビディア株の続伸・反落",
         "AI関連の収益見通し",
-        "長期金利の動き"
+        "長期金利の動き",
+        "26日（水）PCE物価"
       ],
       "top_news": [
+        {
+          "headline": "エヌビディアが約6%下落、Anthropicも上場価格を割りAI株に売り",
+          "published": "2026-11-24",
+          "comment": "AI関連の過熱感の調整が続くとの見方",
+          "source": "CNBC",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/2026/11/23/stock-market-today-live-updates.html"
+        },
         {
           "headline": "エヌビディアがフアン氏をCEOに復帰、株価は約31%急騰",
           "published": "2026-11-23",
@@ -275,6 +314,18 @@
         "株式市場のリスク選好"
       ],
       "top_news": [
+        {
+          "headline": "ビットコインは約1.8%安の6.3万ドル前後と報じられる（日付は未確認）",
+          "published": "2026-11-24",
+          "comment": "株安と利上げ観測で軟調",
+          "source": "Bloomberg",
+          "tier": 2,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://247wallst.com/investing/2026/11/24/stock-market-today-jensens-return-to-nvidia-is-causing-index-indigestion/"
+        },
         {
           "headline": "ビットコインは約61,200ドルで小幅上昇、株の急反発でも反応は限定的",
           "published": "2026-11-23",
