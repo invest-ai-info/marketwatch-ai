@@ -255,3 +255,159 @@ def test_cli_adds_half50(tmp_path, monkeypatch, capsys):
     t = T.load()["trades"][0]
     assert t["entry_type"] == "half50" and t["depth_pct"] == 81.2 and t["entry_time"] == "18:45:00"
     assert "50%押し目 1件" in capsys.readouterr().out
+
+
+# ── 決まりの紙 v2（追記⑥）＝30分以内に30pips → 50%・水平線・MA の押し（2026-11-24 夜・オーナー「これからの取引を記録する」）──
+
+V2_FLAGS = "tokyo_break=1,strongest=1,event_clear=1"
+
+
+def v2(**kw):
+    """割った線 209.963 → 20分で30pips → 新安値 209.570 → 50% で売り・損切りは線の 4pips 外"""
+    base = dict(sl=210.003, sl_line=209.963, entry=209.767, exit_=209.640, far_min=20, pairs_hit=2,
+                flags=T.parse_flags(V2_FLAGS), t_open=J(2026, 12, 1, 17, 30), t_close=J(2026, 12, 1, 17, 50))
+    base.update(kw)
+    return half50(**base)
+
+
+def test_v2_keeps_minutes_and_pairs():
+    t = v2()
+    assert t["far_min"] == 20 and t["pairs_hit"] == 2
+    assert t["flags"]["far30"] is True and t["flags"]["pairs2"] is True
+    assert t["fits_v2_entry"] is True
+    assert t["sl_buffer_pips"] == 4.0 and t["depth_pct"] == 50.1
+
+
+def test_far30_edges():
+    assert v2(far_min=30)["flags"]["far30"] is True
+    assert v2(far_min=35)["flags"]["far30"] is False          # 30分を過ぎて離れた＝狙わない
+    assert v2(far_min=35)["fits_v2_entry"] is False
+    assert v2(far_min=0)["flags"]["far30"] is True            # 抜けた足そのもので30pips
+    t = v2(far_min=None)                                      # 分を入れ忘れ＝分からない
+    assert t["flags"]["far30"] is None and t["fits_v2_entry"] is None
+
+
+def test_never_reached_30pips_is_false_without_minutes():
+    t = v2(far_min=None, extreme=209.664, entry=209.814)      # 29.9pips しか離れていない
+    assert t["leg_pips"] == 29.9 and t["flags"]["far30"] is False and t["fits_v2_entry"] is False
+    t = v2(far_min=10, extreme=209.663, entry=209.813)        # ちょうど30.0pips
+    assert t["leg_pips"] == 30.0 and t["flags"]["far30"] is True
+
+
+def test_minutes_contradict_leg_is_rejected():
+    with pytest.raises(ValueError):
+        v2(far_min=10, extreme=209.664, entry=209.814)        # 30pips 離れていないのに「10分で届いた」
+    with pytest.raises(ValueError):
+        v2(far_min=-5)
+
+
+def test_pairs_hit_edges():
+    assert v2(pairs_hit=1)["flags"]["pairs2"] is False
+    assert v2(pairs_hit=3)["flags"]["pairs2"] is True
+    assert v2(pairs_hit=None)["flags"]["pairs2"] is None
+    assert v2(pairs_hit=1)["fits_v2_entry"] is True           # 「できれば」＝入口の条件には入れない（読むための表で分ける）
+    for bad in (-1, 4):
+        with pytest.raises(ValueError):
+            v2(pairs_hit=bad)
+
+
+def test_v2_takes_all_three_lines_but_not_other():
+    for k in ("ema15", "line", "half50"):
+        assert v2(entry_type=k)["fits_v2_entry"] is True
+    assert v2(entry_type="other")["fits_v2_entry"] is False
+
+
+def test_v2_window_is_until_two_hours_after_london():
+    def at(*a):
+        return v2(t_open=J(*a), t_close=J(*a) + dt.timedelta(minutes=10))
+    assert at(2026, 12, 1, 18, 59)["flags"]["in_window2"] is True        # 冬＝英国の朝8時は17時
+    assert at(2026, 12, 1, 19, 0)["flags"]["in_window2"] is False
+    assert at(2026, 12, 1, 15, 0)["flags"]["in_window2"] is True
+    assert at(2026, 12, 1, 14, 59)["flags"]["in_window2"] is False
+    assert at(2027, 6, 1, 17, 59)["flags"]["in_window2"] is True         # 夏＝16時
+    assert at(2027, 6, 1, 18, 0)["flags"]["in_window2"] is False
+    assert at(2026, 12, 1, 18, 59)["fits_v2_entry"] is True
+    assert at(2026, 12, 1, 19, 0)["fits_v2_entry"] is False
+    assert at(2026, 12, 1, 18, 59)["flags"]["in_window"] is False        # v1 の時間は変えない
+
+
+def test_london_open_follows_uk_not_us_dst():
+    assert T.london_open(dt.date(2027, 3, 26)) == 17 and T.london_open(dt.date(2027, 3, 28)) == 16   # 3月の最後の日曜
+    assert T.london_open(dt.date(2027, 3, 16)) == 17                     # 米国はもう夏時間・英国はまだ冬
+    assert T.london_open(dt.date(2027, 10, 30)) == 16 and T.london_open(dt.date(2027, 10, 31)) == 17
+    assert T.london_open(dt.date(2026, 10, 27)) == 17                    # 米国はまだ夏時間・英国はもう冬
+
+
+def test_v2_needs_the_common_conditions():
+    for kw in (dict(sl=None, sl_line=None), dict(spread=2.6), dict(t_open=J(2026, 12, 4, 17, 30), t_close=J(2026, 12, 4, 17, 50)),
+               dict(flags=T.parse_flags("tokyo_break=0,strongest=1,event_clear=1")),
+               dict(flags=T.parse_flags("tokyo_break=1,strongest=0,event_clear=1")),
+               dict(flags=T.parse_flags("tokyo_break=1,strongest=1,event_clear=0"))):
+        assert v2(**kw)["fits_v2_entry"] is False
+    assert v2(flags=T.parse_flags("tokyo_break=1,strongest=1"))["fits_v2_entry"] is None
+
+
+def test_v1_is_unchanged_by_v2():
+    t = gbpjpy()
+    assert t["fits_v1_entry"] is True and t["fits_v2_entry"] is None     # 30pips の記録が無い＝分からない
+    assert t["far_min"] is None and t["pairs_hit"] is None
+    t = gbpjpy(far_min=45, pairs_hit=1)
+    assert t["fits_v1_entry"] is True and t["fits_v2_entry"] is False
+
+
+def fake_v2(i, r, day, **kw):
+    t = v2(tid=f"v{i}", t_open=J(2026, 12, 1, 17, 0) + dt.timedelta(days=day, minutes=i),
+           t_close=J(2026, 12, 1, 17, 30) + dt.timedelta(days=day, minutes=i), **kw)
+    t["r_net"] = r
+    return t
+
+
+def test_reading_table_splits_v2_items():
+    r = T.reading_table([fake_v2(1, 1.0, 0), fake_v2(2, 3.0, 0), fake_v2(3, -1.0, 0, far_min=40, pairs_hit=1),
+                         fake_v2(4, 9.0, 0, far_min=None, pairs_hit=None)])
+    assert r["far30=o"] == {"n": 2, "mean": 2.0} and r["far30=x"] == {"n": 1, "mean": -1.0}
+    assert r["pairs2=o"] == {"n": 2, "mean": 2.0} and r["pairs2=x"] == {"n": 1, "mean": -1.0}
+    assert r["fits_v2_entry=o"] == {"n": 2, "mean": 2.0} and r["fits_v2_entry=x"] == {"n": 1, "mean": -1.0}
+    assert r["in_window2=o"]["n"] == 4
+
+
+def test_checkpoint_is_not_split_by_v2():
+    st = T.empty_state()
+    for i in range(15):
+        T.add(st, fake(i, 1.0, i % 3))
+        T.add(st, fake_v2(i, -0.5, i % 3))
+    T.run_checkpoints(st, n_boot=300)
+    assert [c["n"] for c in st["checkpoints"]] == [30] and st["checkpoints"][0]["mean_r"] == 0.25
+
+
+def test_status_counts_v2_without_average():
+    st = T.empty_state()
+    T.add(st, gbpjpy())
+    T.add(st, fake_v2(1, 2.345, 0))
+    s = T.status_text(st)
+    assert "決まりの紙 v2 の入口に全部当てはまった取引 1件" in s and "決まりの紙 v1 の入口に全部当てはまった取引 1件" in s
+    assert "2.345" not in s and "+2.3" not in s
+
+
+def test_old_record_without_v2_keys_still_works():
+    st = T.empty_state()
+    t = gbpjpy()
+    for k in ("far_min", "pairs_hit", "fits_v2_entry"):
+        t.pop(k)
+    for k in ("far30", "pairs2", "in_window2"):
+        t["flags"].pop(k)
+    T.add(st, t)
+    assert "決まりの紙 v2 の入口に全部当てはまった取引 0件" in T.status_text(st)
+    r = T.reading_table([t])
+    assert r["far30=o"]["n"] == 0 and r["fits_v2_entry=o"]["n"] == 0
+
+
+def test_cli_adds_v2(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+    T.main(["add", "--id", "78", "--pair", "GBPJPY", "--side", "sell", "--open", "2026.12.01 10:30:00", "--entry", "209.767",
+            "--sl", "210.003", "--close", "2026.12.01 10:50:00", "--exit", "209.640", "--spread", "1.8", "--server-time",
+            "--entry-type", "half50", "--break-line", "209.963", "--extreme", "209.570", "--sl-line", "209.963",
+            "--far-min", "20", "--pairs-hit", "2", "--flags", V2_FLAGS])
+    t = T.load()["trades"][0]
+    assert t["far_min"] == 20 and t["pairs_hit"] == 2 and t["fits_v2_entry"] is True and t["entry_time"] == "17:30:00"
+    assert "決まりの紙 v2 の入口に全部当てはまった取引 1件" in capsys.readouterr().out

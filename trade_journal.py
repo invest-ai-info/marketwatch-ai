@@ -21,6 +21,11 @@
   50%押し目（型1＝memory/07_fx_setups.md）は --entry-type half50 と、割った線・そこからいちばん遠くまで行った値を付ける：
       … --entry-type half50 --break-line 209.963 --extreme 209.570
       （線で入る2発目も half50＝depth_pct が 100 前後になる。型1 は足の確定で手じまうが、逆指値が無いと R を出せず判定に数えない）
+  決まりの紙 v2（「OJ」追記⑥＝抜けて30分以内に30pips → 50%・水平線・MA の押し・損切りは割った線の 4pips 外）は、当たった線を
+  --entry-type half50（50%）・line（割った線）・ema15（MA）で選び、割った線・いちばん遠い値に加えて
+      … --far-min 20 --pairs-hit 2 --sl-line 割った線
+      --far-min＝抜けた5分足が確定してから、ヒゲが線から30pips に届いた足が確定するまでの分（抜けた足そのものなら 0・届いていなければ付けない）
+      --pairs-hit＝入ったとき、ドル円・ユーロ円・ポンド円のうち、それぞれの 50%・割った線・MA のどれかまで 3pips 以内に来ていた数（入ったペアも入れる）
   python trade_journal.py status
   （--server-time＝MT4 の画面の時刻（BigBoss のサーバー時刻）を日本時間に直す。冬＝+7時間・夏＝+6時間）
 """
@@ -40,7 +45,7 @@ SPREAD_MAX = 2.5              # 決まりの紙 v1：スプレッドがこれよ
 COST_MULT = 7.0               # 決まりの紙 v1：損切りの幅はスプレッドの7倍以上（費用 0.15R 以下）
 # 手で付ける項目（決まりの紙 v1 の部品）。自動で付く3つ（in_window・sl_order・spread_ok）は数字から決める
 MANUAL_FLAGS = ("tokyo_break", "strongest", "htf_aligned", "tp_before_high", "event_clear", "sl_at_line")
-AUTO_FLAGS = ("in_window", "sl_order", "spread_ok", "weekday_ok")
+AUTO_FLAGS = ("in_window", "sl_order", "spread_ok", "weekday_ok", "in_window2", "far30", "pairs2")
 # half50＝50%押し目（型1：クロス円がそろって東京時間の線を割る → 線と新安値の 50% の戻りで入る。2026-11-24 夜 オーナー「はい、足す」）。判定は種類で分けない＝読むための表だけ
 ENTRY_TYPES = ("ema15", "line", "half50", "other")
 TYPE_JP = {"ema15": "15分足EMAの押し", "line": "ライン", "half50": "50%押し目", "other": "ほか"}
@@ -48,6 +53,13 @@ TYPE_JP = {"ema15": "15分足EMAの押し", "line": "ライン", "half50": "50%�
 PUSHES = ("break", "1", "2", "3+")
 # 入口が決まりの紙 v1 に全部当てはまるか（出口の tp_before_high と、段2で腕にする htf_aligned は入れない）
 V1_ENTRY = ("tokyo_break", "in_window", "strongest", "sl_order", "event_clear", "spread_ok", "weekday_ok")
+# 決まりの紙 v2（「OJ」追記⑥・2026-11-24 夜 オーナー「ブレイクしてから30分以内に30ピップス以上離れたものだけ押し目待ち…50%か、水平線か、MA」→「これからの取引を記録する」）
+# 2ペア以上（pairs2）は「できれば」＝入口の条件に入れず、読むための表で分ける
+FAR_PIPS = 30.0
+FAR_MIN = 30
+WINDOW2_HOURS = 2             # 終わり＝ロンドンの始まり（英国の朝8時）から2時間まで（段2の登録と同じ＝冬 19:00・夏 18:00 の前）
+V2_ENTRY = ("tokyo_break", "in_window2", "strongest", "sl_order", "event_clear", "spread_ok", "weekday_ok", "far30")
+V2_TYPES = ("ema15", "line", "half50")
 
 
 def empty_state():
@@ -77,6 +89,16 @@ def us_dst(day):
     mar = dt.date(y, 3, 8) + dt.timedelta(days=(6 - dt.date(y, 3, 8).weekday()) % 7)
     nov = dt.date(y, 11, 1) + dt.timedelta(days=(6 - dt.date(y, 11, 1).weekday()) % 7)
     return mar <= day < nov
+
+
+def last_sunday(year, month):
+    d = dt.date(year, month, 31)          # 3月・10月だけで使う（どちらも31日まで）
+    return d - dt.timedelta(days=(d.weekday() + 1) % 7)
+
+
+def london_open(day):
+    """ロンドンの始まり（英国の朝8時）の日本時間の時。冬＝17・夏＝16。英国の夏時間（3月〜10月の最後の日曜）で決まる（米国とは切り替えの日が違う）"""
+    return 16 if last_sunday(day.year, 3) <= day < last_sunday(day.year, 10) else 17
 
 
 def server_to_jst(t):
@@ -126,15 +148,35 @@ def leg_of(side, entry, break_line, extreme, pip):
     return round(leg / pip, 1), round((extreme - entry) * sgn / leg * 100, 1)
 
 
+def far30_of(leg_pips, far_min):
+    """抜けて30分以内に線から30pips 離れたか。True／False／分からない（None）。純関数"""
+    if far_min is not None and far_min < 0:
+        raise ValueError("--far-min は 0 以上")
+    if leg_pips is not None and leg_pips < FAR_PIPS:
+        if far_min is not None:
+            raise ValueError("線から30pips 離れていないのに --far-min がある（入力の取り違え？）")
+        return False
+    return None if far_min is None else far_min <= FAR_MIN
+
+
+def fits(flags, keys, type_ok):
+    """項目が全部 ○＝True・1つでも × か入口の種類が違う＝False・ほか＝None"""
+    vals = [flags.get(k) for k in keys]
+    if False in vals or not type_ok:
+        return False
+    return None if None in vals else True
+
+
 def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=None, pip=None,
                entry_type="other", flags=None, note="", used_for_rule=False, push=None, sl_line=None,
-               break_line=None, extreme=None):
+               break_line=None, extreme=None, far_min=None, pairs_hit=None):
     """MT4 の行の数字 → 記録（値段・pips・R・○×だけ）。t_open・t_close は日本時間。純関数
 
     used_for_rule＝決まりの紙を作るのに使った取引（11/24 のポンド円）。7/26 の判定には数えるが、読むための表からは外す
     push＝何押しで入ったか（break＝ブレイクラインまでの戻り・1・2・3+）。sl_line＝決まりの損切りの線（ブレイクラインか1押しの安値）の値段
     → 逆指値がその線からどれだけ離れていたか（sl_buffer_pips・余白）を残す＝段2の前に余白を決めるため（成績は見ない）
     break_line・extreme＝割った線と、そこからいちばん遠くまで行った値（型1）→ leg_pips・depth_pct を残す
+    far_min＝抜けてから30pips 離れるまでの分・pairs_hit＝線の近くにいたペアの数（決まりの紙 v2）→ far30・pairs2 を残す
     """
     side = side.lower()
     if side not in ("buy", "sell"):
@@ -143,6 +185,8 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
         raise ValueError(f"entry_type は {ENTRY_TYPES}")
     if push is not None and push not in PUSHES:
         raise ValueError(f"push は {PUSHES}")
+    if pairs_hit is not None and not 0 <= pairs_hit <= 3:
+        raise ValueError("pairs_hit は 0〜3（ドル円・ユーロ円・ポンド円）")
     pip = pip or pip_size(pair)
     sgn = 1 if side == "buy" else -1
     sl = sl if sl else None             # MT4 の 0.00000＝逆指値なし
@@ -168,15 +212,17 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     f["weekday_ok"] = t_open.weekday() <= 3   # 月〜木（オーナー「もちろん金曜日は取引しません」・日本時間）
     f["spread_ok"] = (spread <= SPREAD_MAX and risk >= COST_MULT * spread) if (risk and spread is not None) else (
         False if (spread is not None and spread > SPREAD_MAX) else None)
-    vals = [f.get(k) for k in V1_ENTRY]
-    fits = (False if (False in vals or entry_type != "ema15") else (None if None in vals else True))
+    f["in_window2"] = dt.time(15, 0) <= t_open.time() < dt.time(london_open(t_open.date()) + WINDOW2_HOURS, 0)
+    f["far30"] = far30_of(leg_pips, far_min)
+    f["pairs2"] = None if pairs_hit is None else pairs_hit >= 2
     return {"id": str(tid), "date": t_open.strftime("%Y-%m-%d"), "entry_time": t_open.strftime("%H:%M:%S"),
             "exit_time": t_close.strftime("%H:%M:%S"), "hold_min": round((t_close - t_open).total_seconds() / 60, 1),
             "pair": pair.upper(), "side": side, "entry": entry, "sl": sl, "tp": tp, "exit": exit_,
             "spread_pips": spread, "risk_pips": risk, "pnl_pips": pnl, "r_net": r_net, "r_gross": r_gross,
             "cost_r": cost_r, "exit_kind": kind, "entry_type": entry_type, "push": push, "sl_line": sl_line,
             "sl_buffer_pips": buf, "break_line": break_line, "extreme": extreme, "leg_pips": leg_pips,
-            "depth_pct": depth_pct, "flags": f, "fits_v1_entry": fits,
+            "depth_pct": depth_pct, "far_min": far_min, "pairs_hit": pairs_hit, "flags": f,
+            "fits_v1_entry": fits(f, V1_ENTRY, entry_type == "ema15"), "fits_v2_entry": fits(f, V2_ENTRY, entry_type in V2_TYPES),
             "used_for_rule": bool(used_for_rule), "note": note}
 
 
@@ -222,13 +268,14 @@ def reading_table(trades):
     """項目ごとの ○ と × ・入口の種類ごとの R の平均と件数（読むだけ・決まりの紙を作るのに使った取引は外す）"""
     trades = [t for t in trades if not t.get("used_for_rule")]
     rows = {}
-    for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line"):
+    for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line", "in_window2", "far30", "pairs2"):
         for v in (True, False):
             xs = [t["r_net"] for t in trades if t["flags"].get(k) is v]
             rows[f"{k}={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
-    for v in (True, False):
-        xs = [t["r_net"] for t in trades if t.get("fits_v1_entry") is v]
-        rows[f"fits_v1_entry={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
+    for k in ("fits_v1_entry", "fits_v2_entry"):
+        for v in (True, False):
+            xs = [t["r_net"] for t in trades if t.get(k) is v]
+            rows[f"{k}={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
     for k in ENTRY_TYPES:
         xs = [t["r_net"] for t in trades if t.get("entry_type") == k]
         rows[f"entry_type={k}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
@@ -262,8 +309,9 @@ def status_text(st):
     if no_sl:
         L.append(f"⚠️ 損切りの逆指値が無く R を出せない取引 {len(no_sl)}件（数えない）：" +
                  "・".join(f"{t['date']} {t['pair']}" for t in no_sl))
-    fit = sum(1 for t in rs if t.get("fits_v1_entry") is True)
-    L.append(f"決まりの紙 v1 の入口に全部当てはまった取引 {fit}件（成績は判定の日にだけ出す）")
+    for v in ("v1", "v2"):
+        fit = sum(1 for t in rs if t.get(f"fits_{v}_entry") is True)
+        L.append(f"決まりの紙 {v} の入口に全部当てはまった取引 {fit}件（成績は判定の日にだけ出す）")
     kinds = [(k, sum(1 for t in rs if t.get("entry_type") == k)) for k in ENTRY_TYPES]
     L.append("入口の種類：" + "・".join(f"{TYPE_JP[k]} {n}件" for k, n in kinds if n) if rs else "入口の種類：まだ無い")
     for c in st["checkpoints"]:
@@ -291,6 +339,8 @@ def main(argv):
     a.add_argument("--sl-line", type=float, default=None, help="決まりの損切りの線（ブレイクラインか1押しの安値）")
     a.add_argument("--break-line", type=float, default=None, help="型1：割った線（売り＝東京時間の最安値・買い＝最高値）")
     a.add_argument("--extreme", type=float, default=None, help="型1：線からいちばん遠くまで行った値（売り＝新安値・買い＝最高値）")
+    a.add_argument("--far-min", type=float, default=None, help="決まりの紙 v2：抜けてから線の30pips 先に届くまでの分（抜けた足なら 0・届いていなければ付けない）")
+    a.add_argument("--pairs-hit", type=int, default=None, help="決まりの紙 v2：線まで 3pips 以内に来ていたペアの数（0〜3・入ったペアも入れる）")
     a.add_argument("--flags", default="")
     a.add_argument("--note", default="")
     a.add_argument("--used-for-rule", action="store_true", help="決まりの紙を作るのに使った取引（読むための表から外す）")
@@ -303,7 +353,7 @@ def main(argv):
             t_open, t_close = server_to_jst(t_open), server_to_jst(t_close)
         tr = make_trade(args.id, args.pair, args.side, t_open, args.entry, args.sl, args.tp, t_close, args.exit,
                         args.spread, args.pip, args.entry_type, parse_flags(args.flags), args.note,
-                        args.used_for_rule, args.push, args.sl_line, args.break_line, args.extreme)
+                        args.used_for_rule, args.push, args.sl_line, args.break_line, args.extreme, args.far_min, args.pairs_hit)
         add(st, tr)
         r = f"{tr['r_net']:+.2f}R" if tr["r_net"] is not None else "R なし（逆指値なし）"
         print(f"足した：{tr['date']} {tr['entry_time']} {tr['pair']} {tr['side']}・{tr['pnl_pips']:+.1f}pips・{r}")
