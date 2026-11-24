@@ -130,6 +130,7 @@ SYNC_FORBIDDEN = {
     "tdnet-events.csv", "tdnet-days.json",       # 🆕 2026-10-27 TDnet の開示の種類（tdnet-events.yml・平日。約1か月しか残らない＝古い版で上書きすると戻せない）
     "highs-tdnet.csv", "highs-tdnet.md",         # 🆕 2026-10-27 台帳のケース×その前30日の開示（tdnet-events.yml）
     "disclosure-timing-forward.csv", "disclosure-timing-forward.json",   # 🆕 2026-11-17 J52F 入るタイミングの前向き（tdnet-reaction.yml の中。1回だけの判定を持つ）
+    "trade-journal.json",   # 🆕 2026-11-24 OJ オーナーの裁量の取引の記録（クラウドのセッションが trade_journal.py で足す・30件ごとの判定を固定して持つ＝古い版で上書きすると記録と判定が消える）
     "tdnet-reaction.csv", "tdnet-reaction-days.json", "tdnet-reaction-trend.json",   # 🆕 2026-11-10 J51 開示→次の丸1日の値動き（tdnet-reaction.yml・平日・試験。送った日の記録と1回だけの判定を持つ＝古い版で上書きすると同じメールが2通・判定が消える）
     "momentum-forward.json", "momentum-forward.md",   # 🆕 2026-10-08 J42F 一番上げた10銘柄の前向き（momentum-forward.yml・月1）
     "tsmom-lab.json", "tsmom-lab.md",             # 🆕 2026-10-08 夜 R11 株価指数・商品と為替の時系列モメンタム（tsmom-lab.yml・手動）
