@@ -15,7 +15,8 @@
   python trade_journal.py add --id 30211960 --pair GBPJPY --side buy \
       --open "2026.11.24 09:04:08" --entry 207.605 --sl 207.469 --tp 207.778 \
       --close "2026.11.24 09:27:03" --exit 207.734 --spread 1.8 --server-time \
-      --entry-type ema15 --flags tokyo_break=1,strongest=1,htf_aligned=0,tp_before_high=0,event_clear=1 \
+      --entry-type ema15 --push 2 --sl-line 207.51 \
+      --flags tokyo_break=1,strongest=1,htf_aligned=0,tp_before_high=0,event_clear=1,sl_at_line=1 \
       --note "ユーロドルの直近安値のラインと比べ、上に強いほうのポンド円"
   python trade_journal.py status
   （--server-time＝MT4 の画面の時刻（BigBoss のサーバー時刻）を日本時間に直す。冬＝+7時間・夏＝+6時間）
@@ -35,9 +36,11 @@ WINDOW = ("15:00", "16:55")   # 決まりの紙 v1 の入る時間（TB と同�
 SPREAD_MAX = 2.5              # 決まりの紙 v1：スプレッドがこれより広ければ入らない（pips）
 COST_MULT = 7.0               # 決まりの紙 v1：損切りの幅はスプレッドの7倍以上（費用 0.15R 以下）
 # 手で付ける項目（決まりの紙 v1 の部品）。自動で付く3つ（in_window・sl_order・spread_ok）は数字から決める
-MANUAL_FLAGS = ("tokyo_break", "strongest", "htf_aligned", "tp_before_high", "event_clear")
+MANUAL_FLAGS = ("tokyo_break", "strongest", "htf_aligned", "tp_before_high", "event_clear", "sl_at_line")
 AUTO_FLAGS = ("in_window", "sl_order", "spread_ok")
 ENTRY_TYPES = ("ema15", "line", "other")
+# 何押しで入ったか（2026-11-24 夜 オーナー「1押し、2押しで入った場合は1押しの方の直近安値のラインで損切り」）
+PUSHES = ("break", "1", "2", "3+")
 # 入口が決まりの紙 v1 に全部当てはまるか（出口の tp_before_high と、段2で腕にする htf_aligned は入れない）
 V1_ENTRY = ("tokyo_break", "in_window", "strongest", "sl_order", "event_clear", "spread_ok")
 
@@ -105,16 +108,20 @@ def parse_flags(text):
 
 
 def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=None, pip=None,
-               entry_type="other", flags=None, note="", used_for_rule=False):
+               entry_type="other", flags=None, note="", used_for_rule=False, push=None, sl_line=None):
     """MT4 の行の数字 → 記録（値段・pips・R・○×だけ）。t_open・t_close は日本時間。純関数
 
     used_for_rule＝決まりの紙を作るのに使った取引（11/24 のポンド円）。7/26 の判定には数えるが、読むための表からは外す
+    push＝何押しで入ったか（break＝ブレイクラインまでの戻り・1・2・3+）。sl_line＝決まりの損切りの線（ブレイクラインか1押しの安値）の値段
+    → 逆指値がその線からどれだけ離れていたか（sl_buffer_pips・余白）を残す＝段2の前に余白を決めるため（成績は見ない）
     """
     side = side.lower()
     if side not in ("buy", "sell"):
         raise ValueError("side は buy か sell")
     if entry_type not in ENTRY_TYPES:
         raise ValueError(f"entry_type は {ENTRY_TYPES}")
+    if push is not None and push not in PUSHES:
+        raise ValueError(f"push は {PUSHES}")
     pip = pip or pip_size(pair)
     sgn = 1 if side == "buy" else -1
     sl = sl if sl else None             # MT4 の 0.00000＝逆指値なし
@@ -124,6 +131,7 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     if risk is not None and (sl - entry) * sgn >= 0:
         raise ValueError("損切りが入った値の利益側にある（入力の取り違え？）")
     r_net = round(pnl / risk, 3) if risk else None
+    buf = round((sl_line - sl) * sgn / pip, 1) if (sl is not None and sl_line) else None
     cost_r = round(spread / risk, 3) if (risk and spread is not None) else None
     r_gross = round((pnl + spread) / risk, 3) if (risk and spread is not None) else None
     kind = "manual"
@@ -143,7 +151,8 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
             "exit_time": t_close.strftime("%H:%M:%S"), "hold_min": round((t_close - t_open).total_seconds() / 60, 1),
             "pair": pair.upper(), "side": side, "entry": entry, "sl": sl, "tp": tp, "exit": exit_,
             "spread_pips": spread, "risk_pips": risk, "pnl_pips": pnl, "r_net": r_net, "r_gross": r_gross,
-            "cost_r": cost_r, "exit_kind": kind, "entry_type": entry_type, "flags": f, "fits_v1_entry": fits,
+            "cost_r": cost_r, "exit_kind": kind, "entry_type": entry_type, "push": push, "sl_line": sl_line,
+            "sl_buffer_pips": buf, "flags": f, "fits_v1_entry": fits,
             "used_for_rule": bool(used_for_rule), "note": note}
 
 
@@ -189,7 +198,7 @@ def reading_table(trades):
     """項目ごとの ○ と × の R の平均と件数（読むだけ・決まりの紙を作るのに使った取引は外す）"""
     trades = [t for t in trades if not t.get("used_for_rule")]
     rows = {}
-    for k in V1_ENTRY + ("htf_aligned", "tp_before_high"):
+    for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line"):
         for v in (True, False):
             xs = [t["r_net"] for t in trades if t["flags"].get(k) is v]
             rows[f"{k}={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
@@ -249,6 +258,8 @@ def main(argv):
         a.add_argument(f"--{k}", type=float, default=None)
     a.add_argument("--server-time", action="store_true", help="時刻は MT4 の画面の時刻（サーバー時刻）")
     a.add_argument("--entry-type", default="other", choices=ENTRY_TYPES)
+    a.add_argument("--push", default=None, choices=PUSHES, help="何押しで入ったか")
+    a.add_argument("--sl-line", type=float, default=None, help="決まりの損切りの線（ブレイクラインか1押しの安値）")
     a.add_argument("--flags", default="")
     a.add_argument("--note", default="")
     a.add_argument("--used-for-rule", action="store_true", help="決まりの紙を作るのに使った取引（読むための表から外す）")
@@ -261,7 +272,7 @@ def main(argv):
             t_open, t_close = server_to_jst(t_open), server_to_jst(t_close)
         tr = make_trade(args.id, args.pair, args.side, t_open, args.entry, args.sl, args.tp, t_close, args.exit,
                         args.spread, args.pip, args.entry_type, parse_flags(args.flags), args.note,
-                        args.used_for_rule)
+                        args.used_for_rule, args.push, args.sl_line)
         add(st, tr)
         r = f"{tr['r_net']:+.2f}R" if tr["r_net"] is not None else "R なし（逆指値なし）"
         print(f"足した：{tr['date']} {tr['entry_time']} {tr['pair']} {tr['side']}・{tr['pnl_pips']:+.1f}pips・{r}")
