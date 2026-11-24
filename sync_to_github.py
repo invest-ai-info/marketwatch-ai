@@ -482,4 +482,5 @@ SYNC_FILES = [
     "guide-signal-lab-159.html",
     "guide-company-6465-hoshizaki.html",
     "guide-news-2026-11-24-nikkei-rally-nvidia-ceo-return.html",
+    "guide-signal-lab-160.html",
 ]
