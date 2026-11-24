@@ -37,12 +37,12 @@ SPREAD_MAX = 2.5              # 決まりの紙 v1：スプレッドがこれよ
 COST_MULT = 7.0               # 決まりの紙 v1：損切りの幅はスプレッドの7倍以上（費用 0.15R 以下）
 # 手で付ける項目（決まりの紙 v1 の部品）。自動で付く3つ（in_window・sl_order・spread_ok）は数字から決める
 MANUAL_FLAGS = ("tokyo_break", "strongest", "htf_aligned", "tp_before_high", "event_clear", "sl_at_line")
-AUTO_FLAGS = ("in_window", "sl_order", "spread_ok")
+AUTO_FLAGS = ("in_window", "sl_order", "spread_ok", "weekday_ok")
 ENTRY_TYPES = ("ema15", "line", "other")
 # 何押しで入ったか（2026-11-24 夜 オーナー「1押し、2押しで入った場合は1押しの方の直近安値のラインで損切り」）
 PUSHES = ("break", "1", "2", "3+")
 # 入口が決まりの紙 v1 に全部当てはまるか（出口の tp_before_high と、段2で腕にする htf_aligned は入れない）
-V1_ENTRY = ("tokyo_break", "in_window", "strongest", "sl_order", "event_clear", "spread_ok")
+V1_ENTRY = ("tokyo_break", "in_window", "strongest", "sl_order", "event_clear", "spread_ok", "weekday_ok")
 
 
 def empty_state():
@@ -143,6 +143,7 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     hm = t_open.strftime("%H:%M")
     f["in_window"] = WINDOW[0] <= hm <= WINDOW[1]
     f["sl_order"] = sl is not None
+    f["weekday_ok"] = t_open.weekday() <= 3   # 月〜木（オーナー「もちろん金曜日は取引しません」・日本時間）
     f["spread_ok"] = (spread <= SPREAD_MAX and risk >= COST_MULT * spread) if (risk and spread is not None) else (
         False if (spread is not None and spread > SPREAD_MAX) else None)
     vals = [f.get(k) for k in V1_ENTRY]
