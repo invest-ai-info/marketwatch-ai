@@ -18,6 +18,9 @@
       --entry-type ema15 --push 2 --sl-line 207.51 \
       --flags tokyo_break=1,strongest=1,htf_aligned=0,tp_before_high=0,event_clear=1,sl_at_line=1 \
       --note "ユーロドルの直近安値のラインと比べ、上に強いほうのポンド円"
+  50%押し目（型1＝memory/07_fx_setups.md）は --entry-type half50 と、割った線・そこからいちばん遠くまで行った値を付ける：
+      … --entry-type half50 --break-line 209.963 --extreme 209.570
+      （線で入る2発目も half50＝depth_pct が 100 前後になる。型1 は足の確定で手じまうが、逆指値が無いと R を出せず判定に数えない）
   python trade_journal.py status
   （--server-time＝MT4 の画面の時刻（BigBoss のサーバー時刻）を日本時間に直す。冬＝+7時間・夏＝+6時間）
 """
@@ -38,7 +41,9 @@ COST_MULT = 7.0               # 決まりの紙 v1：損切りの幅はスプレ
 # 手で付ける項目（決まりの紙 v1 の部品）。自動で付く3つ（in_window・sl_order・spread_ok）は数字から決める
 MANUAL_FLAGS = ("tokyo_break", "strongest", "htf_aligned", "tp_before_high", "event_clear", "sl_at_line")
 AUTO_FLAGS = ("in_window", "sl_order", "spread_ok", "weekday_ok")
-ENTRY_TYPES = ("ema15", "line", "other")
+# half50＝50%押し目（型1：クロス円がそろって東京時間の線を割る → 線と新安値の 50% の戻りで入る。2026-11-24 夜 オーナー「はい、足す」）。判定は種類で分けない＝読むための表だけ
+ENTRY_TYPES = ("ema15", "line", "half50", "other")
+TYPE_JP = {"ema15": "15分足EMAの押し", "line": "ライン", "half50": "50%押し目", "other": "ほか"}
 # 何押しで入ったか（2026-11-24 夜 オーナー「1押し、2押しで入った場合は1押しの方の直近安値のラインで損切り」）
 PUSHES = ("break", "1", "2", "3+")
 # 入口が決まりの紙 v1 に全部当てはまるか（出口の tp_before_high と、段2で腕にする htf_aligned は入れない）
@@ -107,13 +112,29 @@ def parse_flags(text):
     return out
 
 
+def leg_of(side, entry, break_line, extreme, pip):
+    """割った線からいちばん遠くまで行った値（売り＝新安値・買い＝最高値）までの pips と、入った値がその何％戻したところか。純関数
+    50＝ちょうど真ん中・100＝線まで戻った。線と新安値の値は、50% を測った時点のもの（入る前まで）"""
+    if break_line is None and extreme is None:
+        return None, None
+    if break_line is None or extreme is None:
+        raise ValueError("--break-line と --extreme は両方いる（片方だけでは測れない）")
+    sgn = 1 if side == "buy" else -1
+    leg = (extreme - break_line) * sgn
+    if leg <= 0:
+        raise ValueError("新安値（買いは最高値）が線の内側にある（入力の取り違え？）")
+    return round(leg / pip, 1), round((extreme - entry) * sgn / leg * 100, 1)
+
+
 def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=None, pip=None,
-               entry_type="other", flags=None, note="", used_for_rule=False, push=None, sl_line=None):
+               entry_type="other", flags=None, note="", used_for_rule=False, push=None, sl_line=None,
+               break_line=None, extreme=None):
     """MT4 の行の数字 → 記録（値段・pips・R・○×だけ）。t_open・t_close は日本時間。純関数
 
     used_for_rule＝決まりの紙を作るのに使った取引（11/24 のポンド円）。7/26 の判定には数えるが、読むための表からは外す
     push＝何押しで入ったか（break＝ブレイクラインまでの戻り・1・2・3+）。sl_line＝決まりの損切りの線（ブレイクラインか1押しの安値）の値段
     → 逆指値がその線からどれだけ離れていたか（sl_buffer_pips・余白）を残す＝段2の前に余白を決めるため（成績は見ない）
+    break_line・extreme＝割った線と、そこからいちばん遠くまで行った値（型1）→ leg_pips・depth_pct を残す
     """
     side = side.lower()
     if side not in ("buy", "sell"):
@@ -132,6 +153,7 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
         raise ValueError("損切りが入った値の利益側にある（入力の取り違え？）")
     r_net = round(pnl / risk, 3) if risk else None
     buf = round((sl_line - sl) * sgn / pip, 1) if (sl is not None and sl_line) else None
+    leg_pips, depth_pct = leg_of(side, entry, break_line, extreme, pip)
     cost_r = round(spread / risk, 3) if (risk and spread is not None) else None
     r_gross = round((pnl + spread) / risk, 3) if (risk and spread is not None) else None
     kind = "manual"
@@ -153,7 +175,8 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
             "pair": pair.upper(), "side": side, "entry": entry, "sl": sl, "tp": tp, "exit": exit_,
             "spread_pips": spread, "risk_pips": risk, "pnl_pips": pnl, "r_net": r_net, "r_gross": r_gross,
             "cost_r": cost_r, "exit_kind": kind, "entry_type": entry_type, "push": push, "sl_line": sl_line,
-            "sl_buffer_pips": buf, "flags": f, "fits_v1_entry": fits,
+            "sl_buffer_pips": buf, "break_line": break_line, "extreme": extreme, "leg_pips": leg_pips,
+            "depth_pct": depth_pct, "flags": f, "fits_v1_entry": fits,
             "used_for_rule": bool(used_for_rule), "note": note}
 
 
@@ -196,7 +219,7 @@ def verdict_of(lo, hi):
 
 
 def reading_table(trades):
-    """項目ごとの ○ と × の R の平均と件数（読むだけ・決まりの紙を作るのに使った取引は外す）"""
+    """項目ごとの ○ と × ・入口の種類ごとの R の平均と件数（読むだけ・決まりの紙を作るのに使った取引は外す）"""
     trades = [t for t in trades if not t.get("used_for_rule")]
     rows = {}
     for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line"):
@@ -206,6 +229,9 @@ def reading_table(trades):
     for v in (True, False):
         xs = [t["r_net"] for t in trades if t.get("fits_v1_entry") is v]
         rows[f"fits_v1_entry={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
+    for k in ENTRY_TYPES:
+        xs = [t["r_net"] for t in trades if t.get("entry_type") == k]
+        rows[f"entry_type={k}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
     return rows
 
 
@@ -238,6 +264,8 @@ def status_text(st):
                  "・".join(f"{t['date']} {t['pair']}" for t in no_sl))
     fit = sum(1 for t in rs if t.get("fits_v1_entry") is True)
     L.append(f"決まりの紙 v1 の入口に全部当てはまった取引 {fit}件（成績は判定の日にだけ出す）")
+    kinds = [(k, sum(1 for t in rs if t.get("entry_type") == k)) for k in ENTRY_TYPES]
+    L.append("入口の種類：" + "・".join(f"{TYPE_JP[k]} {n}件" for k, n in kinds if n) if rs else "入口の種類：まだ無い")
     for c in st["checkpoints"]:
         L.append(f"判定（{c['n']}件・{c['through']} まで・{c['days']}日）：平均 {c['mean_r']:+.3f}R"
                  f"（95%の幅 {c['lo']:+.3f}〜{c['hi']:+.3f}）・勝率 {c['win_rate'] * 100:.0f}% → {c['verdict']}")
@@ -261,6 +289,8 @@ def main(argv):
     a.add_argument("--entry-type", default="other", choices=ENTRY_TYPES)
     a.add_argument("--push", default=None, choices=PUSHES, help="何押しで入ったか")
     a.add_argument("--sl-line", type=float, default=None, help="決まりの損切りの線（ブレイクラインか1押しの安値）")
+    a.add_argument("--break-line", type=float, default=None, help="型1：割った線（売り＝東京時間の最安値・買い＝最高値）")
+    a.add_argument("--extreme", type=float, default=None, help="型1：線からいちばん遠くまで行った値（売り＝新安値・買い＝最高値）")
     a.add_argument("--flags", default="")
     a.add_argument("--note", default="")
     a.add_argument("--used-for-rule", action="store_true", help="決まりの紙を作るのに使った取引（読むための表から外す）")
@@ -273,7 +303,7 @@ def main(argv):
             t_open, t_close = server_to_jst(t_open), server_to_jst(t_close)
         tr = make_trade(args.id, args.pair, args.side, t_open, args.entry, args.sl, args.tp, t_close, args.exit,
                         args.spread, args.pip, args.entry_type, parse_flags(args.flags), args.note,
-                        args.used_for_rule, args.push, args.sl_line)
+                        args.used_for_rule, args.push, args.sl_line, args.break_line, args.extreme)
         add(st, tr)
         r = f"{tr['r_net']:+.2f}R" if tr["r_net"] is not None else "R なし（逆指値なし）"
         print(f"足した：{tr['date']} {tr['entry_time']} {tr['pair']} {tr['side']}・{tr['pnl_pips']:+.1f}pips・{r}")

@@ -146,3 +146,112 @@ def test_friday_is_outside_v1():
     t = gbpjpy(t_open=J(2026, 11, 27, 16, 4), t_close=J(2026, 11, 27, 16, 30))   # 金曜
     assert t["flags"]["weekday_ok"] is False and t["fits_v1_entry"] is False
     assert gbpjpy()["flags"]["weekday_ok"] is True                               # 火曜
+
+
+# ── 50%押し目（型1）の目印（2026-11-24 夜・オーナー「はい、足す」）──────────────
+
+def half50(**kw):
+    """型1 の売りの形（作り物の日付・値段は 11/17 の実例の線と新安値と同じ並び）"""
+    base = dict(tid="h1", pair="GBPJPY", side="sell", t_open=J(2026, 12, 1, 18, 45), entry=209.889, sl=210.019,
+                tp=None, t_close=J(2026, 12, 1, 19, 2, 47), exit_=209.760, spread=1.8, entry_type="half50",
+                break_line=209.963, extreme=209.570)
+    base.update(kw)
+    return T.make_trade(**base)
+
+
+def test_half50_keeps_leg_and_depth():
+    t = half50()
+    assert t["entry_type"] == "half50"
+    assert t["leg_pips"] == 39.3                     # 線から新安値まで
+    assert t["depth_pct"] == 81.2                    # 線までの何％戻したところで入ったか（11/17 は約81%）
+    assert t["break_line"] == 209.963 and t["extreme"] == 209.570
+    assert t["fits_v1_entry"] is False               # OJ（15分足 EMA の押し）の決まりの紙には当てはまらない
+    assert gbpjpy()["fits_v1_entry"] is True and gbpjpy(entry_type="half50")["fits_v1_entry"] is False   # ○× が全部そろっていても混ぜない
+
+
+def test_half50_buy_is_mirror():
+    t = half50(side="buy", entry=207.56, sl=207.30, exit_=207.70, break_line=207.36, extreme=207.76)
+    assert t["leg_pips"] == 40.0 and t["depth_pct"] == 50.0
+
+
+def test_half50_second_entry_at_line_is_100():
+    assert half50(entry=209.963)["depth_pct"] == 100.0
+
+
+def test_leg_is_none_without_line_and_extreme():
+    t = gbpjpy()
+    assert t["leg_pips"] is None and t["depth_pct"] is None and t["break_line"] is None and t["extreme"] is None
+    for kw in (dict(break_line=None), dict(extreme=None)):     # 片方だけ＝入れ忘れ
+        with pytest.raises(ValueError):
+            half50(**kw)
+
+
+def test_extreme_on_wrong_side_is_rejected():
+    with pytest.raises(ValueError):
+        half50(extreme=210.30)                       # 売りなのに、新安値が線より上
+    with pytest.raises(ValueError):
+        half50(side="buy", sl=207.30, entry=207.56, exit_=207.7, break_line=207.36, extreme=207.10)
+    with pytest.raises(ValueError):
+        half50(extreme=209.963)                      # 線と同じ値＝0で割る
+
+
+def test_unknown_entry_type_is_rejected():
+    with pytest.raises(ValueError):
+        half50(entry_type="half")
+
+
+def fake_half(i, r, day):
+    t = half50(tid=f"h{i}", t_open=J(2026, 12, 1, 17, 0) + dt.timedelta(days=day, minutes=i),
+               t_close=J(2026, 12, 1, 17, 30) + dt.timedelta(days=day, minutes=i))
+    t["r_net"] = r
+    return t
+
+
+def test_checkpoint_counts_all_types_and_reading_splits_them():
+    st = T.empty_state()
+    for i in range(15):
+        T.add(st, fake(i, 1.0, i % 3))               # 火〜木（金曜は決まりの紙の外になる）
+        T.add(st, fake_half(i, -0.5, i % 3))
+    T.run_checkpoints(st, n_boot=300)
+    c = st["checkpoints"][0]
+    assert c["n"] == 30 and c["mean_r"] == 0.25      # 判定は全部の取引をまとめて1つ（種類で分けない）
+    r = c["reading"]
+    assert r["entry_type=ema15"] == {"n": 15, "mean": 1.0}
+    assert r["entry_type=half50"] == {"n": 15, "mean": -0.5}
+    assert r["entry_type=line"] == {"n": 0, "mean": None}
+    assert r["fits_v1_entry=o"]["n"] == 15           # 50%押し目は OJ の決まりの紙に混ざらない
+
+
+def test_reading_by_type_skips_rule_source_trade():
+    r = T.reading_table([gbpjpy(used_for_rule=True), fake(1, -1.0, 0), fake_half(1, 2.0, 0)])
+    assert r["entry_type=ema15"] == {"n": 1, "mean": -1.0} and r["entry_type=half50"] == {"n": 1, "mean": 2.0}
+
+
+def test_status_shows_counts_by_type_but_no_average():
+    st = T.empty_state()
+    T.add(st, gbpjpy())
+    T.add(st, fake_half(1, 2.345, 0))
+    T.add(st, half50(tid="nosl", sl=None, t_open=J(2026, 12, 2, 18), t_close=J(2026, 12, 2, 18, 20)))
+    s = T.status_text(st)
+    assert "15分足EMAの押し 1件" in s and "50%押し目 1件" in s       # R を出せる取引だけ数える
+    assert "2.345" not in s and "+2.3" not in s and "R（95%" not in s
+
+
+def test_old_records_without_new_keys_still_work():
+    st = T.empty_state()
+    t = gbpjpy()
+    for k in ("break_line", "extreme", "leg_pips", "depth_pct"):
+        t.pop(k)
+    T.add(st, t)
+    assert "15分足EMAの押し 1件" in T.status_text(st)
+    assert T.reading_table([t])["entry_type=ema15"]["n"] == 1
+
+
+def test_cli_adds_half50(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(tmp_path)
+    T.main(["add", "--id", "77", "--pair", "GBPJPY", "--side", "sell", "--open", "2026.12.01 11:45:00", "--entry", "209.889",
+            "--sl", "210.019", "--close", "2026.12.01 12:02:47", "--exit", "209.760", "--spread", "1.8", "--server-time",
+            "--entry-type", "half50", "--break-line", "209.963", "--extreme", "209.570"])
+    t = T.load()["trades"][0]
+    assert t["entry_type"] == "half50" and t["depth_pct"] == 81.2 and t["entry_time"] == "18:45:00"
+    assert "50%押し目 1件" in capsys.readouterr().out
