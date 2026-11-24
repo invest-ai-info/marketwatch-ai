@@ -129,3 +129,14 @@ def test_reading_table_skips_rule_source_trade():
     trades = [gbpjpy(used_for_rule=True), fake(1, -1.0, 0)]
     rows = T.reading_table(trades)
     assert rows["tokyo_break=o"]["n"] == 1 and rows["tokyo_break=o"]["mean"] == -1.0
+
+
+def test_push_and_stop_line_buffer():
+    t = gbpjpy(push="2", sl_line=207.51)
+    assert t["push"] == "2" and t["sl_buffer_pips"] == 4.1
+    s = T.make_trade("5", "EURUSD", "sell", J(2026, 12, 1, 15, 30), 1.1000, 1.1020, None,
+                     J(2026, 12, 1, 15, 40), 1.0990, push="1", sl_line=1.1015)
+    assert s["sl_buffer_pips"] == 5.0           # 売りは線の上に余白
+    with pytest.raises(ValueError):
+        gbpjpy(push="4")
+    assert gbpjpy()["sl_buffer_pips"] is None
