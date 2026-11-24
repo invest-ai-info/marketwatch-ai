@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-11-24T06:10:00+09:00",
+  "generated_at": "2026-11-24T15:06:07+09:00",
   "risk_regime": {
     "regime": "NEUTRAL",
     "confidence": "LOW",
-    "rationale": "11/20の急落（VIX一時40・S&P500が調整局面）から、11/23はエヌビディアのCEO復帰報道で米株が急反発（S&P500 +4.7%、ナスダック +6.5%）。ただし戻りの多くは売り方の買い戻し等との見方もあり、12/9の利上げ観測（9割超）や長期金利5%近辺は残る。方向感が定まらず確度は低め。",
+    "rationale": "11/20の急落（VIX一時40・S&P500が調整局面）から、11/23はエヌビディアのCEO復帰報道で米株が急反発（S&P500 +4.7%、ナスダック +6.5%）。ただし戻りの多くは売り方の買い戻し等との見方もあり、12/9の利上げ観測（9割超）や長期金利5%近辺は残る。方向感が定まらず確度は低め。（15時の回は追加検索で11/24の新しい市況が確認できず、11/23までの材料を維持。確度は低め）",
     "key_drivers": [
       "エヌビディアがジェンスン・フアン氏をCEOに復帰させ株価が約3割急騰",
       "VIXは26台へ低下したが依然として高め（4月以来の水準）",
@@ -14,91 +14,377 @@
   },
   "assets": [
     {
-      "name": "日経225", "ticker": "NKD=F", "bias": "NEUTRAL", "conviction": "LOW",
+      "name": "日経225",
+      "ticker": "NKD=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
       "rationale": "11/20の日経平均は約5%安の56,436円と急落。11/23の米株急反発は東京の火曜寄りに追い風になり得るが、買い戻し主導との指摘もあり、持続性は不透明。",
-      "catalysts": ["米株反発の東京市場への波及", "半導体・AI関連株の値動き", "円相場と日銀の利上げ観測"],
+      "catalysts": [
+        "米株反発の東京市場への波及",
+        "半導体・AI関連株の値動き",
+        "円相場と日銀の利上げ観測"
+      ],
       "top_news": [
-        {"headline": "日経平均が5.1%安の56,436円、世界的なAI・半導体株安で急落", "published": "2026-11-20", "comment": "休場明けは米株の反発をどこまで織り込むかが焦点", "source": "CNBC/Investing.com", "tier": 2, "credibility": "MID", "corroborated_by": [], "materiality": "high", "direction": "bearish", "url": "https://www.cnbc.com/quotes/.N225"},
-        {"headline": "米株が急反発、エヌビディアのフアンCEO復帰で2025年4月以来の上げ幅", "published": "2026-11-23", "comment": "リスク回避が和らぎ日本株にも追い風となり得る", "source": "Yahoo Finance", "tier": 2, "credibility": "MID", "corroborated_by": ["NBC News"], "materiality": "high", "direction": "bullish", "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"}
+        {
+          "headline": "日経平均が5.1%安の56,436円、世界的なAI・半導体株安で急落",
+          "published": "2026-11-20",
+          "comment": "休場明けは米株の反発をどこまで織り込むかが焦点",
+          "source": "CNBC/Investing.com",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.cnbc.com/quotes/.N225"
+        },
+        {
+          "headline": "米株が急反発、エヌビディアのフアンCEO復帰で2025年4月以来の上げ幅",
+          "published": "2026-11-23",
+          "comment": "リスク回避が和らぎ日本株にも追い風となり得る",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "NBC News"
+          ],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
+        }
       ]
     },
     {
-      "name": "S&P500", "ticker": "ES=F", "bias": "NEUTRAL", "conviction": "LOW",
+      "name": "S&P500",
+      "ticker": "ES=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
       "rationale": "11/23は+4.7%の7,237で急反発したが、直前の調整局面入りの後。利上げ観測と長期金利の高さが重しで、急反発の持続性には慎重な見方。",
-      "catalysts": ["12/9のFOMC", "エヌビディアの経営体制", "PCE等の物価指標"],
+      "catalysts": [
+        "12/9のFOMC",
+        "エヌビディアの経営体制",
+        "PCE等の物価指標"
+      ],
       "top_news": [
-        {"headline": "S&P500が4.7%高の7,237、ダウ3.0%高、ナスダック6.5%高と急反発", "published": "2026-11-23", "comment": "売り方の買い戻しが主因との声もあり過信は禁物", "source": "Yahoo Finance", "tier": 2, "credibility": "HIGH", "corroborated_by": ["NBC News"], "materiality": "high", "direction": "bullish", "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"},
-        {"headline": "FRBは12月利上げを準備、織り込みは9割超", "published": "2026-11-23", "comment": "利上げ継続が株の上値を抑える要因になり得る", "source": "CME FedWatch/Investing.com", "tier": 2, "credibility": "MID", "corroborated_by": [], "materiality": "high", "direction": "bearish", "url": "https://www.investing.com/news/economy-news/bond-market-flattening-and-wednesdays-pce-test-for-ratehike-pricing-93CH-5046275"}
+        {
+          "headline": "S&P500が4.7%高の7,237、ダウ3.0%高、ナスダック6.5%高と急反発",
+          "published": "2026-11-23",
+          "comment": "売り方の買い戻しが主因との声もあり過信は禁物",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "NBC News"
+          ],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
+        },
+        {
+          "headline": "FRBは12月利上げを準備、織り込みは9割超",
+          "published": "2026-11-23",
+          "comment": "利上げ継続が株の上値を抑える要因になり得る",
+          "source": "CME FedWatch/Investing.com",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.investing.com/news/economy-news/bond-market-flattening-and-wednesdays-pce-test-for-ratehike-pricing-93CH-5046275"
+        }
       ]
     },
     {
-      "name": "ナスダック", "ticker": "NQ=F", "bias": "NEUTRAL", "conviction": "LOW",
+      "name": "ナスダック",
+      "ticker": "NQ=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
       "rationale": "11/23は+6.5%の24,090と大きく反発。エヌビディア主導の急変動で、直前の下げ幅に対する戻りの段階。AI関連の不透明感は残る。",
-      "catalysts": ["エヌビディア株の続伸・反落", "AI関連の収益見通し", "長期金利の動き"],
+      "catalysts": [
+        "エヌビディア株の続伸・反落",
+        "AI関連の収益見通し",
+        "長期金利の動き"
+      ],
       "top_news": [
-        {"headline": "エヌビディアがフアン氏をCEOに復帰、株価は約31%急騰", "published": "2026-11-23", "comment": "一社の経営体制でナスダック全体が大きく動いた", "source": "Yahoo Finance", "tier": 2, "credibility": "HIGH", "corroborated_by": ["NBC News"], "materiality": "high", "direction": "bullish", "url": "https://nbcnews.com/business/markets/stocks-rebound-ai-tech-selloff-nvidia-rcna610833"},
-        {"headline": "野村のストラテジスト、急反発は買い戻しとヘッジ要因が大きく安心は早いと指摘", "published": "2026-11-23", "comment": "戻りが続くかは需給次第で、慎重な見方もある", "source": "Yahoo Finance", "tier": 2, "credibility": "MID", "corroborated_by": [], "materiality": "mid", "direction": "neutral", "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"}
+        {
+          "headline": "エヌビディアがフアン氏をCEOに復帰、株価は約31%急騰",
+          "published": "2026-11-23",
+          "comment": "一社の経営体制でナスダック全体が大きく動いた",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "HIGH",
+          "corroborated_by": [
+            "NBC News"
+          ],
+          "materiality": "high",
+          "direction": "bullish",
+          "url": "https://nbcnews.com/business/markets/stocks-rebound-ai-tech-selloff-nvidia-rcna610833"
+        },
+        {
+          "headline": "野村のストラテジスト、急反発は買い戻しとヘッジ要因が大きく安心は早いと指摘",
+          "published": "2026-11-23",
+          "comment": "戻りが続くかは需給次第で、慎重な見方もある",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
+        }
       ]
     },
     {
-      "name": "金", "ticker": "GC=F", "bias": "NEUTRAL", "conviction": "LOW",
+      "name": "金",
+      "ticker": "GC=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
       "rationale": "利上げ継続観測とドル高で11/18に約3,690ドルと1年超ぶり安値圏まで下落。11/23は約3,633ドル、+3%台の反発と報じられたが、急落後の戻りで方向感は弱い。",
-      "catalysts": ["12/9のFOMC", "ドルと米長期金利", "中東情勢"],
+      "catalysts": [
+        "12/9のFOMC",
+        "ドルと米長期金利",
+        "中東情勢"
+      ],
       "top_news": [
-        {"headline": "FOMC議事録、ほぼ全員が追加利上げは適切になり得ると認識", "published": "2026-11-18", "comment": "利上げ長期化は金利の付かない金の重しになりやすい", "source": "FXStreet", "tier": 2, "credibility": "MID", "corroborated_by": ["Kitco"], "materiality": "high", "direction": "bearish", "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"},
-        {"headline": "金は3,633ドル前後で約3%反発", "published": "2026-11-23", "comment": "急落後の自律反発の可能性。戻りの持続は不明", "source": "Yahoo Finance", "tier": 2, "credibility": "LOW", "corroborated_by": [], "materiality": "mid", "direction": "bullish", "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"}
+        {
+          "headline": "FOMC議事録、ほぼ全員が追加利上げは適切になり得ると認識",
+          "published": "2026-11-18",
+          "comment": "利上げ長期化は金利の付かない金の重しになりやすい",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "Kitco"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
+        },
+        {
+          "headline": "金は3,633ドル前後で約3%反発",
+          "published": "2026-11-23",
+          "comment": "急落後の自律反発の可能性。戻りの持続は不明",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
+        }
       ]
     },
     {
-      "name": "原油", "ticker": "CL=F", "bias": "NEUTRAL", "conviction": "LOW",
+      "name": "原油",
+      "ticker": "CL=F",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
       "rationale": "11/23の原油（1月限）は約80ドルで約4%安。11/19頃は中東情勢（イラン）をめぐり約84ドルへ上昇しており、材料が交錯して方向感が乏しい。",
-      "catalysts": ["中東・イラン情勢", "供給の回復", "世界景気への懸念"],
+      "catalysts": [
+        "中東・イラン情勢",
+        "供給の回復",
+        "世界景気への懸念"
+      ],
       "top_news": [
-        {"headline": "原油は80ドル前後へ約4%下落", "published": "2026-11-23", "comment": "リスク選好の回復の中で原油は逆に売られた", "source": "Yahoo Finance", "tier": 2, "credibility": "MID", "corroborated_by": [], "materiality": "mid", "direction": "bearish", "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"},
-        {"headline": "米大統領のイラン合意軽視発言を受け、原油が上昇", "published": "2026-11-19", "comment": "中東の緊張は供給不安として原油を押し上げやすい", "source": "FXStreet", "tier": 2, "credibility": "LOW", "corroborated_by": [], "materiality": "mid", "direction": "bullish", "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"}
+        {
+          "headline": "原油は80ドル前後へ約4%下落",
+          "published": "2026-11-23",
+          "comment": "リスク選好の回復の中で原油は逆に売られた",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
+        },
+        {
+          "headline": "米大統領のイラン合意軽視発言を受け、原油が上昇",
+          "published": "2026-11-19",
+          "comment": "中東の緊張は供給不安として原油を押し上げやすい",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
+        }
       ]
     },
     {
-      "name": "ドル円", "ticker": "USDJPY", "bias": "BULLISH", "conviction": "LOW",
+      "name": "ドル円",
+      "ticker": "USDJPY",
+      "bias": "BULLISH",
+      "conviction": "LOW",
       "rationale": "エヌビディア主導の株高でリスク選好が戻り、円が売られたと報じられた。日米金利差と利上げ観測も円安方向だが、159〜160円付近では介入警戒があり、確度は低め。",
-      "catalysts": ["12/9のFOMC", "日銀の政策観測", "介入警戒（160円付近）"],
+      "catalysts": [
+        "12/9のFOMC",
+        "日銀の政策観測",
+        "介入警戒（160円付近）"
+      ],
       "top_news": [
-        {"headline": "エヌビディア主導の株高でリスク選好が戻り円が下落", "published": "2026-11-23", "comment": "株高局面では円が売られやすい傾向がある", "source": "FXStreet", "tier": 2, "credibility": "MID", "corroborated_by": [], "materiality": "mid", "direction": "bullish", "url": "https://www.fxstreet.com/news/japanese-yen-weakens-as-nvidia-led-stock-rally-boosts-risk-appetite-202611231815"}
+        {
+          "headline": "エヌビディア主導の株高でリスク選好が戻り円が下落",
+          "published": "2026-11-23",
+          "comment": "株高局面では円が売られやすい傾向がある",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bullish",
+          "url": "https://www.fxstreet.com/news/japanese-yen-weakens-as-nvidia-led-stock-rally-boosts-risk-appetite-202611231815"
+        }
       ]
     },
     {
-      "name": "ユーロドル", "ticker": "EURUSD", "bias": "BEARISH", "conviction": "LOW",
+      "name": "ユーロドル",
+      "ticker": "EURUSD",
+      "bias": "BEARISH",
+      "conviction": "LOW",
       "rationale": "11/18時点でドルは19カ月ぶり高値圏とされ、FRBの利上げ観測がドルを支える。ユーロ側の直近材料は確認できず、確度は低め。",
-      "catalysts": ["12/9のFOMC", "米PCE物価", "ユーロ圏PMI"],
+      "catalysts": [
+        "12/9のFOMC",
+        "米PCE物価",
+        "ユーロ圏PMI"
+      ],
       "top_news": [
-        {"headline": "ドルが19カ月ぶりの高値圏、FRBの利上げ観測が支え", "published": "2026-11-18", "comment": "利上げ観測がドル高要因になりEURUSDの重しに", "source": "Kitco", "tier": 2, "credibility": "MID", "corroborated_by": [], "materiality": "mid", "direction": "bearish", "url": "https://www.kitco.com/opinion/2026-11-18/nvidia-crushed-earnings-nothing-going-moon-christmas"}
+        {
+          "headline": "ドルが19カ月ぶりの高値圏、FRBの利上げ観測が支え",
+          "published": "2026-11-18",
+          "comment": "利上げ観測がドル高要因になりEURUSDの重しに",
+          "source": "Kitco",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.kitco.com/opinion/2026-11-18/nvidia-crushed-earnings-nothing-going-moon-christmas"
+        }
       ]
     },
     {
-      "name": "ビットコイン", "ticker": "BTC-USD", "bias": "NEUTRAL", "conviction": "LOW",
+      "name": "ビットコイン",
+      "ticker": "BTC-USD",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
       "rationale": "11/23は約61,200ドルで小幅高。11/12の約72,900ドルから下落し、利上げ観測で金と共に売られた後。株の急反発の恩恵は限定的。",
-      "catalysts": ["12/9のFOMC", "ETFの資金流出入", "株式市場のリスク選好"],
+      "catalysts": [
+        "12/9のFOMC",
+        "ETFの資金流出入",
+        "株式市場のリスク選好"
+      ],
       "top_news": [
-        {"headline": "ビットコインは約61,200ドルで小幅上昇、株の急反発でも反応は限定的", "published": "2026-11-23", "comment": "株高ほど仮想通貨は戻らず、需給の弱さが残る", "source": "Yahoo Finance", "tier": 2, "credibility": "MID", "corroborated_by": [], "materiality": "mid", "direction": "neutral", "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"},
-        {"headline": "ビットコインが6.3万ドル割れ、金の下落と連動", "published": "2026-11-19", "comment": "利上げ観測で金もビットコインも売られた", "source": "FXStreet", "tier": 2, "credibility": "MID", "corroborated_by": ["CryptoTicker"], "materiality": "mid", "direction": "bearish", "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"}
+        {
+          "headline": "ビットコインは約61,200ドルで小幅上昇、株の急反発でも反応は限定的",
+          "published": "2026-11-23",
+          "comment": "株高ほど仮想通貨は戻らず、需給の弱さが残る",
+          "source": "Yahoo Finance",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "neutral",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
+        },
+        {
+          "headline": "ビットコインが6.3万ドル割れ、金の下落と連動",
+          "published": "2026-11-19",
+          "comment": "利上げ観測で金もビットコインも売られた",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "CryptoTicker"
+          ],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
+        }
       ]
     }
   ],
   "discarded": [
-    {"headline": "日付不明の記事（2025年版の相場まとめ）", "reason": "年が異なる・日付が確認できないため除外"},
-    {"headline": "11/20の米株終値に関する報道間の数値差", "reason": "ソース間で数値が一致せず、終値の確認ができなかったため除外"}
+    {
+      "headline": "日付不明の記事（2025年版の相場まとめ）",
+      "reason": "年が異なる・日付が確認できないため除外"
+    },
+    {
+      "headline": "11/20の米株終値に関する報道間の数値差",
+      "reason": "ソース間で数値が一致せず、終値の確認ができなかったため除外"
+    }
   ],
   "currencies": [
-    {"code": "USD", "lean": "STRONG", "conviction": "MID", "reason": "12月利上げ観測9割超と長期金利4.9%台、ドルは19カ月ぶり高値圏との報道"},
-    {"code": "EUR", "lean": "NEUTRAL", "conviction": "LOW", "reason": "ユーロ側の新しい材料が乏しく、ドル高に押される構図"},
-    {"code": "GBP", "lean": "NEUTRAL", "conviction": "LOW", "reason": "直近の英国材料を確認できず、ドル高の影響を受けやすい"},
-    {"code": "JPY", "lean": "WEAK", "conviction": "LOW", "reason": "株高でリスク選好が戻り円売り。日米金利差も円安方向だが介入警戒あり"},
-    {"code": "AUD", "lean": "NEUTRAL", "conviction": "LOW", "reason": "RBAは11/3に18年ぶり高水準へ利上げ。中国景気の減速懸念と相殺"},
-    {"code": "CNY", "lean": "NEUTRAL", "conviction": "LOW", "reason": "元は4年ぶり高値圏だが、PBOCが外貨準備率を引き上げ元高を抑制"}
+    {
+      "code": "USD",
+      "lean": "STRONG",
+      "conviction": "MID",
+      "reason": "12月利上げ観測9割超と長期金利4.9%台、ドルは19カ月ぶり高値圏との報道"
+    },
+    {
+      "code": "EUR",
+      "lean": "NEUTRAL",
+      "conviction": "LOW",
+      "reason": "ユーロ側の新しい材料が乏しく、ドル高に押される構図"
+    },
+    {
+      "code": "GBP",
+      "lean": "NEUTRAL",
+      "conviction": "LOW",
+      "reason": "直近の英国材料を確認できず、ドル高の影響を受けやすい"
+    },
+    {
+      "code": "JPY",
+      "lean": "WEAK",
+      "conviction": "LOW",
+      "reason": "株高でリスク選好が戻り円売り。日米金利差も円安方向だが介入警戒あり"
+    },
+    {
+      "code": "AUD",
+      "lean": "NEUTRAL",
+      "conviction": "LOW",
+      "reason": "RBAは11/3に18年ぶり高水準へ利上げ。中国景気の減速懸念と相殺"
+    },
+    {
+      "code": "CNY",
+      "lean": "NEUTRAL",
+      "conviction": "LOW",
+      "reason": "元は4年ぶり高値圏だが、PBOCが外貨準備率を引き上げ元高を抑制"
+    }
   ],
   "asia_watch": [
-    {"headline": "中国の10月公式PMIが製造業・非製造業とも50割れ", "published": "2026-10-31", "region": "CN", "why": "中国景気の減速は豪ドルや日経の重しになり得る", "materiality": "mid", "source": "MNI/FXStreet", "tier": 2, "credibility": "MID", "url": "https://www.fxstreet.com/news/chinese-yuan-strongest-in-four-years-despite-weak-data-commerzbank-202611022041"},
-    {"headline": "豪準備銀行が政策金利を18年ぶり高水準へ引き上げ", "published": "2026-11-03", "region": "AU", "why": "豪ドルの下支え要因。今後の追加利上げ観測が焦点", "materiality": "high", "source": "investingLive", "tier": 2, "credibility": "MID", "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-rba-hikes-to-18-year-high/"},
-    {"headline": "RBA議事要旨はタカ派寄りと報じられる", "published": "2026-11-17", "region": "AU", "why": "豪ドルを支える材料になり得るが、詳細は未確認", "materiality": "mid", "source": "investingLive", "tier": 2, "credibility": "LOW", "url": "https://investinglive.com/es/noticias/investinglive-noticias-del-mercado-de-asia-pacifico-actas-del-rba-con-sesgo-restrictivo/"}
+    {
+      "headline": "中国の10月公式PMIが製造業・非製造業とも50割れ",
+      "published": "2026-10-31",
+      "region": "CN",
+      "why": "中国景気の減速は豪ドルや日経の重しになり得る",
+      "materiality": "mid",
+      "source": "MNI/FXStreet",
+      "tier": 2,
+      "credibility": "MID",
+      "url": "https://www.fxstreet.com/news/chinese-yuan-strongest-in-four-years-despite-weak-data-commerzbank-202611022041"
+    },
+    {
+      "headline": "豪準備銀行が政策金利を18年ぶり高水準へ引き上げ",
+      "published": "2026-11-03",
+      "region": "AU",
+      "why": "豪ドルの下支え要因。今後の追加利上げ観測が焦点",
+      "materiality": "high",
+      "source": "investingLive",
+      "tier": 2,
+      "credibility": "MID",
+      "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-rba-hikes-to-18-year-high/"
+    },
+    {
+      "headline": "RBA議事要旨はタカ派寄りと報じられる",
+      "published": "2026-11-17",
+      "region": "AU",
+      "why": "豪ドルを支える材料になり得るが、詳細は未確認",
+      "materiality": "mid",
+      "source": "investingLive",
+      "tier": 2,
+      "credibility": "LOW",
+      "url": "https://investinglive.com/es/noticias/investinglive-noticias-del-mercado-de-asia-pacifico-actas-del-rba-con-sesgo-restrictivo/"
+    }
   ]
 }
