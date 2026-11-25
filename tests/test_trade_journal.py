@@ -530,55 +530,24 @@ def test_london_phase_winter_and_summer():
     assert P(J(2027, 3, 26, 16, 0)) == "before" and P(J(2027, 3, 29, 16, 0)) == "flat"      # 英国の夏時間の切り替え（3月の最後の日曜）で決まる
 
 
-@pytest.mark.parametrize("kata", ["push", "range", "other"])
-def test_in_window5_skips_the_london_open(kata):
+def test_in_window5_is_one_hour_before_the_open_to_two_hours_after():
+    """どの型も（11/25 夜 オーナー「冬は16時から19時、夏は15時から18時。それぞれロンドン時間が始まってから30分は入らない」→「押し目も16時から」）"""
     W = T.in_window5
-    winter = {(14, 59): False, (15, 0): True, (16, 54): True, (16, 55): False, (17, 2): False, (17, 29): False,
-              (17, 30): True, (18, 59): True, (19, 0): False}
-    assert {hm: W(J(2026, 12, 1, *hm), kata) for hm in winter} == winter
-    summer = {(14, 59): False, (15, 0): True, (15, 54): True, (15, 55): False, (16, 29): False, (16, 30): True, (17, 59): True, (18, 0): False}
-    assert {hm: W(J(2027, 6, 1, *hm), kata) for hm in summer} == summer
+    winter = {(8, 0): False, (14, 59): False, (15, 0): False, (15, 59): False, (16, 0): True, (16, 54): True, (16, 55): False, (17, 0): False, (17, 2): False,
+              (17, 29): False, (17, 30): True, (18, 59): True, (19, 0): False, (21, 0): False}
+    assert {hm: W(J(2026, 12, 1, *hm)) for hm in winter} == winter
+    summer = {(14, 0): False, (14, 59): False, (15, 0): True, (15, 54): True, (15, 55): False, (16, 0): False, (16, 29): False, (16, 30): True, (17, 59): True, (18, 0): False}
+    assert {hm: W(J(2027, 6, 1, *hm)) for hm in summer} == summer
 
 
-def test_in_window5_of_the_fade_is_one_hour_before_the_open_to_two_hours_after():
-    """②逆張り（11/25 夜 オーナー「冬は16時から19時、夏は15時から18時。それぞれロンドン時間が始まってから30分は入らない」）"""
-    winter = {(8, 0): False, (15, 0): False, (15, 59): False, (16, 0): True, (16, 54): True, (16, 55): False, (17, 0): False, (17, 29): False,
-              (17, 30): True, (18, 59): True, (19, 0): False, (21, 0): False}
-    assert {hm: T.in_window5(J(2026, 12, 1, *hm), "fade") for hm in winter} == winter
-    summer = {(14, 0): False, (14, 59): False, (15, 0): True, (15, 54): True, (15, 55): False, (16, 0): False, (16, 29): False,
-              (16, 30): True, (17, 59): True, (18, 0): False}
-    assert {hm: T.in_window5(J(2027, 6, 1, *hm), "fade") for hm in summer} == summer
-
-
-def test_in_window5_without_a_kata_is_empty_only_where_the_katas_differ():
-    winter = {(14, 59): False, (15, 0): None, (15, 59): None, (16, 0): True, (16, 54): True, (16, 55): False, (17, 29): False,
-              (17, 30): True, (19, 0): False}
-    assert {hm: T.in_window5(J(2026, 12, 1, *hm), None) for hm in winter} == winter
-    summer = {(14, 59): False, (15, 0): True, (15, 54): True, (16, 0): False, (16, 30): True, (18, 0): False}     # 夏はどの型も 15:00 から＝同じ
-    assert {hm: T.in_window5(J(2027, 6, 1, *hm), None) for hm in summer} == summer
-
-
-@pytest.mark.parametrize("kata, want", [("push", True), ("range", True), ("other", True), ("fade", False), (None, None)])
-def test_make_trade_marks_the_time_by_kata(kata, want):
-    early = dict(kata=kata, t_open=J(2026, 12, 1, 15, 40), t_close=J(2026, 12, 1, 15, 50))
-    assert gbpjpy(**early)["flags"]["in_window5"] is want
-    assert gbpjpy(**dict(early, t_open=J(2026, 12, 1, 16, 4), t_close=J(2026, 12, 1, 16, 20)))["flags"]["in_window5"] is True
-    assert gbpjpy(**dict(early, t_open=J(2026, 12, 1, 17, 2), t_close=J(2026, 12, 1, 17, 20)))["flags"]["in_window5"] is False
-    t = gbpjpy(**early)
-    assert t["flags"]["in_window"] is True and t["flags"]["in_window2"] is True                # 紙 v1〜v4 の時間は型で分けない（登録のまま）
-    assert t["fits_v5_entry"] is not True
-
-
-def test_make_trade_uses_the_v5_kata_for_the_time():
-    early = dict(t_open=J(2026, 12, 1, 15, 40), t_close=J(2026, 12, 1, 15, 50))
-    assert gbpjpy(kata="push", v4={"kata5": "fade"}, **early)["flags"]["in_window5"] is False
-    assert gbpjpy(kata="fade", v4={"kata5": "push"}, **early)["flags"]["in_window5"] is True
-
-
-def test_reading_table_counts_the_time_by_kata():
-    early = dict(t_open=J(2026, 12, 1, 15, 40), t_close=J(2026, 12, 1, 15, 50))
-    rows = T.reading_table([gbpjpy(tid=str(i), kata=k, **early) for i, k in enumerate(("push", "fade", "fade", None))])
-    assert rows["in_window5=o"]["n"] == 1 and rows["in_window5=x"]["n"] == 2                   # 型が分からない1件は入れない
+@pytest.mark.parametrize("kata", ["push", "fade", "range", "other", None])
+def test_make_trade_marks_the_same_time_for_every_kata(kata):
+    def w(h, m, day=J(2026, 12, 1)):
+        o = day.replace(hour=h, minute=m)
+        return gbpjpy(kata=kata, t_open=o, t_close=o.replace(minute=m + 9))["flags"]
+    assert [w(*hm)["in_window5"] for hm in ((15, 40), (16, 4), (17, 2), (17, 31))] == [False, True, False, True]
+    assert w(15, 10, J(2027, 6, 1))["in_window5"] is True                                      # 夏は 15:00 から
+    assert w(15, 40)["in_window"] is True and w(15, 40)["in_window2"] is True                  # 紙 v1〜v4 の時間は登録のまま（15:00 から）
 
 
 def test_ldn_flat_is_about_holding_through_five_minutes_before():

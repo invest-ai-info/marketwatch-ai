@@ -34,7 +34,7 @@
   決まりの紙 v4（「OJ」追記⑨⑩・2026-11-25＝ユーロポンドで「ユーロかポンドか」・ドル円で「上か下か」）は、--auto が trade_v4.py で埋める（ユーロドル・ポンドドルの取引も向きと型だけ埋める）：
      型（--kata push＝①押し目／fade＝②抜けの失敗の逆張り／range＝④ドル円レンジの押し目／other）・ドル円とユーロポンドの1時間の動き・強いほう・見るペアの線と端・項目7つ・v4 の出口まで・伸ばした分
      ①と④は道具が決める。②・どれでもない・境目は聞く（②は、抜けと逆の向きに入るので道具は決めない）
-  入る時間の ○×（v5・in_window5）は型ごと（「OJ」追記⑬）：②は冬 16:00〜16:54 と 17:30〜18:59・夏 15:00〜15:54 と 16:30〜17:59／ほかの型は 15:00 から（冬の15時台だけ違う）。型が分からない冬の15時台は空
+  入る時間の ○×（v5・in_window5）はどの型も同じ（「OJ」追記⑭）：冬 16:00〜16:54 と 17:30〜18:59・夏 15:00〜15:54 と 16:30〜17:59（紙 v1〜v4 の時間は登録のまま）
   python trade_journal.py status
   （--server-time＝MT4 の画面の時刻（BigBoss のサーバー時刻）を日本時間に直す。冬＝+7時間・夏＝+6時間）
 """
@@ -86,9 +86,8 @@ AFTER_KEYS = ("v4_exit", "v4_exit_min", "v4_exit_pips", "run_pips", "mfe_pips") 
 # 聞いて決めたこと（3つとも選んでもらった答え）：新しく入るのは始まりの30分後から・向きは始まりからの動きだけで測る・線は東京の線のまま。ほかは v4 と同じ
 LDN_FLAT_MIN = 5              # ロンドンの始まりの5分前（冬 16:55・夏 15:55）に手じまう。その1分のうちの決済は ○
 LDN_WAIT_MIN = 30             # 始まりから30分（冬 17:00〜17:29・夏 16:00〜16:29）は入らない＝そこから新しく考える
-# 入る時間は型で分ける（「OJ」追記⑬・2026-11-25 夜 オーナー「入る時間は冬は16時から19時、夏は15時から18時。それぞれロンドン時間が始まってから30分は入らないでお願いします」＝②逆張り）
-FIRST_HOUR = 15               # ①④とほかの型は 15:00 から（v5 のまま）
-FADE_BEFORE_HOURS = 1         # ②は始まりの1時間前から（冬 16:00・夏 15:00）
+# 入る時間はどの型も同じ（「OJ」追記⑬⑭・2026-11-25 夜 オーナー「入る時間は冬は16時から19時、夏は15時から18時。それぞれロンドン時間が始まってから30分は入らないでお願いします」→「押し目も16時から」）
+BEFORE_HOURS = 1              # 始まりの1時間前から（冬 16:00・夏 15:00）。紙 v1〜v4 の時間（15:00 から）は変えない
 V5_FLAGS = ("both_broken", "usd_dir5", "pick_eg5", "far20", "fresh", "pull50", "touch1")
 V5_ENTRY = ("in_window5", "sl_order", "event_clear", "spread_ok", "weekday_ok") + V5_FLAGS      # ①押し目の入口（v4 の時間と向きだけを替えた）
 V5_KEYS = ("usd_ldn", "eg_ldn", "strong_ldn", "kata5")                                            # trade_v4.record の答え（始まりからの動き・強いほう・型）
@@ -142,17 +141,11 @@ def london_phase(t):
     return "flat" if t < l0 + dt.timedelta(minutes=LDN_WAIT_MIN) else "after"
 
 
-def in_window5(t_open, kata):
-    """v5 の入る時間（型ごと・追記⑫⑬）：15:00（②は始まりの1時間前＝冬 16:00・夏 15:00）〜始まりの5分前の前（冬 16:55・夏 15:55）と、
-    始まりの30分後〜2時間後の前（冬 17:30〜19:00・夏 16:30〜18:00）。型が分からず、型で答えが変わる時刻（冬の15時台）は None"""
-    if kata is None:
-        a, b = in_window5(t_open, "push"), in_window5(t_open, "fade")
-        return a if a == b else None
+def in_window5(t_open):
+    """v5 の入る時間（どの型も・追記⑫⑭）：始まりの1時間前〜始まりの5分前の前（冬 16:00〜16:55・夏 15:00〜15:55）と、始まりの30分後〜2時間後の前（冬 17:30〜19:00・夏 16:30〜18:00）"""
     l0 = london_open(t_open.date())
-    if t_open.hour < (l0 - FADE_BEFORE_HOURS if kata == "fade" else FIRST_HOUR):
-        return False
     ph = london_phase(t_open)
-    return ph == "before" or (ph == "after" and t_open.hour < l0 + WINDOW2_HOURS)
+    return (ph == "before" and t_open.hour >= l0 - BEFORE_HOURS) or (ph == "after" and t_open.hour < l0 + WINDOW2_HOURS)
 
 
 def ldn_flat_ok(t_open, t_close):
@@ -307,10 +300,10 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     f["pick_flow"], f["pick_far"] = (None if x is None else x == pair.upper() for x in (strong_flow, strong_far))
     v4, after = v4 or {}, after or {}
     f.update({k: (v4.get("flags") or {}).get(k) for k in V4_FLAGS})
-    kata5 = v4.get("kata5", kata) if v4 else kata                       # v5 の型（--auto で埋めていなければ v4 の型と同じ）
-    f["in_window5"] = in_window5(t_open, kata5)
+    f["in_window5"] = in_window5(t_open)
     f["ldn_flat"] = ldn_flat_ok(t_open, t_close)
     f.update({k: (v4.get("flags5") or {}).get(k) for k in ("usd_dir5", "pick_eg5")})
+    kata5 = v4.get("kata5", kata) if v4 else kata                       # v5 の型（--auto で埋めていなければ v4 の型と同じ）
     return {"id": str(tid), "date": t_open.strftime("%Y-%m-%d"), "entry_time": t_open.strftime("%H:%M:%S"),
             "exit_time": t_close.strftime("%H:%M:%S"), "hold_min": round((t_close - t_open).total_seconds() / 60, 1),
             "pair": pair.upper(), "side": side, "entry": entry, "sl": sl, "tp": tp, "exit": exit_,

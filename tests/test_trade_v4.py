@@ -810,6 +810,14 @@ def v5(**kw):
     return x
 
 
+def test_fits_v5_before_the_open_starts_at_1600_in_winter():
+    """①押し目も冬は16:00から（追記⑭）"""
+    def fit(h, m):
+        return trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, h, m), t_close=dt.datetime(2026, 12, 1, h, m + 4))["fits_v5_entry"]
+    assert (fit(15, 40), fit(16, 4), fit(16, 50), fit(16, 55)) == (False, True, True, False)
+    assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 15, 40), t_close=dt.datetime(2026, 12, 1, 15, 50))["fits_v4_entry"] is True     # 紙 v4 は登録のまま
+
+
 def test_fits_v5_after_the_wait():
     t = trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
     assert t["fits_v5_entry"] is True and (t["usd_ldn"], t["strong_ldn"], t["kata5"]) == (11.0, "EURJPY", "push")
@@ -830,13 +838,13 @@ def test_fits_v5_uses_the_v5_kata_and_keeps_v4_kata():
     t = trade(v5(kata5="range"), kata="push", **at_)
     assert t["kata"] == "push" and t["kata5"] == "range" and t["fits_v5_entry"] is None
     assert trade(v4(), kata="push")["kata5"] == "push"                       # v5 の型が無い記録は v4 の型
-    assert trade(kata="push")["fits_v5_entry"] is None                       # --auto なし＝向きが分からない
+    assert trade(kata="push", **at_)["fits_v5_entry"] is None                # --auto なし＝向きが分からない
 
 
 def test_owner_kata_is_also_the_v5_kata(monkeypatch, tmp_path):
     assert cli(monkeypatch, tmp_path, "--kata", "other") == 0
     t = T.load()["trades"][0]
-    assert t["kata5"] == "other" and t["fits_v5_entry"] is False and t["flags"]["in_window5"] is True and t["flags"]["ldn_flat"] is True
+    assert t["kata5"] == "other" and t["fits_v5_entry"] is False and t["flags"]["in_window5"] is False and t["flags"]["ldn_flat"] is True     # 冬の 15:06
 
 
 def test_v5_eurgbp_uses_its_own_threshold():
@@ -853,15 +861,8 @@ def test_v5_asks_the_kata_from_the_move_since_the_open():
     assert not any("--kata" in x for x in V.questions(run(), set(), set()))
 
 
-@pytest.mark.parametrize("kata, want", [("fade", False), ("push", True), (None, True)])
-def test_add_marks_the_time_by_kata(monkeypatch, tmp_path, kata, want):
-    """冬の 15:06＝②逆張りの時間（16:00 から）の外・①押し目の時間の中（オーナーが言わなければ道具の答え＝①）"""
-    assert cli(monkeypatch, tmp_path, *(("--kata", kata) if kata else ())) == 0
+@pytest.mark.parametrize("extra", [("--kata", "fade"), ("--kata", "push"), ()])
+def test_add_marks_1506_in_winter_as_outside(monkeypatch, tmp_path, extra):
+    assert cli(monkeypatch, tmp_path, *extra) == 0
     t = T.load()["trades"][0]
-    assert t["kata"] == (kata or "push") and t["flags"]["in_window5"] is want
-
-
-def test_add_leaves_the_time_empty_when_the_kata_is_unknown(monkeypatch, tmp_path):
-    b5 = world(eur={})                                                       # 入ったペアがまだ抜けていない＝道具は型を決めない
-    assert cli(monkeypatch, tmp_path, "--unknown", "kata", b5=b5, entry=-4) == 0
-    assert T.load()["trades"][0]["flags"]["in_window5"] is None
+    assert t["kata"] == (extra[1] if extra else "push") and t["flags"]["in_window5"] is False and t["flags"]["in_window2"] is True
