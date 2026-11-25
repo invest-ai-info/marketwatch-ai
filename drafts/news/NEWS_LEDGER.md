@@ -3,6 +3,30 @@
 
 ---
 
+## 2026-11-25
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均1,633円急落──SOX急落とAI支出不安が連鎖売りを呼ぶ（カテゴリ: 株式指数・AI株・半導体）
+- スコア: 話題性 5 / 影響 5 / 付加価値 4（合計 14/15）
+- 出典（確認済み）:
+  - Yahoo!ファイナンス「２５日大引けの日経平均株価＝１６３３円０１銭安の５万７０１１円６２銭」2026-11-25
+  - BigGo Finance「Nikkei Stock Average Briefly Falls Below 57,000 as US SOX Plunge Triggers Selling in AI and Semiconductor Shares」2026-11-25
+  - brecorder.com「Japan's Nikkei falls more than 3%, dragged down by plunges for AI stocks」2026-11-25
+  - CNBC / coinpaper.com「Stock Market Today: S&P 500 and Nasdaq Fall as Nvidia Drops 5.5%」2026-11-24
+  - Kotakneo.com「Asian Markets Fall as Kospi Slides Over 5% and Nikkei Drops Nearly 3% Amid Renewed AI Sell-Off and US Tariff Concerns」2026-11-25
+  - InvestingLive「Japan services producer prices jump 4.2% in October, firming the case for a BOJ hike」2026-11-25
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正2か所適用（「大きく下回る」→「やや下回る」・「強い。」→「強いとの見方がある。」）→ 最終判定 🟢白
+  - 事実確認修正（メイン側）: Goldman Sachs誤帰属→BTIG/クリンスキー氏に訂正、東京CPI日程表現を軟化
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3・noindexなし・断定語なし・推奨なし・出典6系統）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅ / 推奨なし ✅ / 出典6系統 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0 ✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-25-nikkei-drop-sox-plunge-ai-capex.html
+- commit: 5487993（main へ push 済み）
+
+---
+
 ## 2026-11-24
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均2207円高・ナスダック6.5%反発の背景を中立整理──NVIDIA CEO復帰と市場センチメントの転換（カテゴリ: 株式指数・AI株・マクロ）
