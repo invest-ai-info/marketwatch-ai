@@ -11,6 +11,7 @@ import pytest
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 import trade_fill as F  # noqa: E402
 import trade_journal as T  # noqa: E402
+import trade_v4 as V  # noqa: E402
 
 D0 = dt.date(2026, 12, 1)            # 火曜・冬（ロンドンは17時）
 BASE = {"USDJPY": 150.00, "EURJPY": 170.00, "GBPJPY": 200.00}
@@ -406,6 +407,7 @@ def cli(monkeypatch, tmp_path, *extra, b5=None, b1=None, cmd="add", entry=21, hm
     b5 = world() if b5 is None else b5
     b1 = {p: ones(p, {"15:00": (29, 30, 25, 26), "15:05": (26, 27, 20, 22)}, px=29.0) for p in F.PAIRS} if b1 is None else b1
     monkeypatch.setattr(F, "load", lambda t: (b5, b1))
+    monkeypatch.setattr(V, "load_after", lambda *a: ([], [], 60))
     a = [cmd, "--pair", pair, "--side", "buy", "--open", f"2026.12.01 {hm}:08", "--entry", str(price(entry))]
     if cmd == "add":
         a += ["--id", "900", "--sl", str(price(-2)), "--close", "2026.12.01 15:50:00", "--exit", str(price(30)), "--spread", "1.8",
@@ -418,7 +420,7 @@ def test_add_auto_fills_everything(monkeypatch, tmp_path, capsys):
     t = T.load()["trades"][0]
     assert t["entry_type"] == "half50" and t["break_line"] == 200.02 and t["extreme"] == 200.4 and t["leg_pips"] == 38.0
     assert t["far_min"] == 10 and t["pairs_hit"] == 3 and t["flags"]["tokyo_break"] is True and t["fits_v2_entry"] is True
-    assert set(t["filled"]) == {"entry_type", "break_line", "extreme", "far_min", "pairs_hit", "pairs_lm", "tokyo_break"}
+    assert set(t["filled"]) == {"entry_type", "break_line", "extreme", "far_min", "pairs_hit", "pairs_lm", "kata", "tokyo_break"}
     out = capsys.readouterr().out
     assert "14:40" in out and "10分" in out
 
@@ -427,7 +429,7 @@ def test_explicit_values_win(monkeypatch, tmp_path):
     cli(monkeypatch, tmp_path, "--entry-type", "ema15", "--far-min", "25", "--pairs-hit", "1", "--pairs-lm", "1", "--break-line", str(price(5)), "--extreme", str(price(44)))
     t = T.load()["trades"][0]
     assert t["entry_type"] == "ema15" and t["far_min"] == 25 and t["pairs_hit"] == 1 and t["break_line"] == 200.05 and t["extreme"] == 200.44
-    assert t["filled"] == ["tokyo_break"]
+    assert t["filled"] == ["kata", "tokyo_break"]
 
 
 def test_manual_tokyo_flag_wins(monkeypatch, tmp_path):
@@ -507,9 +509,10 @@ def test_add_without_auto_never_fetches(monkeypatch, tmp_path):
 
 
 def test_fill_only_looks(monkeypatch, tmp_path, capsys):
-    assert cli(monkeypatch, tmp_path, cmd="fill", b5=flow_world(-14)) == 0        # ポンド円がいちばん強い世界
+    assert cli(monkeypatch, tmp_path, cmd="fill", b5=flow_world(-14)) == 2        # v4 の答え（ユーロポンドの1時間の動き）はユーロ円＝聞くことがある
     assert not os.path.exists(T.JOURNAL)
     out = capsys.readouterr().out
+    assert out.count("❓") == 1 and "強いほう" in out.split("❓")[1]
     for w in ("200.020", "14:40", "10分", "200.400", "50%", "3ペア"):
         assert w in out
 
@@ -842,9 +845,13 @@ def no_strong(monkeypatch, tmp_path, *extra, **kw):
 
 
 def test_strongest_is_filled_when_the_tool_agrees(monkeypatch, tmp_path):
-    assert no_strong(monkeypatch, tmp_path, b5=flow_world(-14)) == 0
+    assert no_strong(monkeypatch, tmp_path, b5=flow_world(12), pair="EURJPY") == 0       # v4（ユーロポンドの1時間の動き）の答えと同じ
     t = T.load()["trades"][0]
-    assert t["flags"]["strongest"] is True and "strongest" in t["filled"] and t["strong_flow"] == "GBPJPY" and t["strong_far"] == "USDJPY"
+    assert t["flags"]["strongest"] is True and "strongest" in t["filled"] and t["strong_eg"] == "EURJPY" and t["strong_flow"] == "EURJPY" and t["strong_far"] == "USDJPY"
+    os.remove(T.JOURNAL)
+    assert cli(monkeypatch, tmp_path, b5=flow_world(-14)) == 0                            # v3 の答え（終値と MA）は、読むための項目として残す
+    t = T.load()["trades"][0]
+    assert t["strong_flow"] == "GBPJPY" and t["flags"]["pick_flow"] is True and t["flags"]["pick_eg"] is False
 
 
 def test_strongest_is_asked_when_the_tool_disagrees(monkeypatch, tmp_path, capsys):
@@ -873,8 +880,7 @@ def test_strongest_borderline_is_asked(monkeypatch, tmp_path, capsys):
     b5["EURJPY"][i] = (b[0], b[1], max(b[2], c), min(b[3], c), c)
     r = run(b5=b5)
     assert r["flow"]["EURGBP"][1] is None and r["strong_flow"] is None and r["strong_state"] is None
-    assert no_strong(monkeypatch, tmp_path, b5=b5) == 2
-    assert "境目" in capsys.readouterr().out.split("❓")[1]
+    assert any("境目" in q for q in F.questions(r, set(), set()))                         # 聞くのは v4 の答えで（test_trade_v4）＝ここは v3 の答えだけ
 
 
 def test_report_shows_the_count_and_the_strong_pair():
@@ -901,13 +907,13 @@ def test_unbroken_pair_is_not_called_the_strongest(monkeypatch, tmp_path):
     b5["EURJPY"], b5["GBPJPY"] = bars(BASE["EURJPY"]), bars(BASE["GBPJPY"], {"15:00": (-6, -6, -40, -40)})      # ユーロポンドは上・ユーロ円はまだ線の内側
     r = run(b5=b5, pair="EURJPY")
     assert r["strong_state"] is True and r["line"] is None
-    assert no_strong(monkeypatch, tmp_path, b5=b5, pair="EURJPY") == 0
+    assert no_strong(monkeypatch, tmp_path, "--unknown", "kata", b5=b5, pair="EURJPY") == 0
     t = T.load()["trades"][0]
     assert t["flags"]["strongest"] is None and t["strong_flow"] is None and t["strong_far"] is None
 
 
 def test_unbroken_day_fills_neither_count_nor_strong(monkeypatch, tmp_path):
     b5 = {p: bars(BASE[p]) for p in F.PAIRS}
-    assert no_strong(monkeypatch, tmp_path, b5=b5, b1={p: ones(p, px=-6.0) for p in F.PAIRS}) == 0
+    assert no_strong(monkeypatch, tmp_path, "--unknown", "kata", b5=b5, b1={p: ones(p, px=-6.0) for p in F.PAIRS}) == 0
     t = T.load()["trades"][0]
     assert t["pairs_lm"] is None and t["strong_flow"] is None and t["flags"]["strongest"] is None and "pairs_lm" not in t["filled"]
