@@ -657,6 +657,43 @@ def check_jquants_public(sync_files):
                           "（J-Quants の案内で ×。論文の結果の話にする・見本＝guide-graham-001.html）")
 
 
+LISTS_WORKFLOW = os.path.join(".github", "workflows", "research-lists.yml")
+
+
+def _push_paths(text):
+    """ワークフローの on.push.paths に並んだ名前（コメントの行は数えない・並びが終わったらそこまで）"""
+    out, inside = [], False
+    for line in text.splitlines():
+        body = line.strip()
+        if not inside:
+            inside = bool(re.match(r"paths:\s*(#.*)?$", body))
+            continue
+        if not body or body.startswith("#"):
+            continue
+        m = re.match(r"""-\s+(?:'([^']*)'|"([^"]*)"|([^\s#]+))""", body)
+        if not m:
+            break
+        out.append(m.group(1) or m.group(2) or m.group(3))
+    return out
+
+
+def check_lists_trigger(sync_files):
+    """🆕 2026-11-25 手元で数えて送る研究の記録が、検証済みリストを作り直すワークフローのきっかけに入っているか（オーナー「知らせる」）。
+    記録10本（SB・KT1・KT2・OJ〜OJ3 など）が on.push.paths に無く、mw sync で送ってもリストが作り直されていなかった。
+    見るのは「verified_list.py が読み、かつ手元から送る」記録だけ＝GitHub 側で作る記録は、それぞれのワークフローが作り直す。
+    warning は件数が多くて埋もれるので error（クラウドは送る一覧が分からないので main が呼ばない＝自動公開は止めない）。"""
+    paths = _push_paths(_read(LISTS_WORKFLOW)) if _exists(LISTS_WORKFLOW) else []
+    if not paths:
+        errors.append("🚨 .github/workflows/research-lists.yml の on.push.paths が読めない"
+                      "＝記録を送っても検証済みリストが作り直されない")
+        return
+    records = set(re.findall(r'"([\w.\-]+\.json)"', _read("verified_list.py"))) & set(sync_files)
+    for name in sorted(records):
+        if not any(fnmatch.fnmatchcase(name, p) for p in paths):
+            errors.append(f"🚨 {name} は手元から送る研究の記録なのに .github/workflows/research-lists.yml の on.push.paths に無い"
+                          f"（送っても検証済みリストが作り直されない）→ paths に `- '{name}'` を1行足す")
+
+
 def check_site_name(sync_files):
     """サイト名の変更の取りこぼし（2026-11-05）。記事と静的ページは apply_site_frame が毎回直すが、
     生成スクリプトに旧名が残るとコアページが旧名で作られ続ける＝スクリプト側だけ error にする。"""
@@ -755,6 +792,7 @@ def main():
     if sync_known:
         check_sync_forbidden(sync_files)
         check_liquid_in_markdown(sync_files)
+        check_lists_trigger(sync_files)   # 🆕 2026-11-25 送る記録がリストのきっかけに入っているか
     # 1b. 🛡️ サイトに載せないファイル（手元でもクラウドでも同じ＝_config.yml と .nojekyll はリポジトリにある）
     check_pages_exclude()
     check_cdn_integrity()
