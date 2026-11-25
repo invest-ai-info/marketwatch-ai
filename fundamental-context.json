@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-11-25T15:10:00+09:00",
+  "generated_at": "2026-11-26T06:15:00+09:00",
   "risk_regime": {
     "regime": "RISK_OFF",
-    "confidence": "LOW",
-    "rationale": "11/24の米株は前日のエヌビディア急騰から反落。ロイターによるとS&P500は0.50%安（7,201）、ナスダックは1.48%安、半導体指数は約7.9%安。一方ダウは0.85%高でグロースから守り銘柄へ資金が動いた。12月利上げ織り込みは98%と報じられ、26日のPCEが焦点。米の対中追加関税報道も重し。アジア・為替・商品の11/24〜25の確かな材料は乏しく確度は低め。",
+    "confidence": "MID",
+    "rationale": "11/24は米株が反落（S&P500 0.50%安・ナスダック1.48%安）。11/25は10月PCEが予想を上回り、12月利上げ織り込みが93〜98%へ上昇。新たな関税報道も重なり、米株が急落したと報じられた（ナスダックは一時4%超安、場中の数字で終値は未確認）。ただしPCEの数字は媒体で食い違い、日本・アジアの11/25の確かな材料は乏しい。",
     "key_drivers": [
-      "エヌビディアは前日の急騰から約5.9%下落し、半導体株が売られた",
-      "S&P500は0.50%安、ナスダックは1.48%安、ダウは0.85%高（11/24）",
-      "FRBの12月利上げ織り込みは98%、1月追加利上げも66%と報じられた",
-      "米政権が中国などへの関税引き上げを準備との報道",
-      "日本・アジア・為替の11/24〜25の材料は未確認"
+      "10月PCEが予想を上回り、12月利上げ織り込みは93〜98%",
+      "11/25の米株は急落（ナスダック一時4%超安との報道・終値未確認）",
+      "新たな関税報道が重し",
+      "金は約3,550ドル近辺へ下落、ビットコインは6万ドル割れとの報道",
+      "日本・アジア・為替の11/25の材料は未確認"
     ]
   },
   "assets": [
@@ -18,7 +18,7 @@
       "ticker": "NKD=F",
       "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "11/24の米株はエヌビディア急騰の翌日に反落（S&P500は0.50%安・ナスダックは1.48%安・半導体指数は約7.9%安）。利上げ観測と対中関税報道が重く弱気寄りだが、ダウは上昇し確度は低め。",
+      "rationale": "11/25はPCE上振れと関税報道で米株が急落したと報じられた（場中の数字・終値未確認）。12月利上げ織り込みが9割超で、ハイテク中心に弱気寄り。日経は米株安の波及を受けやすいが、東京の材料は未確認。",
       "catalysts": [
         "米株反発の東京市場への波及",
         "半導体・AI関連株の値動き",
@@ -26,6 +26,33 @@
         "26日（水）PCE物価"
       ],
       "top_news": [
+        {
+          "headline": "米株は25日にPCEと新たな関税報道で急落、ナスダックは一時4%超下落との報道",
+          "published": "2026-11-25",
+          "comment": "利上げ懸念でハイテク株中心に売りが広がった",
+          "source": "Benzinga/Investing.com",
+          "tier": 3,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.benzinga.com/markets/equities/26/11/63615832/stock-market-today-dow-jones-sp-500-futures-fall-as-traders-bet-on-december-fed-hike-trump-tells-huang-to-just-tell-the-truth-dell-wday-adsk-in-focus"
+        },
+        {
+          "headline": "10月PCEが市場予想を上回り、FRBの12月利上げ織り込みは93〜98%に上昇",
+          "published": "2026-11-25",
+          "comment": "物価が高止まりなら利上げが続くとの見方が強まる",
+          "source": "FXStreet/Kalshi系",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [
+            "Tokenist",
+            "Coin Alert"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.fxstreet.com/news/euro-slips-as-us-pce-inflation-puts-fed-tightening-bets-to-the-test-202611251132"
+        },
         {
           "headline": "米株は反落、S&P500は0.50%安・ナスダックは1.48%安。半導体株が急落しダウは上昇",
           "published": "2026-11-24",
@@ -49,20 +76,6 @@
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.cnbc.com/quotes/.N225"
-        },
-        {
-          "headline": "米株が急反発、エヌビディアのフアンCEO復帰で2025年4月以来の上げ幅",
-          "published": "2026-11-23",
-          "comment": "リスク回避が和らぎ日本株にも追い風となり得る",
-          "source": "Yahoo Finance",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [
-            "NBC News"
-          ],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
         }
       ]
     },
@@ -70,8 +83,8 @@
       "name": "S&P500",
       "ticker": "ES=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "11/24の米株はエヌビディア急騰の翌日に反落（S&P500は0.50%安・ナスダックは1.48%安・半導体指数は約7.9%安）。利上げ観測と対中関税報道が重く弱気寄りだが、ダウは上昇し確度は低め。",
+      "conviction": "MID",
+      "rationale": "11/25はPCE上振れと関税報道で米株が急落したと報じられた（場中の数字・終値未確認）。12月利上げ織り込みが9割超で、ハイテク中心に弱気寄り。",
       "catalysts": [
         "12/9のFOMC",
         "エヌビディアの経営体制",
@@ -79,6 +92,33 @@
         "26日（水）PCE物価"
       ],
       "top_news": [
+        {
+          "headline": "米株は25日にPCEと新たな関税報道で急落、ナスダックは一時4%超下落との報道",
+          "published": "2026-11-25",
+          "comment": "利上げ懸念でハイテク株中心に売りが広がった",
+          "source": "Benzinga/Investing.com",
+          "tier": 3,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.benzinga.com/markets/equities/26/11/63615832/stock-market-today-dow-jones-sp-500-futures-fall-as-traders-bet-on-december-fed-hike-trump-tells-huang-to-just-tell-the-truth-dell-wday-adsk-in-focus"
+        },
+        {
+          "headline": "10月PCEが市場予想を上回り、FRBの12月利上げ織り込みは93〜98%に上昇",
+          "published": "2026-11-25",
+          "comment": "物価が高止まりなら利上げが続くとの見方が強まる",
+          "source": "FXStreet/Kalshi系",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [
+            "Tokenist",
+            "Coin Alert"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.fxstreet.com/news/euro-slips-as-us-pce-inflation-puts-fed-tightening-bets-to-the-test-202611251132"
+        },
         {
           "headline": "米株は反落、S&P500は0.50%安・ナスダックは1.48%安。半導体株が急落しダウは上昇",
           "published": "2026-11-24",
@@ -104,18 +144,6 @@
           "materiality": "high",
           "direction": "bullish",
           "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
-        },
-        {
-          "headline": "FRBは12月利上げを準備、織り込みは9割超",
-          "published": "2026-11-23",
-          "comment": "利上げ継続が株の上値を抑える要因になり得る",
-          "source": "CME FedWatch/Investing.com",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.investing.com/news/economy-news/bond-market-flattening-and-wednesdays-pce-test-for-ratehike-pricing-93CH-5046275"
         }
       ]
     },
@@ -123,8 +151,8 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "LOW",
-      "rationale": "11/24の米株はエヌビディア急騰の翌日に反落（S&P500は0.50%安・ナスダックは1.48%安・半導体指数は約7.9%安）。利上げ観測と対中関税報道が重く弱気寄りだが、ダウは上昇し確度は低め。",
+      "conviction": "MID",
+      "rationale": "11/25はPCE上振れと関税報道で米株が急落したと報じられた（場中の数字・終値未確認）。12月利上げ織り込みが9割超で、ハイテク中心に弱気寄り。",
       "catalysts": [
         "エヌビディア株の続伸・反落",
         "AI関連の収益見通し",
@@ -132,6 +160,33 @@
         "26日（水）PCE物価"
       ],
       "top_news": [
+        {
+          "headline": "米株は25日にPCEと新たな関税報道で急落、ナスダックは一時4%超下落との報道",
+          "published": "2026-11-25",
+          "comment": "利上げ懸念でハイテク株中心に売りが広がった",
+          "source": "Benzinga/Investing.com",
+          "tier": 3,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.benzinga.com/markets/equities/26/11/63615832/stock-market-today-dow-jones-sp-500-futures-fall-as-traders-bet-on-december-fed-hike-trump-tells-huang-to-just-tell-the-truth-dell-wday-adsk-in-focus"
+        },
+        {
+          "headline": "10月PCEが市場予想を上回り、FRBの12月利上げ織り込みは93〜98%に上昇",
+          "published": "2026-11-25",
+          "comment": "物価が高止まりなら利上げが続くとの見方が強まる",
+          "source": "FXStreet/Kalshi系",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [
+            "Tokenist",
+            "Coin Alert"
+          ],
+          "materiality": "high",
+          "direction": "bearish",
+          "url": "https://www.fxstreet.com/news/euro-slips-as-us-pce-inflation-puts-fed-tightening-bets-to-the-test-202611251132"
+        },
         {
           "headline": "米株は反落、S&P500は0.50%安・ナスダックは1.48%安。半導体株が急落しダウは上昇",
           "published": "2026-11-24",
@@ -155,47 +210,33 @@
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.cnbc.com/2026/11/23/stock-market-today-live-updates.html"
-        },
-        {
-          "headline": "エヌビディアがフアン氏をCEOに復帰、株価は約31%急騰",
-          "published": "2026-11-23",
-          "comment": "一社の経営体制でナスダック全体が大きく動いた",
-          "source": "Yahoo Finance",
-          "tier": 2,
-          "credibility": "HIGH",
-          "corroborated_by": [
-            "NBC News"
-          ],
-          "materiality": "high",
-          "direction": "bullish",
-          "url": "https://nbcnews.com/business/markets/stocks-rebound-ai-tech-selloff-nvidia-rcna610833"
-        },
-        {
-          "headline": "野村のストラテジスト、急反発は買い戻しとヘッジ要因が大きく安心は早いと指摘",
-          "published": "2026-11-23",
-          "comment": "戻りが続くかは需給次第で、慎重な見方もある",
-          "source": "Yahoo Finance",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "neutral",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
         }
       ]
     },
     {
       "name": "金",
       "ticker": "GC=F",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "利上げ継続観測とドル高で11/18に約3,690ドルと1年超ぶり安値圏まで下落。11/23は約3,633ドル、+3%台の反発と報じられたが、急落後の戻りで方向感は弱い。",
+      "rationale": "利上げ観測とドル高で金は1年超ぶり安値圏。11/24〜25にかけて約3,550ドルへ下落との報道もあるが、媒体で数字が食い違う。",
       "catalysts": [
         "12/9のFOMC",
         "ドルと米長期金利",
         "中東情勢"
       ],
       "top_news": [
+        {
+          "headline": "PCE後の利上げ観測で金・銀が下落、金は約3,550ドルとの報道",
+          "published": "2026-11-25",
+          "comment": "利上げ観測は利息のつかない金に逆風",
+          "source": "KuCoin News等",
+          "tier": 4,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.kucoin.com/news/flash/us-inflation-rises-bitcoin-and-gold-prices-dip-amid-fed-rate-hike-outlook"
+        },
         {
           "headline": "FOMC議事録、ほぼ全員が追加利上げは適切になり得ると認識",
           "published": "2026-11-18",
@@ -209,18 +250,6 @@
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
-        },
-        {
-          "headline": "金は3,633ドル前後で約3%反発",
-          "published": "2026-11-23",
-          "comment": "急落後の自律反発の可能性。戻りの持続は不明",
-          "source": "Yahoo Finance",
-          "tier": 2,
-          "credibility": "LOW",
-          "corroborated_by": [],
-          "materiality": "mid",
-          "direction": "bullish",
-          "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
         }
       ]
     },
@@ -229,7 +258,7 @@
       "ticker": "CL=F",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "11/23の原油（1月限）は約80ドルで約4%安。11/19頃は中東情勢（イラン）をめぐり約84ドルへ上昇しており、材料が交錯して方向感が乏しい。",
+      "rationale": "11/23の原油（1月限）は約80ドルで約4%安。11/19頃は中東情勢（イラン）をめぐり約84ドルへ上昇しており、材料が交錯して方向感が乏しい。 11/25の新しい確かな材料は未確認。",
       "catalysts": [
         "中東・イラン情勢",
         "供給の回復",
@@ -265,9 +294,9 @@
     {
       "name": "ドル円",
       "ticker": "USDJPY",
-      "bias": "BULLISH",
+      "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "エヌビディア主導の株高でリスク選好が戻り、円が売られたと報じられた。日米金利差と利上げ観測も円安方向だが、159〜160円付近では介入警戒があり、確度は低め。",
+      "rationale": "日米金利差拡大とドル高は円安方向だが、159〜160円では介入警戒が強い。11/25のリスクオフは円買い要因にもなり、材料が交錯。",
       "catalysts": [
         "12/9のFOMC",
         "日銀の政策観測",
@@ -293,13 +322,25 @@
       "ticker": "EURUSD",
       "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "11/18時点でドルは19カ月ぶり高値圏とされ、FRBの利上げ観測がドルを支える。ユーロ側の直近材料は確認できず、確度は低め。",
+      "rationale": "FRBの12月利上げ観測でドル高が続き、ユーロは1.09台でドルに押される。ECBも利上げ観測だが米国のペースが優勢。",
       "catalysts": [
         "12/9のFOMC",
         "米PCE物価",
         "ユーロ圏PMI"
       ],
       "top_news": [
+        {
+          "headline": "ユーロはドルに対して軟調、FRBの12月利上げが焦点",
+          "published": "2026-11-25",
+          "comment": "米利上げ観測でドルが買われやすい",
+          "source": "FXStreet",
+          "tier": 3,
+          "credibility": "MID",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.fxstreet.com/news/euro-slips-as-us-pce-inflation-puts-fed-tightening-bets-to-the-test-202611251132"
+        },
         {
           "headline": "ドルが19カ月ぶりの高値圏、FRBの利上げ観測が支え",
           "published": "2026-11-18",
@@ -317,15 +358,27 @@
     {
       "name": "ビットコイン",
       "ticker": "BTC-USD",
-      "bias": "NEUTRAL",
+      "bias": "BEARISH",
       "conviction": "LOW",
-      "rationale": "11/23は約61,200ドルで小幅高。11/12の約72,900ドルから下落し、利上げ観測で金と共に売られた後。株の急反発の恩恵は限定的。",
+      "rationale": "PCE後の利上げ観測で暗号資産が売られ、6万ドルを割ったと報じられた。清算額も膨らみ、リスクオフの影響を受けている。",
       "catalysts": [
         "12/9のFOMC",
         "ETFの資金流出入",
         "株式市場のリスク選好"
       ],
       "top_news": [
+        {
+          "headline": "暗号資産が急落、ビットコインは6万ドル割れ・清算は約6.25億ドル",
+          "published": "2026-11-25",
+          "comment": "利上げ観測でリスク資産全体が売られた",
+          "source": "KuCoin News",
+          "tier": 4,
+          "credibility": "LOW",
+          "corroborated_by": [],
+          "materiality": "mid",
+          "direction": "bearish",
+          "url": "https://www.kucoin.com/news/flash/crypto-market-faces-sell-off-as-us-pce-inflation-boosts-fed-rate-hike-odds"
+        },
         {
           "headline": "ビットコインは約1.8%安の6.3万ドル前後と報じられる（日付は未確認）",
           "published": "2026-11-24",
@@ -349,20 +402,6 @@
           "materiality": "mid",
           "direction": "neutral",
           "url": "https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-091118583.html"
-        },
-        {
-          "headline": "ビットコインが6.3万ドル割れ、金の下落と連動",
-          "published": "2026-11-19",
-          "comment": "利上げ観測で金もビットコインも売られた",
-          "source": "FXStreet",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [
-            "CryptoTicker"
-          ],
-          "materiality": "mid",
-          "direction": "bearish",
-          "url": "https://www.fxstreet.com/analysis/gold-slips-below-3-700-as-hawkish-central-banks-pressure-gold-and-crypto-202611191721"
         }
       ]
     }
@@ -382,13 +421,13 @@
       "code": "USD",
       "lean": "STRONG",
       "conviction": "MID",
-      "reason": "12月利上げ観測9割超と長期金利4.9%台、ドルは19カ月ぶり高値圏との報道"
+      "reason": "12月利上げ織り込み9割超、ドル指数は1年超ぶり高値圏との報道"
     },
     {
       "code": "EUR",
-      "lean": "NEUTRAL",
+      "lean": "WEAK",
       "conviction": "LOW",
-      "reason": "ユーロ側の新しい材料が乏しく、ドル高に押される構図"
+      "reason": "米利上げ観測でEUR/USDは1.09台に押される。ECB利上げ観測は支え"
     },
     {
       "code": "GBP",
@@ -398,9 +437,9 @@
     },
     {
       "code": "JPY",
-      "lean": "WEAK",
+      "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "株高でリスク選好が戻り円売り。日米金利差も円安方向だが介入警戒あり"
+      "reason": "金利差は円安方向だが、159〜160円の介入警戒とリスクオフの円買いが交錯"
     },
     {
       "code": "AUD",
