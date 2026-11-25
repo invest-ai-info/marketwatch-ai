@@ -851,3 +851,17 @@ def test_v5_asks_the_kata_from_the_move_since_the_open():
     q = V.questions(r, set(), set())
     assert any("--kata" in x for x in q)
     assert not any("--kata" in x for x in V.questions(run(), set(), set()))
+
+
+@pytest.mark.parametrize("kata, want", [("fade", False), ("push", True), (None, True)])
+def test_add_marks_the_time_by_kata(monkeypatch, tmp_path, kata, want):
+    """冬の 15:06＝②逆張りの時間（16:00 から）の外・①押し目の時間の中（オーナーが言わなければ道具の答え＝①）"""
+    assert cli(monkeypatch, tmp_path, *(("--kata", kata) if kata else ())) == 0
+    t = T.load()["trades"][0]
+    assert t["kata"] == (kata or "push") and t["flags"]["in_window5"] is want
+
+
+def test_add_leaves_the_time_empty_when_the_kata_is_unknown(monkeypatch, tmp_path):
+    b5 = world(eur={})                                                       # 入ったペアがまだ抜けていない＝道具は型を決めない
+    assert cli(monkeypatch, tmp_path, "--unknown", "kata", b5=b5, entry=-4) == 0
+    assert T.load()["trades"][0]["flags"]["in_window5"] is None
