@@ -54,6 +54,22 @@ def state_of(x, lo, tol):
     return 0 if a <= round(lo - tol, 6) else None
 
 
+def since_london(b5, t_open):
+    """決まりの紙 v5（「OJ」追記⑫）：ロンドンの始まり（英国の朝8時）の5分足の始値から、入る前に確定した最後の5分足の終値までの動き
+    → (ドル円 pips, ユーロポンド pips)。ユーロポンドはユーロ円÷ポンド円（v4 と同じ作り方）。始まりの足が無い・まだ確定していなければ None"""
+    import trade_journal as T          # ロンドンの始まりの時刻は記録の道具が持つ（読み込みが輪にならないよう、使うときに読む）
+    l0 = F.to_ts(dt.datetime(t_open.year, t_open.month, t_open.day, T.london_open(t_open.date())))
+    t0 = F.to_ts(t_open)
+    j0 = t0 - t0 % F.BAR
+    u = {b[0]: b for b in b5["USDJPY"]}
+    e, g = {b[0]: b for b in b5["EURJPY"]}, {b[0]: b for b in b5["GBPJPY"]}
+    last_u = max((k for k in u if l0 <= k < j0), default=None)
+    last_eg = max((k for k in e if l0 <= k < j0 and k in g), default=None)
+    usd = None if l0 not in u or last_u is None else round((u[last_u][4] - u[l0][1]) / PIP, 2)
+    eg = None if l0 not in e or l0 not in g or last_eg is None else round((e[last_eg][4] / g[last_eg][4] - e[l0][1] / g[l0][1]) / 0.0001, 2)
+    return usd, eg
+
+
 def strong_of(s, g):
     """買い（1）か売り（−1）か・ユーロポンドの向き → (強いほうの通貨 か None, 確かか)"""
     if g is None:
@@ -209,16 +225,38 @@ def analyze(b5, b1, pair, side, t_open):
     watch = OTHER.get(pair)
     w = legs.get(watch) if flags["both_broken"] else None
     price = {p: None if x is None else dict(x, L=x["L"] * s, ext=x["ext"] * s) for p, x in legs.items()}
+    # v5（追記⑫）：始まりの5分前より前は v4 と同じ答え・5分前〜30分後は入らない時間（向きは測らない）・30分後からは始まりからの動きで測り直す
+    import trade_journal as T
+    phase = T.london_phase(t_open)
+    u5 = e5 = us5 = gs5 = cur5 = pick5 = kata5 = None
+    if phase == "before":
+        us5, gs5, cur5, pick5, kata5 = us, gs, cur, pick, kata
+    elif phase == "after":
+        u5, e5 = since_london(b5, t_open)
+        us5, gs5 = state_of(u5, USD_MIN, USD_TOL), state_of(e5, EG_MIN, EG_TOL)
+        cur5, sure5 = strong_of(s, gs5)
+        pick5 = cur5 == pair[:3] if sure5 else None
+        if pair in CROSS and legs[pair]:
+            kata5 = {s: "push", 0: "range"}.get(us5)
+        elif pair in DOLLAR and us5 == 0:
+            kata5 = "range"
+    flags5 = {"usd_dir5": None if us5 is None else us5 == s, "pick_eg5": pick5}
     return {"pair": pair, "side": side.lower(), "time": F.hhmm(t0), "missing": missing, "coarse": coarse, "usd": (usd, us), "eg": (eur, gs),
             "strong": None if cur is None else cur + "JPY", "pick": pick, "kata": kata, "watch": watch, "watch_line": None if w is None else round(w["L"] * s, 5),
-            "watch_ext": None if w is None else round(w["ext"] * s, 5), "legs": price, "pulls": pulls, "flags": flags, "named": pair in DOLLAR or legs.get(pair) is not None}
+            "watch_ext": None if w is None else round(w["ext"] * s, 5), "legs": price, "pulls": pulls, "flags": flags, "named": pair in DOLLAR or legs.get(pair) is not None,
+            "phase": phase, "usd5": (u5, us5), "eg5": (e5, gs5), "strong5": None if cur5 is None else cur5 + "JPY", "pick5": pick5, "kata5": kata5, "flags5": flags5}
+
+
+def pick_now(r):
+    """いまの決まりで聞く「強いほう」の答え：始まりの30分後からは v5（始まりからの動き）・ほかは v4（1時間の動き）"""
+    return r["pick5"] if r.get("phase") == "after" else r["pick"]
 
 
 def record(r):
     """analyze の答え → 記録（trade_journal.make_trade の v4）"""
     rd = lambda x: None if x is None else round(x, 3)
     return {"usd_1h": r["usd"][0], "eg_1h": r["eg"][0], "strong_eg": r["strong"], "watch": r["watch"], "watch_line": rd(r["watch_line"]), "watch_extreme": rd(r["watch_ext"]),
-            "flags": dict(r["flags"])}
+            "flags": dict(r["flags"]), "usd_ldn": r["usd5"][0], "eg_ldn": r["eg5"][0], "strong_ldn": r["strong5"], "kata5": r["kata5"], "flags5": dict(r["flags5"])}
 
 
 # ── 読む文と、人に聞くこと ────────────────────────────
@@ -228,9 +266,27 @@ def way(x):
     return "足が無い" if d is None else f"{ {1: '上', -1: '下', 0: 'レンジ', None: '境目'}[v] }（1時間に {d:+.1f}pips）"
 
 
+def way5(x):
+    d, v = x
+    return "始まりの足が無い" if d is None else f"{ {1: '上', -1: '下', 0: 'レンジ', None: '境目'}[v] }（始まりから {d:+.1f}pips）"
+
+
 def strong_text(r):
-    who = PAIR_JP[r["strong"]] if r["strong"] else ("決まらない（ユーロポンドがレンジ）" if r["eg"][1] == 0 else "境目")
-    return f"{who}＝ユーロポンド {way(r['eg'])}"
+    after = r.get("phase") == "after"
+    strong, eg = (r["strong5"], r["eg5"]) if after else (r["strong"], r["eg"])
+    who = PAIR_JP[strong] if strong else ("決まらない（ユーロポンドがレンジ）" if eg[1] == 0 else "境目")
+    return f"{who}＝ユーロポンド {(way5 if after else way)(eg)}"
+
+
+def v5_text(r):
+    """v5（追記⑫）の1行：ロンドンの始まりの前か・入らない時間か・始まりからの向き"""
+    if r.get("phase") == "before":
+        return "  v5：ロンドンの始まりの前に入った＝始まりの5分前（冬 16:55・夏 15:55）までに手じまう（向きと強いほうは v4 と同じ）"
+    if r.get("phase") == "flat":
+        return "  v5：ロンドンの始まりの5分前〜30分後に入った＝v5 では入らない時間（30分後から新しく考える）"
+    k = KATA_JP[r["kata5"]] if r["kata5"] else "決まらない"
+    return (f"  v5（ロンドンの始まりから）：ドル円 {way5(r['usd5'])}・ユーロポンド {way5(r['eg5'])} → 強いほう "
+            f"{PAIR_JP[r['strong5']] if r['strong5'] else '決まらない'}（入ったペアと同じ {F.mark(r['pick5'])}）・型 {k}")
 
 
 def report(r):
@@ -240,15 +296,18 @@ def report(r):
         L.append(f"  v4 の見るペア {PAIR_JP[r['watch']]}（" + (f"割った線 {r['watch_line']:.3f}・直近の端 {r['watch_ext']:.3f}" if r["watch_line"] is not None else "まだ抜けていない・境目・足が足りないのどれか") + "）")
     if r["pair"] not in DOLLAR:
         L.append("  v4 の項目：" + "・".join(f"{FLAG_JP[k]} {F.mark(r['flags'][k])}" for k in FLAGS))
+    if "phase" in r:
+        L.append(v5_text(r))
     return "\n".join(L)
 
 
 def questions(r, given, unknown):
     """決められないもの → 人に聞く文"""
     q = []
-    if r["kata"] is None and "kata" not in given and "kata" not in unknown:
+    kata = r["kata5"] if r.get("phase") == "after" else r["kata"]          # 始まりの30分後からは v5 の型
+    if kata is None and "kata" not in given and "kata" not in unknown:
         q.append("どの型で入ったか → --kata push（①押し目）／fade（②抜けの失敗の逆張り）／range（④ドル円レンジの押し目・クロス円とドルストを1つずつ）／other・分からない＝--unknown kata")
-    if r["named"] and r["pick"] is not True and "strongest" not in given and "strong" not in unknown:
+    if r["named"] and pick_now(r) is not True and "strongest" not in given and "strong" not in unknown:
         q.append(f"入った{PAIR_JP[r['pair']]}は、ユーロポンドで強いほうでしたか（道具の答え：{strong_text(r)}）→ --flags strongest=1 か 0・分からない＝--unknown strong")
     return q
 

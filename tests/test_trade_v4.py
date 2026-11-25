@@ -745,3 +745,109 @@ def test_kata_can_be_given_without_auto(monkeypatch, tmp_path):
     T.main(["add", "--id", "1", "--pair", "EURUSD", "--side", "buy", "--open", "2026.12.01 15:31", "--entry", "1.1", "--sl", "1.098", "--close", "2026.12.01 15:50", "--exit", "1.101", "--kata", "range"])
     t = T.load()["trades"][0]
     assert t["kata"] == "range" and t["strong_eg"] is None and D0
+
+
+# ── 決まりの紙 v5（「OJ」追記⑫・始まりの30分後からは、始まりからの動きで測り直す） ──────────
+
+# 17:00 にドル円が上へ（始値 +14 → 17:25 の終値 +25＝11pips）・17:25 にポンド円だけ 29pips 下げる（ユーロポンドは上）
+USD5 = dict(MV, **{"17:00": (14, 20, 13, 18), "17:25": (18, 26, 18, 25)})
+EUR5 = dict(MV, **{"17:00": (14, 15, 13, 14)})
+GBP5 = dict(WEAK, **{"17:00": (9, 12, 5, 6), "17:25": (6, 6, -20, -20)})      # 始まりの足は始値 +9・終値 +6（始値から測る）
+
+
+def world5(**kw):
+    return world(usd=kw.get("usd", USD5), eur=kw.get("eur", EUR5), gbp=kw.get("gbp", GBP5))
+
+
+def test_since_london_is_from_the_open_of_the_1700_bar_to_the_last_closed_bar():
+    b5 = world5()
+    u, e = V.since_london(b5, at("17:31", 8))
+    assert u == pytest.approx(11.0)
+    E, G = {b[0]: b for b in b5["EURJPY"]}, {b[0]: b for b in b5["GBPJPY"]}
+    l0, k = ts("17:00"), ts("17:25")
+    assert e == pytest.approx((E[k][4] / G[k][4] - E[l0][1] / G[l0][1]) / 0.0001, abs=0.01) and e > 10
+    assert V.since_london(b5, at("17:29", 59))[0] == pytest.approx(4.0)       # 入った足（17:25〜）は使わない＝17:20 の終値 +18
+    assert V.since_london(b5, at("17:03", 0)) == (None, None)                 # 始まりの足がまだ確定していない
+    b5["USDJPY"] = [b for b in b5["USDJPY"] if b[0] != ts("17:00")]
+    assert V.since_london(b5, at("17:31", 8))[0] is None                      # 始まりの足が無い
+
+
+def test_v5_after_the_wait_uses_the_move_since_the_open():
+    r = run(b5=world5(), hm="17:31")
+    assert r["phase"] == "after" and r["usd5"] == (11.0, 1) and r["eg5"][1] == 1
+    assert r["strong5"] == "EURJPY" and r["pick5"] is True and r["kata5"] == "push"
+    assert r["flags5"] == {"usd_dir5": True, "pick_eg5": True}
+    assert r["eg"][1] == 0 and r["pick"] is False                             # v4（1時間の動き）ではユーロポンドはレンジ＝強いほうが決まらない
+    assert V.questions(r, set(), set()) == []                                 # 30分後からは v5 の答えで聞く＝聞かない
+    assert "v5（ロンドンの始まりから）" in V.report(r) and "+11.0pips" in V.report(r)
+    rec = V.record(r)
+    assert (rec["usd_ldn"], rec["strong_ldn"], rec["kata5"], rec["flags5"]) == (11.0, "EURJPY", "push", {"usd_dir5": True, "pick_eg5": True})
+
+
+def test_v5_asks_when_the_move_since_the_open_disagrees():
+    r = run(b5=world5(gbp=dict(WEAK, **{"17:25": (9, 40, 9, 40)})), hm="17:31")   # ポンド円のほうが上げた＝ユーロポンドは下
+    assert r["eg5"][1] == -1 and r["strong5"] == "GBPJPY" and r["pick5"] is False and r["flags5"]["pick_eg5"] is False
+    q = V.questions(r, set(), set())
+    assert len(q) == 1 and "始まりから" in q[0]
+    r = run(b5=world5(usd=dict(MV, **{"17:00": (14, 15, 13, 14)})), hm="17:31")   # ドル円が始まりから動いていない＝④の見当
+    assert r["usd5"][1] == 0 and r["flags5"]["usd_dir5"] is False and r["kata5"] == "range"
+
+
+def test_v5_before_the_open_is_the_v4_answer_and_the_wait_is_not_measured():
+    r = run()                                                                 # 15:06
+    assert r["phase"] == "before" and r["flags5"] == {"usd_dir5": r["flags"]["usd_dir"], "pick_eg5": r["pick"]}
+    assert (r["kata5"], r["strong5"], r["usd5"][0]) == (r["kata"], r["strong"], None)
+    for hm in ("16:55", "17:02", "17:29"):
+        r = run(b5=world5(), hm=hm)
+        assert r["phase"] == "flat" and r["flags5"] == {"usd_dir5": None, "pick_eg5": None} and r["kata5"] is None
+        assert "入らない時間" in V.report(r)
+    assert V.pick_now(run(b5=world5(), hm="17:02")) is run(b5=world5(), hm="17:02")["pick"]
+
+
+def v5(**kw):
+    x = v4(usd_ldn=11.0, eg_ldn=12.3, strong_ldn="EURJPY", kata5="push", flags5={"usd_dir5": True, "pick_eg5": True})
+    x.update(kw)
+    return x
+
+
+def test_fits_v5_after_the_wait():
+    t = trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
+    assert t["fits_v5_entry"] is True and (t["usd_ldn"], t["strong_ldn"], t["kata5"]) == (11.0, "EURJPY", "push")
+    assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 17, 2), t_close=dt.datetime(2026, 12, 1, 17, 21))["fits_v5_entry"] is False
+    assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 19, 0), t_close=dt.datetime(2026, 12, 1, 19, 30))["fits_v5_entry"] is False
+
+
+@pytest.mark.parametrize("k", ["usd_dir5", "pick_eg5"])
+def test_fits_v5_needs_the_new_direction(k):
+    at_ = dict(t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
+    assert trade(v5(flags5={"usd_dir5": True, "pick_eg5": True, k: False}), kata="push", **at_)["fits_v5_entry"] is False
+    assert trade(v5(flags5={"usd_dir5": True, "pick_eg5": True, k: None}), kata="push", **at_)["fits_v5_entry"] is None
+    assert trade(v5(flags=dict(ALL, usd_dir=False, pick_eg=False)), kata="push", **at_)["fits_v5_entry"] is True   # v4 の向きは v5 では使わない
+
+
+def test_fits_v5_uses_the_v5_kata_and_keeps_v4_kata():
+    at_ = dict(t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
+    t = trade(v5(kata5="range"), kata="push", **at_)
+    assert t["kata"] == "push" and t["kata5"] == "range" and t["fits_v5_entry"] is None
+    assert trade(v4(), kata="push")["kata5"] == "push"                       # v5 の型が無い記録は v4 の型
+    assert trade(kata="push")["fits_v5_entry"] is None                       # --auto なし＝向きが分からない
+
+
+def test_owner_kata_is_also_the_v5_kata(monkeypatch, tmp_path):
+    assert cli(monkeypatch, tmp_path, "--kata", "other") == 0
+    t = T.load()["trades"][0]
+    assert t["kata5"] == "other" and t["fits_v5_entry"] is False and t["flags"]["in_window5"] is True and t["flags"]["ldn_flat"] is True
+
+
+def test_v5_eurgbp_uses_its_own_threshold():
+    r = run(b5=world5(gbp=dict(WEAK, **{"17:00": (9, 9, 9, 9), "17:25": (9, 9, 6.5, 6.5)})), hm="17:31")   # ポンド円だけ 2.5pips 下げる
+    assert 0.6 < r["eg5"][0] < 1.8 and r["eg5"][1] == 1 and r["pick5"] is True                          # ユーロポンドの物差し（0.5pips）で上
+
+
+def test_v5_asks_the_kata_from_the_move_since_the_open():
+    usd = dict(MV, **{"16:30": (14, 30, 14, 30), "17:00": (30, 31, 29, 30), "17:25": (30, 32, 30, 32)})   # 16:30 に上げ（1時間の動きは上）・始まりからは +2.0＝境目
+    r = run(b5=world5(usd=usd), hm="17:31")
+    assert r["usd5"] == (2.0, None) and r["kata5"] is None and r["kata"] == "push"
+    q = V.questions(r, set(), set())
+    assert any("--kata" in x for x in q)
+    assert not any("--kata" in x for x in V.questions(run(), set(), set()))

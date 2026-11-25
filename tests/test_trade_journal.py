@@ -518,3 +518,57 @@ def test_cli_adds_v3(tmp_path, monkeypatch, capsys):
     t = T.load()["trades"][0]
     assert t["pairs_lm"] == 2 and t["fits_v3_entry"] is True and t["fits_v2_entry"] is False and t["entry_type"] == "series"
     assert "決まりの紙 v3 の入口に全部当てはまった取引 1件" in capsys.readouterr().out
+
+
+# ── 決まりの紙 v5（「OJ」追記⑫・ロンドンの始まりの5分前に手じまい・30分後から新しく考える） ──────────
+
+def test_london_phase_winter_and_summer():
+    P = T.london_phase
+    assert [P(J(2026, 12, 1, *hm)) for hm in ((16, 54, 59), (16, 55), (17, 0), (17, 29, 59), (17, 30), (19, 30))] == \
+        ["before", "flat", "flat", "flat", "after", "after"]                 # 冬＝英国の朝8時は17時
+    assert [P(J(2027, 6, 1, *hm)) for hm in ((15, 54, 59), (15, 55), (16, 29, 59), (16, 30))] == ["before", "flat", "flat", "after"]   # 夏＝16時
+    assert P(J(2027, 3, 26, 16, 0)) == "before" and P(J(2027, 3, 29, 16, 0)) == "flat"      # 英国の夏時間の切り替え（3月の最後の日曜）で決まる
+
+
+def test_in_window5_skips_the_london_open():
+    W = T.in_window5
+    winter = {(14, 59): False, (15, 0): True, (16, 54): True, (16, 55): False, (17, 2): False, (17, 29): False,
+              (17, 30): True, (18, 59): True, (19, 0): False}
+    assert {hm: W(J(2026, 12, 1, *hm)) for hm in winter} == winter
+    summer = {(15, 54): True, (15, 55): False, (16, 29): False, (16, 30): True, (17, 59): True, (18, 0): False}
+    assert {hm: W(J(2027, 6, 1, *hm)) for hm in summer} == summer
+
+
+def test_ldn_flat_is_about_holding_through_five_minutes_before():
+    F_ = T.ldn_flat_ok
+    assert F_(J(2026, 12, 1, 16, 40), J(2026, 12, 1, 16, 54)) is True
+    assert F_(J(2026, 12, 1, 16, 40), J(2026, 12, 1, 16, 55, 59)) is True      # 16:55 の1分のうちの決済は ○
+    assert F_(J(2026, 12, 1, 16, 40), J(2026, 12, 1, 16, 56)) is False
+    assert F_(J(2026, 12, 1, 15, 10), J(2026, 12, 1, 18, 0)) is False
+    assert F_(J(2026, 12, 1, 17, 2), J(2026, 12, 1, 17, 21)) is True          # 始まりのあとに建てた（入る時間の ○× は in_window5）
+    assert F_(J(2027, 6, 1, 15, 40), J(2027, 6, 1, 15, 56)) is False and F_(J(2027, 6, 1, 15, 40), J(2027, 6, 1, 15, 55, 30)) is True
+
+
+def test_make_trade_marks_the_v5_time():
+    t = gbpjpy()                                                              # 11/24 16:04〜16:27
+    assert t["flags"]["in_window5"] is True and t["flags"]["ldn_flat"] is True
+    t = gbpjpy(t_open=J(2026, 11, 25, 17, 2, 13), t_close=J(2026, 11, 25, 17, 21, 15))
+    assert t["flags"]["in_window5"] is False and t["flags"]["ldn_flat"] is True and t["fits_v5_entry"] is False
+    t = gbpjpy(t_close=J(2026, 11, 24, 17, 10))
+    assert t["flags"]["ldn_flat"] is False
+    assert t["usd_ldn"] is None and t["kata5"] is None and t["flags"]["usd_dir5"] is None
+
+
+def test_status_warns_about_holding_through_the_london_open():
+    st = T.empty_state()
+    T.add(st, gbpjpy())
+    assert "5分前をまたいで" not in T.status_text(st)
+    T.add(st, gbpjpy(tid="2", t_close=J(2026, 11, 24, 17, 10)))
+    s = T.status_text(st)
+    assert "5分前をまたいで持っていた取引 1件" in s and "決まりの紙 v5 の入口" in s
+
+
+def test_reading_table_has_the_v5_marks():
+    rows = T.reading_table([gbpjpy(), gbpjpy(tid="2", t_close=J(2026, 11, 24, 17, 10))])
+    assert rows["ldn_flat=o"]["n"] == 1 and rows["ldn_flat=x"]["n"] == 1 and rows["in_window5=o"]["n"] == 2
+    assert "fits_v5_entry=o" in rows

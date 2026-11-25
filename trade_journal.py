@@ -54,7 +54,7 @@ COST_MULT = 7.0               # 決まりの紙 v1：損切りの幅はスプレ
 # 手で付ける項目（決まりの紙 v1 の部品）。自動で付く3つ（in_window・sl_order・spread_ok）は数字から決める
 MANUAL_FLAGS = ("tokyo_break", "strongest", "htf_aligned", "tp_before_high", "event_clear", "sl_at_line")
 AUTO_FLAGS = ("in_window", "sl_order", "spread_ok", "weekday_ok", "in_window2", "far30", "pairs2", "pairs_lm2", "pick_flow", "pick_far",
-              "both_broken", "usd_dir", "pick_eg", "far20", "fresh", "pull50", "touch1")
+              "both_broken", "usd_dir", "pick_eg", "far20", "fresh", "pull50", "touch1", "in_window5", "ldn_flat", "usd_dir5", "pick_eg5")
 # half50＝50%押し目（型1：クロス円がそろって東京時間の線を割る → 線と新安値の 50% の戻りで入る。2026-11-24 夜 オーナー「はい、足す」）。判定は種類で分けない＝読むための表だけ
 # series＝ほかの2ペアが線か MA に当たったとき、まだ線の手前にいる一番強いペアに入った（v3・11/25）
 ENTRY_TYPES = ("ema15", "line", "half50", "series", "other")
@@ -81,7 +81,14 @@ V4_FLAGS = ("both_broken", "usd_dir", "pick_eg", "far20", "fresh", "pull50", "to
 V4_ENTRY = ("in_window2", "sl_order", "event_clear", "spread_ok", "weekday_ok") + V4_FLAGS      # ①押し目の入口。strongest・tokyo_break（3ペアそろい）は条件に入れない（pick_eg・both_broken が代わり）
 V4_KEYS = ("usd_1h", "eg_1h", "strong_eg", "watch", "watch_line", "watch_extreme")
 AFTER_KEYS = ("v4_exit", "v4_exit_min", "v4_exit_pips", "run_pips", "mfe_pips")                 # 入ったあと。書くだけ＝足すときに見せない・判定の日に読む表だけ
-PAPERS = ("v1", "v2", "v3", "v4")
+# 決まりの紙 v5（「OJ」追記⑫・2026-11-25 オーナー「ロンドン時間が始まる5分前には手締まりして、ロンドン時間が始まったらまたそこから新しく考え始める。方向性を考え始める」）
+# 聞いて決めたこと（3つとも選んでもらった答え）：新しく入るのは始まりの30分後から・向きは始まりからの動きだけで測る・線は東京の線のまま。ほかは v4 と同じ
+LDN_FLAT_MIN = 5              # ロンドンの始まりの5分前（冬 16:55・夏 15:55）に手じまう。その1分のうちの決済は ○
+LDN_WAIT_MIN = 30             # 始まりから30分（冬 17:00〜17:29・夏 16:00〜16:29）は入らない＝そこから新しく考える
+V5_FLAGS = ("both_broken", "usd_dir5", "pick_eg5", "far20", "fresh", "pull50", "touch1")
+V5_ENTRY = ("in_window5", "sl_order", "event_clear", "spread_ok", "weekday_ok") + V5_FLAGS      # ①押し目の入口（v4 の時間と向きだけを替えた）
+V5_KEYS = ("usd_ldn", "eg_ldn", "strong_ldn", "kata5")                                            # trade_v4.record の答え（始まりからの動き・強いほう・型）
+PAPERS = ("v1", "v2", "v3", "v4", "v5")
 
 
 def empty_state():
@@ -121,6 +128,29 @@ def last_sunday(year, month):
 def london_open(day):
     """ロンドンの始まり（英国の朝8時）の日本時間の時。冬＝17・夏＝16。英国の夏時間（3月〜10月の最後の日曜）で決まる（米国とは切り替えの日が違う）"""
     return 16 if last_sunday(day.year, 3) <= day < last_sunday(day.year, 10) else 17
+
+
+def london_phase(t):
+    """日本時間 t → "before"（始まりの5分前より前）・"flat"（5分前〜30分後＝持たない・入らない）・"after"（30分後から＝新しく考える）。v5（追記⑫）"""
+    l0 = dt.datetime(t.year, t.month, t.day, london_open(t.date()))
+    if t < l0 - dt.timedelta(minutes=LDN_FLAT_MIN):
+        return "before"
+    return "flat" if t < l0 + dt.timedelta(minutes=LDN_WAIT_MIN) else "after"
+
+
+def in_window5(t_open):
+    """v5 の入る時間：15:00〜始まりの5分前の前（冬 16:55・夏 15:55）と、始まりの30分後〜2時間後の前（冬 17:30〜19:00・夏 16:30〜18:00）"""
+    if t_open.time() < dt.time(15, 0):
+        return False
+    ph = london_phase(t_open)
+    return ph == "before" or (ph == "after" and t_open.hour < london_open(t_open.date()) + WINDOW2_HOURS)
+
+
+def ldn_flat_ok(t_open, t_close):
+    """始まりの5分前をまたいで持っていないか（v5）。5分前の1分（冬 16:55:00〜16:55:59）のうちに決済すれば ○"""
+    l0 = dt.datetime(t_open.year, t_open.month, t_open.day, london_open(t_open.date()))
+    cut = l0 - dt.timedelta(minutes=LDN_FLAT_MIN)
+    return not (t_open < cut and t_close >= cut + dt.timedelta(minutes=1))
 
 
 def server_to_jst(t):
@@ -191,12 +221,17 @@ def fits(flags, keys, type_ok):
     return None if None in vals else True
 
 
-def fits_v4(flags, kata):
+def fits_v4(flags, kata, keys=V4_ENTRY):
     """決まりの紙 v4 の①押し目の入口に全部当てはまるか。②④は紙に入口の決まりが無い（記録だけ）＝None・型が分からない＝None・ほか＝False"""
     if kata in ("fade", "range"):
         return None
-    f = fits(flags, V4_ENTRY, kata != "other")
+    f = fits(flags, keys, kata != "other")
     return None if f and kata is None else f
+
+
+def fits_v5(flags, kata5):
+    """決まりの紙 v5 の①押し目の入口（v4 の時間を in_window5 に・向きと強いほうを始まりからの動きに替えたもの）。型は v5 の型（kata5）"""
+    return fits_v4(flags, kata5, V5_ENTRY)
 
 
 def pnl_of(pair, side, entry, exit_, pip=None):
@@ -263,6 +298,10 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     f["pick_flow"], f["pick_far"] = (None if x is None else x == pair.upper() for x in (strong_flow, strong_far))
     v4, after = v4 or {}, after or {}
     f.update({k: (v4.get("flags") or {}).get(k) for k in V4_FLAGS})
+    f["in_window5"] = in_window5(t_open)
+    f["ldn_flat"] = ldn_flat_ok(t_open, t_close)
+    f.update({k: (v4.get("flags5") or {}).get(k) for k in ("usd_dir5", "pick_eg5")})
+    kata5 = v4.get("kata5", kata) if v4 else kata                       # v5 の型（--auto で埋めていなければ v4 の型と同じ）
     return {"id": str(tid), "date": t_open.strftime("%Y-%m-%d"), "entry_time": t_open.strftime("%H:%M:%S"),
             "exit_time": t_close.strftime("%H:%M:%S"), "hold_min": round((t_close - t_open).total_seconds() / 60, 1),
             "pair": pair.upper(), "side": side, "entry": entry, "sl": sl, "tp": tp, "exit": exit_,
@@ -272,6 +311,7 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
             "depth_pct": depth_pct, "far_min": far_min, "pairs_hit": pairs_hit, "pairs_lm": pairs_lm, "strong_flow": strong_flow, "strong_far": strong_far, "flags": f,
             "fits_v1_entry": fits(f, V1_ENTRY, entry_type and entry_type == "ema15"), "fits_v2_entry": fits(f, V2_ENTRY, entry_type and entry_type in V2_TYPES), "fits_v3_entry": fits(f, V3_ENTRY, True),
             "kata": kata, **{k: v4.get(k) for k in V4_KEYS}, **{k: after.get(k) for k in AFTER_KEYS}, "fits_v4_entry": fits_v4(f, kata),
+            **{k: (kata5 if k == "kata5" else v4.get(k)) for k in V5_KEYS}, "fits_v5_entry": fits_v5(f, kata5),
             "filled": list(filled), "used_for_rule": bool(used_for_rule), "note": note}
 
 
@@ -298,14 +338,16 @@ def auto_fill(args, t_open, flags):
             args.strong_flow, args.strong_far = r["strong_flow"], None if "strong_far" in blank else r["strong_far"]
     v = V.analyze(b5, b1, pair, args.side, t_open)
     args.v4 = V.record(v)
-    ask = V.questions(v, given, unknown)      # 「一番強い」は v4 の答え（ユーロポンドの1時間の動き）で聞く
+    if "kata" in given:                       # オーナーが言った型は v5 の型にも使う
+        args.v4["kata5"] = args.kata
+    ask = V.questions(v, given, unknown)      # 「一番強い」は v4 の答え（ユーロポンドの1時間の動き）で聞く。始まりの30分後からは v5 の答え（始まりからの動き）
     text.append(V.report(v))
     val["kata"] = v["kata"]
     for k, x in val.items():
         if k not in given | blank and x is not None:
             setattr(args, k, x)
             done.append(k)
-    if v["named"] and v["pick"] and flags.get("strongest") is None:      # 道具の答えと違うときは × と決めない（オーナーはチャートの形で見る）
+    if v["named"] and V.pick_now(v) and flags.get("strongest") is None:      # 道具の答えと違うときは × と決めない（オーナーはチャートの形で見る）
         flags["strongest"] = True
         done.append("strongest")
     if pair in F.PAIRS and flags.get("tokyo_break") is None and r["signal"] and "tokyo_break" not in blank:      # 見つからないときは × と決めない（線の見方が違うだけかもしれない）
@@ -378,7 +420,8 @@ def reading_table(trades):
     """項目ごとの ○ と × ・入口の種類ごとの R の平均と件数（読むだけ・決まりの紙を作るのに使った取引は外す）"""
     trades = [t for t in trades if not t.get("used_for_rule")]
     rows = {}
-    for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line", "in_window2", "far30", "pairs2", "pairs_lm2", "pick_flow", "pick_far") + V4_FLAGS:
+    for k in V1_ENTRY + ("htf_aligned", "tp_before_high", "sl_at_line", "in_window2", "far30", "pairs2", "pairs_lm2", "pick_flow", "pick_far") + V4_FLAGS + (
+            "in_window5", "ldn_flat", "usd_dir5", "pick_eg5"):
         for v in (True, False):
             xs = [t["r_net"] for t in trades if t["flags"].get(k) is v]
             rows[f"{k}={'o' if v else 'x'}"] = {"n": len(xs), "mean": round(sum(xs) / len(xs), 3) if xs else None}
@@ -428,6 +471,10 @@ def status_text(st):
     for v in PAPERS:
         fit = sum(1 for t in rs if t.get(f"fits_{v}_entry") is True)
         L.append(f"決まりの紙 {v} の入口に全部当てはまった取引 {fit}件（成績は判定の日にだけ出す）")
+    held = [t for t in st["trades"] if (t.get("flags") or {}).get("ldn_flat") is False]
+    if held:
+        L.append(f"⚠️ ロンドンの始まりの5分前をまたいで持っていた取引 {len(held)}件（v5 の決まりに反する）：" +
+                 "・".join(f"{t['date']} {t['pair']}" for t in held))
     kinds = [(k, sum(1 for t in rs if t.get("entry_type") == k)) for k in ENTRY_TYPES]
     kinds4 = [(k, sum(1 for t in rs if t.get("kata") == k)) for k in KATA]
     if any(n for _, n in kinds4):
