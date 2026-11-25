@@ -15,7 +15,7 @@
   業者（MT4）の足と比べて、向きが逆になったのは 1,869本のうち ドル円は ±0.7pips・ユーロポンドは ±0.5pips を「境目」にすると 0本と1本（2026-11-25 に測った・9/30〜11/23 の 15:00〜18:55）。比べるための別の答え＝線からいちばん遠くまで行った割合が大きいペア
 - 値は Yahoo の1分足（30日以内）と5分足（60日以内）。業者（BigBoss の MT4・5分足）と比べると、9/30〜11/23 の3,151通りで、線のずれは9割が 1.0pips 以内・いちばん遠い値は 0.7pips 以内、
   「30分以内に30pips」の○×が逆になったのは 0・当たりの○×が逆になったのは 9,447 のうち 44（0.5%）（2026-11-24 に測った）
-  → 30pips と 3pips の境目の ±0.5pips は「境目」＝決めずに人に聞く。月曜の8時台は Yahoo に足が無い（冬時間）・線が 4pips ずれると30pips の○×が変わる（104通りのうち25）＝線を人に確かめる。オーナーが言った値（線・いちばん遠い値・分・数・種類）がいつも優先
+  → 30pips と 3pips の境目の ±0.5pips は「境目」＝決めずに**聞かずに空にする**（2026-11-25 オーナー「聞かずに空にする」＝v1〜v3 だけの項目・v4 では使わない）。月曜の8時台は Yahoo に足が無い（冬時間）＝線を使う項目を空・線が 4pips ずれると30pips の○×が変わる（104通りのうち25）＝30pips を空。オーナーが言った値（線・いちばん遠い値・分・数・種類）がいつも優先
 """
 import datetime as dt
 import json
@@ -28,11 +28,14 @@ TYPE_JP = {"half50": "50%", "line": "割った線", "ema15": "15分足MA"}
 PIP = 0.01
 BAR = 300
 LINE_FROM, LINE_TO, BREAK_FROM = 8 * 60, 14 * 60 + 55, 14 * 60     # 日本時間の分
-MAX_MISSING, HARD_MISSING = 10, 24                                 # 線を作る足（84本）の欠け：10本まで＝そのまま（oj_lab と同じ）・24本まで＝線を人に確かめる・それより多い＝計算しない
+MAX_MISSING, HARD_MISSING = 10, 24                                 # 線を作る足（84本）の欠け：10本まで＝そのまま（oj_lab と同じ）・24本まで＝線を使う項目を空・それより多い＝計算しない
 EMA_N = 10
 FAR_PIPS, FAR_MIN, NEAR_PIPS, TOL = 30.0, 30, 3.0, 0.5
-LINE_SENSE = 4.0                                                   # 線がこれだけ内・外にずれたら30pips の○×が変わるなら、線を人に確かめる（11/24 の赤い線との差 3.7pips から）
+LINE_SENSE = 4.0                                                   # 線がこれだけ内・外にずれたら30pips の○×が変わるなら、空にする（11/24 の赤い線との差 3.7pips から）
 LINE_WARN_PIPS = 5.0                                               # オーナーの線と計算した線がこれ以上離れたら知らせる
+OTHER_LINES = ("pairs_hit", "pairs_lm", "tokyo_break", "strong_far")                 # ほかのペアの線も要る項目
+BLANK_JP = {"break_line": "割った線", "extreme": "いちばん遠い値", "far_min": "30pips までの分", "entry_type": "入口の種類", "pairs_hit": "当たったペアの数（v2）",
+            "pairs_lm": "線か MA に当たったペアの数（v3）", "tokyo_break": "3ペアそろい", "strong_far": "線からいちばん遠いペア"}
 LM = ("line", "ema15")                                             # v3 で当たりに数える線（割った線・MA）
 FLOW_TOL = {"USDJPY": 0.7, "EURGBP": 0.5}                          # 向きの境目（pips・ユーロポンドは 0.0001 が 1pip）
 JST = dt.timezone(dt.timedelta(hours=9))
@@ -306,7 +309,7 @@ def signal_of(st, b5, s, d0, j0):
     return None
 
 
-# ── 読む文と、人に聞くこと ────────────────────────────
+# ── 読む文と、空にすること ────────────────────────────
 
 def mark(v):
     return {True: "○", False: "×", None: "境目"}[v]
@@ -355,23 +358,35 @@ def strong_text(r):
     return f"{who}＝ドル円 {way('USDJPY')}・ユーロポンド {way('EURGBP')}"
 
 
-def questions(r, given, unknown):
-    """決められないもの → 人に聞く文の並び。given＝人が渡した項目・unknown＝分からないままでよいとした項目"""
+def blanks(r, given):
+    """決められない項目 → [(空にする項目の並び, わけ)]。given＝人が渡した項目（空にしない）。v1〜v3 だけで使う項目なので、人に聞かない（2026-11-25 オーナー「聞かずに空にする」）"""
     if r["line"] is None:
         return []
-    q = []
-    why = [f"線を作る足が {r['missing'][r['pair']]}本足りない"] if r["missing"][r["pair"]] > MAX_MISSING else []
-    if r["far_state"] is not None and "far_min" not in given and r["far_if"] and any(v != r["far_state"] for v in r["far_if"]):
-        why.append(f"線が {LINE_SENSE:g}pips ずれると、30分以内に30pips の○×が変わる")
-    if why and "break_line" not in given and "line" not in unknown:
-        q.append("・".join(why) + f"：チャートの赤い線は {r['line']:.3f} か → --break-line チャートの値（合っていれば同じ値）／分からない＝--unknown line")
-    if r["far_state"] is None and "far_min" not in given and "far" not in unknown:
-        q.append(f"抜けて30分以内に30pips に届いたかが境目（30分以内の最大 {r['far30_pips']}pips）：チャートの値を聞く → 届いた＝--far-min 分（30分より後でも、その分）／届かない＝--break-line と --extreme にチャートの値／分からない＝--unknown far")
-    if r["type"] is None and "entry_type" not in given and "type" not in unknown:
-        c = "・".join(TYPE_JP[k] for k in r["entry_types"] + r["maybe_types"]) or "当たった線が無い"
-        q.append(f"どの線で入ったか（候補：{c}）→ --entry-type half50／line／ema15／series（入ったペアはまだ線の手前）／other・分からない＝--unknown type")
-    if r["pairs_lm"] is None and "pairs_lm" not in given and "pairs" not in unknown:
-        q.append("水平線か MA に当たっていたペアが2つ以上かが境目（" + "・".join(f"{PAIR_JP[p]} {mark(r['lm_state'][p])}" for p in PAIRS) + "）→ --pairs-lm 数（0〜3）・分からない＝--unknown pairs")
-    if r["strong_state"] is not True and "strongest" not in given and "strong" not in unknown:
-        q.append(f"入った{PAIR_JP[r['pair']]}は、そのとき一番強い通貨でしたか（道具の答え：{strong_text(r)}）→ --flags strongest=1 か 0・分からない＝--unknown strong")
-    return q
+    out, seen = [], set(given)
+
+    def put(keys, why):
+        ks = [k for k in keys if k not in seen]
+        if ks:
+            seen.update(ks)
+            out.append((ks, why))
+
+    short = [p for p in PAIRS if r["missing"][p] > MAX_MISSING]
+    if r["pair"] in short and "break_line" not in given:
+        put(("break_line", "extreme", "far_min", "entry_type") + OTHER_LINES, f"線を作る足が {r['missing'][r['pair']]}本足りない")
+    elif [p for p in short if p != r["pair"]]:
+        series = ("entry_type",) if r["type"] == "series" else ()
+        put(OTHER_LINES + series, "・".join(PAIR_JP[p] for p in short if p != r["pair"]) + "の線を作る足が足りない")
+    if r["far_state"] is None:
+        put(("far_min",), f"抜けて30分以内に30pips に届いたかが境目（30分以内の最大 {r['far30_pips']}pips）")
+    elif r["far_if"] and any(v != r["far_state"] for v in r["far_if"]):
+        put(("far_min",), f"線が {LINE_SENSE:g}pips ずれると、30分以内に30pips の○×が変わる")
+    if r["type"] is None:
+        c = "・".join(TYPE_JP[k] for k in r["entry_types"] + r["maybe_types"])
+        put(("entry_type",), f"どの線で入ったかが決まらない（候補：{c or '当たった線が無い'}）")
+    if r["pairs_lm"] is None:
+        put(("pairs_lm",), "水平線か MA に当たっていたペアが2つ以上かが境目（" + "・".join(f"{PAIR_JP[p]} {mark(r['lm_state'][p])}" for p in PAIRS) + "）")
+    return out
+
+
+def blank_text(rows):
+    return [f"  ⬜ 空のまま（聞かない）：{'・'.join(BLANK_JP[k] for k in ks)}＝{why}" for ks, why in rows]

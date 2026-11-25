@@ -661,13 +661,10 @@ def cli(monkeypatch, tmp_path, *extra, b5=None, b1=None, pair="EURJPY", cmd="add
     return T.main(a + list(extra))
 
 
-OLD = ("--unknown", "far,line,type,pairs")                           # v2・v3 の項目の境目は、ここでは聞かない
-
-
 def test_add_auto_fills_v4(monkeypatch, tmp_path, capsys):
     p = mins("EURJPY", [(20, 15, 18), (26, 18, 25), (40, 24, 38)])
     q = mins("GBPJPY", [(10, 8, 9), (11, 9, 10), (12, 9, 10)])
-    assert cli(monkeypatch, tmp_path, *OLD, after=(p, q, 60)) == 0
+    assert cli(monkeypatch, tmp_path, after=(p, q, 60)) == 0
     t = T.load()["trades"][0]
     assert t["kata"] == "push" and t["strong_eg"] == "EURJPY" and t["watch"] == "GBPJPY" and t["watch_line"] == 200.02 and t["watch_extreme"] == 200.11
     assert t["flags"]["strongest"] is True and {"kata", "strongest"} <= set(t["filled"])
@@ -678,14 +675,14 @@ def test_add_auto_fills_v4(monkeypatch, tmp_path, capsys):
 
 
 def test_owner_kata_wins(monkeypatch, tmp_path):
-    assert cli(monkeypatch, tmp_path, "--kata", "other", *OLD) == 0
+    assert cli(monkeypatch, tmp_path, "--kata", "other") == 0
     t = T.load()["trades"][0]
     assert t["kata"] == "other" and "kata" not in t["filled"] and t["fits_v4_entry"] is False
 
 
 def test_after_lines_are_only_for_the_push(monkeypatch, tmp_path):
     p, q = mins("EURJPY", [(20, 15, 18)] * 4), mins("GBPJPY", [(12, 9, 10)] * 4)
-    assert cli(monkeypatch, tmp_path, "--kata", "range", *OLD, after=(p, q, 60)) == 0
+    assert cli(monkeypatch, tmp_path, "--kata", "range", after=(p, q, 60)) == 0
     t = T.load()["trades"][0]
     assert t["v4_exit"] is None and t["mfe_pips"] == pytest.approx(4.2) and t["watch_line"] == 200.02
 
@@ -694,24 +691,24 @@ def test_unbroken_pair_is_not_called_the_strongest(monkeypatch, tmp_path):
     b5 = world(eur={}, gbp={"14:30": (-6, -6, -60, -60)})            # ユーロポンドは上・ユーロ円はまだ抜けていない
     r = run(b5=b5)
     assert r["pick"] is True and r["named"] is False
-    assert cli(monkeypatch, tmp_path, "--unknown", "far,line,type,pairs,kata", b5=b5, entry=-4) == 0
+    assert cli(monkeypatch, tmp_path, "--unknown", "kata", b5=b5, entry=-4) == 0
     assert T.load()["trades"][0]["flags"]["strongest"] is None
 
 
 def test_unknown_kata_stops_and_can_be_let_through(monkeypatch, tmp_path, capsys):
     b5 = world(eur={})
-    assert cli(monkeypatch, tmp_path, *OLD, b5=b5, entry=-4) == 2 and not os.path.exists(T.JOURNAL)
+    assert cli(monkeypatch, tmp_path, b5=b5, entry=-4) == 2 and not os.path.exists(T.JOURNAL)
     assert "--kata" in capsys.readouterr().out
-    assert cli(monkeypatch, tmp_path, "--unknown", "far,line,type,pairs,kata", b5=b5, entry=-4) == 0
+    assert cli(monkeypatch, tmp_path, "--unknown", "kata", b5=b5, entry=-4) == 0
     assert T.load()["trades"][0]["kata"] is None
 
 
 def test_strongest_is_asked_by_the_v4_answer(monkeypatch, tmp_path, capsys):
     b5 = world(eur=WEAK, gbp=MV)
-    assert cli(monkeypatch, tmp_path, *OLD, b5=b5) == 2
+    assert cli(monkeypatch, tmp_path, b5=b5) == 2
     out = capsys.readouterr().out
     assert out.count("❓") == 1 and "ポンド円" in out.split("❓")[1] and "strongest=1" in out
-    assert cli(monkeypatch, tmp_path, "--unknown", "far,line,type,pairs,strong", b5=b5) == 0
+    assert cli(monkeypatch, tmp_path, "--unknown", "strong", b5=b5) == 0
     t = T.load()["trades"][0]
     assert t["flags"]["strongest"] is None and t["flags"]["pick_eg"] is False
 
@@ -724,7 +721,7 @@ def test_eurgbp_border_is_asked(monkeypatch, tmp_path, capsys):
             break
     r = run(b5=b5)
     assert r["eg"][1] is None and r["pick"] is None and r["strong"] is None and r["flags"]["pick_eg"] is None
-    assert cli(monkeypatch, tmp_path, *OLD, b5=b5, entry=8) == 2
+    assert cli(monkeypatch, tmp_path, b5=b5, entry=8) == 2
     assert "境目" in capsys.readouterr().out.split("❓")[1]
 
 

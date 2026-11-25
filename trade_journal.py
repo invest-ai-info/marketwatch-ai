@@ -29,8 +29,8 @@
   決まりの紙 v3（「OJ」追記⑧・2026-11-25＝3つのうち2つ以上が割った線か MA に当たったときに、一番強い通貨に入る。50% は当たりに入れない・強い通貨そのものは当たっていなくてよい）は
       … --far-min 20 --pairs-lm 2 --flags strongest=1 --sl-line 割った線（--pairs-lm＝割った線か MA まで 3pips 以内に来ていた数。入ったペアがまだ線の手前なら --entry-type series）
   🆕 **いつもの足し方**（ドル円・ユーロ円・ポンド円）＝ add に --auto を付ける：入口の種類・割った線・いちばん遠い値・30pips までの分・当たったペアの数・
-     一番強い通貨か・3ペアそろいを、Yahoo の足から埋める（trade_fill.py・入る前の値だけ）。人が渡した値がいつも優先。決められないもの（境目）があれば**書かずに止まり**、聞くことを出す
-     → オーナーに聞いて値を付けてもう一度／分からないままなら --unknown line,far,type,pairs,strong,kata。書かずに見るだけ＝ python trade_journal.py fill --pair … --side … --open … --entry …
+     一番強い通貨か・3ペアそろいを、Yahoo の足から埋める（trade_fill.py・入る前の値だけ）。人が渡した値がいつも優先。v1〜v3 だけで使う項目（線・30pips・種類・当たりの数・3ペアそろい）が決まらないときは**聞かずに空**（⬜・11/25 オーナー「聞かずに空にする」）
+     聞くのは v4 の2つだけ（型・ユーロポンドで強いほう）＝決まらないと**書かずに止まる** → 値を付けてもう一度／分からないままなら --unknown strong,kata。書かずに見るだけ＝ python trade_journal.py fill --pair … --side … --open … --entry …
   決まりの紙 v4（「OJ」追記⑨⑩・2026-11-25＝ユーロポンドで「ユーロかポンドか」・ドル円で「上か下か」）は、--auto が trade_v4.py で埋める（ユーロドル・ポンドドルの取引も向きと型だけ埋める）：
      型（--kata push＝①押し目／fade＝②抜けの失敗の逆張り／range＝④ドル円レンジの押し目／other）・ドル円とユーロポンドの1時間の動き・強いほう・見るペアの線と端・項目7つ・v4 の出口まで・伸ばした分
      ①と④は道具が決める。②・どれでもない・境目は聞く（②は、抜けと逆の向きに入るので道具は決めない）
@@ -184,9 +184,9 @@ def far30_of(leg_pips, far_min, tol=0.0):
 
 
 def fits(flags, keys, type_ok):
-    """項目が全部 ○＝True・1つでも × か入口の種類が違う＝False・ほか＝None"""
-    vals = [flags.get(k) for k in keys]
-    if False in vals or not type_ok:
+    """項目が全部 ○＝True・1つでも × か入口の種類が違う＝False・ほか（種類が決まらない None も）＝None"""
+    vals = [flags.get(k) for k in keys] + [type_ok]
+    if False in vals:
         return False
     return None if None in vals else True
 
@@ -214,7 +214,7 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     → 逆指値がその線からどれだけ離れていたか（sl_buffer_pips・余白）を残す＝段2の前に余白を決めるため（成績は見ない）
     break_line・extreme＝割った線と、そこからいちばん遠くまで行った値（型1）→ leg_pips・depth_pct を残す
     far_min＝抜けてから30pips 離れるまでの分・pairs_hit＝線の近くにいたペアの数（決まりの紙 v2）→ far30・pairs2 を残す
-    filled＝trade_fill.py が埋めた項目（人が言った値と分けて残す）・far_unknown＝30pips に届いたかが境目で、人に聞いても分からなかった
+    filled＝trade_fill.py が埋めた項目（人が言った値と分けて残す）・far_unknown＝30pips に届いたかが決まらない（聞かずに空）
     pairs_lm＝割った線か MA に当たっていたペアの数（v3）→ pairs_lm2。strong_flow・strong_far＝道具が出した「一番強い通貨」の2つの答え（ドル円×ユーロポンドの向き／線からいちばん遠い割合）
     → 入ったペアと同じか（pick_flow・pick_far）を読むための表に残す。決まりの○×は strongest（オーナーの見立てが優先）
     kata＝型（v4）・v4＝trade_v4.record の答え（向き・強いほう・見るペアの線と端・項目7つ）・after＝trade_v4.after の答え（v4 の出口・伸ばした分）。無ければ None のまま
@@ -222,7 +222,7 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
     side = side.lower()
     if side not in ("buy", "sell"):
         raise ValueError("side は buy か sell")
-    if entry_type not in ENTRY_TYPES:
+    if entry_type is not None and entry_type not in ENTRY_TYPES:      # None＝--auto で決まらなかった
         raise ValueError(f"entry_type は {ENTRY_TYPES}")
     if push is not None and push not in PUSHES:
         raise ValueError(f"push は {PUSHES}")
@@ -270,49 +270,48 @@ def make_trade(tid, pair, side, t_open, entry, sl, tp, t_close, exit_, spread=No
             "cost_r": cost_r, "exit_kind": kind, "entry_type": entry_type, "push": push, "sl_line": sl_line,
             "sl_buffer_pips": buf, "break_line": break_line, "extreme": extreme, "leg_pips": leg_pips,
             "depth_pct": depth_pct, "far_min": far_min, "pairs_hit": pairs_hit, "pairs_lm": pairs_lm, "strong_flow": strong_flow, "strong_far": strong_far, "flags": f,
-            "fits_v1_entry": fits(f, V1_ENTRY, entry_type == "ema15"), "fits_v2_entry": fits(f, V2_ENTRY, entry_type in V2_TYPES), "fits_v3_entry": fits(f, V3_ENTRY, True),
+            "fits_v1_entry": fits(f, V1_ENTRY, entry_type and entry_type == "ema15"), "fits_v2_entry": fits(f, V2_ENTRY, entry_type and entry_type in V2_TYPES), "fits_v3_entry": fits(f, V3_ENTRY, True),
             "kata": kata, **{k: v4.get(k) for k in V4_KEYS}, **{k: after.get(k) for k in AFTER_KEYS}, "fits_v4_entry": fits_v4(f, kata),
             "filled": list(filled), "used_for_rule": bool(used_for_rule), "note": note}
 
 
 def auto_fill(args, t_open, flags):
-    """注文の行（args）の空いている項目を trade_fill.py と trade_v4.py で埋める → (埋めた項目の並び, 30pips が分からないままか, 読む文, 人に聞くこと)"""
+    """注文の行（args）の空いている項目を trade_fill.py と trade_v4.py で埋める → (埋めた項目の並び, 決まらず空にする項目, 読む文, 人に聞くこと＝v4 の2つだけ)"""
     import trade_fill as F
     import trade_v4 as V
     pair = args.pair.upper()
     if pair not in F.PAIRS + V.DOLLAR:
-        return [], False, "（自動で埋めるのはドル円・ユーロ円・ポンド円〔とユーロドル・ポンドドルの向き〕の取引だけ＝埋めずに足す）", []
+        return [], set(), "（自動で埋めるのはドル円・ユーロ円・ポンド円〔とユーロドル・ポンドドルの向き〕の取引だけ＝埋めずに足す）", []
     unknown = parse_unknown(args.unknown)
     given = {k for k in ("entry_type", "break_line", "extreme", "far_min", "pairs_hit", "pairs_lm", "kata") if getattr(args, k) is not None}
-    if flags.get("strongest") is not None:
-        given.add("strongest")
+    given |= {k for k in ("strongest", "tokyo_break") if flags.get(k) is not None}
     b5, b1 = F.load(t_open)
-    val, ask, text, far_unknown, done = {}, [], [], False, []
+    val, text, blank, done = {}, [], set(), []
     if pair in F.PAIRS:
         r = F.analyze(b5, b1, pair, args.side, t_open, args.entry, args.break_line, args.extreme)
-        ask += F.questions(r, given | {"strongest"}, unknown)     # 「一番強い」は v4 の答え（ユーロポンドの1時間の動き）で聞く
-        text.append(F.report(r))
+        rows = F.blanks(r, given)
+        blank = {k for ks, _ in rows for k in ks}
+        text += [F.report(r)] + F.blank_text(rows)
         if r["line"] is not None:
             val = {"entry_type": r["type"], "break_line": round(r["line"], 3), "extreme": round(r["extreme"], 3), "far_min": r["far_min"],
                    "pairs_hit": r["pairs_hit"], "pairs_lm": r["pairs_lm"]}
-            args.strong_flow, args.strong_far = r["strong_flow"], r["strong_far"]
-            far_unknown = r["far_state"] is None and "far_min" not in given
+            args.strong_flow, args.strong_far = r["strong_flow"], None if "strong_far" in blank else r["strong_far"]
     v = V.analyze(b5, b1, pair, args.side, t_open)
     args.v4 = V.record(v)
-    ask += V.questions(v, given, unknown)
+    ask = V.questions(v, given, unknown)      # 「一番強い」は v4 の答え（ユーロポンドの1時間の動き）で聞く
     text.append(V.report(v))
     val["kata"] = v["kata"]
     for k, x in val.items():
-        if k not in given and x is not None:
+        if k not in given | blank and x is not None:
             setattr(args, k, x)
             done.append(k)
     if v["named"] and v["pick"] and flags.get("strongest") is None:      # 道具の答えと違うときは × と決めない（オーナーはチャートの形で見る）
         flags["strongest"] = True
         done.append("strongest")
-    if pair in F.PAIRS and flags.get("tokyo_break") is None and r["signal"]:      # 見つからないときは × と決めない（線の見方が違うだけかもしれない）
+    if pair in F.PAIRS and flags.get("tokyo_break") is None and r["signal"] and "tokyo_break" not in blank:      # 見つからないときは × と決めない（線の見方が違うだけかもしれない）
         flags["tokyo_break"] = True
         done.append("tokyo_break")
-    return done, far_unknown, "\n".join(text), ask
+    return done, blank, "\n".join(text), ask
 
 
 def after_entry(args, t_open, t_close):
@@ -331,9 +330,9 @@ def after_entry(args, t_open, t_close):
 
 def parse_unknown(text):
     out = {x.strip() for x in (text or "").split(",") if x.strip()}
-    bad = out - {"line", "far", "type", "pairs", "strong", "kata"}
+    bad = out - {"strong", "kata"}
     if bad:
-        raise SystemExit(f"🚨 --unknown に使えるのは line・far・type・pairs・strong・kata（{', '.join(sorted(bad))} は知らない）")
+        raise SystemExit(f"🚨 --unknown に使えるのは strong・kata（{', '.join(sorted(bad))} は要らない＝線・30pips・種類・数は、決まらなければ聞かずに空）")
     return out
 
 
@@ -433,7 +432,8 @@ def status_text(st):
     kinds4 = [(k, sum(1 for t in rs if t.get("kata") == k)) for k in KATA]
     if any(n for _, n in kinds4):
         L.append("v4 の型：" + "・".join(f"{KATA_JP[k]} {n}件" for k, n in kinds4 if n))
-    L.append("入口の種類：" + "・".join(f"{TYPE_JP[k]} {n}件" for k, n in kinds if n) if rs else "入口の種類：まだ無い")
+    none = sum(1 for t in rs if t.get("entry_type") is None)
+    L.append("入口の種類：" + "・".join([f"{TYPE_JP[k]} {n}件" for k, n in kinds if n] + ([f"決まらない {none}件"] if none else [])) if rs else "入口の種類：まだ無い")
     for c in st["checkpoints"]:
         L.append(f"判定（{c['n']}件・{c['through']} まで・{c['days']}日）：平均 {c['mean_r']:+.3f}R"
                  f"（95%の幅 {c['lo']:+.3f}〜{c['hi']:+.3f}）・勝率 {c['win_rate'] * 100:.0f}% → {c['verdict']}")
@@ -441,17 +441,17 @@ def status_text(st):
 
 
 def fill_text(args, t_open, flags):
-    """埋めて読む文を出す → (終わりの番号＝0：決まった・2：人に聞くことがある／取れない, 埋めた項目, 30pips が分からないままか)"""
+    """埋めて読む文を出す → (終わりの番号＝0：決まった・2：人に聞くことがある／取れない, 埋めた項目, 空にする項目)"""
     import trade_fill as F
     try:
-        done, far_unknown, text, ask = auto_fill(args, t_open, flags)
+        done, blank, text, ask = auto_fill(args, t_open, flags)
     except F.FillError as e:
         print(f"🛑 {e}")
-        return 2, [], False
+        return 2, [], set()
     print(text)
     for q in ask:
         print(f"❓ {q}")
-    return (2 if ask else 0), done, far_unknown
+    return (2 if ask else 0), done, blank
 
 
 def main(argv):
@@ -468,7 +468,7 @@ def main(argv):
     for k in ("sl", "tp", "spread", "pip"):
         a.add_argument(f"--{k}", type=float, default=None)
     a.add_argument("--server-time", action="store_true", help="時刻は MT4 の画面の時刻（サーバー時刻）")
-    a.add_argument("--entry-type", default=None, choices=ENTRY_TYPES, help="付けなければ other（--auto なら、当たっていた線が1つのときだけ埋める）")
+    a.add_argument("--entry-type", default=None, choices=ENTRY_TYPES, help="付けなければ other（--auto なら、当たっていた線が1つのときだけ埋める・決まらなければ空）")
     a.add_argument("--push", default=None, choices=PUSHES, help="何押しで入ったか")
     a.add_argument("--sl-line", type=float, default=None, help="決まりの損切りの線（ブレイクラインか1押しの安値）")
     a.add_argument("--break-line", type=float, default=None, help="型1：割った線（売り＝東京時間の最安値・買い＝最高値）")
@@ -477,8 +477,8 @@ def main(argv):
     a.add_argument("--pairs-hit", type=int, default=None, help="決まりの紙 v2：線まで 3pips 以内に来ていたペアの数（0〜3・入ったペアも入れる）")
     a.add_argument("--pairs-lm", type=int, default=None, help="決まりの紙 v3：割った線か MA まで 3pips 以内に来ていたペアの数（0〜3・50%% は入れない・入ったペアも入れる）")
     a.add_argument("--kata", default=None, choices=KATA, help="決まりの紙 v4 の型：push＝①押し目・fade＝②抜けの失敗の逆張り・range＝④ドル円レンジの押し目・other＝ほか")
-    a.add_argument("--auto", action="store_true", help="空いている項目を Yahoo の足から埋める（境目があれば書かずに止まる）")
-    a.add_argument("--unknown", default="", help="--auto で決められず、聞いても分からなかったもの（line,far,type,pairs,strong,kata）")
+    a.add_argument("--auto", action="store_true", help="空いている項目を Yahoo の足から埋める（v1〜v3 の項目が決まらなければ空・v4 の型と強いほうは聞く）")
+    a.add_argument("--unknown", default="", help="--auto で決められず、聞いても分からなかったもの（strong,kata）")
     a.add_argument("--flags", default="")
     a.add_argument("--note", default="")
     a.add_argument("--used-for-rule", action="store_true", help="決まりの紙を作るのに使った取引（読むための表から外す）")
@@ -504,17 +504,17 @@ def main(argv):
         t_open, t_close = parse_time(args.open), parse_time(args.close)
         if args.server_time:
             t_open, t_close = server_to_jst(t_open), server_to_jst(t_close)
-        flags, done, far_unknown, aft = parse_flags(args.flags), [], False, None
+        flags, done, blank, aft = parse_flags(args.flags), [], set(), None
         if args.auto:
-            code, done, far_unknown = fill_text(args, t_open, flags)
+            code, done, blank = fill_text(args, t_open, flags)
             if code:
                 print("🛑 まだ記録していない＝上のことを決めてから、もう一度 add する")
                 return code
             aft = after_entry(args, t_open, t_close)
         tr = make_trade(args.id, args.pair, args.side, t_open, args.entry, args.sl, args.tp, t_close, args.exit,
-                        args.spread, args.pip, args.entry_type or "other", flags, args.note,
+                        args.spread, args.pip, args.entry_type or (None if "entry_type" in blank else "other"), flags, args.note,
                         args.used_for_rule, args.push, args.sl_line, args.break_line, args.extreme, args.far_min, args.pairs_hit,
-                        done, far_unknown, args.pairs_lm, args.strong_flow, args.strong_far, args.kata, args.v4, aft)
+                        done, "far_min" in blank, args.pairs_lm, args.strong_flow, args.strong_far, args.kata, args.v4, aft)
         add(st, tr)
         r = f"{tr['r_net']:+.2f}R" if tr["r_net"] is not None else "R なし（逆指値なし）"
         print(f"足した：{tr['date']} {tr['entry_time']} {tr['pair']} {tr['side']}・{tr['pnl_pips']:+.1f}pips・{r}")

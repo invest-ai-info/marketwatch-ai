@@ -128,17 +128,85 @@ def test_too_few_bars_is_an_error():
     assert run()["missing"] == {p: 0 for p in F.PAIRS}
 
 
-def test_monday_without_the_8_oclock_bars_asks_about_the_line(monkeypatch, tmp_path, capsys):
-    """Yahoo は月曜の 8:00〜8:55（冬時間）が無い＝12本欠け。計算はするが、線が合っているかを聞いてから書く"""
-    skip = [f"08:{m:02d}" for m in range(0, 60, 5)]
-    b5 = world(skip=skip)
-    assert cli(monkeypatch, tmp_path, b5=b5) == 2 and not os.path.exists(T.JOURNAL)
+def squares(out):
+    return [x for x in out.split("\n") if "⬜" in x]
+
+
+LINE_KEYS = ("break_line", "extreme", "leg_pips", "depth_pct", "far_min", "entry_type", "pairs_hit", "pairs_lm", "strong_far")
+LINE_MARKS = ("far30", "pairs2", "pairs_lm2", "tokyo_break", "pick_far")
+
+
+def test_monday_without_the_8_oclock_bars_leaves_the_line_items_blank(monkeypatch, tmp_path, capsys):
+    """Yahoo は月曜の 8:00〜8:55（冬時間）が無い＝12本欠け。聞かずに、線を使う項目を空にして書く（2026-11-25 オーナー「聞かずに空にする」）"""
+    b5 = world(skip=[f"08:{m:02d}" for m in range(0, 60, 5)])
+    assert cli(monkeypatch, tmp_path, b5=b5) == 0
     out = capsys.readouterr().out
-    assert "200.020" in out and "--break-line" in out and "--unknown line" in out and "12本" in out
-    assert cli(monkeypatch, tmp_path, "--unknown", "line", b5=b5) == 0
+    assert "❓" not in out and len(squares(out)) == 1 and "12本" in squares(out)[0] and "割った線・" in squares(out)[0] and "3ペアそろい" in squares(out)[0]
+    t = T.load()["trades"][0]
+    assert all(t[k] is None for k in LINE_KEYS) and all(t["flags"][k] is None for k in LINE_MARKS)
+    assert [t[f"fits_v{k}_entry"] for k in (1, 2, 3)] == [None] * 3 and set(t["filled"]) == {"kata"}
     os.remove(T.JOURNAL)
-    assert cli(monkeypatch, tmp_path, "--break-line", str(price(3)), b5=b5) == 0
-    assert T.load()["trades"][0]["break_line"] == 200.03
+    assert cli(monkeypatch, tmp_path, "--break-line", str(price(3)), b5=b5) == 0      # 人が線を渡した＝自分のペアの項目は埋まる。ほかのペアの線が要る項目は空のまま
+    t = T.load()["trades"][0]
+    assert t["break_line"] == 200.03 and t["extreme"] == 200.4 and t["far_min"] == 10 and t["entry_type"] == "half50"
+    assert all(t[k] is None for k in ("pairs_hit", "pairs_lm", "strong_far")) and t["flags"]["tokyo_break"] is None
+    assert "ドル円・ユーロ円の線を作る足" in squares(capsys.readouterr().out)[0]
+
+
+def test_ten_missing_bars_are_not_short_and_each_item_is_told_once():
+    r = run()
+    ten = {p: 10 for p in F.PAIRS}
+    assert F.blanks(dict(r, missing=ten), set()) == [] and len(F.blanks(dict(r, missing=dict(ten, GBPJPY=11)), set())) == 1
+    rows = F.blanks(dict(r, missing=dict(ten, GBPJPY=12), far_state=None, type=None, pairs_lm=None), set())
+    assert len(rows) == 1 and len(rows[0][0]) == len(set(rows[0][0])) == 8
+    rows = F.blanks(dict(r, far_state=None, type=None, pairs_lm=None), set())
+    assert [x[0] for x in rows] == [["far_min"], ["entry_type"], ["pairs_lm"]]
+
+
+def test_only_the_own_line_is_short(monkeypatch, tmp_path):
+    b5 = world()
+    b5["GBPJPY"] = bars(BASE["GBPJPY"], MOVE, skip=[f"08:{m:02d}" for m in range(0, 60, 5)])
+    assert cli(monkeypatch, tmp_path, b5=b5) == 0
+    t = T.load()["trades"][0]
+    assert all(t[k] is None for k in LINE_KEYS) and all(t["flags"][k] is None for k in LINE_MARKS)
+    os.remove(T.JOURNAL)
+    assert cli(monkeypatch, tmp_path, "--break-line", str(price(2)), b5=b5) == 0
+    t = T.load()["trades"][0]
+    assert t["break_line"] == 200.02 and t["pairs_hit"] == 3 and t["flags"]["tokyo_break"] is True and t["strong_far"] is not None
+
+
+def test_only_another_line_is_short(monkeypatch, tmp_path, capsys):
+    b5 = world()
+    b5["USDJPY"] = bars(BASE["USDJPY"], MOVE, skip=[f"08:{m:02d}" for m in range(0, 60, 5)])
+    assert cli(monkeypatch, tmp_path, b5=b5) == 0
+    t = T.load()["trades"][0]
+    assert t["break_line"] == 200.02 and t["far_min"] == 10 and t["entry_type"] == "half50" and t["flags"]["far30"] is True
+    assert all(t[k] is None for k in ("pairs_hit", "pairs_lm", "strong_far")) and all(t["flags"][k] is None for k in ("pairs2", "pairs_lm2", "tokyo_break", "pick_far"))
+    sq = squares(capsys.readouterr().out)
+    assert len(sq) == 1 and "ドル円の線を作る足" in sq[0] and "割った線" not in sq[0]
+
+
+def test_series_type_needs_the_other_lines():
+    b5, b1 = three(MA, MA, 36)
+    r = run(b5=b5, b1=b1)
+    assert r["type"] == "series" and F.blanks(r, set()) == []
+    r = dict(r, missing=dict(r["missing"], EURJPY=11))
+    assert "entry_type" in F.blanks(r, set())[0][0] and "entry_type" not in F.blanks(r, {"entry_type"})[0][0]
+    assert "entry_type" not in F.blanks(dict(run(), missing=r["missing"]), set())[0][0]          # 50% は、ほかのペアの線が要らない
+
+
+def test_owner_values_and_marks_stay_on_a_short_day(monkeypatch, tmp_path, capsys):
+    b5 = world(skip=[f"08:{m:02d}" for m in range(0, 60, 5)])
+    assert cli(monkeypatch, tmp_path, "--entry-type", "line", "--far-min", "20", "--pairs-hit", "2", "--pairs-lm", "1", "--flags", "strongest=1,event_clear=1,tokyo_break=1", b5=b5) == 0
+    t = T.load()["trades"][0]
+    assert t["entry_type"] == "line" and t["far_min"] == 20 and t["flags"]["far30"] is True and t["pairs_hit"] == 2 and t["pairs_lm"] == 1 and t["flags"]["tokyo_break"] is True
+    assert t["break_line"] is None and t["extreme"] is None
+    sq = squares(capsys.readouterr().out)
+    assert len(sq) == 1 and "3ペアそろい" not in sq[0] and "入口の種類" not in sq[0] and "線からいちばん遠いペア" in sq[0]
+    os.remove(T.JOURNAL)
+    with pytest.raises(ValueError):                                                                # いちばん遠い値だけ渡した＝線が無いので測れない。書かない
+        cli(monkeypatch, tmp_path, "--extreme", str(price(41)), b5=b5)
+    assert not os.path.exists(T.JOURNAL)
 
 
 def test_ten_missing_bars_are_fine(monkeypatch, tmp_path):
@@ -446,39 +514,45 @@ def test_no_signal_leaves_tokyo_unknown(monkeypatch, tmp_path):
     assert t["flags"]["tokyo_break"] is None                                  # 見つからない＝×とは決めない
 
 
-def test_borderline_is_not_written(monkeypatch, tmp_path, capsys):
+def test_borderline_is_left_blank(monkeypatch, tmp_path, capsys):
     mv = dict(MOVE, **{"14:50": (24, 32.2, 23, 30), "14:55": (30, 31, 29, 30)})       # 線から 30.2pips＝境目・50% は +17.1
-    assert cli(monkeypatch, tmp_path, b5=world(move=mv)) == 2
-    assert not os.path.exists(T.JOURNAL)
+    assert cli(monkeypatch, tmp_path, b5=world(move=mv)) == 0
     out = capsys.readouterr().out
-    assert "境目" in out and "--far-min" in out
+    assert "❓" not in out and "⬜" in out and "30.2pips" in out
+    t = T.load()["trades"][0]
+    assert t["far_min"] is None and t["flags"]["far30"] is None and t["leg_pips"] == 30.2 and t["break_line"] == 200.02
 
 
-def test_unknown_lets_it_through(monkeypatch, tmp_path):
+def test_blank_is_neither_yes_nor_no(monkeypatch, tmp_path):
     mv = dict(MOVE, **{"14:50": (24, 31.8, 23, 30), "14:55": (30, 31, 29, 30)})       # 29.8pips＝境目
-    assert cli(monkeypatch, tmp_path, "--unknown", "far,type,pairs", b5=world(move=mv)) == 0
+    assert cli(monkeypatch, tmp_path, b5=world(move=mv)) == 0
     t = T.load()["trades"][0]
     assert t["far_min"] is None and t["flags"]["far30"] is None and t["leg_pips"] == 29.8         # ×とも○とも書かない
-    assert t["entry_type"] == "other" and t["fits_v2_entry"] is False and t["pairs_hit"] is None
+    assert t["entry_type"] is None and t["pairs_hit"] is None
+    assert t["fits_v1_entry"] is None and t["fits_v2_entry"] is None and t["fits_v3_entry"] is not True
 
 
-def test_two_lines_at_once_asks_which(monkeypatch, tmp_path, capsys):
+def test_two_lines_at_once_leaves_the_type_blank(monkeypatch, tmp_path, capsys):
     b1 = {p: ones(p, {"15:05": (29, 30, 1, 5), "15:06": (5, 22, 5, 21)}, px=29.0) for p in F.PAIRS}       # 50% も線も MA もまたぐ
-    assert cli(monkeypatch, tmp_path, b1=b1) == 2
-    assert "--entry-type" in capsys.readouterr().out
+    assert cli(monkeypatch, tmp_path, b1=b1) == 0
+    out = capsys.readouterr().out
+    assert "❓" not in out and "入口の種類" in squares(out)[0] and "候補：" in squares(out)[0] and "15分足MA" in squares(out)[0]
+    t = T.load()["trades"][0]
+    assert t["entry_type"] is None and "entry_type" not in t["filled"] and t["fits_v2_entry"] is None and "決まらない 1件" in T.status_text(T.load())
+    os.remove(T.JOURNAL)
     assert cli(monkeypatch, tmp_path, "--entry-type", "half50", b1=b1) == 0
+    assert T.load()["trades"][0]["entry_type"] == "half50"
 
 
-def test_no_line_hit_asks_type_and_unknown_becomes_other(monkeypatch, tmp_path):
-    b1 = {p: ones(p, px=36.0) for p in F.PAIRS}
-    assert cli(monkeypatch, tmp_path, b1=b1) == 2
-    assert cli(monkeypatch, tmp_path, "--unknown", "type", b1=b1) == 0
-    assert T.load()["trades"][0]["entry_type"] == "other"
+def test_no_line_hit_leaves_the_type_blank(monkeypatch, tmp_path, capsys):
+    assert cli(monkeypatch, tmp_path, b1={p: ones(p, px=36.0) for p in F.PAIRS}) == 0
+    assert T.load()["trades"][0]["entry_type"] is None and "当たった線が無い" in capsys.readouterr().out
 
 
 def test_unknown_word_is_rejected(monkeypatch, tmp_path):
-    with pytest.raises(SystemExit):
-        cli(monkeypatch, tmp_path, "--unknown", "foo")
+    for w in ("foo", "line", "far", "type", "pairs"):                                 # 線・30pips・種類・数は、もう聞かない
+        with pytest.raises(SystemExit):
+            cli(monkeypatch, tmp_path, "--unknown", w)
 
 
 def test_other_pairs_are_recorded_without_filling(monkeypatch, tmp_path, capsys):
@@ -550,12 +624,13 @@ def test_owner_extreme_says_it_did_not_reach(monkeypatch, tmp_path):
     assert t["leg_pips"] == 29.5 and t["far_min"] is None and t["flags"]["far30"] is False
 
 
-def test_question_shows_the_distance_within_30_minutes():
+def test_blank_reason_shows_the_distance_within_30_minutes():
     mv = {"14:10": (0, 12, 0, 10), "14:15": (10, 32.2, 9, 10), "15:00": (10, 40, 9, 10)}
     r = F.analyze(world(move=mv), {}, "GBPJPY", "buy", at("15:31"))
     assert r["far30_pips"] == 30.2 and r["leg_pips"] == 38.0
-    q = F.questions(r, {"entry_type", "pairs_lm", "strongest"}, set())
-    assert len(q) == 1 and "30.2pips" in q[0]
+    q = F.blanks(r, {"entry_type", "pairs_lm"})
+    assert len(q) == 1 and q[0][0] == ["far_min"] and "30.2pips" in q[0][1]
+    assert F.blanks(r, {"entry_type", "pairs_lm", "far_min"}) == []
 
 
 def test_no_bars_around_entry_is_unknown_not_no():
@@ -573,27 +648,33 @@ def test_1400_bar_can_break_and_equal_is_not_a_break():
     assert r["break_bar"] == "14:40"
 
 
-def test_line_matters_for_30pips_is_asked(monkeypatch, tmp_path, capsys):
+def test_line_matters_for_30pips_is_left_blank(monkeypatch, tmp_path, capsys):
     mv = dict(MOVE, **{"14:50": (24, 29, 23, 28), "14:55": (28, 29, 27, 28)})        # 28pips＝届いていない。線が 4pips 内側なら 32pips
     b5 = world(move=mv)
     more = ("--entry-type", "half50", "--pairs-hit", "2")
-    assert cli(monkeypatch, tmp_path, *more, b5=b5) == 2
+    assert cli(monkeypatch, tmp_path, *more, b5=b5) == 0
     out = capsys.readouterr().out
-    assert out.count("❓") == 1 and "200.020" in out and "--break-line" in out and not os.path.exists(T.JOURNAL)
+    assert "❓" not in out and "4pips ずれると" in out
+    t = T.load()["trades"][0]
+    assert t["flags"]["far30"] is None and t["far_min"] is None and t["leg_pips"] == 28.0 and t["break_line"] == 200.02
+    os.remove(T.JOURNAL)
     assert cli(monkeypatch, tmp_path, *more, "--break-line", str(price(-2)), b5=b5) == 0
     assert T.load()["trades"][0]["flags"]["far30"] is True
     os.remove(T.JOURNAL)
-    assert cli(monkeypatch, tmp_path, *more, "--unknown", "line", b5=b5) == 0
+    assert cli(monkeypatch, tmp_path, *more, "--extreme", str(price(29)), b5=b5) == 0      # 遠い値だけでは線のずれは分からない
     t = T.load()["trades"][0]
-    assert t["flags"]["far30"] is False and t["leg_pips"] == 28.0
-    os.remove(T.JOURNAL)
-    assert cli(monkeypatch, tmp_path, *more, "--extreme", str(price(29)), b5=b5) == 2      # 遠い値だけでは線のずれは分からない
+    assert t["flags"]["far30"] is None and t["extreme"] == 200.29
 
 
 def test_line_outside_side_also_matters(monkeypatch, tmp_path):
     mv = dict(MOVE, **{"14:50": (24, 35, 23, 34), "14:55": (34, 35, 30, 32)})        # 33pips＝届いた。線が 4pips 外なら 29pips
     assert run(b5=world(move=mv))["far_if"] == (True, False)
-    assert cli(monkeypatch, tmp_path, "--entry-type", "half50", "--pairs-hit", "2", b5=world(move=mv)) == 2
+    assert cli(monkeypatch, tmp_path, "--entry-type", "half50", "--pairs-hit", "2", b5=world(move=mv)) == 0
+    t = T.load()["trades"][0]
+    assert t["flags"]["far30"] is None and t["far_min"] is None
+    os.remove(T.JOURNAL)
+    assert cli(monkeypatch, tmp_path, "--entry-type", "half50", "--pairs-hit", "2", "--far-min", "10", b5=world(move=mv)) == 0      # 人が言った分が優先
+    assert T.load()["trades"][0]["flags"]["far30"] is True
 
 
 def test_far_from_the_edge_is_not_asked():
@@ -696,18 +777,17 @@ def test_computed_line_hit_that_depends_on_4pips_is_unknown():
     assert run(b5=three(36, 36, -5.6)[0], b1=three(36, 36, -5.6)[1])["lm_state"]["GBPJPY"] is False   # 線が 4pips 内側でも 3.6pips
 
 
-def test_lm_question_only_when_two_or_not_depends(monkeypatch, tmp_path, capsys):
+def test_lm_count_is_left_blank_when_two_or_not_depends(monkeypatch, tmp_path, capsys):
     b5, b1 = three(36, MA, MA + 3.0)                                                  # ユーロ円＝当たり・ポンド円＝境目
-    assert cli(monkeypatch, tmp_path, "--entry-type", "ema15", b5=b5, b1=b1, entry=MA + 3) == 2
+    assert cli(monkeypatch, tmp_path, "--entry-type", "ema15", b5=b5, b1=b1, entry=MA + 3) == 0
     out = capsys.readouterr().out
-    assert out.count("❓") == 1 and "--pairs-lm" in out and not os.path.exists(T.JOURNAL)
+    assert "❓" not in out and "⬜" in out and "2つ以上か" in out
+    t = T.load()["trades"][0]
+    assert t["pairs_lm"] is None and t["flags"]["pairs_lm2"] is None and t["fits_v3_entry"] is None
+    os.remove(T.JOURNAL)
     assert cli(monkeypatch, tmp_path, "--entry-type", "ema15", "--pairs-lm", "2", b5=b5, b1=b1, entry=MA + 3) == 0
     t = T.load()["trades"][0]
     assert t["pairs_lm"] == 2 and "pairs_lm" not in t["filled"]
-    os.remove(T.JOURNAL)
-    assert cli(monkeypatch, tmp_path, "--entry-type", "ema15", "--unknown", "pairs", b5=b5, b1=b1, entry=MA + 3) == 0
-    t = T.load()["trades"][0]
-    assert t["pairs_lm"] is None and t["flags"]["pairs_lm2"] is None and t["fits_v3_entry"] is None
     os.remove(T.JOURNAL)
     b5, b1 = three(MA, MA, MA + 3.0)                                                  # ほかの2つが当たり＝ポンド円がどちらでも2以上
     assert cli(monkeypatch, tmp_path, "--entry-type", "ema15", b5=b5, b1=b1, entry=MA + 3) == 0
@@ -880,7 +960,7 @@ def test_strongest_borderline_is_asked(monkeypatch, tmp_path, capsys):
     b5["EURJPY"][i] = (b[0], b[1], max(b[2], c), min(b[3], c), c)
     r = run(b5=b5)
     assert r["flow"]["EURGBP"][1] is None and r["strong_flow"] is None and r["strong_state"] is None
-    assert any("境目" in q for q in F.questions(r, set(), set()))                         # 聞くのは v4 の答えで（test_trade_v4）＝ここは v3 の答えだけ
+    assert F.strong_text(r).startswith("境目") and not hasattr(F, "questions")            # 聞くのは v4 の答えで（test_trade_v4）＝ここは v3 の答えだけ
 
 
 def test_report_shows_the_count_and_the_strong_pair():
@@ -912,8 +992,9 @@ def test_unbroken_pair_is_not_called_the_strongest(monkeypatch, tmp_path):
     assert t["flags"]["strongest"] is None and t["strong_flow"] is None and t["strong_far"] is None
 
 
-def test_unbroken_day_fills_neither_count_nor_strong(monkeypatch, tmp_path):
+def test_unbroken_day_fills_neither_count_nor_strong(monkeypatch, tmp_path, capsys):
     b5 = {p: bars(BASE[p]) for p in F.PAIRS}
     assert no_strong(monkeypatch, tmp_path, "--unknown", "kata", b5=b5, b1={p: ones(p, px=-6.0) for p in F.PAIRS}) == 0
     t = T.load()["trades"][0]
     assert t["pairs_lm"] is None and t["strong_flow"] is None and t["flags"]["strongest"] is None and "pairs_lm" not in t["filled"]
+    assert t["entry_type"] == "other" and squares(capsys.readouterr().out) == [] and "決まらない" not in T.status_text(T.load()).split("入口の種類")[1]      # まだ抜けていない＝今までどおり

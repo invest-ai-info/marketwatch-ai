@@ -195,6 +195,12 @@ def test_extreme_on_wrong_side_is_rejected():
         half50(extreme=209.963)                      # 線と同じ値＝0で割る
 
 
+def test_blank_entry_type_is_neither_yes_nor_no():
+    """種類が決まらない（None）＝v1・v2 の○×も付けない。ほかが × なら ×"""
+    assert T.fits({"a": True}, ("a",), None) is None and T.fits({"a": False}, ("a",), None) is False
+    assert T.fits({"a": True}, ("a",), True) is True and T.fits({"a": True}, ("a",), False) is False and T.fits({"a": None}, ("a",), True) is None
+
+
 def test_unknown_entry_type_is_rejected():
     with pytest.raises(ValueError):
         half50(entry_type="half")
