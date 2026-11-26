@@ -97,6 +97,15 @@ def test_judge_wrong_date_is_problem():
     assert problems == [], problems
 
 
+def test_judge_today_already_released_is_not_problem():
+    # 2026-11-25 実測（Issue #461）: 台帳どおり今日 豪CPI が発表済みのため、統計局の
+    # Future releases はもう当日を含まず先の回だけになる。これは誤登録ではない。
+    today = D(2026, 11, 25)
+    found = [D(2027, 1, 6), D(2027, 1, 27), D(2027, 2, 24)]
+    problems, _ = _run(found, [today, D(2027, 1, 6)], [today, D(2027, 1, 6)], today)
+    assert problems == [], problems
+
+
 def test_judge_near_missing_is_problem():
     today = D(2026, 11, 12)
     found = [D(2026, 11, 19), D(2026, 12, 17)]
