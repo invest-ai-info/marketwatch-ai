@@ -1,69 +1,74 @@
 {
-  "generated_at": "2026-11-26T06:15:00+09:00",
+  "generated_at": "2026-11-26T15:10:00+09:00",
   "risk_regime": {
-    "regime": "RISK_OFF",
+    "regime": "NEUTRAL",
     "confidence": "MID",
-    "rationale": "11/24は米株が反落（S&P500 0.50%安・ナスダック1.48%安）。11/25は10月PCEが予想を上回り、12月利上げ織り込みが93〜98%へ上昇。新たな関税報道も重なり、米株が急落したと報じられた（ナスダックは一時4%超安、場中の数字で終値は未確認）。ただしPCEの数字は媒体で食い違い、日本・アジアの11/25の確かな材料は乏しい。",
+    "rationale": "11/25の米株は場中にナスダックが4%超下げたが、大引けはS&P500が0.25%安・ナスダック総合が0.62%安・ダウは0.33%高まで戻した。10月コアPCEは前年比3.3%と予想（3.2%）を上回り12月利上げ観測は強いが、26日のアジアはAI株中心に反発した。関税案とインフレの重しは残り、方向感は定まらない。",
     "key_drivers": [
-      "10月PCEが予想を上回り、12月利上げ織り込みは93〜98%",
-      "11/25の米株は急落（ナスダック一時4%超安との報道・終値未確認）",
-      "新たな関税報道が重し",
-      "金は約3,550ドル近辺へ下落、ビットコインは6万ドル割れとの報道",
-      "日本・アジア・為替の11/25の材料は未確認"
+      "10月コアPCE 3.3%（予想3.2%）で12月FOMC（12/8-9）の利上げ観測が強い",
+      "USTRが日本・EU・中国など14カ国・地域への新たな301条関税案を提示",
+      "米株は場中の急落から大引けで大半を戻した（S&P500 -0.25%、ナスダック -0.62%）",
+      "26日はアジア株がAI株中心に反発、米国は感謝祭で休場",
+      "豪州の10月CPIが予想を上回り、RBAの追加利上げ観測が意識される"
     ]
   },
   "assets": [
     {
       "name": "日経225",
       "ticker": "NKD=F",
-      "bias": "BEARISH",
+      "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "11/25はPCE上振れと関税報道で米株が急落したと報じられた（場中の数字・終値未確認）。12月利上げ織り込みが9割超で、ハイテク中心に弱気寄り。日経は米株安の波及を受けやすいが、東京の材料は未確認。",
+      "rationale": "米株の急落が大引けで大半戻り、26日のアジア株はAI株中心に反発した。一方で日本も対象の関税案と12月利上げ観測が重しで、方向感は乏しい。日銀の田村委員のタカ派発言で円高方向の圧力も意識される。",
       "catalysts": [
-        "米株反発の東京市場への波及",
+        "関税案の詳細と日本への影響",
         "半導体・AI関連株の値動き",
         "円相場と日銀の利上げ観測",
-        "26日（水）PCE物価"
+        "12/8-9のFOMC"
       ],
       "top_news": [
         {
-          "headline": "米株は25日にPCEと新たな関税報道で急落、ナスダックは一時4%超下落との報道",
+          "headline": "米株は11/25に場中で急落後に反発、大引けはS&P500が0.25%安・ナスダックが0.62%安・ダウは0.33%高",
           "published": "2026-11-25",
-          "comment": "利上げ懸念でハイテク株中心に売りが広がった",
-          "source": "Benzinga/Investing.com",
-          "tier": 3,
-          "credibility": "LOW",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.benzinga.com/markets/equities/26/11/63615832/stock-market-today-dow-jones-sp-500-futures-fall-as-traders-bet-on-december-fed-hike-trump-tells-huang-to-just-tell-the-truth-dell-wday-adsk-in-focus"
-        },
-        {
-          "headline": "10月PCEが市場予想を上回り、FRBの12月利上げ織り込みは93〜98%に上昇",
-          "published": "2026-11-25",
-          "comment": "物価が高止まりなら利上げが続くとの見方が強まる",
-          "source": "FXStreet/Kalshi系",
-          "tier": 3,
+          "comment": "朝の急落は関税とインフレ懸念、終盤に買い戻しで下げ縮小",
+          "source": "Reuters/Investing.com等",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [
-            "Tokenist",
-            "Coin Alert"
+            "CNBC",
+            "Wisevoter"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+        },
+        {
+          "headline": "10月コアPCEは前年比3.3%で予想3.2%を上回り、12月の利上げ観測が継続",
+          "published": "2026-11-25",
+          "comment": "物価が高止まりなら利上げ長期化への警戒が続く",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "Wisevoter",
+            "Financefeeds"
           ],
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.fxstreet.com/news/euro-slips-as-us-pce-inflation-puts-fed-tightening-bets-to-the-test-202611251132"
         },
         {
-          "headline": "米株は反落、S&P500は0.50%安・ナスダックは1.48%安。半導体株が急落しダウは上昇",
-          "published": "2026-11-24",
-          "comment": "ハイテクから守り銘柄へ資金移動。PCE待ちで警戒感",
-          "source": "Reuters",
-          "tier": 2,
+          "headline": "USTRが日本・EU・中国など14カ国・地域への新たな301条関税案を提示",
+          "published": "2026-11-25",
+          "comment": "貿易摩擦の再燃懸念。案の段階で内容は今後変わり得る",
+          "source": "Financefeeds/Wisevoter",
+          "tier": 3,
           "credibility": "MID",
-          "corroborated_by": [],
+          "corroborated_by": [
+            "Investing.com"
+          ],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.investing.com/news/economy-news/wall-st-futures-dip-as-chip-stocks-cool-after-nvidiafueled-rally-5047567"
+          "url": "https://financefeeds.com/nasdaq-falls-4-as-tariff-proposals-meet-hotter-core-pce/"
         },
         {
           "headline": "日経平均が5.1%安の56,436円、世界的なAI・半導体株安で急落",
@@ -82,54 +87,59 @@
     {
       "name": "S&P500",
       "ticker": "ES=F",
-      "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "11/25はPCE上振れと関税報道で米株が急落したと報じられた（場中の数字・終値未確認）。12月利上げ織り込みが9割超で、ハイテク中心に弱気寄り。",
+      "bias": "NEUTRAL",
+      "conviction": "LOW",
+      "rationale": "場中の急落から大引けで下げ幅を縮め、S&P500は0.25%安にとどまった。コアPCE上振れと関税案は重いが、AI株以外は底堅く、強弱材料が拮抗する。",
       "catalysts": [
-        "12/9のFOMC",
-        "エヌビディアの経営体制",
-        "PCE等の物価指標",
-        "26日（水）PCE物価"
+        "12/8-9のFOMC",
+        "関税案の詳細",
+        "エヌビディアなどAI株の動向",
+        "米長期金利"
       ],
       "top_news": [
         {
-          "headline": "米株は25日にPCEと新たな関税報道で急落、ナスダックは一時4%超下落との報道",
+          "headline": "米株は11/25に場中で急落後に反発、大引けはS&P500が0.25%安・ナスダックが0.62%安・ダウは0.33%高",
           "published": "2026-11-25",
-          "comment": "利上げ懸念でハイテク株中心に売りが広がった",
-          "source": "Benzinga/Investing.com",
-          "tier": 3,
-          "credibility": "LOW",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.benzinga.com/markets/equities/26/11/63615832/stock-market-today-dow-jones-sp-500-futures-fall-as-traders-bet-on-december-fed-hike-trump-tells-huang-to-just-tell-the-truth-dell-wday-adsk-in-focus"
-        },
-        {
-          "headline": "10月PCEが市場予想を上回り、FRBの12月利上げ織り込みは93〜98%に上昇",
-          "published": "2026-11-25",
-          "comment": "物価が高止まりなら利上げが続くとの見方が強まる",
-          "source": "FXStreet/Kalshi系",
-          "tier": 3,
+          "comment": "朝の急落は関税とインフレ懸念、終盤に買い戻しで下げ縮小",
+          "source": "Reuters/Investing.com等",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [
-            "Tokenist",
-            "Coin Alert"
+            "CNBC",
+            "Wisevoter"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+        },
+        {
+          "headline": "10月コアPCEは前年比3.3%で予想3.2%を上回り、12月の利上げ観測が継続",
+          "published": "2026-11-25",
+          "comment": "物価が高止まりなら利上げ長期化への警戒が続く",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "Wisevoter",
+            "Financefeeds"
           ],
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.fxstreet.com/news/euro-slips-as-us-pce-inflation-puts-fed-tightening-bets-to-the-test-202611251132"
         },
         {
-          "headline": "米株は反落、S&P500は0.50%安・ナスダックは1.48%安。半導体株が急落しダウは上昇",
-          "published": "2026-11-24",
-          "comment": "ハイテクから守り銘柄へ資金移動。PCE待ちで警戒感",
-          "source": "Reuters",
-          "tier": 2,
+          "headline": "USTRが日本・EU・中国など14カ国・地域への新たな301条関税案を提示",
+          "published": "2026-11-25",
+          "comment": "貿易摩擦の再燃懸念。案の段階で内容は今後変わり得る",
+          "source": "Financefeeds/Wisevoter",
+          "tier": 3,
           "credibility": "MID",
-          "corroborated_by": [],
+          "corroborated_by": [
+            "Investing.com"
+          ],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.investing.com/news/economy-news/wall-st-futures-dip-as-chip-stocks-cool-after-nvidiafueled-rally-5047567"
+          "url": "https://financefeeds.com/nasdaq-falls-4-as-tariff-proposals-meet-hotter-core-pce/"
         },
         {
           "headline": "S&P500が4.7%高の7,237、ダウ3.0%高、ナスダック6.5%高と急反発",
@@ -151,65 +161,58 @@
       "name": "ナスダック",
       "ticker": "NQ=F",
       "bias": "BEARISH",
-      "conviction": "MID",
-      "rationale": "11/25はPCE上振れと関税報道で米株が急落したと報じられた（場中の数字・終値未確認）。12月利上げ織り込みが9割超で、ハイテク中心に弱気寄り。",
+      "conviction": "LOW",
+      "rationale": "場中は4%超下げ、大引けは0.62%安まで戻した。AI・半導体株の調整と利上げ観測が続く一方、押し目買いも入り、弱気はやや後退。",
       "catalysts": [
-        "エヌビディア株の続伸・反落",
+        "エヌビディア・半導体株の続落／反発",
         "AI関連の収益見通し",
         "長期金利の動き",
-        "26日（水）PCE物価"
+        "関税案"
       ],
       "top_news": [
         {
-          "headline": "米株は25日にPCEと新たな関税報道で急落、ナスダックは一時4%超下落との報道",
+          "headline": "米株は11/25に場中で急落後に反発、大引けはS&P500が0.25%安・ナスダックが0.62%安・ダウは0.33%高",
           "published": "2026-11-25",
-          "comment": "利上げ懸念でハイテク株中心に売りが広がった",
-          "source": "Benzinga/Investing.com",
-          "tier": 3,
-          "credibility": "LOW",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.benzinga.com/markets/equities/26/11/63615832/stock-market-today-dow-jones-sp-500-futures-fall-as-traders-bet-on-december-fed-hike-trump-tells-huang-to-just-tell-the-truth-dell-wday-adsk-in-focus"
-        },
-        {
-          "headline": "10月PCEが市場予想を上回り、FRBの12月利上げ織り込みは93〜98%に上昇",
-          "published": "2026-11-25",
-          "comment": "物価が高止まりなら利上げが続くとの見方が強まる",
-          "source": "FXStreet/Kalshi系",
-          "tier": 3,
+          "comment": "朝の急落は関税とインフレ懸念、終盤に買い戻しで下げ縮小",
+          "source": "Reuters/Investing.com等",
+          "tier": 2,
           "credibility": "MID",
           "corroborated_by": [
-            "Tokenist",
-            "Coin Alert"
+            "CNBC",
+            "Wisevoter"
+          ],
+          "materiality": "high",
+          "direction": "neutral",
+          "url": "https://www.cnbc.com/2026/11/24/stock-market-today-live-updates-.html"
+        },
+        {
+          "headline": "10月コアPCEは前年比3.3%で予想3.2%を上回り、12月の利上げ観測が継続",
+          "published": "2026-11-25",
+          "comment": "物価が高止まりなら利上げ長期化への警戒が続く",
+          "source": "FXStreet",
+          "tier": 2,
+          "credibility": "MID",
+          "corroborated_by": [
+            "Wisevoter",
+            "Financefeeds"
           ],
           "materiality": "high",
           "direction": "bearish",
           "url": "https://www.fxstreet.com/news/euro-slips-as-us-pce-inflation-puts-fed-tightening-bets-to-the-test-202611251132"
         },
         {
-          "headline": "米株は反落、S&P500は0.50%安・ナスダックは1.48%安。半導体株が急落しダウは上昇",
-          "published": "2026-11-24",
-          "comment": "ハイテクから守り銘柄へ資金移動。PCE待ちで警戒感",
-          "source": "Reuters",
-          "tier": 2,
+          "headline": "USTRが日本・EU・中国など14カ国・地域への新たな301条関税案を提示",
+          "published": "2026-11-25",
+          "comment": "貿易摩擦の再燃懸念。案の段階で内容は今後変わり得る",
+          "source": "Financefeeds/Wisevoter",
+          "tier": 3,
           "credibility": "MID",
-          "corroborated_by": [],
+          "corroborated_by": [
+            "Investing.com"
+          ],
           "materiality": "high",
           "direction": "bearish",
-          "url": "https://www.investing.com/news/economy-news/wall-st-futures-dip-as-chip-stocks-cool-after-nvidiafueled-rally-5047567"
-        },
-        {
-          "headline": "エヌビディアが約6%下落、Anthropicも上場価格を割りAI株に売り",
-          "published": "2026-11-24",
-          "comment": "AI関連の過熱感の調整が続くとの見方",
-          "source": "CNBC",
-          "tier": 2,
-          "credibility": "MID",
-          "corroborated_by": [],
-          "materiality": "high",
-          "direction": "bearish",
-          "url": "https://www.cnbc.com/2026/11/23/stock-market-today-live-updates.html"
+          "url": "https://financefeeds.com/nasdaq-falls-4-as-tariff-proposals-meet-hotter-core-pce/"
         }
       ]
     },
@@ -296,11 +299,12 @@
       "ticker": "USDJPY",
       "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "日米金利差拡大とドル高は円安方向だが、159〜160円では介入警戒が強い。11/25のリスクオフは円買い要因にもなり、材料が交錯。",
+      "rationale": "26日午前は158.9〜159.2円の小動き。日銀・田村委員のタカ派発言で円買いも出たが、日米金利差と介入警戒が交錯し方向感は乏しい。",
       "catalysts": [
-        "12/9のFOMC",
-        "日銀の政策観測",
-        "介入警戒（160円付近）"
+        "日銀の追加利上げ観測",
+        "介入警戒（159〜160円）",
+        "米利上げ観測",
+        "感謝祭休場後の米市場"
       ],
       "top_news": [
         {
@@ -320,9 +324,9 @@
     {
       "name": "ユーロドル",
       "ticker": "EURUSD",
-      "bias": "BEARISH",
+      "bias": "NEUTRAL",
       "conviction": "LOW",
-      "rationale": "FRBの12月利上げ観測でドル高が続き、ユーロは1.09台でドルに押される。ECBも利上げ観測だが米国のペースが優勢。",
+      "rationale": "26日午前は1.096〜1.098ドルの狭いレンジ。米利上げ観測のドル高と欧州の引き締め観測が拮抗する。",
       "catalysts": [
         "12/9のFOMC",
         "米PCE物価",
@@ -408,12 +412,12 @@
   ],
   "discarded": [
     {
-      "headline": "日付不明の記事（2025年版の相場まとめ）",
-      "reason": "年が異なる・日付が確認できないため除外"
+      "headline": "2025年11月の相場まとめ記事",
+      "reason": "年が異なるため除外"
     },
     {
-      "headline": "11/20の米株終値に関する報道間の数値差",
-      "reason": "ソース間で数値が一致せず、終値の確認ができなかったため除外"
+      "headline": "11/25のナスダック「4%超下落」の場中報道",
+      "reason": "大引けでは0.62%安まで戻っており、終値ベースで更新"
     }
   ],
   "currencies": [
@@ -421,72 +425,83 @@
       "code": "USD",
       "lean": "STRONG",
       "conviction": "MID",
-      "reason": "12月利上げ織り込み9割超、ドル指数は1年超ぶり高値圏との報道"
+      "reason": "コアPCE上振れで12月FOMCの利上げ観測が強く、金利面で支えられる"
     },
     {
       "code": "EUR",
-      "lean": "WEAK",
+      "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "米利上げ観測でEUR/USDは1.09台に押される。ECB利上げ観測は支え"
+      "reason": "ユーロドルは1.09台半ばで小動き。米利上げ観測が重しだがECBの引き締め観測が支え"
     },
     {
       "code": "GBP",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "直近の英国材料を確認できず、ドル高の影響を受けやすい"
+      "reason": "直近の英国固有の材料は確認できず、ドル動向に左右される"
     },
     {
       "code": "JPY",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "金利差は円安方向だが、159〜160円の介入警戒とリスクオフの円買いが交錯"
+      "reason": "日銀・田村委員のタカ派発言は円高要因だが、日米金利差と159円付近の介入警戒が交錯"
     },
     {
       "code": "AUD",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "RBAは11/3に18年ぶり高水準へ利上げ。中国景気の減速懸念と相殺"
+      "reason": "10月CPIが予想超えでRBAの追加利上げ観測は支え。中国景気の弱さと相殺"
     },
     {
       "code": "CNY",
       "lean": "NEUTRAL",
       "conviction": "LOW",
-      "reason": "元は4年ぶり高値圏だが、PBOCが外貨準備率を引き上げ元高を抑制"
+      "reason": "元は4年ぶり高値圏で緩やかな元高。当局の元高抑制姿勢と関税案が交錯"
     }
   ],
   "asia_watch": [
     {
-      "headline": "中国の10月公式PMIが製造業・非製造業とも50割れ",
-      "published": "2026-10-31",
-      "region": "CN",
-      "why": "中国景気の減速は豪ドルや日経の重しになり得る",
-      "materiality": "mid",
-      "source": "MNI/FXStreet",
+      "headline": "豪10月CPIが予想を上回り3年ぶり高水準（4.9%と報道）",
+      "published": "2026-11-25",
+      "region": "AU",
+      "why": "RBAの追加利上げ観測につながり得て豪ドルの支え。株には重し",
+      "materiality": "high",
+      "source": "ABC News/IBTimes AU",
       "tier": 2,
       "credibility": "MID",
-      "url": "https://www.fxstreet.com/news/chinese-yuan-strongest-in-four-years-despite-weak-data-commerzbank-202611022041"
+      "url": "https://www.abc.net.au/news/2026-11-25/asx-markets-business-live-news/107423208"
+    },
+    {
+      "headline": "アジア株はAI株中心に反発、ASX200は0.8%高・ハンセンは約2%高と報道",
+      "published": "2026-11-26",
+      "region": "CN",
+      "why": "米株の戻りを受けた反発で、日経・豪ドルにも追い風となり得る",
+      "materiality": "mid",
+      "source": "ABC News/AP",
+      "tier": 2,
+      "credibility": "MID",
+      "url": "https://www.abc.net.au/news/2026-11-26/asx-markets-business-news-live-updates-thursday-26-november/107428134"
+    },
+    {
+      "headline": "米が中国製品に最大20%の関税を含む新関税案を提示",
+      "published": "2026-11-25",
+      "region": "CN",
+      "why": "中国景気と元、豪ドルの重しになる可能性。案の段階",
+      "materiality": "mid",
+      "source": "Financefeeds",
+      "tier": 3,
+      "credibility": "MID",
+      "url": "https://financefeeds.com/nasdaq-falls-4-as-tariff-proposals-meet-hotter-core-pce/"
     },
     {
       "headline": "豪準備銀行が政策金利を18年ぶり高水準へ引き上げ",
       "published": "2026-11-03",
       "region": "AU",
-      "why": "豪ドルの下支え要因。今後の追加利上げ観測が焦点",
-      "materiality": "high",
+      "why": "豪ドルの下支え。追加利上げ観測が焦点",
+      "materiality": "mid",
       "source": "investingLive",
       "tier": 2,
       "credibility": "MID",
       "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-rba-hikes-to-18-year-high/"
-    },
-    {
-      "headline": "RBA議事要旨はタカ派寄りと報じられる",
-      "published": "2026-11-17",
-      "region": "AU",
-      "why": "豪ドルを支える材料になり得るが、詳細は未確認",
-      "materiality": "mid",
-      "source": "investingLive",
-      "tier": 2,
-      "credibility": "LOW",
-      "url": "https://investinglive.com/es/noticias/investinglive-noticias-del-mercado-de-asia-pacifico-actas-del-rba-con-sesgo-restrictivo/"
     }
   ]
 }
