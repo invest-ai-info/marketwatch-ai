@@ -487,4 +487,5 @@ SYNC_FILES = [
     "guide-news-2026-11-25-nikkei-drop-sox-plunge-ai-capex.html",
     "guide-signal-lab-161.html",
     "guide-company-6383-daifuku.html",
+    "guide-news-2026-11-26-nikkei-rebound-kioxia-nvidia.html",
 ]
