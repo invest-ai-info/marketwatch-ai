@@ -813,13 +813,13 @@ def v5(**kw):
 def test_fits_v5_before_the_open_starts_at_1600_in_winter():
     """①押し目も冬は16:00から（追記⑭）"""
     def fit(h, m):
-        return trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, h, m), t_close=dt.datetime(2026, 12, 1, h, m + 4))["fits_v5_entry"]
+        return trade(v5(), kata="push", far_min=10, t_open=dt.datetime(2026, 12, 1, h, m), t_close=dt.datetime(2026, 12, 1, h, m + 4))["fits_v5_entry"]
     assert (fit(15, 40), fit(16, 4), fit(16, 50), fit(16, 55)) == (False, True, True, False)
     assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 15, 40), t_close=dt.datetime(2026, 12, 1, 15, 50))["fits_v4_entry"] is True     # 紙 v4 は登録のまま
 
 
 def test_fits_v5_after_the_wait():
-    t = trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
+    t = trade(v5(), kata="push", far_min=10, t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
     assert t["fits_v5_entry"] is True and (t["usd_ldn"], t["strong_ldn"], t["kata5"]) == (11.0, "EURJPY", "push")
     assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 17, 2), t_close=dt.datetime(2026, 12, 1, 17, 21))["fits_v5_entry"] is False
     assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 19, 0), t_close=dt.datetime(2026, 12, 1, 19, 30))["fits_v5_entry"] is False
@@ -830,7 +830,18 @@ def test_fits_v5_needs_the_new_direction(k):
     at_ = dict(t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
     assert trade(v5(flags5={"usd_dir5": True, "pick_eg5": True, k: False}), kata="push", **at_)["fits_v5_entry"] is False
     assert trade(v5(flags5={"usd_dir5": True, "pick_eg5": True, k: None}), kata="push", **at_)["fits_v5_entry"] is None
-    assert trade(v5(flags=dict(ALL, usd_dir=False, pick_eg=False)), kata="push", **at_)["fits_v5_entry"] is True   # v4 の向きは v5 では使わない
+    assert trade(v5(flags=dict(ALL, usd_dir=False, pick_eg=False)), kata="push", far_min=10, **at_)["fits_v5_entry"] is True   # v4 の向きは v5 では使わない
+
+
+def test_fits_v5_needs_30pips_in_30min_on_the_entered_pair():
+    """伸びの条件は「入るペアのヒゲが、抜けてから30分以内に30pips」（追記⑮・オーナー「30pipsに戻す」）＝ v2 の far30。v4 の far20 は v5 では使わない"""
+    at_ = dict(t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
+    assert trade(v5(), kata="push", far_min=30, **at_)["fits_v5_entry"] is True
+    assert trade(v5(), kata="push", far_min=35, **at_)["fits_v5_entry"] is False          # 30分を過ぎてから30pips
+    assert trade(v5(), kata="push", **at_)["fits_v5_entry"] is None                       # 30pips までの分が分からない
+    assert trade(v5(flags=dict(ALL, far20=False)), kata="push", far_min=10, **at_)["fits_v5_entry"] is True
+    t = trade(v5(), kata="push", far_min=35, t_open=dt.datetime(2026, 12, 1, 15, 40), t_close=dt.datetime(2026, 12, 1, 15, 50))
+    assert t["fits_v4_entry"] is True                                                      # 紙 v4 は 20pips のまま
 
 
 def test_fits_v5_uses_the_v5_kata_and_keeps_v4_kata():

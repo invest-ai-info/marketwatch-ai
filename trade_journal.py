@@ -35,6 +35,7 @@
      型（--kata push＝①押し目／fade＝②抜けの失敗の逆張り／range＝④ドル円レンジの押し目／other）・ドル円とユーロポンドの1時間の動き・強いほう・見るペアの線と端・項目7つ・v4 の出口まで・伸ばした分
      ①と④は道具が決める。②・どれでもない・境目は聞く（②は、抜けと逆の向きに入るので道具は決めない）
   入る時間の ○×（v5・in_window5）はどの型も同じ（「OJ」追記⑭）：冬 16:00〜16:54 と 17:30〜18:59・夏 15:00〜15:54 と 16:30〜17:59（紙 v1〜v4 の時間は登録のまま）
+  v5 の伸びの ○× は「入るペアのヒゲが、抜けてから30分以内に30pips」＝ far30（「OJ」追記⑮。紙 v4 の far20 は登録のまま）
   python trade_journal.py status
   （--server-time＝MT4 の画面の時刻（BigBoss のサーバー時刻）を日本時間に直す。冬＝+7時間・夏＝+6時間）
 """
@@ -88,8 +89,9 @@ LDN_FLAT_MIN = 5              # ロンドンの始まりの5分前（冬 16:55�
 LDN_WAIT_MIN = 30             # 始まりから30分（冬 17:00〜17:29・夏 16:00〜16:29）は入らない＝そこから新しく考える
 # 入る時間はどの型も同じ（「OJ」追記⑬⑭・2026-11-25 夜 オーナー「入る時間は冬は16時から19時、夏は15時から18時。それぞれロンドン時間が始まってから30分は入らないでお願いします」→「押し目も16時から」）
 BEFORE_HOURS = 1              # 始まりの1時間前から（冬 16:00・夏 15:00）。紙 v1〜v4 の時間（15:00 から）は変えない
-V5_FLAGS = ("both_broken", "usd_dir5", "pick_eg5", "far20", "fresh", "pull50", "touch1")
-V5_ENTRY = ("in_window5", "sl_order", "event_clear", "spread_ok", "weekday_ok") + V5_FLAGS      # ①押し目の入口（v4 の時間と向きだけを替えた）
+# 伸びの条件は「入るペアのヒゲが、抜けてから30分以内に30pips」＝ v2 の far30（「OJ」追記⑮・2026-11-26 オーナー「30pipsに戻す」）。v4 の far20（どちらかが20pips）は v5 では使わない
+V5_FLAGS = ("both_broken", "usd_dir5", "pick_eg5", "far30", "fresh", "pull50", "touch1")
+V5_ENTRY = ("in_window5", "sl_order", "event_clear", "spread_ok", "weekday_ok") + V5_FLAGS      # ①押し目の入口（v4 の時間・向き・伸びを替えた）
 V5_KEYS = ("usd_ldn", "eg_ldn", "strong_ldn", "kata5")                                            # trade_v4.record の答え（始まりからの動き・強いほう・型）
 PAPERS = ("v1", "v2", "v3", "v4", "v5")
 
@@ -232,7 +234,7 @@ def fits_v4(flags, kata, keys=V4_ENTRY):
 
 
 def fits_v5(flags, kata5):
-    """決まりの紙 v5 の①押し目の入口（v4 の時間を in_window5 に・向きと強いほうを始まりからの動きに替えたもの）。型は v5 の型（kata5）"""
+    """決まりの紙 v5 の①押し目の入口（v4 の時間を in_window5 に・向きと強いほうを始まりからの動きに・伸びを far30 に替えたもの）。型は v5 の型（kata5）"""
     return fits_v4(flags, kata5, V5_ENTRY)
 
 
