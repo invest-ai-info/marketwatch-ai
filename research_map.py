@@ -32,6 +32,7 @@ import json
 import os
 import sys
 
+import recheck_status as RS   # 🆕 2026-11-27 検算の関門
 import signal_lab_tracker as T
 import verified_list as V
 
@@ -231,10 +232,12 @@ def registered_not_yet_tracked(tracker):
     return out
 
 
-def _stage(h):
+def _stage(h, root=None, go_live=None):
     st = h.get("status")
     if st == "pending":
         return "new", "🆕 登録したばかり（次の朝から数える）"
+    if RS.promoted_waiting(h, root, go_live):   # 🆕 2026-11-27 検算の関門
+        return "wait", RS.WAIT_MARK + "（基準は満たした・数え直すまで使わない）"
     if st == "promoted":
         return "done", "✅ 判定の基準を満たした（昇格中・今後外れることもある）"
     if h.get("holdout_pass"):
@@ -792,7 +795,7 @@ def build_pane(root=".", model=None):
     .rm-prog span{{font-size:.8rem;white-space:nowrap}}
     .rm-bar{{height:6px;background:#eaeef2;border-radius:3px;margin-top:4px;min-width:90px}}
     .rm-bar i{{display:block;height:6px;background:#0969da;border-radius:3px}}
-    .rm-new{{color:#8250df;font-weight:700}} .rm-cand{{color:#9a6700;font-weight:700}} .rm-done{{color:#1a7f37;font-weight:700}}
+    .rm-new{{color:#8250df;font-weight:700}} .rm-cand{{color:#9a6700;font-weight:700}} .rm-done{{color:#1a7f37;font-weight:700}} .rm-wait{{color:#bc4c00;font-weight:700}}
     .rm-sub{{font-size:.78rem;color:#8b949e}}
     .rm-det{{border:1px solid #d0d7de;border-radius:8px;padding:10px 14px;margin:0 0 10px;background:#fff}}
     .rm-det summary{{cursor:pointer;font-size:.93rem;line-height:1.6}}

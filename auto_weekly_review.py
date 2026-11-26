@@ -21,6 +21,8 @@ import sys
 import json
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+
+import recheck_status as RS  # 🆕 2026-11-27 検算の関門
 from apply_site_frame import FRAME_STYLE_TAG, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 
 JST = timezone(timedelta(hours=9))
@@ -148,6 +150,8 @@ def render_banzuke_section(banzuke):
         fwd = h.get("forward") or {}
         n = fwd.get("n", "—")
         label = h.get("label") or h.get("id", "?")
+        if RS.promoted_waiting(h):   # 🆕 2026-11-27 検算の関門
+            label += f"（{RS.WAIT_MARK}）"
         return (f'<tr><td>{mark}</td><td><b>{label}</b></td><td>{kind}</td>'
                 f'<td style="white-space:nowrap">{h.get(date_key, "")}</td>'
                 f'<td style="text-align:right">{n}</td></tr>')

@@ -462,6 +462,68 @@ def check_pages_exclude():
 _CDN_SCRIPT = re.compile(r"""<script\b[^>]*\bsrc\s*=\s*["']https://(?:cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net|unpkg\.com)/[^"']+["'][^>]*>""", re.I)
 
 
+PREREG_HEAD_DATE = re.compile(r"(\d{4}-\d{2}-\d{2})[^）]{0,12}登録")
+PREREG_AUDIT_FP = re.compile(r"点検の指紋 `([0-9a-f]{12})`")
+PREREG_HEADING = re.compile(r"^(#{2,3}) [^\n]*", re.M)
+PREREG_RESULT = re.compile(r"^[ \t]*(?:[-*][ \t]+)?\*\*結果（|^#{2,6}[ \t]*結果", re.M)
+
+
+def _audit_passed(rec):
+    """点検の記録が「通った」か＝error 無し・warning は全部理由つき（古い形の記録は中身から判断）"""
+    if rec.get("passed") is not None:
+        return bool(rec["passed"])
+    w = rec.get("waivers") or {}
+    return int(rec.get("errors", 0)) == 0 and all(
+        str(w.get(f.get("check"), "")).strip() for f in rec.get("findings", []) if f.get("level") == "warning")
+
+
+def check_prereg_audit(text=None, root=None, go_live=None):
+    """🆕 2026-11-27 検算の関門：使い始めの日より後の登録で、結果を書いた所には点検の指紋が要る。
+    結果の印＝行頭の「**結果（」（箇条書きの「- **結果（」も）・「### 結果」の見出し。その結果を決める登録の日付＝
+    結果より前で一番近い「## 」か「### 」の見出しの日付（〜登録）。「## 」が変わると日付は引き継がない。
+    日付が go_live 以降なら、結果から次の見出しまでに 点検の指紋 `12文字` が要る。記録（recheck/audits.json・前の記録も）に無い・
+    その点検が通っていない（error がある・warning に理由が無い）→ error。日付の無い所・使い始めの日より前はさかのぼらない。
+    ID の重複（B4・M6・ST）は関係ない＝指紋で引く（2026-11-27 全体の読み直しで、箇条書き・### の段・「・夜 登録」の抜け道を塞いだ）"""
+    import recheck_status as RS
+    root = root or SD
+    gl = go_live or RS.GO_LIVE
+    if text is None:
+        p = os.path.join(root, "PILLAR_PREREG.md")
+        if not os.path.exists(p):
+            return
+        with open(p, encoding="utf-8") as f:
+            text = f.read()
+    heads = [(m.start(), len(m.group(1)), m.group(0)) for m in PREREG_HEADING.finditer(text)]
+    starts = [h[0] for h in heads]
+    cur_date, cur_name, hi = None, "", 0
+    for m in PREREG_RESULT.finditer(text):
+        p = m.start()
+        while hi < len(heads) and heads[hi][0] <= p:
+            _, lvl, line = heads[hi]
+            d = PREREG_HEAD_DATE.search(line)
+            if lvl == 2:
+                cur_date, cur_name = (d.group(1) if d else None), line
+            elif d:
+                cur_date, cur_name = d.group(1), line
+            hi += 1
+        if not cur_date or cur_date < gl:
+            continue
+        end = next((s for s in starts if s > p), len(text))
+        name = cur_name.lstrip("#").strip()[:40]
+        fps = PREREG_AUDIT_FP.findall(text[p:end])
+        if not fps:
+            errors.append(f"🚨 PILLAR_PREREG「{name}」: 結果があるのに点検の指紋が無い"
+                          "（run は result_audit.gate を通してから結果を書き、結果の行に 点検の指紋 `12文字` を書く）")
+            continue
+        for fp in fps:
+            rec = RS.audit_by_fingerprint(fp, root)
+            if rec is None:
+                errors.append(f"🚨 PILLAR_PREREG「{name}」: 点検の指紋 {fp} の記録が recheck/audits.json に見つからない")
+            elif not _audit_passed(rec):
+                errors.append(f"🚨 PILLAR_PREREG「{name}」: 点検の指紋 {fp} の点検が通っていない"
+                              "（error がある・warning に理由が無い）＝結果を書いてはいけない")
+
+
 def check_cdn_integrity():
     """生成スクリプト（.py）は error・ページ（.html）は warning（生成物は次の再生成で直る）。"""
     for fp in sorted(glob.glob(os.path.join(SD, "*.py")) + glob.glob(os.path.join(SD, "*.html"))):
@@ -796,6 +858,7 @@ def main():
     # 1b. 🛡️ サイトに載せないファイル（手元でもクラウドでも同じ＝_config.yml と .nojekyll はリポジトリにある）
     check_pages_exclude()
     check_cdn_integrity()
+    check_prereg_audit()   # 🆕 2026-11-27 検算の関門：新しい登録の結果には点検の指紋
 
     # 2. 各 guide-*.html（週次/自動生成を除く）の整合性
     guides_html = _read("guides.html") if _exists("guides.html") else ""

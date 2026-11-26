@@ -2771,23 +2771,31 @@ def filter_positive_ev(promoted_hyps, timeframe):
     return kept
 
 
-def load_promoted_hypotheses(kind="edge"):
+def load_promoted_hypotheses(kind="edge", path=None, root=None, go_live=None):
     """signal-lab-tracker.json から status=='promoted' かつ指定 kind の仮説だけ読む。
     ⚠️ kind=='gate' の promoted は「回避が確認された負けパターン」＝メール通行証にしてはいけない
     （2026-07-19 修正: metal×ロング gate が昇格した際、status だけ見る旧実装だと
     　最悪パターンが「検証済みエッジ🏅」として配信される穴があった）。
     kind='gate' 指定は本文への⚠️回避警告表示にのみ使う（送信可否には使わない）。
-    読めないとき（checkout 欠落・壊れた JSON 等）は None＝ゲート無効（fail-open＝従来どおり全送信）。"""
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "signal-lab-tracker.json")
+    読めないとき（checkout 欠落・壊れた JSON 等）は None＝ゲート無効（fail-open＝従来どおり全送信）。
+    🆕 2026-11-27 検算の関門（オーナー「待たせる」）：使い始めの日より後に昇格して、数え直しの記録
+    （recheck/records.json）がまだ無い仮説は使わない＝リストから外す。記録が読めないときも外す（新しい昇格だけ）。"""
+    here = os.path.dirname(os.path.abspath(__file__))
+    path = path or os.path.join(here, "signal-lab-tracker.json")
     try:
         data = json.load(open(path, encoding="utf-8-sig"))
         hyps = data.get("hypotheses", [])
         # 照合用に期間の条件（fired_from/fired_before）を外す＝live_filter の説明を参照
-        return [dict(h, filter=live_filter(h["filter"])) for h in hyps
-                if h.get("status") == "promoted" and h.get("kind") == kind and isinstance(h.get("filter"), dict)]
+        out = [dict(h, filter=live_filter(h["filter"])) for h in hyps
+               if h.get("status") == "promoted" and h.get("kind") == kind and isinstance(h.get("filter"), dict)]
     except Exception as e:
         print(f"⚠️ 昇格ゲート: tracker 読込失敗 ({type(e).__name__}: {str(e)[:60]}) → 従来どおり全送信")
         return None
+    import recheck_status as RS   # 🆕 2026-11-27 検算の関門
+    waiting = [h["id"] for h in out if RS.promoted_waiting(h, root or here, go_live)]
+    if waiting:
+        print(f"🔍 数え直し待ちのため使わない: {', '.join(waiting)}")
+    return [h for h in out if h["id"] not in waiting]
 
 
 # ─────────────────────────────────────────────

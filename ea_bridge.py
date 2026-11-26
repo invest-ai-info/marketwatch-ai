@@ -119,6 +119,8 @@ def orders_rows(recent, now, suffix="", extra=None):
     for s in (recent or {}).get("signals", []):
         if s.get("timeframe") != "4h" or not s.get("email_sent") or s.get("dir") not in (1, -1):
             continue
+        # ⚠️ 2026-11-27 時点で promoted_hit を書く所はどこにも無い（死んだ道）。将来つなぐときは
+        # generate_technical_alerts.load_promoted_hypotheses を通す＝数え直し待ちの昇格はそこで外れる（検算の関門）
         kind = "promoted" if s.get("promoted_hit") else "watch" if s.get("watch_hit") else None
         if not kind or s.get("stop_loss") is None or s.get("entry") is None:
             continue

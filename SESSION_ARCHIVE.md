@@ -6,6 +6,17 @@ SESSION_HANDOFF.md のスリム化（2026-06-20）で、2026-06-17 以前の履�
 
 ---
 
+## 📦 2026-11-27 退避（SESSION_HANDOFF の 11/15 の2節・元の文のまま。大きさの目安 30KB を超えるため）
+
+### 🎬 2026-11-15 夕（クラウド）: YouTube の動画1本を Gemini で分析する手動ワークフロー＋生配信の推測要約を止めた（オーナー「この動画の内容の分析も」→「お願いします」）
+- 動画1本を Gemini で分析＝`youtube-analyze.yml`（手動・URL と質問・サイトに載せない）。YouTube 要約は録画ができてから・画質を下げて読む道を先に（`gemini_youtube.py`・invest-ai-info/marketwatch-ai#396）
+- 🙋 手元の `sync_to_github.py` の `SYNC_FILES` に `gemini_youtube.py`・`analyze_youtube_video.py`・`.github/workflows/youtube-analyze.yml`・`tests/test_youtube_live_and_analyze.py` を足す。全文は【2026-11-21 退避】
+
+### 🎨 2026-11-15（クラウド）: すべてのページをトップの見た目にそろえた（オーナー「すべてのホームページのデザインをトップページのデザインに合わせて」）
+- `apply_site_frame.py` の段階3＝記事以外の15ページ（`V2_PAGES`）もトップと同じヘッダー・ナビ・見た目に。戻し方＝`apply_site_frame.PAGES_V2_ON = False`（記事の枠は `FRAME_V2`）。テスト `tests/test_site_pages_v2.py`
+- 🆕 **11/21 オーナー「暗い表示を足す」「部品の色をそろえる」**＝`page_palette.py`（暗い表示を持たない10ページ＝カレンダー・指標プレビュー・市場健康度・VIX・チャート・出来高急増・YouTube要約・運営者情報・お問い合わせ・プライバシー）。ページ自身の CSS の色をトップの色に置き換え、`body.dark` のときはトップの暗い色に（HTML に直接書かれた色も・グラフは白い地のまま）。元の CSS は書き換えず `</body>` の直前に `<style data-mw-palette>` を1つ（冪等）。戻す＝`page_palette.ON = False`（または環境変数 PALETTE=0）。テスト `tests/test_page_palette.py`。⚠️ HTML に直接 `color:…!important` を書くと暗い表示が効かない（市場健康度の金利の表は外した）。運営者情報・お問い合わせ・プライバシーには 🌙 が無い＝色だけ
+
+
 ## 📦 2026-11-26 退避（SESSION_HANDOFF の 11/12 夜の1節・元の文のまま。大きさの目安 30KB を超えたため）
 
 ### 🧹 2026-11-12 夜（手元）: 文書・覚え書き・見張りを片付けた（`mw declutter`＝検出なし・古い節は【2026-11-12 退避②】・覚え書きの元の文は `research/memory_archive/`）

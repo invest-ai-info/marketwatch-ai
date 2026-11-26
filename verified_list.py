@@ -12,6 +12,8 @@ import datetime as dt
 import json
 import sys
 
+import recheck_status as RS   # 🆕 2026-11-27 検算の関門（合格は数え直すまで「🔍 数え直し待ち」）
+
 OUT_MD = "verified-list.md"
 # (記録の JSON, 登録の名前, 事前登録の節)
 SOURCES = [
@@ -248,7 +250,17 @@ def collect_markers(sources=None):
     return out
 
 
-def render_markers(rows):
+def split_waiting(rows, root=None, go_live=None):
+    """合格側の行を、数え直しの記録があるもの（そのまま合格）と、まだのもの（🔍 数え直し待ち）に分ける。
+    使い始めの日より前に決まったものは、そのまま合格（さかのぼらない）"""
+    ok, wait = [], []
+    for r in rows:
+        v = r.get("v") or {}
+        (wait if RS.is_waiting(_label(r), v.get("decided_on"), root, go_live) else ok).append(r)
+    return ok, wait
+
+
+def render_markers(rows, root=None, go_live=None):
     """目印（見分け方）の前向きの節"""
     L = ["## 🔎 目印（見分け方）の前向き", "",
          "「入らない方がいい」目印が本当に効くかを、登録のあとの取引だけで数えたもの。数字は目印あり−なしの平均の差（費用前）。"
@@ -261,6 +273,8 @@ def render_markers(rows):
         for r in done:
             v = r["v"]
             res = "✅ 確認" if v["status"] == "confirm" else "⏹ ストップ"
+            if v["status"] == "confirm" and RS.is_waiting(_label(r), v.get("decided_on"), root, go_live):
+                res = RS.WAIT_MARK + "（数え直すまで使わない）"
             L.append(f"| {_label(r)} | {r['title']} | {res} | {v['decided_on']} | {v['n']} | {_pct(v['mean'])} | "
                      f"{_pct(v['lo'])}〜{_pct(v['hi'])} | {v['reason']} |")
     L += [f"- 👀 {_label(r)} {r['title']}（目印あり {_progress(r)}）" for r in rows if not r["v"]]
@@ -462,7 +476,7 @@ def render_screens(screens):
 JP_PRIVATE_NOTE = "日本株の決算の数字（財務）を使う研究は、データの利用条件のため手元だけで行っていて、ここには載せていません。"
 
 
-def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), observe=(), methods=()):
+def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), observe=(), methods=(), waiting=()):
     now = now or dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(timespec="minutes")
     L = ["# 検証済みリスト", "",
          f"更新: {now}（GitHub Actions が記録から組み立てる。手で書かない）。",
@@ -489,6 +503,10 @@ def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), o
             L.append(f"| {_label(r)} | {r['title']} | {v['decided_on']} | {v['n']} | {_num(v['mean'], u)} | {_num(v['lo'], u)}〜{_num(v['hi'], u)} |")
     else:
         L.append("- まだ無い")
+    if waiting:
+        L += ["", f"## {RS.WAIT_MARK}（数え直すまで合格として使わない）", "",
+              "判定は合格側になったが、別の書き方での数え直し（`recheck/RECOUNT_GUIDE.md`）がまだのもの。", ""]
+        L += [f"- {_label(r)} {r['title']}（判定日 {(r.get('v') or {}).get('decided_on', '—')}）" for r in waiting]
     L += ["", "## 👀 いま前向きで数えているもの", ""]
     L += [f"- {_label(r)} {r['title']}（{_progress(r)}）" for r in watching] or ["- 無い"]
     L += [""] + render_markers(list(markers))
@@ -502,8 +520,10 @@ def render(stop, plus, watching, now=None, screens=(), markers=(), tracker=(), o
 
 
 def main():
-    md = render(*collect(), screens=collect_screens(), markers=collect_markers(), tracker=collect_tracker(),
-                observe=collect_observe(), methods=collect_methods())
+    stop, plus, watching = collect()
+    plus, waiting = split_waiting(plus)
+    md = render(stop, plus, watching, screens=collect_screens(), markers=collect_markers(), tracker=collect_tracker(),
+                observe=collect_observe(), methods=collect_methods(), waiting=waiting)
     with open(OUT_MD, "w", encoding="utf-8") as fh:
         fh.write(md)
     print(md)

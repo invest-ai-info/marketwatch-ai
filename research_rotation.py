@@ -36,6 +36,7 @@ import os
 import re
 import sys
 
+import recheck_status as RS  # 🆕 2026-11-27 検算の関門
 import signal_lab_tracker as T
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -504,14 +505,17 @@ def cull_box(day, reg, today):
             f"（今日登録した数だけ・少なくとも1つ。研究中の中で、1回あたりの損益の平均が低い順）</p><ol>" + "".join(items) + "</ol></div>")
 
 
-def research_list(tracker, reg, limit=10):
+def research_list(tracker, reg, limit=10, root=None, go_live=None):
     pool, active = cull_pool(tracker, reg)
     rows = []
     for m in reg.get("methods", []):
         if m.get("status") in ("tracking", "promoted"):
             f = m.get("forward") or {}
             sc, tot = method_score(m)
-            rows.append(("昇格" if m["status"] == "promoted" else "採点中", m["name"], m["registered_at"], f, sc, tot))
+            st = "採点中"
+            if m["status"] == "promoted":   # 🆕 2026-11-27 検算の関門：数え直すまでは「🔍 数え直し待ち」
+                st = RS.WAIT_MARK if RS.is_waiting(m.get("id") or m["name"], m.get("promoted_at"), root, go_live) else "昇格"
+            rows.append((st, m["name"], m["registered_at"], f, sc, tot))
     rows.sort(key=lambda r: -(r[4] if r[4] is not None else -9))
     head = ("<div class=\"s-table-wrap\" data-mw-method-snippet=\"list\"><table class=\"s-table\"><thead><tr><th>状態</th>"
             "<th>研究中の新しい方法</th><th>登録</th><th>2018年からの1回あたりの損益の平均</th><th>登録後の回数</th></tr></thead><tbody>")

@@ -3,6 +3,8 @@
 2026-10-08 に CLAUDE.md の「自動化システム」表から移した（CLAUDE.md が上限 32KB の約4倍＝約130KB になり、すべてのセッションと予約の頭に読み込まれて、10/8 朝の signal-lab-daily が文脈あふれで止まったため）。**新しいラボ・前向きを足したら、ここに1行**（CLAUDE.md には書かない）。
 事前登録＝`PILLAR_PREREG.md`／判定の記録＝各ラボの `*.md`／検証中・検証済み＝`research-list.html`（研究の地図）・`verified-list.md`。
 
+🔍 **2026-11-27〜 検算の関門（共通の決まり）**：run は結果を書く前に `result_audit.gate(rows, ctx, study)` を通す（取引の一覧は `to_common()` で共通の形に・1つの取引は1行）。結果の行に `点検の指紋 `12文字`` を書く（`mw check` が見る）。合格側の判定は `recheck/RECOUNT_GUIDE.md` で数え直し、`recheck/records.json` に一致100%の記録が無いうちは使わない（リストに「🔍 数え直し待ち」）。新しい道具は `mutate_check.py` で壊した数・気づかなかった数とその理由を登録に書く。設計書 `docs/superpowers/specs/2026-11-26-result-audit-design.md`
+
 ## ワークフロー（研究ラボ・前向き）
 
 | ワークフロー | 頻度 (JST) | 役割 |

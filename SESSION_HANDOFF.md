@@ -1,6 +1,11 @@
-# 🔖 セッション引き継ぎ（最終更新: 2026-11-17 夜）
+# 🔖 セッション引き継ぎ（最終更新: 2026-11-27）
 
 > 🧹 **目安 30KB（`mw declutter`）**。古い節は `SESSION_ARCHIVE.md` へ元の文のまま移してある（消していない・見出しで検索できる）。研究の結果の一覧＝`RESEARCH_LABS.md`（各行の「結果」）と `memory/03_initiatives.md`。「🛡️ コードが強制しているルール一覧」は `OPERATIONS.md` の最後。新しい節は**この下の一番上**に足し、古くなった節は同じ形で SESSION_ARCHIVE へ移す
+
+## 🔍 2026-11-27（手元）: 検算の関門＝研究の数字の間違いを見つける仕組みを作った（オーナー「間違いを見つける仕組みを作ってください」→「今後＋使用中を洗う」「案1（関門型）」「待たせる」）
+- 設計書 `docs/superpowers/specs/2026-11-26-result-audit-design.md`・手順書 `docs/superpowers/plans/2026-11-27-result-audit.md`。道具＝`result_audit.py`（ありえない数字の点検・閾値は `LIMITS`・較正 `recheck/CALIBRATION.md`）・`recount_compare.py`（別の書き方での数え直しの突き合わせ・手順 `recheck/RECOUNT_GUIDE.md`）・`mutate_check.py`（わざと壊す）・`recheck_status.py`（記録の読み書き・`GO_LIVE` 2026-11-27）。記録＝`recheck/audits.json`・`recheck/records.json`（値段なし・送る）
+- 関門：新しい登録の結果の行には `点検の指紋`（`mw check`）／合格側は数え直しの記録（一致100%）が無いうちは「🔍 数え直し待ち」＝リスト・地図・メールの絞り（`load_promoted_hypotheses`）・総当たりの MT5 段で使わない（今ある `rl_tf_adx_strong` は例外のまま）／DOCTRINE の新しい ✅・🏅 は `[recheck:研究]` が要る＝**固定オラクル `_doctrine_check.py` に9番の検査を足した（強める変更・設計書の承認＝オーナーの承認）**／見張り番 ⑥b（待ちが出た日から2日だけ Issue）
+- 残り：いま使っている結果の洗い直し（ADX の見送り → 目印C・B候補 → 危険スコア → 決算ゲート → ほか）・OJ5 にあとから点検
 
 ## 🔧 2026-11-19（クラウド）: 株式分割・単位のずれで日本株の数字が狂うのを直した（キーエンス 6861 の 1→5 ほか）。全文は `SESSION_ARCHIVE.md`【2026-11-21 退避】
 - **知っておくこと**＝Yahoo は分割を何か月も直さないことがある（しまむら 8227 は9か月）・値段の単位が10倍／100倍ずれる日もある＝日本株の日足・月足は `jp_splits.py` を通す（`RULE_VERSION` 7・決まりは `PILLAR_PREREG.md` 末尾「データの直し」・テスト `tests/test_jp_splits.py`）
@@ -19,13 +24,9 @@
 
 ## 💱 2026-11-16 昼（クラウド）: オーナーの FX の「型1」（クロス円がそろって東京時間の安値を割る → 戻り売り）を控えた＝**型の決まり・実例（11/16〜11/18）・口座の記録・悪い例は `memory/07_fx_setups.md`**。過去で KT1・KT2 として数えて ✕（上の節）。残り＝逆張りの型（未確認）。全文は【2026-11-21 退避】
 
-## 🎬 2026-11-15 夕（クラウド）: YouTube の動画1本を Gemini で分析する手動ワークフロー＋生配信の推測要約を止めた（オーナー「この動画の内容の分析も」→「お願いします」）
-- 動画1本を Gemini で分析＝`youtube-analyze.yml`（手動・URL と質問・サイトに載せない）。YouTube 要約は録画ができてから・画質を下げて読む道を先に（`gemini_youtube.py`・invest-ai-info/marketwatch-ai#396）
-- 🙋 手元の `sync_to_github.py` の `SYNC_FILES` に `gemini_youtube.py`・`analyze_youtube_video.py`・`.github/workflows/youtube-analyze.yml`・`tests/test_youtube_live_and_analyze.py` を足す。全文は【2026-11-21 退避】
+## 🎬 2026-11-15 夕（クラウド）: YouTube の動画1本を Gemini で分析する手動ワークフロー（`youtube-analyze.yml`）＋生配信の推測要約を止めた。全文は `SESSION_ARCHIVE.md`【2026-11-27 退避】
 
-## 🎨 2026-11-15（クラウド）: すべてのページをトップの見た目にそろえた（オーナー「すべてのホームページのデザインをトップページのデザインに合わせて」）
-- `apply_site_frame.py` の段階3＝記事以外の15ページ（`V2_PAGES`）もトップと同じヘッダー・ナビ・見た目に。戻し方＝`apply_site_frame.PAGES_V2_ON = False`（記事の枠は `FRAME_V2`）。テスト `tests/test_site_pages_v2.py`
-- 🆕 **11/21 オーナー「暗い表示を足す」「部品の色をそろえる」**＝`page_palette.py`（暗い表示を持たない10ページ＝カレンダー・指標プレビュー・市場健康度・VIX・チャート・出来高急増・YouTube要約・運営者情報・お問い合わせ・プライバシー）。ページ自身の CSS の色をトップの色に置き換え、`body.dark` のときはトップの暗い色に（HTML に直接書かれた色も・グラフは白い地のまま）。元の CSS は書き換えず `</body>` の直前に `<style data-mw-palette>` を1つ（冪等）。戻す＝`page_palette.ON = False`（または環境変数 PALETTE=0）。テスト `tests/test_page_palette.py`。⚠️ HTML に直接 `color:…!important` を書くと暗い表示が効かない（市場健康度の金利の表は外した）。運営者情報・お問い合わせ・プライバシーには 🌙 が無い＝色だけ
+## 🎨 2026-11-15（クラウド）: すべてのページをトップの見た目にそろえた（戻す＝`apply_site_frame.PAGES_V2_ON = False`・暗い表示は `page_palette.ON`）。全文は【2026-11-27 退避】
 
 ## 🌊 2026-11-11〜12（手元・クラウド）: 為替5分足の「オーナーの裁量の形」＝TB・FL・FLC ほか（FLM・FLH・FLX・FLP・FLK・FLW・FLS・FLT）とも数え終わってストップ（全文は `SESSION_ARCHIVE.md`【2026-11-12 退避】・【2026-11-12 退避②】・【2026-11-21 退避】・FL の細分化は `RESEARCH_LABS.md` の FLC の行）
 - **データ**：7ペア（円の4つ＋ユーロドル・ポンドドル・豪ドル米ドル）の1分足（Dukascopy・2017-01〜2022-05）が手元の `C:\mt5run\duka_fx\<ペア>`（取り方＝`fx-min-fetch.yml` → `gold_bars.py pull --prefix fx-min-`）

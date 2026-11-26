@@ -19,6 +19,7 @@ import sys
 import json
 from datetime import datetime, timezone, timedelta
 from collections import defaultdict
+import recheck_status as RS  # 🆕 2026-11-27 検算の関門（昇格は数え直すまで「🔍 数え直し待ち」）
 from apply_site_frame import FRAME_STYLE_TAG, SUBBRAND_HTML  # サイト共通の枠（ナビ2段・広告の余白）の単一の真実
 from apply_site_frame import finish_page  # 🆕 2026-11-15 トップと同じ見た目（新しいヘッダー・ナビ・共通の見た目）
 
@@ -1007,7 +1008,8 @@ def build_banzuke_section(tracker):
             out.append(
                 "<tr>"
                 f"<td><strong>{_bz_esc(h.get('label') or h.get('id'))}</strong>"
-                f'<br><span style="font-size:.78rem;color:#8b949e">{_bz_esc(_bz_filter_str(h.get("filter")))}</span></td>'
+                + (f"<br><span style=\"color:#bc4c00\">{RS.WAIT_MARK}（数え直すまで使わない）</span>" if RS.promoted_waiting(h) else "")
+                + f'<br><span style="font-size:.78rem;color:#8b949e">{_bz_esc(_bz_filter_str(h.get("filter")))}</span></td>'
                 f"<td>{_bz_kind(h)}</td>"
                 + _bz_fwd_cells(h)
                 + extra

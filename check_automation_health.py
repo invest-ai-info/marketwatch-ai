@@ -661,6 +661,36 @@ def check_tracker_registration(owner, repo, token, today_jst=None):
     return len(declared), missing, pending
 
 
+# ⑥b 🆕 2026-11-27 検算の関門：自動で出た合格が「数え直し待ち」になっていないか（オーナー「待たせる」）
+RECHECK_NEW_DAYS = 2   # 待ちが出た日から何日だけ Issue に出すか（そのあとは一覧の行だけ＝毎日の書き込みを増やさない）
+
+
+def eval_recheck_waiting(tracker, records, screens, today, go_live):
+    """→ ("new"|"waiting"|"none", 日本語1行, 研究の名前の一覧)。
+    待ち＝tracker の promoted で promoted_at が使い始めの日以降・数え直しの記録（一致100%）が無いもの
+    ＋総当たりの候補（stage=candidate・since が使い始めの日以降・記録無し）"""
+    import recheck_status as RS
+    recs = records if isinstance(records, dict) else {}
+    items = []
+    for h in (tracker or {}).get("hypotheses", []) or []:
+        d = str(h.get("promoted_at") or "")[:10]
+        if h.get("status") == "promoted" and d and d >= go_live and not RS.entry_ok(recs.get(RS.safe(h.get("id", "")))):
+            items.append((h.get("id", "?"), d))
+    for s in screens or []:
+        for it in (s or {}).get("promoted", []) or []:
+            d = str(it.get("since") or "")[:10]
+            if it.get("stage") == "candidate" and d and d >= go_live and not RS.entry_ok(recs.get(RS.safe(it.get("id", "")))):
+                items.append((it.get("id", "?"), d))
+    if not items:
+        return "none", "数え直し待ちの合格は無い", []
+    t = dt.date.fromisoformat(str(today)[:10])
+    fresh = [i for i, d in items if (t - dt.date.fromisoformat(d)).days <= RECHECK_NEW_DAYS]
+    ids = [i for i, _ in items]
+    note = (f"数え直し待ち {len(ids)} 件: {', '.join(ids)}"
+            "（手元のセッションで recheck/RECOUNT_GUIDE.md の手順で数え直すまで、メールの絞りや次の段には使わない）")
+    return ("new" if fresh else "waiting"), note, ids
+
+
 # ⑦ ティッカー用フィードのソース単位の停止検知（2026-08-06 追加）。
 #    ①は news-ticker.yml の実行成否しか見ないため、workflow が緑のまま特定フィードだけが
 #    死ぬ形（URL変更・RSS廃止＝8/1 Bloomberg の壊れ方）を捕まえられない。
@@ -1321,6 +1351,30 @@ def main():
     except Exception as e:
         # ③④⑤と同じ方針: API/import の一時エラー自体では Issue を立てない（記録のみ）
         body.append(f"- 🚨 ⚪ トラッカー登録の突合失敗: {e}")
+
+    body.append("")
+    body.append("### ⑥b 自動で出た合格の数え直し待ち（🆕 2026-11-27 検算の関門）")
+    try:
+        import recheck_status as RS
+
+        def _get(path):
+            try:
+                return json.loads(api_raw(f"https://api.github.com/repos/{owner}/{repo}/contents/{path}", token))
+            except Exception:
+                return None
+        tracker = _get(TRACKER_JSON_PATH)
+        screens = [x for x in (_get("m6-screen.json"), _get("m7-screen.json")) if x]
+        today_s = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date().isoformat()
+        level, note, _ids = eval_recheck_waiting(tracker, _get("recheck/records.json") or {}, screens, today_s, RS.GO_LIVE)
+        if level == "new":
+            body.append(f"- 🔍 🟡 {note}")
+            bad.append(("数え直し待ち", "warn"))
+        elif level == "waiting":
+            body.append(f"- ⚪ {note}")
+        else:
+            body.append(f"- ✅ 🟢 {note}")
+    except Exception as e:
+        body.append(f"- ⚪ 数え直し待ちの確かめ失敗: {e}")
 
     body.append("")
     body.append("### ⑦ ティッカー用フィードの停止検知（①はworkflow成否しか見ない死角＝ソース単位で見る）")

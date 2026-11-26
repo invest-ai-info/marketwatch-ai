@@ -185,6 +185,19 @@ HTML を即座に反映したい場合は GitHub Actions の "Run workflow" で�
 - ✋ **11/12 オーナー決定：朝の板の流れは自動化しない**（「朝の寄り付きの動きも見たいので、自動化にしなくて大丈夫です」）＝8:59 の板と 9:30 の市況の画面をオーナーが送り、セッションが読む形を続ける。RSS（J46R）・画面の自動読み取り・Yahoo を標準にする案は出さない（オーナーから言われたときだけ）
 - 次の朝も同じ流れ（8:59 の板 → 9:30 過ぎの市況）で届いたら `j10b_records.py add` で足す。**10/23 からは J46 の欄も**＝先に `python j10b_records.py basetv --date <今日> <コード…>` でふだんの売買代金（円）を出し、`add` に `--ask-qty --bid-qty --mkt-sell --mkt-buy`（画面の百株のまま）と `--base-tv` を足す。片側だけの気配（S高・S安）は数量を渡さない。画面の 9:30 が無い（9:35 より後）日は Yahoo で代える（9:50 より後に取る・10/27 追記）。クラウドの入れ物に `yfinance` が無ければ（`basetv` が ModuleNotFoundError）先に `pip install yfinance`
 
+## 🔍 検算の関門（2026-11-27・研究の数字の間違いを見つける仕組み）
+
+| 部品 | やること | 止める所 |
+|---|---|---|
+| `result_audit.py` | ありえない数字の点検（A1〜A10・G1）。損益の合計・平均・勝率は出さない。閾値は `LIMITS` の1か所・較正は `recheck/CALIBRATION.md` | error なら結果を書かない（`gate`）／warning は理由を1行 |
+| `recount_compare.py` | 別の書き方での数え直しを1件ずつ突き合わせ（手順・担当への指示文は `recheck/RECOUNT_GUIDE.md`） | 一致100%で `recheck/records.json` に記録 |
+| `mutate_check.py` | わざと壊してテストが気づくか | 止めない（登録に数を書く） |
+| `recheck_status.py` | 記録の読み書き・`GO_LIVE`（2026-11-27）・`is_waiting`・`promoted_waiting` | — |
+
+- 止める所：`mw check`（`check_prereg_audit`＝新しい登録の結果に点検の指紋）・`verified_list.py`／`promotion_list.py`／`research_map.py`／成績ページ／週の振り返り（🔍 数え直し待ち）・`generate_technical_alerts.load_promoted_hypotheses`（メールの絞り）・`screen_judge.apply_mt5`（総当たりの MT5 段）・`_doctrine_check.py` 9番（DOCTRINE の新しい ✅🏅）・見張り番 ⑥b
+- 使い始めの日より前の登録・昇格はさかのぼらない（`rl_tf_adx_strong`・OJ5 は例外のまま。洗い直しは設計書 5.6 の順）
+- 記録の2ファイルは値段を含まない＝手元から送る（`_config.yml` でサイトには出さない）。取引の一覧（値段つき）は `research/recheck/<研究>/` の手元だけ
+
 ## 📎 CLAUDE.md から移した詳しい説明（2026-10-08・CLAUDE.md を目安 32KB に収めるため。中身は変えていない）
 
 ### サイト構成の表：research-list.html の行（全文）

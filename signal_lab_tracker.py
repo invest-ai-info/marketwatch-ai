@@ -37,6 +37,7 @@ import sys
 
 from signal_lab_verify import wilson, closed, win, match
 from signal_lab_sweep import BREAKEVEN, load_log, r_of, _mean_std
+import recheck_status as RS  # 🆕 2026-11-27 検算の関門（昇格は数え直すまで表に「🔍数え直し待ち」）
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TRACKER = os.path.join(ROOT, "signal-lab-tracker.json")
@@ -1096,7 +1097,7 @@ def table_html(t, today):
         crit = crit_cell(h["kind"], mn, bool(ho))
         val = value_cell(f"{fwd.get('avgR',0):+.2f}", f"{fwd.get('rci_lo',0):+.2f}", f"{fwd.get('rci_hi',0):+.2f}",
                          fwd["k"], fwd["n"], f"勝率{fwd['pct']:.0f}%")
-        st = state_cell(icon[h.get("status", "tracking")])
+        st = state_cell("🔍数え直し待ち" if RS.promoted_waiting(h) else icon[h.get("status", "tracking")])   # 🆕 2026-11-27 検算の関門
         out.append(f'<tr><td>{plain_cell(h["filter"], h["label"])}</td><td>{plain_kind_cell(h["kind"])}</td>'
                    f'<td>{crit}</td><td>{val}</td>{state_td(st)}{st}</td></tr>')
     out.append("</table>")
