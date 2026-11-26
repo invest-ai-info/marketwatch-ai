@@ -810,16 +810,19 @@ def v5(**kw):
     return x
 
 
+THREE = T.parse_flags("event_clear=1,strongest=1,tokyo_break=1")      # v5 は3ペアそろい（追記⑯）が要る
+
+
 def test_fits_v5_before_the_open_starts_at_1600_in_winter():
     """①押し目も冬は16:00から（追記⑭）"""
     def fit(h, m):
-        return trade(v5(), kata="push", far_min=10, t_open=dt.datetime(2026, 12, 1, h, m), t_close=dt.datetime(2026, 12, 1, h, m + 4))["fits_v5_entry"]
+        return trade(v5(), kata="push", far_min=10, flags=THREE, t_open=dt.datetime(2026, 12, 1, h, m), t_close=dt.datetime(2026, 12, 1, h, m + 4))["fits_v5_entry"]
     assert (fit(15, 40), fit(16, 4), fit(16, 50), fit(16, 55)) == (False, True, True, False)
     assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 15, 40), t_close=dt.datetime(2026, 12, 1, 15, 50))["fits_v4_entry"] is True     # 紙 v4 は登録のまま
 
 
 def test_fits_v5_after_the_wait():
-    t = trade(v5(), kata="push", far_min=10, t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
+    t = trade(v5(), kata="push", far_min=10, flags=THREE, t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
     assert t["fits_v5_entry"] is True and (t["usd_ldn"], t["strong_ldn"], t["kata5"]) == (11.0, "EURJPY", "push")
     assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 17, 2), t_close=dt.datetime(2026, 12, 1, 17, 21))["fits_v5_entry"] is False
     assert trade(v5(), kata="push", t_open=dt.datetime(2026, 12, 1, 19, 0), t_close=dt.datetime(2026, 12, 1, 19, 30))["fits_v5_entry"] is False
@@ -830,18 +833,31 @@ def test_fits_v5_needs_the_new_direction(k):
     at_ = dict(t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
     assert trade(v5(flags5={"usd_dir5": True, "pick_eg5": True, k: False}), kata="push", **at_)["fits_v5_entry"] is False
     assert trade(v5(flags5={"usd_dir5": True, "pick_eg5": True, k: None}), kata="push", **at_)["fits_v5_entry"] is None
-    assert trade(v5(flags=dict(ALL, usd_dir=False, pick_eg=False)), kata="push", far_min=10, **at_)["fits_v5_entry"] is True   # v4 の向きは v5 では使わない
+    assert trade(v5(flags=dict(ALL, usd_dir=False, pick_eg=False)), kata="push", far_min=10, flags=THREE, **at_)["fits_v5_entry"] is True   # v4 の向きは v5 では使わない
 
 
 def test_fits_v5_needs_30pips_in_30min_on_the_entered_pair():
     """伸びの条件は「入るペアのヒゲが、抜けてから30分以内に30pips」（追記⑮・オーナー「30pipsに戻す」）＝ v2 の far30。v4 の far20 は v5 では使わない"""
     at_ = dict(t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
-    assert trade(v5(), kata="push", far_min=30, **at_)["fits_v5_entry"] is True
-    assert trade(v5(), kata="push", far_min=35, **at_)["fits_v5_entry"] is False          # 30分を過ぎてから30pips
-    assert trade(v5(), kata="push", **at_)["fits_v5_entry"] is None                       # 30pips までの分が分からない
-    assert trade(v5(flags=dict(ALL, far20=False)), kata="push", far_min=10, **at_)["fits_v5_entry"] is True
+    assert trade(v5(), kata="push", far_min=30, flags=THREE, **at_)["fits_v5_entry"] is True
+    assert trade(v5(), kata="push", far_min=35, flags=THREE, **at_)["fits_v5_entry"] is False          # 30分を過ぎてから30pips
+    assert trade(v5(), kata="push", flags=THREE, **at_)["fits_v5_entry"] is None                       # 30pips までの分が分からない
+    assert trade(v5(flags=dict(ALL, far20=False)), kata="push", far_min=10, flags=THREE, **at_)["fits_v5_entry"] is True
     t = trade(v5(), kata="push", far_min=35, t_open=dt.datetime(2026, 12, 1, 15, 40), t_close=dt.datetime(2026, 12, 1, 15, 50))
     assert t["fits_v4_entry"] is True                                                      # 紙 v4 は 20pips のまま
+
+
+def test_fits_v5_needs_all_three_pairs_broken_together():
+    """入るのは、シリーズ（ドル円・ユーロ円・ポンド円）の3つとも、同じ5分足の終値で東京の線の外にそろったとき（追記⑯・オーナー「すべてのシリーズが同時に抜けた場合に変更」）
+    ＝ v1 の tokyo_break（3ペアそろい）。v4 の both_broken（ユーロ円とポンド円の2つ）は v5 では使わない"""
+    at_ = dict(t_open=dt.datetime(2026, 12, 1, 17, 31, 8), t_close=dt.datetime(2026, 12, 1, 18, 0))
+    two = T.parse_flags("event_clear=1,strongest=1,tokyo_break=0")
+    assert trade(v5(), kata="push", far_min=10, flags=THREE, **at_)["fits_v5_entry"] is True
+    assert trade(v5(), kata="push", far_min=10, flags=two, **at_)["fits_v5_entry"] is False                # 2つだけ（3つはそろわなかった）
+    assert trade(v5(), kata="push", far_min=10, **at_)["fits_v5_entry"] is None                            # そろったかが分からない
+    assert trade(v5(flags=dict(ALL, both_broken=False)), kata="push", far_min=10, flags=THREE, **at_)["fits_v5_entry"] is True
+    assert trade(v5(), kata="push", far_min=10, flags=two, t_open=dt.datetime(2026, 12, 1, 15, 40),
+                 t_close=dt.datetime(2026, 12, 1, 15, 50))["fits_v4_entry"] is True                       # 紙 v4 は「両方の抜け」のまま
 
 
 def test_fits_v5_uses_the_v5_kata_and_keeps_v4_kata():
