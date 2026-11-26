@@ -107,10 +107,13 @@ def judge(label, found, js, ms, today, problems, notes):
         if d not in ms:                     # どの年でも見る（2026-11-12 まで 2026年だけ＝翌年の表の抜けを知らせなかった）
             notes.append(f"{master_label(d)}: {d}（{wd(d)}）の{label}が未登録")
     # 逆向き＝うちにあって公式に無い日付（＝誤登録）。公式がまだ出していない先の期間は正常なので、公式の最終日までだけ見る
+    # ⚠️ 今日ちょうどの日付は比べない（2026-11-25 実測）＝発表が当日中に終わると、統計局側の
+    #    「Future releases」はその日のうちに次回へ進んでしまい、台帳の今日の行が「公式に無い」と誤判定される。
+    #    誤登録なら、今日になる前（NEAR=21日前後）の回で必ず捕まっている。
     last, official = max(found), set(found)
     for where, mine in (("economic-events.json", js), (None, ms)):
         for d in sorted(mine):
-            if today <= d <= last and d not in official:
+            if today < d <= last and d not in official:
                 problems.append(f"🚨 {where or master_label(d)}: {d}（{wd(d)}）に{label}を載せているが、公式の日程に無い")
 
 
