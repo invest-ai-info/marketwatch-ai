@@ -3,6 +3,31 @@
 
 ---
 
+## 2026-11-26
+- 判定: ✅ 公開済み
+- 選定トピック: 日経平均487円高で反発──キオクシア×NVIDIA「1.1PB級GPUメモリ拡張」PoC発表がAI半導体の買い戻しを呼ぶ（カテゴリ: 株式指数・AI株・半導体技術）
+- スコア: 話題性 5 / 影響 4 / 付加価値 4（合計 13/15）
+- 出典（確認済み）:
+  - BusinessWire／Yahoo!Finance「Kioxia and NVIDIA Collaborate to Expand Effective High-Bandwidth Memory Capacity with SSDs」2026-11-25〜26
+  - HotHardware「Kioxia And NVIDIA Tap 144 SSDs To Push AI GPU Memory Past 1 Petabyte」2026-11-26
+  - Business Recorder「Japan's Nikkei bounces as dip buyers scoop up AI stocks」2026-11-26
+  - Longbridge「Japanese and South Korean Stock Markets Close Higher」2026-11-26
+  - Investing.com「Japan shares higher at close of trade; Nikkei 225 up 0.84%」2026-11-26
+  - Finimize「Japan's Nikkei Bounced Back As AI Stocks Drew Dip Buyers」2026-11-26
+  - キオクシア公式「KIOXIA Forum 2026 開催について」2026-11-06
+  - NYSE・NASDAQ公式（感謝祭休場確認）2026-11-26
+- コンプライアンス監査:
+  - 第1Opus（初期判定）: 🟡グレー → 軽微修正1か所適用（KIOXIA Forum の表現を「プログラムに予定されていた」に軟化）→ 最終判定 🟢白
+  - 第2Opus（独立確認・Readのみ）: 🟢白（kinsho-v1×3・noindexなし・断定語なし・推奨なし・出典8系統）→「そのまま公開OK」
+  - 最終判定: 🟢白
+- 決定論チェック: kinsho-v1×3 ✅ / 断定語なし ✅ / 推奨なし ✅ / 出典8系統 ✅
+- 整合性チェック（check_site_consistency.py）: EXIT=0 ✅
+- publish_article.py: ✅（guides.html カード追加・SYNC_FILES登録・更新履歴追加）
+- 公開ファイル: guide-news-2026-11-26-nikkei-rebound-kioxia-nvidia.html
+- commit: 5c34c98（main へ push 済み）
+
+---
+
 ## 2026-11-25
 - 判定: ✅ 公開済み
 - 選定トピック: 日経平均1,633円急落──SOX急落とAI支出不安が連鎖売りを呼ぶ（カテゴリ: 株式指数・AI株・半導体）
