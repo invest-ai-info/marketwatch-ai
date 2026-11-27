@@ -39,6 +39,19 @@ def test_values_match_the_research_formula():
     assert (M.TV_HIGH, M.UP, M.TV_DAYS) == (5.0, 0.05, 20)
 
 
+def test_exact_five_times_is_c():
+    """ちょうど5倍は C（5倍以上）。1億で割ってから足すと 4.999999999999999 になった形（2026-11-27 洗い直し②・landmine_lab と同じ直し）"""
+    win = [(0, 0), (996, 200), (0, 0), (0, 0), (0, 0), (0, 0), (2494, 100), (1028, 100), (0, 0), (118, 400),
+           (0, 0), (0, 0), (2708, 400), (1, 2432700), (0, 0), (0, 0), (0, 0), (187, 200), (827, 300), (0, 0)]
+    ck, vk = 1000, 1100
+    d0 = dt.date(2008, 1, 7)
+    bars = []
+    for j, (c, v) in enumerate(win + [(ck, vk)]):
+        cc = float(c or ck)
+        bars.append(((d0 + dt.timedelta(days=j)).isoformat(), cc, cc, cc, float(v)))
+    assert M.stock_values(bars)[1] >= M.TV_HIGH
+
+
 def test_rules_text_matches():
     text = open("MY_TRADING_RULES.md", encoding="utf-8").read()
     assert "**C：前の日の売買代金が、その前の20営業日の平均の5倍以上 → 寄りでは買わない**" in text

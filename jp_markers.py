@@ -63,9 +63,12 @@ def stock_values(bars):
     ret = c[-1] / c[-2] - 1 if c[-2] > 0 else None
     ratio = None
     if len(bars) >= TV_DAYS + 1:
-        base = sum(tv[-TV_DAYS - 1:-1]) / TV_DAYS
-        if base > 0:
-            ratio = tv[-1] / base
+        # 倍率は1億で割る前の 終値×出来高 で出す（ふつうは整数＝ちょうど5倍が丸めで 4.99999… にならない。
+        # 2026-11-27 洗い直し②・landmine_lab.prev_more と同じ直し）
+        pv = [b[3] * (b[4] or 0) for b in bars]
+        total = sum(pv[-TV_DAYS - 1:-1])
+        if total > 0:
+            ratio = TV_DAYS * pv[-1] / total
     return tv[-1], ratio, ret
 
 
