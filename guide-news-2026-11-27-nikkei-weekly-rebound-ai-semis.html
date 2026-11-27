@@ -112,18 +112,27 @@ td strong,td b,th strong{white-space:nowrap}
 <nav class="nav-bar mwf-nav mwf-v2" aria-label="メイン">
   <div class="mwf-in">
     <div class="mwf-row">
-      <a class="nav-btn" href="index.html">🏠 ホーム</a>
-      <a class="nav-btn" href="political-feed.html">🚨 政治・発言</a>
-      <a class="nav-btn" href="track-record.html">🧪 シグナル研究</a>
-      <a class="nav-btn" href="calendar.html">📅 カレンダー</a>
-      <a class="nav-btn current" href="guides.html">📚 解説記事</a>
-      <a class="nav-btn" href="guide-investment-books.html">📖 投資本</a>
-      <a class="nav-btn" href="market-health.html">🩺 市場健康度</a>
-      <a class="nav-btn" href="hot-assets.html">🔥 急騰ランキング</a>
-      <a class="nav-btn" href="charts.html">📈 長期チャート</a>
-      <a class="nav-btn" href="youtube-summary.html">📺 YouTube要約</a>
+      <a class="nav-btn" href="index.html">ホーム</a>
+      <a class="nav-btn" href="guide-how-we-research.html">はじめての方へ</a>
+      <a class="nav-btn current" href="guides.html" aria-current="page">解説記事</a>
+      <a class="nav-btn" href="track-record.html">検証の結果</a>
+      <a class="nav-btn" href="market-health.html">市場データ</a>
+      <a class="nav-btn" href="calendar.html">経済カレンダー</a>
     </div>
+    <details class="mwf-more"><summary>もっと見る ▾</summary>
+      <ul>
+        <li><a class="nav-btn" href="political-feed.html">政治発言ライブ</a></li>
+        <li><a class="nav-btn" href="hot-assets.html">出来高急増</a></li>
+        <li><a class="nav-btn" href="charts.html">150年チャート</a></li>
+        <li><a class="nav-btn" href="holdings.html">大量保有報告</a></li>
+        <li><a class="nav-btn" href="guide-investment-books.html">投資本</a></li>
+        <li><a class="nav-btn" href="youtube-summary.html">YouTube要約</a></li>
+        <li><a class="nav-btn" href="research-list.html">検証中リスト</a></li>
+        <li><a class="nav-btn" href="guides.html#cat-tools">計算ツール</a></li>
+      </ul>
+    </details>
   </div>
+  <script>(function(){var n=document.currentScript&&document.currentScript.parentNode;if(!n)return;var d=n.querySelector('.mwf-more'),r=n.querySelector('.mwf-row'),c=r&&r.querySelector('a.current');function f(){if(!c)return;var a=r.getBoundingClientRect(),b=c.getBoundingClientRect();if(b.right>a.right)r.scrollLeft+=b.right-a.right+8}f();window.addEventListener('load',f);if(!d)return;document.addEventListener('click',function(e){if(d.open&&!d.contains(e.target))d.open=false});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&d.open)d.open=false})})();</script>
 </nav>
 
 <main>
@@ -250,11 +259,66 @@ td strong,td b,th strong{white-space:nowrap}
       </a>
     </div>
 
+<!-- series-nav:begin -->
+<style>
+.mw-sernav{display:block;max-width:900px;margin:28px auto 0;padding:0 16px;background:none;border:0;box-shadow:none}
+.mw-sernav-h{font-size:14px;font-weight:700;color:#2C4F8F;margin-bottom:10px}
+.mw-sernav-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mw-sernav-btn{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border:1px solid #dfe3e8;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a1a;min-width:0;white-space:normal}
+.mw-sernav-btn:hover{border-color:#2C4F8F;box-shadow:0 2px 8px rgba(44,79,143,.12)}
+.mw-sernav-btn.next{text-align:right}
+.mw-sernav-dir{font-size:12px;color:#6b7280;font-weight:600}
+.mw-sernav-t{font-size:13.5px;line-height:1.5;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal;overflow-wrap:anywhere}
+.mw-sernav-btn.is-off{opacity:.45;background:#f6f7f9;pointer-events:none}
+.mw-sernav-idx{margin-top:10px;text-align:center;font-size:12.5px;color:#6b7280}
+.mw-sernav-idx a{color:#2C4F8F;font-weight:600}
+@media(max-width:520px){.mw-sernav-row{grid-template-columns:minmax(0,1fr)}.mw-sernav-btn.next{text-align:left}}
+body.dark .mw-sernav-h{color:#58a6ff}
+body.dark .mw-sernav-btn{background:#161b22;border-color:#30363d;color:#e6edf3}
+body.dark .mw-sernav-btn.is-off{background:#0d1117}
+body.dark .mw-sernav-dir,body.dark .mw-sernav-idx{color:#8b949e}
+body.dark .mw-sernav-idx a{color:#58a6ff}
+</style>
+    <nav class="mw-sernav" aria-label="今日のニュースのシリーズ内移動">
+      <div class="mw-sernav-h">📚 今日のニュース</div>
+      <div class="mw-sernav-row">
+      <a class="mw-sernav-btn prev" href="guide-news-2026-11-26-nikkei-rebound-kioxia-nvidia.html" rel="prev">
+        <span class="mw-sernav-dir">← 前の記事</span>
+        <span class="mw-sernav-t">日経平均487円高で反発──キオクシア×NVIDIA「1.1PB GPUメモリ拡張」発表が呼んだAI半導体の買い戻し（2026年11月26日）</span>
+      </a>
+      <span class="mw-sernav-btn next is-off" aria-hidden="true">
+        <span class="mw-sernav-dir">次の記事 →</span>
+        <span class="mw-sernav-t">これが最新の記事です</span>
+      </span>
+      </div>
+      <div class="mw-sernav-idx"><a href="guides.html">シリーズの記事一覧を見る →</a></div>
+    </nav>
+<!-- series-nav:end -->
     <div class="disclaimer" data-disclaimer="kinsho-v1">
       <strong>免責事項：</strong>本記事は情報提供のみを目的としており、金融商品取引法上の投資助言・投資勧誘ではありません。特定の銘柄・金融商品の購入・売却を推奨するものではなく、掲載の情報・数値はその正確性を保証するものではありません。投資に際してはご自身の判断と責任のもとで行っていただき、必要に応じて専門家にご相談ください。過去の価格動向は将来の結果を保証しません。
     </div>
   </div>
 </main>
+
+<!-- ===== 広告 (A8.net) ===== -->
+<div class="mw-ad" aria-label="広告" data-mw-ads="cfd,kabu">
+  <span class="mw-ad-label">広告</span>
+  <div class="mw-ad-slot"></div>
+  <noscript>
+    <a href="https://px.a8.net/svt/ejp?a8mat=4B5R09+79YQYA+1WP2+NY1Y9" rel="nofollow noopener" target="_blank"><img border="0" width="468" height="60" alt="DMM CFD" src="https://www25.a8.net/svt/bgt?aid=260608761440&wid=001&eno=01&mid=s00000008903004022000&mc=1"></a>
+    <img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=4B5R09+79YQYA+1WP2+NY1Y9" alt="">
+  </noscript>
+</div>
+<style>
+.mw-ad{max-width:680px;margin:32px auto;padding:14px 16px 16px;text-align:center;border:1px solid #d0d7de;border-radius:12px;background:#f6f8fa}
+.mw-ad .mw-ad-label{display:block;font-size:.66rem;color:#8b949e;letter-spacing:.1em;margin-bottom:8px;text-align:left}
+.mw-ad img{max-width:100%;height:auto;vertical-align:middle}
+.mw-ad .mw-ad-slot{min-height:60px}
+body.dark .mw-ad{background:#161b22;border-color:#30363d}
+body.dark .mw-ad .mw-ad-label{color:#6e7681}
+</style>
+<script src="mw-ads.js" defer></script>
+<!-- ===== /広告 ===== -->
 
 <footer>
   <div class="footer-disclaimer" data-disclaimer="kinsho-v1">本サイトの情報は投資助言ではありません。投資判断はご自身の責任で行ってください。</div>
@@ -264,7 +328,7 @@ td strong,td b,th strong{white-space:nowrap}
     <a href="track-record.html">シグナル研究</a> |
     <a href="calendar.html">経済カレンダー</a>
   </p>
-  <p style="margin-top:8px;">© 2026 時短投資ラボ（旧 MarketWatch AI）</p>
+  <p style="margin-top:8px;">© 2026 時短投資ラボ（旧時短投資ラボ）</p>
 </footer>
 <script src="site-search.js" defer></script>
 </body>
