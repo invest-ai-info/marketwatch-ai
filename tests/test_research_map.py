@@ -136,6 +136,38 @@ def _dump(d, name, obj):
         json.dump(obj, fh, ensure_ascii=False)
 
 
+def _unexplained(pane):
+    found = C.check_html("<html><head><title>いま検証中のこと</title></head><body><main>"
+                         + pane + "</main></body></html>")
+    return [f for f in found if f[0] == "用語の説明が無い"]
+
+
+_MACD_RETIRED = {"hypotheses": [
+    {"id": "state_macdg_below", "status": "retired", "registered_at": "2026-07-20",
+     "retired_at": "2026-08-01", "filter": {"signal": "macd_golden", "ma_pos": "below_both"}}]}
+
+
+def test_terms_explained_when_first_seen_in_exit_section():
+    # 2026-11-27: ②に MACD の仮説が無くなり（終わって⑤へ）、③の出口の表で初めて「MACD」が出たのに説明が付かなかった
+    d = tempfile.mkdtemp()
+    _dump(d, R.TRACKER_FILE, _MACD_RETIRED)          # 記録に無いと、登録だけの仮説として②に載ってしまう
+    _dump(d, R.EXIT_LAB, {"is_until": "2026-09-25", "flagged_forward": [
+        {"tf": "4h", "entry": "macd_dead", "side": "short", "group": "index", "sl": "be", "tp": "none",
+         "vs_base": {"n": 35}, "state": "🟡蓄積中"}]})
+    pane = R.build_pane(root=d)
+    assert "MACDのデッドクロス" in pane
+    assert not _unexplained(pane), _unexplained(pane)
+
+
+def test_terms_explained_when_first_seen_in_ended_section():
+    # 同じ日: 終わった仮説（⑤）にだけ MACD が出るときも、初めて出たところで説明する
+    d = tempfile.mkdtemp()
+    _dump(d, R.TRACKER_FILE, _MACD_RETIRED)
+    pane = R.build_pane(root=d)
+    assert "MACDのゴールデンクロス" in pane
+    assert not _unexplained(pane), _unexplained(pane)
+
+
 def test_study_lists_read_forward_records_and_drop_judged():
     # 2026-10-01 オーナー「今進めている研究はすべて…研究中一覧、検証中一覧に簡潔に短くまとめて」
     d = tempfile.mkdtemp()
@@ -334,7 +366,9 @@ def test_nav_label_for_track_record_is_the_same_everywhere():
     label = dict(F.NAV_BUTTONS)["track-record.html"]
     label_v2 = dict(F.NAV_V2)["track-record.html"]
     bad = []
-    for p in glob.glob("*.py") + ["guides.html", "about.html", "contact.html", "privacy.html", "holdings.html"]:
+    # 手元だけにある GitHub 側の古い写し（`_gmn_remote.py` など）は動かないので見ない
+    pys = [p for p in glob.glob("*.py") if not re.fullmatch(r"_.+_remote\.py", p)]
+    for p in pys + ["guides.html", "about.html", "contact.html", "privacy.html", "holdings.html"]:
         text = open(p, encoding="utf-8").read()
         want = label_v2 if (p.endswith(".html") and "nav-bar mwf-nav mwf-v2" in text) else label
         for m in re.finditer(r'<a class="nav-btn(?: current)?" href="track-record\.html"(?: aria-current="page")?>([^<]*)</a>',

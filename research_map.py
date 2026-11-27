@@ -123,6 +123,14 @@ TERMS = [
     ("ボリンジャーバンド", "ボリンジャーバンド（値動きのふだんの幅を表す線。−2σは下の線、+2σは上の線）"),
 ]
 
+def _terms_note(text, explained):
+    """text に出てくる用語のうち、まだ説明していないものの「表に出てくる言葉」の行（無ければ ""）。
+    説明した用語は explained に足す。🆕 2026-11-27 ②にしか説明が無く、③・⑤で初めて出た MACD が説明なしになった。"""
+    used = [(term, desc) for term, desc in TERMS if term in text and term not in explained]
+    explained.update(term for term, _d in used)
+    return (f'<p class="rm-desc">表に出てくる言葉：{_e("／".join(d for _t, d in used))}</p>' if used else "")
+
+
 # 定期的に回している研究（しくみ）。頻度と場所は各ワークフロー／routine の設定に合わせる
 ROUTINES = [
     ("🧪 AIシグナル研究日誌", "毎朝",
@@ -845,10 +853,10 @@ def build_pane(root=".", model=None):
                  '売買のタイミングや銘柄を示すものではありません。'
                  '決まった件数がたまるごとに判定し、基準を2回続けて満たすと昇格、反対の結果が出ると終わりになります。'
                  '成績の数字は <a href="#banzuke">🏆 エッジ番付</a> のタブで見られます。</p>')
-    names = " ".join(r["name"] for th in m["themes"] for r in th["rows"])
-    used = [text for term, text in TERMS if term in names]
-    if used:
-        parts.append(f'<p class="rm-desc">表に出てくる言葉：{_e("／".join(used))}</p>')
+    explained = set()      # 🆕 2026-11-27 説明した用語（②・③・⑤のどこで初めて出ても、その表の前で1回だけ説明する）
+    note = _terms_note(" ".join(r["name"] for th in m["themes"] for r in th["rows"]), explained)
+    if note:
+        parts.append(note)
     head = "<tr><th>仮説（どんな場面のシグナルか）</th><th>確かめていること</th><th>段階</th><th>登録した日より後の件数</th></tr>"
 
     def table(rows):
@@ -886,6 +894,10 @@ def build_pane(root=".", model=None):
                  '組み合わせをたくさん試したぶん、偶然よく見えただけの可能性があるので、判定は100件たまってからです。'
                  '「いまの方式」とは、このサイトがシグナルの記録を採点するときに使っている決まった置き方で、'
                  '損切りをATR（値動きの平均的な幅）の1.5倍、利確を2.0倍の位置に置きます。</p>')
+    note = _terms_note(" ".join(x["title"] + " " + x["note"] + " " + " ".join(r["desc"] for r in x["rows"])
+                                for x in m["exits"]), explained)
+    if note:
+        parts.append(note)
     if not m["exits"]:
         parts.append('<p class="rm-desc">いま前向きに確かめている出口の研究はありません。</p>')
     for x in m["exits"]:
@@ -923,10 +935,11 @@ def build_pane(root=".", model=None):
                        f'<td data-l="終わり方">{_e(r["why"])}</td>'
                        f'<td data-l="登録">{_e(r["registered"])}</td></tr>'
                        for r in m["ended"])
+        note = _terms_note(" ".join(f'{r["name"]} {r["question"]} {r["why"]}' for r in m["ended"]), explained)
         parts.append(
             f'<h3 style="margin-top:28px">⑤ 終わった検証（{len(m["ended"])}本）</h3>'
             f'<details><summary style="cursor:pointer;font-size:.9rem;color:#57606a">'
-            f'思ったとおりにならなかった検証も、消さずに残しています（開く）</summary>'
+            f'思ったとおりにならなかった検証も、消さずに残しています（開く）</summary>{note}'
             f'<div class="scroll-x" style="margin-top:10px"><table class="rm-t"><tr><th>仮説</th><th>確かめていたこと</th><th>終わり方</th><th>登録</th></tr>'
             f'{rows}</table></div></details>')
 
