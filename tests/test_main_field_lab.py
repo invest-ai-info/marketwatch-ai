@@ -119,3 +119,15 @@ if __name__ == "__main__":
                 fails += 1
                 print(f"❌ {name}: {e}")
     sys.exit(1 if fails else 0)
+
+
+def test_prev_features_missing_close_does_not_spoil_later_days():
+    """2026-11-27 洗い直し⑤（J21）：25日線を積み上げた合計の引き算で出していたので、値の無い終値が1本あると
+    そのあと全部の日の離れが NaN になっていた（9439 は2000年の欠けで、20年あとの主戦場の朝まで過熱を判定できなかった）"""
+    c = [100.0 + i for i in range(80)]
+    c[5] = float("nan")
+    daily = [(f"d{i:03d}", x, x, x, x, 1000.0) for i, x in enumerate(c)]
+    dev, _ = M.prev_features(daily)
+    assert np.isnan(dev[5]) and np.isnan(dev[29])                         # 欠けを含む窓は計算しない
+    assert np.isfinite(dev[30]) and abs(dev[30] - (c[30] / np.mean(c[6:31]) - 1)) < 1e-12   # 欠けが窓を出たら戻る
+    assert abs(dev[79] - (c[79] / np.mean(c[55:80]) - 1)) < 1e-12

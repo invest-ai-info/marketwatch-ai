@@ -5,8 +5,8 @@
 ## 🔍 2026-11-27（手元）: 検算の関門＝研究の数字の間違いを見つける仕組みを作った（オーナー「間違いを見つける仕組みを作ってください」→「今後＋使用中を洗う」「案1（関門型）」「待たせる」）
 - 設計書 `docs/superpowers/specs/2026-11-26-result-audit-design.md`・手順書 `docs/superpowers/plans/2026-11-27-result-audit.md`。道具＝`result_audit.py`（ありえない数字の点検・閾値は `LIMITS`・較正 `recheck/CALIBRATION.md`）・`recount_compare.py`（別の書き方での数え直しの突き合わせ・手順 `recheck/RECOUNT_GUIDE.md`）・`mutate_check.py`（わざと壊す）・`recheck_status.py`（記録の読み書き・`GO_LIVE` 2026-11-27）。記録＝`recheck/audits.json`・`recheck/records.json`（値段なし・送る）
 - 関門：新しい登録の結果の行には `点検の指紋`（`mw check`）／合格側は数え直しの記録（一致100%）が無いうちは「🔍 数え直し待ち」＝リスト・地図・メールの絞り（`load_promoted_hypotheses`）・総当たりの MT5 段で使わない（今ある `rl_tf_adx_strong` は例外のまま）／DOCTRINE の新しい ✅・🏅 は `[recheck:研究]` が要る＝**固定オラクル `_doctrine_check.py` に9番の検査を足した（強める変更・設計書の承認＝オーナーの承認）**／見張り番 ⑥b（待ちが出た日から2日だけ Issue）
-- ✅ 洗い直し①ADX・②目印C・B候補（J26・J16・J17）・③危険スコア（ゲート4条件＋🔪⚡⚠️の元＝Q13・Q14・Q22）・④決算ゲート（J6・📅?）＝どれも数え直しと一致100%（J-Quants の分は記録も手元だけ）。直した誤り＝`landmine_lab.prev_more`・`jp_markers` のちょうど5倍の丸め／スクリーナーの連騰を研究と同じ陽線の数に／研究の日足の置き場に分割の直し（`_jp_daily_splits.py`・今日の途中の足は入れない）／Q14 の「新規」の判定が pandas 3 で働かず条件を満たす日を毎日数えていた（直して数え直しても判定は6本とも同じ・⚡の列も直した）／📅? の中心を翌営業日に（祝日も飛ばす）。点検の道具は複数日の結果の幅を日数に合わせた（`result_audit.py` の `outcome_days`）
-- 残り：⑤ほか（J21・J36・J42・J49 と前向きの記録）／Q4 G1 にも同じ「新規」の誤り（棄却済みの研究・直して数え直すかはオーナー）／OJ5＝次は run 1回＋あとから点検
+- ✅ 洗い直し①ADX・②目印C・B候補（J26・J16・J17）・③危険スコア（ゲート4条件＋🔪⚡⚠️の元＝Q13・Q14・Q22）・④決算ゲート（J6・📅?）・⑤（J21💣・J36〔貸借〕・J42 上がりすぎ・J49 罠の目印・前向き J10F・J13F・J17F・J26F・J31F）＝どれも数え直しと一致100%（J-Quants の分は記録も手元だけ）。直した誤り＝`landmine_lab.prev_more`・`jp_markers` のちょうど5倍の丸め／スクリーナーの連騰を研究と同じ陽線の数に／研究の日足の置き場に分割の直し（`_jp_daily_splits.py`・今日の途中の足は入れない）／Q14 の「新規」の判定が pandas 3 で働かず条件を満たす日を毎日数えていた（直して数え直しても判定は6本とも同じ・⚡の列も直した）／📅? の中心を翌営業日に（祝日も飛ばす）／⑤で直した誤り＝25日線の積み上げ和の NaN（`main_field_lab`）・上場来高値の偽の最高値と同じ高値の丸め（`highs_shape_lab`）・境目ちょうど ±10%（`highs_entry_lab`）。J49 の T1・T3 の ✅ は直しても同じ。点検の道具は複数日の結果の幅を日数に合わせた（`result_audit.py` の `outcome_days`）
+- 残り：J42F・J49F は確定した値がまだ無い（数える行が無い）／OJ5＝次は run 1回＋あとから点検。決めた読み・直した所は `PILLAR_PREREG.md` の各節の「追記（2026-11-27・検算の関門の洗い直し⑤…）」
 
 ## 🔧 2026-11-19（クラウド）: 株式分割・単位のずれで日本株の数字が狂うのを直した（キーエンス 6861 の 1→5 ほか）。全文は `SESSION_ARCHIVE.md`【2026-11-21 退避】
 - **知っておくこと**＝Yahoo は分割を何か月も直さないことがある（しまむら 8227 は9か月）・値段の単位が10倍／100倍ずれる日もある＝日本株の日足・月足は `jp_splits.py` を通す（`RULE_VERSION` 7・決まりは `PILLAR_PREREG.md` 末尾「データの直し」・テスト `tests/test_jp_splits.py`）
@@ -18,8 +18,6 @@
 - 決まりの元＝`PILLAR_PREREG.md`「毎日の新しい方法と入れ替え（2026-11-17）」・手順＝`SIGNAL_LAB_SOP.md`「毎日の新しい方法の回」・一覧＝`RESEARCH_LABS.md` の method-lab の行。**10/8・10/10 の「テクニカルの新しい登録はしない」はこの形に限ってやめた**
 - 🙋 **手元の `sync_to_github.py` の `SYNC_FILES` に足す**：`method_lab.py`・`method_ideas.json`・`research_rotation.py`・`method_lab_verify.py`・`tests/test_method_lab.py`・`.github/workflows/method-lab.yml`（記録の `method-lab.json`・`method-lab.md`・`method-lab-registry.json` は SYNC禁忌）
 - 戻し方：routine の指示の「追加⑤」を消す＋ `method-lab.yml` の schedule と push を外す。経緯（第1版〜3回目・試しの結果）の全文は【2026-11-21 退避】
-
-## 🧹 2026-11-17 夕（クラウド）: 研究日誌の表の枠と図の文字の重なりを直した（`signal_lab_tracker.wrap_table`・新しい検査 `svg_layout_check.py` を finalize・`publish_article.py`・`mw check` に入れた・過去250本も0件に）。図の文字の置き方は `SIGNAL_LAB_SOP.md`。全文は【2026-11-21 退避】
 
 ## 💱 2026-11-16 昼（クラウド）: オーナーの FX の「型1」（クロス円がそろって東京時間の安値を割る → 戻り売り）を控えた＝**型の決まり・実例（11/16〜11/18）・口座の記録・悪い例は `memory/07_fx_setups.md`**。過去で KT1・KT2 として数えて ✕（上の節）。残り＝逆張りの型（未確認）。全文は【2026-11-21 退避】
 

@@ -36,6 +36,7 @@ HIGH_PROB = 0.50              # 「高い確率」＝目印ありの罠の割合
 # T1 急騰の重なり（記録の日）
 M25_HOT, RET_HOT, TVX_HOT, STREAK_HOT, HOT_MIN = 0.20, 0.10, 3.0, 4, 3
 T3_DAYS, T3_DROP = 5, 0.10    # T3：記録の次の日から5本のうちに、終値が記録の日の終値の −10％以下
+EDGE_EPS = 1e-9               # 🆕 2026-11-27 洗い直し⑤：ちょうど境目（+10%・−10%・3倍・+20%）の値を「以上」「以下」に入れる（指数の掛け算・割り算の丸めで外さない）
 P_DEPTH = {"P1": 0.05, "P2": 0.10, "P3": 0.20}   # P4 は25日線
 X_RULES = {"X1": {"stop": 0.10}, "X2": {"stop": 0.20}, "X3": {"trail": 0.15}, "X4": {"stop": 0.10, "tp": 0.20}}
 N_Q = 12
@@ -226,9 +227,9 @@ def stock_cases(day, vals, mkt, clusters=()):
             short += 1
             continue
         m25, ret1, tvx = rec.get("m25"), rec.get("ret1"), rec.get("tvx")
-        flags = [m25 is not None and np.isfinite(m25) and m25 >= M25_HOT,
-                 ret1 is not None and np.isfinite(ret1) and ret1 >= RET_HOT,
-                 tvx is not None and np.isfinite(tvx) and tvx >= TVX_HOT,
+        flags = [m25 is not None and np.isfinite(m25) and m25 >= M25_HOT - EDGE_EPS,
+                 ret1 is not None and np.isfinite(ret1) and ret1 >= RET_HOT - EDGE_EPS,
+                 tvx is not None and np.isfinite(tvx) and tvx >= TVX_HOT - EDGE_EPS,
                  int(streak[j]) >= STREAK_HOT]
         hot = int(sum(flags))
         t2 = bool(Pi[j + 1] < Lx[j])
@@ -243,7 +244,7 @@ def stock_cases(day, vals, mkt, clusters=()):
         # T3 と読むための 5本以内の下げ
         r["t3"] = {}
         for drop in READ_T3:
-            ks = [i for i in range(j + 1, j + T3_DAYS + 1) if Pi[i] <= Pi[j] * (1 - drop)]
+            ks = [i for i in range(j + 1, j + T3_DAYS + 1) if Pi[i] <= Pi[j] * (1 - drop) * (1 + EDGE_EPS)]
             a = (ks[0] + 1) if ks else (j + T3_DAYS + 1)
             r["t3"][f"{drop:.2f}"] = {"flag": bool(ks), "x": window(a)}
         # 押し目（20本のうちの指値・60本持つ）

@@ -43,6 +43,7 @@ MA_N = 25
 OLD_RECORD = dt.date(2001, 3, 31)   # 記録の始まりがこれより後なら、最初の足の日を上場の日とみなす
 CLUSTER_N = 10                # 🆕 補足：同じ日に記録が始まる銘柄がこれ以上＝Yahoo の記録の始まり（上場の日ではない）
 TRUNC_DAYS = 1826             # 🆕 補足：上場の日ではない記録の始まりから5年（暦日）たつまではケースにしない
+REC_EPS = 1e-9                # 🆕 2026-11-27 洗い直し⑤：記録を「上回った」＝前の記録の高値の (1+1e-9) 倍より上（同じ値段に並んだ高値が、指数の掛け算の丸めの差で上回ったことにならないように）
 YOUNG_DAYS, OLD_DAYS = 365, 1096
 FRESH, STREAK = 250, 20       # Q5：前の記録から250本以上／20本以内
 TV_BIG_X, TV_SMALL_X = 3.0, 1.5      # 読むだけ：その日の売買代金の倍率
@@ -132,13 +133,15 @@ def stock_cases(day, vals, hold=HOLD, clusters=()):
     Pi, Q, Hx, _ = M.clean_index(day, o, h, l, c)
     Lx = Pi * np.where(c > 0, l / np.where(c > 0, c, 1.0), 1.0)
     good = good_days(day, o, h, l, c)
+    # 2026-11-27 洗い直し⑤：誤りの日は値動き0＝高値の指数もその日の終値の指数（つないだ終値×高値÷終値のままだと偽の最高値ができる）
+    Hx = np.where(good | (np.arange(n) == 0), Hx, Pi)
     tv = c * v
     tv20 = np.full(n, np.nan)                 # その日より前の20本
     rm = _rolling_mean(tv, TV_N)
     tv20[TV_N:] = rm[TV_N - 1:-1]
     cm = np.maximum.accumulate(Hx)
     prev_max = np.r_[np.nan, cm[:-1]]
-    newmax = np.r_[True, Hx[1:] > cm[:-1]]    # 前の記録の足＝その高値を初めて付けた足（同じ値に並んだ足は数えない）
+    newmax = np.r_[True, Hx[1:] > cm[:-1] * (1 + REC_EPS)]    # 前の記録の足＝その高値を初めて付けた足（同じ値に並んだ足は数えない）
     setidx = np.maximum.accumulate(np.where(newmax, np.arange(n), -1))
     ma25 = _rolling_mean(Pi, MA_N)
     ma75, ma200 = _rolling_mean(Pi, 75), _rolling_mean(Pi, 200)
@@ -157,8 +160,8 @@ def stock_cases(day, vals, hold=HOLD, clusters=()):
                                                     _fwd_arr(Pi, Q, js, READ_HOLDS[0]), _fwd_arr(Pi, Q, js, READ_HOLDS[1])]))
 
     cases, last = [], -10 ** 9
-    cand = (np.arange(n) >= MIN_BARS) & good & np.isfinite(tv20) & (tv20 >= TV_MIN) & (Hx > prev_max)
-    if not young_record:
+    cand = (np.arange(n) >= MIN_BARS) & good & np.isfinite(tv20) & (tv20 >= TV_MIN) & (Hx > prev_max * (1 + REC_EPS))
+    if int(day[0]) in clusters:     # 2026-11-27 洗い直し⑤（読みの決め＝読みA）：5年待つのは、そろって始まる日の銘柄だけ
         cand &= (day.astype(np.int64) - int(day[0])) >= TRUNC_DAYS
     for j in np.nonzero(cand)[0]:
         if j - last < GAP:
@@ -189,8 +192,8 @@ def stock_cases(day, vals, hold=HOLD, clusters=()):
                "r60": fwd(j, hold), "c60": (float(Pi[j + hold] / Pi[j] - 1) if j + hold < n else None),
                "r20": fwd(j, READ_HOLDS[0]), "r120": fwd(j, READ_HOLDS[1])}
         if j + hold < n:
-            rec["again20"] = bool(Hx[j + 1:j + 21].max() > cm[j]) if j + 20 < n else None
-            rec["again60"] = bool(Hx[j + 1:j + hold + 1].max() > cm[j])
+            rec["again20"] = bool(Hx[j + 1:j + 21].max() > cm[j] * (1 + REC_EPS)) if j + 20 < n else None
+            rec["again60"] = bool(Hx[j + 1:j + hold + 1].max() > cm[j] * (1 + REC_EPS))
             rec["dd60"] = float(Lx[j + 1:j + hold + 1].min() / Q[j + 1] - 1)
         cases.append(rec)
     return cases, market

@@ -134,7 +134,9 @@ def test_young_record_gets_age_and_old_record_does_not():
     c_long = np.r_[np.full(40, 100.0), np.linspace(101, 300, 1400)]
     d_old, v_old = bars(c_long, vol=2e6, start="2001-01-04")
     cs = S.stock_cases(d_old, v_old)[0]
-    assert cs and all(r["age"] is None for r in cs) and dt.date.fromordinal(cs[0]["day"]) >= dt.date(2006, 1, 4)
+    # 2026-11-27 洗い直し⑤（読みの決め＝読みA）：5年の決まりは、そろって始まる日（10銘柄以上）の銘柄だけに当てる。
+    # ひとりで 2001-03-31 以前に始まる株は上場の日が分からない（age なし）が、5年は待たない
+    assert cs and all(r["age"] is None for r in cs) and dt.date.fromordinal(cs[0]["day"]) < dt.date(2006, 1, 4)
 
 
 def test_record_starting_on_a_shared_date_is_not_a_listing():
@@ -215,3 +217,43 @@ if __name__ == "__main__":
                 fails += 1
                 print(f"💥 {name}: {type(e).__name__}: {e}")
     sys.exit(1 if fails else 0)
+
+
+def _tie_path():
+    """同じ高値 110 を 40本目と 100本目に付ける値動き（指数の掛け算の丸めで、100本目の高値の指数が 40本目より 1e-16 ほど大きくなる形）"""
+    rng = np.random.default_rng(1)
+    rng.uniform(95, 105, 80)
+    c = np.r_[np.full(30, 100.0), np.round(rng.uniform(95, 105, 80), 1)]
+    c[40] = 105.0
+    day, v = bars(c, vol=2e6)
+    v = v.astype(np.float64)
+    v[:, 1] = np.maximum(v[:, 1], v[:, 3])
+    v[40, 1] = 110.0
+    v[100, 1], v[100, 3], v[100, 0] = 110.0, 106.0, c[99]
+    v[100, 2] = min(v[100, 0], 106.0) * 0.99
+    v[101:, 1] = np.minimum(v[101:, 1], 109.0)
+    v[101:, 3] = np.minimum(v[101:, 3], 108.9)
+    return day, v.astype(np.float32)
+
+
+def test_equal_high_is_not_a_new_record_even_with_rounding_noise():
+    # 2026-11-27 洗い直し⑤：同じ値段の高値（並んだだけ）を、指数の丸めの差で「上回った」と数えていた
+    day, v = _tie_path()
+    o, h, lo, c = (v[:, i].astype(float) for i in range(4))
+    _, _, Hx, _ = M.clean_index(day, o, h, lo, c)
+    assert h[100] == h[40] and Hx[100] > Hx[40]            # 前提：丸めの差がある形
+    cases, _ = S.stock_cases(day, v)
+    js = [int(np.searchsorted(day, r["day"])) for r in cases]
+    assert 100 not in js
+
+
+def test_error_day_high_does_not_make_a_fake_record():
+    # 2026-11-27 洗い直し⑤：誤りの日（高値が前の日の終値の1.5倍超）の高値を、つないだ終値×高値÷終値で残すと、偽の最高値ができて
+    # そのあとの本当の最高値が数えられなかった。誤りの日は値動き0＝高値の指数もその日の終値の指数
+    c = np.r_[np.full(50, 100.0), 100.0 * 1.005 ** np.arange(1, 251)]
+    day, v = bars(c, vol=2e6)
+    v = v.astype(np.float64)
+    v[40, 1] = 200.0                                        # 40本目だけ高値 200（前の日の終値 100 の2倍＝誤りの日）
+    cases, _ = S.stock_cases(day, v.astype(np.float32))
+    js = [int(np.searchsorted(day, r["day"])) for r in cases]
+    assert js and js[0] == 50

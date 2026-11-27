@@ -242,3 +242,31 @@ if __name__ == "__main__":
                 fails += 1
                 print(f"💥 {name}: {type(e).__name__}: {e}")
     sys.exit(1 if fails else 0)
+
+
+def _exact_path(seed, after):
+    """41本目が記録の日になる値動き（0本目 1060 を超えない乱数の40本 → 40本目 1000 → after）"""
+    rng = np.random.default_rng(seed)
+    c = np.r_[1060.0, np.round(rng.uniform(950, 1050, 40)).astype(float)]
+    c[40] = 1000.0
+    return np.r_[c, np.asarray(after, float)]
+
+
+def _case41(c):
+    d, v = bars(c)
+    cs, _ = E.stock_cases(d, v, flat_market(d.astype(np.int64)))
+    js = [int(np.searchsorted(d, r["day"])) for r in cs]
+    assert 41 in js
+    return cs[js.index(41)]
+
+
+def test_exact_plus_10pct_day_counts_as_t1_b():
+    # 2026-11-27 洗い直し⑤：終値がちょうど +10%（1000→1100）の日を、指数の割り算の丸めで「+10%以上」から外していた
+    r = _case41(_exact_path(0, np.r_[1100.0, np.full(100, 1000.0)]))
+    assert r["hot_flags"][1] is True
+
+
+def test_exact_minus_10pct_close_counts_as_t3_hit():
+    # 2026-11-27 洗い直し⑤：5本以内の終値がちょうど −10%（1100→990）の朝を、丸めで「−10%以下」から外していた
+    r = _case41(_exact_path(385, np.r_[1100.0, 1050.0, 990.0, np.full(100, 1000.0)]))
+    assert r["t3"]["0.10"]["flag"] is True

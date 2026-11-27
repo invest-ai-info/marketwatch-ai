@@ -57,9 +57,10 @@ def prev_features(daily):
     n = len(c)
     dev = np.full(n, np.nan)
     if n >= 25:
-        cs = np.concatenate([[0.0], np.cumsum(c)])
-        ma = (cs[25:] - cs[:-25]) / 25
-        dev[24:] = c[24:] / ma - 1
+        # 2026-11-27 洗い直し⑤：25本ずつ直接平均する（積み上げた合計の引き算だと、値の無い終値が1本あると以後ずっと NaN）
+        ma = np.lib.stride_tricks.sliding_window_view(c, 25).mean(axis=1)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            dev[24:] = c[24:] / ma - 1
     streak = np.zeros(n)
     for k in range(1, n):
         streak[k] = streak[k - 1] + 1 if c[k] > c[k - 1] else 0
