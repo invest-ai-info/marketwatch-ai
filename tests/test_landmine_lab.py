@@ -61,6 +61,51 @@ def test_prev_more_uses_only_past_values():
     assert np.isnan(got[days[100]][L.C["new_high"]])               # 250日そろわなければ判定しない
 
 
+def _long_then_exact_five(n=2000, seed=0):
+    """長い作り物の日足のあとに、前の20本のうち4本だけ同じ売買代金・16本は出来高0・その次の日も同じ売買代金
+    （倍率はちょうど5倍）。2026-11-27 洗い直し②で、積み上げの引き算の誤差で 4.99999… になっていた形"""
+    rng = np.random.default_rng(seed)
+    d0 = dt.date(2000, 1, 3)
+    rows = []
+    for i in range(n):
+        c, v = float(np.float32(rng.uniform(50, 5000))), float(np.float32(rng.integers(1, 10 ** 7)))
+        rows.append(((d0 + dt.timedelta(days=i)).isoformat(), c, c, c, c, v))
+    c, v = 733.0, 1300.0
+    for j in range(21):
+        rows.append(((d0 + dt.timedelta(days=n + j)).isoformat(), c, c, c, c, v if j % 5 == 0 else 0.0))
+    return rows
+
+
+def test_prev_more_exact_five_times_counts_as_five():
+    ratio, *_ = L.prev_more(_long_then_exact_five())
+    assert ratio[-1] >= 5.0, repr(float(ratio[-1]))
+
+
+def test_prev_more_exact_five_with_mixed_turnovers():
+    """20本のうち9本の売買代金（終値×出来高は整数）を足すと、ちょうど次の日の4倍＝倍率5倍。
+    1億で割ってから足すと丸めで 4.999999999999999 になっていた形（2026-11-27 洗い直し②の残り2行）"""
+    win = [(1598, 200), (1234, 400), (1801, 100), (2239, 400), (0, 0), (0, 0), (2873, 400), (0, 0), (0, 0), (429, 200),
+           (0, 0), (0, 0), (1, 1192900), (1348, 300), (0, 0), (924, 200), (0, 0), (0, 0), (0, 0), (0, 0)]
+    ck, vk = 2453, 500
+    d0 = dt.date(2008, 1, 7)
+    rows = []
+    for j, (c, v) in enumerate(win + [(ck, vk)]):
+        cc = float(c or ck)
+        rows.append(((d0 + dt.timedelta(days=j)).isoformat(), cc, cc, cc, cc, float(v)))
+    ratio, *_ = L.prev_more(rows)
+    assert ratio[-1] >= 5.0, repr(float(ratio[-1]))
+
+
+def test_prev_more_missing_bar_does_not_spoil_later_days():
+    days, rows = _daily()
+    rows[3] = [days[3], float("nan"), float("nan"), float("nan"), float("nan"), float("nan")]   # 値の欠けた足が1本
+    rows[255] = [days[255], 100.0, 108.0, 99.0, 102.0, 1e7]
+    ratio, *_ = L.prev_more([tuple(r) for r in rows])
+    tv = np.array([r[4] * r[5] / 1e8 for r in rows])
+    assert np.isnan(ratio[10])                                      # 欠けた足が20本の中にある日は計算しない
+    assert abs(ratio[255] - tv[255] / tv[235:255].mean()) < 1e-9     # 離れた日は欠けに引きずられない
+
+
 def test_flags():
     A = np.zeros((4, len(L.COLS)))
     A[:, L.C["dev25"]] = [0.2, 0.1, np.nan, 0.2]

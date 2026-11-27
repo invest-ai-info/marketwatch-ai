@@ -5,8 +5,8 @@
 ## 🔍 2026-11-27（手元）: 検算の関門＝研究の数字の間違いを見つける仕組みを作った（オーナー「間違いを見つける仕組みを作ってください」→「今後＋使用中を洗う」「案1（関門型）」「待たせる」）
 - 設計書 `docs/superpowers/specs/2026-11-26-result-audit-design.md`・手順書 `docs/superpowers/plans/2026-11-27-result-audit.md`。道具＝`result_audit.py`（ありえない数字の点検・閾値は `LIMITS`・較正 `recheck/CALIBRATION.md`）・`recount_compare.py`（別の書き方での数え直しの突き合わせ・手順 `recheck/RECOUNT_GUIDE.md`）・`mutate_check.py`（わざと壊す）・`recheck_status.py`（記録の読み書き・`GO_LIVE` 2026-11-27）。記録＝`recheck/audits.json`・`recheck/records.json`（値段なし・送る）
 - 関門：新しい登録の結果の行には `点検の指紋`（`mw check`）／合格側は数え直しの記録（一致100%）が無いうちは「🔍 数え直し待ち」＝リスト・地図・メールの絞り（`load_promoted_hypotheses`）・総当たりの MT5 段で使わない（今ある `rl_tf_adx_strong` は例外のまま）／DOCTRINE の新しい ✅・🏅 は `[recheck:研究]` が要る＝**固定オラクル `_doctrine_check.py` に9番の検査を足した（強める変更・設計書の承認＝オーナーの承認）**／見張り番 ⑥b（待ちが出た日から2日だけ Issue）
-- ✅ 洗い直し① ADX の見送り（`rl_tf_adx_strong`）＝9/26〜の決着済み 216 行・点検 error 0・数え直しは一致 213＋データの版の違い 3（Yahoo の足の抜けと跳ね＝元の記録の MAE で確認）＝一致100%・`recheck/records.json`・元の道具の誤りなし
-- 残り：洗い直し②目印C・B候補 → ③危険スコア → ④決算ゲート → ⑤ほか・OJ5 にあとから点検
+- ✅ 洗い直し①ADX（`rl_tf_adx_strong`）一致100%／②目印C・B候補の元（J26・J16・J17）一致100%＝元の道具の誤り2つ（`landmine_lab.prev_more`：ちょうど5倍の丸め・欠けた足の持ち越し）を直し、データの誤りの読みを J16 に追記
+- 残り：③危険スコア → ④決算ゲート → ⑤ほか／OJ5＝次は run 1回＋あとから点検
 
 ## 🔧 2026-11-19（クラウド）: 株式分割・単位のずれで日本株の数字が狂うのを直した（キーエンス 6861 の 1→5 ほか）。全文は `SESSION_ARCHIVE.md`【2026-11-21 退避】
 - **知っておくこと**＝Yahoo は分割を何か月も直さないことがある（しまむら 8227 は9か月）・値段の単位が10倍／100倍ずれる日もある＝日本株の日足・月足は `jp_splits.py` を通す（`RULE_VERSION` 7・決まりは `PILLAR_PREREG.md` 末尾「データの直し」・テスト `tests/test_jp_splits.py`）

@@ -65,11 +65,14 @@ def prev_more(daily):
     n = len(c)
     tv = c * v / 1e8
     ratio = np.full(n, np.nan)
-    cs = np.concatenate([[0.0], np.cumsum(tv)])
-    for k in range(TV_DAYS, n):
-        base = (cs[k] - cs[k - TV_DAYS]) / TV_DAYS
-        if base > 0:
-            ratio[k] = tv[k] / base
+    if n > TV_DAYS:
+        # k の前の20本（k−20〜k−1）をそのつど足す。2026-11-27 計算の誤りの直し（洗い直し②）：前は積み上げた和の引き算で、
+        # 長い日足ではちょうど5倍が 4.99999… になり、値の欠けた足が1本あるとその後の全部の日が計算できなくなっていた
+        # 倍率は1億で割る前の 終値×出来高 で出す（ふつうは整数＝足しても丸めが出ない。割る前でも後でも倍率は同じ）
+        pv = c * v
+        total = np.lib.stride_tricks.sliding_window_view(pv, TV_DAYS)[:-1].sum(axis=1)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            ratio[TV_DAYS:] = np.where(total > 0, TV_DAYS * pv[TV_DAYS:] / total, np.nan)
     rng = h - lo
     with np.errstate(invalid="ignore", divide="ignore"):
         wick = np.where(rng > 0, (h - c) / rng, 0.0)
