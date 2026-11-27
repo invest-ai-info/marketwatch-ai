@@ -428,3 +428,12 @@ if __name__ == "__main__":
             fn()
             n += 1
     print(f"ok {n}")
+
+
+def test_multi_day_event_outcomes_widen_like_trades():   # 2026-11-27 洗い直し③：10営業日の MAE の本物の暴落
+    real_crash = [_event("3350.T", "2024-07-22", outcome=-74.7)]
+    assert _find(A.audit(real_crash, A.Context(kind="event")), "A3")                       # 1日の目印なら鳴る（前と同じ）
+    assert not _find(A.audit(real_crash, A.Context(kind="event", outcome_days=10)), "A3")  # 10日の動きなら上限を広げる
+    half = [_event("6976.T", "2026-06-30", outcome=-47.9)]
+    assert _find(A.audit(half, A.Context(kind="event", outcome_days=3)), "A3")             # 5日以下は分割の形も見る
+    assert not _find(A.audit(half, A.Context(kind="event", outcome_days=10)), "A3")        # 長い動きの半分は本物がある

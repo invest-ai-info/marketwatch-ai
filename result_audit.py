@@ -66,6 +66,7 @@ class Context:
     missing_ratio: float | None = None      # 道具が数えたデータの抜けの割合
     holidays: dict = field(default_factory=dict)   # 市場 → ["YYYY-MM-DD", ...]
     min_cost: float | None = None           # 費用の下限（unit の単位）
+    outcome_days: int = 1                   # 目印の outcome が何営業日の動きか（A3 の上限を日数で広げる・分割の形は split_max_days 以下だけ）
 
 
 @dataclass
@@ -293,7 +294,9 @@ def _a3(rows, ctx):
         for i, r in enumerate(rows):
             if _has(r, "outcome") and r["unit"] == "pct":
                 o = float(r["outcome"]) / 100
-                if abs(o) > LIMITS["event_move_max"][r["market"]] or (r["market"] == "jp" and _split_shape(1 + o)):
+                days = max(1, int(ctx.outcome_days or 1))
+                short_jp = r["market"] == "jp" and days <= LIMITS["split_max_days"]
+                if abs(o) > LIMITS["event_move_max"][r["market"]] * days or (short_jp and _split_shape(1 + o)):
                     idx.append(i)
         return _hit("A3", "error", idx, "印のあとの動きがありえない大きさか分割の形（分割の直しもれ・偽の値の形）")
     for i, r in enumerate(rows):
