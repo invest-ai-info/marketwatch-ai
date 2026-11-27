@@ -6470,6 +6470,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-27", "line": '・<b>2026-11-27</b>: 📰 解説「<a href="guide-news-2026-11-27-nikkei-weekly-rebound-ai-semis.html" style="color:#0969da"><b>日経平均1,211円高で週間2,274円高達成──AI半導体の3日続伸</b></a>」公開'},
         {"date": "2026-11-27", "line": '・<b>2026-11-27</b>: 🛡️ 解説「<a href="guide-company-4704-trendmicro.html" style="color:#0969da"><b>トレンドマイクロ</b></a>」公開'},
         {"date": "2026-11-27", "line": '・<b>2026-11-27</b>: 🧪 解説「<a href="guide-signal-lab-162.html" style="color:#0969da"><b>上げ相場の急落買いは通じる？#162</b></a>」公開'},
         {"date": "2026-11-26", "line": '・<b>2026-11-26</b>: 📰 解説「<a href="guide-news-2026-11-26-nikkei-rebound-kioxia-nvidia.html" style="color:#0969da"><b>日経平均487円高で反発──キオクシア×NVIDIA「1.1PB」PoC発表がAI半導体に買い戻し</b></a>」公開'},
