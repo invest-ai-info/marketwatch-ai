@@ -6470,6 +6470,7 @@ def build_html(data, hist, now_jst, news=None, touraku=None):
     #    新記事を足すときは下のリストに {"date","line"} を1件追加するだけ（並べ替え・5件キープは自動）。
     #    週次戦略(guide-weekly)は build_weekly_history_item が自動検出するので手動追記しない。
     _history_items = [
+        {"date": "2026-11-29", "line": '・<b>2026-11-29</b>: 🧪 解説「<a href="guide-signal-lab-164.html" style="color:#0969da"><b>20日線より大きく下で買う方法は通じる？【研究日誌 #164】</b></a>」公開'},
         {"date": "2026-11-28", "line": '・<b>2026-11-28</b>: 📰 解説「<a href="guide-news-2026-11-28-fed-december-hike-pce.html" style="color:#0969da"><b>FRB12月利上げ確率94〜97%──コアPCE3.3%加速の背景を整理</b></a>」公開'},
         {"date": "2026-11-28", "line": '・<b>2026-11-28</b>: 👗 解説「<a href="guide-company-8227-shimamura.html" style="color:#0969da"><b>しまむら</b></a>」公開'},
         {"date": "2026-11-28", "line": '・<b>2026-11-28</b>: 🧪 解説「<a href="guide-signal-lab-163.html" style="color:#0969da"><b>株価指数が急に売られた次の日だけ買う方法は通じる？【研究日誌 #163】</b></a>」公開'},
