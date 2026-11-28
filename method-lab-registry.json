@@ -139,6 +139,12 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-29",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
   },
@@ -265,6 +271,12 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-29",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
   },
@@ -356,12 +368,12 @@
     }
    },
    "forward": {
-    "n": 0,
-    "avgR": null,
+    "n": 4,
+    "avgR": 0.4271,
     "rci_lo": null,
     "rci_hi": null,
-    "win": null,
-    "excess": null
+    "win": 1.0,
+    "excess": 0.3365
    },
    "history": [
     {
@@ -392,6 +404,12 @@
      "date": "2026-11-28",
      "n": 0,
      "avgR": null,
+     "lo": null
+    },
+    {
+     "date": "2026-11-29",
+     "n": 4,
+     "avgR": 0.4271,
      "lo": null
     }
    ]
@@ -510,6 +528,12 @@
     },
     {
      "date": "2026-11-28",
+     "n": 0,
+     "avgR": null,
+     "lo": null
+    },
+    {
+     "date": "2026-11-29",
      "n": 0,
      "avgR": null,
      "lo": null
@@ -632,6 +656,12 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-29",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
   },
@@ -746,8 +776,100 @@
      "n": 0,
      "avgR": null,
      "lo": null
+    },
+    {
+     "date": "2026-11-29",
+     "n": 0,
+     "avgR": null,
+     "lo": null
     }
    ]
+  },
+  {
+   "id": "ml-a38ecb64",
+   "name": "株価指数の5つで、「終値が20日移動平均よりATRの1倍以上下」のときに買う",
+   "spec": {
+    "direction": "long",
+    "universe": "index",
+    "conds": [
+     [
+      "dist_ma_lt",
+      20,
+      1
+     ]
+    ],
+    "exit": "hold_1"
+   },
+   "exit_ja": "次の日の終値で手じまい（損切りはATRの1.5倍）",
+   "universe_ja": "株価指数の5つ",
+   "conds_ja": [
+    "終値が20日移動平均よりATRの1倍以上下"
+   ],
+   "direction": "long",
+   "kind": "edge",
+   "source": "random",
+   "why": null,
+   "parent": null,
+   "registered_at": "2026-11-29",
+   "status": "tracking",
+   "past": {
+    "explore": {
+     "n": 4231,
+     "mean": 0.0206,
+     "lo": -0.0043,
+     "hi": 0.0454,
+     "win": 0.5271,
+     "placebo": {
+      "mean": 0.0034,
+      "sd": 0.0068,
+      "p": 0.005,
+      "excess": 0.0172,
+      "z": 2.539,
+      "p_norm": 0.005556453191720065
+     },
+     "from": "1996-01-02"
+    },
+    "confirm": {
+     "n": 2108,
+     "mean": 0.0304,
+     "lo": -0.0078,
+     "hi": 0.0687,
+     "win": 0.5512,
+     "placebo": {
+      "mean": 0.0042,
+      "sd": 0.0101,
+      "p": 0.005,
+      "excess": 0.0262,
+      "z": 2.593,
+      "p_norm": 0.004761695758076163
+     },
+     "per_year": 236.7,
+     "to": "2026-11-28",
+     "halves": [
+      {
+       "from": "2018-01-01",
+       "to": "2021-12-31",
+       "n": 879,
+       "mean": 0.0392,
+       "excess": 0.0335
+      },
+      {
+       "from": "2022-01-01",
+       "to": "2026-11-28",
+       "n": 1229,
+       "mean": 0.0242,
+       "excess": 0.0222
+      }
+     ],
+     "cost2_mean": 0.0218
+    }
+   },
+   "forward": {
+    "n": 0,
+    "avgR": null,
+    "rci_lo": null,
+    "rci_hi": null
+   }
   }
  ],
  "culls": [
@@ -974,6 +1096,24 @@
    "pool_size": 31,
    "active_before": 44,
    "flip_id": "btc_1h_gate__flip"
+  },
+  {
+   "source": "signal",
+   "id": "auto_group-metal_reversal_long-True",
+   "kind": "gate",
+   "name": "金・銀の逆張り買い",
+   "label": "group=metal×reversalL",
+   "registered_at": "2026-06-17",
+   "n": 164,
+   "avgR": 0.024,
+   "lo": -0.243,
+   "hi": 0.291,
+   "basis": "登録後",
+   "score": -0.024,
+   "date": "2026-11-29",
+   "pool_size": 30,
+   "active_before": 45,
+   "flip_id": "auto_group-metal_reversal_long-True__flip"
   }
  ],
  "days": {
@@ -1164,7 +1304,25 @@
    "cull_note": "1件を外した",
    "events": [],
    "active_before": 44
+  },
+  "2026-11-29": {
+   "lab_asof": "2026-11-29 03:14 JST",
+   "forward_asof": "2026-11-29 03:14 JST",
+   "rules_version": 2,
+   "chosen_id": "ml-a38ecb64",
+   "chosen_status": "passed",
+   "registered": [
+    "ml-a38ecb64"
+   ],
+   "register_note": "1件を登録した",
+   "cull_ids": [
+    "auto_group-metal_reversal_long-True"
+   ],
+   "cull_target": 1,
+   "cull_note": "1件を外した",
+   "events": [],
+   "active_before": 45
   }
  },
- "updated_at": "2026-11-28"
+ "updated_at": "2026-11-29"
 }
